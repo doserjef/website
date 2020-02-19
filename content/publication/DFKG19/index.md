@@ -23,8 +23,8 @@ publishDate: "2017-05-03T00:00:00Z"
 slides: ''
 summary: A Bayesian approach to hypothesis testing to assess the influence of a shelterwood logging on northern Michigan soundscapes.
 title: "Assessing soundscape disturbance through hierarchical models and acoustic indices: a case study on a shelterwood logged northern Michigan forest"
-url_code: ''
-url_dataset: ''
+url_code: 'https://github.com/doserjef/DFKG19'
+url_dataset: 'https://www.remoteenvironmentalassessmentlaboratory.com/'
 url_pdf: https://arxiv.org/pdf/1911.03278.pdf
 url_poster: ''
 url_project: ''

@@ -4,21 +4,21 @@ authors:
 - Jeffrey W. Doser
 - Kristina M. Hannam
 - Andrew O. Finley
-date: "2019-05-03T00:00:00Z"
+date: "2020-02-18T00:00:00Z"
 doi: ""
 featured: false
 links:
 - name: arXiv
   url: https://arxiv.org/abs/1905.01218
-publication: ""
+publication: "In: Landscape Ecology (2020) https://doi.org/10.1007/s10980-020-00973-2"
 publication_short: ""
 publication_types:
-- "3"
+- "2"
 publishDate: "2017-05-03T00:00:00Z"
 slides: ''
 summary: We develop a modeling framework to characterize the functional relationship between anthropogenic  and biological sounds in western New York state.
 title: "Characterizing functional relationships between anthropogenic and biological sounds: A western New York state soundscape case study"
-url_code: ''
+url_code: 'https://github.com/doserjef/DHF20'
 url_dataset: ''
 url_pdf: https://arxiv.org/pdf/1905.01218.pdf
 url_poster: ''
