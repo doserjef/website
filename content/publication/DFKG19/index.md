@@ -9,20 +9,20 @@ authors:
 - Andrew O. Finley
 - Eric P. Kasten
 - Stuart H. Gage
-date: "2019-11-11T00:00:00Z"
+date: "2020-03-04T00:00:00Z"
 doi: ""
 featured: false
 links:
 - name: arXiv
   url: https://arxiv.org/abs/1911.03278
-publication: ""
+publication: "In: Ecological Indicators (2020) https://doi.org/10.1016/j.ecolind.2020.106244"
 publication_short: ""
 publication_types:
-- "3"
-publishDate: "2017-05-03T00:00:00Z"
+- "2"
+publishDate: "2020-03-04T00:00:00Z"
 slides: ''
 summary: A Bayesian approach to hypothesis testing to assess the influence of a shelterwood logging on northern Michigan soundscapes.
-title: "Assessing soundscape disturbance through hierarchical models and acoustic indices: a case study on a shelterwood logged northern Michigan forest"
+title: "Assessing soundscape disturbance through hierarchical models and acoustic indices: A case study on a shelterwood logged northern Michigan forest"
 url_code: 'https://github.com/doserjef/DFKG19'
 url_dataset: 'https://www.remoteenvironmentalassessmentlaboratory.com/'
 url_pdf: https://arxiv.org/pdf/1911.03278.pdf
