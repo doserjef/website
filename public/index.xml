@@ -741,57 +741,6 @@ $$&lt;/p&gt;
     </item>
     
     <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>
-
-
-&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;R Markdown&lt;/h1&gt;
-&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-fit &amp;lt;- lm(dist ~ speed, data = cars)
-fit
-## 
-## Call:
-## lm(formula = dist ~ speed, data = cars)
-## 
-## Coefficients:
-## (Intercept)        speed  
-##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Including Plots&lt;/h1&gt;
-&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
-  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
-  init.angle = -50, border = NA
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 1: A fancy pie chart.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Characterizing functional relationships between technophony and biophony: A western New York soundscape case study</title>
       <link>/slides/nrea2019/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -1103,6 +1052,137 @@ Figure 1: A fancy pie chart.
 &lt;p&gt;Welch, Peter D. 1967. “The Use of Fast Fourier Transform for the Estimation of Power Spectra: A Method Based on Time Averaging Over Short, Modified Periodograms.” &lt;em&gt;IEE Trans. Audio and Electroacoustics&lt;/em&gt; 15: 70–73.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Simple Linear Regression</title>
+      <link>/post/simplelinearregression/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/simplelinearregression/</guid>
+      <description>
+
+
+&lt;p&gt;The basic simple linear regression model is ubiquitous in ecology. The model takes the following form:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y = \beta_0 + \beta_1x + e \\
+e \sim (0, \sigma^2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; is the dependent response variable and &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; is the independent explanatory variable. The first step to do prior to performing a linear regression should be to plot &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; versus &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; to confirm a linear relationship between the variables exists.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\beta_0\)&lt;/span&gt; is the y-intercept and &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt; is the change in unit &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; for a change in unit &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;There are numerous ways to estimate the regression parameters &lt;span class=&#34;math inline&#34;&gt;\(\beta_0\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt;, but of course the most common method to use is called &lt;strong&gt;Least Squares Estimation&lt;/strong&gt;. Remember the crucial assumption of least squares estimation:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e_i \sim IID(0, \sigma^2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;for all &lt;span class=&#34;math inline&#34;&gt;\(i = 1, 2, \dots, n\)&lt;/span&gt;. Note that for actually estimating the parameters &lt;span class=&#34;math inline&#34;&gt;\(\beta_0\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\beta_1\)&lt;/span&gt; you do not need to assume normality of the errors, but if you wish to do any sort of hypothesis testing than you do need to.&lt;/p&gt;
+&lt;p&gt;The idea behind least squares estimation is to minimize the sum of squares of the residuals:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_{i = 1}^ne_i^2 = \sum_{i = 1}^n(y_i - \beta_0 - \beta_1x_i)^2
+\]&lt;/span&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Temporal Autocorrelation Structures and Repeated Measures</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>
+
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Temporal Autocorrelation Structures and Repeated Measures</title>
+      <link>/post/repeatedmeasures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/repeatedmeasures/</guid>
+      <description>
+
+
+&lt;p&gt;In this document I provide some details to potentially help clarify the concept of “repeated measures”. I have often found these sorts of experimental design terms to be very confusing. Here I hope to clarify the concept of repeated measures as a method to account for temporal autocorrelation in a dataset.&lt;/p&gt;
+&lt;p&gt;Repeated measures designs are a specific type of design where there is some sort of temporal autocorrelation among data points. Specifically, in a repeated measures design it is assumed that the same individual study units (e.g., trees) are measured at multiple time points. Thus, from an experimental design standpoint, one can view individuals as being a blocking variable and the variation within the subject represents the experimental error. Thinking hierarchically, we can imagine our full set of data points in a regression where at the second level there is a random effect of “individual”, where these are 0-centered normally distributed variables with a single variance, where that variance is said to account for the similarity among individuals.&lt;/p&gt;
+&lt;p&gt;This sort of example I just discussed where the subjects that are repatedly measured over time are treated as a blocking variable (i.e., random effect) is the most basic sort of repeated measures design. In fact, this has a special name, and is referred to as &lt;strong&gt;Compound Symmetry&lt;/strong&gt;. You can also view this as saying that “observations within a subject are equally correlated with each other”. This most basic type of repeated measures design can be summed up in the following basic hierarchical model:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+y_{ij} \mid \omega_j &amp;amp;\sim \text{Normal}(\mu + \mu_i + \omega_j, \sigma^2) \\
+\omega_j &amp;amp;\sim \text{Normal}(0, \tau^2)
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;From this hierarchical model, it is clear how this most basic repeated measures design works (which is also equivalent to a basic RCBD with the blocking factor being random). It is also clear from this hierarchical perspective the variance components incorporated in the measurements for each individual measurement.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Point&lt;/strong&gt;: repeated measures designs are extensions of a basic random effects model that provides more structure of how data points within a blocking variable are related to each other. Repeated measures are simply a method to account for non-indenpendence of data points that specifically has to do with temporal autocorrelation.&lt;/p&gt;
+&lt;p&gt;Let’s next consider some other basic autocorrelation structures.&lt;/p&gt;
+&lt;div id=&#34;ar1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;AR(1)&lt;/h3&gt;
+&lt;p&gt;The AR(1) covariance structure is very commonly used in time-series applications. One important thing to consider is that the AR(1) requires equally spaced intervals of time. The covariance structure takes the following form:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sigma^2
+\begin{pmatrix}
+1 &amp;amp; \rho &amp;amp; \rho^2 &amp;amp; \rho^3 &amp;amp; \dots \\
+\rho &amp;amp; 1 &amp;amp; \rho &amp;amp; \rho^2 &amp;amp; \dots \\
+\rho^2 &amp;amp; \rho &amp;amp; 1 &amp;amp; \rho &amp;amp; \dots \\
+\rho^3 &amp;amp; \rho^2 &amp;amp; \rho &amp;amp; 1 &amp;amp; \dots
+\end{pmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Notice how this structure assumes constant variance among the observations. In an hierarchical model, one can consider the structure of the model to take the following form for any given set of values &lt;span class=&#34;math inline&#34;&gt;\(\boldsymbol{y}\)&lt;/span&gt; that come from the same group that is repeatedly measured over time.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+\boldsymbol{y}_j \mid \boldsymbol{\omega}_j &amp;amp;\sim \text{Normal}(\mu + \boldsymbol{\mu}_j + \boldsymbol{\omega}_j, \text{diag}(\sigma^2)) \\
+\boldsymbol{\omega}_j &amp;amp;\sim \text{Normal}(\boldsymbol{0}, \tau^2\boldsymbol{\Sigma}(\rho))
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;span class=&#34;math inline&#34;&gt;\(\tau^2\boldsymbol{\Sigma}(\rho)\)&lt;/span&gt; is equivalent to the AR(1) covariance structure defined above.&lt;/p&gt;
+&lt;p&gt;There are numerous other covariance structures that can be assumed depending on the structure one thinks can be reasonable for the data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;double-repeated-measures&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Double Repeated Measures&lt;/h2&gt;
+&lt;p&gt;Now let’s consider the situation where one expects temporal autocorrelation over two separate time periods. In other words, there are two units of time where repeated measures take place, and it is not reasonable to group these into a single time unit.&lt;/p&gt;
+&lt;p&gt;This is actually exactly analogous to what you did in your first publication. This concept would be a double repeated measures where you have an unstructured covariance matrix for the time of day, and then an AR(1) covariance matrix for the 29 minute recordings.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Vim Useful CheatSheet</title>
+      <link>/post/vimcheatsheet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vimcheatsheet/</guid>
+      <description>
+
+
+&lt;p&gt;Here I provide some useful commands for using &lt;code&gt;vi&lt;/code&gt;.&lt;/p&gt;
+&lt;div id=&#34;commenting-out-a-block-of-code&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Commenting out a Block of Code&lt;/h1&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Go to first line you want to comment: press &lt;code&gt;ctrl v&lt;/code&gt;. This puts you in the Visual Block mode.&lt;/li&gt;
+&lt;li&gt;Use the arrow key and select until the last line.&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;Shift i&lt;/code&gt;, which puts the editor in Insert mode and then press &lt;code&gt;#&lt;/code&gt;. This will add a hash to the first line&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;Esc&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;copying-text-to-the-global-clipboard&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Copying text to the global clipboard&lt;/h1&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;+y&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;+p&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;To copy the entire file into the + register, &lt;code&gt;gg&amp;quot;+yG&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;moving-around&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Moving around&lt;/h1&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Move cursor to top of screen: gg&lt;/li&gt;
+&lt;li&gt;Move cursor to bottom: shift + g&lt;/li&gt;
+&lt;li&gt;Move cursot to end of current line: g_&lt;/li&gt;
+&lt;li&gt;Move to the beginning of line: 0&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 </description>
     </item>

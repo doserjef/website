@@ -27,10 +27,12 @@
   
     
   
-  <meta name="description" content="PhD Student">
+  <meta name="description" content="The basic simple linear regression model is ubiquitous in ecology. The model takes the following form:
+\[ y = \beta_0 &#43; \beta_1x &#43; e \\ e \sim (0, \sigma^2) \]
+where \(y\) is the dependent response variable and \(x\) is the independent explanatory variable. The first step to do prior to performing a linear regression should be to plot \(y\) versus \(x\) to confirm a linear relationship between the variables exists.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/categories/r/">
+  <link rel="alternate" hreflang="en-us" href="/post/simplelinearregression/">
 
   
 
@@ -90,15 +92,12 @@
   
 
   
-  <link rel="alternate" href="/categories/r/index.xml" type="application/rss+xml" title="Jeff Doser">
-  <link rel="feed" href="/categories/r/index.xml" type="application/rss+xml" title="Jeff Doser">
-  
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/categories/r/">
+  <link rel="canonical" href="/post/simplelinearregression/">
 
   
   
@@ -110,19 +109,22 @@
   <meta property="twitter:card" content="summary">
   
   <meta property="og:site_name" content="Jeff Doser">
-  <meta property="og:url" content="/categories/r/">
-  <meta property="og:title" content="R | Jeff Doser">
-  <meta property="og:description" content="PhD Student"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="og:url" content="/post/simplelinearregression/">
+  <meta property="og:title" content="Simple Linear Regression | Jeff Doser">
+  <meta property="og:description" content="The basic simple linear regression model is ubiquitous in ecology. The model takes the following form:
+\[ y = \beta_0 &#43; \beta_1x &#43; e \\ e \sim (0, \sigma^2) \]
+where \(y\) is the dependent response variable and \(x\) is the independent explanatory variable. The first step to do prior to performing a linear regression should be to plot \(y\) versus \(x\) to confirm a linear relationship between the variables exists."><meta property="og:image" content="/img/icon-192.png">
   <meta property="og:locale" content="en-us">
   
   
   
-
   
 
   
 
-  <title>R | Jeff Doser</title>
+  
+
+  <title>Simple Linear Regression | Jeff Doser</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
@@ -417,7 +419,9 @@
 </nav>
 
 
+<article class="article" itemscope itemtype="http://schema.org/Article">
 
+  
 
 
 
@@ -434,55 +438,258 @@
 
   
   
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Simple Linear Regression</h1>
+
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1 itemprop="name">R</h1>
+
+
+
+<meta content="" itemprop="datePublished">
+<meta content="" itemprop="dateModified">
+
+<div class="article-metadata">
 
   
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jan 1, 0001</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+
+<p>The basic simple linear regression model is ubiquitous in ecology. The model takes the following form:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x + e \\
+e \sim (0, \sigma^2)
+\]</span></p>
+<p>where <span class="math inline">\(y\)</span> is the dependent response variable and <span class="math inline">\(x\)</span> is the independent explanatory variable. The first step to do prior to performing a linear regression should be to plot <span class="math inline">\(y\)</span> versus <span class="math inline">\(x\)</span> to confirm a linear relationship between the variables exists.</p>
+<p><span class="math inline">\(\beta_0\)</span> is the y-intercept and <span class="math inline">\(\beta_1\)</span> is the change in unit <span class="math inline">\(y\)</span> for a change in unit <span class="math inline">\(x\)</span>.</p>
+<p>There are numerous ways to estimate the regression parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, but of course the most common method to use is called <strong>Least Squares Estimation</strong>. Remember the crucial assumption of least squares estimation:</p>
+<p><span class="math display">\[
+e_i \sim IID(0, \sigma^2)
+\]</span></p>
+<p>for all <span class="math inline">\(i = 1, 2, \dots, n\)</span>. Note that for actually estimating the parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> you do not need to assume normality of the errors, but if you wish to do any sort of hypothesis testing than you do need to.</p>
+<p>The idea behind least squares estimation is to minimize the sum of squares of the residuals:</p>
+<p><span class="math display">\[
+\sum_{i = 1}^ne_i^2 = \sum_{i = 1}^n(y_i - \beta_0 - \beta_1x_i)^2
+\]</span></p>
+
+    </div>
+
+    
+
+
+
+    
+      
+
+
+
+
+
+
+
 
   
-  
-  <div>
-    <h2><a href="/post/2015-07-23-r-rmarkdown/">Temporal Autocorrelation Structures and Repeated Measures</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/repeatedmeasures/">Temporal Autocorrelation Structures and Repeated Measures</a></h2>
-    <div class="article-style">
-      
-      In this document I provide some details to potentially help clarify the concept of “repeated measures”. I have often found these sorts of experimental design terms to be very confusing. Here I hope to clarify the concept of repeated measures as a method to account for temporal autocorrelation in a dataset.
-Repeated measures designs are a specific type of design where there is some sort of temporal autocorrelation among data points.
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/vimcheatsheet/">Vim Useful CheatSheet</a></h2>
-    <div class="article-style">
-      
-       Here I provide some useful commands for using vi.
-Commenting out a Block of Code Go to first line you want to comment: press ctrl v. This puts you in the Visual Block mode. Use the arrow key and select until the last line. Press Shift i, which puts the editor in Insert mode and then press #. This will add a hash to the first line Press Esc.   Copying text to the global clipboard &quot;+y &quot;+p To copy the entire file into the + register, gg&quot;+yG   Moving around Move cursor to top of screen: gg Move cursor to bottom: shift + g Move cursot to end of current line: g_ Move to the beginning of line: 0   
-      
-    </div>
-  </div>
-  
+
+
+
+
 
   
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu89c2cf3f7c10c81cab0f8ff61d5b3223_2251617_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
 
-</div>
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Jeff Doser</a></h5>
+      <h6 class="card-subtitle">PhD Student</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/jeffdoser18" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/doserjef" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/" >
+              <i class="googlescholar googlescholar-"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
 <div class="container">
   <footer class="site-footer">
   
