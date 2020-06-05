@@ -1,0 +1,304 @@
+# Rcpp
+
+R is an interpreted language. The code interpretor runs each line of a script individually instead of compiling the entire file at once as in a compiled language like C++. This means R can be slower than compiled languages when completing some tasks. In this chapter, we show how to improve the performance of our R scripts by rewriting functions in C++^[You do not need prior C++ experience to complete this chapter and corresponding exercises, but we are hoping you learn a little C++ syntax along the way!]. Although R has an API for developers to move between R data structures and data structures in lower-level languages (C++, C, FORTRAN, etc.), an alternative is to use `Rcpp`. According to the [official Rcpp website](http://www.rcpp.org/), "Rcpp provides a powerful API on top of R, permitting direct interchange of rich R objects between R and C++." It is a higher-level approach than using the aforementioned API directly. C++ functions can address gaps in R's abilities including
+
++ Vectorizing loops whose subsequent iterations depend on previous iterations.
++ Writing recursive functions with lower overhead. (Recursive functions are functions that call themselves, leading to millions of function calls.)
++ Using data structures and algorithms that R does not provide but that are in the C++ standard template library (STL) such as ordered maps and double-ended queues.
+
+In this chapter, we will cover an abbreviated/modified version of Hadley Wickham's tutorial [High performance functions with Rcpp](http://adv-r.had.co.nz/Rcpp.html}{High performance functions with Rcpp)
+
+## Getting Started with Rcpp
+
+### Installation
+Before we install the `Rcpp` package, we need a working C++ compiler. To get the compiler:
+
++ Windows: install Rtools from [here](https://cran.r-project.org/bin/windows/Rtools/).
++ Mac: install Xcode from the Mac App Store.
++ Linux: in the terminal (for Debian-based systems or similar) enter 
+`sudo apt-get install r-base dev`.
+
+Now we can install `Rcpp`. (Note that the `microbenchmark` package is needed for the examples in this chapter, so we'll install that, too.)
+
+### The Simplest C++ Example
+
+It is common for textbooks to introduce a new programming language through the "Hello World" program.^[For a collection of "Hello World" programs in 400+ programming languages, see [here](https://helloworldcollection.github.io/).] If we wanted to write this simple program in C++, the code would look like this:
+
+```{Rcpp, eval = FALSE}
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello World!" << std::endl;
+}
+```
+
+Think about the C++ code above. How would you accomplish the same task in R? How are the programs similar in syntax and structure? How are they different? In the following section, we will rewrite this program in a format that can interface with R through `Rcpp`. Note that C++ is a compiled language, which means we cannot run the program line-by-line like we can with an R script.
+
+## Using Rcpp
+
+### Exporting C++ Functions
+
+Let's start out with that simple, obligatory "Hello World!" program in C++ that we will export to R. C++ files use the extension `*.cpp`. Through the RStudio menu, create a new C++ File (File $>$ New File $>$ C++ File). Note that the default C++ file contains the line `#include <Rcpp.h>`. In C++, these `include` files are header files that provide us with objects and functions that we can use within our C++ file. Although the program building process is different, there are some parallels between these header files and the packages we use in our R code. Note that unlike R, every line of code in a C++ file must end with a semicolon.
+
+To verify that Rcpp is working correctly, let's run the following code. Save the document as `hello.cpp`, and enter the following code:
+
+```{Rcpp, eval = FALSE}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+
+void hello(){
+  Rprintf("Hello World!\n");
+}
+```
+
+Let's do a quick line-by line explanation:
+
+1. `#include <Rcpp.h>`: contains the definitions used by the Rcpp package.
+\item `using namespace Rcpp;`: allows us to call functions from the Rcpp header file by writing `functionname` instead of `Rcpp::functionname`.
+\item `// [[Rcpp::export]]`: an Rcpp attribute. Attributes are annotations that are added to C++ source files to indicate that C++ functions should be made available as R functions. 
+\item `void hello(){`: the declaration of the `hello` function, which has a return type `void` and no arguments, hence the empty parentheses. Note that the function content (definition) is all contained within the squiggly brackets.
+\item `Rprintf("Hello World!\n");`: prints to the R console.
+
+Now, we can go to the RStudio Console and test our code with the following three lines and the expected output.
+
+```{r, eval = FALSE}
+library(Rcpp)
+sourceCpp("hello.cpp")
+hello()
+```
+
+```{r, echo = FALSE}
+print("Hello")
+```
+
+The `sourceCpp` function parsed our C++ file ("hello.cpp") and looked for functions marked with the `Rcpp::export` attribute. A shared library was then built and the exported function (`hello()`) was made available as an R function in the current environment. The function simply printed "Hello World!" to our RStudio Console. Great! You have now written a C++ function using built-in C++ types and Rcpp wrapper types and then sourced them like an R script.
+
+### Inline C++ Code
+
+Maintaining C++ code in it's own source file provides several benefits including the ability to use C++ aware text-editing tools and straightforward mapping of compilation errors to lines in the source file. However, it's also possible to do inline declaration and execution of C++ code.
+
+There are several ways to accomplish this, including passing a code string to `sourceCpp()` or using the shorter-form `cppFunction()` or `evalCpp()` functions. Run the following code:
+
+```{r, prompt=FALSE}
+library(Rcpp)
+
+cppFunction("
+  int add(int x, int y, int z) {
+    int sum = x + y + z;
+    return sum;
+  }"
+)
+
+add(1, 2, 4)
+
+a <- add(3, 2, 1)
+a
+```
+
+When you run this code, Rcpp will compile the C++ code and construct an R function that connects to the compiled C++ function. We're going to use this simple interface to learn how to write C++. C++ is a large language, and there's no way to cover it all in the limited time we have. Instead, you'll get the basics so that you can start writing useful functions to address bottlenecks in your R code.
+
+
+## The Rcpp Interface
+
+The following subsections will teach you the basics by translating simple R functions to their C++ equivalents. We'll start simple with a function that has no inputs and a scalar output, and then get progressively more complicated:
+
++ No input and scalar output
++ Scalar input and scalar output
++ Vector input and scalar output
++ Vector input and vector output
++ Matrix input and vector output
++ Matrix input and matrix output
+
+## No input and scalar output
+
+Let's start with a very simple function. It has no arguments and always returns the integer 1:
+
+```{r,  eval=FALSE, prompt=FALSE}
+one <- function() 1L
+```
+
+The equivalent C++ function is: 
+
+```{Rcpp, eval = FALSE}
+int one() {
+  return 1;
+}
+```
+
+We can compile and use this from R with `cppFunction`:
+
+```{r, eval=FALSE, prompt=FALSE}
+cppFunction("
+  int one() {
+    return 1;
+  }"
+)
+```
+
+This small function illustrates a number of important differences between R and C++:
+
++ The syntax to create a function looks like the syntax to call a function; you don't use assignment to create functions as you do in R.
++ You must declare the type of output the function returns. This function returns an int (a scalar integer). The classes for the most common types of R vectors are: NumericVector, IntegerVector, CharacterVector, and LogicalVector.
++ Scalars and vectors are different. The scalar equivalents of numeric, integer, character, and logical vectors are: double, int, String, and bool.
++ You must use an explicit return statement to return a value from a function.
++ Every statement is terminated by a semicolon.
+
+### Scalar input and scalar output
+
+The next example function implements a scalar version of the `sign()` function which returns 1 if the input is positive, and -1 if it's negative:
+
+```{r, eval=FALSE, prompt=FALSE}
+signR <- function(x) {
+    if (x > 0) {
+        1
+    } else if (x == 0) {
+        0
+    } else {
+        -1
+    }
+}
+
+cppFunction("
+  int signC(int x) {
+    if (x > 0) {
+      return 1;
+    } else if (x == 0) {
+      return 0;
+    } else {
+      return -1;
+    }
+  }"
+)
+```
+
+In the C++ version:
+
++ We declare the type of each input in the same way we declare the type of the output. While this makes the code a little more verbose, it also makes it very obvious what type of input the function needs.
+
++ The `if` syntax is identical. While there are some big differences between R and C++, there are also lots of similarities! C++ also has a `while` statement that works the same way as R's, e.g., as in R you can use `break` to exit the loop.
+
+### Vector input and scalar output
+
+One big difference between R and C++ is that the cost of loops is much lower in C++. For example, we could implement the `sum()` function in R using a loop. If you've been programming in R a while, you'll probably have a visceral reaction to this function!
+
+```{r, prompt = FALSE}
+sumR <- function(x) {
+    total <- 0
+    for (i in 1:length(x)) {
+        total <- total + x[i]
+    }
+    total
+}
+```
+
+In C++, loops have very little overhead, so it's fine to use them.
+
+```{r, prompt=FALSE}
+cppFunction("
+  double sumC(NumericVector x) {
+    int n = x.size();
+    double total = 0;
+    for(int i = 0; i < n; i++) {
+      total += x[i];
+    }
+    return total;
+  }"
+)
+```
+
+The C++ version is similar, but
+
++ To find the length of the vector, we use the `.size()` method, which returns an integer. C++ methods are called with `.` (i.e., a period).
+
++ The `for` statement has a different syntax: `for(init; check; increment)`. This loop is initialized by creating a new variable called `i` with value 0. Before each iteration, we check that `i < n`, and terminate the loop if it's not. After each iteration, we increment the value of `i` by one, using the special prefix operator `++` which increases the value of `i` by 1.
++ In C++, vector indices start at 0. I'll say this again because it's so important: IN C++, VECTOR INDICES START AT 0! This is a very common source of bugs when converting R functions to C++.
++ Use `=` for assignment, not `<-`.
++ C++ provides operators that modify in-place: `total += x[i]` is equivalent to `total = total + x[i]`. Similar in-place operators are `-=`, `*=;`, and `/=`.
+
+This is a good example of where C++ is much more efficient than R. As shown by the following microbenchmark, `sumC()` is competitive with the built-in (and highly optimized) `sum()`, while `sumR()` is several orders of magnitude slower. Note, you'll need to install the microbenchmark package.
+
+```{r, prompt=FALSE}
+library(microbenchmark)
+
+x <- runif(1000)
+microbenchmark(sum(x), sumC(x), sumR(x))
+```
+
+The `microbenchmark()` function runs each function it's passed 100 times and provides summary statistics for the multiple execution times. This is a very handy tool for testing various function implementations (as illustrated above).
+
+### Vector input and vector output
+
+Next we'll create a function that computes the Euclidean distance between a value and a vector of values:
+
+```{r, prompt=FALSE}
+pdistR <- function(x, ys) {
+    sqrt((x - ys)^2)
+}
+```
+
+It's not obvious that we want `x` to be a scalar from the function definition. We'd need to make that clear in the documentation. That's not a problem in the C++ version because we have to be explicit about types:
+
+```{r, prompt=FALSE}
+cppFunction("
+  NumericVector pdistC(double x, NumericVector ys) {
+    int n = ys.size();
+    NumericVector out(n);
+
+    for(int i = 0; i < n; i++) {
+      out[i] = sqrt(pow(ys[i] - x, 2.0));
+    }
+    return out;
+  }"
+)
+```
+
+This function introduces only a few new concepts:
+
++ We create a new numeric vector of length n with a constructor: `NumericVector out(n)`. This and similar vector and matrix constrictors initialize the elements with zeros. Another useful way of making a vector is to copy an existing one: `NumericVector zs = clone(ys)`.
++ C++ uses `pow()`, not `^`, for exponentiation.
+
+Note that because the R version is fully vectorized, it's already going to be fast. On my computer, it takes around 8 ms with a 1 million element y vector. The C++ function is twice as fast, $\sim$ 4 ms, but assuming it took you 10 minutes to write the C++ function, you'd need to run it $\sim$ 150,000 times to make rewriting worthwhile :-) The reason why the C++ function is faster is subtle, and relates to memory management. The R version needs to create an intermediate vector the same length as `y(x - ys)`, and allocating memory is an expensive operation. The C++ function avoids this overhead because it uses an intermediate scalar.
+
+### Matrix input and vector output
+
+Each vector type has a matrix equivalent: `NumericMatrix`, `IntegerMatrix`, `CharacterMatrix`, and `LogicalMatrix`. Using them is straightforward. For example, we could create a function that reproduces `rowSums()`:
+
+```{r, prompt=FALSE}
+cppFunction("
+  NumericVector rowSumsC(NumericMatrix x) {
+    int nrow = x.nrow(), ncol = x.ncol();
+    NumericVector out(nrow);
+
+    for (int i = 0; i < nrow; i++) {
+      double total = 0;
+      for (int j = 0; j < ncol; j++) {
+        total += x(i, j);
+      }
+      out[i] = total;
+    }
+    return out;
+  }"
+)
+
+x <- matrix(sample(100), 10)
+
+rowSums(x)
+rowSumsC(x)
+```
+
+Let's look at the main differences:
+
++ In C++, you subset a matrix with `()`, not `[]`.
++ In C++, use `.nrow()` and `.ncol()` methods to get the dimensions of a matrix.
+
+### Matrix input and matrix output
+
+See the Rcpp exercise.
+
+  
+## Exercises
+
+**Exercise Rcpp** Learning objectives: practice using `Rcpp` to run a C++ function through R; use `microbenchmark()` to compare function performance.

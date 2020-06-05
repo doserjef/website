@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-rcpp.html">
+<link rel="next" href="section-digial-signal-processing.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-databases-and-r" class="section level1">
+<h1><span class="header-section-number">Chapter 14</span> Databases and R</h1>
+<p>As we previously saw in Chapter <a href="section-data2.html#section-data2">7</a>, <code>dplyr</code> is a fantastic tool for manipulating data inside the R environment. Up to this point, we have worked with data sets that easily fit within your computer’s memory. Is R capable of working with data sets that are too large to store on your computer? Fortunately R is more than capable of dealing with large data sets (or not so large data sets that are stored remotely in a database). Recently, developers at <code>RStudio</code> have been working on building tools for data scientists to use inside of R to work with databases. Currently there are numerous different ways to work with data from databases in R. In this chapter we will explore some of the many different packages used to query external databases from within R, and we will focus on using <code>dplyr</code> to perform our queries solely in R.</p>
+<div id="section-sql-and-database-structure" class="section level2">
+<h2><span class="header-section-number">14.1</span> SQL and Database Structure</h2>
+<p>In today’s world, there is an extremely large amount of electronic data. The actual amount of existing data is not quite known, as it is pretty much impossible to determine an exact amount. One estimate by IBM stated that 2.5 exabytes (2.5 billion gigabytes) of data were generated every day in 2012. Clearly, we need to have efficient ways to store such incredibly large amounts of data inside computers. In many cases, these data are stored in <em>relational databases</em>.</p>
+<p>In simple terms, a database is a collection of similar files. In a relational database, there are numerous data-containing tables that are related to each other by some common field, known as a <em>key</em>. Each table consists of numerous rows and columns, very similar to the way a <code>tibble</code> or any other type of data frame is stored inside of R. One can imagine a database consisting of student records with two tables, one containing the address information of students (called <code>address</code>), and one containing email information of the students (called <code>email</code>). These two tables could perhaps be linked (or <em>joined</em>) together by a common field such as a student identification number. Thus one could join together the two tables to obtain email information and address information for any given student at the same time.</p>
+<p>Data analysts and data scientists require a method to do tasks like that described above in databases. Fortunately, almost every relational database is manipulated and stored using <code>SQL</code>, which makes such queries possible.</p>
+<div id="section-sql" class="section level3">
+<h3><span class="header-section-number">14.1.1</span> SQL</h3>
+<p>SQL<a href="section-references.html#section-fn62" class="footnoteRef" id="section-fnref62"><sup>62</sup></a>, or Structured Query Language, is an incredibly useful tool for querying and managing relational databases. SQL is common to all major database management systems, such as Oracle, MariaDB, PostgreSQL, MySQL, SQLite, and SQL Server. Each system has slight differences in syntax for certain commands, but the overall basic structure is the same across all database management systems. In order to work with databases, at least a basic understanding of the SQL language is desirable. Here we will give a <em>brief</em> overview of the main structure of a SQL query. If you have minimal SQL background and desire to learn more about databases, we encourage you to use numerous free online resources to help gain experience in using SQL. Some of my favorites include tutorials from <a href="https://www.w3schools.com/sql/">W3Schools</a>, <a href="https://www.tutorialspoint.com/sql/index.htm">tutorialspoint</a>, and <a href="http://www.sqltutorial.org/">SQL Tutorial</a>. There are also numerous free online courses available (i.e. this <a href="https://lagunita.stanford.edu/courses/Engineering/db/2014_1/about">Stanford</a> course) that you can enroll in and gain experience in querying on sample databases.</p>
+<div id="section-a-basic-query" class="section level4">
+<h4><span class="header-section-number">14.1.1.1</span> A Basic Query</h4>
+<p>Let’s first explore a little bit of SQL syntax. A basic SQL query consists of three different parts:</p>
+<ol style="list-style-type: decimal">
+<li><code>SELECT</code>: used to select data from a database</li>
+<li><code>FROM</code>: tells SQL what table to look at to get the data</li>
+<li><code>WHERE</code>: used to filter out different records</li>
+</ol>
+<p>Using these three statements you are able to perform queries on the database to extract data from different tables. For example, consider the database mentioned previously consisting of student records. To obtain all the email addresses from the <code>email</code> table, our query would look like this</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">&gt; <span class="kw">SELECT</span> email_address
++ <span class="kw">FROM</span> email</code></pre></div>
+<p>If we only desired the email addresses of the student with <code>id = 001</code>, then we would add a condition using the <code>WHERE</code> clause:</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">&gt; <span class="kw">SELECT</span> email_address
++ <span class="kw">FROM</span> email
++ <span class="kw">WHERE</span> student_id = <span class="st">&#39;001&#39;</span></code></pre></div>
+<p>Queries of this basic form are used by database programmers numerous times a day in order to obtain needed information from large databases. There are <em>many</em> more features that can be added to this basic query form, including:</p>
+<ol style="list-style-type: decimal">
+<li><code>AND</code>: added to the <code>WHERE</code> clause, allows for multiple conditions at once</li>
+<li><code>JOIN</code>: connect two tables based on a common feature</li>
+<li><code>GROUP BY</code>: group data together according to a certain field to obtain statistics, counts, etc.</li>
+</ol>
+<p>Does this remind you of anything we previously studied? Maybe something in Chapter <a href="section-data2.html#section-data2">7</a>? If so, you are correct! The manipulation of data sets in R using <code>dplyr</code> provides many of the same sort of manipulation tools used by SQL, and we will soon see how we can use <code>dplyr</code> directly to query external databases.</p>
+<p><code>SQL</code> also has the ability to update the database, insert new records, and delete records from the database. This is done using the <code>UPDATE</code>, <code>INSERT</code>, and <code>DELETE</code> statements. Here are some simple examples for each of these statements:</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql">&gt; <span class="kw">UPDATE</span> email
++ <span class="kw">SET</span> email_address = <span class="st">&#39;doserjef@msu.edu&#39;</span>
++ <span class="kw">WHERE</span> student_id = <span class="st">&#39;001&#39;</span>
++ 
++ <span class="kw">DELETE</span> <span class="kw">FROM</span> email
++ <span class="kw">WHERE</span> email_address = <span class="st">&#39;doserjef@msu.edu&#39;</span>
++ 
++ <span class="kw">INSERT</span> <span class="kw">INTO</span> email
++ <span class="kw">VALUES</span> (<span class="st">&#39;001&#39;</span>, <span class="st">&#39;doserjef@msu.edu&#39;</span>)</code></pre></div>
+<p>Again, this is nowhere near a full introduction to the SQL language, but it will provide you with enough understanding to work with databases within the R framework. If you are interested in databases, we encourage you to seek out some of the additional resources mentioned at the beginning of this section.</p>
+</div>
+</div>
+</div>
+<div id="section-difficulties-of-working-with-large-datasets" class="section level2">
+<h2><span class="header-section-number">14.2</span> Difficulties of Working with Large Datasets</h2>
+<p>The first step in using R with databases is to connect R to the database. This leads to many difficulties. As described by Edgar Ruiz, a solutions engineer at RStudio, when connecting to a database in R there is only a “small conduit” between R and the database that often prevents us from being able to work with the data as fast as we can work with local data frames. In order to work around this there have historically been two different options. The first option is to take data from the database in small chunks, save it in R memory, and then analyze it later. This is not desirable because you aren’t dealing with the data directly, so if the data in the database changes this will not be reflected in the data previously loaded into your R memory. A different option is to load <em>all</em> of the data into R. This allows you to see all of the data, but it takes forever to download and it essentially takes over the R session (and it has the same problems as option one regarding changes in the database).</p>
+<p>The main problem with these methods is that they are trying to perform the computations locally in R as opposed to performing computations directly on the data in the database using the SQL Engine. Ideally, we want to be able to analyze the data in place. In other words, we want R to somehow send a SQL query over to the database, perform the query using the powerful SQL engine, and then have the database send back an R data frame that we can manipulate in R. This would allow us to avoid performing computations directly in R, which would improve program speed and reduce the amount of storage needed. In addition, we do not want to go back and forth between using R and SQL, as this can cause a lot of unnecessary confusion. As R programmers, we of course want to write solely R code. Fortunately, researchers at RStudio have increased the capabilities of the <code>dplyr</code> package to allow just that.</p>
+</div>
+<div id="section-using-dplyr-to-query-the-database" class="section level2">
+<h2><span class="header-section-number">14.3</span> Using <code>dplyr</code> to Query the Database</h2>
+<p>The <code>dplyr</code> package has recently been updated to allow for better communications with external databases. Specifically, you, as the R programmer, can write code in <code>dplyr</code> acting on a database in the same manner in which you use <code>dplyr</code> to work with a data frame in the R environment. <code>dplyr</code> will then behind the scenes convert this R code into a SQL query, will send this query to the database, use the SQL engine to run the query on the data, and will return these data as a data frame in R.</p>
+<p>This is the most efficient method for querying databases in R for three reasons:</p>
+<ol style="list-style-type: decimal">
+<li>We are pushing the computation to the database, allowing us to avoid bringing large amounts of data in the database into the R environment unless we specifically ask R to do it.</li>
+<li>We can use piped code, which greatly enhances the readability of the code.</li>
+<li>All the code is in R. This reduces the cognitive costs that are often associated when using two or more programming languages at the same time.</li>
+</ol>
+<p>Next we will go through an example using <code>SQLite</code> to detail exactly how queries on a sample database are performed.</p>
+<div id="section-example-with-rsqlite" class="section level3">
+<h3><span class="header-section-number">14.3.1</span> Example with RSQLite</h3>
+<p>SQLite is arguably the most widely used relational database management system throughout the world. We will first provide a demonstration using a SQLite database as it is relatively easy to install on your system compared to other database management systems. SQLite is different from most database management systems because you don’t have to set up a separate database server. This makes SQLite great for a demo, and surprisingly it can also be very powerful when working with many gigabytes of data. We will use a sample database provided by SQLite called <code>chinook</code> that contains data on store employees, customers, and the music they purchased.</p>
+<p>First, go to the link (here)[<a href="http://www.sqlitetutorial.net/sqlite-sample-database/" class="uri">http://www.sqlitetutorial.net/sqlite-sample-database/</a>] and download the <code>chinook</code> database into your R working directory so you can follow along with this example yourself.</p>
+<p>Upon successful download, the first step we need to do is install/load the necessary packages for connecting to the external database. To help <code>dplyr</code> communicate with the SQL engine, install the <code>dbplyr</code> package using <code>install.packages(&quot;dbplyr&quot;)</code>. Next we need the <code>RSQLite</code> package for interfacing with the SQLite database. Install this by running <code>install.packages(&quot;RSQLite&quot;)</code> in the R console. Then load the packages, along with <code>dplyr</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(dplyr)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(dbplyr)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(RSQLite)</code></pre></div>
+<p>We next use the <code>DBI</code> package to connect directly to the database. <code>DBI</code> is a backend package that provides a common interface for R to work with many different database management systems using the same code. This package does much of the communication from R to the database that occurs behind the scenes, and is an essential part of using <code>dplyr</code> to work with databases.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(DBI)
+<span class="op">&gt;</span><span class="st"> </span>chinook &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(<span class="kw">SQLite</span>(), <span class="st">&quot;chinook.db&quot;</span>)</code></pre></div>
+<p>This command creates a reference to the database, and tells R to connect to this database in a specific location (your location could change depending on where you save the <code>chinook.db</code> file). A similar approach could be used to connect to databases of other database management systems like Oracle, MySQL, PostgreSQL, and others. Most databases do not live in a file, but instead live on another server. This causes the above connection to be much more complex, but for now we will focus on this simple case.</p>
+<p>Now lets look closer at the chinook database.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">src_dbi</span>(chinook)</code></pre></div>
+<pre><code>src:  sqlite 3.22.0 [/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/chinook.db]
+tbls: albums, artists, customers, employees, genres,
+  invoice_items, invoices, media_types,
+  playlist_track, playlists, sqlite_sequence,
+  sqlite_stat1, tracks</code></pre>
+<p>The above function displays the location of the database, as well as the tables contained in the database. You can see in the <code>chinook</code> database there are numerous tables regarding customers, employees, and the music that customers purchased. In total, there are 13 tables contained in this database.</p>
+<p>Now that we know the structure of the database, we can perform some simple queries on the data using <code>dplyr</code> syntax. For now, let’s focus on the <code>employees</code> table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>employees &lt;-<span class="st"> </span><span class="kw">tbl</span>(chinook, <span class="st">&quot;employees&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>employees</code></pre></div>
+<pre><code># Source:   table&lt;employees&gt; [?? x 15]
+# Database: sqlite 3.22.0
+#   [/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/chinook.db]
+  EmployeeId LastName FirstName Title ReportsTo
+       &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;int&gt;
+1          1 Adams    Andrew    Gene…        NA
+2          2 Edwards  Nancy     Sale…         1
+3          3 Peacock  Jane      Sale…         2
+4          4 Park     Margaret  Sale…         2
+5          5 Johnson  Steve     Sale…         2
+6          6 Mitchell Michael   IT M…         1
+7          7 King     Robert    IT S…         6
+8          8 Callahan Laura     IT S…         6
+# ... with 10 more variables: BirthDate &lt;chr&gt;,
+#   HireDate &lt;chr&gt;, Address &lt;chr&gt;, City &lt;chr&gt;,
+#   State &lt;chr&gt;, Country &lt;chr&gt;, PostalCode &lt;chr&gt;,
+#   Phone &lt;chr&gt;, Fax &lt;chr&gt;, Email &lt;chr&gt;</code></pre>
+<p>Notice how the <code>employees</code> table looks mostly like a regular tibble, but has a couple added lines detailing its location as a remote table in a SQLite database.</p>
+<p>Now lets use familiar <code>dplyr</code> commands to perform queries on the database</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">select</span>(LastName, FirstName, Phone, Email) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(LastName)</code></pre></div>
+<pre><code># Source:     lazy query [?? x 4]
+# Database:   sqlite 3.22.0
+#   [/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/chinook.db]
+# Ordered by: LastName
+  LastName FirstName Phone          Email             
+  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;             
+1 Adams    Andrew    +1 (780) 428-… andrew@chinookcor…
+2 Callahan Laura     +1 (403) 467-… laura@chinookcorp…
+3 Edwards  Nancy     +1 (403) 262-… nancy@chinookcorp…
+4 Johnson  Steve     1 (780) 836-9… steve@chinookcorp…
+5 King     Robert    +1 (403) 456-… robert@chinookcor…
+6 Mitchell Michael   +1 (403) 246-… michael@chinookco…
+7 Park     Margaret  +1 (403) 263-… margaret@chinookc…
+8 Peacock  Jane      +1 (403) 262-… jane@chinookcorp.…</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(LastName)</code></pre></div>
+<pre><code># Source:     lazy query [?? x 3]
+# Database:   sqlite 3.22.0
+#   [/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/chinook.db]
+# Ordered by: LastName
+  LastName FirstName Address         
+  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;           
+1 Johnson  Steve     7727B 41 Ave    
+2 Park     Margaret  683 10 Street SW
+3 Peacock  Jane      1111 6 Ave SW   </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(ReportsTo) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">numberAtLocation =</span> <span class="kw">n</span>())</code></pre></div>
+<pre><code># Source:   lazy query [?? x 2]
+# Database: sqlite 3.22.0
+#   [/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/chinook.db]
+  ReportsTo numberAtLocation
+      &lt;int&gt;            &lt;int&gt;
+1        NA                1
+2         1                2
+3         2                3
+4         6                2</code></pre>
+<p>You can see by using <code>dplyr</code> you are able to use the same syntax to query the database as you used to analyze data frames in Chapter <a href="section-data2.html#section-data2">7</a>. The most important difference to again note is that when working with remote databases the R code is translated into SQL and executed in the database using the SQL engine, not in R. When doing this, <code>dplyr</code> is as “lazy” as possible as it never pulls data in R unless explicity asked. It collects everything you ask it to do and then sends it to the database all in one step. This is often a very useful feature when desiring to look at a certain group of records in a database. To understand this further, take a look at the following code, which at first you might think will output a <code>tibble</code> or <code>data frame</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>salesSupportAgents &lt;-<span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(LastName) 
+<span class="op">&gt;</span><span class="st"> </span>salesSupportAgents</code></pre></div>
+<pre><code># Source:     lazy query [?? x 3]
+# Database:   sqlite 3.22.0
+#   [/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/chinook.db]
+# Ordered by: LastName
+  LastName FirstName Address         
+  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;           
+1 Johnson  Steve     7727B 41 Ave    
+2 Park     Margaret  683 10 Street SW
+3 Peacock  Jane      1111 6 Ave SW   </code></pre>
+<p>Notice the first two lines in the output. The source is described as a <code>lazy query</code> and the <code>salesSupportAgents</code> is still a database connection and not a local data frame. Because you did not specifically tell R that you wanted to bring the data directly into R, it did not do so. In order to bring the data directly into R in a local tibble you need to use the <code>collect()</code> function. Note that if you are asking the database to send back a lot of data, this could take a while.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>salesSupportAgents &lt;-<span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>dplyr<span class="op">::</span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(LastName) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">collect</span>()
+<span class="op">&gt;</span><span class="st"> </span>salesSupportAgents</code></pre></div>
+<pre><code># A tibble: 3 x 3
+  LastName FirstName Address         
+  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;           
+1 Johnson  Steve     7727B 41 Ave    
+2 Park     Margaret  683 10 Street SW
+3 Peacock  Jane      1111 6 Ave SW   </code></pre>
+<p>As we’ve seen, for simple tasks, and even many complex tasks, <code>dplyr</code> syntax can be used to query external databases.</p>
+</div>
+<div id="section-dbplot" class="section level3">
+<h3><span class="header-section-number">14.3.2</span> <code>dbplot</code></h3>
+<p>If we can use <code>dplyr</code> to analyze the data in a database, you may be wondering whether or not we can use <code>ggplot2</code> to graph the data in the database. Of course we can! In fact, the package <code>dbplot</code> is designed to process the calculations of a plot inside a database and output a <code>ggplot2</code> object. If not already installed on your system, make sure to install the <code>dbplot</code> package before continuing.</p>
+<p>We can use the same <code>chinook</code> database from SQLite we were using above. Suppose we desire to see how many types of each employee there are in the database. We can produce a barplot to show this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(dbplot)
+<span class="op">&gt;</span><span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">dbplot_bar</span>(Title)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-344-1.png" width="672" /></p>
+<p>We first load the <code>dbplot</code> package. Next we produce the bar plot. Notice that we can continue to use the convenient <code>%&gt;%</code> character while producing graphs using <code>dbplot</code>, making the code easy to read. Since <code>dbplot</code> outputs a <code>ggplot2</code> object, we can further customize the graph using familiar functions from <code>ggplot2</code> (so long as the package is loaded).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(ggplot2)
+<span class="op">&gt;</span><span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">dbplot_bar</span>(Title) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Employee Types&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Count&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-345-1.png" width="672" /></p>
+<!-- ### Using Google BigQuery -->
+<!-- For a second example, we will utilize a database from Google BigQuery, Google's fully managed low cost analytics data warehouse. The package `bigrquery` provides an R interface to Google BigQuery. If not already installed, install the package with our usual method.  -->
+<!-- To follow along yourself with this example, you will have to create a Google Cloud Platform account that you can easily link with an existing google email. If you don't desire to do this, then you can simply follow along in the textbook (but we always suggest running the code yourself and trying out different examples). For creating the account, follow the instructions at this [Google Cloud Guide](https://blog.openbridge.com/the-missing-guide-to-setting-up-google-cloud-service-accounts-for-google-bigquery-6301e509b232). Note that we are using a FREE trial, and Google requires the input of a credit card number solely to ensure you are not a robot (or at least that's what they say!). You will not be charged unless you upgrade to a paid account. This is a 12-month free trial where you have \$300, 1 TB of queries, and 10 GB of storage to experiment with the cloud platform. No charges will be made unless you specifically ask for them. -->
+<!-- We will use data from a great set of sample tables that BigQuery provides to its users. First we will look at the `shakespeare` table that contains a word index of the different works of Shakespeare. Thus, given the data in the table, let's use `bigrquery`, `DBI`, and `dplyr` to determine the ten words that appear most often in Shakespeare's works.  -->
+<!-- ```{r, echo = FALSE} -->
+<!-- path = "/home/jeffdoser/.httr-oauth" -->
+<!-- options(httr_oauth_cache = path) -->
+<!-- ``` -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- library(bigrquery) -->
+<!-- library(DBI) -->
+<!-- library(dplyr) -->
+<!-- billing <- "for875-databases" -->
+<!-- con <- dbConnect( -->
+<!--   bigquery(), -->
+<!--   project = "publicdata", -->
+<!--   dataset = "samples", -->
+<!--   billing = billing -->
+<!-- ) -->
+<!-- shakespeare <- con %>% -->
+<!--   tbl("shakespeare") -->
+<!-- shakespeare %>%  -->
+<!--   group_by(word) %>%  -->
+<!--   summarise(n = sum(word_count, na.rm = TRUE)) %>%  -->
+<!--   arrange(desc(n)) %>%  -->
+<!--   head(10) -->
+<!-- ``` -->
+<!-- First we load the neceessary packages. We then provide the name of our project to the `billing` variable. In order to connect to this yourself, use your project ID here that should be visible in the Google Cloud Platform. The `con` variable establishes the connection to the database and the data that we want to look at. Notice the difference in connecting to the Google BigQuery database, which is stored remotely on Google's servers, as compared to the previous example when connecting to a SQLite database stored on your computer's hard drive. This example is much more realistic of the connections you would make when accessing external databases.  The `bigquery()` statement tells DBI we will be working with a database from Google BigQuery. The project and dataset options tell DBI what database to look for inside of the Google BigQuery framework. We then supply the name of our project to the `billing` option to tell BigQuery what account to "bill" (but of course you will not actually be charged anything). -->
+<!-- From here we can establish a connection to a specific table by using the `tbl()` function as shown above. We can then use `dplyr` like we did previously to group the data by words, determine the count of each word, and then order it in decreasing order to obtain the top ten words in Shakespeare's works. Notice that when you run this code you may obtain a message in red describing the total amount of bytes billed. This is how Google manages how much its users are querying and using its data. Right now, since we are just playing around, it is unlikely you would go above the free limit (1 TB of queries/ 10 GB of storage).  -->
+<!-- This code again displays the benefits of the "lazy evaluation" that R employs. The `con` variable and `shakespeare` variable do not store the database or the specific table in R itself, instead they serve as references to the database where the specific data they are referencing is contained. Only when the `dplyr` query is written and called using the `collect()` function is any data from the database actually brought into R. R waits till the last possible second (i.e. is lazy) to perform any computations.  -->
+<!-- A second table in the `publicdata` project on Google BigQuery contains weather data from NOAA ranging from the years 1929 to 2010. Let's first make a connection to this table and explore its structure.  -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- weather <- con %>%  -->
+<!--   tbl("gsod") -->
+<!-- dbListFields(con, "gsod") -->
+<!-- weather %>%  -->
+<!--   dplyr::select(thunder, mean_wind_speed) %>%  -->
+<!--   head(10) -->
+<!-- ``` -->
+<!-- First we establish a connection to the weather table. We then use the `dbListFields()` function from the `DBI` package to display the fields in the table. We then view the first 10 records in the table. We see that there are 31 different variables on information for the weather on a given day from 1929 to 2010. Let's say we are interested in determining the total number of days where the `mean_temp > 60` and `mean_wind_speed > 10`. -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- weather %>%  -->
+<!--   dplyr::filter(mean_temp > 60 & mean_wind_speed > 10) %>%  -->
+<!--   summarize(count = n()) -->
+<!-- ``` -->
+<!-- Further, suppose we are interested in determining how the average wind speed has changed from 1929 to 2010. We can use `dbplot` to plot the data.  -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- weather %>%  -->
+<!--   dbplot_line(year, average_wind_speed = mean(mean_wind_speed, na.rm = TRUE)) -->
+<!-- ``` -->
+<!-- Upon first glance at this plot, a naive student might think ``Wow! Wind speeds have decreased dramatically since the 1930s'', and just accept this as true since that is what the graph shows. But since we are all data analysts at heart (otherwise you wouldn't be taking this course!), we want to explore this further. We might ask why the wind was so high in the late 1920s and early 1930s? An average wind speed of above 12 miles per hour seems pretty high. Let's explore the entries for all years in the 1930s and 1920s.  -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- weather %>% -->
+<!--   dplyr::select(year, mean_wind_speed) %>%  -->
+<!--   dplyr::filter(year < 1940 & !is.na(mean_wind_speed)) %>%  -->
+<!--   dbplot_histogram(mean_wind_speed) -->
+<!-- ``` -->
+<!-- Well that's interesting. Just from looking at the distribution of the average wind speeds for all years lower than 1940 it looks like most records have wind speeds lower than 10. We have to keep in mind that we may not have the same number of entries for each year. Let's see how many records there are with a mean wind speed for each year before 1940.  -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- weather %>%  -->
+<!--   dplyr::filter(year < 1940 & !is.na(mean_wind_speed)) %>%  -->
+<!--   group_by(year) %>%  -->
+<!--   summarize(count = n()) -->
+<!-- ``` -->
+<!-- Interesting! We see that there are only 2037 records from 1929, while there are 65623 records from 1939. This could explain the pattern we saw in the previous histogram. Let's look at the histogram for 1929 only to help confirm this conjecture. -->
+<!-- ```{r, tidy = FALSE} -->
+<!-- weather %>% -->
+<!--   dplyr::select(year, mean_wind_speed) %>%  -->
+<!--   dplyr::filter(year == 1929 & !is.na(mean_wind_speed)) %>%  -->
+<!--   dbplot_histogram(mean_wind_speed) -->
+<!-- ``` -->
+<!-- Just from looking at this graph, we can see that the `mean_wind_speed` is closer to 12, which is what we found in the original line plot as well. Was the wind in 1929 really that much stronger than it is now? Maybe. Or we could be experiencing something known as `sampling bias` in which the 2037 records from 1929 are not a valid random representation of all the wind speeds occurring in 1929. Determining whether sampling bias is causing the pattern we see requires further investigation, which we leave to you if you so desire. -->
+</div>
+</div>
+<div id="section-changing-records-in-the-database" class="section level2">
+<h2><span class="header-section-number">14.4</span> Changing Records in the Database</h2>
+<p><code>dplyr</code> is fantastic for retrieving data from databases and analyzing it using familiar functions. As detailed in this <a href="https://www.rstudio.com/resources/videos/best-practices-for-working-with-databases-webinar/">video</a>, using <code>dplyr</code> is considered a “best practice” when using databases in R because you only have to use one language, you don’t need to know any SQL, and you can use the lazy evaluation of R, among many other reasons. As a data analyst, a majority of work can be accomplished by using <code>dplyr</code> and other forms of queries against a database. But what if you need to do more than query the data in the database and you have to change some of the records? <code>dplyr</code> is not capable of inserting or deleting records in a database, and although updating recordings is possible with <code>dplyr</code>, Hadley Wickham strongly recommends against it, as <code>dplyr</code> is designed specifically for retrieving data. Thus, we need to use other options for updating/inserting/deleting records in a database. Unlike using <code>dplyr</code> this requires a more in depth knowledge of SQL. We will not discuss updating/inserting/deleting records in a database here, but you will briefly learn about methods to do this in this chapter’s exercise.</p>
+</div>
+<div id="section-r-studio-connections-pane" class="section level2">
+<h2><span class="header-section-number">14.5</span> R Studio Connections Pane</h2>
+<p>If by this point in the book you haven’t already been convinced that RStudio is a fantastic IDE for running R then perhaps this will convince you. R Studio has a Connections Pane by default in the top right corner of your screen that makes it easy to connect to a variety of data sources, and better yet, explore the objects and data inside the connection. You can use it with a variety of different packages for working with databases in R, and it will also work with a variety of databases and other datasources (i.e. Spark). This Connections Pane is a great way of exploring the data in a data source once you are connected. If interested, the page <a href="\href%7Bhttps://support.rstudio.com/hc/en-us/articles/115010915687">here</a> provides a good overview of how to get the most out of these connections.</p>
+</div>
+<div id="section-other-options" class="section level2">
+<h2><span class="header-section-number">14.6</span> Other Options</h2>
+<p>There are numerous other methods besides <code>dplyr</code> to work with databases in R that involve using more standard SQL queries. If you come from a SQL background and want to use these other methods, then explore the <a href="http://db.rstudio.com/">RStudio Databases using R page</a>. But while doing this, keep in mind that we (and R Studio) both recommend using <code>dplyr</code> for querying an external database within R.</p>
+</div>
+<div id="section-homework-11" class="section level2">
+<h2><span class="header-section-number">14.7</span> Homework</h2>
+<p><strong>Exercise Databases</strong> Learning objectives: connect to an external database; perform simple queries using <code>dplyr</code>; use data from a database in a Shiny app; learn how to perform changes (update/delete/insert) on a database</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-rcpp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-digial-signal-processing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

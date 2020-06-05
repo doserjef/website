@@ -1,0 +1,199 @@
+\mainmatter
+
+# Data
+
+Data science is a field that intersects with statistics, mathematics, computer science, and a wide range of applied fields, such as marketing, biology, and physics. As such, it is hard to formally define data science, but obviously data are central to data science, and it is useful at the start to consider some types of data that are of interest.
+
+## Baby Crawling Data
+
+When thinking about data, we might initially have in mind a modest-sized and uncomplicated data set consisting primarily of numbers. As an example of such a data set, a study was done to assess the possible relationship between the age at which babies first begin to crawl and the temperature at the time of first crawling. Participants in the study were volunteers.^[More correctly, were volunteered by their parents.] The data set from this study separates the babies by birth month, and reports the birth month, the average age (in weeks) when first crawling for that month, the standard deviation of the crawling ages for that month, the number of infants for that month, and the average temperature during the month when crawling commenced. The data are shown in Table \@ref(tab:crawling) below.^[These data were retrieved from http://lib.stat.cmu.edu/DASL/Datafiles/Crawling.html.]
+
+```{r}
+u <- "https://www.finley-lab.com/files/data/BabyCrawling.tsv"
+BabyCrawling <- read.table(u, header=T)
+```
+
+```{r crawling, echo = FALSE}
+knitr::kable(
+  BabyCrawling, booktabs = TRUE,
+  caption = 'Data on age at crawling', 
+  row.names = FALSE
+)
+```
+
+This data set has many simple properties: it is relatively small, there are no missing observations, the variables are easily understood, etc.
+
+## World Bank Data
+
+```{r, echo = F}
+u <- "https://www.finley-lab.com/files/data/WorldBank.csv"
+WorldBank <- read.csv(u, header = TRUE, stringsAsFactors = FALSE)
+set.seed(2188)
+options(knitr.kable.NA = '')
+rows <- sample(1:dim(WorldBank)[1], size=10, replace=FALSE)
+```
+
+The World Bank provides data related to the development of countries. A data set was constructed from the World Bank repository. The data set contains data on countries throughout the world for the years `r min(WorldBank$year)` through `r max(WorldBank$year)` and contains, among others, variables representing average life expectancy, fertility rate, and population. Table \@ref(tab:worldBank) contains the first five records and then 10 more randomly selected records for these variables in the data set.
+
+```{r worldBank, echo = F}
+knitr::kable(
+  WorldBank[c(1:5, rows), 2:6], booktabs = TRUE, 
+  caption = "A small portion of the World Bank data set", 
+  row.names = FALSE
+)
+```
+
+Notice that many observations contain missing data for fertility rate and life expectancy. If all the variables were shown, we would see much more missing data.  This data set is also substantially larger than the baby crawling age data, with `r dim(WorldBank)[1]` rows and `r dim(WorldBank)[2]` columns of data in the full data set. (Each column represents one of the variables. Each row represents one country during one year).
+
+## Email Data
+It is estimated that in 2015, 90\% of the total 205 billion emails sent were spam.^[Radicati Group http://www.radicati.com] Spam filters use large amounts of data from emails to learn what distinguishes spam messages from non-spam (sometimes called "ham") messages. Below we include one spam message followed by a ham message.^[These messages both come from the large collection of spam and ham messages at http://spamassassin.apache.org.]
+
+```
+From safety33o@l11.newnamedns.com  Fri Aug 23 11:03:37 2002
+Return-Path: <safety33o@l11.newnamedns.com>
+Delivered-To: zzzz@localhost.example.com
+Received: from localhost (localhost [127.0.0.1])
+	by phobos.labs.example.com (Postfix) with ESMTP id 5AC994415F
+	for <zzzz@localhost>; Fri, 23 Aug 2002 06:02:59 -0400 (EDT)
+Received: from mail.webnote.net [193.120.211.219]
+	by localhost with POP3 (fetchmail-5.9.0)
+	for zzzz@localhost (single-drop); Fri, 23 Aug 2002 11:02:59 +0100 (IST)
+Received: from l11.newnamedns.com ([64.25.38.81])
+	by webnote.net (8.9.3/8.9.3) with ESMTP id KAA09379
+	for <zzzz@example.com>; Fri, 23 Aug 2002 10:18:03 +0100
+From: safety33o@l11.newnamedns.com
+Date: Fri, 23 Aug 2002 02:16:25 -0400
+Message-Id: <200208230616.g7N6GOR28438@l11.newnamedns.com>
+To: kxzzzzgxlrah@l11.newnamedns.com
+Reply-To: safety33o@l11.newnamedns.com
+Subject: ADV: Lowest life insurance rates available!                                                   
+moode
+
+Lowest rates available for term life insurance! Take a moment 
+and fill out our online form 
+to see the low rate you qualify for. 
+Save up to 70% from regular rates! Smokers accepted! 
+http://www.newnamedns.com/termlife/ 
+          
+Representing quality nationwide carriers. Act now!
+```
+
+```
+From rssfeeds@jmason.org  Tue Oct  1 10:37:22 2002
+Return-Path: <rssfeeds@example.com>
+Delivered-To: yyyy@localhost.example.com
+Received: from localhost (jalapeno [127.0.0.1])
+	by jmason.org (Postfix) with ESMTP id B277816F16
+	for <jm@localhost>; Tue,  1 Oct 2002 10:37:21 +0100 (IST)
+Received: from jalapeno [127.0.0.1]
+	by localhost with IMAP (fetchmail-5.9.0)
+	for jm@localhost (single-drop); Tue, 01 Oct 2002 10:37:21 +0100 (IST)
+Received: from dogma.slashnull.org (localhost [127.0.0.1]) by
+    dogma.slashnull.org (8.11.6/8.11.6) with ESMTP id g9180YK15357 for
+    <jm@jmason.org>; Tue, 1 Oct 2002 09:00:34 +0100
+Message-Id: <200210010800.g9180YK15357@dogma.slashnull.org>
+To: yyyy@example.com
+From: boingboing <rssfeeds@example.com>
+Subject: Disney's no-good Park-Czar replaced
+Date: Tue, 01 Oct 2002 08:00:34 -0000
+Content-Type: text/plain; encoding=utf-8
+X-Spam-Status: No, hits=-641.2 required=5.0
+	tests=AWL
+	version=2.50-cvs
+X-Spam-Level: 
+
+URL: http://boingboing.net/#85506723
+Date: Not supplied
+
+Disney has named a new president of Walt Disney Parks, replacing Paul Pressler, 
+the exec who did his damnedest to ruin Disneyland, slashing spending (at the 
+expense of safety and employee satisfaction), building the craptastical 
+California Adventure, reducing the number of SKUs available for sale in the 
+Park stores, and so on. The new president, James Rasulo, used to be head of 
+Euro Disney. Link[1] Discuss[2]
+
+[1] http://reuters.com/news_article.jhtml?type=search&StoryID=1510778
+[2] http://www.quicktopic.com/boing/H/rw7cDXT3W44C
+```
+
+To implement a spam filter we would have to get the data from these email messages (and thousands of others) into a software package, extract and separate potentially important features such as the `To:` line, the `Subject:` line, the message body, etc., and then compare spam and non-spam messages to find a method to classify new emails correctly. These steps are not simple in this example. In particular, we would need to become skilled at working with *text data*.
+
+## Handwritten Digit Recognition
+
+Correct recognition of handwritten digits by a machine is commonly required in today's world. For example, the postal service must scan and recognize zip codes on handwritten mail. Roughly speaking, a handwritten digit is scanned and converted to a digital image. To keep things simple we will assume the scanning creates a grayscale rather than a color image. When converting an image to a grayscale digital image, a grid of "pixels" is used to represent the handwritten image, where each pixel has a black intensity value. For concreteness we'll assume that intensities are recorded on a scale from $-1$ (no black intensity at all) to $1$ (maximum black intensity). If the pixel grid is 16 by 16 then the resulting digitized image will contain 256 intensity values, one for each of the $16\times 16 = 256$ pixels.
+
+For example, here are the data corresponding to one handwritten digit, which happens to be the numeral "6". Figure \@ref(fig:digit) shows how that digit looks when digitized.
+
+```{r, echo = FALSE}
+library(ElemStatLearn)
+data(zip.train)
+ll <- length(zip.train[1,])
+for(i in 1:26){
+  cat(format(zip.train[1,((i-1)*10+2):min((i*10+1), ll)], digits = 3, nsmall=3), "\n")
+}
+```
+
+```{r digit, fig.cap = "A digitized version of a handwritten 6", echo = FALSE}
+bbb <- matrix(zip.train[1,-1], nrow=16, ncol=16)
+bbb <- bbb[,16:1]
+par(mfrow=c(1,1))
+image(1:16, 1:16, bbb, col=gray(256:0/256), xlab="", ylab="", xaxt="n", yaxt="n")
+```
+
+Looking at the digitized images, it may seem simple to correctly identify a handwritten numeral. But remember, the machine only has access to the 256 pixel intensities, and must make a decision based on them. 
+
+Figure \@ref(fig:25digits) shows the digitized images of the first 25 numerals in the data set, and Figure \@ref(fig:25Sevens) shows the digitized images of the first 25 numeral sevens in the data set. These give some idea of the variability in how digits are written.^[Actually, these data were already pre-processed to get the orientation correct. Actual handwritten digits would be even more variable.]
+
+
+```{r 25digits, echo = FALSE, fig.cap = "The first 25 handwritten numerals, digitized"}
+par(mar = c(1,1,1,1))
+par(mfrow=c(5,5))
+for(i in 1:25) {
+  bbb <- matrix(zip.train[i,-1], nrow=16, ncol=16)
+  bbb <- bbb[,16:1]
+  image(1:16, 1:16, bbb, col=gray(256:0/256), xlab="", ylab="", xaxt="n", yaxt="n")
+}
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+par(mfrow=c(1,1))
+```
+
+```{r 25Sevens, echo = FALSE, fig.cap = "The first 25 numeral sevens, digitized"}
+sevens = which(zip.train[,1] == 7)[1:25]
+par(mar = c(1,1,1,1))
+par(mfrow=c(5,5))
+for(i in sevens){
+bbb <- matrix(zip.train[i,-1], nrow=16, ncol=16)
+bbb <- bbb[,16:1]
+image(1:16, 1:16, bbb, col=gray(256:0/256), xlab="", ylab="", xaxt="n", yaxt="n")
+}
+par(mar = c(5.1, 4.1, 4.1, 2.1))
+par(mfrow=c(1,1))
+```
+
+## Looking Forward
+
+The four examples above illustrate a small sample of the wide variety of data sets that may be encountered in data science. Each of these provides its own challenges. The baby crawling data present challenges that are more statistical in nature. For example, how might the study design (which isn't described here) affect methods of analysis and conclusions drawn from the study? Similar challenges are also present within the other data sets, but these data sets also present more substantial challenges prior to (and during) the analysis stage, such as how to work with the missing data in the World Bank data set, or how to effectively and efficiently process the email data to extract features of interest.
+
+This book and associated material introduce tools to tackle some of the challenges in working with real data sets, within the context of the R statistical system. We will focus on important topics such as
+
+1. Obtaining and manipulating data
+2. Graphical tools for exploring and summarizing data
+3. Communicating findings about data that support reproducible research
+4. Tools for classification problems such as email spam filtering or handwritten digit recognition
+5. Programming and writing functions in R
+
+
+## How to learn (The most important section in this book!)
+
+There are several ways to engage with the content of this book and associated materials. 
+
+One way is not to engage at all. Leave the book closed on a shelf and do something else with your time. That may or may not be a good life strategy, depending on what else you do with your time, but you won't learn much from the book!
+
+Another way to engage is to read through the book "passively", reading all that's written but not reading the book while at your computer, where you could enter the R commands from the book. With this strategy you'll probably learn more than if you leave the book closed on a shelf, but there are better options.
+
+A third way to engage is to read the book while you're at a computer, enter the R commands from the book as you read about them, and work on the practice problems within many of the chapters. You'll likely learn more this way.
+
+A fourth strategy is even better. In addition to reading, entering the commands given in the book, and working through the practice exercises, you think about what you're doing, and ask yourself questions (which you then go on to answer). For example after working through some R code computing the logarithm of positive numbers you might ask yourself, "What would R do if I asked it to calculate the logarithm of a negative number? What would R do if I asked it to calculate the logarithm of a really large number such as one trillion?" You could explore these questions easily by just trying things out in the R Console window. 
+
+If your goal is to maximize the time you have to binge-watch \emph{Stranger Things} Season 2 on Netflix, the first strategy may be optimal. But if your goal is to learn a lot about computational tools for data science, the fourth strategy is probably going to be best.
+

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-data.html">
+<link rel="next" href="section-scripts-and-r-markdown.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-introduction-to-r-and-rstudio" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Introduction to R and RStudio</h1>
+<p>Various statistical and programming software environments are used in data science, including R, Python, SAS, C++, SPSS, and many others. Each has strengths and weaknesses, and often two or more are used in a single project. This book focuses on R for several reasons:</p>
+<ol style="list-style-type: decimal">
+<li>R is free</li>
+<li>It is one of, if not the, most widely used software environments in data science</li>
+<li>R is under constant and open development by a diverse and expert core group</li>
+<li>It has an incredible variety of contributed packages</li>
+<li>A new user can (relatively) quickly gain enough skills to obtain, manage, and analyze data in R</li>
+</ol>
+<p>Several enhanced interfaces for R have been developed. Generally such interfaces are referred to as <em>integrated development environments (IDE)</em>. These interfaces are used to facilitate software development. At minimum, an IDE typically consists of a source code editor and build automation tools. We will use the RStudio IDE, which according to its developers “is a powerful productive user interface for R.”<a href="section-references.html#section-fn6" class="footnoteRef" id="section-fnref6"><sup>6</sup></a> RStudio is widely used, it is used increasingly in the R community, and it makes learning to use R a bit simpler. Although we will use RStudio, most of what is presented in this book can be accomplished in R (without an added interface) with few or no changes.</p>
+<div id="section-obtaining-and-installing-r" class="section level2">
+<h2><span class="header-section-number">2.1</span> Obtaining and Installing R</h2>
+<p>It is simple to install R on computers running Microsoft Windows, macOS, or Linux. For other operating systems users can compile the source code directly.<a href="section-references.html#section-fn7" class="footnoteRef" id="section-fnref7"><sup>7</sup></a> Here is a step-by-step guide to installing R for Microsoft Windows.<a href="section-references.html#section-fn8" class="footnoteRef" id="section-fnref8"><sup>8</sup></a> macOS and Linux users would follow similar steps.</p>
+<ol style="list-style-type: decimal">
+<li>Go to <a href="http://www.r-project.org/" class="uri">http://www.r-project.org/</a></li>
+<li>Click on the <code>CRAN</code> link on the left side of the page</li>
+<li>Choose one of the mirrors.<a href="section-references.html#section-fn9" class="footnoteRef" id="section-fnref9"><sup>9</sup></a></li>
+<li>Click on <code>Download R for Windows</code></li>
+<li>Click on <code>base</code></li>
+<li>Click on <code>Download R 3.6.0 for Windows</code></li>
+<li>Install R as you would install any other Windows program</li>
+</ol>
+</div>
+<div id="section-obtaining-and-installing-rstudio" class="section level2">
+<h2><span class="header-section-number">2.2</span> Obtaining and Installing RStudio</h2>
+<p>You must install R prior to installing RStudio. RStudio is also simple to install:</p>
+<ol style="list-style-type: decimal">
+<li>Go to <a href="http://www.rstudio.com" class="uri">http://www.rstudio.com</a></li>
+<li>Click on the link <code>RStudio</code> under the <code>Products</code> tab, then select the <code>Desktop</code> option</li>
+<li>Click on the <code>Desktop</code> link</li>
+<li>Choose the <code>DOWNLOAD RSTUDIO DESKTOP</code> link in the <code>Open Source Edition</code> column</li>
+<li>On the ensuing page, click on the <code>Installer</code> version for your operating system, and once downloaded, install as you would any other program</li>
+</ol>
+</div>
+<div id="section-using-r-and-rstudio" class="section level2">
+<h2><span class="header-section-number">2.3</span> Using R and RStudio</h2>
+<p>Start RStudio as you would any other program in your operating system. For example, under Microsoft Windows use the Start Menu or double click on the shortcut on the desktop (if a shortcut was created in the installation process). A (rather small) view of RStudio is displayed in Figure <a href="section-introduction-to-r-and-rstudio.html#fig:rstudioPic">2.1</a>.</p>
+<div class="figure"><span id="fig:rstudioPic"></span>
+<img src="../figures/RStudio.png" alt="The RStudio IDE" width="4in" height="4in" />
+<p class="caption">
+FIGURE 2.1: The RStudio IDE
+</p>
+</div>
+<p>Initially the RStudio window contains three smaller windows. For now our main focus will be the large window on the left, the <code>Console</code> window, in which R statements are typed. The next few sections give simple examples of the use of R. In these sections we will focus on small and non-complex data sets, but of course later in the book we will work with much larger and more complex sets of data. Read these sections at your computer with R running, and enter the R commands there to get comfortable using the R console window and RStudio.</p>
+<div id="section-r-as-a-calculator" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> R as a Calculator</h3>
+<p>R can be used as a calculator. Note that <code>#</code> is the comment character in R, so R ignores everything following this character. Also, you will see that R prints <code>[1]</code> before the results of each command. Soon we will explain its relevance, but ignore this for now. The command prompt in R is the greater than sign <code>&gt;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">34</span> <span class="op">+</span><span class="st"> </span><span class="dv">20</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">100</span>)  ## +,-,*,/ have the expected meanings</code></pre></div>
+<pre><code>[1] 234</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="dv">2</span>)  ##The exponential function</code></pre></div>
+<pre><code>[1] 7.389</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">log10</span>(<span class="dv">100</span>)  ##Base 10 logarithm</code></pre></div>
+<pre><code>[1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">100</span>)  ##Base e logarithm</code></pre></div>
+<pre><code>[1] 4.605</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="kw">log10</span>(<span class="dv">55</span>)</code></pre></div>
+<pre><code>[1] 55</code></pre>
+<p>Most functions in R can be applied to vector arguments rather than operating on a single argument at a time. A <code>vector</code> is a data structure that contains elements of the same data type (i.e. integers).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">25</span>  ##The integers from 1 to 25</code></pre></div>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17
+[18] 18 19 20 21 22 23 24 25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>)  ##The base e logarithm of these integers</code></pre></div>
+<pre><code> [1] 0.0000 0.6931 1.0986 1.3863 1.6094 1.7918 1.9459
+ [8] 2.0794 2.1972 2.3026 2.3979 2.4849 2.5649 2.6391
+[15] 2.7081 2.7726 2.8332 2.8904 2.9444 2.9957 3.0445
+[22] 3.0910 3.1355 3.1781 3.2189</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">25</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">25</span>  ##What will this produce?</code></pre></div>
+<pre><code> [1]   1   4   9  16  25  36  49  64  81 100 121 144
+[13] 169 196 225 256 289 324 361 400 441 484 529 576
+[25] 625</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">25</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>  ##What about this?</code></pre></div>
+<pre><code> [1]   1   4   9  16  25   6  14  24  36  50  11  24
+[13]  39  56  75  16  34  54  76 100  21  44  69  96
+[25] 125</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)  ##A sequence of numbers from 0 to 1</code></pre></div>
+<pre><code> [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>))  ##What will this produce?</code></pre></div>
+<pre><code> [1] 1.000 1.105 1.221 1.350 1.492 1.649 1.822 2.014
+ [9] 2.226 2.460 2.718</code></pre>
+<p>Now the mysterious square bracketed numbers appearing next to the output make sense. R puts the position of the beginning value on a line in square brackets before the line of output. For example if the output has 40 values, and 15 values appear on each line, then the first line will have <code>[1]</code> at the left, the second line will have <code>[16]</code> to the left, and the third line will have <code>[31]</code> to the left.</p>
+</div>
+<div id="section-dec" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Basic descriptive statistics and graphics in R</h3>
+<p>It is easy to compute basic descriptive statistics and to produce standard graphical representations of data in R. First we create three variables with horsepower, miles per gallon, and names for 15 cars.<a href="section-references.html#section-fn10" class="footnoteRef" id="section-fnref10"><sup>10</sup></a> In this case with a small data set we enter the data “by hand” using the <code>c()</code> function, which concatenates its arguments into a vector. For larger data sets we will clearly want an alternative. Note that character values are surrounded by quotation marks.</p>
+<p>A style note: R has two widely used methods of assignment: the left arrow, which consists of a less than sign followed immediately by a dash: <code>&lt;-</code> and the equals sign: <code>=</code>. Much ink has been used debating the relative merits of the two methods, and their subtle differences. Many leading R style guides (e.g., the Google style guide at <a href="https://google.github.io/styleguide/Rguide.xml" class="uri">https://google.github.io/styleguide/Rguide.xml</a> and the Bioconductor style guide at <a href="http://www.bioconductor.org/developers/how-to/coding-style/" class="uri">http://www.bioconductor.org/developers/how-to/coding-style/</a>) recommend the left arrow <code>&lt;-</code> as an assignment operator, and we will use this throughout the book.</p>
+<p>Also you will see that if a command has not been completed but the ENTER key is pressed, the command prompt changes to a <code>+</code> sign. To get back to the regular prompt sign, you can either type something to finish the command (i.e., <code>)</code> or <code>]</code>), or you can press your <code>ESC</code> button and retype the whole command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>car.hp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">110</span>, <span class="dv">110</span>, <span class="dv">93</span>, <span class="dv">110</span>, <span class="dv">175</span>, <span class="dv">105</span>, <span class="dv">245</span>, <span class="dv">62</span>, <span class="dv">95</span>, <span class="dv">123</span>, 
+<span class="op">+</span><span class="st"> </span><span class="dv">123</span>, <span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">180</span>, <span class="dv">205</span>)
+<span class="op">&gt;</span><span class="st"> </span>car.mpg &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">21.0</span>, <span class="fl">21.0</span>, <span class="fl">22.8</span>, <span class="fl">21.4</span>, <span class="fl">18.7</span>, <span class="fl">18.1</span>, <span class="fl">14.3</span>, <span class="fl">24.4</span>, <span class="fl">22.8</span>, 
+<span class="op">+</span><span class="st">              </span><span class="fl">19.2</span>, <span class="fl">17.8</span>, <span class="fl">16.4</span>, <span class="fl">17.3</span>, <span class="fl">15.2</span>, <span class="fl">10.4</span>)
+<span class="op">&gt;</span><span class="st"> </span>car.name &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Mazda RX4&quot;</span>, <span class="st">&quot;Mazda RX4 Wag&quot;</span>, <span class="st">&quot;Datsun 710&quot;</span>, 
+<span class="op">+</span><span class="st">               &quot;Hornet 4 Drive&quot;</span>, <span class="st">&quot;Hornet Sportabout&quot;</span>, <span class="st">&quot;Valiant&quot;</span>, 
+<span class="op">+</span><span class="st">               &quot;Duster 360&quot;</span>, <span class="st">&quot;Merc 240D&quot;</span>, <span class="st">&quot;Merc 230&quot;</span>, <span class="st">&quot;Merc 280&quot;</span>, 
+<span class="op">+</span><span class="st">               &quot;Merc 280C&quot;</span>, <span class="st">&quot;Merc 450SE&quot;</span>, <span class="st">&quot;Merc 450SL&quot;</span>, 
+<span class="op">+</span><span class="st">               &quot;Merc 450SLC&quot;</span>, <span class="st">&quot;Cadillac Fleetwood&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>car.hp</code></pre></div>
+<pre><code> [1] 110 110  93 110 175 105 245  62  95 123 123 180
+[13] 180 180 205</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>car.mpg</code></pre></div>
+<pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2
+[11] 17.8 16.4 17.3 15.2 10.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>car.name</code></pre></div>
+<pre><code> [1] &quot;Mazda RX4&quot;          &quot;Mazda RX4 Wag&quot;     
+ [3] &quot;Datsun 710&quot;         &quot;Hornet 4 Drive&quot;    
+ [5] &quot;Hornet Sportabout&quot;  &quot;Valiant&quot;           
+ [7] &quot;Duster 360&quot;         &quot;Merc 240D&quot;         
+ [9] &quot;Merc 230&quot;           &quot;Merc 280&quot;          
+[11] &quot;Merc 280C&quot;          &quot;Merc 450SE&quot;        
+[13] &quot;Merc 450SL&quot;         &quot;Merc 450SLC&quot;       
+[15] &quot;Cadillac Fleetwood&quot;</code></pre>
+<p>Next we compute some descriptive statistics for the two numeric variables (<code>car.hp</code> and <code>car.mpg</code>)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(car.hp)</code></pre></div>
+<pre><code>[1] 139.7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sd</span>(car.hp)</code></pre></div>
+<pre><code>[1] 50.78</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">summary</span>(car.hp)</code></pre></div>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     62     108     123     140     180     245 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(car.mpg)</code></pre></div>
+<pre><code>[1] 18.72</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sd</span>(car.mpg)</code></pre></div>
+<pre><code>[1] 3.714</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">summary</span>(car.mpg)</code></pre></div>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   10.4    16.9    18.7    18.7    21.2    24.4 </code></pre>
+<p>Next, a scatter plot of <code>cars.mpg</code> versus <code>cars.hp</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(car.hp, car.mpg)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Unsurprisingly as horsepower increases, mpg tends to decrease. This relationship can be investigated further using linear regression, a statistical procedure that involves fitting a linear model to a data set in order to further understand the relationship between two variables.</p>
+</div>
+<div id="section-an-initial-tour-of-rstudio" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> An Initial Tour of RStudio</h3>
+<p>When you created the <code>car.hp</code> and other vectors in the previous section, you might have noticed the vector name and a short description of its attributes appear in the top right <code>Global Environment</code> window. Similarly, when you called <code>plot(car.hp,car.mpg)</code> the corresponding plot appeared in the lower right <code>Plots</code> window.</p>
+<p>A comprehensive, but slightly overwhelming, cheatsheet for RStudio is available here <a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf</a>. As we progress in learning R and RStudio, this cheatsheet will become more useful. For now you might use the cheatsheet to locate the various windows and functions identified in the coming chapters.</p>
+</div>
+<div id="section-practice-exercise" class="section level3">
+<h3><span class="header-section-number">2.3.4</span> Practice Exercise</h3>
+<p>When running a large program consisting of numerous lines of complicated code, it is often basic algebraic typos that lead to the most frustrating bugs. Having a good grip on the order of operations is a basic, yet very important skill for writing good code. To practice, compute the following operation in R.</p>
+<p><span class="math display">\[
+\frac{(e^{14} + \text{log}_{10}(8)) \times \sqrt{5}}{\text{log}_{e}(4) - 5 * 10^2}
+\]</span></p>
+</div>
+</div>
+<div id="section-getting-help" class="section level2">
+<h2><span class="header-section-number">2.4</span> Getting Help</h2>
+<p>There are several free (and several not free) ways to get R help when needed.</p>
+<p>Several help-related functions are built into R. If there’s a particular R function of interest, such as <code>log</code>, <code>help(log)</code> or <code>?log</code> will bring up a help page for that function. In RStudio the help page is displayed, by default, in the <code>Help</code> tab in the lower right window.<a href="section-references.html#section-fn11" class="footnoteRef" id="section-fnref11"><sup>11</sup></a> The function <code>help.start</code> opens a window which allows browsing of the online documentation included with R. To use this, type <code>help.start()</code> in the console window.<a href="section-references.html#section-fn12" class="footnoteRef" id="section-fnref12"><sup>12</sup></a> The <code>help.start</code> function also provides several manuals online and can be a useful interface in addition to the built in help.</p>
+<p>Search engines provide another, sometimes more user-friendly, way to receive answers for R questions. A Google search often quickly finds something written by another user who had the same (or a similar) question, or an online tutorial that touches on the question. More specialized is <a href="http://rseek.org">rseek.org</a>, which is a search engine focused specifically on R. Both Google and <a href="http://rseek.org">rseek.org</a> are valuable tools, often providing more user-friendly information than R’s own help system.</p>
+<p>In addition, R users have written many types of contributed documentation. Some of this documentation is available at <a href="http://cran.r-project.org/other-docs.html" class="uri">http://cran.r-project.org/other-docs.html</a>. Of course there are also numerous books covering general and specialized R topics available for purchase.</p>
+</div>
+<div id="section-workspace-working-directory-and-keeping-organized" class="section level2">
+<h2><span class="header-section-number">2.5</span> Workspace, Working Directory, and Keeping Organized</h2>
+<p>The <em>workspace</em> is your R session working environment and includes any objects you create. Recall these objects are listed in the <code>Global Environment</code> window. The command <code>ls()</code>, which stands for list, will also list all the objects in your workspace (note, this is the same list that is given in the <code>Global Environment</code> window). When you close RStudio, a dialog box will ask you if you want to save an image of the current workspace. If you choose to save your workspace, RStudio saves your session objects and information in a <code>.RData</code> file (the period makes it a hidden file) in your <em>working directory</em>. Next time you start R or RStudio it checks if there is a <code>.RData</code> in the working directory, loads it if it exists, and your session continues where you left off. Otherwise R starts with an empty workspace. This leads to the next question—what is a working directory?</p>
+<p>Each R session is associated with a working directory. This is just a directory from which R reads and writes files, e.g., the <code>.RData</code> file, data files you want to analyze, or files you want to save. On Mac when you start RStudio it sets the working directory to your home directory (for me that’s <code>/Users/andy</code>). If you’re on a different operating system, you can check where the default working directory is by typing <code>getwd()</code> in the console. You can change the default working directory under RStudio’s  dialog found under the <code>Tools</code> dropdown menu. There are multiple ways to change the working directory once an R session is started in RStudio. One method is to click on the <code>Files</code> tab in the lower right window and then click the <code>More</code> button. Alternatively, you can set the session’s working directory using the <code>setwd()</code> in the console. For example, on Windows <code>setwd(&quot;C:/Users/andy/for875/exercise1&quot;)</code> will set the working directory to <code>C:/Users/andy/for875/exercise1</code>, assuming that file path and directory exist (Note: Windows file path uses a backslash, <code>\</code>, but in R the backslash is an escape character, hence specifying file paths in R on Windows uses the forward slash, i.e., <code>/</code>). Similarly on Mac you can use <code>setwd(&quot;/Users/andy/for875/exercise1&quot;)</code>. Perhaps the most simple method is to click on the <code>Session</code> tab at the top of your screen and click on the <code>Set Working Directory</code> option. Later on when we start reading and writing data from our R session, it will be very important that you are able to identify your current working directory and change it if needed. We will revisit this in subsequent chapters.</p>
+<p>As with all work, keeping organized is the key to efficiency. It is good practice to have a dedicated directory for each R project or exercise.</p>
+</div>
+<div id="section-quality-of-r-code" class="section level2">
+<h2><span class="header-section-number">2.6</span> Quality of R code</h2>
+<div class="figure"><span id="fig:comic"></span>
+<img src="../figures/code_quality.png" alt="xkcd: Code Quality" width="4in" height="4in" />
+<p class="caption">
+FIGURE 2.2: xkcd: Code Quality
+</p>
+</div>
+<p>Writing well-organized and well-labeled code allows your code to be more easily read and understood by another person. (See xkcd’s take on code quality in Figure <a href="section-introduction-to-r-and-rstudio.html#fig:comic">2.2</a>.) More importantly, though, your well-written code is more accessible to you hours, days, or even months later. We are hoping that you can use the code you write in this class in future projects and research.</p>
+<p>Google provides style guides for many programming languages. You can find the R style guide <a href="https://google.github.io/styleguide/Rguide.xml">here</a>. Below are a few of the key points from the guide that we will use right away.</p>
+<div id="section-naming-files" class="section level3">
+<h3><span class="header-section-number">2.6.1</span> Naming Files</h3>
+<p>File names should be meaningful and end in <code>.R</code>. If we write a script that analyzes a certain species distribution:</p>
+<ul>
+<li>GOOD: <span class="math inline">\(\color{green}{\verb+african_rhino_distribution.R+}\)</span></li>
+<li>GOOD: <span class="math inline">\(\color{green}{\verb+africanRhinoDistribution.R+}\)</span></li>
+<li>BAD: <span class="math inline">\(\color{red}{\verb+speciesDist.R+}\)</span> (too ambiguous)</li>
+<li>BAD: <span class="math inline">\(\color{red}{\verb+species.dist.R+}\)</span> (too ambiguous and two periods can confuse operating systems’ file type auto-detect)</li>
+<li>BAD: <span class="math inline">\(\color{red}{\verb+speciesdist.R+}\)</span> (too ambiguous and confusing)</li>
+</ul>
+</div>
+<div id="section-naming-variables" class="section level3">
+<h3><span class="header-section-number">2.6.2</span> Naming Variables</h3>
+<ul>
+<li>GOOD: <span class="math inline">\(\color{green}{\verb+rhino.count+}\)</span></li>
+<li>GOOD: <span class="math inline">\(\color{green}{\verb+rhinoCount+}\)</span></li>
+<li>GOOD: <span class="math inline">\(\color{green}{\verb+rhino_count+}\)</span> (We don’t mind the underscore and use it quite often, although Google’s style guide says it’s a no-no for some reason)</li>
+<li>BAD: <span class="math inline">\(\color{red}{\verb+rhinocount+}\)</span> (confusing)</li>
+</ul>
+</div>
+<div id="section-syntax" class="section level3">
+<h3><span class="header-section-number">2.6.3</span> Syntax</h3>
+<ul>
+<li>Keep code lines under 80 characters long.</li>
+<li>Indent your code with two spaces. (RStudio does this by default when you press the TAB key.)</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-scripts-and-r-markdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

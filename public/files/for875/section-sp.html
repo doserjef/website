@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-functions.html">
+<link rel="next" href="section-shiny-interactive-web-apps-in-r.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-sp" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Spatial Data Visualization and Analysis</h1>
+<div id="section-overview" class="section level2">
+<h2><span class="header-section-number">9.1</span> Overview</h2>
+<p>Recall, a data structure is a format for organizing and storing data. The structure is designed so that data can be accessed and worked with in specific ways. Statistical software and programming languages have methods (or functions) designed to operate on different kinds of data structures.</p>
+<p>This chapter focuses on spatial data structures and some of the R functions that work with these data. Spatial data comprise values associated with locations, such as temperature data at a given latitude, longitude, and perhaps elevation. Spatial data are typically organized into <strong>vector</strong> or <strong>raster</strong> data types. (See Figure <a href="section-sp.html#fig:raster">9.1</a>).</p>
+<ul>
+<li>Vector data represent features such as discrete points, lines, and polygons.</li>
+<li>Raster data represent surfaces as a rectangular matrix of square cells or pixels.</li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:raster"></span>
+<img src="../figures/Raster_vector_tikz.png" alt="Raster/Vector Comparison [@imageRaster]" width="100%" />
+<p class="caption">
+FIGURE 9.1: Raster/Vector Comparison <span class="citation">(Wegmann <a href="#ref-imageRaster">2010</a>)</span>
+</p>
+</div>
+<p>Whether or not you use vector or raster data depends on the type of problem, the type of maps you need, and the data source. Each data structure has strengths and weaknesses in terms of functionality and representation. As you gain more experience working with spatial data, you will be able to determine which structure to use for a particular application.</p>
+<p>There is a large set of R packages available for working with spatial (and space-time) data. These packages are described in the <a href="https://CRAN.R-project.org/view=Spatial">Cran Task View: Analysis of Spatial Data</a>. The CRAN task view attempts to organize the various packages into categories, such as <em>Handling spatial data</em>, <em>Reading and writing spatial data</em>, <em>Visualization</em>, and <em>Disease mapping and areal data analysis</em>, so users can quickly identify package options given their project needs.</p>
+<p>Exploring the extent of the excellent spatial data tools available in R is beyond the scope of this book. Rather, we would point you to subject texts like <em>Applied Spatial Data Analysis with R</em> by <span class="citation">Bivand, Pebesma, and Gomez-Rubio (<a href="#ref-Bivand13">2013</a>)</span> (available for free via the MSU library system), and numerous online tutorials on pretty much any aspect of spatial data analysis with R. These tools make R a full-blown <a href="https://en.wikipedia.org/wiki/Geographic_information_system">Geographic Information System</a> (GIS) capable of spatial data manipulation and analysis on par with commercial GIS systems such as <a href="http://www.esri.com/arcgis/about-arcgis">ESRI’s ArcGIS</a>.</p>
+<div id="section-some-spatial-data-packages" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Some Spatial Data Packages</h3>
+<p>This chapter will focus on a few R packages for manipulating and visualizing spatial data. Specifically we will touch on the following packages</p>
+<ul>
+<li><code>sp</code>: spatial data structures and methods</li>
+<li><code>rgdal</code>: interface to the C/C<code>++</code> spatial data Geospatial Data Abstraction Library</li>
+<li><code>ggmap</code>: extends <code>ggplot2</code> language to handle spatial data</li>
+<li><code>leaflet</code>: generates dynamic online maps</li>
+</ul>
+</div>
+</div>
+<div id="section-motivating-data" class="section level2">
+<h2><span class="header-section-number">9.2</span> Motivating Data</h2>
+<p>We motivate the topics introduced in this chapter using some forestry data from the <a href="https://www.nrs.fs.fed.us/ef/locations/me/penobscot%7D%7BPenobscot%20Experimental%20Forest">Penobscot Experimental Forest</a> (PEF) located in Maine. The PEF is a long-term experimental forest that is used to understand the effects of silviculture (i.e., science of tending trees) treatments on forest growth and composition. The PEF is divided into non-overlapping management units that receive different harvesting treatments. Within each management unit is a series of observation point locations (called forest inventory plots) where forest variables have been measured. Ultimately, we want to summarize the inventory plots measurements by management unit and map the results.</p>
+</div>
+<div id="section-reading-spatial-data-into-r" class="section level2">
+<h2><span class="header-section-number">9.3</span> Reading Spatial Data into R</h2>
+<p>Spatial data come in a variety of file formats. Examples of popular vector file formats for points, lines, and polygons, include ESRI’s <a href="https://en.wikipedia.org/wiki/Shapefile">shapefile</a> and open standard <a href="https://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a>. Common raster file formats include <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a> and <a href="https://en.wikipedia.org/wiki/NetCDF">netCDF</a><a href="section-references.html#section-fn42" class="footnoteRef" id="section-fnref42"><sup>42</sup></a>.</p>
+<p>The <code>rgdal</code> function <code>readOGR</code> will read a large variety of vector data file formats (there is also a <code>writeOGR()</code> for writing vector data files). Raster data file formats can be read using the <code>rgdal</code> function <code>readGDAL</code> (yup, also a <code>writeGDAL()</code>) or read functions in the <code>raster</code> package. All of these functions automatically cast the data into an appropriate R spatial data object (i.e., data structure), which are defined in the <code>sp</code> or <code>raster</code> packages. Table <a href="section-sp.html#tab:spatialObjs">9.1</a> provides an abbreviated list of these R spatial objects<a href="section-references.html#section-fn43" class="footnoteRef" id="section-fnref43"><sup>43</sup></a>. The <em>Without attributes </em>column gives the <code>sp</code> package’s spatial data object classes for points, lines, polygons, and raster pixels that do not have data associated with the spatial objects (i.e., without attributes in GIS speak). <code>DataFrame</code> is appended to the object class name once data, in the form of variables, are added to the spatial object.</p>
+<table>
+<caption><span id="tab:spatialObjs">TABLE 9.1: </span>An abbreviated list of <code>sp</code> and <code>raster</code> data objects and associated classes for the fundamental spatial data types</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Without Attributes</th>
+<th align="left">With Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Polygons</td>
+<td align="left">SpatialPolygons</td>
+<td align="left">SpatialPolygonsDataFrame</td>
+</tr>
+<tr class="even">
+<td>Points</td>
+<td align="left">SpatialPoints</td>
+<td align="left">SpatialPointsDataFrame</td>
+</tr>
+<tr class="odd">
+<td>Lines</td>
+<td align="left">SpatialLines</td>
+<td align="left">SpatialLinesDataFrame</td>
+</tr>
+<tr class="even">
+<td>Raster</td>
+<td align="left">SpatialGrid</td>
+<td align="left">SpatialGridDataFrame</td>
+</tr>
+<tr class="odd">
+<td>Raster</td>
+<td align="left">SpatialPixels</td>
+<td align="left">SpatialPixelsDataFrame</td>
+</tr>
+<tr class="even">
+<td>Raster</td>
+<td align="left"></td>
+<td align="left">RasterLayer</td>
+</tr>
+<tr class="odd">
+<td>Raster</td>
+<td align="left"></td>
+<td align="left">RasterBrick</td>
+</tr>
+<tr class="even">
+<td>Raster</td>
+<td align="left"></td>
+<td align="left">RasterStack</td>
+</tr>
+</tbody>
+</table>
+<p>You can create your own spatial data objects in R. Below, for example, we create a <code>SpatialPoints</code> object consisting of four points. Then add some data to the points to make it a <code>SpatialPointsDataFrame</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(sp)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(dplyr)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>)
+<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>coords &lt;-<span class="st"> </span><span class="kw">cbind</span>(x, y)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>sp.pts &lt;-<span class="st"> </span><span class="kw">SpatialPoints</span>(coords)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">class</span>(sp.pts)</code></pre></div>
+<pre><code>[1] &quot;SpatialPoints&quot;
+attr(,&quot;package&quot;)
+[1] &quot;sp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>some.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">var.1 =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), <span class="dt">var.2 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>sp.pts.df &lt;-<span class="st"> </span><span class="kw">SpatialPointsDataFrame</span>(sp.pts, some.data)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">class</span>(sp.pts.df)</code></pre></div>
+<pre><code>[1] &quot;SpatialPointsDataFrame&quot;
+attr(,&quot;package&quot;)
+[1] &quot;sp&quot;</code></pre>
+<p>If, for example, you already have a data frame that includes the spatial coordinate columns and other variables, then you can promote it to a <code>SpatialPointsDataFrame</code> by indicating which columns contain point coordinates. You can extract or access the data frame associated with the spatial object using <code>@data</code>. You can also access individual variables directly from the spatial object using <code>$</code> or by name or column number to the right of the comma in <code>[,]</code> (analogues to accessing variables in a data frame).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>), <span class="dt">var.1 =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), <span class="dt">var.2 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">class</span>(df)</code></pre></div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="co"># promote to a SpatialPointsDataFrame</span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">coordinates</span>(df) &lt;-<span class="st"> </span><span class="er">~</span>x <span class="op">+</span><span class="st"> </span>y
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">class</span>(df)</code></pre></div>
+<pre><code>[1] &quot;SpatialPointsDataFrame&quot;
+attr(,&quot;package&quot;)
+[1] &quot;sp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="co"># access entire data frame</span>
+<span class="er">&gt;</span><span class="st"> </span>df<span class="op">@</span>data</code></pre></div>
+<pre><code>  var.1 var.2
+1     a     1
+2     b     2
+3     c     3
+4     d     4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">class</span>(df<span class="op">@</span>data)</code></pre></div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="co"># access columns directly</span>
+<span class="er">&gt;</span><span class="st"> </span>df<span class="op">$</span>var.<span class="dv">1</span></code></pre></div>
+<pre><code>[1] a b c d
+Levels: a b c d</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>df[, <span class="kw">c</span>(<span class="st">&quot;var.1&quot;</span>, <span class="st">&quot;var.2&quot;</span>)]</code></pre></div>
+<pre><code>  coordinates var.1 var.2
+1      (3, 2)     a     1
+2      (2, 5)     b     2
+3      (5, 6)     c     3
+4      (6, 7)     d     4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>df[, <span class="dv">2</span>]</code></pre></div>
+<pre><code>  coordinates var.2
+1      (3, 2)     1
+2      (2, 5)     2
+3      (5, 6)     3
+4      (6, 7)     4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="co"># get the bounding box</span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">bbox</span>(df)</code></pre></div>
+<pre><code>  min max
+x   2   6
+y   2   7</code></pre>
+<p>Here, the data frame <code>df</code> is promoted to a <code>SpatialPointsDataFrame</code> by indicating the column names that hold the longitude and latitude (i.e., <code>x</code> and <code>y</code> respectively) using the <code>coordinates</code> function. Here too, the <code>@data</code> is used to retrieve the data frame associated with the points. We also illustrate how variables can be accessed directly from the spatial object. The <code>bbox</code> function is used to return the bounding box that is defined by the spatial extent of the point coordinates. The other spatial objects noted in Table <a href="section-sp.html#tab:spatialObjs">9.1</a> can be created, and their data accessed, in a similar way<a href="section-references.html#section-fn44" class="footnoteRef" id="section-fnref44"><sup>44</sup></a>.</p>
+<p>More than often we find ourselves reading existing spatial data files into R. The code below uses the <code>downloader</code> package to download all of the PEF data we’ll use in this chapter. The data are compressed in a single zip file, which is then extracted into the working directory using the <code>unzip</code> function. A look into the PEF directory using <code>list.files</code> shows nine files<a href="section-references.html#section-fn45" class="footnoteRef" id="section-fnref45"><sup>45</sup></a>. Those named <code>MU-bounds.*</code> comprise the shapefile that holds the PEF’s management unit boundaries in the form of polygons. Like other spatial data file formats, shapefiles are made up of several different files (with different file extensions) that are linked together to form a spatial data object. The <code>plots.csv</code> file holds the spatial coordinates and other information about the PEF’s forest inventory plots. The <code>roads.*</code> shapefile holds roads and trails in and around the PEF.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(downloader)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">download</span>(<span class="st">&quot;http://blue.for.msu.edu/FOR875/data/PEF.zip&quot;</span>, 
+<span class="op">+</span><span class="st">          </span><span class="dt">destfile=</span><span class="st">&quot;./PEF.zip&quot;</span>, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>) 
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">unzip</span>(<span class="st">&quot;PEF.zip&quot;</span>, <span class="dt">exdir =</span> <span class="st">&quot;.&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;PEF&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;MU-bounds.dbf&quot; &quot;MU-bounds.prj&quot; &quot;MU-bounds.qpj&quot;
+ [4] &quot;MU-bounds.shp&quot; &quot;MU-bounds.shx&quot; &quot;plots.csv&quot;    
+ [7] &quot;plots.dbf&quot;     &quot;plots.prj&quot;     &quot;plots.qpj&quot;    
+[10] &quot;plots.shp&quot;     &quot;plots.shx&quot;     &quot;roads.dbf&quot;    
+[13] &quot;roads.prj&quot;     &quot;roads.shp&quot;     &quot;roads.shx&quot;    </code></pre>
+<p>Next we read the MU-bounds shapefile into R using <code>readOGR()</code><a href="section-references.html#section-fn46" class="footnoteRef" id="section-fnref46"><sup>46</sup></a> and explore the resulting <code>mu</code> object. Notice that when we read a shapefile into R, we do not include a file extension with the shapefile name because a shapefile is always composed of multiple files.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(rgdal)</code></pre></div>
+<pre><code>rgdal: version: 1.3-6, (SVN revision 773)
+ Geospatial Data Abstraction Library extensions to R successfully loaded
+ Loaded GDAL runtime: GDAL 2.2.3, released 2017/11/20
+ Path to GDAL shared files: /usr/share/gdal/2.2
+ GDAL binary built with GEOS: TRUE 
+ Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
+ Path to PROJ.4 shared files: (autodetected)
+ Linking to sp version: 1.3-1 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;PEF&quot;</span>, <span class="st">&quot;MU-bounds&quot;</span>)</code></pre></div>
+<pre><code>OGR data source with driver: ESRI Shapefile 
+Source: &quot;/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/PEF&quot;, layer: &quot;MU-bounds&quot;
+with 40 features
+It has 1 fields</code></pre>
+<p>When called, the <code>readOGR</code> function provides a bit of information about the object being read in. Here, we see that it read the MU-bounds shapefile from PEF directory and the shapefile had 40 features (i.e., polygons) and 1 field (i.e., field is synonymous with column or variable in the data frame).</p>
+<p>You can think of the resulting <code>mu</code> object as a data frame where each row corresponds to a polygon and each column holds information about the polygon<a href="section-references.html#section-fn47" class="footnoteRef" id="section-fnref47"><sup>47</sup></a>. More specifically, the <code>mu</code> object is a <code>SpatialPolygonsDataFrame</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">class</span>(mu)</code></pre></div>
+<pre><code>[1] &quot;SpatialPolygonsDataFrame&quot;
+attr(,&quot;package&quot;)
+[1] &quot;sp&quot;</code></pre>
+<p>As illustrated using the made-up point data in the example above, you can access the data frame associated with the polygons using <code>@data</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">class</span>(mu<span class="op">@</span>data)</code></pre></div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(mu<span class="op">@</span>data)</code></pre></div>
+<pre><code>[1] 40  1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(mu<span class="op">@</span>data)</code></pre></div>
+<pre><code>  mu_id
+0   C15
+1   C17
+2   C16
+3   C27
+4   U18
+5   U31</code></pre>
+<p>Above, a call to <code>class()</code> confirms we have accessed the data frame, <code>dim()</code> shows there are 40 rows (one row for each polygon) and one column, and <code>head()</code> shows the first six values of the column named <code>mu_id</code>. The <code>mu_id</code> values are unique identifiers for each management unit polygon across the PEF.</p>
+</div>
+<div id="section-coordinate-reference-systems" class="section level2">
+<h2><span class="header-section-number">9.4</span> Coordinate Reference Systems</h2>
+<p>One of the more challenging aspects of working with spatial data is getting used to the idea of a coordinate reference system. A <em>coordinate reference system</em> (CRS) is a system that uses one or more numbers, or coordinates, to uniquely determine the position of a point or other geometric element (e.g., line, polygon, raster). For spatial data, there are two common coordinate systems:</p>
+<ol style="list-style-type: decimal">
+<li>Spherical coordinate system, such as latitude-longitude, often referred to as a <em>geographic coordinate system</em>.</li>
+<li>Projected coordinate system based on a map projection, which is a systematic transformation of the latitudes and longitudes that aims to minimize distortion occurring from projecting maps of the earth’s spherical surface onto a two-dimensional Cartesian coordinate plane. Projected coordinate systems are sometimes referred to as <em>map projections</em>.</li>
+</ol>
+<p>There are numerous map projections<a href="section-references.html#section-fn48" class="footnoteRef" id="section-fnref48"><sup>48</sup></a>. One of the more frustrating parts of working with spatial data is that it seems like each data source you find offers its data in a different map projection and hence you spend a great deal of time <em>reprojecting</em> (i.e., transforming from one CRS to another) data into a common CRS such that they overlay correctly. Reprojecting is accomplished using the <code>sp</code> package’s <code>spTransform</code> function as demonstrated in Section <a href="section-sp.html#section-ggmap">9.5</a>.</p>
+<p>In R, a spatial object’s CRS is accessed via the <code>sp</code> package <code>proj4string</code> function. The code below shows the current projection of <code>mu</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">proj4string</span>(mu)</code></pre></div>
+<pre><code>[1] &quot;+proj=utm +zone=19 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0&quot;</code></pre>
+<p>The cryptic looking string returned by <code>proj4string()</code> is a set of directives understood by the <a href="http://proj4.org/">proj.4</a> C library, which is part of <code>sp</code>, and used to map geographic longitude and latitude coordinates into the projected Cartesian coordinates. This CRS tells us the <code>mu</code> object is in <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator (UTM)</a> zone 19 coordinate system.<a href="section-references.html#section-fn49" class="footnoteRef" id="section-fnref49"><sup>49</sup></a></p>
+</div>
+<div id="section-ggmap" class="section level2">
+<h2><span class="header-section-number">9.5</span> Illustration using <code>ggmap</code></h2>
+<p>Let’s begin by making a map of PEF management unit boundaries over top of a satellite image using the <code>ggmap</code> package. Given an address, location, or bounding box, the <code>ggmap</code> package’s <code>get_map</code> function will query Google Maps, OpenStreetMap, Stamen Maps, or Naver Map servers for a user-specified map type. The <code>get_map</code> function requires the location or bounding box coordinates be in a geographic coordinate system (i.e., latitude-longitude). This means we need to reproject <code>mu</code> from UTM zone 19 to latitude-longitude geographic coordinates, which is defined by the <code>'&quot;proj=longlat +datum=WGS84&quot;'</code> proj.4 string. As seen below, the first argument in <code>spTransform</code> function is the spatial object to reproject and the second argument is a CRS object created by passing a proj.4 string into the <code>CRS</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu &lt;-<span class="st"> </span><span class="kw">spTransform</span>(mu, <span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>))
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">proj4string</span>(mu)</code></pre></div>
+<pre><code>[1] &quot;+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0&quot;</code></pre>
+<p>Unfortunately, we cannot just feed the <code>SpatialPolygonsDataFrame</code> <code>mu</code> into <code>ggplot</code> (perhaps some day soon this will possible). Rather, we need to first convert the <code>SpatialPolygonsDataFrame</code> into a specially formatted data frame using the <code>fortify</code> function that is part of the <code>ggplot2</code> package<a href="section-references.html#section-fn50" class="footnoteRef" id="section-fnref50"><sup>50</sup></a>. The <code>fortify</code> function will also need a unique identifier for each polygon specified using the <code>region</code> argument, which for <code>mu</code> is the <code>mu_id</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(ggmap)</code></pre></div>
+<pre><code>Google Maps API Terms of Service: http://developers.google.com/maps/terms.</code></pre>
+<pre><code>Please cite ggmap if you use it: see citation(&quot;ggmap&quot;) for details.</code></pre>
+<pre><code>
+Attaching package: &#39;ggmap&#39;</code></pre>
+<pre><code>The following object is masked _by_ &#39;.GlobalEnv&#39;:
+
+    crime</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.f &lt;-<span class="st"> </span><span class="kw">fortify</span>(mu, <span class="dt">region =</span> <span class="st">&quot;mu_id&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(mu.f)</code></pre></div>
+<pre><code>    long   lat order  hole piece  id group
+1 -68.62 44.86     1 FALSE     1 C12 C12.1
+2 -68.62 44.86     2 FALSE     1 C12 C12.1
+3 -68.62 44.86     3 FALSE     1 C12 C12.1
+4 -68.62 44.86     4 FALSE     1 C12 C12.1
+5 -68.62 44.86     5 FALSE     1 C12 C12.1
+6 -68.62 44.86     6 FALSE     1 C12 C12.1</code></pre>
+<p>Notice the <code>id</code> column in the fortified version of <code>mu</code> holds each polygon’s <code>mu_id</code> value (this will be important later when we link data to the polygons).</p>
+<p>Next, we query the satellite imagery used to underlay the management units (we’ll generally refer to this underlying map as the basemap). As of October 2018, Google now requires you to set up a Google API account in order to run the following maps. This is free, but it does require a credit card to obtain the API Key that is required to make the <code>ggmap</code> package work. Here I provide you with an API key for a project I created for this class that should allow you to run the following function if you desire. If you are interested in obtaining your own API key, see the page <a href="https://developers.google.com/maps/documentation/geocoding/get-api-key">here</a> for learning about how to use Google maps web services.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">register_google</span>(<span class="dt">key =</span> <span class="st">&quot;AIzaSyBPAwSY5x8vQqlnG-QwiCAWQW12U3CTLZY&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>mu.bbox &lt;-<span class="st"> </span><span class="kw">bbox</span>(mu)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>basemap &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location=</span>mu.bbox, <span class="dt">zoom =</span> <span class="dv">14</span>, <span class="dt">maptype=</span><span class="st">&quot;satellite&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>mu.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group=</span>group), 
+<span class="op">+</span><span class="st">                  </span><span class="dt">fill=</span><span class="ot">NA</span>, <span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;orange&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-229-1.png" width="672" /></p>
+<p>Looks pretty good! Take a look at the <code>get_map</code> function manual page and try different options for <code>maptype</code> (e.g., <code>maptype=&quot;terrain&quot;</code>).</p>
+<p>Next we’ll add the forest inventory plots to the map. Begin by reading in the PEF forest inventory plot data held in “plots.csv”. Recall, foresters have measured forest variables at a set of locations (i.e., inventory plots) within each management unit. The following statement reads these data and displays the resulting data frame structure.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>plots &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;PEF/plots.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(plots)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   451 obs. of  8 variables:
+ $ mu_id           : chr  &quot;U10&quot; &quot;U10&quot; &quot;U10&quot; &quot;U10&quot; ...
+ $ plot            : int  11 13 21 22 23 24 31 32 33 34 ...
+ $ easting         : num  529699 529777 529774 529814 529850 ...
+ $ northing        : num  4966333 4966471 4966265 4966336 4966402 ...
+ $ biomass_mg_ha   : num  96.3 115.7 121.6 72 122.3 ...
+ $ stems_ha        : int  5453 2629 3385 7742 7980 10047 5039 5831 2505 7325 ...
+ $ diameter_cm     : num  4.8 6.9 6.1 3.1 4.7 1.6 4.1 5.2 5.7 3.3 ...
+ $ basal_area_m2_ha: num  22 23.2 23 16.1 29.2 19.1 14.1 27.4 21.6 15 ...</code></pre>
+<p>In <code>plots</code> each row is a forest inventory plot and columns are:</p>
+<ul>
+<li><code>mu_id</code> identifies the management unit within which the plot is located</li>
+<li><code>plot</code> unique plot number within the management unit</li>
+<li><code>easting</code> longitude coordinate in UTM zone 19</li>
+<li><code>northing</code> latitude coordinate in UTM zone 19</li>
+<li><code>biomass_mg_ha</code> tree biomass in metric ton (per hectare basis)</li>
+<li><code>stocking_stems_ha</code> number of tree (per hectare basis)</li>
+<li><code>diameter_cm</code> average tree diameter measured 130 cm up the tree trunk</li>
+<li><code>basal_area_m2_ha</code> total cross-sectional area at 130 cm up the tree trunk (per hectare basis)</li>
+</ul>
+<p>There is nothing inherently spatial about this data structure—it is simply a data frame. We make <code>plots</code> into a spatial object by identifying which columns hold the coordinates. This is done below using the <code>coordinates</code> function, which promotes the <code>plots</code> data frame to a <code>SpatialPointsDataFrame</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">coordinates</span>(plots) &lt;-<span class="st"> </span><span class="er">~</span>easting<span class="op">+</span>northing
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">class</span>(plots)</code></pre></div>
+<pre><code>[1] &quot;SpatialPointsDataFrame&quot;
+attr(,&quot;package&quot;)
+[1] &quot;sp&quot;</code></pre>
+<p>Although <code>plots</code> is now a <code>SpatialPointsDataFrame</code>, it does not know to which CRS the coordinates belong; hence, the <code>NA</code> when <code>proj4string(plots)</code> is called below. As noted in the <code>plots</code> file description above, <code>easting</code> and <code>northing</code> are in UTM zone 19. This CRS is set using the second call to <code>proj4string</code> below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">proj4string</span>(plots)</code></pre></div>
+<pre><code>[1] NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">proj4string</span>(plots) &lt;-<span class="st"> </span><span class="kw">CRS</span>(<span class="st">&quot;+proj=utm +zone=19 +datum=NAD83 +units=m </span>
+<span class="st">+                              +no_defs +ellps=GRS80 +towgs84=0,0,0&quot;</span>)                   </code></pre></div>
+<p>Now let’s reproject <code>plots</code> to share a common CRS with <code>mu</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>plots &lt;-<span class="st"> </span><span class="kw">spTransform</span>(plots, <span class="kw">CRS</span>(<span class="st">&quot;+proj=longlat +datum=WGS84&quot;</span>))</code></pre></div>
+<p>Note, because <code>mu</code> is already in the projection we want for <code>plots</code>, we could have replaced the second argument in the <code>spTransform</code> call above with <code>proj4string(mu)</code> and saved some typing.</p>
+<p>We’re now ready to add the forest inventory plots to the existing basemap with management units. Specifically, let’s map the <code>biomass_mg_ha</code> variable to show changes in biomass across the forest. No need to fortify <code>plots</code>, <code>ggplot</code> is happy to take <code>geom_point</code>’s <code>data</code> argument as a data frame (although we do need to convert <code>plots</code> from a <code>SpatialPointsDataFrame</code> to a data frame using the <code>as.data.frame</code> function). Check out the <code>scale_color_gradient</code> function in your favorite <code>ggplot2</code> reference to understand how the color scale is set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>mu.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group=</span>group), 
+<span class="op">+</span><span class="st">                  </span><span class="dt">fill=</span><span class="ot">NA</span>, <span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;orange&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_point</span>(<span class="dt">data=</span><span class="kw">as.data.frame</span>(plots), 
+<span class="op">+</span><span class="st">                </span><span class="kw">aes</span>(<span class="dt">x =</span> easting, <span class="dt">y =</span> northing, <span class="dt">color=</span>biomass_mg_ha)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">     </span><span class="kw">scale_color_gradient</span>(<span class="dt">low=</span><span class="st">&quot;white&quot;</span>, <span class="dt">high=</span><span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">&quot;Biomass (mg/ha)&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<p>There is something subtle and easy to miss in the code above. Notice the <code>aes</code> function arguments in <code>geom_points</code> take geographic longitude and latitude, <code>x</code> and <code>y</code> respectively, from the <code>points</code> data frame (but recall <code>easting</code> and <code>northing</code> were in UTM zone 19). This works because we applied <code>spTransform</code> to reproject the <code>points</code> <code>SpatialPointsDataFrame</code> to geographic coordinates. <code>sp</code> then replaces the values in <code>easting</code> and <code>northing</code> columns with the reprojected coordinate values when converting a <code>SpatialPointsDataFrame</code> to a data frame via <code>as.data.frame()</code>.</p>
+<p>Foresters use the inventory plot measurements to estimate forest variables within management units, e.g., the average or total management unit biomass. Next we’ll make a plot with management unit polygons colored by average <code>biomass_mg_ha</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.bio &lt;-<span class="st"> </span>plots<span class="op">@</span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(mu_id) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">     </span><span class="kw">summarize</span>(<span class="dt">biomass_mu =</span> <span class="kw">mean</span>(biomass_mg_ha))
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">print</span>(mu.bio)</code></pre></div>
+<pre><code># A tibble: 33 x 2
+   mu_id biomass_mu
+   &lt;chr&gt;      &lt;dbl&gt;
+ 1 C12        124. 
+ 2 C15         49.9
+ 3 C16        128. 
+ 4 C17        112. 
+ 5 C20        121. 
+ 6 C21        134. 
+ 7 C22         65.2
+ 8 C23A       108. 
+ 9 C23B       153. 
+10 C24        126. 
+# ... with 23 more rows</code></pre>
+<p>Recall from Section <a href="section-data2.html#section-pipes">7.7.5</a> this one-liner can be read as “get the data frame from <code>plots</code>’s <code>SpatialPointsDataFrame</code> <em>then</em> group by management unit <em>then</em> make a new variable called <code>biomass_mu</code> that is the average of <code>biomass_mg_ha</code> and assign it to the <code>mu.bio</code> tibble.”</p>
+<p>The management unit specific <code>biomass_mu</code> can now be joined to the <code>mu</code> polygons using the common <code>mu_id</code> value. Remember when we created the fortified version of <code>mu</code> called <code>mu.f</code>? The <code>fortify</code> function <code>region</code> argument was <code>mu_id</code> which is the <code>id</code> variable in the resulting <code>mu.f</code>. This <code>id</code> variable in <code>mu.f</code> can be linked to the <code>mu_id</code> variable in <code>mu.bio</code> using <code>dplyr</code>’s <code>left_join</code> function as illustrated below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(mu.f, <span class="dt">n =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>    long   lat order  hole piece  id group
+1 -68.62 44.86     1 FALSE     1 C12 C12.1
+2 -68.62 44.86     2 FALSE     1 C12 C12.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.f &lt;-<span class="st"> </span><span class="kw">left_join</span>(mu.f, mu.bio, <span class="dt">by =</span> <span class="kw">c</span>(<span class="dt">id =</span> <span class="st">&quot;mu_id&quot;</span>))
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(mu.f, <span class="dt">n =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>    long   lat order  hole piece  id group biomass_mu
+1 -68.62 44.86     1 FALSE     1 C12 C12.1      123.7
+2 -68.62 44.86     2 FALSE     1 C12 C12.1      123.7</code></pre>
+<p>The calls to <code>head()</code> show the first few rows of <code>mu.f</code> pre- and post-join. After the join, <code>mu.f</code> includes <code>biomass_mu</code>, which is used used below for <code>geom_polygon</code>’s <code>fill</code> argument to color the polygons accordingly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>mu.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, 
+<span class="op">+</span><span class="st">                                 </span><span class="dt">group=</span>group, <span class="dt">fill=</span>biomass_mu), 
+<span class="op">+</span><span class="st">                  </span><span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;orange&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low=</span><span class="st">&quot;white&quot;</span>, <span class="dt">high=</span><span class="st">&quot;darkblue&quot;</span>, 
+<span class="op">+</span><span class="st">                         </span><span class="dt">na.value=</span><span class="st">&quot;transparent&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">labs</span>(<span class="dt">fill=</span><span class="st">&quot;Biomass (mg/ha)&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-237-1.png" width="672" /></p>
+<p>Let’s add the roads and some more descriptive labels as a finishing touch. The roads data include a variable called <code>type</code> that identifies the road type. To color roads by type in the map, we need to join the <code>roads</code> data frame with the fortified roads <code>roads.f</code> using the common variable <code>id</code> as a road segment specific identifier. Then <code>geom_path</code>’s <code>color</code> argument gets this <code>type</code> variable as a factor to create road-specific color. The default coloring of the roads blends in too much with the polygon colors, so we manually set the road colors using the <code>scale_color_brewer</code> function. The <code>palette</code> argument in this function accepts a set of key words, e.g., <code>&quot;Dark2&quot;</code>, that specify sets of diverging colors chosen to make map object difference optimally distinct (see, the manual page for <code>scale_color_brewer</code>, <a href="http://colorbrewer2.org" class="uri">http://colorbrewer2.org</a>, and blog <a href="https://www.r-bloggers.com/r-using-rcolorbrewer-to-colour-your-figures-in-r">here</a>.)<a href="section-references.html#section-fn51" class="footnoteRef" id="section-fnref51"><sup>51</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>roads &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="st">&quot;PEF&quot;</span>, <span class="st">&quot;roads&quot;</span>)</code></pre></div>
+<pre><code>OGR data source with driver: ESRI Shapefile 
+Source: &quot;/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/PEF&quot;, layer: &quot;roads&quot;
+with 33 features
+It has 2 fields</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>roads &lt;-<span class="st"> </span><span class="kw">spTransform</span>(roads, <span class="kw">proj4string</span>(mu))
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>roads.f &lt;-<span class="st"> </span><span class="kw">fortify</span>(roads, <span class="dt">region=</span><span class="st">&quot;id&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>roads.f &lt;-<span class="st"> </span><span class="kw">left_join</span>(roads.f, roads<span class="op">@</span>data, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&#39;id&#39;</span> =<span class="st"> &#39;id&#39;</span>))</code></pre></div>
+<pre><code>Warning: Column `id` joining character vector and
+factor, coercing into character vector</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>mu.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group=</span>group, 
+<span class="op">+</span><span class="st">                                 </span><span class="dt">fill=</span>biomass_mu), 
+<span class="op">+</span><span class="st">                  </span><span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;orange&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_path</span>(<span class="dt">data=</span>roads.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, 
+<span class="op">+</span><span class="st">                                 </span><span class="dt">group=</span>group, <span class="dt">color=</span><span class="kw">factor</span>(type))) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low=</span><span class="st">&quot;white&quot;</span>, <span class="dt">high=</span><span class="st">&quot;darkblue&quot;</span>, 
+<span class="op">+</span><span class="st">                         </span><span class="dt">na.value=</span><span class="st">&quot;transparent&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">labs</span>(<span class="dt">fill=</span><span class="st">&quot;Biomass (mg/ha)&quot;</span>, <span class="dt">color=</span><span class="st">&quot;Road type&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Longitude&quot;</span>, 
+<span class="op">+</span><span class="st">          </span><span class="dt">ylab=</span><span class="st">&quot;Latitude&quot;</span>, <span class="dt">title=</span><span class="st">&quot;PEF forest biomass&quot;</span>)</code></pre></div>
+<pre><code>Warning: Removed 616 rows containing missing values
+(geom_path).</code></pre>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-238-1.png" width="672" /></p>
+<p>The second, and more cryptic, of the two warnings from this code occurs because some of the roads extend beyond the range of the map axes and are removed (nothing to worry about).</p>
+</div>
+<div id="section-illustration-using-leaflet" class="section level2">
+<h2><span class="header-section-number">9.6</span> Illustration using <code>leaflet</code></h2>
+<p>Leaflet is one of the most popular open-source JavaScript libraries for interactive maps. As noted on the official <a href="https://rstudio.github.io/leaflet">R leaflet website</a>, it’s used by websites ranging from <em>The New York Times</em> and <em>The Washington Post</em> to GitHub and Flickr, as well as by GIS specialists like OpenStreetMap, Mapbox, and CartoDB.</p>
+<p>The <a href="https://rstudio.github.io/leaflet">R leaflet website</a> is an excellent resource to learn leaflet basics, and should serve as a reference to gain a better understanding of the topics we briefly explore below.</p>
+<p>You create a leaflet map using these basic steps:</p>
+<ol style="list-style-type: decimal">
+<li>Create a map by calling <code>leaflet()</code></li>
+<li>Add data layers to the map using layer functions such as, <code>addTiles()</code>, <code>addMarkers()</code>, <code>addPolygons()</code>, <code>addCircleMarkers()</code>, <code>addPolylines()</code>, <code>addRasterImage()</code> and other <code>add...</code> functions</li>
+<li>Repeat step 2 to add more layers to the map</li>
+<li>Print the map to display it</li>
+</ol>
+<p>Here’s a brief example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(leaflet)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>m &lt;-<span class="st"> </span><span class="kw">leaflet</span>() <span class="op">%&gt;%</span>
+<span class="op">+</span><span class="st">       </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Add default OpenStreetMap map tiles</span>
+<span class="op">+</span><span class="st">       </span><span class="kw">addMarkers</span>(<span class="dt">lng=</span><span class="op">-</span><span class="fl">84.482004</span>, <span class="dt">lat=</span><span class="fl">42.727516</span>, 
+<span class="op">+</span><span class="st">                  </span><span class="dt">popup=</span><span class="st">&quot;&lt;b&gt;Here I am!&lt;/b&gt;&quot;</span>) <span class="co"># Add a clickable marker</span>
+<span class="op">&gt;</span><span class="st"> </span>m  <span class="co"># Print the map</span></code></pre></div>
+<div id="htmlwidget-3892c55f1e170df1695a" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3892c55f1e170df1695a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[42.727516,-84.482004,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"<b>Here I am!<\/b>",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[42.727516,42.727516],"lng":[-84.482004,-84.482004]}},"evals":[],"jsHooks":[]}</script>
+<p>There are a couple things to note in the code. First, we use the pipe operator <code>%&gt;%</code> just like in <code>dplyr</code> functions. Second, the <code>popup</code> argument in <code>addMarkers()</code> takes standard HTML and clicking on the marker makes the text popup. Third, the html version of this text provides the full interactive, dynamic map, so we encourage you to read and interact with the html version of this textbook for this section. The PDF document will simply display a static version of this map and will not do justice to how awesome <code>leaflet</code> truly is!</p>
+<p>As seen in the <code>leaflet()</code> call above, the various <code>add...</code> functions can take longitude (i.e., <code>lng</code>) and latitude (i.e., <code>lat</code>). Alternatively, these functions can extract the necessary spatial information from <code>sp</code> objects, e.g., Table <a href="section-sp.html#tab:spatialObjs">9.1</a>, when passed to the data argument (which greatly simplifies life compared with map making using <code>ggmap</code>).</p>
+</div>
+<div id="section-subsetting-spatial-data" class="section level2">
+<h2><span class="header-section-number">9.7</span> Subsetting Spatial Data</h2>
+<p>You can imagine that we might want to subset spatial objects to map specific points, lines, or polygons that meet some criteria, or perhaps extract values from polygons or raster surfaces at a set of points or geographic extent. These, and similar types, of operations are easy in R (as long as all spatial objects are in a common CRS). Recall from Chapter <a href="section-structures.html#section-structures">4</a> how handy it is to subset data structures, e.g., vectors and data frames, using the <code>[]</code> operator and logical vectors? Well it’s just as easy to subset spatial objects, thanks to the authors of <code>sp</code>, <code>raster</code>, and other spatial data packages.</p>
+<div id="section-fetching-and-cropping-data-using-raster" class="section level3">
+<h3><span class="header-section-number">9.7.1</span> Fetching and Cropping Data using <code>raster</code></h3>
+<p>In order to motivate our exploration of spatial data subsetting and to illustrate some useful functionality of the <code>raster</code> package, let’s download some elevation data for the PEF. The <code>raster</code> package has a rich set of functions for manipulating raster data as well as functions for downloading data from open source repositories. We’ll focus on the package’s <code>getData</code> function, which, given a location in geographic longitude and latitude or location name, will download data from <a href="http://www.gadm.org/%7D%7BGlobal%20Administrative%20Boundaries">GADM</a>, <a href="https://www2.jpl.nasa.gov/srtm/%7D%7BShuttle%20Radar%20Topography%20Mission">Shuttle Radar Topography Mission</a>, <a href="http://www.worldclim.org/">Global Climate Data</a>, and other sources commonly used in spatial data applications.</p>
+<p>Let’s download SRTM surface elevation data for the PEF, check the resulting object’s class and CRS, and display it using the <code>raster</code> package’s <code>image</code> function along with the PEF forest inventory plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(raster)</code></pre></div>
+<pre><code>
+Attaching package: &#39;raster&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    select</code></pre>
+<pre><code>The following object is masked from &#39;package:tidyr&#39;:
+
+    extract</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>pef.centroid &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(plots) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">     </span><span class="kw">summarize</span>(<span class="dt">mu.x =</span> <span class="kw">mean</span>(easting), <span class="dt">mu.y =</span> <span class="kw">mean</span>(northing))
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>srtm &lt;-<span class="st"> </span><span class="kw">getData</span>(<span class="st">&quot;SRTM&quot;</span>, <span class="dt">lon =</span> pef.centroid[, <span class="dv">1</span>], <span class="dt">lat =</span> pef.centroid[, <span class="dv">2</span>])</code></pre></div>
+<pre><code>Error in utils::download.file(url = aurl, destfile = fn, method = &quot;auto&quot;, : cannot open URL &#39;http://srtm.csi.cgiar.org/SRT-ZIP/SRTM_V41/SRTM_Data_GeoTiff/srtm_23_04.ZIP&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>srtm &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;srtm_23_04.tif&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">proj4string</span>(srtm) &lt;-<span class="st"> &quot;+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">class</span>(srtm)</code></pre></div>
+<pre><code>[1] &quot;RasterLayer&quot;
+attr(,&quot;package&quot;)
+[1] &quot;raster&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">proj4string</span>(srtm)</code></pre></div>
+<pre><code>[1] &quot;+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">image</span>(srtm)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(plots, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
+<p>A few things to notice in the code above. First the <code>getData</code> function needs the longitude <code>lon</code> and latitude <code>lat</code> to identify which SRTM raster tile to return (SRTM data come in large raster tiles that cover the globe). As usual, look at the <code>getData</code> function documentation for a description of the arguments. To estimate the PEF’s centroid coordinate, we averaged the forest inventory plots’ latitude and longitude then assigned the result to <code>pef.centroid</code>. Second, there is currently a bug with downloading <code>SRTM</code> data using the <code>getData()</code> function. All the data are downloaded into your current directory, but the function does not properly load them into <code>R</code>. If you run this line yourself and get an error, continue going through the code we have. In the next line we load the data in ourselves using the call to <code>raster(&quot;srtm_23_04.tiff&quot;)</code>. I also manually change the coordinate system using the <code>proj4string</code> function. The <code>srtm</code> object result from our code to get around the bug is a <code>RasterLayer</code>, see Table <a href="section-sp.html#tab:spatialObjs">9.1</a>. Third, <code>srtm</code> is in a longitude latitude geographic CRS (same as our other PEF data). Finally, the image shows SRTM elevation along the coast of Maine, the PEF plots are those tiny specks of black in the northwest quadrant, and the white region of the image is the Atlantic Ocean.</p>
+<p>Okay, this is a start, but it would be good to crop the SRTM image to the PEF’s extent. This is done using <code>raster</code>’s <code>crop</code> function. This function can use many different kinds of spatial objects in the second argument to calculate the extent at which to crop the object in the first argument. Here, I set <code>mu</code> as the second argument and save the resulting SRTM subset over the larger tile (the <code>srtm</code> object).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>srtm &lt;-<span class="st"> </span><span class="kw">crop</span>(srtm, mu)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">image</span>(srtm)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">plot</span>(mu, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-241-1.png" width="672" /></p>
+<p>The <code>crop</code> is in effect doing a spatial setting of the raster data. We’ll return to the <code>srtm</code> data and explore different kinds of subsetting in the subsequent sections.</p>
+</div>
+<div id="section-logical-index-and-name-subsetting" class="section level3">
+<h3><span class="header-section-number">9.7.2</span> Logical, Index, and Name Subsetting</h3>
+<p>As promised, we can subset spatial objects using the <code>[]</code> operator and a logical, index, or name vector. The key is that <code>sp</code> objects behave like data frames, see Section <a href="section-structures.html#section-dataFrames">4.6</a>. A logical or index vector to the left of the comma in <code>[,]</code> accesses points, lines, polygons, or pixels. Similarly, a logical, index, or name vector to the right of the comma accesses variables.</p>
+<p>For example, say we want to map forest inventory plots with more than 10,000 stems per hectare, <code>stems_ha</code> (the <code>min()</code> was added below to double check that the subset worked correctly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(plots<span class="op">$</span>stems_ha)</code></pre></div>
+<pre><code>[1] 119</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>plots.10k &lt;-<span class="st"> </span>plots[plots<span class="op">$</span>stems_ha <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span>, ]
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">min</span>(plots.10k<span class="op">$</span>stems_ha)</code></pre></div>
+<pre><code>[1] 10008</code></pre>
+<p>You can also add new variables to the spatial objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>plots<span class="op">$</span>diameter_in &lt;-<span class="st"> </span>plots<span class="op">$</span>diameter_cm<span class="op">/</span><span class="fl">2.54</span>
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(plots)</code></pre></div>
+<pre><code>  mu_id plot biomass_mg_ha stems_ha diameter_cm
+1   U10   11         96.35     5453         4.8
+2   U10   13        115.70     2629         6.9
+3   U10   21        121.58     3385         6.1
+4   U10   22         71.97     7742         3.1
+5   U10   23        122.26     7980         4.7
+6   U10   24         85.85    10047         1.6
+  basal_area_m2_ha diameter_in
+1             22.0      1.8898
+2             23.2      2.7165
+3             23.0      2.4016
+4             16.1      1.2205
+5             29.2      1.8504
+6             19.1      0.6299</code></pre>
+</div>
+<div id="section-spatial-subsetting-and-overlay" class="section level3">
+<h3><span class="header-section-number">9.7.3</span> Spatial Subsetting and Overlay</h3>
+<p>A spatial overlay retrieves the indexes or variables from object <span class="math inline">\(A\)</span> using the location of object <span class="math inline">\(B\)</span>. With some spatial objects this operation can be done using the <code>[]</code> operator. For example, say we want to select and map all management units in <code>mu</code>, i.e., <span class="math inline">\(A\)</span>, that contain plots with more than 10,000 stems per ha, i.e., <span class="math inline">\(B\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.10k &lt;-<span class="st"> </span>mu[plots.10k, ]  ## A[B,]
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>mu.10k.f &lt;-<span class="st"> </span><span class="kw">fortify</span>(mu.10k, <span class="dt">region =</span> <span class="st">&quot;mu_id&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span><span class="st"> </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> mu.10k.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, 
+<span class="op">+</span><span class="st">   </span><span class="dt">y =</span> lat, <span class="dt">group =</span> group), <span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">as.data.frame</span>(plots.10k), 
+<span class="op">+</span><span class="st">   </span><span class="kw">aes</span>(<span class="dt">x =</span> easting, <span class="dt">y =</span> northing), <span class="dt">color =</span> <span class="st">&quot;white&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-244-1.png" width="672" /></p>
+<p>More generally, however, the <code>over</code> function offers consistent overlay operations for <code>sp</code> objects and can return either indexes or variables from object <span class="math inline">\(A\)</span> given locations from object <span class="math inline">\(B\)</span>, i.e., <code>over(B, A)</code> or, equivalently, <code>B%over%A</code>. The code below duplicates the result from the preceding example using <code>over</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.10k &lt;-<span class="st"> </span>mu[mu<span class="op">$</span>mu_id <span class="op">%in%</span><span class="st"> </span><span class="kw">unique</span>(<span class="kw">over</span>(plots.10k, mu)<span class="op">$</span>mu_id), 
+<span class="op">+</span><span class="st">   </span>]</code></pre></div>
+<p>Yes, this requires more code but <code>over</code> provides a more flexible and general purpose function for overlays on the variety of <code>sp</code> objects. Let’s unpack this one-liner into its five steps.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>i &lt;-<span class="st"> </span><span class="kw">over</span>(plots.10k, mu)
+<span class="op">&gt;</span><span class="st"> </span>ii &lt;-<span class="st"> </span>i<span class="op">$</span>mu_id
+<span class="op">&gt;</span><span class="st"> </span>iii &lt;-<span class="st"> </span><span class="kw">unique</span>(ii)
+<span class="op">&gt;</span><span class="st"> </span>iv &lt;-<span class="st"> </span>mu<span class="op">$</span>mu_id <span class="op">%in%</span><span class="st"> </span>iii
+<span class="op">&gt;</span><span class="st"> </span>v &lt;-<span class="st"> </span>mu[iv, ]</code></pre></div>
+<ol style="list-style-type: lower-roman">
+<li>The <code>over</code> function returns variables for <code>mu</code>’s polygons that coincide with the <code>nrow(plots.10k@data)</code> points in <code>plots.10k</code>. No points fall outside the polygons and the polygons do not overlap, so <span class="math inline">\(i\)</span> should be a data frame with <code>nrow(plots.10k@data)</code> rows. If polygons did overlap and a point fell within the overlap region, then variables for the coinciding polygons are returned.</li>
+<li>Select the unique <code>mu</code> identifier <code>mu_id</code> (this step is actually not necessary here because <code>mu</code> only has one variable).</li>
+<li>Because some management units contain multiple plots there will be repeat values of <code>mu_id</code> in <em>ii</em>, so apply the <code>unique</code> function to get rid of duplicates.</li>
+<li>Use the <code>%in%</code> operator to create a logical vector that identifies which polygons should be in the final map.</li>
+<li>Subset <code>mu</code> using the logical vector created in <span class="math inline">\(iv\)</span>.</li>
+</ol>
+<p>Now let’s do something similar using the <code>srtm</code> elevation raster. Say we want to map elevation along trails, winter roads, and gravel roads across the PEF. We could subset <code>srtm</code> using the <code>roads</code> <code>SpatialLinesDataFrame</code>; however, mapping the resulting pixel values along the road segments using <code>ggmap</code> requires a bit more massaging. So, to simplify things for this example, <code>roads</code> is first coerced into a <code>SpatialPointsDataFrame</code> called <code>roads.pts</code> that is used to extract spatially coinciding <code>srtm</code> pixel values which themselves are coerced from <code>raster</code>’s <code>RasterLayer</code> to <code>sp</code>’s <code>SpatialPixelsDataFrame</code> called <code>srtm.sp</code> so that we can use the <code>over</code> function. We also choose a different basemap just for fun.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>hikes &lt;-<span class="st"> </span>roads[roads<span class="op">$</span>type <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Trail&quot;</span>, <span class="st">&quot;Winter&quot;</span>, <span class="st">&quot;Gravel&quot;</span>),]
+<span class="op">&gt;</span><span class="st">  </span>
+<span class="er">&gt;</span><span class="st"> </span>hikes.pts &lt;-<span class="st"> </span><span class="kw">as</span>(hikes, <span class="st">&quot;SpatialPointsDataFrame&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>srtm.sp &lt;-<span class="st"> </span><span class="kw">as</span>(srtm, <span class="st">&quot;SpatialPixelsDataFrame&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>hikes.pts<span class="op">$</span>srtm &lt;-<span class="st"> </span><span class="kw">over</span>(hikes.pts, srtm.sp)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>basemap &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location=</span>mu.bbox,  <span class="dt">zoom =</span> <span class="dv">14</span>, <span class="dt">maptype=</span><span class="st">&quot;terrain&quot;</span>)</code></pre></div>
+<pre><code>Warning: bounding box given to google - spatial extent
+only approximate.</code></pre>
+<pre><code>converting bounding box to center/zoom specification. (experimental)</code></pre>
+<pre><code>Source : https://maps.googleapis.com/maps/api/staticmap?center=44.852323,-68.625803&amp;zoom=14&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=AIzaSyBPAwSY5x8vQqlnG-QwiCAWQW12U3CTLZY</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>color.vals &lt;-<span class="st"> </span>srtm<span class="op">@</span>data<span class="op">@</span>values[<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(hikes.pts)]
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_point</span>(<span class="dt">data=</span><span class="kw">as.data.frame</span>(hikes.pts),
+<span class="op">+</span><span class="st">                </span><span class="kw">aes</span>(<span class="dt">x =</span> coords.x1, <span class="dt">y =</span> coords.x2, <span class="dt">color =</span> color.vals)) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">scale_color_gradient</span>(<span class="dt">low=</span><span class="st">&quot;green&quot;</span>, <span class="dt">high=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">&quot;Hiking trail elevation</span><span class="ch">\n</span><span class="st">(m above sea level)&quot;</span>,
+<span class="op">+</span><span class="st">          </span><span class="dt">xlab=</span><span class="st">&quot;Longitude&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Latitude&quot;</span>)</code></pre></div>
+<pre><code>Warning: Removed 483 rows containing missing values
+(geom_point).</code></pre>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-247-1.png" width="672" /></p>
+<p>In the call to <code>geom_point</code> above, <code>coords.x1</code> <code>coords.x2</code> are the default names given to longitude and latitude, respectively, when <code>sp</code> coerces <code>hikes</code> to <code>hikes.pts</code>. These points represent the vertices along line segments. I create the vector <code>color.vals</code> that contains the values from <code>srtm</code> that I use in the map argument <code>color</code>. Normally, I would be able to simply use the argument <code>color = srtm</code> in the graph, but since there is a bug in the <code>getData</code> function I mentioned earlier, we need to do another workaround here.</p>
+<p>Overlay operations involving lines and polygons over polygons require the <code>rgeos</code> package which provides an interface to the <a href="https://trac.osgeo.org/geos/">Geometry Engine - Open Source</a> (GEOS) <code>C++</code> library for topology operations on geometries. We’ll leave it to you to explore these capabilities.</p>
+</div>
+<div id="section-spatial-aggregation" class="section level3">
+<h3><span class="header-section-number">9.7.4</span> Spatial Aggregation</h3>
+<p>We have seen aggregation operations before when using <code>dplyr</code>’s <code>summarize</code> function. The <code>summarize</code> function is particularly powerful when combined with <code>group_by()</code>, which can apply a function specified in <code>summarize()</code> to a variable partitioned using a grouping variable. The <code>aggregate</code> function in <code>sp</code> works in a similar manner, except groups are delineated by the spatial extent of a thematic variable. In fact, the work we did to create <code>mu.bio</code> using <code>dplyr</code> functions can be accomplished with <code>aggregate()</code>. Using <code>aggregate()</code> will, however, require a slightly different approach for joining the derived average <code>biomass_mg_ha</code> to the fortified <code>mu</code>. This is because the <code>aggregate</code> function will apply the user specified function to all variables in the input object, which, in our case, results in an <code>NA</code> for the linking variable <code>mu_id</code> as demonstrated below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.ag &lt;-<span class="st"> </span><span class="kw">aggregate</span>(plots[, <span class="kw">c</span>(<span class="st">&quot;mu_id&quot;</span>, <span class="st">&quot;biomass_mg_ha&quot;</span>)], 
+<span class="op">+</span><span class="st">   </span><span class="dt">by =</span> mu, <span class="dt">FUN =</span> mean)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>(mu.ag<span class="op">@</span>data, <span class="dt">n =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>  mu_id biomass_mg_ha
+0  &lt;NA&gt;         49.86
+1  &lt;NA&gt;        112.17</code></pre>
+<p>With <code>mu_id</code> rendered useless, we do not have a variable that uniquely identifies each polygon for use in <code>fortify</code>’s <code>region</code> argument; hence no way to subsequently join the unfortified and fortified versions of <code>mu.bio.ag</code>. Here’s the work around. If the <code>region</code> is not specified, <code>fortify()</code> uses an internal unique polygon ID that is part of the <code>sp</code> data object and accessed via <code>row.names()</code><a href="section-references.html#section-fn52" class="footnoteRef" id="section-fnref52"><sup>52</sup></a> So, the trick is to add this unique polygon ID to the <code>aggregate()</code> output prior to calling <code>fortify()</code> as demonstrated below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.ag<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">row.names</span>(mu.ag)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>mu.ag.f &lt;-<span class="st"> </span><span class="kw">fortify</span>(mu.ag)</code></pre></div>
+<pre><code>Regions defined for each Polygons</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.ag.f &lt;-<span class="st"> </span><span class="kw">left_join</span>(mu.ag.f, mu.ag<span class="op">@</span>data)</code></pre></div>
+<pre><code>Joining, by = &quot;id&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span><span class="st"> </span><span class="kw">geom_polygon</span>(<span class="dt">data =</span> mu.ag.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, 
+<span class="op">+</span><span class="st">   </span><span class="dt">y =</span> lat, <span class="dt">group =</span> group, <span class="dt">fill =</span> biomass_mg_ha), <span class="dt">size =</span> <span class="fl">0.2</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">high =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">na.value =</span> <span class="st">&quot;transparent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Biomass (mg/ha)&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-249-1.png" width="672" /></p>
+<p>The <code>aggregate()</code> function will work with all <code>sp</code> objects. For example let’s map the variance of pixel values in <code>srtm.sp</code> by management unit. Notice that <code>aggregate()</code> is happy to take a user-specified function for <code>FUN</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.srtm &lt;-<span class="st"> </span><span class="kw">aggregate</span>(srtm.sp, <span class="dt">by=</span>mu,
+<span class="op">+</span><span class="st">                      </span><span class="dt">FUN=</span><span class="cf">function</span>(x){<span class="kw">sqrt</span>(<span class="kw">var</span>(x))})
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>mu.srtm<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">row.names</span>(mu.srtm)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span>mu.srtm.f &lt;-<span class="st"> </span><span class="kw">fortify</span>(mu.srtm)</code></pre></div>
+<pre><code>Regions defined for each Polygons</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mu.srtm.f &lt;-<span class="st"> </span><span class="kw">left_join</span>(mu.srtm.f, mu.srtm<span class="op">@</span>data)</code></pre></div>
+<pre><code>Joining, by = &quot;id&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggmap</span>(basemap) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>mu.srtm.f, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">group=</span>group, 
+<span class="op">+</span><span class="st">                                      </span><span class="dt">fill=</span>srtm_23_<span class="dv">04</span>), 
+<span class="op">+</span><span class="st">                  </span><span class="dt">size=</span><span class="fl">0.2</span>, <span class="dt">color=</span><span class="st">&quot;orange&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">     </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low=</span><span class="st">&quot;green&quot;</span>, <span class="dt">high=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="op">+</span><span class="st">         </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Elevation standard deviation</span><span class="ch">\n</span><span class="st">(m above sea level)&quot;</span>, 
+<span class="op">+</span><span class="st">          </span><span class="dt">xlab=</span><span class="st">&quot;Longitude&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Latitude&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-250-1.png" width="672" /></p>
+</div>
+</div>
+<div id="section-where-to-go-from-here" class="section level2">
+<h2><span class="header-section-number">9.8</span> Where to go from here</h2>
+<p>This chapter just scratches the surface of R’s spatial data manipulation and visualization capabilities. The basic ideas we presented here should allow you to take a deeper look into <code>sp</code>, <code>rgdal</code>, <code>rgeos</code>, <code>ggmap</code>, <code>leaflet</code>, and a myriad of other excellent user-contributed R spatial data packages. A good place to start is with Edzer Pebesma’s excellent vignette on the use of the map overlay and spatial aggregation, available <a href="https://cran.r-project.org/web/packages/sp/vignettes/over.pdf">here</a>, as well as <em>Applied Spatial Data Analysis with R</em> by .</p>
+</div>
+<div id="section-homework-6" class="section level2">
+<h2><span class="header-section-number">9.9</span> Homework</h2>
+<p><strong>Exercise Spatial Data</strong> Learning objectives: practice loading and reprojecting spatial data; analyze spatial data; create leaflet maps to convey analysis results; interpret analysis results.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-shiny-interactive-web-apps-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

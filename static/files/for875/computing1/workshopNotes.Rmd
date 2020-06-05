@@ -1,0 +1,31 @@
+---
+title: "Workshop Notes"
+author: "Jeff Doser"
+date: "October 11, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
++ To compile shared library you should run code of the following form: `gcc -I/usr/share/R/include -fPIC -shared cIDist.cpp -o cIDist.so`
+    + `gcc` is the compiler
+    + `-I/usr/share/R/include` specifies the location to find the libraries that you are including in the header of the `.cpp` file
+    + `-fPIC` specifies that the code is independent and can be accessed regardless of its location (necessary for shared libraries)
+    + `-shared` specifies that you want a shared object
+    + `cIDIst.cpp` is the name of the `C++` file
+    + `-o` specifies that you will generate the shared file from the `.o` object file
++ To compile using `OpenMP`, add the option `-fopenmp` to the above
++ SEXP is R's generic object in C. It's a specialized object that R recognizes
++ `cIDist.R` is the R wrapper for `cIDist.cpp`
++ The `.Call()` is looking at the name of the function inside of .cpp file
++ Both R and C are column major. Keep track of this
++ `R_NilValue` is the object you pass back that is equivalent to a `NULL`
++ Easy way to compile the C++ file: `R CMD SHLIB cIDist.cpp`. Does things like the above but does it all for you and spits back what it's doingc
++ The `ifdef` statements are used to ensure the code doesn't break if OpenMP is not installed
+
+
+# RMPI within the HPC4Stats Framework
+
+

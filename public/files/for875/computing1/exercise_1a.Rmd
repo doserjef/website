@@ -1,0 +1,46 @@
+---
+title: "Exercise 1a"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Loop heavy R function to calculate Euclidean distance between two coordinate matrices.
+
+```{r, code=readLines('rIDist.R')}
+```
+
+### Similar Euclidean distance function in C/C++ via `.Call()`.
+
+`R` file
+```{r, code=readLines('cIDist.R'), eval=FALSE} 
+```
+
+C++ file
+
+```{c, code=readLines('cIDist.cpp'), eval=FALSE} 
+```
+
+### Add some parallelization to the distance function.
+
+`R` file
+```{r, code=readLines('cIDistOMP.R'), eval=FALSE} 
+```
+
+C++ file
+
+```{c, code=readLines('cIDistOMP.cpp'), eval=FALSE} 
+```
+
+### Compile the C++ shared objects.
+```{r}
+system("R CMD SHLIB cIDist.cpp")
+
+system("R CMD SHLIB cIDistOMP.cpp")
+```
+
+### Run some time tests using the three `IDist` functions.
+```{r, code=readLines('try-it-out.R')}
+```

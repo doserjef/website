@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Functions and Programming | R Programming for Data Sciences</title>
+  <meta name="description" content="Chapter 7 Functions and Programming | R Programming for Data Sciences" />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Functions and Programming | R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Functions and Programming | R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser" />
+
+
+<meta name="date" content="2019-05-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data2.html">
+<link rel="next" href="sp.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="data.html"><a href="data.html#baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html#world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="data.html"><a href="data.html#email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="data.html"><a href="data.html#handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="data.html"><a href="data.html#looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="data.html"><a href="data.html#how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and Processing R Markdown Documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.2</b> Output Formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.3</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#practice-exercises"><i class="fa fa-check"></i><b>3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="3.4" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#homework"><i class="fa fa-check"></i><b>3.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="structures.html"><a href="structures.html#types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.2</b> Factors</a></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#names-of-objects-in-r"><i class="fa fa-check"></i><b>4.3</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.4</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.4.1</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.5</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.5.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.6</b> Lists</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.7</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.7.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.7.2" data-path="structures.html"><a href="structures.html#logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.7.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.8</b> Patterned Data</a></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#practice-exercises-1"><i class="fa fa-check"></i><b>4.9</b> Practice Exercises</a></li>
+<li class="chapter" data-level="4.10" data-path="structures.html"><a href="structures.html#homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="graphics-in-r.html"><a href="graphics-in-r.html"><i class="fa fa-check"></i><b>5</b> Graphics in R</a><ul>
+<li class="chapter" data-level="5.1" data-path="graphics-in-r.html"><a href="graphics-in-r.html#scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="graphics-in-r.html"><a href="graphics-in-r.html#structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="graphics-in-r.html"><a href="graphics-in-r.html#adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="graphics-in-r.html"><a href="graphics-in-r.html#labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="graphics-in-r.html"><a href="graphics-in-r.html#labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="graphics-in-r.html"><a href="graphics-in-r.html#customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="graphics-in-r.html"><a href="graphics-in-r.html#text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="graphics-in-r.html"><a href="graphics-in-r.html#other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="graphics-in-r.html"><a href="graphics-in-r.html#histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="graphics-in-r.html"><a href="graphics-in-r.html#boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="graphics-in-r.html"><a href="graphics-in-r.html#bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="graphics-in-r.html"><a href="graphics-in-r.html#graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="graphics-in-r.html"><a href="graphics-in-r.html#themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="graphics-in-r.html"><a href="graphics-in-r.html#saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="graphics-in-r.html"><a href="graphics-in-r.html#more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a></li>
+<li class="chapter" data-level="5.8" data-path="graphics-in-r.html"><a href="graphics-in-r.html#practice-exercises-2"><i class="fa fa-check"></i><b>5.8</b> Practice Exercises</a></li>
+<li class="chapter" data-level="5.9" data-path="graphics-in-r.html"><a href="graphics-in-r.html#homework-2"><i class="fa fa-check"></i><b>5.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data2.html"><a href="data2.html"><i class="fa fa-check"></i><b>6</b> Working with Data</a><ul>
+<li class="chapter" data-level="6.1" data-path="data2.html"><a href="data2.html#reading-data-into-r"><i class="fa fa-check"></i><b>6.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="6.2" data-path="data2.html"><a href="data2.html#reading-data-with-missing-observations"><i class="fa fa-check"></i><b>6.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="6.3" data-path="data2.html"><a href="data2.html#summarizing-data-frames"><i class="fa fa-check"></i><b>6.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="data2.html"><a href="data2.html#column-and-row-summaries"><i class="fa fa-check"></i><b>6.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data2.html"><a href="data2.html#apply"><i class="fa fa-check"></i><b>6.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data2.html"><a href="data2.html#saving-typing-using-with"><i class="fa fa-check"></i><b>6.3.3</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data2.html"><a href="data2.html#transforming-a-data-frame"><i class="fa fa-check"></i><b>6.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="data2.html"><a href="data2.html#adding-variables"><i class="fa fa-check"></i><b>6.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="6.4.2" data-path="data2.html"><a href="data2.html#removing-variables"><i class="fa fa-check"></i><b>6.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="6.4.3" data-path="data2.html"><a href="data2.html#transforming-variables"><i class="fa fa-check"></i><b>6.4.3</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data2.html"><a href="data2.html#rearranging-variables"><i class="fa fa-check"></i><b>6.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="6.6" data-path="data2.html"><a href="data2.html#reshaping-data"><i class="fa fa-check"></i><b>6.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="data2.html"><a href="data2.html#tidyr"><i class="fa fa-check"></i><b>6.6.1</b> <code>tidyr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data2.html"><a href="data2.html#manipulating-data-with-dplyr-dplyr"><i class="fa fa-check"></i><b>6.7</b> Manipulating Data with <code>dplyr</code> #{dplyr}</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="data2.html"><a href="data2.html#improved-data-frames"><i class="fa fa-check"></i><b>6.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="6.7.2" data-path="data2.html"><a href="data2.html#filtering-data-by-row"><i class="fa fa-check"></i><b>6.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="6.7.3" data-path="data2.html"><a href="data2.html#selecting-variables-by-column"><i class="fa fa-check"></i><b>6.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="6.7.4" data-path="data2.html"><a href="data2.html#pipes"><i class="fa fa-check"></i><b>6.7.4</b> Pipes</a></li>
+<li class="chapter" data-level="6.7.5" data-path="data2.html"><a href="data2.html#arranging-data-by-row"><i class="fa fa-check"></i><b>6.7.5</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="6.7.6" data-path="data2.html"><a href="data2.html#renaming-variables"><i class="fa fa-check"></i><b>6.7.6</b> Renaming Variables</a></li>
+<li class="chapter" data-level="6.7.7" data-path="data2.html"><a href="data2.html#data-summaries-and-grouping"><i class="fa fa-check"></i><b>6.7.7</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="6.7.8" data-path="data2.html"><a href="data2.html#creating-new-variables"><i class="fa fa-check"></i><b>6.7.8</b> Creating New Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data2.html"><a href="data2.html#practice-exercises-3"><i class="fa fa-check"></i><b>6.8</b> Practice Exercises</a></li>
+<li class="chapter" data-level="6.9" data-path="data2.html"><a href="data2.html#homework-3"><i class="fa fa-check"></i><b>6.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functions-and-programming.html"><a href="functions-and-programming.html"><i class="fa fa-check"></i><b>7</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="7.1" data-path="functions-and-programming.html"><a href="functions-and-programming.html#r-functions"><i class="fa fa-check"></i><b>7.1</b> R Functions</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="functions-and-programming.html"><a href="functions-and-programming.html#creating-functions"><i class="fa fa-check"></i><b>7.1.1</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="functions-and-programming.html"><a href="functions-and-programming.html#programming-conditional-statements"><i class="fa fa-check"></i><b>7.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="functions-and-programming.html"><a href="functions-and-programming.html#comparison-and-logical-operators"><i class="fa fa-check"></i><b>7.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="7.2.2" data-path="functions-and-programming.html"><a href="functions-and-programming.html#if-else-statements"><i class="fa fa-check"></i><b>7.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="functions-and-programming.html"><a href="functions-and-programming.html#arith"><i class="fa fa-check"></i><b>7.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="7.4" data-path="functions-and-programming.html"><a href="functions-and-programming.html#loops"><i class="fa fa-check"></i><b>7.4</b> Loops</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="functions-and-programming.html"><a href="functions-and-programming.html#a-repeat-loop"><i class="fa fa-check"></i><b>7.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="7.4.2" data-path="functions-and-programming.html"><a href="functions-and-programming.html#a-while-loop"><i class="fa fa-check"></i><b>7.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="7.4.3" data-path="functions-and-programming.html"><a href="functions-and-programming.html#a-for-loop"><i class="fa fa-check"></i><b>7.4.3</b> A For Loop</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="functions-and-programming.html"><a href="functions-and-programming.html#efficiency-considerations"><i class="fa fa-check"></i><b>7.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="functions-and-programming.html"><a href="functions-and-programming.html#growing-objects"><i class="fa fa-check"></i><b>7.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="7.5.2" data-path="functions-and-programming.html"><a href="functions-and-programming.html#vectorization"><i class="fa fa-check"></i><b>7.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="functions-and-programming.html"><a href="functions-and-programming.html#more-on-functions"><i class="fa fa-check"></i><b>7.6</b> More on Functions</a></li>
+<li class="chapter" data-level="7.7" data-path="functions-and-programming.html"><a href="functions-and-programming.html#calling-functions"><i class="fa fa-check"></i><b>7.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="functions-and-programming.html"><a href="functions-and-programming.html#the-...-argument"><i class="fa fa-check"></i><b>7.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="7.7.2" data-path="functions-and-programming.html"><a href="functions-and-programming.html#lazy-evaluation"><i class="fa fa-check"></i><b>7.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="functions-and-programming.html"><a href="functions-and-programming.html#homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="sp.html"><a href="sp.html"><i class="fa fa-check"></i><b>8</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="sp.html"><a href="sp.html#overview"><i class="fa fa-check"></i><b>8.1</b> Overview</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="sp.html"><a href="sp.html#some-spatial-data-packages"><i class="fa fa-check"></i><b>8.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="sp.html"><a href="sp.html#motivating-data"><i class="fa fa-check"></i><b>8.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="8.3" data-path="sp.html"><a href="sp.html#reading-spatial-data-into-r"><i class="fa fa-check"></i><b>8.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="8.4" data-path="sp.html"><a href="sp.html#coordinate-reference-systems"><i class="fa fa-check"></i><b>8.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="8.5" data-path="sp.html"><a href="sp.html#ggmap"><i class="fa fa-check"></i><b>8.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="8.6" data-path="sp.html"><a href="sp.html#illustration-using-leaflet"><i class="fa fa-check"></i><b>8.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="8.7" data-path="sp.html"><a href="sp.html#subsetting-spatial-data"><i class="fa fa-check"></i><b>8.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="sp.html"><a href="sp.html#fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>8.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="8.7.2" data-path="sp.html"><a href="sp.html#logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>8.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="8.7.3" data-path="sp.html"><a href="sp.html#spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>8.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="8.7.4" data-path="sp.html"><a href="sp.html#spatial-aggregation"><i class="fa fa-check"></i><b>8.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="sp.html"><a href="sp.html#where-to-go-from-here"><i class="fa fa-check"></i><b>8.8</b> Where to go from here</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>9</b> Shiny</a><ul>
+<li class="chapter" data-level="9.1" data-path="shiny.html"><a href="shiny.html#running-a-simple-shiny-app"><i class="fa fa-check"></i><b>9.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="9.2" data-path="shiny.html"><a href="shiny.html#adding-user-input"><i class="fa fa-check"></i><b>9.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="9.3" data-path="shiny.html"><a href="shiny.html#adding-output"><i class="fa fa-check"></i><b>9.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="shiny.html"><a href="shiny.html#interactive-server-logic"><i class="fa fa-check"></i><b>9.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="9.3.2" data-path="shiny.html"><a href="shiny.html#interactive-user-interface"><i class="fa fa-check"></i><b>9.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="shiny.html"><a href="shiny.html#more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>9.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="shiny.html"><a href="shiny.html#michigan-campgrounds-ui"><i class="fa fa-check"></i><b>9.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="9.4.2" data-path="shiny.html"><a href="shiny.html#michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>9.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="shiny.html"><a href="shiny.html#adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>9.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="9.6" data-path="shiny.html"><a href="shiny.html#why-use-shiny"><i class="fa fa-check"></i><b>9.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="9.7" data-path="shiny.html"><a href="shiny.html#homework-5"><i class="fa fa-check"></i><b>9.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a><ul>
+<li class="chapter" data-level="10.1" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>10.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="classification.html"><a href="classification.html#adding-predictors"><i class="fa fa-check"></i><b>10.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification.html"><a href="classification.html#more-than-two-classes"><i class="fa fa-check"></i><b>10.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="classification.html"><a href="classification.html#nearest-neighbor-methods"><i class="fa fa-check"></i><b>10.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="classification.html"><a href="classification.html#knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>10.2.1</b> kNN and the Diabetes Data</a></li>
+<li class="chapter" data-level="10.2.2" data-path="classification.html"><a href="classification.html#knn-and-the-iris-data"><i class="fa fa-check"></i><b>10.2.2</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="classification.html"><a href="classification.html#homework-6"><i class="fa fa-check"></i><b>10.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="xml.html"><a href="xml.html"><i class="fa fa-check"></i><b>11</b> Text Data</a><ul>
+<li class="chapter" data-level="11.1" data-path="xml.html"><a href="xml.html#reading-text-data-into-r"><i class="fa fa-check"></i><b>11.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="11.2" data-path="xml.html"><a href="xml.html#the-paste-function"><i class="fa fa-check"></i><b>11.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="11.3" data-path="xml.html"><a href="xml.html#more-string-processing-functions"><i class="fa fa-check"></i><b>11.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="xml.html"><a href="xml.html#tolower-and-toupper"><i class="fa fa-check"></i><b>11.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="11.3.2" data-path="xml.html"><a href="xml.html#nchar-and-strsplit"><i class="fa fa-check"></i><b>11.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="11.3.3" data-path="xml.html"><a href="xml.html#nchar-again"><i class="fa fa-check"></i><b>11.3.3</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="11.3.4" data-path="xml.html"><a href="xml.html#substr-and-strtrim"><i class="fa fa-check"></i><b>11.3.4</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="11.3.5" data-path="xml.html"><a href="xml.html#grep-and-related-functions"><i class="fa fa-check"></i><b>11.3.5</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="xml.html"><a href="xml.html#homework-7"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>12</b> Rcpp</a><ul>
+<li class="chapter" data-level="12.1" data-path="rcpp.html"><a href="rcpp.html#getting-started-with-rcpp"><i class="fa fa-check"></i><b>12.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="rcpp.html"><a href="rcpp.html#installation"><i class="fa fa-check"></i><b>12.1.1</b> Installation</a></li>
+<li class="chapter" data-level="12.1.2" data-path="rcpp.html"><a href="rcpp.html#the-simplest-c-example"><i class="fa fa-check"></i><b>12.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="rcpp.html"><a href="rcpp.html#using-rcpp"><i class="fa fa-check"></i><b>12.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="rcpp.html"><a href="rcpp.html#exporting-c-functions"><i class="fa fa-check"></i><b>12.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="12.2.2" data-path="rcpp.html"><a href="rcpp.html#inline-c-code"><i class="fa fa-check"></i><b>12.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="rcpp.html"><a href="rcpp.html#the-rcpp-interface"><i class="fa fa-check"></i><b>12.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="12.4" data-path="rcpp.html"><a href="rcpp.html#no-input-and-scalar-output"><i class="fa fa-check"></i><b>12.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="rcpp.html"><a href="rcpp.html#scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>12.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="12.4.2" data-path="rcpp.html"><a href="rcpp.html#vector-input-and-scalar-output"><i class="fa fa-check"></i><b>12.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="12.4.3" data-path="rcpp.html"><a href="rcpp.html#vector-input-and-vector-output"><i class="fa fa-check"></i><b>12.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="12.4.4" data-path="rcpp.html"><a href="rcpp.html#matrix-input-and-vector-output"><i class="fa fa-check"></i><b>12.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="12.4.5" data-path="rcpp.html"><a href="rcpp.html#matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>12.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="rcpp.html"><a href="rcpp.html#homework-8"><i class="fa fa-check"></i><b>12.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="databases-and-r.html"><a href="databases-and-r.html"><i class="fa fa-check"></i><b>13</b> Databases and R</a><ul>
+<li class="chapter" data-level="13.1" data-path="databases-and-r.html"><a href="databases-and-r.html#sql-and-database-structure"><i class="fa fa-check"></i><b>13.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="databases-and-r.html"><a href="databases-and-r.html#sql"><i class="fa fa-check"></i><b>13.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="databases-and-r.html"><a href="databases-and-r.html#difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>13.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="13.3" data-path="databases-and-r.html"><a href="databases-and-r.html#using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>13.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="databases-and-r.html"><a href="databases-and-r.html#example-with-rsqlite"><i class="fa fa-check"></i><b>13.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="13.3.2" data-path="databases-and-r.html"><a href="databases-and-r.html#dbplot"><i class="fa fa-check"></i><b>13.3.2</b> <code>dbplot</code></a></li>
+<li class="chapter" data-level="13.3.3" data-path="databases-and-r.html"><a href="databases-and-r.html#using-google-bigquery"><i class="fa fa-check"></i><b>13.3.3</b> Using Google BigQuery</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="databases-and-r.html"><a href="databases-and-r.html#changing-records-in-the-database"><i class="fa fa-check"></i><b>13.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="13.5" data-path="databases-and-r.html"><a href="databases-and-r.html#r-studio-connections-pane"><i class="fa fa-check"></i><b>13.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="13.6" data-path="databases-and-r.html"><a href="databases-and-r.html#other-options"><i class="fa fa-check"></i><b>13.6</b> Other Options</a></li>
+<li class="chapter" data-level="13.7" data-path="databases-and-r.html"><a href="databases-and-r.html#homework-9"><i class="fa fa-check"></i><b>13.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html"><i class="fa fa-check"></i><b>14</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="14.1" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>14.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#sinusoidal-signals"><i class="fa fa-check"></i><b>14.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#noise-and-filters"><i class="fa fa-check"></i><b>14.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="14.3" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>14.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="14.4" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>14.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="14.5" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#homework-10"><i class="fa fa-check"></i><b>14.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="functions-and-programming" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Functions and Programming</h1>
+<p>We have been working with a wide variety of R functions, from simple functions such as <code>mean()</code> and <code>sd()</code> to more complex functions such as <code>ggplot()</code> and <code>apply()</code>. Gaining a better understanding of existing functions and the ability to write your own functions dramatically increases what we can do with R. Learning about R’s programming capabilities is an important step in gaining facility with functions.</p>
+<div id="r-functions" class="section level2">
+<h2><span class="header-section-number">7.1</span> R Functions</h2>
+<p>Data on the yield (pounds per acre) of two types of corn seeds (regular and kiln dried) were collected. Each of the 11 plots of land was split into two subplots, and one of the subplots was planted in regular corn while the other was planted in kiln dried corn. These data were analyzed in a famous paper authored by William Gosset. Here are the data.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.corn &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/corn.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>corn &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.corn, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>corn</code></pre>
+<pre><code>   regular kiln_dried
+1     1903       2009
+2     1935       1915
+3     1910       2011
+4     2496       2463
+5     2108       2180
+6     1961       1925
+7     2060       2122
+8     1444       1482
+9     1612       1542
+10    1316       1443
+11    1511       1535</code></pre>
+<p>A paired t test, or a confidence interval for the mean difference, may be used to assess the difference in yield between the two varieties. Of course R has a function <code>t.test</code> that performs a paired t test and computes a confidence interval, but we will perform the test without using that function. We will focus for now on testing the hypotheses <span class="math inline">\(H_0\colon \mu_d = 0\)</span> versus <span class="math inline">\(H_a\colon \mu_d \neq 0\)</span> and on a two-sided confidence interval for <span class="math inline">\(\mu_d\)</span>. Here <span class="math inline">\(\mu_d\)</span> represents the population mean difference.</p>
+<p>The paired <span class="math inline">\(t\)</span> statistic is defined by
+<span class="math display">\[\begin{equation}
+t = \frac{\overline d}{S_d/\sqrt{n}}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\overline d\)</span> is the mean of the differences, <span class="math inline">\(S_d\)</span> is the standard deviation of the differences, and <span class="math inline">\(n\)</span> is the sample size. The p-value is twice the area to the right of <span class="math inline">\(|t_{\text{obs}}|\)</span>, where <span class="math inline">\(t_{\text{obs}}\)</span> is the observed <span class="math inline">\(t\)</span> statistic, and a confidence interval is given by
+<span class="math display">\[\begin{equation}
+\overline d \pm t^* (S_d/\sqrt{n}).
+\end{equation}\]</span></p>
+<p>Here <span class="math inline">\(t^*\)</span> is an appropriate quantile of a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(corn<span class="op">$</span>kiln_dried <span class="op">-</span><span class="st"> </span>corn<span class="op">$</span>regular)
+<span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(corn<span class="op">$</span>regular)
+<span class="op">&gt;</span><span class="st"> </span>S_d &lt;-<span class="st"> </span><span class="kw">sd</span>(corn<span class="op">$</span>kiln_dried <span class="op">-</span><span class="st"> </span>corn<span class="op">$</span>regular)
+<span class="op">&gt;</span><span class="st"> </span>t_obs &lt;-<span class="st"> </span>dbar<span class="op">/</span>(S_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">&gt;</span><span class="st"> </span>t_obs</code></pre>
+<pre><code>[1] 1.69</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>pval &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(t_obs), n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<span class="op">&gt;</span><span class="st"> </span>pval</code></pre>
+<pre><code>[1] 0.1218</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(S_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">&gt;</span><span class="st"> </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">&gt;</span><span class="st"> </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">&gt;</span><span class="st"> </span>lcl</code></pre>
+<pre><code>[1] -10.73</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>ucl</code></pre>
+<pre><code>[1] 78.18</code></pre>
+<p>With a few lines of R code we have calculated the t statistic, the p-value, and the confidence interval. Since paired t tests are pretty common, however, it would be helpful to automate this procedure. One obvious reason is to save time and effort, but another important reason is to avoid mistakes. It would be easy to make a mistake (e.g., using <span class="math inline">\(n\)</span> instead of <span class="math inline">\(n-1\)</span> as the degrees of freedom) when repeating the above computations.</p>
+<p>Here is a first basic function which automates the computation.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2) {
+<span class="op">+</span><span class="st">   </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)
+<span class="op">+</span><span class="st">   </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">+</span><span class="st">   </span>pval &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<span class="op">+</span><span class="st">   </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">   </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl =</span> ucl))
+<span class="op">+</span><span class="st"> </span>}</code></pre>
+<p>And here is the function in action</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dt">x1 =</span> corn<span class="op">$</span>kiln_dried, <span class="dt">x2 =</span> corn<span class="op">$</span>regular)</code></pre>
+<pre><code>$tstat
+[1] 1.69
+
+$pval
+[1] 0.1218
+
+$lcl
+[1] -10.73
+
+$ucl
+[1] 78.18</code></pre>
+<p>An explanation and comments on the function are in order.</p>
+<ul>
+<li><code>paired_t &lt;- function(x1, x2)</code> assigns a function of two variables, <code>x1</code> and <code>x2</code>, to an R object called <code>paired_t</code>.</li>
+<li>The <em>compound expression</em>, i.e., the code that makes up the body of the function, is enclosed in curly braces <code>{}</code>.</li>
+<li><code>return(list(tstat = tstat, pval = pval, lcl=lcl, ucl=ucl))</code> indicates the object(s) returned by the function. In this case the function returns a list with four components.</li>
+<li>The body of the function basically mimics the computations required to compute the t statistic, the p-value, and the confidence interval.</li>
+<li>Several objects such as <code>n</code> and <code>dbar</code> are created in the body of the function. These objects are NOT available outside the function. We will discuss this further when we cover environments and scope in R.</li>
+</ul>
+<p>Our function has automated the basic calculations. But it is still somewhat limited in usefulness. For example, it only computes a 95% confidence interval, while a user may want a different confidence level. And the function only performs a two-sided test, while a user may want a one-sided procedure. We modify the function slightly to allow the user to specify the confidence level next.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>) {
+<span class="op">+</span><span class="st">   </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)
+<span class="op">+</span><span class="st">   </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">+</span><span class="st">   </span>pval &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<span class="op">+</span><span class="st">   </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span>
+<span class="op">+</span><span class="st">   </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">   </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl =</span> ucl))
+<span class="op">+</span><span class="st"> </span>}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular)</code></pre>
+<pre><code>$tstat
+[1] 1.69
+
+$pval
+[1] 0.1218
+
+$lcl
+[1] -10.73
+
+$ucl
+[1] 78.18</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">cl =</span> <span class="fl">0.99</span>)</code></pre>
+<pre><code>$tstat
+[1] 1.69
+
+$pval
+[1] 0.1218
+
+$lcl
+[1] -29.5
+
+$ucl
+[1] 96.96</code></pre>
+<p>Two things to note. First, arguments do not have to be named. So</p>
+<pre><code>paired_t(corn$kiln_dried, corn$regular)</code></pre>
+<p>and</p>
+<pre><code>paired_t(x1 = corn$kiln_dried, x2 = corn$regular)</code></pre>
+<p>are equivalent. But we need to be careful if we do not name arguments because then we have to know the ordering of the arguments in the function declaration.</p>
+<p>Second, in the declaration of the function, the third argument <code>cl</code> was given a default value of <code>0.95</code>. If a user does not specify a value for <code>cl</code> it will silently be set to <code>0.95</code>. But of course a user can override this, as we did in</p>
+<pre><code>paired_t(corn$kiln_dried, corn$regular, cl = 0.99)</code></pre>
+<div id="creating-functions" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Creating Functions</h3>
+<p>Creating very short functions at the command prompt is a reasonable strategy. For longer functions, one option is to write the function in a script and then submit the whole function. Or a function can be written in any text editor, saved as a plain text file (possibly with a <code>.r</code> extension), and then read into R using the <code>source()</code> function.</p>
+</div>
+</div>
+<div id="programming-conditional-statements" class="section level2">
+<h2><span class="header-section-number">7.2</span> Programming: Conditional Statements</h2>
+<p>The <code>paired_t</code> function is somewhat useful, but could be improved in several ways. For example, consider the following:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</code></pre>
+<pre><code>Warning in x1 - x2: longer object length is not a
+multiple of shorter object length
+
+Warning in x1 - x2: longer object length is not a
+multiple of shorter object length</code></pre>
+<pre><code>$tstat
+[1] 1
+
+$pval
+[1] 0.3739
+
+$lcl
+[1] -1.421
+
+$ucl
+[1] 3.021</code></pre>
+<p>The user specified data had different numbers of observations in <code>x1</code> and <code>x2</code>, which of course can’t be data tested by a paired t test. Rather than stopping and letting the user know that this is a problem, the function continued and produced meaningless output.</p>
+<p>Also, the function as written only allows testing against a two-sided alternative hypothesis, and it would be good to allow one-sided alternatives.</p>
+<p>First we will address some checks on arguments specified by the user. For this we will use an <code>if()</code> function and a <code>stop()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>) {
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)) {
+<span class="op">+</span><span class="st">     </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors  must have the same length&quot;</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)
+<span class="op">+</span><span class="st">   </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">+</span><span class="st">   </span>pval &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<span class="op">+</span><span class="st">   </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span>
+<span class="op">+</span><span class="st">   </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">   </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl =</span> ucl))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</code></pre>
+<pre><code>Error in paired_t(1:5, 1:4): The input vectors  must have the same length</code></pre>
+<p>The argument to the <code>if()</code> function is evaluated. If the argument returns <code>TRUE</code> the ensuing code is executed. Otherwise, the ensuing code is skipped and the rest of the function is evaluated. If a <code>stop()</code> function is executed, the function is exited and the argument of <code>stop()</code> is printed.</p>
+<p>To better understand and use <code>if()</code> statements, we need to understand comparison operators and logical operators.</p>
+<div id="comparison-and-logical-operators" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Comparison and Logical Operators</h3>
+<p>We have made use of some of the comparison operators in R. These include</p>
+<ul>
+<li>Equal: <code>==</code></li>
+<li>Not equal: <code>!=</code></li>
+<li>Greater than: <code>&gt;</code></li>
+<li>Less than: <code>&lt;</code></li>
+<li>Greater than or equal to: <code>&gt;=</code></li>
+<li>Less than or equal to: <code>&lt;=</code></li>
+</ul>
+<p>Special care needs to be taken with the <code>==</code> and <code>!=</code> operators because of how numbers are represented on computers, see Section <a href="functions-and-programming.html#arith">7.3</a>.</p>
+<p>There are also three logical operators, with two variants of the “and” operator and the “or” operator.</p>
+<ul>
+<li>and: Either <code>&amp;</code> or <code>&amp;&amp;</code></li>
+<li>or: Either <code>|</code> or <code>||</code></li>
+<li>not: <code>!</code></li>
+</ul>
+<p>The “double” operators <code>&amp;&amp;</code> and <code>||</code> just examine the first element of the two vectors, whereas the “single” operators <code>&amp;</code> and <code>|</code> compare element by element.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">|</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</code></pre>
+<pre><code>[1]  TRUE  TRUE FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">&amp;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</code></pre>
+<pre><code>[1] FALSE  TRUE FALSE</code></pre>
+<p>We can use the logical operators to check whether a user-specified confidence level is between 0 and 1.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>) {
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)) {
+<span class="op">+</span><span class="st">     </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors  must have the same length&quot;</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (cl <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>cl <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>) {
+<span class="op">+</span><span class="st">     </span><span class="kw">stop</span>(<span class="st">&quot;The confidence level must be between 0 and 1&quot;</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)
+<span class="op">+</span><span class="st">   </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">+</span><span class="st">   </span>pval &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<span class="op">+</span><span class="st">   </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span>
+<span class="op">+</span><span class="st">   </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">   </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl =</span> ucl))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">cl =</span> <span class="dv">15</span>)</code></pre>
+<pre><code>Error in paired_t(1:5, 2:6, cl = 15): The confidence level must be between 0 and 1</code></pre>
+</div>
+<div id="if-else-statements" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> If else statements</h3>
+<p>The <code>if()</code> statement we have used so far has the form</p>
+<pre><code>if (condition) {
+  expression
+}</code></pre>
+<p>Often we want to evaluate one expression if the condition is true, and evaluate a different expression if the condition is false. That is accomplished by the <code>if else</code> statement. Here we determine whether a number is positive, negative, or zero.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>Sign &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) {
+<span class="op">+</span><span class="st">     </span><span class="kw">print</span>(<span class="st">&quot;the number is negative&quot;</span>)
+<span class="op">+</span><span class="st">   </span>} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {
+<span class="op">+</span><span class="st">     </span><span class="kw">print</span>(<span class="st">&quot;the number is positive&quot;</span>)
+<span class="op">+</span><span class="st">   </span>} <span class="cf">else</span> {
+<span class="op">+</span><span class="st">     </span><span class="kw">print</span>(<span class="st">&quot;the number is zero&quot;</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="dv">3</span>)</code></pre>
+<pre><code>[1] &quot;the number is positive&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="op">-</span><span class="dv">3</span>)</code></pre>
+<pre><code>[1] &quot;the number is negative&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="dv">0</span>)</code></pre>
+<pre><code>[1] &quot;the number is zero&quot;</code></pre>
+<p>Notice the “different expression” for the first <code>if</code> statement was itself an <code>if</code> statement.</p>
+<p>Next we modify the <code>paired_t</code> function to allow two-sided and one-sided alternatives.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>, <span class="dt">alternative =</span> <span class="st">&quot;not.equal&quot;</span>) {
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)) {
+<span class="op">+</span><span class="st">     </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors must be of the same length&quot;</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (cl <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>cl <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>) {
+<span class="op">+</span><span class="st">     </span><span class="kw">stop</span>(<span class="st">&quot;The confidence level must be between 0 and 1&quot;</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)
+<span class="op">+</span><span class="st">   </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)
+<span class="op">+</span><span class="st">   </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (alternative <span class="op">==</span><span class="st"> &quot;not.equal&quot;</span>) {
+<span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+<span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span>
+<span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span>} <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="op">==</span><span class="st"> &quot;greater&quot;</span>) {
+<span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(tstat, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
+<span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(cl, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span><span class="ot">Inf</span>
+<span class="op">+</span><span class="st">   </span>} <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="op">==</span><span class="st"> &quot;less&quot;</span>) {
+<span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="kw">pt</span>(tstat, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)
+<span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(cl, n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)
+<span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span>
+<span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl =</span> ucl))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular)</code></pre>
+<pre><code>$tstat
+[1] 1.69
+
+$pval
+[1] 0.1218
+
+$lcl
+[1] -10.73
+
+$ucl
+[1] 78.18</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)</code></pre>
+<pre><code>$tstat
+[1] 1.69
+
+$pval
+[1] 0.9391
+
+$lcl
+[1] -Inf
+
+$ucl
+[1] 69.89</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</code></pre>
+<pre><code>$tstat
+[1] 1.69
+
+$pval
+[1] 0.06091
+
+$lcl
+[1] -2.434
+
+$ucl
+[1] Inf</code></pre>
+</div>
+</div>
+<div id="arith" class="section level2">
+<h2><span class="header-section-number">7.3</span> Computer Arithmetic</h2>
+<p>Like most software, R does not perform exact arithmetic. Rather, R follows the IEEE 754 floating point standards. This can have profound effects on how computational algorithms are implemented, but is also important when considering things like comparisons.</p>
+<p>Note first that computer arithmetic does not follow some of the rules of ordinary arithmetic. For example, it is not associative.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^-</span><span class="dv">30</span></code></pre>
+<pre><code>[1] 0.0000000009313</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^-</span><span class="dv">30</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">2</span><span class="op">^</span><span class="dv">30</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span>)</code></pre>
+<pre><code>[1] 0.0000000009313</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>(<span class="dv">2</span><span class="op">^-</span><span class="dv">30</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span>) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span></code></pre>
+<pre><code>[1] 0</code></pre>
+<p>Computer arithmetic is not exact.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span></code></pre>
+<pre><code>[1] 0.1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span> <span class="op">==</span><span class="st"> </span><span class="fl">0.1</span></code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>(<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span>) <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span></code></pre>
+<pre><code>[1] 0.00000000000000008327</code></pre>
+<p>So for example an <code>if</code> statement that uses an equality test may not give the expected answer. One way to avoid this problem is to test “near equality” using <code>all.equal()</code>. The function takes as arguments two objects to be compared, and a tolerance. If the objects are within the tolerance of each other, the function returns <code>TRUE</code>. The tolerance has a default value of about <span class="math inline">\(1.5\times 10^{-8}\)</span>, which works well in many cases.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">all.equal</span>((<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span>), <span class="fl">0.1</span>)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div id="loops" class="section level2">
+<h2><span class="header-section-number">7.4</span> Loops</h2>
+<p>Loops are an important component of any programming language, including R. Vectorized calculations and functions such as <code>apply()</code> make loops a bit less central to R than to many other languages, but an understanding of the three looping structures in R is still quite important.</p>
+<p>We will investigate loops in the context of computing what is sometimes called the “machine epsilon.” Because of the inexact representation of numbers in R (and other languages) sometimes R cannot distinguish between the numbers <code>1</code> and <code>|1 + x|</code> for small values of <code>x</code>. The smallest value of <code>x</code> such that <code>1</code> and <code>|1+x|</code> are not declared equal is the machine epsilon.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">^-</span><span class="dv">4</span></code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">^-</span><span class="dv">50</span></code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>Clearly the machine epsilon is somewhere between <span class="math inline">\(10^{-4}\)</span> and <span class="math inline">\(10^{-50}\)</span>. How can we find its value exactly? Since floating point numbers use a binary representation, we know that the machine epsilon will be equal to <span class="math inline">\(1/2^k\)</span> for some value of <span class="math inline">\(k\)</span>. So to find the machine epsilon, we can keep testing whether <span class="math inline">\(1\)</span> and <span class="math inline">\(1+1/2^k\)</span> are equal, until we find a value <span class="math inline">\(k\)</span> where the two are equal. Then the machine epsilon will be <span class="math inline">\(1/2^{k-1}\)</span>, since it is the smallest value for which the two are NOT equal.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span></code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span></code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span></code></pre>
+<pre><code>[1] FALSE</code></pre>
+<p>Testing by hand like this gets tedious quickly. A loop can automate the process. We will do this with two R loop types, <code>repeat</code> and <code>while</code>.</p>
+<div id="a-repeat-loop" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> A Repeat Loop</h3>
+<p>A <code>repeat</code> loop just repeats a given expression over and over again until a <code>break</code> statement is encountered.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>k &lt;-<span class="st"> </span><span class="dv">1</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="cf">repeat</span> {
+<span class="op">+</span><span class="st">   </span><span class="cf">if</span> (<span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>k) {
+<span class="op">+</span><span class="st">     </span><span class="cf">break</span>
+<span class="op">+</span><span class="st">   </span>} <span class="cf">else</span> {
+<span class="op">+</span><span class="st">     </span>k &lt;-<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span>k</code></pre>
+<pre><code>[1] 53</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>(k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</code></pre>
+<pre><code>[1] 0.000000000000000222</code></pre>
+<p>This code initializes <code>k</code> at 1. The body of the loop initially checks whether <span class="math inline">\(1\)</span> and <span class="math inline">\(1+1/2^k\)</span> are equal. If they are equal, the <code>break</code> statement is executed and control is transferred outside the loop. If they are not equal, <code>k</code> is increased by 1, and we return to the beginning of the top of the body of the loop.</p>
+</div>
+<div id="a-while-loop" class="section level3">
+<h3><span class="header-section-number">7.4.2</span> A While Loop</h3>
+<p>A <code>while</code> loop has the form</p>
+<pre><code>while (condition) {
+  expression
+}</code></pre>
+<p>As long as the <code>condition</code> is <code>TRUE</code> the <code>expression</code> is evaluated. Once the <code>condition</code> is <code>FALSE</code> control is transferred outside the loop.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>k &lt;-<span class="st"> </span><span class="dv">1</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="cf">while</span> (<span class="dv">1</span> <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>k) {
+<span class="op">+</span><span class="st">   </span>k &lt;-<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span>k</code></pre>
+<pre><code>[1] 53</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>(k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</code></pre>
+<pre><code>[1] 0.000000000000000222</code></pre>
+</div>
+<div id="a-for-loop" class="section level3">
+<h3><span class="header-section-number">7.4.3</span> A For Loop</h3>
+<p>A <code>for</code> loop has the form</p>
+<pre><code>for (variable in vector) {
+  expression
+}</code></pre>
+<p>The <code>for</code> loop sets the <code>variable</code> equal to each element of the <code>vector</code> in succession, and evaluates the <code>expression</code> each time. Here are two different ways to use a <code>for</code> loop to calculate the sum of the elements in a vector.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
+<span class="op">&gt;</span><span class="st"> </span>S &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {
+<span class="op">+</span><span class="st">   </span>S &lt;-<span class="st"> </span>S <span class="op">+</span><span class="st"> </span>x[i]
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span>S</code></pre>
+<pre><code>[1] 55</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>S &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (value <span class="cf">in</span> x) {
+<span class="op">+</span><span class="st">   </span>S &lt;-<span class="st"> </span>S <span class="op">+</span><span class="st"> </span>value
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span>S</code></pre>
+<pre><code>[1] 55</code></pre>
+<p>In the first case we loop over the positions of the vector elements, while in the second case we loop over the elements themselves.</p>
+</div>
+</div>
+<div id="efficiency-considerations" class="section level2">
+<h2><span class="header-section-number">7.5</span> Efficiency Considerations</h2>
+<p>In many contexts R and modern computers are fast enough that the user does not need to worry about writing efficient code. There are a few simple ways to write efficient code that are easy enough, and provide enough speed-up, that they are worth following as often as possible. The R function <code>system.time()</code> reports how long a set of R code takes to execute, and we will use this function to compare different ways to accomplish objectives in R.</p>
+<div id="growing-objects" class="section level3">
+<h3><span class="header-section-number">7.5.1</span> Growing Objects</h3>
+<p>Consider two ways to create a sequence of integers from 1 to n, implemented in functions <code>f1</code> and <code>f2</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Start with a zero-length vector, and let it grow:</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>f1 &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
+<span class="op">+</span><span class="st">   </span>x &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="dv">0</span>)
+<span class="op">+</span><span class="st">   </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {
+<span class="op">+</span><span class="st">     </span>x &lt;-<span class="st"> </span><span class="kw">c</span>(x, i)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span>x
+<span class="op">+</span><span class="st"> </span>}</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Start with a vector of length <span class="math inline">\(n\)</span> and fill in the values:</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>f2 &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
+<span class="op">+</span><span class="st">   </span>x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)
+<span class="op">+</span><span class="st">   </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {
+<span class="op">+</span><span class="st">     </span>x[i] &lt;-<span class="st"> </span>i
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span>x
+<span class="op">+</span><span class="st"> </span>}</code></pre>
+<p>Here are the two functions in action, with <span class="math inline">\(n = 100000\)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">100000</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">f1</span>(n))</code></pre>
+<pre><code>   user  system elapsed 
+ 17.745   0.089  18.160 </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">f2</span>(n))</code></pre>
+<pre><code>   user  system elapsed 
+  0.019   0.000   0.020 </code></pre>
+<p>It is <em>much</em> more efficient to start with a full-length vector and then fill in values.<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a></p>
+<p>Of course another way to create a vector of integers from 1 to n is to use <code>1:n</code>. Let’s see how fast this is.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)</code></pre>
+<pre><code>   user  system elapsed 
+      0       0       0 </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">1000000</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)</code></pre>
+<pre><code>   user  system elapsed 
+      0       0       0 </code></pre>
+<p>For <span class="math inline">\(n=100000\)</span> this is so fast the system time is very close to zero. Even when <span class="math inline">\(n\)</span> is 1000000 the time is very small. So another important lesson is to use built-in R functions whenever possible, since they have had substantial development focused on efficiency, correctness, etc.</p>
+</div>
+<div id="vectorization" class="section level3">
+<h3><span class="header-section-number">7.5.2</span> Vectorization</h3>
+<p>Next consider calculating the sum of the squared entries in each column of a matrix. For example with the matrix <span class="math inline">\(M\)</span>,
+<span class="math display">\[
+M = \left(\begin{array}{ccc}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6
+\end{array}\right),
+\]</span></p>
+<p>the sums would be <span class="math inline">\(1^2 + 4^2 = 17\)</span>, <span class="math inline">\(2^2 + 5^2 = 29\)</span>, and <span class="math inline">\(3^2 + 6^2 = 45\)</span>.
+One possibility is to have an outer loop that traverses the columns and an inner loop that traverses the rows within a column, squaring the entries and adding them together.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>test_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>, <span class="dt">nrow =</span> <span class="dv">2</span>)
+<span class="op">&gt;</span><span class="st"> </span>test_matrix</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>ss1 &lt;-<span class="st"> </span><span class="cf">function</span>(M) {
+<span class="op">+</span><span class="st">   </span>n &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">1</span>]
+<span class="op">+</span><span class="st">   </span>m &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">2</span>]
+<span class="op">+</span><span class="st">   </span>out &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, m)
+<span class="op">+</span><span class="st">   </span><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {
+<span class="op">+</span><span class="st">     </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {
+<span class="op">+</span><span class="st">       </span>out[j] &lt;-<span class="st"> </span>out[j] <span class="op">+</span><span class="st"> </span>M[i, j]<span class="op">^</span><span class="dv">2</span>
+<span class="op">+</span><span class="st">     </span>}
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(out)
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">ss1</span>(test_matrix)</code></pre>
+<pre><code>[1] 17 29 45</code></pre>
+<p>Another possibility eliminates the inner loop, using the <code>sum()</code> function to compute the sum of the squared entries in the column directly.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>ss2 &lt;-<span class="st"> </span><span class="cf">function</span>(M) {
+<span class="op">+</span><span class="st">   </span>m &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">2</span>]
+<span class="op">+</span><span class="st">   </span>out &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)
+<span class="op">+</span><span class="st">   </span><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m) {
+<span class="op">+</span><span class="st">     </span>out[j] &lt;-<span class="st"> </span><span class="kw">sum</span>(M[, j]<span class="op">^</span><span class="dv">2</span>)
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(out)
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">ss2</span>(test_matrix)</code></pre>
+<pre><code>[1] 17 29 45</code></pre>
+<p>A third possibility uses the <code>colSums()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>ss3 &lt;-<span class="st"> </span><span class="cf">function</span>(M) {
+<span class="op">+</span><span class="st">   </span>out &lt;-<span class="st"> </span><span class="kw">colSums</span>(M<span class="op">^</span><span class="dv">2</span>)
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(out)
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">ss3</span>(test_matrix)</code></pre>
+<pre><code>[1] 17 29 45</code></pre>
+<p>Here is a speed comparison, using a <span class="math inline">\(1000\times 10000\)</span> matrix.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>, <span class="dt">nrow =</span> <span class="dv">1000</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss1</span>(mm))</code></pre>
+<pre><code>   user  system elapsed 
+  1.714   0.000   1.755 </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss2</span>(mm))</code></pre>
+<pre><code>   user  system elapsed 
+  0.091   0.000   0.093 </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss3</span>(mm))</code></pre>
+<pre><code>   user  system elapsed 
+  0.196   0.020   0.222 </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(mm)</code></pre>
+</div>
+</div>
+<div id="more-on-functions" class="section level2">
+<h2><span class="header-section-number">7.6</span> More on Functions</h2>
+<p>Understanding functions deeply requires a careful study of R’s scoping rules, as well as a good understanding of environments in R. That’s beyond the scope of this book, but we will briefly discuss some issues that are most salient. For a more in-depth treatment, see “Advanced R” by Hadley Wickham, especially the chapters on functions and environments.</p>
+</div>
+<div id="calling-functions" class="section level2">
+<h2><span class="header-section-number">7.7</span> Calling Functions</h2>
+<p>When using a function, the functions arguments can be specified in three ways:</p>
+<ol style="list-style-type: decimal">
+<li>By the full name of the argument.</li>
+<li>By the position of the argument.</li>
+<li>By a partial name of the argument.</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>tmp_function &lt;-<span class="st"> </span><span class="cf">function</span>(first.arg, second.arg, third.arg, 
+<span class="op">+</span><span class="st">   </span>fourth.arg) {
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">c</span>(first.arg, second.arg, third.arg, fourth.arg))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">tmp_function</span>(<span class="dv">34</span>, <span class="dv">15</span>, <span class="dt">third.arg =</span> <span class="dv">11</span>, <span class="dt">fou =</span> <span class="dv">99</span>)</code></pre>
+<pre><code>[1] 34 15 11 99</code></pre>
+<p>Positional matching of arguments is convenient, but should be used carefully, and probably limited to the first few, and most commonly used, arguments in a function. Partial does have pitfalls. A partially specified argument must unambiguously match exactly one argument—a requirement that’s not met below.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>tmp_function &lt;-<span class="st"> </span><span class="cf">function</span>(first.arg, fourth.arg) {
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(<span class="kw">c</span>(first.arg, fourth.arg))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">tmp_function</span>(<span class="dv">1</span>, <span class="dt">f =</span> <span class="dv">2</span>)</code></pre>
+<pre><code>Error in tmp_function(1, f = 2): argument 2 matches multiple formal arguments</code></pre>
+<div id="the-...-argument" class="section level3">
+<h3><span class="header-section-number">7.7.1</span> The <code>...</code> argument</h3>
+<p>In defining a function, a special argument denoted by <code>...</code> can be used. Sometimes this is called the “ellipsis” argument, sometimes the “three dot” argument, sometimes the “dot dot dot” argument, etc. The R language definition <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-lang.html</a> describes the argument in this way:</p>
+<blockquote>
+<p>The special type of argument `…’ can contain any number of supplied arguments. It is used for a variety of purposes. It allows you to write a function that takes an arbitrary number of arguments. It can be used to absorb some arguments into an intermediate function which can then be extracted by functions called subsequently.</p>
+</blockquote>
+<p>Consider for example the <code>sum()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre>
+<pre><code>[1] 15</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">90</span>))</code></pre>
+<pre><code>[1] 112</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">90</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre>
+<pre><code>[1] 118</code></pre>
+<p>Think about writing such a function. There is no way to predict in advance the number of arguments a user might specify. So the function is defined with <code>...</code> as the first argument:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>sum</code></pre>
+<pre><code>function (..., na.rm = FALSE)  .Primitive(&quot;sum&quot;)</code></pre>
+<p>This is true of many commonly-used functions in R such as <code>c()</code> among others.</p>
+<p>Next, consider a function that calls another function in its body. For example, suppose that a collaborator always supplies comma delimited files that have five lines of description, followed by a line containing variable names, followed by the data. You are tired of having to specify <code>skip = 5</code>, <code>header = TRUE</code>, and <code>sep = &quot;,&quot;</code> to <code>read.table()</code> and want to create a function <code>my.read()</code> which uses these as defaults.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>my.read &lt;-<span class="st"> </span><span class="cf">function</span>(file, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">skip =</span> <span class="dv">5</span>, 
+<span class="op">+</span><span class="st">   </span>...) {
+<span class="op">+</span><span class="st">   </span><span class="kw">read.table</span>(<span class="dt">file =</span> file, <span class="dt">header =</span> header, <span class="dt">sep =</span> sep, 
+<span class="op">+</span><span class="st">     </span><span class="dt">skip =</span> skip, ...)
+<span class="op">+</span><span class="st"> </span>}</code></pre>
+<p>The <code>...</code> in the definition of <code>my.read()</code> allows the user to specify other arguments, for example, <code>stringsAsFactors = FALSE</code>. These will be passed on to the <code>read.table()</code> function. In fact, that is how <code>read.csv()</code> is defined.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>read.csv</code></pre>
+<pre><code>function (file, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;, dec = &quot;.&quot;, 
+    fill = TRUE, comment.char = &quot;&quot;, ...) 
+read.table(file = file, header = header, sep = sep, quote = quote, 
+    dec = dec, fill = fill, comment.char = comment.char, ...)
+&lt;bytecode: 0x5653385edf28&gt;
+&lt;environment: namespace:utils&gt;</code></pre>
+</div>
+<div id="lazy-evaluation" class="section level3">
+<h3><span class="header-section-number">7.7.2</span> Lazy Evaluation</h3>
+<p>Arguments to R functions are not evaluated until they are needed, sometimes called <em>lazy</em> evaluation.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>f &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {
+<span class="op">+</span><span class="st">   </span><span class="kw">print</span>(a<span class="op">^</span><span class="dv">2</span>)
+<span class="op">+</span><span class="st">   </span><span class="kw">print</span>(a<span class="op">^</span><span class="dv">3</span>)
+<span class="op">+</span><span class="st">   </span><span class="kw">print</span>(a <span class="op">*</span><span class="st"> </span>b)
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dt">a =</span> <span class="dv">3</span>, <span class="dt">b =</span> <span class="dv">2</span>)</code></pre>
+<pre><code>[1] 9
+[1] 27
+[1] 6</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dt">a =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>[1] 9
+[1] 27</code></pre>
+<pre><code>Error in print(a * b): argument &quot;b&quot; is missing, with no default</code></pre>
+<p>The first call specified both of the arguments <code>a</code> and <code>b</code>, and produced the expected output. In the second call the argument <code>b</code> was not specified. Since it was not needed until the third <code>print</code> statement, R happily executed the first two <code>print</code> statements, and only reported an error in the third statement, when <code>b</code> was needed to compute <code>a*b</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>f &lt;-<span class="st"> </span><span class="cf">function</span>(a, <span class="dt">b =</span> a<span class="op">^</span><span class="dv">3</span>) {
+<span class="op">+</span><span class="st">   </span><span class="kw">return</span>(a <span class="op">*</span><span class="st"> </span>b)
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">2</span>)</code></pre>
+<pre><code>[1] 16</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">2</span>, <span class="dv">10</span>)</code></pre>
+<pre><code>[1] 20</code></pre>
+<p>In the first call, since <code>b</code> was not specified, it was computed as <code>a^3</code>. In the second call, <code>b</code> was specified, and the specified value was used.</p>
+</div>
+</div>
+<div id="homework-4" class="section level2">
+<h2><span class="header-section-number">7.8</span> Homework</h2>
+<p><strong>Exercise 10</strong> Learning objectives: translate statistical notation into coded functions; learn about tools for checking validity of function arguments; practice writing functions that return multiple objects.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="36">
+<li id="fn36"><p>Roughly speaking, the first option is slower because each time the vector is increased in size, R must resize the vector and re-allocate memory.<a href="functions-and-programming.html#fnref36" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

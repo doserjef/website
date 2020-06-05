@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-shiny-interactive-web-apps-in-r.html">
+<link rel="next" href="section-xml.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-classification" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Classification</h1>
+<p>Classification problems are quite common. For example a spam filter is asked to classify incoming messages into spam or non-spam, based on factors such as the sender’s address, the subject of the message, the contents of the message, and so on. As another example, a doctor diagnosing a patient into one of four possible diagnoses based on symptoms, blood tests, and medical history is another form of classification. Or a bank may want to determine (prior to giving a loan) whether an applicant for a loan will default on the loan, again based on several variables such as income, financial history, etc.</p>
+<p>Classification methods are both extremely useful and an active area of research in statistics. In this chapter we will learn about two common, and somewhat different, classification methods, logistic regression and <span class="math inline">\(k\)</span> nearest neighbors. A very good introduction to classification and many other “Statistical Learning” methods is <span class="citation">James et al. (<a href="#ref-JamesEtAl">2014</a>)</span>. The abbreviated treatment in this chapter draws from <span class="citation">James et al. (<a href="#ref-JamesEtAl">2014</a>)</span>.</p>
+<div id="section-logistic-regression" class="section level2">
+<h2><span class="header-section-number">11.1</span> Logistic Regression</h2>
+<p>Logistic regression is widely used to relate a categorical response variable to one or more (continuous or categorical) predictors. Initially we will consider the simplest case where the response <span class="math inline">\(Y\)</span> has only two possible values (we’ll assume the values are <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>) and where there is only one continuous predictor <span class="math inline">\(X\)</span>. We would like to predict the value of <span class="math inline">\(Y\)</span> based on the value of the predictor <span class="math inline">\(X\)</span>. Let <span class="math inline">\(p(X) = P(Y = 1 | X)\)</span>.<a href="section-references.html#section-fn55" class="footnoteRef" id="section-fnref55"><sup>55</sup></a>. We will model <span class="math inline">\(p(X)\)</span> with the <em>logistic function</em>, which takes values between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, which is of course appropriate for modeling a probability:</p>
+<p><span class="math display">\[
+p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}.
+\]</span></p>
+<p>A graph of this function when <span class="math inline">\(\beta_0=0\)</span> and <span class="math inline">\(\beta_1 = 1\)</span> shows the characteristic shape.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(ggplot2)
+<span class="op">&gt;</span><span class="st"> </span>logistic &lt;-<span class="st"> </span><span class="cf">function</span>(x){<span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(x))}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> logistic)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-261-1.png" width="672" /></p>
+<p>To make this more concrete, we will consider a data set on a population of women who were over 21 years of age, lived near Phoenix, Arizona, and were of Pima Indian heritage. The data included diabetes status (yes or no) and seven possible predictor variables such as age, number of pregnancies, body mass index, etc. The original data are from the National Institute of Diabetes and Digestive and Kidney Diseases. These data were cleaned and are available in the <code>MASS</code> package in R. In the package the data frame <code>Pima.tr</code> contains 200 randomly selected cases from the full data set, which we will use to find a classifier. The data frame <code>Pima.te</code> contains the remaining 332 cases, which we will use to test the classifier on new data.<a href="section-references.html#section-fn56" class="footnoteRef" id="section-fnref56"><sup>56</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(MASS)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(Pima.tr)</code></pre></div>
+<pre><code>  npreg glu bp skin  bmi   ped age type
+1     5  86 68   28 30.2 0.364  24   No
+2     7 195 70   33 25.1 0.163  55  Yes
+3     5  77 82   41 35.8 0.156  35   No
+4     0 165 76   43 47.9 0.259  26   No
+5     0 107 60   25 26.4 0.133  23   No
+6     5  97 76   27 35.6 0.378  52  Yes</code></pre>
+<p>It will be more convenient to code the presence or absence of diabetes by 1 and 0, so we first create another column in the data frame with this coding:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>Pima.tr<span class="op">$</span>diabetes &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(Pima.tr)[<span class="dv">1</span>])
+<span class="op">&gt;</span><span class="st"> </span>Pima.tr<span class="op">$</span>diabetes[Pima.tr<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;Yes&quot;</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(Pima.tr)</code></pre></div>
+<pre><code>  npreg glu bp skin  bmi   ped age type diabetes
+1     5  86 68   28 30.2 0.364  24   No        0
+2     7 195 70   33 25.1 0.163  55  Yes        1
+3     5  77 82   41 35.8 0.156  35   No        0
+4     0 165 76   43 47.9 0.259  26   No        0
+5     0 107 60   25 26.4 0.133  23   No        0
+6     5  97 76   27 35.6 0.378  52  Yes        1</code></pre>
+<p>We will begin with <code>glu</code> as a predictor, and of course <code>type</code> as the response. So we want to find the values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> which provide the best fit for the model</p>
+<p><span class="math display">\[
+P(\text{yes} | \text{glu}) = \frac{e^{\beta_0 + \beta_1 (\text{glu})}}{1 + e^{\beta_0 + \beta_1 (\text{glu})}}
+\]</span></p>
+<p>Usually maximum likelihood methods are used to fit the model.</p>
+<p>In R we will use the function <code>glm</code> to fit logistic regression models. The <code>glm</code> function fits a wide variety of models. To specify the logistic regression model we specify <code>family = binomial</code> as an argument to <code>glm</code>. We also must specify the predictor and response variables via the model formula, which in our case will be <code>diabetes ~ glu</code> to indicate that <code>diabetes</code> (i.e., <code>type</code> recoded) is the response and <code>glu</code> is the predictor; also we specify the data frame, which in our case is <code>Pima.tr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.lr1 &lt;-<span class="st"> </span><span class="kw">glm</span>(diabetes <span class="op">~</span><span class="st"> </span>glu, <span class="dt">data =</span> Pima.tr, <span class="dt">family =</span> binomial)
+<span class="op">&gt;</span><span class="st"> </span>diabetes.lr1</code></pre></div>
+<pre><code>
+Call:  glm(formula = diabetes ~ glu, family = binomial, data = Pima.tr)
+
+Coefficients:
+(Intercept)          glu  
+    -5.5036       0.0378  
+
+Degrees of Freedom: 199 Total (i.e. Null);  198 Residual
+Null Deviance:      256 
+Residual Deviance: 207  AIC: 211</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">summary</span>(diabetes.lr1)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = diabetes ~ glu, family = binomial, data = Pima.tr)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-1.971  -0.779  -0.529   0.849   2.263  
+
+Coefficients:
+            Estimate Std. Error z value       Pr(&gt;|z|)
+(Intercept) -5.50364    0.83608   -6.58 0.000000000046
+glu          0.03778    0.00628    6.02 0.000000001756
+               
+(Intercept) ***
+glu         ***
+---
+Signif. codes:  
+0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 256.41  on 199  degrees of freedom
+Residual deviance: 207.37  on 198  degrees of freedom
+AIC: 211.4
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>beta0.lr.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">coef</span>(diabetes.lr1)[<span class="dv">1</span>]
+<span class="op">&gt;</span><span class="st"> </span>beta1.lr.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">coef</span>(diabetes.lr1)[<span class="dv">2</span>]
+<span class="op">&gt;</span><span class="st"> </span>beta0.lr.<span class="dv">1</span></code></pre></div>
+<pre><code>(Intercept) 
+     -5.504 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>beta1.lr.<span class="dv">1</span></code></pre></div>
+<pre><code>    glu 
+0.03778 </code></pre>
+<p>The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are approximately -5.504 and 0.038, respectively. So for example we can estimate the probability that a woman in this population whose glucose level is 150 would be diabetic as</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">5.504</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.038</span> <span class="op">*</span><span class="st"> </span><span class="dv">150</span>)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">5.504</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.038</span> <span class="op">*</span><span class="st"> </span><span class="dv">150</span>))</code></pre></div>
+<pre><code>[1] 0.5488</code></pre>
+<p>We can plot the fitted probabilities along with the data “by hand”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.logistic.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x){
+<span class="op">+</span><span class="st">   </span><span class="kw">exp</span>(beta0.lr.<span class="dv">1</span><span class="op">+</span><span class="st"> </span>beta1.lr.<span class="dv">1</span><span class="op">*</span>x)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(beta0.lr.<span class="dv">1</span><span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">                                            </span>beta1.lr.<span class="dv">1</span><span class="op">*</span>x))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> diabetes)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> diabetes.logistic.<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-266-1.png" width="672" /></p>
+<p>The <code>ggplot2</code> package also provides a way to do this more directly, using <code>stat_smooth</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> diabetes)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, 
+<span class="op">+</span><span class="st">               </span><span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
+<p>From these graphics we can see that although glucose level and diabetes are related, there are many women with high glucose levels who are not diabetic, and many with low glucose levels who are diabetic, so likely adding other predictors to the model will help.</p>
+<p>Next let’s see how the model does in predicting diabetes status in the data we did not use for fitting the model. We will predict diabetes for anyone whose glucose level leads to a model-based probability greater than <span class="math inline">\(1/2\)</span>. First we use the <code>predict</code> function to compute the probabilities, and then use these to make predictions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(Pima.te)</code></pre></div>
+<pre><code>  npreg glu bp skin  bmi   ped age type
+1     6 148 72   35 33.6 0.627  50  Yes
+2     1  85 66   29 26.6 0.351  31   No
+3     1  89 66   23 28.1 0.167  21   No
+4     3  78 50   32 31.0 0.248  26  Yes
+5     2 197 70   45 30.5 0.158  53  Yes
+6     5 166 72   19 25.8 0.587  51  Yes</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.probs.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(diabetes.lr1, Pima.te, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(diabetes.probs.<span class="dv">1</span>)</code></pre></div>
+<pre><code>      1       2       3       4       5       6 
+0.52207 0.09179 0.10519 0.07199 0.87433 0.68319 </code></pre>
+<p>The <code>predict</code> function (with <code>type = &quot;response&quot;</code> specified) provides <span class="math inline">\(p(x) = P(Y = 1 | X = x)\)</span> for all the <span class="math inline">\(x\)</span> values in a data frame. In this case we specified the data frame <code>Pima.te</code> since we want to know how the model does in predicting diabetes in a new population, i.e., in a population that wasn’t used to “train” the model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.predict.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>])
+<span class="op">&gt;</span><span class="st"> </span>diabetes.predict.<span class="dv">1</span>[diabetes.probs.<span class="dv">1</span> <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;Yes&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(diabetes.predict.<span class="dv">1</span>)</code></pre></div>
+<pre><code>[1] &quot;Yes&quot; &quot;No&quot;  &quot;No&quot;  &quot;No&quot;  &quot;Yes&quot; &quot;Yes&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(diabetes.predict.<span class="dv">1</span>, Pima.te<span class="op">$</span>type)</code></pre></div>
+<pre><code>                  
+diabetes.predict.1  No Yes
+               No  206  58
+               Yes  17  51</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(diabetes.predict.<span class="dv">1</span>[diabetes.predict.<span class="dv">1</span> <span class="op">==</span><span class="st"> </span>Pima.te<span class="op">$</span>type])<span class="op">/</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>]</code></pre></div>
+<pre><code>[1] 0.7741</code></pre>
+<p>The table (sometimes called a <em>confusion matrix</em>) has the predictions of the model in the rows, so for example we see that the model predicts that <span class="math inline">\(206 + 58 = 264\)</span> of the women will not be diabetic, and that <span class="math inline">\(17+51 = 68\)</span> of the women will be diabetic. More interesting of course are the cells themselves. For example, of the <span class="math inline">\(206 + 17 = 223\)</span> women who are not diabetic in <code>Pima.te</code>, the model correctly classifies 206, and misclassifies 17. A classifier that predicted perfectly for the test data would have zeros off the diagonal.</p>
+<div id="section-adding-predictors" class="section level3">
+<h3><span class="header-section-number">11.1.1</span> Adding Predictors</h3>
+<p>If we have <span class="math inline">\(p\)</span> predictors <span class="math inline">\(X = (X_1, \dots, X_p)\)</span>, the logistic model becomes</p>
+<p><span class="math display">\[
+p(X) = p(X) = \frac{e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}.
+\]</span></p>
+<p>Although there is a lot more notation to keep track of, the basic ideas are the same as they were for the one predictor model. We will next see how adding <code>bmi</code>, the body mass index, affects predictions of diabetes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.lr2 &lt;-<span class="st"> </span><span class="kw">glm</span>(diabetes <span class="op">~</span><span class="st"> </span>glu <span class="op">+</span><span class="st"> </span>bmi, <span class="dt">data =</span> Pima.tr, 
+<span class="op">+</span><span class="st">   </span><span class="dt">family =</span> binomial)
+<span class="op">&gt;</span><span class="st"> </span>diabetes.lr2</code></pre></div>
+<pre><code>
+Call:  glm(formula = diabetes ~ glu + bmi, family = binomial, data = Pima.tr)
+
+Coefficients:
+(Intercept)          glu          bmi  
+    -8.2161       0.0357       0.0900  
+
+Degrees of Freedom: 199 Total (i.e. Null);  197 Residual
+Null Deviance:      256 
+Residual Deviance: 198  AIC: 204</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">summary</span>(diabetes.lr2)</code></pre></div>
+<pre><code>
+Call:
+glm(formula = diabetes ~ glu + bmi, family = binomial, data = Pima.tr)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-2.058  -0.757  -0.431   0.801   2.249  
+
+Coefficients:
+            Estimate Std. Error z value     Pr(&gt;|z|)
+(Intercept) -8.21611    1.34697   -6.10 0.0000000011
+glu          0.03572    0.00631    5.66 0.0000000152
+bmi          0.09002    0.03127    2.88        0.004
+               
+(Intercept) ***
+glu         ***
+bmi         ** 
+---
+Signif. codes:  
+0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 256.41  on 199  degrees of freedom
+Residual deviance: 198.47  on 197  degrees of freedom
+AIC: 204.5
+
+Number of Fisher Scoring iterations: 4</code></pre>
+<p>Now we look at predictions from this model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.probs.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(diabetes.lr2, Pima.te, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(diabetes.probs.<span class="dv">2</span>)</code></pre></div>
+<pre><code>      1       2       3       4       5       6 
+0.52359 0.05810 0.07530 0.06662 0.82713 0.50879 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>diabetes.predict.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>])
+<span class="op">&gt;</span><span class="st"> </span>diabetes.predict.<span class="dv">2</span>[diabetes.probs.<span class="dv">2</span> <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;Yes&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(diabetes.predict.<span class="dv">2</span>)</code></pre></div>
+<pre><code>[1] &quot;Yes&quot; &quot;No&quot;  &quot;No&quot;  &quot;No&quot;  &quot;Yes&quot; &quot;Yes&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(diabetes.predict.<span class="dv">2</span>, Pima.te<span class="op">$</span>type)</code></pre></div>
+<pre><code>                  
+diabetes.predict.2  No Yes
+               No  204  54
+               Yes  19  55</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(diabetes.predict.<span class="dv">2</span>[diabetes.predict.<span class="dv">2</span> <span class="op">==</span><span class="st"> </span>Pima.te<span class="op">$</span>type])<span class="op">/</span><span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>]</code></pre></div>
+<pre><code>[1] 0.7801</code></pre>
+<p>Adding <code>bmi</code> as a predictor did not improve the predictions by very much!</p>
+<p>Let <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> represent glucose and bmi levels. We classify a subject as “diabetic” if the fitted <span class="math inline">\(p(X)\)</span> is greater than <span class="math inline">\(0.5\)</span>, i.e., if the fitted probability of diabetes is greater than the fitted probability of not diabetes. The boundary for our decision is where these two fitted probabilities are equal, i.e., where</p>
+<p><span class="math display">\[
+\frac{P(Y = 1 | (x_1, x_2))}{P(Y = 0 | (x_1, x_2))} = \frac{P(Y = 1 | (x_1, x_2))}{1 - P(Y = 1 | (x_1, x_2))}  = 1.
+\]</span></p>
+<p>Writing these out in terms of the logistic regression model, taking logarithms, and performing some algebra leads to the following (linear!) decision boundary:</p>
+<p><span class="math display">\[
+x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
+\]</span></p>
+<p>The diabetes training data along with the decision boundary are plotted below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>lr.int &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">1</span>]<span class="op">/</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">3</span>]
+<span class="op">&gt;</span><span class="st"> </span>lr.slope &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">2</span>]<span class="op">/</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">3</span>]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> bmi)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> lr.int, <span class="dt">slope =</span> lr.slope)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
+</div>
+<div id="section-more-than-two-classes" class="section level3">
+<h3><span class="header-section-number">11.1.2</span> More than Two Classes</h3>
+<p>Logistic regression methods also are applicable to classification contexts where there are more than two classes. Consider for example Fisher’s iris data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">data</span>(iris)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(iris)</code></pre></div>
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+5          5.0         3.6          1.4         0.2
+6          5.4         3.9          1.7         0.4
+  Species
+1  setosa
+2  setosa
+3  setosa
+4  setosa
+5  setosa
+6  setosa</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(iris)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   150 obs. of  5 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+ $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+ $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+ $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">y =</span> Petal.Width)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-273-2.png" width="672" /></p>
+<p>Here the potential predictors are sepal width, sepal length, petal width, and petal length. The goal is to find a classifier that will yield the correct species. From the scatter plots it should be pretty clear that a model with petal length and petal width as predictors would classify the data well. Although in a sense this is too easy, these data do a good job of illustrating logistic regression with more than two classes.</p>
+<p>Before doing that we randomly choose 75 of the 150 rows of the data frame to be the training sample, with the other 75 being the test sample.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">set.seed</span>(<span class="dv">321</span>)
+<span class="op">&gt;</span><span class="st"> </span>selected &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">size =</span> <span class="dv">75</span>)
+<span class="op">&gt;</span><span class="st"> </span>iris.train &lt;-<span class="st"> </span>iris[selected, ]
+<span class="op">&gt;</span><span class="st"> </span>iris.test &lt;-<span class="st"> </span>iris[<span class="op">-</span>selected, ]</code></pre></div>
+<p>There are several packages which implement logistic regression for data with more than two classes. We will use the <code>VGAM</code> package. The function <code>vglm</code> within <code>VGAM</code> implements logistic regression (and much more).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(VGAM)
+<span class="op">&gt;</span><span class="st"> </span>iris.lr &lt;-<span class="st"> </span><span class="kw">vglm</span>(Species <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Petal.Length, 
+<span class="op">+</span><span class="st">                 </span><span class="dt">data =</span> iris.train, <span class="dt">family =</span> multinomial)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">summary</span>(iris.lr)</code></pre></div>
+<pre><code>
+Call:
+vglm(formula = Species ~ Petal.Width + Petal.Length, family = multinomial, 
+    data = iris.train)
+
+Pearson residuals:
+                           Min           1Q
+log(mu[,1]/mu[,3]) -0.00000181 -0.000000246
+log(mu[,2]/mu[,3]) -1.26528143 -0.000122333
+                         Median          3Q       Max
+log(mu[,1]/mu[,3]) 0.0000000436 0.000000063 0.0000164
+log(mu[,2]/mu[,3]) 0.0000006634 0.002992883 2.4706594
+
+Coefficients: 
+               Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept):1    118.95    9260.55      NA       NA
+(Intercept):2     63.51      34.00      NA       NA
+Petal.Width:1    -27.34   14731.81       0        1
+Petal.Width:2    -14.55       7.47      NA       NA
+Petal.Length:1   -26.61    6453.20       0        1
+Petal.Length:2    -8.24       5.59      NA       NA
+
+Names of linear predictors: log(mu[,1]/mu[,3]), 
+log(mu[,2]/mu[,3])
+
+Residual deviance: 8.682 on 144 degrees of freedom
+
+Log-likelihood: -4.341 on 144 degrees of freedom
+
+Number of Fisher scoring iterations: 21 
+
+Warning: Hauck-Donner effect detected in the following estimate(s):
+&#39;(Intercept):1&#39;, &#39;(Intercept):2&#39;, &#39;Petal.Width:2&#39;, &#39;Petal.Length:2&#39;
+
+
+Reference group is level  3  of the response</code></pre>
+<p>Notice that the family is specified as <code>multinomial</code> rather than <code>binomial</code> since we have more than two classes. When run with these data, the <code>vglm</code> function returns several (about 20) warnings. These occur mainly because the classes are so easily separated, and are suppressed above.</p>
+<p>Next we compute the probabilities for the test data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>iris.probs &lt;-<span class="st"> </span><span class="kw">predict</span>(iris.lr, iris.test[, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)], <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(iris.probs)</code></pre></div>
+<pre><code>   setosa           versicolor
+4       1 0.000000000010035925
+5       1 0.000000000001598575
+9       1 0.000000000001598575
+11      1 0.000000000010035925
+12      1 0.000000000063005974
+14      1 0.000000000000001799
+                                     virginica
+4  0.00000000000000000000000000000001129030771
+5  0.00000000000000000000000000000000078877050
+9  0.00000000000000000000000000000000078877050
+11 0.00000000000000000000000000000001129030771
+12 0.00000000000000000000000000000016160727116
+14 0.00000000000000000000000000000000000001748</code></pre>
+<p>At least for the first six cases, one probability is close to one and the other two are close to zero, reflecting the fact that this is an easy classification problem. Next we extract the actual predictions. For these, we want to choose the highest probability in each row. The <code>which.max</code> function makes this easy. Before applying this to the fitted probabilities, we illustrate its use. Take notice that <code>which.max()</code> returns the position of the highest probability, and not the actualy highest probability itself.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">which.max</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">3</span>))</code></pre></div>
+<pre><code>[1] 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">which.max</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>))</code></pre></div>
+<pre><code>[1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>class.predictions &lt;-<span class="st"> </span><span class="kw">apply</span>(iris.probs, <span class="dv">1</span>, which.max)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(class.predictions)</code></pre></div>
+<pre><code> 4  5  9 11 12 14 
+ 1  1  1  1  1  1 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">1</span>]
+<span class="op">&gt;</span><span class="st"> </span>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">2</span>]
+<span class="op">&gt;</span><span class="st"> </span>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">3</span>]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(class.predictions)</code></pre></div>
+<pre><code>       4        5        9       11       12       14 
+&quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; </code></pre>
+<p>Next we create the confusion matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(class.predictions, iris.test<span class="op">$</span>Species)</code></pre></div>
+<pre><code>                 
+class.predictions setosa versicolor virginica
+       setosa         26          0         0
+       versicolor      0         19         1
+       virginica       0          2        27</code></pre>
+</div>
+</div>
+<div id="section-nearest-neighbor-methods" class="section level2">
+<h2><span class="header-section-number">11.2</span> Nearest Neighbor Methods</h2>
+<p>Nearest neighbor methods provide a rather different way to construct classifiers, and have strengths (minimal assumptions, flexible decision boundaries) and weaknesses (computational burden, lack of interpretability) compared to logistic regression models.</p>
+<p>In principle the idea is simple. Recall that the training set will have both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values known, while the test set will have only <span class="math inline">\(x\)</span> values known. Begin by choosing a positive integer <span class="math inline">\(k\)</span> which will specify the number of neighbors to use in classification. To classify a point <span class="math inline">\(x\)</span> in the training set, find the <span class="math inline">\(k\)</span> closest <span class="math inline">\(x\)</span> values in the training set, and choose the class which has the highest representation among the <span class="math inline">\(k\)</span> points. The algorithm is called kNN for “k Nearest Neighbors”.</p>
+<p>For example, suppose that <span class="math inline">\(k=10\)</span> and the 10 nearest neighbors to a training <span class="math inline">\(x\)</span> have classes <span class="math inline">\(1, 1, 3, 2, 3, 3, 3, 2, 3, 2\)</span>. Since there are five 3s, three 2s, and two 1s, the training point is assigned to class 3. Suppose that for another <span class="math inline">\(x\)</span> the 10 nearest neighbors have classes <span class="math inline">\(1,1,1,2,3,1,3,3,3,2\)</span>. In this case there are four 1s and four 3s, so there is a tie for the lead. The nearest neighbor algorithm then will choose between 1 and 3 at random.</p>
+<p>Although in principle kNN is simple, some issues arise. First, how should <span class="math inline">\(k\)</span> be chosen? There is not an easy answer, but it can help to think of the extreme values for <span class="math inline">\(k\)</span>.</p>
+<p>The largest possible <span class="math inline">\(k\)</span> is the number of observations in the training set. For example suppose that the training set has <span class="math inline">\(10\)</span> observations, with classes <span class="math inline">\(1, 1, 1, 2, 2, 2, 3, 3, 3, 3\)</span>. Then for any point in the test set, the <span class="math inline">\(k=10\)</span> nearest neighbors will include ALL of the points in the training set, and hence every point in the test set will be classified in class 3. This classifier has low (zero) variance, but probably has high bias.</p>
+<p>The smallest possible <span class="math inline">\(k\)</span> is 1. In this case, each point in the test set is put in the same class as its nearest neighbor in the training set. This may lead to a very non-smooth and high variance classifier, but the bias will tend to be small.</p>
+<p>A second issue that is relatively easy to deal with concerns the scales on which the <span class="math inline">\(x\)</span> values are measured. If for example one <span class="math inline">\(x\)</span> variable has a range from 2 to 4, while another has a range from 2000 to 4000, the distance between the test and training data will be dominated by the second variable. The solution that is typically used is to standardize all the variables (rescale them so that their mean is 0 and their standard deviation is 1).</p>
+<p>These and other issues are discussed in the literature on kNN, but we won’t pursue them further.</p>
+<p>There are at least three R packages which implement kNN, including <code>class</code>, <code>kknn</code>, and <code>RWeka</code>. We will use <code>class</code> below.</p>
+<p>An example from <span class="citation">T. Hastie, Tibshirani, and Friedman (<a href="#ref-hastieESL">2009</a>)</span> will be used to give a better sense of the role of <span class="math inline">\(k\)</span> in the kNN algorithm. The example uses simulated data and shows the decision boundaries for kNN with <span class="math inline">\(k=15\)</span> and <span class="math inline">\(k=1\)</span>.<a href="section-references.html#section-fn57" class="footnoteRef" id="section-fnref57"><sup>57</sup></a>. Although the R code used to draw the displays is given below, focus mainly on the graphics produced, and what they tell us about kNN.</p>
+<p>First the data are read into R and graphed. The predictors <code>x1</code> and <code>x2</code>, while not standardized, have very similar standard deviations, so we will not standardize these data before applying kNN.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.knn &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/knnExample.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>knnExample &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.knn, <span class="dt">header=</span><span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(knnExample)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   200 obs. of  3 variables:
+ $ x1   : num  2.5261 0.367 0.7682 0.6934 -0.0198 ...
+ $ x2   : num  0.3211 0.0315 0.7175 0.7772 0.8673 ...
+ $ class: int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> knnExample, <span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(class))) <span class="op">+</span>
+<span class="op">+</span><span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
+<p>Next a large set of test data is created using the <code>expand.grid</code> function, which creates a data frame with all possible combinations of the arguments. First a simple example to illustrate the function, then the actual creation of the training set. The test set covers the range of the <code>x1</code> and <code>x2</code> values in the training set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="fl">3.4</span>, <span class="dv">2</span>))</code></pre></div>
+<pre><code>  x   y
+1 1 5.0
+2 2 5.0
+3 1 3.4
+4 2 3.4
+5 1 2.0
+6 2 2.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(knnExample<span class="op">$</span>x1)</code></pre></div>
+<pre><code>[1] -2.521</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">max</span>(knnExample<span class="op">$</span>x1)</code></pre></div>
+<pre><code>[1] 4.171</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">min</span>(knnExample<span class="op">$</span>x2)</code></pre></div>
+<pre><code>[1] -2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">max</span>(knnExample<span class="op">$</span>x2)</code></pre></div>
+<pre><code>[1] 2.856</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x.test &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x1 =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">4.2</span>, <span class="dt">by =</span> <span class="fl">0.1</span>), <span class="dt">x2 =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">2</span>, 
+<span class="op">+</span><span class="st">   </span><span class="fl">2.9</span>, <span class="dt">by =</span> <span class="fl">0.1</span>))</code></pre></div>
+<p>Next the kNN with <span class="math inline">\(k=15\)</span> is fit. Notice that the first argument gives the <span class="math inline">\(x\)</span> values in the training set, the next argument gives the <span class="math inline">\(x\)</span> values in the test set, the third argument gives the <span class="math inline">\(y\)</span> values (labels) from the training set. The fourth argument gives <span class="math inline">\(k\)</span>, and the fifth argument asks for the function to return the probabilities of membership (that is, the proportion of the nearest neighbors which were in the majority class) as well as the class assignments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(class)
+<span class="op">&gt;</span><span class="st"> </span>Example_knn &lt;-<span class="st"> </span><span class="kw">knn</span>(knnExample[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], x.test, knnExample[, 
+<span class="op">+</span><span class="st">   </span><span class="dv">3</span>], <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>prob &lt;-<span class="st"> </span><span class="kw">attr</span>(Example_knn, <span class="st">&quot;prob&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(prob)</code></pre></div>
+<pre><code>[1] 0.6667 0.6667 0.6667 0.7333 0.7333 0.7333</code></pre>
+<p>Next the graphs are created. This is somewhat complex, since we want to plot the test data colored by the class they were assigned to by the kNN classifier as background, the training data (using a different symbol), and the decision boundary.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(dplyr)
+<span class="op">&gt;</span><span class="st"> </span>df1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">0</span>, <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>class, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(df1)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   3450 obs. of  5 variables:
+ $ x1      : num  -2.6 -2.5 -2.4 -2.3 -2.2 -2.1 -2 -1.9 -1.8 -1.7 ...
+ $ x2      : num  -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 ...
+ $ prob    : num  0.667 0.667 0.667 0.733 0.733 ...
+ $ class   : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ prob_cls: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>df2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">1</span>, <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>class, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="op">&gt;</span><span class="st"> </span>bigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(df1, df2)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">names</span>(knnExample)</code></pre></div>
+<pre><code>[1] &quot;x1&quot;    &quot;x2&quot;    &quot;class&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(bigdf) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> class), 
+<span class="op">+</span><span class="st">   </span><span class="dt">data =</span> <span class="kw">mutate</span>(x.test, <span class="dt">class =</span> Example_knn), <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> <span class="kw">as.factor</span>(class)), 
+<span class="op">+</span><span class="st">     </span><span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> knnExample) <span class="op">+</span><span class="st"> </span><span class="kw">geom_contour</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, 
+<span class="op">+</span><span class="st">   </span><span class="dt">y =</span> x2, <span class="dt">z =</span> prob_cls, <span class="dt">group =</span> <span class="kw">as.factor</span>(class), <span class="dt">color =</span> <span class="kw">as.factor</span>(class)), 
+<span class="op">+</span><span class="st">   </span><span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">data =</span> bigdf) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-282-1.png" width="672" /></p>
+<p>Next we graph the decision boundary of kNN with <span class="math inline">\(k=1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>Example_knn &lt;-<span class="st"> </span><span class="kw">knn</span>(knnExample[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)], x.test, knnExample[, 
+<span class="op">+</span><span class="st">   </span><span class="dv">3</span>], <span class="dt">k =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>prob &lt;-<span class="st"> </span><span class="kw">attr</span>(Example_knn, <span class="st">&quot;prob&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(prob)</code></pre></div>
+<pre><code>[1] 1 1 1 1 1 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>df1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">0</span>, <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>class, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(df1)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   3450 obs. of  5 variables:
+ $ x1      : num  -2.6 -2.5 -2.4 -2.3 -2.2 -2.1 -2 -1.9 -1.8 -1.7 ...
+ $ x2      : num  -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 ...
+ $ prob    : num  1 1 1 1 1 1 1 1 1 1 ...
+ $ class   : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ prob_cls: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>df2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">1</span>, <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span>class, <span class="dv">1</span>, <span class="dv">0</span>))
+<span class="op">&gt;</span><span class="st"> </span>bigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(df1, df2)
+<span class="op">&gt;</span><span class="st"> </span>
+<span class="er">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(bigdf) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> class), 
+<span class="op">+</span><span class="st">   </span><span class="dt">data =</span> <span class="kw">mutate</span>(x.test, <span class="dt">class =</span> Example_knn), <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> <span class="kw">as.factor</span>(class)), 
+<span class="op">+</span><span class="st">     </span><span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> knnExample) <span class="op">+</span><span class="st"> </span><span class="kw">geom_contour</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, 
+<span class="op">+</span><span class="st">   </span><span class="dt">y =</span> x2, <span class="dt">z =</span> prob_cls, <span class="dt">group =</span> <span class="kw">as.factor</span>(class), <span class="dt">color =</span> <span class="kw">as.factor</span>(class)), 
+<span class="op">+</span><span class="st">   </span><span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">data =</span> bigdf) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-283-1.png" width="672" /></p>
+<div id="section-knn-and-the-diabetes-data" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> kNN and the Diabetes Data</h3>
+<p>Next kNN is applied to the diabetes data. We will use the same predictors, <code>glu</code> and <code>bmi</code> that were used in the logistic regression example. Since the scales of the predictor variables are substantially different, they are standardized first. The value <span class="math inline">\(k=15\)</span> is chosen for kNN.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>Pima.tr[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(Pima.tr[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>Pima.te[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(Pima.te[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>knn_Pima &lt;-<span class="st"> </span><span class="kw">knn</span>(Pima.tr[, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)], Pima.te[, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)], 
+<span class="op">+</span><span class="st">   </span>Pima.tr[, <span class="dv">8</span>], <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(knn_Pima, Pima.te[, <span class="dv">8</span>])</code></pre></div>
+<pre><code>        
+knn_Pima  No Yes
+     No  206  55
+     Yes  17  54</code></pre>
+<p>At least in terms of the confusion matrix, kNN with <span class="math inline">\(k=15\)</span> performed about as well as logistic regression for these data.</p>
+</div>
+</div>
+<div id="section-practice-exercise-14" class="section level2">
+<h2><span class="header-section-number">11.3</span> Practice Exercise</h2>
+<p>Produce a figure that displays how the number of false positives produced from the kNN classifier for the diabetes data set changes for all integer values of <span class="math inline">\(k\)</span> from 1 to 40. Use this graph to justify whether or not <span class="math inline">\(k = 15\)</span> was a valid choice for the number of neighbors.</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-285-1.png" width="672" /><img src="bookdown_files/figure-html/unnamed-chunk-285-2.png" width="672" /></p>
+<div id="section-knn-and-the-iris-data" class="section level3">
+<h3><span class="header-section-number">11.3.1</span> kNN and the iris Data</h3>
+<p>Now kNN is used to classify the iris data. As before we use petal length and width as predictors. The scales of the two predictors are not particularly different, so we won’t standardize the predictors. Unsurprisingly kNN does well in classifying the test set for a wide variety of <span class="math inline">\(k\)</span> values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sd</span>(iris.train<span class="op">$</span>Petal.Width)</code></pre></div>
+<pre><code>[1] 0.7286</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sd</span>(iris.train<span class="op">$</span>Petal.Length)</code></pre></div>
+<pre><code>[1] 1.672</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(iris.train)</code></pre></div>
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width
+144          6.8         3.2          5.9         2.3
+140          6.9         3.1          5.4         2.1
+36           5.0         3.2          1.2         0.2
+38           4.9         3.6          1.4         0.1
+58           4.9         2.4          3.3         1.0
+50           5.0         3.3          1.4         0.2
+       Species
+144  virginica
+140  virginica
+36      setosa
+38      setosa
+58  versicolor
+50      setosa</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)], iris.test[, <span class="kw">c</span>(<span class="dv">3</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dv">4</span>)], iris.train[, <span class="dv">5</span>], <span class="dt">k =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(knn_iris, iris.test[, <span class="dv">5</span>])</code></pre></div>
+<pre><code>            
+knn_iris     setosa versicolor virginica
+  setosa         26          0         0
+  versicolor      0         20         1
+  virginica       0          1        27</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)], iris.test[, <span class="kw">c</span>(<span class="dv">3</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dv">4</span>)], iris.train[, <span class="dv">5</span>], <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(knn_iris, iris.test[, <span class="dv">5</span>])</code></pre></div>
+<pre><code>            
+knn_iris     setosa versicolor virginica
+  setosa         26          0         0
+  versicolor      0         19         1
+  virginica       0          2        27</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)], iris.test[, <span class="kw">c</span>(<span class="dv">3</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dv">4</span>)], iris.train[, <span class="dv">5</span>], <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">table</span>(knn_iris, iris.test[, <span class="dv">5</span>])</code></pre></div>
+<pre><code>            
+knn_iris     setosa versicolor virginica
+  setosa         26          0         0
+  versicolor      0         19         1
+  virginica       0          2        27</code></pre>
+</div>
+</div>
+<div id="section-homework-8" class="section level2">
+<h2><span class="header-section-number">11.4</span> Homework</h2>
+<p><strong>Exercise Classification</strong> Learning objectives: explore the logistic regression classification method; apply the kNN classification method; create confusion matrices to compare classification methods; plot classified data.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-shiny-interactive-web-apps-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-xml.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-classification.html">
+<link rel="next" href="section-rcpp.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-xml" class="section level1">
+<h1><span class="header-section-number">Chapter 12</span> Text Data</h1>
+<p>Many applications require the ability to manipulate and process text data. For example, an email spam filter takes as its input various features of email such as the sender, words in the subject, words in the body, the number and types of attachments, and so on. The filter then tries to build a classifier which can correctly classify a message as spam or not spam (aka ham). As another example, some works of literature, such as some of Shakespeare’s plays or some of the Federalist papers, have disputed authorship. By analyzing word use across many documents, researchers try to determine the author of the disputed work.</p>
+<p>Working with text data requires functions that will, for example, concatenate and split text strings, modify strings (e.g., converting to lower-case or removing vowels), count the number of characters in a string, and so on. In addition to being useful in such contexts, string manipulation is helpful more generally in R—for example, to effectively construct titles for graphics.</p>
+<p>As with most tasks, there are a variety of ways to accomplish these text processing tasks in R. The <code>base</code> R package has functions which work with and modify text strings. Another useful package which approaches these tasks in a slightly different way is <code>stringr</code>. As with graphics, we will focus mainly on one package to avoid confusion. In this case we will focus on the base R string processing functions, but will emphasize that <code>stringr</code> is also worth knowing.</p>
+<p>The application to analyzing <em>Moby Dick</em> below comes from the book <em>{Text Analysis with R for Students of Literature</em> by Matthew L. Jockers.</p>
+<div id="section-reading-text-data-into-r" class="section level2">
+<h2><span class="header-section-number">12.1</span> Reading Text Data into R</h2>
+<p>Often text data will not be in a rectangular format that is suitable for reading into a data frame. For example, an email used to help train a spam filter, or literary texts used to help determine authorship of a novel are certainly not of this form. Often when working with text data we want to read the whole text object into a single R vector. In this case either the <code>scan</code> function or the <code>readLines</code> function are useful. The <code>readLines</code> function is typically more efficient, but <code>scan</code> is much more flexible.</p>
+<p>As an example, consider the following email message and a plain text version of the novel <em>Moby Dick</em> by Herman Melville, the beginning of which is displayed subsequently.</p>
+<pre><code>From safety33o@l11.newnamedns.com  Fri Aug 23 11:03:37 2002
+Return-Path: &lt;safety33o@l11.newnamedns.com&gt;
+Delivered-To: zzzz@localhost.example.com
+Received: from localhost (localhost [127.0.0.1])
+    by phobos.labs.example.com (Postfix) with ESMTP id 5AC994415F
+    for &lt;zzzz@localhost&gt;; Fri, 23 Aug 2002 06:02:59 -0400 (EDT)
+Received: from mail.webnote.net [193.120.211.219]
+    by localhost with POP3 (fetchmail-5.9.0)
+    for zzzz@localhost (single-drop); Fri, 23 Aug 2002 11:02:59 +0100 (IST)
+Received: from l11.newnamedns.com ([64.25.38.81])
+    by webnote.net (8.9.3/8.9.3) with ESMTP id KAA09379
+    for &lt;zzzz@example.com&gt;; Fri, 23 Aug 2002 10:18:03 +0100
+From: safety33o@l11.newnamedns.com
+Date: Fri, 23 Aug 2002 02:16:25 -0400
+Message-Id: &lt;200208230616.g7N6GOR28438@l11.newnamedns.com&gt;
+To: kxzzzzgxlrah@l11.newnamedns.com
+Reply-To: safety33o@l11.newnamedns.com
+Subject: ADV: Lowest life insurance rates available!                                                   
+moode
+
+Lowest rates available for term life insurance! Take a moment 
+and fill out our online form 
+to see the low rate you qualify for. 
+Save up to 70% from regular rates! Smokers accepted! 
+http://www.newnamedns.com/termlife/ 
+          
+Representing quality nationwide carriers. Act now!</code></pre>
+<pre><code>The Project Gutenberg EBook of Moby Dick; or The Whale, by Herman Melville
+
+This eBook is for the use of anyone anywhere at no cost and with
+almost no restrictions whatsoever.  You may copy it, give it away or
+re-use it under the terms of the Project Gutenberg License included
+with this eBook or online at www.gutenberg.org
+
+
+Title: Moby Dick; or The Whale
+
+Author: Herman Melville
+
+Last Updated: January 3, 2009
+Posting Date: December 25, 2008 [EBook #2701]
+Release Date: June, 2001
+
+Language: English
+
+
+*** START OF THIS PROJECT GUTENBERG EBOOK MOBY DICK; OR THE WHALE ***
+
+
+
+
+Produced by Daniel Lazarus and Jonesey
+
+
+
+
+
+MOBY DICK; OR THE WHALE
+
+By Herman Melville</code></pre>
+<p>The email message is available at <a href="http://blue.for.msu.edu/FOR875/data/email1.txt" class="uri">http://blue.for.msu.edu/FOR875/data/email1.txt</a> while the novel is available at <a href="http://blue.for.msu.edu/FOR875/data/mobydick.txt" class="uri">http://blue.for.msu.edu/FOR875/data/mobydick.txt</a>. We will read these into R using <code>scan</code>.</p>
+<p>First, we read in the email message. The <code>scan</code> function has several possible arguments. For now the important arguments are the file to be read (the argument is named <code>file</code>), the type of data in the file (the argument is named <code>what</code>), and how the fields in the file are separated (the argument is named <code>sep</code>). To illustrate the <code>sep</code> argument, the file will be read into R once with <code>sep = &quot;&quot;</code> indicating that the separator is whitespace, and once with <code>sep = &quot;\n&quot;</code> indicating that the separator is the newline character, i.e., each field in the file is a line.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.email &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/email1.txt&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>email1 &lt;-<span class="st"> </span><span class="kw">scan</span>(u.email, <span class="dt">what =</span> <span class="st">&quot;character&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(email1)</code></pre></div>
+<pre><code>[1] 133</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>email1[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<pre><code> [1] &quot;From&quot;                          
+ [2] &quot;safety33o@l11.newnamedns.com&quot;  
+ [3] &quot;Fri&quot;                           
+ [4] &quot;Aug&quot;                           
+ [5] &quot;23&quot;                            
+ [6] &quot;11:03:37&quot;                      
+ [7] &quot;2002&quot;                          
+ [8] &quot;Return-Path:&quot;                  
+ [9] &quot;&lt;safety33o@l11.newnamedns.com&gt;&quot;
+[10] &quot;Delivered-To:&quot;                 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>email1 &lt;-<span class="st"> </span><span class="kw">scan</span>(u.email, <span class="dt">what =</span> <span class="st">&quot;character&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(email1)</code></pre></div>
+<pre><code>[1] 26</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>email1[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<pre><code> [1] &quot;From safety33o@l11.newnamedns.com  Fri Aug 23 11:03:37 2002&quot;              
+ [2] &quot;Return-Path: &lt;safety33o@l11.newnamedns.com&gt;&quot;                              
+ [3] &quot;Delivered-To: zzzz@localhost.example.com&quot;                                 
+ [4] &quot;Received: from localhost (localhost [127.0.0.1])&quot;                         
+ [5] &quot;\tby phobos.labs.example.com (Postfix) with ESMTP id 5AC994415F&quot;          
+ [6] &quot;\tfor &lt;zzzz@localhost&gt;; Fri, 23 Aug 2002 06:02:59 -0400 (EDT)&quot;            
+ [7] &quot;Received: from mail.webnote.net [193.120.211.219]&quot;                        
+ [8] &quot;\tby localhost with POP3 (fetchmail-5.9.0)&quot;                               
+ [9] &quot;\tfor zzzz@localhost (single-drop); Fri, 23 Aug 2002 11:02:59 +0100 (IST)&quot;
+[10] &quot;Received: from l11.newnamedns.com ([64.25.38.81])&quot;                        </code></pre>
+<p>Note that when <code>sep = &quot;&quot;</code> was specified, every time whitespace was encountered R moved to a new element of the vector <code>email1</code>, and this vector ultimately contained 133 elements. When <code>sep = &quot;\n&quot;</code> was specified, all the text before a newline was put into one element of the vector, which ended up with 26 elements.</p>
+<p>The <code>scan</code> function is quite flexible. In fact, <code>read.table</code> uses <code>scan</code> to actually read in the data. Read the help file for <code>scan</code> if more information is desired.</p>
+<p>Next <em>Moby Dick</em> is read in line by line.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.moby &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/mobydick.txt&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span><span class="kw">scan</span>(u.moby, <span class="dt">what =</span> <span class="st">&quot;character&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>moby_dick[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]</code></pre></div>
+<pre><code> [1] &quot;The Project Gutenberg EBook of Moby Dick; or The Whale, by Herman Melville&quot;
+ [2] &quot;This eBook is for the use of anyone anywhere at no cost and with&quot;          
+ [3] &quot;almost no restrictions whatsoever.  You may copy it, give it away or&quot;      
+ [4] &quot;re-use it under the terms of the Project Gutenberg License included&quot;       
+ [5] &quot;with this eBook or online at www.gutenberg.org&quot;                            
+ [6] &quot;Title: Moby Dick; or The Whale&quot;                                            
+ [7] &quot;Author: Herman Melville&quot;                                                   
+ [8] &quot;Last Updated: January 3, 2009&quot;                                             
+ [9] &quot;Posting Date: December 25, 2008 [EBook #2701]&quot;                             
+[10] &quot;Release Date: June, 2001&quot;                                                  
+[11] &quot;Language: English&quot;                                                         
+[12] &quot;*** START OF THIS PROJECT GUTENBERG EBOOK MOBY DICK; OR THE WHALE ***&quot;     
+[13] &quot;Produced by Daniel Lazarus and Jonesey&quot;                                    
+[14] &quot;MOBY DICK; OR THE WHALE&quot;                                                   
+[15] &quot;By Herman Melville&quot;                                                        
+[16] &quot;Original Transcriber&#39;s Notes:&quot;                                             
+[17] &quot;This text is a combination of etexts, one from the now-defunct ERIS&quot;       
+[18] &quot;project at Virginia Tech and one from Project Gutenberg&#39;s archives. The&quot;   
+[19] &quot;proofreaders of this version are indebted to The University of Adelaide&quot;   
+[20] &quot;Library for preserving the Virginia Tech version. The resulting etext&quot;     
+[21] &quot;was compared with a public domain hard copy version of the text.&quot;          
+[22] &quot;In chapters 24, 89, and 90, we substituted a capital L for the symbol&quot;     
+[23] &quot;for the British pound, a unit of currency.&quot;                                
+[24] &quot;ETYMOLOGY.&quot;                                                                
+[25] &quot;(Supplied by a Late Consumptive Usher to a Grammar School)&quot;                </code></pre>
+<p>You will notice that the <code>scan</code> function ignored blank lines in the file. If it is important to preserve blank lines, the argument <code>blank.lines.skip = FALSE</code> can be supplied to <code>scan</code>.</p>
+<p>The file containing the novel contains some introductory and closing text that is not part of the original novel. If we are interested in Melville’s writing, we should remove this text. By inspection we can discover that the novel’s text begins at position 408 and ends at position 18576.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span>moby_dick[<span class="dv">408</span><span class="op">:</span><span class="dv">18576</span>]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(moby_dick)</code></pre></div>
+<pre><code>[1] 18169</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
+<pre><code>[1] &quot;CHAPTER 1. Loomings.&quot;                                                    
+[2] &quot;Call me Ishmael. Some years ago--never mind how long precisely--having&quot;  
+[3] &quot;little or no money in my purse, and nothing particular to interest me on&quot;
+[4] &quot;shore, I thought I would sail about a little and see the watery part of&quot; </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick[<span class="dv">18165</span><span class="op">:</span><span class="dv">18169</span>]</code></pre></div>
+<pre><code>[1] &quot;they glided by as if with padlocks on their mouths; the savage sea-hawks&quot;
+[2] &quot;sailed with sheathed beaks. On the second day, a sail drew near, nearer,&quot;
+[3] &quot;and picked me up at last. It was the devious-cruising Rachel, that in&quot;   
+[4] &quot;her retracing search after her missing children, only found another&quot;     
+[5] &quot;orphan.&quot;                                                                 </code></pre>
+</div>
+<div id="section-the-paste-function" class="section level2">
+<h2><span class="header-section-number">12.2</span> The <code>paste</code> Function</h2>
+<p>The <code>paste</code> function concatenates vectors after (if necessary) converting the vectors to character.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Homer Simpson&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;Bart Simpson&#39;s&quot;</span>, <span class="st">&quot;father&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;Homer Simpson is Bart Simpson&#39;s father&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">10</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;The value of n is&quot;</span>, n)</code></pre></div>
+<pre><code>[1] &quot;The value of n is 10&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;pig&quot;</span>, <span class="st">&quot;dog&quot;</span>), <span class="dv">3</span>)</code></pre></div>
+<pre><code>[1] &quot;pig 3&quot; &quot;dog 3&quot;</code></pre>
+<p>By default the <code>paste</code> function separates the input vectors with a space. But other separators can be specified.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;mail&quot;</span>, <span class="st">&quot;google&quot;</span>, <span class="st">&quot;com&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;.&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;mail.google.com&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;and&quot;</span>, <span class="st">&quot;or&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;and/or&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;horse&quot;</span>, <span class="st">&quot;human&quot;</span>, <span class="st">&quot;elephant&quot;</span>), <span class="st">&quot;food&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;dog food&quot;      &quot;cat food&quot;      &quot;horse food&quot;   
+[4] &quot;human food&quot;    &quot;elephant food&quot;</code></pre>
+<p>Sometimes we want to take a character vector with <span class="math inline">\(n\)</span> elements and create a character vector with only one element, which contains all <span class="math inline">\(n\)</span> character strings. Setting the <code>collapse</code> argument to something other than the default <code>NULL</code> tells R we want to do this, and allows specification of the separator in the collapsed vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;five&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;six&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;seven&quot;</span>, <span class="st">&quot;eight&quot;</span>, <span class="st">&quot;nine&quot;</span>, <span class="st">&quot;ten&quot;</span>))</code></pre></div>
+<pre><code>[1] &quot;one six&quot;     &quot;two seven&quot;   &quot;three eight&quot;
+[4] &quot;four nine&quot;   &quot;five ten&quot;   </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;five&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;six&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;seven&quot;</span>, <span class="st">&quot;eight&quot;</span>, <span class="st">&quot;nine&quot;</span>, <span class="st">&quot;ten&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot;.&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;one six.two seven.three eight.four nine.five ten&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;five&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;six&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;seven&quot;</span>, <span class="st">&quot;eight&quot;</span>, <span class="st">&quot;nine&quot;</span>, <span class="st">&quot;ten&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot;&amp;&amp;&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;one six&amp;&amp;two seven&amp;&amp;three eight&amp;&amp;four nine&amp;&amp;five ten&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;two&quot;</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;five&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;six&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;seven&quot;</span>, <span class="st">&quot;eight&quot;</span>, <span class="st">&quot;nine&quot;</span>, <span class="st">&quot;ten&quot;</span>), <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;one six two seven three eight four nine five ten&quot;</code></pre>
+<p>In the example above by default <code>paste</code> created a vector with five elements, each containing one input string from the first input vector and one from the second vector, pasted together. When a non <code>NULL</code> argument was specified for <code>collapse</code>, the vector created had one element, with the pasted strings separated by that argument.<a href="section-references.html#section-fn58" class="footnoteRef" id="section-fnref58"><sup>58</sup></a></p>
+<p>Also don’t forget that R “recycles” values from vectors if two or more different length vectors are provided as input.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;a1&quot;  &quot;b2&quot;  &quot;a3&quot;  &quot;b4&quot;  &quot;a5&quot;  &quot;b6&quot;  &quot;a7&quot;  &quot;b8&quot; 
+ [9] &quot;a9&quot;  &quot;b10&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
+<pre><code>[1] &quot;a1&quot; &quot;b2&quot; &quot;a3&quot; &quot;b4&quot; &quot;a5&quot; &quot;b6&quot; &quot;a7&quot; &quot;b8&quot; &quot;a9&quot;</code></pre>
+<p>Next, consider writing a function which simulates repeatedly tossing a coin <span class="math inline">\(n\)</span> times, counting the number of HEADS out of the <span class="math inline">\(n\)</span> tosses. For the first five repetitions of <span class="math inline">\(n\)</span> tosses, the function will print out the number of HEADS (for example if there are 7 HEADS in the <span class="math inline">\(n=10\)</span> tosses the function prints “The number of HEADS out of 10 tosses is 7.” The function returns a histogram of the number of HEADS, with a title stating “Number of HEADS in ?? tosses” where ?? is replaced by the number of tosses. The <code>paste</code> function will help greatly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>coin_toss &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">iter =</span> <span class="dv">500</span>) {
+<span class="op">+</span><span class="st">   </span><span class="kw">require</span>(ggplot2)
+<span class="op">+</span><span class="st">   </span>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">numheads =</span> <span class="kw">numeric</span>(iter))
+<span class="op">+</span><span class="st">   </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>iter) {
+<span class="op">+</span><span class="st">     </span>df<span class="op">$</span>numheads[i] &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, n, <span class="fl">0.5</span>)
+<span class="op">+</span><span class="st">     </span><span class="cf">if</span> (i <span class="op">&lt;=</span><span class="st"> </span><span class="dv">5</span>) {
+<span class="op">+</span><span class="st">       </span><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The number of HEADS out of&quot;</span>, n, 
+<span class="op">+</span><span class="st">         &quot;tosses is&quot;</span>, df<span class="op">$</span>numheads[i]))
+<span class="op">+</span><span class="st">     </span>}
+<span class="op">+</span><span class="st">   </span>}
+<span class="op">+</span><span class="st">   </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df, <span class="kw">aes</span>(<span class="dt">x =</span> numheads)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">     </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;Number of HEADS in&quot;</span>, n, <span class="st">&quot;tosses&quot;</span>))
+<span class="op">+</span><span class="st"> </span>}
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">coin_toss</span>()</code></pre></div>
+<pre><code>Warning in rbinom(1, n, 0.5): &#39;.Random.seed[1]&#39; is not
+a valid integer, so ignored</code></pre>
+<pre><code>[1] &quot;The number of HEADS out of 10 tosses is 6&quot;
+[1] &quot;The number of HEADS out of 10 tosses is 5&quot;
+[1] &quot;The number of HEADS out of 10 tosses is 2&quot;
+[1] &quot;The number of HEADS out of 10 tosses is 4&quot;
+[1] &quot;The number of HEADS out of 10 tosses is 8&quot;</code></pre>
+<p><img src="bookdown_files/figure-html/cointoss-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">coin_toss</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">iter =</span> <span class="dv">1000</span>)</code></pre></div>
+<pre><code>[1] &quot;The number of HEADS out of 25 tosses is 13&quot;
+[1] &quot;The number of HEADS out of 25 tosses is 7&quot;
+[1] &quot;The number of HEADS out of 25 tosses is 13&quot;
+[1] &quot;The number of HEADS out of 25 tosses is 14&quot;
+[1] &quot;The number of HEADS out of 25 tosses is 11&quot;</code></pre>
+<p><img src="bookdown_files/figure-html/cointoss-2.png" width="672" /></p>
+<p>Let’s now return to the object <code>moby_dick</code> that contains the text of the novel. If we want to analyze word choice, word frequency, etc., it would be helpful to form a vector in which each element is a word from the novel. One way to do this is to first paste the current version of the <code>moby_dick</code> variable into a new version which is one long vector with the lines pasted together. To illustrate, we will first do this with a much smaller object that shares the structure of <code>moby_dick</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>small_novel &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;First line&quot;</span>, <span class="st">&quot;Second somewhat longer line&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;third line.&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>small_novel</code></pre></div>
+<pre><code>[1] &quot;First line&quot;                 
+[2] &quot;Second somewhat longer line&quot;
+[3] &quot;third line.&quot;                </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>small_novel &lt;-<span class="st"> </span><span class="kw">paste</span>(small_novel, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(small_novel)</code></pre></div>
+<pre><code>[1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>small_novel</code></pre></div>
+<pre><code>[1] &quot;First line Second somewhat longer line third line.&quot;</code></pre>
+<p>Now we do the same with the actual novel.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span><span class="kw">paste</span>(moby_dick, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(moby_dick)</code></pre></div>
+<pre><code>[1] 1</code></pre>
+<p>At this point <code>moby_dick</code> contains a single very long character string. Next we will separate this string into separate words and clean up the resulting vector a bit.</p>
+</div>
+<div id="section-more-string-processing-functions" class="section level2">
+<h2><span class="header-section-number">12.3</span> More String Processing Functions</h2>
+<p>Common string processing tasks include changing case between upper and lower, extracting and/or replacing substrings of a string, trimming a string to a specified width, counting the number of characters in a string, etc.</p>
+<div id="section-tolower-and-toupper" class="section level3">
+<h3><span class="header-section-number">12.3.1</span> <code>tolower</code> and <code>toupper</code></h3>
+<p>R contains functions <code>tolower</code> and <code>toupper</code> which very simply change the case of all characters in a string.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> &quot;aBCdefG12#&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span>x
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">tolower</span>(x)</code></pre></div>
+<pre><code>[1] &quot;abcdefg12#&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">toupper</span>(y)</code></pre></div>
+<pre><code>[1] &quot;ABCDEFG12#&quot;</code></pre>
+<p>If we are interested in frequencies of words in <em>Moby Dick</em>, converting all the text to the same case makes sense, so for example the word “the” at the beginning of a sentence is not counted differently than the same word in the middle of a sentence.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span><span class="kw">tolower</span>(moby_dick)</code></pre></div>
+</div>
+<div id="section-nchar-and-strsplit" class="section level3">
+<h3><span class="header-section-number">12.3.2</span> <code>nchar</code> and <code>strsplit</code></h3>
+<p>The function <code>nchar</code> counts the number of characters in a string or strings.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">nchar</span>(<span class="st">&quot;dog&quot;</span>)</code></pre></div>
+<pre><code>[1] 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">nchar</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;horse&quot;</span>, <span class="st">&quot;elephant&quot;</span>))</code></pre></div>
+<pre><code>[1] 3 3 5 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">nchar</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;horse&quot;</span>, <span class="st">&quot;elephant&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;goat&quot;</span>))</code></pre></div>
+<pre><code>[1]  3  3  5  8 NA  4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">nchar</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;horse&quot;</span>, <span class="st">&quot;elephant&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;goat&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="dt">keepNA =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>[1] 3 3 5 8 2 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">nchar</span>(moby_dick)</code></pre></div>
+<pre><code>[1] 1190309</code></pre>
+<p>By default <code>nchar</code> returns NA for a missing value. If you want <code>nchar</code> to return 2 for a <code>NA</code> value, you can set <code>keepNA = TRUE</code>.<a href="section-references.html#section-fn59" class="footnoteRef" id="section-fnref59"><sup>59</sup></a></p>
+<p>The function <code>strsplit</code> splits the elements of a character vector. The function returns a list, and often the <code>unlist</code> function is useful to convert the list into an atomic vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;mail.msu.edu&quot;</span>, <span class="st">&quot;mail.google.com&quot;</span>, <span class="st">&quot;www.amazon.com&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="dt">split =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[[1]]
+[1] &quot;mail&quot; &quot;msu&quot;  &quot;edu&quot; 
+
+[[2]]
+[1] &quot;mail&quot;   &quot;google&quot; &quot;com&quot;   
+
+[[3]]
+[1] &quot;www&quot;    &quot;amazon&quot; &quot;com&quot;   </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;mail.msu.edu&quot;</span>, <span class="st">&quot;mail.google.com&quot;</span>, <span class="st">&quot;www.amazon.com&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="dt">split =</span> <span class="st">&quot;.&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>[1] &quot;mail&quot;   &quot;msu&quot;    &quot;edu&quot;    &quot;mail&quot;   &quot;google&quot;
+[6] &quot;com&quot;    &quot;www&quot;    &quot;amazon&quot; &quot;com&quot;   </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;pig&quot;</span>, <span class="st">&quot;horse&quot;</span>), <span class="dt">split =</span> <span class="st">&quot;o&quot;</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">fixed =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>[1] &quot;d&quot;   &quot;g&quot;   &quot;cat&quot; &quot;pig&quot; &quot;h&quot;   &quot;rse&quot;</code></pre>
+<p>Setting the argument <code>fixed</code> to <code>TRUE</code> tells R to match the value of <code>split</code> exactly when performing the split. The function can be much more powerful if the value of <code>split</code> is a <em>regular expression</em>, which can for example ask for splits at any vowels, etc. We will not go in depth on Regular Expressions here, but we will make some use of regular expressions on a case-by-case basis prior to that. Regular expressions are very powerful, so if this chapter interests you, we suggest researching regular expressions on your own (as always there are plenty of free resources online).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;pig&quot;</span>, <span class="st">&quot;horse&quot;</span>, <span class="st">&quot;rabbit&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="dt">split =</span> <span class="st">&quot;[aeiou]&quot;</span>))</code></pre></div>
+<pre><code> [1] &quot;d&quot;  &quot;g&quot;  &quot;c&quot;  &quot;t&quot;  &quot;p&quot;  &quot;g&quot;  &quot;h&quot;  &quot;rs&quot; &quot;r&quot;  &quot;bb&quot;
+[11] &quot;t&quot; </code></pre>
+<p>The regular expression <code>[aeiou]</code> represents any of the letters a, e, i, o, u. In general a string of characters enclosed in square brackets indicates any one character in the string.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;pig&quot;</span>, <span class="st">&quot;horse&quot;</span>, <span class="st">&quot;rabbit&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="dt">split =</span> <span class="st">&quot;[aorb]&quot;</span>))</code></pre></div>
+<pre><code> [1] &quot;d&quot;   &quot;g&quot;   &quot;c&quot;   &quot;t&quot;   &quot;pig&quot; &quot;h&quot;   &quot;&quot;    &quot;se&quot; 
+ [9] &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;&quot;    &quot;it&quot; </code></pre>
+<p>The regular expression <code>[aorb]</code> represents any of the letters a, o, r, b.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;a1c2b&quot;</span>, <span class="st">&quot;bbb2bc3f&quot;</span>), <span class="dt">split =</span> <span class="st">&quot;[1-9]&quot;</span>))</code></pre></div>
+<pre><code>[1] &quot;a&quot;   &quot;c&quot;   &quot;b&quot;   &quot;bbb&quot; &quot;bc&quot;  &quot;f&quot;  </code></pre>
+<p>The regular expression <code>[1-9]</code> represents any of the numbers 1, 2, 3, 4, 5, 6, 7, 8, 9.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;aBc1fGh&quot;</span>, <span class="st">&quot;1TyzaaG&quot;</span>), <span class="dt">split =</span> <span class="st">&quot;[^a-z]&quot;</span>))</code></pre></div>
+<pre><code>[1] &quot;a&quot;    &quot;c&quot;    &quot;f&quot;    &quot;h&quot;    &quot;&quot;     &quot;&quot;     &quot;yzaa&quot;</code></pre>
+<p>The regular expression <code>[a-z]</code> represents any lower case letter. The caret <code>^</code> in front of <code>a-z</code> indicates “match any character <em>except</em> those in the following string” which in this case indicates “match any character that is NOT a lower case letter”.</p>
+<p>Recall that the <code>moby_dick</code> vector now contains one long character string which includes the entire text of the novel, and that we would like to split it into separate words. We now know how to do this using <code>strsplit</code> and a regular expression. First a smaller example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain stays mainly&quot;</span>, <span class="st">&quot;in&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;the plain&quot;</span>), <span class="dt">split =</span> <span class="st">&quot;[^0-9A-Za-z]&quot;</span>))</code></pre></div>
+<pre><code>[1] &quot;the&quot;    &quot;rain&quot;   &quot;in&quot;     &quot;Spain&quot;  &quot;stays&quot; 
+[6] &quot;mainly&quot; &quot;in&quot;     &quot;the&quot;    &quot;plain&quot; </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain stays mainly&quot;</span>, <span class="st">&quot;in&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;the plain&quot;</span>), <span class="dt">split =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>[1] &quot;the&quot;    &quot;rain&quot;   &quot;in&quot;     &quot;Spain&quot;  &quot;stays&quot; 
+[6] &quot;mainly&quot; &quot;in&quot;     &quot;the&quot;    &quot;plain&quot; </code></pre>
+<p>Look at the regular expression. The caret says “match anything but” and then <code>0=9A-Za-z</code> says “any digit, any lower-case letter, and any upper-case letter.” So the whole expression (including the fact that it is the value of the argument <code>split</code>) says “match anything but any digit, any lower-case letter, or any upper-case letter”.</p>
+<p>Now we apply this to <code>moby_dick</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(moby_dick, <span class="dt">split =</span> <span class="st">&quot;[^0-9A-Za-z]&quot;</span>))</code></pre></div>
+<p>Let’s see a bit of what we have.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>]</code></pre></div>
+<pre><code> [1] &quot;chapter&quot;    &quot;1&quot;          &quot;&quot;          
+ [4] &quot;loomings&quot;   &quot;&quot;           &quot;call&quot;      
+ [7] &quot;me&quot;         &quot;ishmael&quot;    &quot;&quot;          
+[10] &quot;some&quot;       &quot;years&quot;      &quot;ago&quot;       
+[13] &quot;&quot;           &quot;never&quot;      &quot;mind&quot;      
+[16] &quot;how&quot;        &quot;long&quot;       &quot;precisely&quot; 
+[19] &quot;&quot;           &quot;having&quot;     &quot;little&quot;    
+[22] &quot;or&quot;         &quot;no&quot;         &quot;money&quot;     
+[25] &quot;in&quot;         &quot;my&quot;         &quot;purse&quot;     
+[28] &quot;&quot;           &quot;and&quot;        &quot;nothing&quot;   
+[31] &quot;particular&quot; &quot;to&quot;         &quot;interest&quot;  
+[34] &quot;me&quot;         &quot;on&quot;         &quot;shore&quot;     
+[37] &quot;&quot;           &quot;i&quot;          &quot;thought&quot;   
+[40] &quot;i&quot;          &quot;would&quot;      &quot;sail&quot;      
+[43] &quot;about&quot;      &quot;a&quot;          &quot;little&quot;    
+[46] &quot;and&quot;        &quot;see&quot;        &quot;the&quot;       
+[49] &quot;watery&quot;     &quot;part&quot;      </code></pre>
+<p>There is a small problem: Some of the “words” are blank. The following small example indicates why this happened.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;in&quot;</span>, <span class="st">&quot;the plain&quot;</span>), <span class="dt">split =</span> <span class="st">&quot;[^0-9A-Za-z]&quot;</span>))</code></pre></div>
+<pre><code> [1] &quot;the&quot;    &quot;rain&quot;   &quot;in&quot;     &quot;Spain&quot;  &quot;&quot;      
+ [6] &quot;&quot;       &quot;&quot;       &quot;stays&quot;  &quot;mainly&quot; &quot;in&quot;    
+[11] &quot;the&quot;    &quot;plain&quot; </code></pre>
+<p>It is not too hard to remove the blank words.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(moby_dick)</code></pre></div>
+<pre><code>[1] 253993</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>not.blanks &lt;-<span class="st"> </span><span class="kw">which</span>(moby_dick <span class="op">!=</span><span class="st"> &quot;&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span>moby_dick[not.blanks]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(moby_dick)</code></pre></div>
+<pre><code>[1] 214889</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>]</code></pre></div>
+<pre><code> [1] &quot;chapter&quot;    &quot;1&quot;          &quot;loomings&quot;  
+ [4] &quot;call&quot;       &quot;me&quot;         &quot;ishmael&quot;   
+ [7] &quot;some&quot;       &quot;years&quot;      &quot;ago&quot;       
+[10] &quot;never&quot;      &quot;mind&quot;       &quot;how&quot;       
+[13] &quot;long&quot;       &quot;precisely&quot;  &quot;having&quot;    
+[16] &quot;little&quot;     &quot;or&quot;         &quot;no&quot;        
+[19] &quot;money&quot;      &quot;in&quot;         &quot;my&quot;        
+[22] &quot;purse&quot;      &quot;and&quot;        &quot;nothing&quot;   
+[25] &quot;particular&quot; &quot;to&quot;         &quot;interest&quot;  
+[28] &quot;me&quot;         &quot;on&quot;         &quot;shore&quot;     
+[31] &quot;i&quot;          &quot;thought&quot;    &quot;i&quot;         
+[34] &quot;would&quot;      &quot;sail&quot;       &quot;about&quot;     
+[37] &quot;a&quot;          &quot;little&quot;     &quot;and&quot;       
+[40] &quot;see&quot;        &quot;the&quot;        &quot;watery&quot;    
+[43] &quot;part&quot;       &quot;of&quot;         &quot;the&quot;       
+[46] &quot;world&quot;      &quot;it&quot;         &quot;is&quot;        
+[49] &quot;a&quot;          &quot;way&quot;       </code></pre>
+<p>(In this example it would have been more efficient to replace</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(moby_dick, <span class="dt">split =</span> <span class="st">&quot;[^0-9A-Za-z]&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick2 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(moby_dick, <span class="dt">split =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<p>Then the second step of selecting the non-blank words would not have been necessary. But regular expressions will be essential going forward, so it was worthwhile using regular expressions even if they do not provide the most efficient method.)</p>
+</div>
+<div id="section-practice-exercise-15" class="section level3">
+<h3><span class="header-section-number">12.3.3</span> Practice Exercise</h3>
+<p>Use <code>strsplit()</code> and regular expressions to split the following strings into their respective words (i.e. write a regular expression that will match the <code>-</code> and <code>.</code> character). Your output should be a vector (not a list).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>strings &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Once-upon&quot;</span>, <span class="st">&quot;a.time&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;was-a&quot;</span>, <span class="st">&quot;man.named&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;Bob&quot;</span>)</code></pre></div>
+<pre><code> [1] &quot;Once&quot;  &quot;upon&quot;  &quot;a&quot;     &quot;time&quot;  &quot;there&quot; &quot;was&quot;  
+ [7] &quot;a&quot;     &quot;man&quot;   &quot;named&quot; &quot;Bob&quot;  </code></pre>
+</div>
+<div id="section-nchar-again" class="section level3">
+<h3><span class="header-section-number">12.3.4</span> <code>nchar</code> Again</h3>
+<p>Now that the vector <code>moby_dick</code> contains each word in the novel as a separate element, it is relatively easy to do some basic analyses. For example the <code>nchar</code> function can give us a count of the number of characters in each element of the vector, i.e., can give us the number of letters in each word in the novel.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick_nchar &lt;-<span class="st"> </span><span class="kw">nchar</span>(moby_dick)
+<span class="op">&gt;</span><span class="st"> </span>moby_dick_nchar[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>]</code></pre></div>
+<pre><code> [1]  7  1  8  4  2  7  4  5  3  5  4  3  4  9  6  6  2
+[18]  2  5  2  2  5  3  7 10  2  8  2  2  5  1  7  1  5
+[35]  4  5  1  6  3  3  3  6  4  2  3  5  2  2  1  3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">max</span>(moby_dick_nchar)</code></pre></div>
+<pre><code>[1] 20</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">nwords =</span> moby_dick_nchar), <span class="kw">aes</span>(<span class="dt">x =</span> nwords)) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of letters in words in Moby Dick&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-312-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>moby_dick_word_table &lt;-<span class="st"> </span><span class="kw">table</span>(moby_dick)
+<span class="op">&gt;</span><span class="st"> </span>moby_dick_word_table &lt;-<span class="st"> </span><span class="kw">sort</span>(moby_dick_word_table, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>moby_dick_word_table[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>]</code></pre></div>
+<pre><code>moby_dick
+  the    of   and     a    to    in  that    it   his 
+14175  6469  6325  4636  4539  4077  3045  2497  2495 
+    i    he   but     s    as  with    is   was   for 
+ 2114  1876  1805  1737  1720  1692  1690  1627  1593 
+  all  this    at    by whale   not  from   him    so 
+ 1515  1382  1304  1175  1150  1142  1072  1058  1053 
+   on    be   one   you there   now   had  have    or 
+ 1040  1032   907   884   854   779   767   754   689 
+ were  they  like    me  then which  what  some their 
+  677   649   639   630   628   625   611   608   604 
+ when    an   are    my    no 
+  601   590   587   587   581 </code></pre>
+</div>
+<div id="section-substr-and-strtrim" class="section level3">
+<h3><span class="header-section-number">12.3.5</span> <code>substr</code> and <code>strtrim</code></h3>
+<p>The <code>substr</code> function can be used to extract or replace substrings. The first argument is the string to be manipulated, and the second and third arguments specify the first and last elements of the string to be extracted or to be replaced.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> &quot;Michigan&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">substr</span>(x, <span class="dv">3</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>[1] &quot;ch&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">substr</span>(x, <span class="dv">3</span>, <span class="dv">4</span>) &lt;-<span class="st"> &quot;CH&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>x</code></pre></div>
+<pre><code>[1] &quot;MiCHigan&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Ohio&quot;</span>, <span class="st">&quot;Michigan&quot;</span>, <span class="st">&quot;Illinois&quot;</span>, <span class="st">&quot;Wisconsin&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">substr</span>(x, <span class="dv">2</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>[1] &quot;hio&quot; &quot;ich&quot; &quot;lli&quot; &quot;isc&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">substr</span>(x, <span class="dv">2</span>, <span class="dv">4</span>) &lt;-<span class="st"> &quot;$#&amp;&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>x</code></pre></div>
+<pre><code>[1] &quot;O$#&amp;&quot;      &quot;M$#&amp;igan&quot;  &quot;I$#&amp;nois&quot;  &quot;W$#&amp;onsin&quot;</code></pre>
+<p>The <code>strtrim</code> function trims a character string to a specified length.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">strtrim</span>(<span class="st">&quot;Michigan&quot;</span>, <span class="dv">1</span>)</code></pre></div>
+<pre><code>[1] &quot;M&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">strtrim</span>(<span class="st">&quot;Michigan&quot;</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>[1] &quot;Mich&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">strtrim</span>(<span class="st">&quot;Michigan&quot;</span>, <span class="dv">100</span>)</code></pre></div>
+<pre><code>[1] &quot;Michigan&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">strtrim</span>(<span class="kw">c</span>(<span class="st">&quot;Ohio&quot;</span>, <span class="st">&quot;Michigan&quot;</span>, <span class="st">&quot;Illinois&quot;</span>, <span class="st">&quot;Wisconsin&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="dv">3</span>)</code></pre></div>
+<pre><code>[1] &quot;Ohi&quot; &quot;Mic&quot; &quot;Ill&quot; &quot;Wis&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">strtrim</span>(<span class="kw">c</span>(<span class="st">&quot;Ohio&quot;</span>, <span class="st">&quot;Michigan&quot;</span>, <span class="st">&quot;Illinois&quot;</span>, <span class="st">&quot;Wisconsin&quot;</span>), 
+<span class="op">+</span><span class="st">   </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>))</code></pre></div>
+<pre><code>[1] &quot;Ohi&quot;    &quot;Mich&quot;   &quot;Illin&quot;  &quot;Wiscon&quot;</code></pre>
+</div>
+<div id="section-grep-and-related-functions" class="section level3">
+<h3><span class="header-section-number">12.3.6</span> <code>grep</code> and Related Functions</h3>
+<p>The <code>grep</code> function searches for a specified pattern and returns either the locations where this pattern is found or the selected elements. The <code>grepl</code> function returns a logical vector rather than locations of elements.</p>
+<p>Here are some examples. All use <code>fixed = TRUE</code> since at this point we are using fixed character strings rather than regular expressions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;a&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, <span class="st">&quot;in&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] 1 2 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;a&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, <span class="st">&quot;in&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>, <span class="dt">value =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] &quot;the rain&quot;                
+[2] &quot;in Spain    stays mainly&quot;
+[3] &quot;the plain&quot;               </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;a&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, <span class="st">&quot;in&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1]  TRUE  TRUE FALSE  TRUE</code></pre>
+<p>The <code>sub</code> and <code>gsub</code> functions replace a specified character string. The <code>sub</code> function only replaces the first occurrence, while <code>gsub</code> replaces all occurrences.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;?&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;in&quot;</span>, <span class="st">&quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] &quot;the r?in&quot;                
+[2] &quot;in Sp?in    st?ys m?inly&quot;
+[3] &quot;in&quot;                      
+[4] &quot;the pl?in&quot;               </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;?&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;in&quot;</span>, <span class="st">&quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] &quot;the r?in&quot;                
+[2] &quot;in Sp?in    stays mainly&quot;
+[3] &quot;in&quot;                      
+[4] &quot;the pl?in&quot;               </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;???&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;in&quot;</span>, <span class="st">&quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] &quot;the r???in&quot;                    
+[2] &quot;in Sp???in    st???ys m???inly&quot;
+[3] &quot;in&quot;                            
+[4] &quot;the pl???in&quot;                   </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;???&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;the rain&quot;</span>, <span class="st">&quot;in Spain    stays mainly&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;in&quot;</span>, <span class="st">&quot;the plain&quot;</span>), <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] &quot;the r???in&quot;                
+[2] &quot;in Sp???in    stays mainly&quot;
+[3] &quot;in&quot;                        
+[4] &quot;the pl???in&quot;               </code></pre>
+</div>
+</div>
+<div id="section-homework-9" class="section level2">
+<h2><span class="header-section-number">12.4</span> Homework</h2>
+<p><strong>Exercise Text Data</strong> Learning objectives: read and write text data; concatenate text with the <code>paste</code> function, analyze text with <code>nchar</code>; practice with functions; manipulate strings with <code>substr</code> and <code>strtrim</code>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-classification.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-rcpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

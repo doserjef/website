@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-graphics.html">
+<link rel="next" href="section-functions.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-data2" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Working with Data</h1>
+<p>Bringing data into R, exporting data from R in a form that is readable by other software, cleaning and reshaping data, and other data manipulation tasks are an important and often overlooked component of data science. The book <span class="citation">Spector (<a href="#ref-SpectorDataManipulation">2008</a>)</span>, while a few years old, is still an excellent reference for data-related issues. And the  manual, available online at , is an up-to-date (and free) reference on importing a wide variety of datasets into R and on exporting data in various forms.</p>
+<div id="section-reading-data-into-r" class="section level2">
+<h2><span class="header-section-number">7.1</span> Reading Data into R</h2>
+<p>Data come in a dizzying variety of forms. It might be in a proprietary format such as an <a href="https://en.wikipedia.org/wiki/Microsoft_Excel">.xlsx</a> Excel file, a <a href="https://en.wikipedia.org/wiki/SPSS">.sav</a> SPSS file, or a <a href="https://en.wikipedia.org/wiki/Minitab">.mtw</a> Minitab file. It might be structured using a <a href="https://en.wikipedia.org/wiki/Relational_model%7D%7Brelational%20model">relational model</a> comprising many tables that need to be connected via key-value pairs. It might be a data-interchange format such as <a href="http://www.json.org/">JSON</a> (JavaScript Object Notation), or a markup language such as <a href="https://en.wikipedia.org/wiki/XML">XML</a> (Extensible Markup Language), perhaps with specialized standards for describing ecological information, see <a href="https://en.wikipedia.org/wiki/Ecological_Metadata_Language">EML</a> (Ecological Metadata Language). Both XML and EML are common data metadata formats (i.e., data that provides information about other data). Fortunately many datasets are (or can be) saved as plain text files, and most software can both read and write such files, so our initial focus will be on reading plain text files into R and saving data from R in plain text format. RStudio provides a handy <a href="http://www.rstudio.com/resources/cheatsheets">data import cheat sheet</a> for many of the read functions detailed in this section.</p>
+<p>The <code>foreign</code> R package provides functions to directly read data saved in some of the proprietary formats into R, which is sometimes unavoidable, but if possible it is good to save data from another package as plain text and then read this plain text file into R. In Chapter <a href="section-xml.html#section-xml">12</a> methods for reading web-based data sets into R will be discussed.</p>
+<p>The function <code>read.table()</code> and its offshoots such as <code>read.csv()</code> are used to read in rectangular data from a text file. For example, the file <code>BrainAndBody.csv</code> contains data<a href="section-references.html#section-fn37" class="footnoteRef" id="section-fnref37"><sup>37</sup></a> on the brain weight, body weight, and name of some terrestrial animals. Here are the first few lines of that file:</p>
+<pre><code>body,brain,name
+1.35,8.1,Mountain beaver
+465,423,Cow
+36.33,119.5,Grey wolf
+27.66,115,Goat
+1.04,5.5,Guinea pig</code></pre>
+<p>As is evident, the first line of the file contains the names of the three variables, separated (delimited) by commas. Each subsequent line contains the body weight, brain weight, and name of a specific terrestrial animal.</p>
+<p>This file is accessible at the url <a href="http://blue.for.msu.edu/FOR875/data/BrainAndBody.csv" class="uri">http://blue.for.msu.edu/FOR875/data/BrainAndBody.csv</a>. The <code>read.table()</code> function is used to read these data into an R data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.bb &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/BrainAndBody.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>BrainBody &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> u.bb, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, 
+<span class="op">+</span><span class="st">                         </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(BrainBody)</code></pre></div>
+<pre><code>      body brain            name
+1     1.35   8.1 Mountain beaver
+2   465.00 423.0             Cow
+3    36.33 119.5       Grey wolf
+4    27.66 115.0            Goat
+5     1.04   5.5      Guinea pig
+6 11700.00  50.0     Dipliodocus</code></pre>
+<p>The arguments used in this call to <code>read.table()</code> include:</p>
+<ol style="list-style-type: decimal">
+<li><code>file = u.bb</code>, which tells R the location of the file. In this case the string <code>http://blue.for.msu.edu/FOR875/data/BrainAndBody.csv</code> giving the location is rather long, so it was first assigned to the object <code>u.bb</code>.</li>
+<li><code>header = TRUE</code>, which tells R the first line of the file gives the names of the variables.</li>
+<li><code>sep = &quot;,&quot;</code>, which tells R that a comma separates the fields in the file.</li>
+<li><code>stringsAsFactors = FALSE</code> which tells R not to convert character vectors to factors.</li>
+</ol>
+<p>The function <code>read.csv()</code> is the same as <code>read.table()</code> except the default separator is a comma, whereas the default separator for <code>read.table()</code> is whitespace.</p>
+<p>The file <code>BrainAndBody.tsv</code> contains the same data, except a tab is used in place of a comma to separate fields. The only change needed to read in the data in this file is in the <code>sep</code> argument (and of course the <code>file</code> argument, since the data are stored in a different file):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.bb &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/BrainAndBody.tsv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>BrainBody2 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> u.bb, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+<span class="op">+</span><span class="st">                          </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(BrainBody2)</code></pre></div>
+<pre><code>      body brain            name
+1     1.35   8.1 Mountain beaver
+2   465.00 423.0             Cow
+3    36.33 119.5       Grey wolf
+4    27.66 115.0            Goat
+5     1.04   5.5      Guinea pig
+6 11700.00  50.0     Dipliodocus</code></pre>
+<p>File extensions, e.g., <code>.csv</code> or <code>.tsv</code>, are naming conventions only and are there to remind us how the columns are separated. In other words, they have no influence on R’s file read functions.</p>
+<p>A third file, <code>BrainAndBody.txt</code>, contains the same data, but also contains a few lines of explanatory text above the names of the variables. It also uses whitespace rather than a comma or a tab as a separator. Here are the first several lines of the file.</p>
+<pre><code>This file contains data
+on brain and body
+weights of several terrestrial animals
+
+&quot;body&quot; &quot;brain&quot; &quot;name&quot;
+1.35 8.1 &quot;Mountain beaver&quot;
+465 423 &quot;Cow&quot;
+36.33 119.5 &quot;Grey wolf&quot;
+27.66 115 &quot;Goat&quot;
+1.04 5.5 &quot;Guinea pig&quot;
+11700 50 &quot;Dipliodocus&quot;
+2547 4603 &quot;Asian elephant&quot;</code></pre>
+<p>Notice that in this file the values of <code>name</code> are put inside of quotation marks. This is necessary since instead R would (reasonably) assume the first line contained the values of four variables, the values being <code>1.35</code>, <code>8.1</code>, <code>Mountain</code>, and <code>beaver</code> while in reality there are only three values desired, with <code>Mountain beaver</code> being the third.</p>
+<p>To read in this file we need to tell R to skip the first five lines and to use whitespace as the separator. The <code>skip</code> argument handles the first, and the <code>sep</code> argument the second. First let’s see what happens if we don’t use the <code>skip</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.bb &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/BrainAndBody.txt&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>BrainBody3 &lt;-<span class="st"> </span><span class="kw">read.table</span>(u.bb, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, 
+<span class="op">+</span><span class="st">                          </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : line 1 did not have 5 elements</code></pre>
+<p>R assumed the first line of the file contained the variable names, since <code>header = TRUE</code> was specified, and counted four including <code>This</code>, <code>file</code>, <code>contains</code>, and <code>data</code>. So in the first line of actual data, R expected four columns containing data plus possibly a fifth column containing row names for the data set, and complained that “line 1 did not have 5 elements.” The error message is somewhat mysterious, since it starts with “Error in scan.” This happens because <code>read.table()</code> actually uses a more basic R function called <code>scan()</code> to do the work.</p>
+<p>Here’s how to read in the file correctly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.bb &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/BrainAndBody.txt&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>BrainBody3 &lt;-<span class="st"> </span><span class="kw">read.table</span>(u.bb, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, 
+<span class="op">+</span><span class="st">                          </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="dv">4</span>)
+<span class="op">&gt;</span><span class="st"> </span>BrainBody3[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</code></pre></div>
+<pre><code>       body  brain            name
+1      1.35    8.1 Mountain beaver
+2    465.00  423.0             Cow
+3     36.33  119.5       Grey wolf
+4     27.66  115.0            Goat
+5      1.04    5.5      Guinea pig
+6  11700.00   50.0     Dipliodocus
+7   2547.00 4603.0  Asian elephant
+8    187.10  419.0          Donkey
+9    521.00  655.0           Horse
+10    10.00  115.0    Potar monkey</code></pre>
+</div>
+<div id="section-reading-data-with-missing-observations" class="section level2">
+<h2><span class="header-section-number">7.2</span> Reading Data with Missing Observations</h2>
+<p>Missing data are represented in many ways. Sometimes a missing data point is just that, i.e., the place where it should be in the file is blank. Other times specific numbers such as <span class="math inline">\(-9999\)</span> or specific symbols are used. The <code>read.table()</code> function has an argument <code>na.string</code> that allows the user to specify how missing data is indicated in the source file.</p>
+<p>The site <a href="http://www.wunderground.com/history/" class="uri">http://www.wunderground.com/history/</a> makes weather data available for locations around the world from dates going back to 1945. The file <code>WeatherKLAN2014.csv</code> contains weather data for Lansing, Michigan for the year 2014. Here are the first few lines of that file:</p>
+<pre><code>EST,Max TemperatureF,Min TemperatureF, Events
+1/1/14,14,9,Snow
+1/2/14,13,-3,Snow
+1/3/14,13,-11,Snow
+1/4/14,31,13,Snow
+1/5/14,29,16,Fog-Snow
+1/6/14,16,-12,Fog-Snow
+1/7/14,2,-13,Snow
+1/8/14,17,-1,Snow
+1/9/14,21,2,Snow
+1/10/14,39,21,Fog-Rain-Snow
+1/11/14,41,32,Fog-Rain
+1/12/14,39,31,</code></pre>
+<p>Look at the last line, and notice that instead of an <code>Event</code> such as <code>Snow</code> or <code>Fog-Snow</code> there is nothing after the comma. This observation is missing, but rather than using an explicit code such as <code>NA</code>, the site just leaves that entry blank. To read these data into R we will supply the argument <code>na.string = &quot;&quot;</code> which tells R the file indicates missing data by leaving the appropriate entry blank.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.weather &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/WeatherKLAN2014.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>WeatherKLAN2014 &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.weather, <span class="dt">header=</span><span class="ot">TRUE</span>, 
+<span class="op">+</span><span class="st">                             </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, <span class="dt">na.string =</span> <span class="st">&quot;&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>WeatherKLAN2014[<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>,]</code></pre></div>
+<pre><code>       EST Max.TemperatureF Min.TemperatureF
+1   1/1/14               14                9
+2   1/2/14               13               -3
+3   1/3/14               13              -11
+4   1/4/14               31               13
+5   1/5/14               29               16
+6   1/6/14               16              -12
+7   1/7/14                2              -13
+8   1/8/14               17               -1
+9   1/9/14               21                2
+10 1/10/14               39               21
+11 1/11/14               41               32
+12 1/12/14               39               31
+13 1/13/14               44               34
+14 1/14/14               37               26
+15 1/15/14               27               18
+          Events
+1           Snow
+2           Snow
+3           Snow
+4           Snow
+5       Fog-Snow
+6       Fog-Snow
+7           Snow
+8           Snow
+9           Snow
+10 Fog-Rain-Snow
+11      Fog-Rain
+12          &lt;NA&gt;
+13          Rain
+14     Rain-Snow
+15          Snow</code></pre>
+</div>
+<div id="section-summarizing-data-frames" class="section level2">
+<h2><span class="header-section-number">7.3</span> Summarizing Data Frames</h2>
+<p>Some common data tasks include variable summaries such as means or standard deviations, transforming an existing variable, and creating new variables. As with many tasks, there are several ways to accomplish each of these.</p>
+<div id="section-column-and-row-summaries" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Column (and Row) Summaries</h3>
+<p>The file <code>WeatherKLAN2014Full.csv</code> contains a more complete set of weather data variables than <code>WeatherKLAN2014.csv</code>, from the same source, <a href="http://www.wunderground.com/history" class="uri">http://www.wunderground.com/history</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.weather &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/WeatherKLAN2014Full.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>WeatherKLAN2014Full &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.weather, <span class="dt">header=</span><span class="ot">TRUE</span>, 
+<span class="op">+</span><span class="st">                                </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, 
+<span class="op">+</span><span class="st">                                </span><span class="dt">na.string =</span> <span class="st">&quot;&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(WeatherKLAN2014Full)</code></pre></div>
+<pre><code> [1] &quot;EST&quot;                      
+ [2] &quot;Max.TemperatureF&quot;         
+ [3] &quot;Mean.TemperatureF&quot;        
+ [4] &quot;Min.TemperatureF&quot;         
+ [5] &quot;Max.Dew.PointF&quot;           
+ [6] &quot;MeanDew.PointF&quot;           
+ [7] &quot;Min.DewpointF&quot;            
+ [8] &quot;Max.Humidity&quot;             
+ [9] &quot;Mean.Humidity&quot;            
+[10] &quot;Min.Humidity&quot;             
+[11] &quot;Max.Sea.Level.PressureIn&quot; 
+[12] &quot;Mean.Sea.Level.PressureIn&quot;
+[13] &quot;Min.Sea.Level.PressureIn&quot; 
+[14] &quot;Max.VisibilityMiles&quot;      
+[15] &quot;Mean.VisibilityMiles&quot;     
+[16] &quot;Min.VisibilityMiles&quot;      
+[17] &quot;Max.Wind.SpeedMPH&quot;        
+[18] &quot;Mean.Wind.SpeedMPH&quot;       
+[19] &quot;Max.Gust.SpeedMPH&quot;        
+[20] &quot;PrecipitationIn&quot;          
+[21] &quot;CloudCover&quot;               
+[22] &quot;Events&quot;                   
+[23] &quot;WindDirDegrees&quot;           </code></pre>
+<p>How can we compute the mean for each variable? One possibility is to do this a variable at a time:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(WeatherKLAN2014Full<span class="op">$</span>Mean.TemperatureF)</code></pre></div>
+<pre><code>[1] 45.78</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(WeatherKLAN2014Full<span class="op">$</span>Min.TemperatureF)</code></pre></div>
+<pre><code>[1] 36.25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(WeatherKLAN2014Full<span class="op">$</span>Max.TemperatureF)</code></pre></div>
+<pre><code>[1] 54.84</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>## Et Cetera</code></pre></div>
+<p>This is pretty inefficient. Fortunately there is a <code>colMeans()</code> function which computes the mean of each column (or a specified number of columns) in a data frame. Some columns in the current data frame are not numeric, and obviously we don’t want to ask R to compute means for these columns. We use <code>str()</code> to investigate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(WeatherKLAN2014Full)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   365 obs. of  23 variables:
+ $ EST                      : chr  &quot;2014-1-1&quot; &quot;2014-1-2&quot; &quot;2014-1-3&quot; &quot;2014-1-4&quot; ...
+ $ Max.TemperatureF         : int  14 13 13 31 29 16 2 17 21 39 ...
+ $ Mean.TemperatureF        : int  12 5 1 22 23 2 -5 8 12 30 ...
+ $ Min.TemperatureF         : int  9 -3 -11 13 16 -12 -13 -1 2 21 ...
+ $ Max.Dew.PointF           : int  9 7 2 27 27 11 -6 7 18 37 ...
+ $ MeanDew.PointF           : int  4 4 -5 18 21 -4 -13 1 8 28 ...
+ $ Min.DewpointF            : int  0 -8 -14 3 11 -18 -18 -6 0 19 ...
+ $ Max.Humidity             : int  88 76 83 92 92 80 78 88 88 100 ...
+ $ Mean.Humidity            : int  76 70 68 73 86 73 72 78 75 92 ...
+ $ Min.Humidity             : int  63 63 53 53 80 65 65 67 62 84 ...
+ $ Max.Sea.Level.PressureIn : num  30.4 30.4 30.5 30.1 30 ...
+ $ Mean.Sea.Level.PressureIn: num  30.3 30.2 30.4 30 29.9 ...
+ $ Min.Sea.Level.PressureIn : num  30.2 30.1 30.1 29.9 29.7 ...
+ $ Max.VisibilityMiles      : int  10 9 10 10 4 10 10 10 10 9 ...
+ $ Mean.VisibilityMiles     : int  4 4 10 6 1 2 6 10 7 3 ...
+ $ Min.VisibilityMiles      : int  1 0 5 1 0 0 1 8 2 0 ...
+ $ Max.Wind.SpeedMPH        : int  17 22 23 28 22 31 25 15 14 17 ...
+ $ Mean.Wind.SpeedMPH       : int  9 13 10 15 11 18 15 7 6 10 ...
+ $ Max.Gust.SpeedMPH        : int  22 30 32 36 30 40 31 18 17 22 ...
+ $ PrecipitationIn          : chr  &quot;0.08&quot; &quot;0.01&quot; &quot;0.00&quot; &quot;0.12&quot; ...
+ $ CloudCover               : int  8 7 1 5 8 8 6 5 7 8 ...
+ $ Events                   : chr  &quot;Snow&quot; &quot;Snow&quot; &quot;Snow&quot; &quot;Snow&quot; ...
+ $ WindDirDegrees           : int  43 24 205 203 9 262 220 236 147 160 ...</code></pre>
+<p>It isn’t surprising that <code>EST</code> and <code>Events</code> are not numeric, but is surprising that <code>PrecipitationIn</code>, which measures precipitation in inches, also is not numeric, but is character. Let’s investigate further.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>WeatherKLAN2014Full<span class="op">$</span>PrecipitationIn[<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>]</code></pre></div>
+<pre><code> [1] &quot;0.08&quot; &quot;0.01&quot; &quot;0.00&quot; &quot;0.12&quot; &quot;0.78&quot; &quot;0.07&quot; &quot;T&quot;   
+ [8] &quot;T&quot;    &quot;0.01&quot; &quot;0.39&quot; &quot;0.16&quot; &quot;0.00&quot; &quot;0.00&quot; &quot;0.01&quot;
+[15] &quot;T&quot;    &quot;0.08&quot; &quot;T&quot;    &quot;T&quot;    &quot;T&quot;    &quot;0.01&quot; &quot;0.00&quot;
+[22] &quot;0.05&quot; &quot;T&quot;    &quot;T&quot;    &quot;0.07&quot; &quot;0.23&quot; &quot;0.04&quot; &quot;T&quot;   
+[29] &quot;T&quot;    &quot;0.03&quot; &quot;T&quot;    &quot;0.37&quot; &quot;T&quot;    &quot;0.00&quot; &quot;T&quot;   
+[36] &quot;0.27&quot; &quot;0.01&quot; &quot;T&quot;    &quot;0.04&quot; &quot;0.03&quot; &quot;T&quot;    &quot;0.00&quot;
+[43] &quot;0.00&quot; &quot;T&quot;    &quot;T&quot;    &quot;0.00&quot; &quot;0.02&quot; &quot;0.15&quot; &quot;0.08&quot;
+[50] &quot;0.01&quot;</code></pre>
+<p>Now it’s more clear. The original data file included <code>T</code> in the precipitation column to represent a “trace” of precipitation, which is precipitation greater than <span class="math inline">\(0\)</span> but less than <span class="math inline">\(0.01\)</span> inches. One possibility would be to set all these values to <code>&quot;0&quot;</code>, and then to convert the column to numeric. For now we will just leave the <code>PrecipitationIn</code> column out of the columns for which we request the mean.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">colMeans</span>(WeatherKLAN2014Full[, <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>)])</code></pre></div>
+<pre><code>         Max.TemperatureF         Mean.TemperatureF 
+                   54.838                    45.781 
+         Min.TemperatureF            Max.Dew.PointF 
+                   36.255                    41.800 
+           MeanDew.PointF             Min.DewpointF 
+                   36.395                    30.156 
+             Max.Humidity             Mean.Humidity 
+                   88.082                    70.392 
+             Min.Humidity  Max.Sea.Level.PressureIn 
+                   52.200                    30.130 
+Mean.Sea.Level.PressureIn  Min.Sea.Level.PressureIn 
+                   30.015                    29.904 
+      Max.VisibilityMiles      Mean.VisibilityMiles 
+                    9.896                     8.249 
+      Min.VisibilityMiles         Max.Wind.SpeedMPH 
+                    4.825                    19.101 
+       Mean.Wind.SpeedMPH         Max.Gust.SpeedMPH 
+                    8.679                        NA 
+               CloudCover            WindDirDegrees 
+                    4.367                   205.000 </code></pre>
+</div>
+<div id="section-apply" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> The <code>apply()</code> Function</h3>
+<p>R also has functions <code>rowMeans()</code>, <code>colSums()</code>, and <code>rowSums()</code>. But what if we want to compute the median or standard deviation of columns of data, or some other summary statistic? For this the <code>apply()</code> function can be used. This function applies a user-chosen function to either the rows or columns (or both) of a data frame. The arguments are:</p>
+<ol style="list-style-type: decimal">
+<li><code>X</code>: the data frame of interest</li>
+<li><code>MARGIN</code>: specifying either rows (<code>MARGIN = 1</code>) or columns (<code>MARGIN = 2</code>)</li>
+<li><code>FUN</code>: the function to be applied.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">apply</span>(<span class="dt">X =</span> WeatherKLAN2014Full[, <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>)], <span class="dt">MARGIN =</span> <span class="dv">2</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">FUN =</span> sd)</code></pre></div>
+<pre><code>         Max.TemperatureF         Mean.TemperatureF 
+                  22.2130                   20.9729 
+         Min.TemperatureF            Max.Dew.PointF 
+                  20.2597                   19.5167 
+           MeanDew.PointF             Min.DewpointF 
+                  20.0311                   20.8511 
+             Max.Humidity             Mean.Humidity 
+                   8.1910                    9.3660 
+             Min.Humidity  Max.Sea.Level.PressureIn 
+                  13.9462                    0.2032 
+Mean.Sea.Level.PressureIn  Min.Sea.Level.PressureIn 
+                   0.2159                    0.2360 
+      Max.VisibilityMiles      Mean.VisibilityMiles 
+                   0.5790                    2.1059 
+      Min.VisibilityMiles         Max.Wind.SpeedMPH 
+                   3.8168                    6.4831 
+       Mean.Wind.SpeedMPH         Max.Gust.SpeedMPH 
+                   3.8863                        NA 
+               CloudCover            WindDirDegrees 
+                   2.7798                   90.0673 </code></pre>
+<p>As with any R function the arguments don’t need to be named as long as they are specified in the correct order, so</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">apply</span>(WeatherKLAN2014Full[, <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>)], <span class="dv">2</span>, sd)</code></pre></div>
+<p>has the same result.</p>
+</div>
+<div id="section-practice-exercises" class="section level3">
+<h3><span class="header-section-number">7.3.3</span> Practice Exercises</h3>
+<ol style="list-style-type: decimal">
+<li>Notice the output value of <code>NA</code> for the column <code>Max.Gust.SpeedMPH</code>. Why does this happen? Figure out a way to make the <code>apply()</code> function return a numeric value for this column.</li>
+<li>The <code>apply()</code> family of functions is extremely important in R, so it gets two practice exercises :) Use the <code>apply()</code> function to compute the median values for all numeric columns in the <code>iris</code> data set.</li>
+</ol>
+</div>
+<div id="section-saving-typing-using-with" class="section level3">
+<h3><span class="header-section-number">7.3.4</span> Saving Typing Using <code>with()</code></h3>
+<p>Consider calculating the mean of the maximum temperature values for those days where the cloud cover is less than 4 and when the maximum humidity is over 85. We can do this using subsetting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(WeatherKLAN2014Full<span class="op">$</span>Max.TemperatureF[
+<span class="op">+</span><span class="st">                              </span>WeatherKLAN2014Full<span class="op">$</span>CloudCover <span class="op">&lt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="op">+</span><span class="st">                              </span>WeatherKLAN2014Full<span class="op">$</span>Max.Humidity <span class="op">&gt;</span><span class="st"> </span><span class="dv">85</span>])</code></pre></div>
+<pre><code>[1] 69.39</code></pre>
+<p>While this works, it requires a lot of typing, since each time we refer to a variable in the data set we need to preface its name by <code>WeatherKLAN2014Full$</code>. The <code>with()</code> function tells R that we are working with a particular data frame, and we don’t need to keep typing the name of the data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">with</span>(WeatherKLAN2014Full, <span class="kw">mean</span>(Max.TemperatureF[CloudCover <span class="op">&lt;</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span>Max.Humidity <span class="op">&gt;</span><span class="st"> </span><span class="dv">85</span>]))</code></pre></div>
+<pre><code>[1] 69.39</code></pre>
+</div>
+</div>
+<div id="section-transforming-a-data-frame" class="section level2">
+<h2><span class="header-section-number">7.4</span> Transforming a Data Frame</h2>
+<p>Variables are often added to, removed from, changed in, or rearranged in a data frame. The subsetting features of R make this reasonably easy. We will investigate this in the context of the <code>gapminder</code> data frame. If the <code>gapminder</code> library is not yet installed, use <code>install.packages(&quot;gapminder&quot;)</code> to install it locally.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
+<div id="section-adding-variables" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> Adding Variables</h3>
+<p>The data frame contains per capita GDP and population, and it might be interesting to create a variable that gives the total GDP by multiplying these two variables. (If we were interested in an accurate value for the total GDP we would probably be better off getting this information directly, since it is likely that the per capita GDP values in the data frame are rounded substantially.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gapminder<span class="op">$</span>TotalGDP &lt;-<span class="st"> </span>gapminder<span class="op">$</span>gdpPercap <span class="op">*</span><span class="st"> </span>gapminder<span class="op">$</span>pop
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  7 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+ $ TotalGDP : num  6.57e+09 7.59e+09 8.76e+09 9.65e+09 9.68e+09 ...</code></pre>
+<p>Analogous to the <code>with()</code> function, there is a function <code>within()</code> which can simplify the syntax. Whereas <code>with()</code> does not change the data frame, <code>within()</code> can. Note, below I first remove the altered gapminder dataframe using <code>rm()</code> then bring a clean copy back in by reloading the <code>gapminder</code> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gapminder &lt;-<span class="st"> </span><span class="kw">within</span>(gapminder, TotalGDP &lt;-<span class="st"> </span>gdpPercap <span class="op">*</span><span class="st"> </span>pop)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  7 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+ $ TotalGDP : num  6.57e+09 7.59e+09 8.76e+09 9.65e+09 9.68e+09 ...</code></pre>
+<p>A nice feature of <code>within()</code> is its ability to add more than one variable at a time to a data frame. In this case the two or more formulas creating new variables must be enclosed in braces.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gapminder &lt;-<span class="st"> </span><span class="kw">within</span>(gapminder, {TotalGDP &lt;-<span class="st"> </span>gdpPercap <span class="op">*</span><span class="st"> </span>pop
+<span class="op">+</span><span class="st">     </span>lifeExpMonths &lt;-<span class="st"> </span>lifeExp <span class="op">*</span><span class="st"> </span><span class="dv">12</span>})
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  8 variables:
+ $ country      : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent    : Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year         : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp      : num  28.8 30.3 32 34 36.1 ...
+ $ pop          : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap    : num  779 821 853 836 740 ...
+ $ TotalGDP     : num  6.57e+09 7.59e+09 8.76e+09 9.65e+09 9.68e+09 ...
+ $ lifeExpMonths: num  346 364 384 408 433 ...</code></pre>
+</div>
+<div id="section-removing-variables" class="section level3">
+<h3><span class="header-section-number">7.4.2</span> Removing Variables</h3>
+<p>After reflection we may realize the new variables we added to the <code>gapminder</code> data frame are not useful, and should be removed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  8 variables:
+ $ country      : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent    : Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year         : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp      : num  28.8 30.3 32 34 36.1 ...
+ $ pop          : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap    : num  779 821 853 836 740 ...
+ $ TotalGDP     : num  6.57e+09 7.59e+09 8.76e+09 9.65e+09 9.68e+09 ...
+ $ lifeExpMonths: num  346 364 384 408 433 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gapminder &lt;-<span class="st"> </span>gapminder[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gapminder)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
+<p>The same result could be obtained via <code>gapminder &lt;- gapminder[, 1:6]</code>. The first method uses the fact that a data frame is also a list, and uses list subsetting methods. It is slightly preferable, since even if only one variable is retained, the object will still be a data frame, while the other method can return a vector in this case. Note this difference in the resulting <code>x</code> variable below (again this behavior can be frustrating at times if it is not anticipated).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;pig&quot;</span>), <span class="dt">z =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">to =</span> <span class="dv">2</span>, <span class="dt">length =</span> <span class="dv">3</span>))
+<span class="op">&gt;</span><span class="st"> </span>a</code></pre></div>
+<pre><code>  x   y   z
+1 1 dog 1.0
+2 2 cat 1.5
+3 3 pig 2.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span>a[<span class="dv">1</span>]
+<span class="op">&gt;</span><span class="st"> </span>a</code></pre></div>
+<pre><code>  x
+1 1
+2 2
+3 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;pig&quot;</span>), <span class="dt">z =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dt">to =</span> <span class="dv">2</span>, <span class="dt">length =</span> <span class="dv">3</span>))
+<span class="op">&gt;</span><span class="st"> </span>a</code></pre></div>
+<pre><code>  x   y   z
+1 1 dog 1.0
+2 2 cat 1.5
+3 3 pig 2.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span>a[, <span class="dv">1</span>]
+<span class="op">&gt;</span><span class="st"> </span>a</code></pre></div>
+<pre><code>[1] 1 2 3</code></pre>
+<p>One can also use a negative sign in front of the variable number(s). For example, <code>a[-(2:3)]</code> would drop the first two columns of <code>a</code>. Some care is needed when removing variables using the negative sign.</p>
+</div>
+<div id="section-practice-exercise-7" class="section level3">
+<h3><span class="header-section-number">7.4.3</span> Practice Exercise</h3>
+<p>What happens if you write <code>a[-2:3]</code> instead of <code>a[-(2:3)]</code>? Why are the parentheses important here?</p>
+<p>An alternative approach is to set the variables you’d like to remove to <code>NULL</code>. For example, <code>a[c(&quot;y&quot;,&quot;z&quot;)] &lt;- NULL</code> and <code>a[,2:3] &lt;- NULL</code> produce the same result as above.</p>
+</div>
+<div id="section-transforming-variables" class="section level3">
+<h3><span class="header-section-number">7.4.4</span> Transforming Variables</h3>
+<p>Consider the gapminder data again. Possibly we don’t want to add a new variable that gives life expectancy in months, but rather want to modify the existing variable to measure life expectancy in months. Here are two ways to accomplish this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span>gapminder<span class="op">$</span>lifeExp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>[1] 28.80 30.33 32.00 34.02 36.09</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gapminder<span class="op">$</span>lifeExp &lt;-<span class="st"> </span>gapminder<span class="op">$</span>lifeExp <span class="op">*</span><span class="st"> </span><span class="dv">12</span>
+<span class="op">&gt;</span><span class="st"> </span>gapminder<span class="op">$</span>lifeExp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>[1] 345.6 364.0 384.0 408.2 433.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(gapminder)
+<span class="op">&gt;</span><span class="st"> </span>gapminder<span class="op">$</span>lifeExp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>[1] 28.80 30.33 32.00 34.02 36.09</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gapminder &lt;-<span class="st"> </span><span class="kw">within</span>(gapminder, lifeExp &lt;-<span class="st"> </span>lifeExp <span class="op">*</span><span class="st"> </span><span class="dv">12</span>)
+<span class="op">&gt;</span><span class="st"> </span>gapminder<span class="op">$</span>lifeExp[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>[1] 345.6 364.0 384.0 408.2 433.1</code></pre>
+</div>
+</div>
+<div id="section-rearranging-variables" class="section level2">
+<h2><span class="header-section-number">7.5</span> Rearranging Variables</h2>
+<p>Consider the full weather data set again.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.weather &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/WeatherKLAN2014Full.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>WeatherKLAN2014Full &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.weather, <span class="dt">header=</span><span class="ot">TRUE</span>, 
+<span class="op">+</span><span class="st">                                 </span><span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>,
+<span class="op">+</span><span class="st">                                 </span><span class="dt">na.string =</span> <span class="st">&quot;&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(WeatherKLAN2014Full)</code></pre></div>
+<pre><code> [1] &quot;EST&quot;                      
+ [2] &quot;Max.TemperatureF&quot;         
+ [3] &quot;Mean.TemperatureF&quot;        
+ [4] &quot;Min.TemperatureF&quot;         
+ [5] &quot;Max.Dew.PointF&quot;           
+ [6] &quot;MeanDew.PointF&quot;           
+ [7] &quot;Min.DewpointF&quot;            
+ [8] &quot;Max.Humidity&quot;             
+ [9] &quot;Mean.Humidity&quot;            
+[10] &quot;Min.Humidity&quot;             
+[11] &quot;Max.Sea.Level.PressureIn&quot; 
+[12] &quot;Mean.Sea.Level.PressureIn&quot;
+[13] &quot;Min.Sea.Level.PressureIn&quot; 
+[14] &quot;Max.VisibilityMiles&quot;      
+[15] &quot;Mean.VisibilityMiles&quot;     
+[16] &quot;Min.VisibilityMiles&quot;      
+[17] &quot;Max.Wind.SpeedMPH&quot;        
+[18] &quot;Mean.Wind.SpeedMPH&quot;       
+[19] &quot;Max.Gust.SpeedMPH&quot;        
+[20] &quot;PrecipitationIn&quot;          
+[21] &quot;CloudCover&quot;               
+[22] &quot;Events&quot;                   
+[23] &quot;WindDirDegrees&quot;           </code></pre>
+<p>If we want the wind speed variables to come right after the date, we can again use subsetting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>WeatherKLAN2014Full &lt;-<span class="st"> </span>WeatherKLAN2014Full[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">17</span>, <span class="dv">18</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dv">19</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">16</span>, <span class="dv">20</span><span class="op">:</span><span class="dv">23</span>)]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(WeatherKLAN2014Full)</code></pre></div>
+<pre><code> [1] &quot;EST&quot;                      
+ [2] &quot;Max.Wind.SpeedMPH&quot;        
+ [3] &quot;Mean.Wind.SpeedMPH&quot;       
+ [4] &quot;Max.Gust.SpeedMPH&quot;        
+ [5] &quot;Max.TemperatureF&quot;         
+ [6] &quot;Mean.TemperatureF&quot;        
+ [7] &quot;Min.TemperatureF&quot;         
+ [8] &quot;Max.Dew.PointF&quot;           
+ [9] &quot;MeanDew.PointF&quot;           
+[10] &quot;Min.DewpointF&quot;            
+[11] &quot;Max.Humidity&quot;             
+[12] &quot;Mean.Humidity&quot;            
+[13] &quot;Min.Humidity&quot;             
+[14] &quot;Max.Sea.Level.PressureIn&quot; 
+[15] &quot;Mean.Sea.Level.PressureIn&quot;
+[16] &quot;Min.Sea.Level.PressureIn&quot; 
+[17] &quot;Max.VisibilityMiles&quot;      
+[18] &quot;Mean.VisibilityMiles&quot;     
+[19] &quot;Min.VisibilityMiles&quot;      
+[20] &quot;PrecipitationIn&quot;          
+[21] &quot;CloudCover&quot;               
+[22] &quot;Events&quot;                   
+[23] &quot;WindDirDegrees&quot;           </code></pre>
+</div>
+<div id="section-reshaping-data" class="section level2">
+<h2><span class="header-section-number">7.6</span> Reshaping Data</h2>
+<p>A data set can be represented in several different formats. Consider a (fictitious) data set on incomes of three people during three different years. Here is one representation of the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>yearlyIncomeWide</code></pre></div>
+<pre><code>          name income1990 income2000 income2010
+1   John Smith      29784      39210      41213
+2     Jane Doe      56789      89321     109321
+3 Albert Jones       2341      34567      56781</code></pre>
+<p>Here is another representation of the same data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>yearlyIncomeLong</code></pre></div>
+<pre><code>          name       year income
+1   John Smith income1990  29784
+2     Jane Doe income1990  56789
+3 Albert Jones income1990   2341
+4   John Smith income2000  39210
+5     Jane Doe income2000  89321
+6 Albert Jones income2000  34567
+7   John Smith income2010  41213
+8     Jane Doe income2010 109321
+9 Albert Jones income2010  56781</code></pre>
+<p>For hopefully obvious reasons, the first representation is called a <em>wide</em> representation of the data, and the second is called a <em>long</em> representation. Each has its merits. The first representation is probably easier for people to read, while the second is often the form needed for analysis by statistical software such as R. There are of course other representations. For example the rows and columns could be interchanged to create a different wide representation, or the long representation, which currently groups data by year, could group by name instead.</p>
+<p>Whatever the relative merits of wide and long representations of data, transforming data from wide to long or long to wide is often required. As with many tasks, there are several ways to accomplish this in R. We will focus on a library called <code>tidyr</code> written by Hadley Wickham that performs the transformations and more.</p>
+<div id="section-tidyr" class="section level3">
+<h3><span class="header-section-number">7.6.1</span> <code>tidyr</code></h3>
+<p>The R library <code>tidyr</code> has functions for converting data between formats. To illustrate its use, we examine a simple data set that explores the relationship between religion and income in the United States. The data come from a Pew survey, and are used in the <code>tidyr</code> documentation to illustrate transforming data from wide to long format.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.rel &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/religion2.csv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>religion &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.rel, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(religion)</code></pre></div>
+<pre><code>            religion under10k btw10and20k btw20and30k
+1           Agnostic       27          34          60
+2            Atheist       12          27          37
+3           Buddhist       27          21          30
+4           Catholic      418         617         732
+5 DoNotKnowOrRefused       15          14          15
+6    EvangelicalProt      575         869        1064
+  btw30and40k btw40and50k btw50and75k btw75and100k
+1          81          76         137          122
+2          52          35          70           73
+3          34          33          58           62
+4         670         638        1116          949
+5          11          10          35           21
+6         982         881        1486          949
+  btw100and150k over150k DoNotKnowOrRefused
+1           109       84                 96
+2            59       74                 76
+3            39       53                 54
+4           792      633               1489
+5            17       18                116
+6           723      414               1529</code></pre>
+<p>As given, the columns include religion and income level, and there are counts for each of the combinations of religion and income level. For example, there are 27 people who are Agnostic and whose income is less than 10 thousand dollars, and there are 617 people who are Catholic and whose income is between 10 and 20 thousand dollars.</p>
+<p>The <code>gather()</code> function can transform data from wide to long format.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(tidyr)
+<span class="op">&gt;</span><span class="st"> </span>religionLong &lt;-<span class="st"> </span><span class="kw">gather</span>(<span class="dt">data =</span> religion, <span class="dt">key =</span> IncomeLevel, 
+<span class="op">+</span><span class="st">                        </span><span class="dt">value =</span> Frequency, <span class="dv">2</span><span class="op">:</span><span class="dv">11</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(religionLong)</code></pre></div>
+<pre><code>            religion IncomeLevel Frequency
+1           Agnostic    under10k        27
+2            Atheist    under10k        12
+3           Buddhist    under10k        27
+4           Catholic    under10k       418
+5 DoNotKnowOrRefused    under10k        15
+6    EvangelicalProt    under10k       575</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">tail</span>(religionLong)</code></pre></div>
+<pre><code>               religion        IncomeLevel Frequency
+175              Muslim DoNotKnowOrRefused        22
+176            Orthodox DoNotKnowOrRefused        73
+177      OtherChristian DoNotKnowOrRefused        18
+178         OtherFaiths DoNotKnowOrRefused        71
+179 OtherWorldReligions DoNotKnowOrRefused         8
+180        Unaffiliated DoNotKnowOrRefused       597</code></pre>
+<p>To use <code>gather()</code> we specified the data frame (<code>data = religion</code>), the name we want to give to the column created from the income levels (<code>key = IncomeLevel</code>), the name we want to give to the column containing the frequency values (<code>value = Frequency</code>) and the columns to gather (<code>2:11</code>).</p>
+<p>Columns to be gathered can be specified by name also, and we can also specify which columns should be omitted using a negative sign in front of the name(s). So the following creates an equivalent data frame:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>religionLong &lt;-<span class="st"> </span><span class="kw">gather</span>(<span class="dt">data =</span> religion, <span class="dt">key =</span> IncomeLevel, 
+<span class="op">+</span><span class="st">                        </span><span class="dt">value =</span> Frequency, <span class="op">-</span>religion)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(religionLong)</code></pre></div>
+<pre><code>            religion IncomeLevel Frequency
+1           Agnostic    under10k        27
+2            Atheist    under10k        12
+3           Buddhist    under10k        27
+4           Catholic    under10k       418
+5 DoNotKnowOrRefused    under10k        15
+6    EvangelicalProt    under10k       575</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>religionWide &lt;-<span class="st"> </span><span class="kw">spread</span>(<span class="dt">data =</span> religionLong, <span class="dt">key =</span> IncomeLevel, 
+<span class="op">+</span><span class="st">   </span><span class="dt">value =</span> Frequency)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(religionWide)</code></pre></div>
+<pre><code>            religion btw100and150k btw10and20k
+1           Agnostic           109          34
+2            Atheist            59          27
+3           Buddhist            39          21
+4           Catholic           792         617
+5 DoNotKnowOrRefused            17          14
+6    EvangelicalProt           723         869
+  btw20and30k btw30and40k btw40and50k btw50and75k
+1          60          81          76         137
+2          37          52          35          70
+3          30          34          33          58
+4         732         670         638        1116
+5          15          11          10          35
+6        1064         982         881        1486
+  btw75and100k DoNotKnowOrRefused over150k under10k
+1          122                 96       84       27
+2           73                 76       74       12
+3           62                 54       53       27
+4          949               1489      633      418
+5           21                116       18       15
+6          949               1529      414      575</code></pre>
+<p>Here we specify the data frame (<code>religionLong</code>), the column (<code>IncomeLevel</code>) to be spread, and the column of values (<code>Frequency</code>) to be spread among the newly created columns. As can be seen, this particular call to <code>spread()</code> yields the original data frame.</p>
+<p><code>tidyr</code> provides two other useful functions to separate and unite variables based on some deliminator. Consider again the <code>yearlyIncomeWide</code> table. Say we want to split the <code>name</code> variable into first and last name. This can be done using the <code>separate()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>firstLast &lt;-<span class="st"> </span><span class="kw">separate</span>(<span class="dt">data =</span> yearlyIncomeLong, <span class="dt">col =</span> name, 
+<span class="op">+</span><span class="st">                       </span><span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;first&quot;</span>, <span class="st">&quot;last&quot;</span>), <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\\</span><span class="st">s&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">print</span>(firstLast)</code></pre></div>
+<pre><code>   first  last       year income
+1   John Smith income1990  29784
+2   Jane   Doe income1990  56789
+3 Albert Jones income1990   2341
+4   John Smith income2000  39210
+5   Jane   Doe income2000  89321
+6 Albert Jones income2000  34567
+7   John Smith income2010  41213
+8   Jane   Doe income2010 109321
+9 Albert Jones income2010  56781</code></pre>
+<p>Now say, you’re not happy with that and you want to combine the name column again, but this time separate the first and last name with a underscore. This is done using the <code>unite()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unite</span>(firstLast, <span class="dt">col =</span> name, first, last, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</code></pre></div>
+<pre><code>          name       year income
+1   John_Smith income1990  29784
+2     Jane_Doe income1990  56789
+3 Albert_Jones income1990   2341
+4   John_Smith income2000  39210
+5     Jane_Doe income2000  89321
+6 Albert_Jones income2000  34567
+7   John_Smith income2010  41213
+8     Jane_Doe income2010 109321
+9 Albert_Jones income2010  56781</code></pre>
+</div>
+<div id="section-practice-exercise-8" class="section level3">
+<h3><span class="header-section-number">7.6.2</span> Practice Exercise</h3>
+<p>The <code>separate()</code> function from the <code>tidyr</code> library is especially useful when working with real data as multiple pieces of information can be combined into one column in a data set. For example, consider the following data frame</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>data.birds</code></pre></div>
+<pre><code>  birds recordingInfo
+1    10 LA-2017-01-01
+2    38 DF-2011-03-02
+3    29 OG-2078-05-11
+4    88 YA-2000-11-18
+5    42 LA-2019-03-17
+6   177 OG-2016-10-10
+7   200 YA-2001-03-22</code></pre>
+<p>“RecordingInfo” that contains the site where data was collected, as well as the year, month, and date the data was recorded. The data are coded as follows: <code>site-year-month-day</code>. Write a line of code that will extract the desired data from the <code>data.birds</code> data frame into separate columns named <code>site</code>, <code>year</code>, <code>month</code> and <code>day</code>.</p>
+</div>
+</div>
+<div id="section-dplyr" class="section level2">
+<h2><span class="header-section-number">7.7</span> Manipulating Data with <code>dplyr</code></h2>
+<p>Much of the effort (a figure of 80% is sometimes suggested) in data analysis is spent cleaning the data and getting it ready for analysis. Having effective tools for this task can save substantial time and effort. The R package <code>dplyr</code> written by Hadley Wickham is designed, in Hadley’s words, to be “a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges.” Casting data analysis tasks in terms of “grammar” should be familiar from our work with the <code>ggplot2</code> package, which was also authored by Hadley. Functions provided by <code>dplyr</code> do in fact capture key data analysis actions (i.e., verbs). These functions include</p>
+<ul>
+<li><code>mutate()</code> adds new variables that are functions of existing variables</li>
+<li><code>select()</code> picks variables based on their names</li>
+<li><code>filter()</code> picks cases based on their values</li>
+<li><code>summarize()</code> reduces multiple values down to a single summary</li>
+<li><code>arrange()</code> changes the ordering of the rows.</li>
+</ul>
+<p>These all combine naturally with a <code>group_by()</code> function that allows you to perform any operation grouped by values of one or more variables. All the tasks done using <code>dplyr</code> can be accomplished using tools already covered in this text; however, <code>dplyr</code>’s functions provide a potentially more efficient and convenient framework to accomplish these tasks. RStudio provides a convenient <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">data wrangling cheat sheet</a> that covers many aspects of the <code>tidyr</code> and <code>dplyr</code> packages.</p>
+<p>This somewhat long section on <code>dplyr</code> adapts the nice introduction by Jenny Bryan, available at <a href="http://stat545-ubc.github.io/block010_dplyr-end-single-table.html" class="uri">http://stat545-ubc.github.io/block010_dplyr-end-single-table.html</a>.</p>
+<div id="section-improved-data-frames" class="section level3">
+<h3><span class="header-section-number">7.7.1</span> Improved Data Frames</h3>
+<p>The <code>dplyr</code> package provides a couple functions that offer improvements on data frames. First, <code>tibble</code> creates a tibble from a series of vectors<a href="section-references.html#section-fn38" class="footnoteRef" id="section-fnref38"><sup>38</sup></a>. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table’s dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the <code>as_tibble()</code> function to convert an existing data frame or list into a tibble. Here is an example using the <code>religionWide</code> data frame.<a href="section-references.html#section-fn39" class="footnoteRef" id="section-fnref39"><sup>39</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(dplyr)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(religionWide)</code></pre></div>
+<pre><code>            religion btw100and150k btw10and20k
+1           Agnostic           109          34
+2            Atheist            59          27
+3           Buddhist            39          21
+4           Catholic           792         617
+5 DoNotKnowOrRefused            17          14
+6    EvangelicalProt           723         869
+  btw20and30k btw30and40k btw40and50k btw50and75k
+1          60          81          76         137
+2          37          52          35          70
+3          30          34          33          58
+4         732         670         638        1116
+5          15          11          10          35
+6        1064         982         881        1486
+  btw75and100k DoNotKnowOrRefused over150k under10k
+1          122                 96       84       27
+2           73                 76       74       12
+3           62                 54       53       27
+4          949               1489      633      418
+5           21                116       18       15
+6          949               1529      414      575</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>religionWide[, <span class="dv">1</span>]</code></pre></div>
+<pre><code> [1] &quot;Agnostic&quot;              &quot;Atheist&quot;              
+ [3] &quot;Buddhist&quot;              &quot;Catholic&quot;             
+ [5] &quot;DoNotKnowOrRefused&quot;    &quot;EvangelicalProt&quot;      
+ [7] &quot;Hindu&quot;                 &quot;HistoricallyBlackProt&quot;
+ [9] &quot;JehovahsWitness&quot;       &quot;Jewish&quot;               
+[11] &quot;MainlineProt&quot;          &quot;Mormon&quot;               
+[13] &quot;Muslim&quot;                &quot;Orthodox&quot;             
+[15] &quot;OtherChristian&quot;        &quot;OtherFaiths&quot;          
+[17] &quot;OtherWorldReligions&quot;   &quot;Unaffiliated&quot;         </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>religionWideTbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(religionWide)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(religionWideTbl)</code></pre></div>
+<pre><code># A tibble: 6 x 11
+  religion btw100and150k btw10and20k btw20and30k
+  &lt;chr&gt;            &lt;int&gt;       &lt;int&gt;       &lt;int&gt;
+1 Agnostic           109          34          60
+2 Atheist             59          27          37
+3 Buddhist            39          21          30
+4 Catholic           792         617         732
+5 DoNotKn…            17          14          15
+6 Evangel…           723         869        1064
+# ... with 7 more variables: btw30and40k &lt;int&gt;,
+#   btw40and50k &lt;int&gt;, btw50and75k &lt;int&gt;,
+#   btw75and100k &lt;int&gt;, DoNotKnowOrRefused &lt;int&gt;,
+#   over150k &lt;int&gt;, under10k &lt;int&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>religionWideTbl[, <span class="dv">1</span>]</code></pre></div>
+<pre><code># A tibble: 18 x 1
+   religion             
+   &lt;chr&gt;                
+ 1 Agnostic             
+ 2 Atheist              
+ 3 Buddhist             
+ 4 Catholic             
+ 5 DoNotKnowOrRefused   
+ 6 EvangelicalProt      
+ 7 Hindu                
+ 8 HistoricallyBlackProt
+ 9 JehovahsWitness      
+10 Jewish               
+11 MainlineProt         
+12 Mormon               
+13 Muslim               
+14 Orthodox             
+15 OtherChristian       
+16 OtherFaiths          
+17 OtherWorldReligions  
+18 Unaffiliated         </code></pre>
+<p>As seen above, note that once the data frame is reduced to one dimension by subsetting to one column, it is no longer a data frame and has been <em>simplified</em> to a vector. This might not seem like a big deal; however, it can be very frustrating and potentially break your code when you expect an object to behave like a data frame and it doesn’t because it’s now a vector. Alternatively, once we convert <code>religionWide</code> to a <code>tibble</code> via the <code>as_tibble()</code> function the object remains a data frame even when subsetting down to one dimension (there is no automatic simplification). Converting data frames using <code>as_tibble()</code> is not required for using <code>dplyr</code> but is convenient. Also, it is important to note that <code>tibble</code> is simply a wrapper around a data frame that provides some additional behaviors. The newly formed <code>tibble</code> object will still behave like a data frame (because it technically still is a data frame) but will have some added niceties (some of which are illustrated below).</p>
+</div>
+<div id="section-filtering-data-by-row" class="section level3">
+<h3><span class="header-section-number">7.7.2</span> Filtering Data by Row</h3>
+<p>Recall the <code>gapminder</code> data. These data are available in tab-separated format in <code>gapminder.tsv</code>, and can be read in using <code>read.delim()</code> (or the related read functions described previously). The <code>read.delim()</code> function defaults to <code>header = TRUE</code> so this doesn’t need to be specified explicitly. In this section we will be working with the <code>gapminder</code> data often, so we will use a short name for the data frame to save typing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>u.gm &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/gapminder.tsv&quot;</span>
+<span class="op">&gt;</span><span class="st"> </span>gm &lt;-<span class="st"> </span><span class="kw">read.delim</span>(u.gm)
+<span class="op">&gt;</span><span class="st"> </span>gm &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(gm)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(gm)</code></pre></div>
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(gm)</code></pre></div>
+<pre><code># A tibble: 6 x 6
+  country     year     pop continent lifeExp gdpPercap
+  &lt;fct&gt;      &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+1 Afghanist…  1952  8.43e6 Asia         28.8      779.
+2 Afghanist…  1957  9.24e6 Asia         30.3      821.
+3 Afghanist…  1962  1.03e7 Asia         32.0      853.
+4 Afghanist…  1967  1.15e7 Asia         34.0      836.
+5 Afghanist…  1972  1.31e7 Asia         36.1      740.
+6 Afghanist…  1977  1.49e7 Asia         38.4      786.</code></pre>
+<p>Filtering helps us to examine subsets of the data such as data from a particular country, from several specified countries, from certain years, from countries with certain populations, etc. Some examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">filter</span>(gm, country <span class="op">==</span><span class="st"> &quot;Brazil&quot;</span>)</code></pre></div>
+<pre><code># A tibble: 12 x 6
+   country  year       pop continent lifeExp gdpPercap
+   &lt;fct&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Brazil   1952  56602560 Americas     50.9     2109.
+ 2 Brazil   1957  65551171 Americas     53.3     2487.
+ 3 Brazil   1962  76039390 Americas     55.7     3337.
+ 4 Brazil   1967  88049823 Americas     57.6     3430.
+ 5 Brazil   1972 100840058 Americas     59.5     4986.
+ 6 Brazil   1977 114313951 Americas     61.5     6660.
+ 7 Brazil   1982 128962939 Americas     63.3     7031.
+ 8 Brazil   1987 142938076 Americas     65.2     7807.
+ 9 Brazil   1992 155975974 Americas     67.1     6950.
+10 Brazil   1997 168546719 Americas     69.4     7958.
+11 Brazil   2002 179914212 Americas     71.0     8131.
+12 Brazil   2007 190010647 Americas     72.4     9066.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">filter</span>(gm, country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;Mexico&quot;</span>))</code></pre></div>
+<pre><code># A tibble: 24 x 6
+   country  year       pop continent lifeExp gdpPercap
+   &lt;fct&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Brazil   1952  56602560 Americas     50.9     2109.
+ 2 Brazil   1957  65551171 Americas     53.3     2487.
+ 3 Brazil   1962  76039390 Americas     55.7     3337.
+ 4 Brazil   1967  88049823 Americas     57.6     3430.
+ 5 Brazil   1972 100840058 Americas     59.5     4986.
+ 6 Brazil   1977 114313951 Americas     61.5     6660.
+ 7 Brazil   1982 128962939 Americas     63.3     7031.
+ 8 Brazil   1987 142938076 Americas     65.2     7807.
+ 9 Brazil   1992 155975974 Americas     67.1     6950.
+10 Brazil   1997 168546719 Americas     69.4     7958.
+# ... with 14 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">filter</span>(gm, country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;Mexico&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>year <span class="op">%in%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">c</span>(<span class="dv">1952</span>, <span class="dv">1972</span>))</code></pre></div>
+<pre><code># A tibble: 4 x 6
+  country  year       pop continent lifeExp gdpPercap
+  &lt;fct&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+1 Brazil   1952  56602560 Americas     50.9     2109.
+2 Brazil   1972 100840058 Americas     59.5     4986.
+3 Mexico   1952  30144317 Americas     50.8     3478.
+4 Mexico   1972  55984294 Americas     62.4     6809.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">filter</span>(gm, pop <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span>)</code></pre></div>
+<pre><code># A tibble: 25 x 6
+   country  year       pop continent lifeExp gdpPercap
+   &lt;fct&gt;   &lt;int&gt;     &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 China    1952    5.56e8 Asia         44        400.
+ 2 China    1957    6.37e8 Asia         50.5      576.
+ 3 China    1962    6.66e8 Asia         44.5      488.
+ 4 China    1967    7.55e8 Asia         58.4      613.
+ 5 China    1972    8.62e8 Asia         63.1      677.
+ 6 China    1977    9.43e8 Asia         64.0      741.
+ 7 China    1982    1.00e9 Asia         65.5      962.
+ 8 China    1987    1.08e9 Asia         67.3     1379.
+ 9 China    1992    1.16e9 Asia         68.7     1656.
+10 China    1997    1.23e9 Asia         70.4     2289.
+# ... with 15 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">filter</span>(gm, pop <span class="op">&gt;</span><span class="st"> </span><span class="dv">300000000</span> <span class="op">&amp;</span><span class="st"> </span>year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>)</code></pre></div>
+<pre><code># A tibble: 3 x 6
+  country     year     pop continent lifeExp gdpPercap
+  &lt;fct&gt;      &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+1 China       2007  1.32e9 Asia         73.0     4959.
+2 India       2007  1.11e9 Asia         64.7     2452.
+3 United St…  2007  3.01e8 Americas     78.2    42952.</code></pre>
+<p>Notice the full results are not printed. For example, when we asked for the data for Brazil and Mexico, only the first ten rows were printed. This is an effect of using the <code>as_tibble()</code> function. Of course if we wanted to analyze the results (as we will below) the full set of data would be available.</p>
+</div>
+<div id="section-selecting-variables-by-column" class="section level3">
+<h3><span class="header-section-number">7.7.3</span> Selecting variables by column</h3>
+<p>Continuing with the <code>gapminder</code> data, another common task is to restrict attention to some subset of variables in the data set. The <code>select()</code> function does this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">select</span>(gm, country, year, lifeExp)</code></pre></div>
+<pre><code># A tibble: 1,704 x 3
+   country      year lifeExp
+   &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  1952    28.8
+ 2 Afghanistan  1957    30.3
+ 3 Afghanistan  1962    32.0
+ 4 Afghanistan  1967    34.0
+ 5 Afghanistan  1972    36.1
+ 6 Afghanistan  1977    38.4
+ 7 Afghanistan  1982    39.9
+ 8 Afghanistan  1987    40.8
+ 9 Afghanistan  1992    41.7
+10 Afghanistan  1997    41.8
+# ... with 1,694 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">select</span>(gm, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)</code></pre></div>
+<pre><code># A tibble: 1,704 x 3
+    year      pop continent
+   &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;    
+ 1  1952  8425333 Asia     
+ 2  1957  9240934 Asia     
+ 3  1962 10267083 Asia     
+ 4  1967 11537966 Asia     
+ 5  1972 13079460 Asia     
+ 6  1977 14880372 Asia     
+ 7  1982 12881816 Asia     
+ 8  1987 13867957 Asia     
+ 9  1992 16317921 Asia     
+10  1997 22227415 Asia     
+# ... with 1,694 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">select</span>(gm, <span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</code></pre></div>
+<pre><code># A tibble: 1,704 x 3
+   country     lifeExp gdpPercap
+   &lt;fct&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Afghanistan    28.8      779.
+ 2 Afghanistan    30.3      821.
+ 3 Afghanistan    32.0      853.
+ 4 Afghanistan    34.0      836.
+ 5 Afghanistan    36.1      740.
+ 6 Afghanistan    38.4      786.
+ 7 Afghanistan    39.9      978.
+ 8 Afghanistan    40.8      852.
+ 9 Afghanistan    41.7      649.
+10 Afghanistan    41.8      635.
+# ... with 1,694 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">select</span>(gm, <span class="kw">starts_with</span>(<span class="st">&quot;c&quot;</span>))</code></pre></div>
+<pre><code># A tibble: 1,704 x 2
+   country     continent
+   &lt;fct&gt;       &lt;fct&gt;    
+ 1 Afghanistan Asia     
+ 2 Afghanistan Asia     
+ 3 Afghanistan Asia     
+ 4 Afghanistan Asia     
+ 5 Afghanistan Asia     
+ 6 Afghanistan Asia     
+ 7 Afghanistan Asia     
+ 8 Afghanistan Asia     
+ 9 Afghanistan Asia     
+10 Afghanistan Asia     
+# ... with 1,694 more rows</code></pre>
+<p>Notice a few things. Variables can be selected by name or column number. As usual, a negative sign tells R to leave something out. And there are special functions such as <code>starts_with</code> that provide ways to match part of a variable’s name.</p>
+</div>
+<div id="section-practice-exercise-9" class="section level3">
+<h3><span class="header-section-number">7.7.4</span> Practice Exercise</h3>
+<p>Use the <code>contains()</code> function to select only the columns that contain a <code>c</code></p>
+</div>
+<div id="section-pipes" class="section level3">
+<h3><span class="header-section-number">7.7.5</span> Pipes</h3>
+<p>Consider selecting the country, year, and population for countries in Asia or Europe. One possibility is to nest a <code>filter()</code> function inside a <code>select()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">filter</span>(gm, continent <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Asia&quot;</span>, <span class="st">&quot;Europe&quot;</span>)), country, 
+<span class="op">+</span><span class="st">   </span>year, pop)</code></pre></div>
+<pre><code># A tibble: 756 x 3
+   country      year      pop
+   &lt;fct&gt;       &lt;int&gt;    &lt;dbl&gt;
+ 1 Afghanistan  1952  8425333
+ 2 Afghanistan  1957  9240934
+ 3 Afghanistan  1962 10267083
+ 4 Afghanistan  1967 11537966
+ 5 Afghanistan  1972 13079460
+ 6 Afghanistan  1977 14880372
+ 7 Afghanistan  1982 12881816
+ 8 Afghanistan  1987 13867957
+ 9 Afghanistan  1992 16317921
+10 Afghanistan  1997 22227415
+# ... with 746 more rows</code></pre>
+<p>Even a two-step process like this becomes hard to follow in this nested form, and often we will want to perform more than two operations. There is a nice feature in <code>dplyr</code> that allows us to “feed” results of one function into the first argument of a subsequent function. Another way of saying this is that we are “piping” the results into another function. The <code>%&gt;%</code> operator does the piping. Here we again restrict attention to country, year, and population for countries in Asia or Europe<a href="section-references.html#section-fn40" class="footnoteRef" id="section-fnref40"><sup>40</sup></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(continent <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Asia&quot;</span>, <span class="st">&quot;Europe&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(country, year, pop)</code></pre></div>
+<pre><code># A tibble: 756 x 3
+   country      year      pop
+   &lt;fct&gt;       &lt;int&gt;    &lt;dbl&gt;
+ 1 Afghanistan  1952  8425333
+ 2 Afghanistan  1957  9240934
+ 3 Afghanistan  1962 10267083
+ 4 Afghanistan  1967 11537966
+ 5 Afghanistan  1972 13079460
+ 6 Afghanistan  1977 14880372
+ 7 Afghanistan  1982 12881816
+ 8 Afghanistan  1987 13867957
+ 9 Afghanistan  1992 16317921
+10 Afghanistan  1997 22227415
+# ... with 746 more rows</code></pre>
+<p>It can help to think of <code>%&gt;%</code> as representing the word “then”. The above can be read as, “Start with the data frame <code>gm</code> <em>then</em> filter it to select data from the continents Asia and Europe <em>then</em> select the variables country, year, and population from these data”.</p>
+<p>The pipe operator <code>%&gt;%</code> is not restricted to functions in <code>dplyr</code>. In fact the pipe operator itself was introduced in another package called <code>magrittr</code>, but is included in <code>dplyr</code> as a convenience.</p>
+</div>
+<div id="section-arranging-data-by-row" class="section level3">
+<h3><span class="header-section-number">7.7.6</span> Arranging Data by Row</h3>
+<p>By default the <code>gapminder</code> data are arranged by country and then by year.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(gm, <span class="dv">15</span>)</code></pre></div>
+<pre><code># A tibble: 15 x 6
+   country    year     pop continent lifeExp gdpPercap
+   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Afghanis…  1952  8.43e6 Asia         28.8      779.
+ 2 Afghanis…  1957  9.24e6 Asia         30.3      821.
+ 3 Afghanis…  1962  1.03e7 Asia         32.0      853.
+ 4 Afghanis…  1967  1.15e7 Asia         34.0      836.
+ 5 Afghanis…  1972  1.31e7 Asia         36.1      740.
+ 6 Afghanis…  1977  1.49e7 Asia         38.4      786.
+ 7 Afghanis…  1982  1.29e7 Asia         39.9      978.
+ 8 Afghanis…  1987  1.39e7 Asia         40.8      852.
+ 9 Afghanis…  1992  1.63e7 Asia         41.7      649.
+10 Afghanis…  1997  2.22e7 Asia         41.8      635.
+11 Afghanis…  2002  2.53e7 Asia         42.1      727.
+12 Afghanis…  2007  3.19e7 Asia         43.8      975.
+13 Albania    1952  1.28e6 Europe       55.2     1601.
+14 Albania    1957  1.48e6 Europe       59.3     1942.
+15 Albania    1962  1.73e6 Europe       64.8     2313.</code></pre>
+<p>Possibly arranging the data by year and then country would be desired. The <code>arrange()</code> function makes this easy. We will again use pipes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(year, country)</code></pre></div>
+<pre><code># A tibble: 1,704 x 6
+   country    year     pop continent lifeExp gdpPercap
+   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Afghanis…  1952  8.43e6 Asia         28.8      779.
+ 2 Albania    1952  1.28e6 Europe       55.2     1601.
+ 3 Algeria    1952  9.28e6 Africa       43.1     2449.
+ 4 Angola     1952  4.23e6 Africa       30.0     3521.
+ 5 Argentina  1952  1.79e7 Americas     62.5     5911.
+ 6 Australia  1952  8.69e6 Oceania      69.1    10040.
+ 7 Austria    1952  6.93e6 Europe       66.8     6137.
+ 8 Bahrain    1952  1.20e5 Asia         50.9     9867.
+ 9 Banglade…  1952  4.69e7 Asia         37.5      684.
+10 Belgium    1952  8.73e6 Europe       68       8343.
+# ... with 1,694 more rows</code></pre>
+<p>How about the data for Rwanda, arranged in order of life expectancy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;Rwanda&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(lifeExp)</code></pre></div>
+<pre><code># A tibble: 12 x 6
+   country  year     pop continent lifeExp gdpPercap
+   &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Rwanda   1992 7290203 Africa       23.6      737.
+ 2 Rwanda   1997 7212583 Africa       36.1      590.
+ 3 Rwanda   1952 2534927 Africa       40        493.
+ 4 Rwanda   1957 2822082 Africa       41.5      540.
+ 5 Rwanda   1962 3051242 Africa       43        597.
+ 6 Rwanda   2002 7852401 Africa       43.4      786.
+ 7 Rwanda   1987 6349365 Africa       44.0      848.
+ 8 Rwanda   1967 3451079 Africa       44.1      511.
+ 9 Rwanda   1972 3992121 Africa       44.6      591.
+10 Rwanda   1977 4657072 Africa       45        670.
+11 Rwanda   1982 5507565 Africa       46.2      882.
+12 Rwanda   2007 8860588 Africa       46.2      863.</code></pre>
+<p>Possibly we want these data to be in decreasing (descending) order. Here, <code>desc()</code> is one of many <code>dplyr</code> helper functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;Rwanda&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(<span class="kw">desc</span>(lifeExp))</code></pre></div>
+<pre><code># A tibble: 12 x 6
+   country  year     pop continent lifeExp gdpPercap
+   &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Rwanda   2007 8860588 Africa       46.2      863.
+ 2 Rwanda   1982 5507565 Africa       46.2      882.
+ 3 Rwanda   1977 4657072 Africa       45        670.
+ 4 Rwanda   1972 3992121 Africa       44.6      591.
+ 5 Rwanda   1967 3451079 Africa       44.1      511.
+ 6 Rwanda   1987 6349365 Africa       44.0      848.
+ 7 Rwanda   2002 7852401 Africa       43.4      786.
+ 8 Rwanda   1962 3051242 Africa       43        597.
+ 9 Rwanda   1957 2822082 Africa       41.5      540.
+10 Rwanda   1952 2534927 Africa       40        493.
+11 Rwanda   1997 7212583 Africa       36.1      590.
+12 Rwanda   1992 7290203 Africa       23.6      737.</code></pre>
+<p>Possibly we want to include only the year and life expectancy, to make the message more stark.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;Rwanda&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(year, lifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(<span class="kw">desc</span>(lifeExp)) </code></pre></div>
+<pre><code># A tibble: 12 x 2
+    year lifeExp
+   &lt;int&gt;   &lt;dbl&gt;
+ 1  2007    46.2
+ 2  1982    46.2
+ 3  1977    45  
+ 4  1972    44.6
+ 5  1967    44.1
+ 6  1987    44.0
+ 7  2002    43.4
+ 8  1962    43  
+ 9  1957    41.5
+10  1952    40  
+11  1997    36.1
+12  1992    23.6</code></pre>
+<p>For analyzing data in R, the order shouldn’t matter. But for presentation to human eyes, the order is important.</p>
+</div>
+<div id="section-practice-exercise-10" class="section level3">
+<h3><span class="header-section-number">7.7.7</span> Practice Exercise</h3>
+<p>It is worth your while to get comfortable with using pipes. Here is some hard-to-read code. Convert it into more easier to read code by using pipes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">select</span>(<span class="kw">filter</span>(gm, country <span class="op">==</span><span class="st"> &quot;Afghanistan&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, 
+<span class="op">+</span><span class="st">   &quot;lifeExp&quot;</span>)), <span class="dt">desc =</span> lifeExp)</code></pre></div>
+<pre><code># A tibble: 12 x 2
+    year lifeExp
+   &lt;int&gt;   &lt;dbl&gt;
+ 1  1952    28.8
+ 2  1957    30.3
+ 3  1962    32.0
+ 4  1967    34.0
+ 5  1972    36.1
+ 6  1977    38.4
+ 7  1982    39.9
+ 8  1987    40.8
+ 9  1992    41.7
+10  1997    41.8
+11  2002    42.1
+12  2007    43.8</code></pre>
+</div>
+<div id="section-renaming-variables" class="section level3">
+<h3><span class="header-section-number">7.7.8</span> Renaming Variables</h3>
+<p>The <code>dplyr</code> package has a <code>rename</code> function that makes renaming variables in a data frame quite easy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm &lt;-<span class="st"> </span><span class="kw">rename</span>(gm, <span class="dt">population =</span> pop)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(gm)</code></pre></div>
+<pre><code># A tibble: 6 x 6
+  country  year population continent lifeExp gdpPercap
+  &lt;fct&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+1 Afghan…  1952    8425333 Asia         28.8      779.
+2 Afghan…  1957    9240934 Asia         30.3      821.
+3 Afghan…  1962   10267083 Asia         32.0      853.
+4 Afghan…  1967   11537966 Asia         34.0      836.
+5 Afghan…  1972   13079460 Asia         36.1      740.
+6 Afghan…  1977   14880372 Asia         38.4      786.</code></pre>
+</div>
+<div id="section-data-summaries-and-grouping" class="section level3">
+<h3><span class="header-section-number">7.7.9</span> Data Summaries and Grouping</h3>
+<p>The <code>summarize()</code> function computes summary statistics using user provided functions for one or more columns of data in a data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">summarize</span>(gm, <span class="dt">meanpop =</span> <span class="kw">mean</span>(population), <span class="dt">medpop =</span> <span class="kw">median</span>(population))</code></pre></div>
+<pre><code># A tibble: 1 x 2
+    meanpop   medpop
+      &lt;dbl&gt;    &lt;dbl&gt;
+1 29601212. 7023596.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>##or
+<span class="er">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">meanpop =</span> <span class="kw">mean</span>(population), <span class="dt">medpop =</span> <span class="kw">median</span>(population))</code></pre></div>
+<pre><code># A tibble: 1 x 2
+    meanpop   medpop
+      &lt;dbl&gt;    &lt;dbl&gt;
+1 29601212. 7023596.</code></pre>
+<p>Often we want summaries for specific components of the data. For example, we might want the median life expectancy for each continent separately. One option is subsetting:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(gm<span class="op">$</span>lifeExp[gm<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>])</code></pre></div>
+<pre><code>[1] 47.79</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(gm<span class="op">$</span>lifeExp[gm<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Asia&quot;</span>])</code></pre></div>
+<pre><code>[1] 61.79</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(gm<span class="op">$</span>lifeExp[gm<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Europe&quot;</span>])</code></pre></div>
+<pre><code>[1] 72.24</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(gm<span class="op">$</span>lifeExp[gm<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Americas&quot;</span>])</code></pre></div>
+<pre><code>[1] 67.05</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(gm<span class="op">$</span>lifeExp[gm<span class="op">$</span>continent <span class="op">==</span><span class="st"> &quot;Oceania&quot;</span>])</code></pre></div>
+<pre><code>[1] 73.66</code></pre>
+<p>The <code>group_by()</code> function makes this easier, and makes the output more useful.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">medLifeExp =</span> <span class="kw">median</span>(lifeExp)) </code></pre></div>
+<pre><code># A tibble: 5 x 2
+  continent medLifeExp
+  &lt;fct&gt;          &lt;dbl&gt;
+1 Africa          47.8
+2 Americas        67.0
+3 Asia            61.8
+4 Europe          72.2
+5 Oceania         73.7</code></pre>
+<p>Or if we want the results ordered by the median life expectancy:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">medLifeExp =</span> <span class="kw">median</span>(lifeExp)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(medLifeExp)</code></pre></div>
+<pre><code># A tibble: 5 x 2
+  continent medLifeExp
+  &lt;fct&gt;          &lt;dbl&gt;
+1 Africa          47.8
+2 Asia            61.8
+3 Americas        67.0
+4 Europe          72.2
+5 Oceania         73.7</code></pre>
+<p>As another example, we calculate the number of observations we have per continent (using the <code>n()</code> helper function), and then, among continents, how many distinct countries are represented (using <code>n_distinct()</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">numObs =</span> <span class="kw">n</span>())</code></pre></div>
+<pre><code># A tibble: 5 x 2
+  continent numObs
+  &lt;fct&gt;      &lt;int&gt;
+1 Africa       624
+2 Americas     300
+3 Asia         396
+4 Europe       360
+5 Oceania       24</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">n_obs =</span> <span class="kw">n</span>(), <span class="dt">n_countries =</span> <span class="kw">n_distinct</span>(country))</code></pre></div>
+<pre><code># A tibble: 5 x 3
+  continent n_obs n_countries
+  &lt;fct&gt;     &lt;int&gt;       &lt;int&gt;
+1 Africa      624          52
+2 Americas    300          25
+3 Asia        396          33
+4 Europe      360          30
+5 Oceania      24           2</code></pre>
+<p>Here is a bit more involved example that calculates the minimum and maximum life expectancies for countries in Africa by year.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(continent <span class="op">==</span><span class="st"> &quot;Africa&quot;</span>) <span class="op">%&gt;%</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">min_lifeExp =</span> <span class="kw">min</span>(lifeExp), <span class="dt">max_lifeExp =</span> <span class="kw">max</span>(lifeExp))</code></pre></div>
+<pre><code># A tibble: 12 x 3
+    year min_lifeExp max_lifeExp
+   &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1  1952        30          52.7
+ 2  1957        31.6        58.1
+ 3  1962        32.8        60.2
+ 4  1967        34.1        61.6
+ 5  1972        35.4        64.3
+ 6  1977        36.8        67.1
+ 7  1982        38.4        69.9
+ 8  1987        39.9        71.9
+ 9  1992        23.6        73.6
+10  1997        36.1        74.8
+11  2002        39.2        75.7
+12  2007        39.6        76.4</code></pre>
+<p>This is interesting, but the results don’t include the countries that achieved the minimum and maximum life expectancies. Here is one way to achieve that. We will start with the minimum life expectancy. Note the rank of the minimum value will be 1.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(country, continent, year, lifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(year) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(<span class="kw">rank</span>(lifeExp) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
+<pre><code># A tibble: 12 x 4
+# Groups:   year [12]
+   country      continent  year lifeExp
+   &lt;fct&gt;        &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  Asia       1952    28.8
+ 2 Afghanistan  Asia       1957    30.3
+ 3 Afghanistan  Asia       1962    32.0
+ 4 Afghanistan  Asia       1967    34.0
+ 5 Sierra Leone Africa     1972    35.4
+ 6 Cambodia     Asia       1977    31.2
+ 7 Sierra Leone Africa     1982    38.4
+ 8 Angola       Africa     1987    39.9
+ 9 Rwanda       Africa     1992    23.6
+10 Rwanda       Africa     1997    36.1
+11 Zambia       Africa     2002    39.2
+12 Swaziland    Africa     2007    39.6</code></pre>
+<p>Next we add the maximum life expectancy. Here we need to better understand the <code>desc()</code> function, which will transform a vector into a numeric vector which will be sorted in descending order. Here are some examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">desc</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
+<pre><code>[1] -1 -2 -3 -4 -5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">desc</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="op">-</span><span class="dv">4</span>))</code></pre></div>
+<pre><code>[1] -2 -3 -1 -5 -6  4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">desc</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;w&quot;</span>, <span class="st">&quot;e&quot;</span>))</code></pre></div>
+<pre><code>[1] -1 -3 -2 -5 -4</code></pre>
+<p>We now use this to extract the maximum life expectancy. Recall that <code>|</code> represents “or”. Also by default only the first few rows of a <code>tibble</code> object will be printed. To see all the rows we pipe the output to <code>print(n = 24)</code> to ask for all 24 rows to be printed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(country, continent, year, lifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(year) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">filter</span>(<span class="kw">rank</span>(lifeExp) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">rank</span>(<span class="kw">desc</span>(lifeExp)) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">print</span>(<span class="dt">n=</span><span class="dv">24</span>)</code></pre></div>
+<pre><code># A tibble: 24 x 4
+# Groups:   year [12]
+   country      continent  year lifeExp
+   &lt;fct&gt;        &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  Asia       1952    28.8
+ 2 Norway       Europe     1952    72.7
+ 3 Afghanistan  Asia       1957    30.3
+ 4 Iceland      Europe     1957    73.5
+ 5 Afghanistan  Asia       1962    32.0
+ 6 Iceland      Europe     1962    73.7
+ 7 Afghanistan  Asia       1967    34.0
+ 8 Sweden       Europe     1967    74.2
+ 9 Sierra Leone Africa     1972    35.4
+10 Sweden       Europe     1972    74.7
+11 Cambodia     Asia       1977    31.2
+12 Iceland      Europe     1977    76.1
+13 Japan        Asia       1982    77.1
+14 Sierra Leone Africa     1982    38.4
+15 Angola       Africa     1987    39.9
+16 Japan        Asia       1987    78.7
+17 Japan        Asia       1992    79.4
+18 Rwanda       Africa     1992    23.6
+19 Japan        Asia       1997    80.7
+20 Rwanda       Africa     1997    36.1
+21 Japan        Asia       2002    82  
+22 Zambia       Africa     2002    39.2
+23 Japan        Asia       2007    82.6
+24 Swaziland    Africa     2007    39.6</code></pre>
+</div>
+<div id="section-creating-new-variables" class="section level3">
+<h3><span class="header-section-number">7.7.10</span> Creating New Variables</h3>
+<p>The <code>$</code> notation provides a simple way to create new variables in a data frame. The <code>mutate()</code> function provides another, sometimes cleaner way to do this. We will use <code>mutate()</code> along with the <code>lag()</code> function to investigate changes in life expectancy over five years for the <code>gapminder</code> data. We’ll do this in a few steps. First, we create a variable that measures the change in life expectancy and remove the population and GDP variables that are not of interest. We have to be careful to first group by country, since we want to calculate the change in life expectancy by country.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">changeLifeExp =</span> lifeExp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(lifeExp, <span class="dt">order_by =</span> year)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(population, gdpPercap))</code></pre></div>
+<pre><code># A tibble: 1,704 x 5
+# Groups:   country [142]
+   country      year continent lifeExp changeLifeExp
+   &lt;fct&gt;       &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Afghanistan  1952 Asia         28.8       NA     
+ 2 Afghanistan  1957 Asia         30.3        1.53  
+ 3 Afghanistan  1962 Asia         32.0        1.66  
+ 4 Afghanistan  1967 Asia         34.0        2.02  
+ 5 Afghanistan  1972 Asia         36.1        2.07  
+ 6 Afghanistan  1977 Asia         38.4        2.35  
+ 7 Afghanistan  1982 Asia         39.9        1.42  
+ 8 Afghanistan  1987 Asia         40.8        0.968 
+ 9 Afghanistan  1992 Asia         41.7        0.852 
+10 Afghanistan  1997 Asia         41.8        0.0890
+# ... with 1,694 more rows</code></pre>
+<p>Next, summarize by computing the largest drop in life expectancy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">changeLifeExp =</span> lifeExp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(lifeExp, <span class="dt">order_by =</span> year)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(population, gdpPercap)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">largestDropLifeExp =</span> <span class="kw">min</span>(changeLifeExp))</code></pre></div>
+<pre><code># A tibble: 142 x 2
+   country     largestDropLifeExp
+   &lt;fct&gt;                    &lt;dbl&gt;
+ 1 Afghanistan                 NA
+ 2 Albania                     NA
+ 3 Algeria                     NA
+ 4 Angola                      NA
+ 5 Argentina                   NA
+ 6 Australia                   NA
+ 7 Austria                     NA
+ 8 Bahrain                     NA
+ 9 Bangladesh                  NA
+10 Belgium                     NA
+# ... with 132 more rows</code></pre>
+<p>Oops. We forgot that since we don’t have data from before 1952, the first drop will be <code>NA</code>. Let’s try again.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">changeLifeExp =</span> lifeExp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(lifeExp, <span class="dt">order_by =</span> year)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(population, gdpPercap)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">largestDropLifeExp =</span> <span class="kw">min</span>(changeLifeExp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code># A tibble: 142 x 2
+   country     largestDropLifeExp
+   &lt;fct&gt;                    &lt;dbl&gt;
+ 1 Afghanistan             0.0890
+ 2 Albania                -0.419 
+ 3 Algeria                 1.31  
+ 4 Angola                 -0.036 
+ 5 Argentina               0.492 
+ 6 Australia               0.170 
+ 7 Austria                 0.490 
+ 8 Bahrain                 0.84  
+ 9 Bangladesh              1.67  
+10 Belgium                 0.5   
+# ... with 132 more rows</code></pre>
+<p>That’s not quite what we wanted. We could arrange the results by the life expectancy drop, but it would be good to have both the continent and year printed out also. So we’ll take a slightly different approach, by arranging the results in increasing order.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">changeLifeExp =</span> lifeExp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(lifeExp, <span class="dt">order_by =</span> year)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(population, gdpPercap)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(changeLifeExp)</code></pre></div>
+<pre><code># A tibble: 1,704 x 5
+# Groups:   country [142]
+   country       year continent lifeExp changeLifeExp
+   &lt;fct&gt;        &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Rwanda        1992 Africa       23.6        -20.4 
+ 2 Zimbabwe      1997 Africa       46.8        -13.6 
+ 3 Lesotho       2002 Africa       44.6        -11.0 
+ 4 Swaziland     2002 Africa       43.9        -10.4 
+ 5 Botswana      1997 Africa       52.6        -10.2 
+ 6 Cambodia      1977 Asia         31.2         -9.10
+ 7 Namibia       2002 Africa       51.5         -7.43
+ 8 South Africa  2002 Africa       53.4         -6.87
+ 9 Zimbabwe      2002 Africa       40.0         -6.82
+10 China         1962 Asia         44.5         -6.05
+# ... with 1,694 more rows</code></pre>
+<p>That’s still not quite right. Because the data are grouped by country, R did the ordering within group. If we want to see the largest drops overall, we need to remove the grouping.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">changeLifeExp =</span> lifeExp <span class="op">-</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">lag</span>(lifeExp, <span class="dt">order_by =</span> year)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(population, 
+<span class="op">+</span><span class="st">   </span>gdpPercap)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(changeLifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">20</span>)</code></pre></div>
+<pre><code># A tibble: 1,704 x 5
+   country       year continent lifeExp changeLifeExp
+   &lt;fct&gt;        &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Rwanda        1992 Africa       23.6        -20.4 
+ 2 Zimbabwe      1997 Africa       46.8        -13.6 
+ 3 Lesotho       2002 Africa       44.6        -11.0 
+ 4 Swaziland     2002 Africa       43.9        -10.4 
+ 5 Botswana      1997 Africa       52.6        -10.2 
+ 6 Cambodia      1977 Asia         31.2         -9.10
+ 7 Namibia       2002 Africa       51.5         -7.43
+ 8 South Africa  2002 Africa       53.4         -6.87
+ 9 Zimbabwe      2002 Africa       40.0         -6.82
+10 China         1962 Asia         44.5         -6.05
+11 Botswana      2002 Africa       46.6         -5.92
+12 Zambia        1997 Africa       40.2         -5.86
+13 Iraq          1992 Asia         59.5         -5.58
+14 Liberia       1992 Africa       40.8         -5.23
+15 Cambodia      1972 Asia         40.3         -5.10
+16 Kenya         1997 Africa       54.4         -4.88
+17 Somalia       1992 Africa       39.7         -4.84
+18 Zambia        1992 Africa       46.1         -4.72
+19 Swaziland     2007 Africa       39.6         -4.26
+20 Uganda        1997 Africa       44.6         -4.25
+# ... with 1,684 more rows</code></pre>
+</div>
+<div id="section-practice-exercise-11" class="section level3">
+<h3><span class="header-section-number">7.7.11</span> Practice Exercise</h3>
+<p>As you progress in your data science related career, we are sure you will find <code>dplyr</code> as one of the most useful packages for your initial data exploration. Here is one more practice exercise to get more comfortable with the syntax.</p>
+<p>Recall the <code>iris</code> data set we have worked with multiple times. We want to look at the ratio of <code>Sepal.Length</code> to <code>Petal.Length</code> in the three different species. Write a series of <code>dplyr</code> statements that groups the data by species, creates a new column called <code>s.p.ratio</code> that is the <code>Sepal.Length</code> divided by <code>Petal.Length</code>, then computes the mean of this column for each species in a column called <code>mean.ratio</code>. Display the data in descending order of <code>mean.ratio</code>.</p>
+</div>
+</div>
+<div id="section-homework-4" class="section level2">
+<h2><span class="header-section-number">7.8</span> Homework</h2>
+<p><strong>Exercise 7</strong> Learning objectives: introduce <code>with()</code>, <code>tapply()</code>, and <code>cut()</code> functions; summarize data using the <code>table()</code> function with logical subsetting; practice using factor data types.</p>
+<p><strong>Exercise 8</strong> Learning objectives: work with messy data; import data from an external spreadsheet; practice using functions in <code>tidyr</code> and graphing functions.}</p>
+<p><strong>Exercise 9</strong> {Learning objectives: work with several key <strong>dplyr</strong> functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.}</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-graphics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 16 High Performance Computing in R | R Programming for Data Sciences</title>
+  <meta name="description" content="Chapter 16 High Performance Computing in R | R Programming for Data Sciences" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 16 High Performance Computing in R | R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 16 High Performance Computing in R | R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
+
+
+<meta name="date" content="2019-06-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="references.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="data.html"><a href="data.html#baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html#world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="data.html"><a href="data.html#email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="data.html"><a href="data.html#handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="data.html"><a href="data.html#looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="data.html"><a href="data.html#how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#practice-problem"><i class="fa fa-check"></i><b>2.3.4</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#exercises"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="structures.html"><a href="structures.html#types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+<li class="chapter" data-level="4.1.3" data-path="structures.html"><a href="structures.html#practice-problem-1"><i class="fa fa-check"></i><b>4.1.3</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.2</b> Factors</a></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#names-of-objects-in-r"><i class="fa fa-check"></i><b>4.3</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.4</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="structures.html"><a href="structures.html#practice-problem-2"><i class="fa fa-check"></i><b>4.4.1</b> Practice Problem</a></li>
+<li class="chapter" data-level="4.4.2" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.4.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.5</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.5.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.6</b> Lists</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.7</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.7.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.7.2" data-path="structures.html"><a href="structures.html#logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.7.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.8</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="structures.html"><a href="structures.html#practice-problem-3"><i class="fa fa-check"></i><b>4.8.1</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#exercises-1"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#practice-problem-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#practice-problem-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#exercises-2"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data2.html"><a href="data2.html"><i class="fa fa-check"></i><b>6</b> Working with Data</a><ul>
+<li class="chapter" data-level="6.1" data-path="data2.html"><a href="data2.html#reading-data-into-r"><i class="fa fa-check"></i><b>6.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="6.2" data-path="data2.html"><a href="data2.html#reading-data-with-missing-observations"><i class="fa fa-check"></i><b>6.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="6.3" data-path="data2.html"><a href="data2.html#summarizing-data-frames"><i class="fa fa-check"></i><b>6.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="data2.html"><a href="data2.html#column-and-row-summaries"><i class="fa fa-check"></i><b>6.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data2.html"><a href="data2.html#apply"><i class="fa fa-check"></i><b>6.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data2.html"><a href="data2.html#practice-problems"><i class="fa fa-check"></i><b>6.3.3</b> Practice Problems</a></li>
+<li class="chapter" data-level="6.3.4" data-path="data2.html"><a href="data2.html#saving-typing-using-with"><i class="fa fa-check"></i><b>6.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data2.html"><a href="data2.html#transforming-a-data-frame"><i class="fa fa-check"></i><b>6.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="data2.html"><a href="data2.html#adding-variables"><i class="fa fa-check"></i><b>6.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="6.4.2" data-path="data2.html"><a href="data2.html#removing-variables"><i class="fa fa-check"></i><b>6.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="6.4.3" data-path="data2.html"><a href="data2.html#practice-problem-6"><i class="fa fa-check"></i><b>6.4.3</b> Practice Problem</a></li>
+<li class="chapter" data-level="6.4.4" data-path="data2.html"><a href="data2.html#transforming-variables"><i class="fa fa-check"></i><b>6.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="data2.html"><a href="data2.html#rearranging-variables"><i class="fa fa-check"></i><b>6.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="6.6" data-path="data2.html"><a href="data2.html#reshaping-data"><i class="fa fa-check"></i><b>6.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="data2.html"><a href="data2.html#tidyr"><i class="fa fa-check"></i><b>6.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="6.6.2" data-path="data2.html"><a href="data2.html#practice-problem-7"><i class="fa fa-check"></i><b>6.6.2</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="data2.html"><a href="data2.html#dplyr"><i class="fa fa-check"></i><b>6.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="6.7.1" data-path="data2.html"><a href="data2.html#improved-data-frames"><i class="fa fa-check"></i><b>6.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="6.7.2" data-path="data2.html"><a href="data2.html#filtering-data-by-row"><i class="fa fa-check"></i><b>6.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="6.7.3" data-path="data2.html"><a href="data2.html#selecting-variables-by-column"><i class="fa fa-check"></i><b>6.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="6.7.4" data-path="data2.html"><a href="data2.html#practice-problem-8"><i class="fa fa-check"></i><b>6.7.4</b> Practice Problem</a></li>
+<li class="chapter" data-level="6.7.5" data-path="data2.html"><a href="data2.html#pipes"><i class="fa fa-check"></i><b>6.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="6.7.6" data-path="data2.html"><a href="data2.html#arranging-data-by-row"><i class="fa fa-check"></i><b>6.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="6.7.7" data-path="data2.html"><a href="data2.html#practice-problem-9"><i class="fa fa-check"></i><b>6.7.7</b> Practice Problem</a></li>
+<li class="chapter" data-level="6.7.8" data-path="data2.html"><a href="data2.html#renaming-variables"><i class="fa fa-check"></i><b>6.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="6.7.9" data-path="data2.html"><a href="data2.html#data-summaries-and-grouping"><i class="fa fa-check"></i><b>6.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="6.7.10" data-path="data2.html"><a href="data2.html#creating-new-variables"><i class="fa fa-check"></i><b>6.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="6.7.11" data-path="data2.html"><a href="data2.html#practice-problem-10"><i class="fa fa-check"></i><b>6.7.11</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="data2.html"><a href="data2.html#exercises-3"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>7</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="7.1" data-path="functions.html"><a href="functions.html#r-functions"><i class="fa fa-check"></i><b>7.1</b> R Functions</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="functions.html"><a href="functions.html#practice-problem-11"><i class="fa fa-check"></i><b>7.1.1</b> Practice Problem</a></li>
+<li class="chapter" data-level="7.1.2" data-path="functions.html"><a href="functions.html#creating-functions"><i class="fa fa-check"></i><b>7.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="functions.html"><a href="functions.html#programming-conditional-statements"><i class="fa fa-check"></i><b>7.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="functions.html"><a href="functions.html#comparison-and-logical-operators"><i class="fa fa-check"></i><b>7.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="7.2.2" data-path="functions.html"><a href="functions.html#if-else-statements"><i class="fa fa-check"></i><b>7.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="functions.html"><a href="functions.html#arith"><i class="fa fa-check"></i><b>7.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="7.4" data-path="functions.html"><a href="functions.html#loops"><i class="fa fa-check"></i><b>7.4</b> Loops</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="functions.html"><a href="functions.html#a-repeat-loop"><i class="fa fa-check"></i><b>7.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="7.4.2" data-path="functions.html"><a href="functions.html#a-while-loop"><i class="fa fa-check"></i><b>7.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="7.4.3" data-path="functions.html"><a href="functions.html#a-for-loop"><i class="fa fa-check"></i><b>7.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="7.4.4" data-path="functions.html"><a href="functions.html#practice-problem-12"><i class="fa fa-check"></i><b>7.4.4</b> Practice Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="functions.html"><a href="functions.html#efficiency-considerations"><i class="fa fa-check"></i><b>7.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="functions.html"><a href="functions.html#growing-objects"><i class="fa fa-check"></i><b>7.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="7.5.2" data-path="functions.html"><a href="functions.html#vectorization"><i class="fa fa-check"></i><b>7.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="functions.html"><a href="functions.html#more-on-functions"><i class="fa fa-check"></i><b>7.6</b> More on Functions</a></li>
+<li class="chapter" data-level="7.7" data-path="functions.html"><a href="functions.html#calling-functions"><i class="fa fa-check"></i><b>7.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="functions.html"><a href="functions.html#the-...-argument"><i class="fa fa-check"></i><b>7.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="7.7.2" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i><b>7.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="functions.html"><a href="functions.html#exercises-4"><i class="fa fa-check"></i><b>7.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="sp.html"><a href="sp.html"><i class="fa fa-check"></i><b>8</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="sp.html"><a href="sp.html#overview"><i class="fa fa-check"></i><b>8.1</b> Overview</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="sp.html"><a href="sp.html#some-spatial-data-packages"><i class="fa fa-check"></i><b>8.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="sp.html"><a href="sp.html#motivating-data"><i class="fa fa-check"></i><b>8.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="8.3" data-path="sp.html"><a href="sp.html#reading-spatial-data-into-r"><i class="fa fa-check"></i><b>8.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="8.4" data-path="sp.html"><a href="sp.html#coordinate-reference-systems"><i class="fa fa-check"></i><b>8.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="8.5" data-path="sp.html"><a href="sp.html#ggmap"><i class="fa fa-check"></i><b>8.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="8.6" data-path="sp.html"><a href="sp.html#illustration-using-leaflet"><i class="fa fa-check"></i><b>8.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="8.7" data-path="sp.html"><a href="sp.html#subsetting-spatial-data"><i class="fa fa-check"></i><b>8.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="sp.html"><a href="sp.html#fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>8.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="8.7.2" data-path="sp.html"><a href="sp.html#logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>8.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="8.7.3" data-path="sp.html"><a href="sp.html#spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>8.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="8.7.4" data-path="sp.html"><a href="sp.html#spatial-aggregation"><i class="fa fa-check"></i><b>8.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="sp.html"><a href="sp.html#where-to-go-from-here"><i class="fa fa-check"></i><b>8.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="8.9" data-path="sp.html"><a href="sp.html#exercises-5"><i class="fa fa-check"></i><b>8.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>9</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="9.1" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#running-a-simple-shiny-app"><i class="fa fa-check"></i><b>9.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="9.2" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#adding-user-input"><i class="fa fa-check"></i><b>9.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="9.3" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#adding-output"><i class="fa fa-check"></i><b>9.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#interactive-server-logic"><i class="fa fa-check"></i><b>9.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="9.3.2" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#interactive-user-interface"><i class="fa fa-check"></i><b>9.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>9.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#michigan-campgrounds-ui"><i class="fa fa-check"></i><b>9.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="9.4.2" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>9.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>9.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="9.6" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#why-use-shiny"><i class="fa fa-check"></i><b>9.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="9.7" data-path="shiny-interactive-web-apps-in-r.html"><a href="shiny-interactive-web-apps-in-r.html#exercises-6"><i class="fa fa-check"></i><b>9.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a><ul>
+<li class="chapter" data-level="10.1" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>10.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="classification.html"><a href="classification.html#adding-predictors"><i class="fa fa-check"></i><b>10.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification.html"><a href="classification.html#more-than-two-classes"><i class="fa fa-check"></i><b>10.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="classification.html"><a href="classification.html#nearest-neighbor-methods"><i class="fa fa-check"></i><b>10.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="classification.html"><a href="classification.html#knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>10.2.1</b> kNN and the Diabetes Data</a></li>
+<li class="chapter" data-level="10.2.2" data-path="classification.html"><a href="classification.html#practice-problem-13"><i class="fa fa-check"></i><b>10.2.2</b> Practice Problem</a></li>
+<li class="chapter" data-level="10.2.3" data-path="classification.html"><a href="classification.html#knn-and-the-iris-data"><i class="fa fa-check"></i><b>10.2.3</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="classification.html"><a href="classification.html#exercises-7"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="xml.html"><a href="xml.html"><i class="fa fa-check"></i><b>11</b> Text Data</a><ul>
+<li class="chapter" data-level="11.1" data-path="xml.html"><a href="xml.html#reading-text-data-into-r"><i class="fa fa-check"></i><b>11.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="11.2" data-path="xml.html"><a href="xml.html#the-paste-function"><i class="fa fa-check"></i><b>11.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="11.3" data-path="xml.html"><a href="xml.html#more-string-processing-functions"><i class="fa fa-check"></i><b>11.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="xml.html"><a href="xml.html#tolower-and-toupper"><i class="fa fa-check"></i><b>11.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="11.3.2" data-path="xml.html"><a href="xml.html#nchar-and-strsplit"><i class="fa fa-check"></i><b>11.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="11.3.3" data-path="xml.html"><a href="xml.html#practice-problem-14"><i class="fa fa-check"></i><b>11.3.3</b> Practice Problem</a></li>
+<li class="chapter" data-level="11.3.4" data-path="xml.html"><a href="xml.html#nchar-again"><i class="fa fa-check"></i><b>11.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="11.3.5" data-path="xml.html"><a href="xml.html#practice-problem-15"><i class="fa fa-check"></i><b>11.3.5</b> Practice Problem</a></li>
+<li class="chapter" data-level="11.3.6" data-path="xml.html"><a href="xml.html#substr-and-strtrim"><i class="fa fa-check"></i><b>11.3.6</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="11.3.7" data-path="xml.html"><a href="xml.html#grep-and-related-functions"><i class="fa fa-check"></i><b>11.3.7</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="xml.html"><a href="xml.html#exercises-8"><i class="fa fa-check"></i><b>11.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>12</b> Rcpp</a><ul>
+<li class="chapter" data-level="12.1" data-path="rcpp.html"><a href="rcpp.html#getting-started-with-rcpp"><i class="fa fa-check"></i><b>12.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="rcpp.html"><a href="rcpp.html#installation"><i class="fa fa-check"></i><b>12.1.1</b> Installation</a></li>
+<li class="chapter" data-level="12.1.2" data-path="rcpp.html"><a href="rcpp.html#the-simplest-c-example"><i class="fa fa-check"></i><b>12.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="rcpp.html"><a href="rcpp.html#using-rcpp"><i class="fa fa-check"></i><b>12.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="rcpp.html"><a href="rcpp.html#exporting-c-functions"><i class="fa fa-check"></i><b>12.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="12.2.2" data-path="rcpp.html"><a href="rcpp.html#inline-c-code"><i class="fa fa-check"></i><b>12.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="rcpp.html"><a href="rcpp.html#the-rcpp-interface"><i class="fa fa-check"></i><b>12.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="12.4" data-path="rcpp.html"><a href="rcpp.html#no-input-and-scalar-output"><i class="fa fa-check"></i><b>12.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="rcpp.html"><a href="rcpp.html#scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>12.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="12.4.2" data-path="rcpp.html"><a href="rcpp.html#vector-input-and-scalar-output"><i class="fa fa-check"></i><b>12.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="12.4.3" data-path="rcpp.html"><a href="rcpp.html#vector-input-and-vector-output"><i class="fa fa-check"></i><b>12.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="12.4.4" data-path="rcpp.html"><a href="rcpp.html#matrix-input-and-vector-output"><i class="fa fa-check"></i><b>12.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="12.4.5" data-path="rcpp.html"><a href="rcpp.html#matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>12.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="rcpp.html"><a href="rcpp.html#exercises-9"><i class="fa fa-check"></i><b>12.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="databases-and-r.html"><a href="databases-and-r.html"><i class="fa fa-check"></i><b>13</b> Databases and R</a><ul>
+<li class="chapter" data-level="13.1" data-path="databases-and-r.html"><a href="databases-and-r.html#sql-and-database-structure"><i class="fa fa-check"></i><b>13.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="databases-and-r.html"><a href="databases-and-r.html#sql"><i class="fa fa-check"></i><b>13.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="databases-and-r.html"><a href="databases-and-r.html#difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>13.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="13.3" data-path="databases-and-r.html"><a href="databases-and-r.html#using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>13.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="databases-and-r.html"><a href="databases-and-r.html#example-with-rsqlite"><i class="fa fa-check"></i><b>13.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="13.3.2" data-path="databases-and-r.html"><a href="databases-and-r.html#dbplot"><i class="fa fa-check"></i><b>13.3.2</b> <code>dbplot</code></a></li>
+<li class="chapter" data-level="13.3.3" data-path="databases-and-r.html"><a href="databases-and-r.html#using-google-bigquery"><i class="fa fa-check"></i><b>13.3.3</b> Using Google BigQuery</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="databases-and-r.html"><a href="databases-and-r.html#changing-records-in-the-database"><i class="fa fa-check"></i><b>13.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="13.5" data-path="databases-and-r.html"><a href="databases-and-r.html#r-studio-connections-pane"><i class="fa fa-check"></i><b>13.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="13.6" data-path="databases-and-r.html"><a href="databases-and-r.html#further-resources"><i class="fa fa-check"></i><b>13.6</b> Further Resources</a></li>
+<li class="chapter" data-level="13.7" data-path="databases-and-r.html"><a href="databases-and-r.html#exercises-10"><i class="fa fa-check"></i><b>13.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html"><i class="fa fa-check"></i><b>14</b> Digital Signal Processing</a><ul>
+<li class="chapter" data-level="14.1" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html#introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>14.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html#sinusoidal-signals"><i class="fa fa-check"></i><b>14.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html#noise-and-filters"><i class="fa fa-check"></i><b>14.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="14.3" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html#fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>14.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="14.4" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html#analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>14.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="14.5" data-path="digital-signal-processing.html"><a href="digital-signal-processing.html#exercises-11"><i class="fa fa-check"></i><b>14.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="graphics.html"><a href="graphics.html"><i class="fa fa-check"></i><b>15</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="15.1" data-path="graphics.html"><a href="graphics.html#scatter-plots-1"><i class="fa fa-check"></i><b>15.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="graphics.html"><a href="graphics.html#adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>15.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="graphics.html"><a href="graphics.html#labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>15.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="graphics.html"><a href="graphics.html#labels-1"><i class="fa fa-check"></i><b>15.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="graphics.html"><a href="graphics.html#customizing-axes-1"><i class="fa fa-check"></i><b>15.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="graphics.html"><a href="graphics.html#text-point-size-and-color-1"><i class="fa fa-check"></i><b>15.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="graphics.html"><a href="graphics.html#other-types-of-graphics-1"><i class="fa fa-check"></i><b>15.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="graphics.html"><a href="graphics.html#histograms-1"><i class="fa fa-check"></i><b>15.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="15.4.2" data-path="graphics.html"><a href="graphics.html#boxplots-1"><i class="fa fa-check"></i><b>15.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="15.4.3" data-path="graphics.html"><a href="graphics.html#bar-graphs-1"><i class="fa fa-check"></i><b>15.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="15.4.4" data-path="graphics.html"><a href="graphics.html#graphs-of-functions-1"><i class="fa fa-check"></i><b>15.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="graphics.html"><a href="graphics.html#saving-graphics-1"><i class="fa fa-check"></i><b>15.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="15.6" data-path="graphics.html"><a href="graphics.html#a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>15.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="15.6.1" data-path="graphics.html"><a href="graphics.html#practice-problem-16"><i class="fa fa-check"></i><b>15.6.1</b> Practice Problem</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="16" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html"><i class="fa fa-check"></i><b>16</b> High Performance Computing in R</a><ul>
+<li class="chapter" data-level="16.1" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html#why-connect-r-and-lower-level-code"><i class="fa fa-check"></i><b>16.1</b> Why connect R and lower-level code</a></li>
+<li class="chapter" data-level="16.2" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html#r-foreign-language-interfaces"><i class="fa fa-check"></i><b>16.2</b> <code>R</code> Foreign Language Interfaces</a></li>
+<li class="chapter" data-level="16.3" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html#moving-between-r-and-cc-types"><i class="fa fa-check"></i><b>16.3</b> Moving between <code>R</code> and <code>C/C++</code> Types</a></li>
+<li class="chapter" data-level="16.4" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html#calling-a-cc-function-from-r"><i class="fa fa-check"></i><b>16.4</b> Calling a <code>C/C++</code> Function from <code>R</code></a></li>
+<li class="chapter" data-level="16.5" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html#parallel-computing-with-openmp"><i class="fa fa-check"></i><b>16.5</b> Parallel Computing with <code>OpenMP</code></a></li>
+<li class="chapter" data-level="16.6" data-path="high-performance-computing-in-r.html"><a href="high-performance-computing-in-r.html#exercises-12"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="high-performance-computing-in-r" class="section level1">
+<h1><span class="header-section-number">Chapter 16</span> High Performance Computing in R</h1>
+<p>R is the preferred language of choice for many researchers requiring capabilities of a high performance computing system, whether they work with spatial data, spatio-temporal data, or any other type of data that requires efficient programming techniques to work with. In this chapter, we provide a brief overview of some handy methods that we utilize to improve the efficiency of our code for working with large spatio-temporal data sets. Specifically, we will</p>
+<ol style="list-style-type: decimal">
+<li>Mention some topics that might get you thinking about how to improve your code.</li>
+<li>Scratch the surface of some expansive topics in computing</li>
+<li>Provide some code and ideas that might point you in the right direction.</li>
+</ol>
+<p>Our goal here is not to provide an exhaustive overview of high performance computing within the R environment. Rather, we seek to provide you with a set of tools for you to use as you begin your career of working with data in R.</p>
+<div id="why-connect-r-and-lower-level-code" class="section level2">
+<h2><span class="header-section-number">16.1</span> Why connect R and lower-level code</h2>
+<p>It is often the case that working with a combination of R and some form of lower-level code (i.e. <code>C</code>, <code>C++</code>, <code>Java</code>, <code>FORTRAN</code>) is ideal for many data analysis tasks. For many tasks that require large data sets and expensive operations, we want to utilize the power of lower-level languages. R is an interpreted language, and as we have mentioned previously, this can result in it being slow at vectorizing loops whose subsequent iterations depend on previous iterations, and at executing recursive functions (i.e. functions that call themselves). In addition, by utilizing lower-level code, we can use data structures, algorithms, and libraries written in such lower-level code that are extremely well-written and optimized to make code efficient (i.e. BLAS, LAPACK, CHOLMOD, Eigen, GNU Scientific Library, etc.).</p>
+<p>This might lead you to ask “well why don’t we just write standalone lower-level code?”. Well for one, we have seen throughout this book the utilities available using R, and we clearly wouldn’t have written a book about R if we didn’t actually find it useful. Here are a few other reasons among many that contribute to reasons behind why we may want to connect R with lower-level code:</p>
+<ol style="list-style-type: decimal">
+<li><code>R</code> is nice for input/output and other tasks in-between (think <code>dplyr</code>, <code>ggplot2</code>, <code>RMarkdown</code>).</li>
+<li>We might want to use some of <code>R</code>’s <code>C</code> functions (i.e. RNGs and probability distributions in <code>Rmath.h</code>)</li>
+<li>We might eventually write an <code>R</code> package</li>
+<li>Often simplifies in-house code sharing and teaching as <code>R</code> is often easier to learn and interpret.</li>
+</ol>
+</div>
+<div id="r-foreign-language-interfaces" class="section level2">
+<h2><span class="header-section-number">16.2</span> <code>R</code> Foreign Language Interfaces</h2>
+<p>In this chapter we’ll scratch the surface of <code>R</code>’s foreign language interfaces, with a primary focus on calling <code>C</code> or <code>C++</code>. For a thorough treatment on <code>R</code> foregin language interfaces check out the <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html">Writing R Extensions</a> document available from CRAN.</p>
+<p>We will focus on three approaches for passing stuff between <code>R</code> and <code>C/C++</code>:</p>
+<ol style="list-style-type: decimal">
+<li><code>.Call()</code>: designed for calling code that understands <code>R</code> objects and environments. Allows multiple arguments to be passed to <code>C/C++</code> and <code>R</code> objects returned.</li>
+<li><code>External()</code>: similar to <code>.Call()</code> but the <code>C/C++</code> function is passed a single argument containing a <code>LISTSXP</code>, a pairlist from which the arguments can be extracted.</li>
+<li><code>.C()</code>: designed to call code that does not know about <code>R</code>. Straightforward, but limited types of arguments, and all checking of arguments must be done in <code>R</code>. No return value, but may alter its arguments.</li>
+</ol>
+<p>As you can probably tell, these methods have different costs and benefits. We’ll primarily focus here on the first method using the <code>.Call()</code> function.</p>
+</div>
+<div id="moving-between-r-and-cc-types" class="section level2">
+<h2><span class="header-section-number">16.3</span> Moving between <code>R</code> and <code>C/C++</code> Types</h2>
+<p>Whenever connecting <code>R</code> to a lower-level language, you have to have a proper understanding of how data types in <code>R</code> are mapped to the lower language. In Table <a href="high-performance-computing-in-r.html#tab:types">16.1</a> we list the mapping between the modes of <code>R</code> atomic vectors and the types of arguments to a <code>C/C++</code> function.</p>
+<table>
+<caption><span id="tab:types">TABLE 16.1: </span>Corresponding C types for R Storage Modes</caption>
+<thead>
+<tr class="header">
+<th align="left">R storage mode</th>
+<th align="left">C type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">logical</td>
+<td align="left">int *</td>
+</tr>
+<tr class="even">
+<td align="left">integer</td>
+<td align="left">int *</td>
+</tr>
+<tr class="odd">
+<td align="left">double</td>
+<td align="left">double *</td>
+</tr>
+<tr class="even">
+<td align="left">complex</td>
+<td align="left">Rcomplex *</td>
+</tr>
+<tr class="odd">
+<td align="left">character</td>
+<td align="left">char **</td>
+</tr>
+<tr class="even">
+<td align="left">raw</td>
+<td align="left">unsigned char *</td>
+</tr>
+</tbody>
+</table>
+<p>You will clearly see the utility of this table in the subsequent examples.</p>
+</div>
+<div id="calling-a-cc-function-from-r" class="section level2">
+<h2><span class="header-section-number">16.4</span> Calling a <code>C/C++</code> Function from <code>R</code></h2>
+<p>To call a <code>C/C++</code> function from <code>R</code> requires two pieces: a <code>C/C++</code> function and an <code>R</code> wrapper function that uses the <code>.Call()</code> function to pass <code>R</code> objects to compiled <code>C/C++</code> code. The first step to do this is to compile the <code>C/C++</code> code and call it from <code>R</code> using a shared object <code>.so</code> on Linux or macOS operating systems, or as a <code>.dll</code> file on Windows operating systems. Compiling can be done within RStudio itself by utilizing the <code>Terminal</code> tab that is likely in the bottom left portion of your screen. Once the shared object is available to <code>R</code>, you then load it using the <code>dyn.load()</code> function and subsequently unload it using the <code>dyn.unload()</code> function. The easiest way to show how this works is through an example.</p>
+<p>First we need to download all the script files that we’ll use throughout the example. In this example we compare the efficiency of a stand alone <code>R</code> function for computing the Euclidean distance between points stored in vectors with a <code>C/C++</code> function we call from within <code>R</code>. Use the below code to download the zip file into your current directory, and then unzip it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(downloader)
+
+<span class="co"># Change to exercise-1a data</span>
+<span class="kw">download</span>(<span class="st">&quot;http://blue.for.msu.edu/FOR875/data/PEF.zip&quot;</span>, 
+         <span class="dt">destfile=</span><span class="st">&quot;./PEF.zip&quot;</span>, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>) 
+<span class="co"># Change to exercise-1a data</span>
+<span class="kw">unzip</span>(<span class="st">&quot;PEF.zip&quot;</span>, <span class="dt">exdir =</span> <span class="st">&quot;.&quot;</span>)</code></pre></div>
+<p>We’ll first take a look at the stand alone <code>R</code> function that is stored in <code>rIDist.r</code>, which we display below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r.iDist &lt;-<span class="st"> </span><span class="cf">function</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>){
+    
+    n.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">nrow</span>(coords.<span class="dv">1</span>)
+    n.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">nrow</span>(coords.<span class="dv">2</span>)
+    p &lt;-<span class="st"> </span><span class="kw">ncol</span>(coords.<span class="dv">1</span>)
+    
+    D &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, n.<span class="dv">1</span>, n.<span class="dv">2</span>)
+    
+    dist &lt;-<span class="st"> </span><span class="dv">0</span>
+
+    start.time &lt;-<span class="st"> </span><span class="kw">proc.time</span>()
+    
+    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n.<span class="dv">1</span>){
+        <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n.<span class="dv">2</span>){
+            dist &lt;-<span class="st"> </span><span class="dv">0</span>
+            <span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>p){
+                dist &lt;-<span class="st"> </span>dist <span class="op">+</span><span class="st"> </span>(coords.<span class="dv">1</span>[i,k] <span class="op">-</span><span class="st"> </span>coords.<span class="dv">2</span>[j,k])<span class="op">^</span><span class="dv">2</span>
+            }
+            D[i,j] &lt;-<span class="st"> </span><span class="kw">sqrt</span>(dist)
+        }
+    }
+    
+    <span class="kw">return</span>(<span class="kw">list</span>(<span class="st">&quot;D&quot;</span>=D, <span class="dt">sys.time=</span><span class="kw">proc.time</span>()<span class="op">-</span>start.time))
+}</code></pre></div>
+<p>There shouldn’t be too much new here as functions were covered in Chapter <a href="functions.html#functions">7</a>. The function takes in two matrices, <code>coords.1</code> and <code>coords.2</code>, consisting of Euclidean points on a grid (i.e. (x, y) coordinates). We then use multiple <code>for</code> loops to compute the Euclidean distances between each pair of points in the matrices.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Notice how we use the <code>proc.time()</code> function to compute the total amount of time needed to run and compute the function and obtain the desired output. The output of the function is a list consisting of the matrix <code>D</code> that holds the Euclidean distances of the points, and the vector <code>sys.time</code> that gives us information on how long the computation took.</p>
+<p>Next let’s take a look at the function <code>c.iDist</code> contained in the <code>cIDist.R</code> script and displayed below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c.iDist &lt;-<span class="st"> </span><span class="cf">function</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>){
+    
+    <span class="co"># Section 1: Error Handling</span>
+    <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.matrix</span>(coords.<span class="dv">1</span>))
+        coords.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coords.<span class="dv">1</span>)
+    
+    <span class="cf">if</span>(<span class="kw">missing</span>(coords.<span class="dv">2</span>))
+        coords.<span class="dv">2</span> &lt;-<span class="st"> </span>coords.<span class="dv">1</span>
+    
+    <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.matrix</span>(coords.<span class="dv">2</span>))
+        coords.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coords.<span class="dv">2</span>)
+    
+    <span class="cf">if</span>(<span class="kw">ncol</span>(coords.<span class="dv">1</span>) <span class="op">!=</span><span class="st"> </span><span class="kw">ncol</span>(coords.<span class="dv">2</span>))
+        <span class="kw">stop</span>(<span class="st">&quot;error: ncol(coords.1) != ncol(coords.2)&quot;</span>)
+    
+    <span class="co"># Section 2: Setup</span>
+    p &lt;-<span class="st"> </span><span class="kw">ncol</span>(coords.<span class="dv">1</span>)
+    n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(coords.<span class="dv">1</span>)
+    n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(coords.<span class="dv">2</span>)
+    
+    D &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, n1, n2)
+    
+    <span class="kw">storage.mode</span>(coords.<span class="dv">1</span>) &lt;-<span class="st"> &quot;double&quot;</span>
+    <span class="kw">storage.mode</span>(coords.<span class="dv">2</span>) &lt;-<span class="st"> &quot;double&quot;</span>
+    <span class="kw">storage.mode</span>(D) &lt;-<span class="st"> &quot;double&quot;</span>
+    <span class="kw">storage.mode</span>(n1) &lt;-<span class="st"> &quot;integer&quot;</span>
+    <span class="kw">storage.mode</span>(n2) &lt;-<span class="st"> &quot;integer&quot;</span>
+    <span class="kw">storage.mode</span>(p) &lt;-<span class="st"> &quot;integer&quot;</span>
+  
+    start.time &lt;-<span class="st"> </span><span class="kw">proc.time</span>()
+    
+    <span class="co"># Section 3: Execute and Output</span>
+    <span class="kw">.Call</span>(<span class="st">&quot;cIDist&quot;</span>, coords.<span class="dv">1</span>, n1, coords.<span class="dv">2</span>, n2, p, D)
+    
+    <span class="kw">list</span>(<span class="st">&quot;D&quot;</span>=D, <span class="dt">sys.time=</span><span class="kw">proc.time</span>()<span class="op">-</span>start.time)
+}</code></pre></div>
+<p>The <code>c.iDist</code> function is the R wrapper function that allows us to call the underlying <code>C/C++</code> code that is contained in the file <code>cIDist.cpp</code>. We see the function consists of three sections, labeled in the code. In Section 1, the first and third <code>if</code> statements check if the input coordinates are matrices, and if they are not, they are converted to matrix format using the <code>as.matrix()</code> function. The second <code>if</code> statement handles the case where only one input value is provided (<code>coords.1</code>) and the sets <code>coords.2</code> equal to <code>coords.1</code>. The fourth <code>if</code> statement ensures that the matrices have the same number of columns (i.e. the points are in the same dimensional space), and if not, returns an error.</p>
+<p>In Section 2 we set up the variables we will supply to our call to the underlying <code>C/C++</code> function. Of important note is our use of the <code>storage.mode()</code> function, which specifies how the object supplied as input to the function is stored and will be treated in the <code>C/C++</code> code. Notice that we specify the coordinates as type <code>&quot;double&quot;</code> and the variables storing the dimensions of the matrices (<code>n1</code>, <code>n2</code>, and <code>p</code>) as type <code>&quot;integer&quot;</code>. As we did in the <code>r.iDist</code> function, we again keep track of the processing time using the <code>proc.time()</code> function, and store this start time in a variable called <code>start.time</code>.</p>
+<p>Section 3 is where we use the <code>.Call()</code> function to call the function <code>cIDist</code> written in <code>C/C++</code>. The definition of this function is stored in the <code>cIDist.cpp</code> file, which we will go over next. We also provide all the necessary inputs to the <code>cIDist</code> function in our call to the <code>.Call()</code> function. We then specify the output of the function, which again takes the form of a list containing the matrix of distances and information about the processing time.</p>
+<p>Now that we’ve written the R wrapper function we can look at the definition of the <code>cIDist</code> function in the <code>cIDist.cpp</code> file.</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">// Section 1</span>
+<span class="pp">#include </span><span class="im">&lt;R.h&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;Rinternals.h&gt;</span>
+
+<span class="at">extern</span> <span class="st">&quot;C&quot;</span> {
+
+  <span class="co">// Section 2</span>
+  SEXP cIDist(SEXP coords1_r, SEXP n1_r, SEXP coords2_r, SEXP n2_r, SEXP p_r, SEXP D_r){
+    
+    <span class="co">// Section 3</span>
+    <span class="dt">double</span> *coords1 = REAL(coords1_r);
+    <span class="dt">int</span> n1 = INTEGER(n1_r)[<span class="dv">0</span>];
+    
+    <span class="dt">double</span> *coords2 = REAL(coords2_r);
+    <span class="dt">int</span> n2 = INTEGER(n2_r)[<span class="dv">0</span>];
+    
+    <span class="dt">int</span> p = INTEGER(p_r)[<span class="dv">0</span>];
+    
+    <span class="dt">double</span> *D = REAL(D_r);
+    
+    <span class="dt">int</span> i, j, k;
+    <span class="dt">double</span> dist = <span class="fl">0.0</span>;
+    
+    <span class="co">// Section 4</span>
+    <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; n1; i++){
+      <span class="cf">for</span>(j = <span class="dv">0</span>; j &lt; n2; j++){
+          dist = <span class="fl">0.0</span>;
+          <span class="cf">for</span>(k = <span class="dv">0</span>; k &lt; p; k++){
+            dist += pow(coords1[k*n1+i]-coords2[k*n2+j],<span class="dv">2</span>);
+          }
+          D[n1*j+i] = sqrt(dist);
+      }
+    }
+
+    <span class="co">// Section 5</span>
+    <span class="cf">return</span>(R_NilValue);
+  }  
+}</code></pre></div>
+<p>The goal of this chapter is not to teach you <code>C++</code>, as that requires another (probably longer) textbook than the one you are currently reading. Luckily, since you’ve already learned a lot about programming in <code>R</code>, learning a second language is relatively easy, and you should be able to get the gist of what is going on in the <code>cIDist</code> function pretty quickly after a couple small explanations.</p>
+<p>We again split up the file into separate sections. In Section 1 we use the <code>#include</code> statement to include header files that contain functions we will use in the function. You can think of this as being analogous as the <code>library()</code> function in <code>R</code>. We then see the <code>extern &quot;C&quot;</code> statement followed by code contained within curly braces <code>{}</code>. The <code>extern &quot;C&quot;</code> statement is used to make a <code>C</code> function avaialable outside of it’s current environment. This will ultimately make the function available for us to use in <code>R</code>.</p>
+<p>The rest of the code is the actual function definition. In Section 2, we define the name of the function <code>cIDist</code>, the type of output the function produces <code>SEXP</code>, the input variables to the function (<code>coords1_r</code>, <code>n1_r</code>, <code>coords2_r</code>, <code>n2_r</code>, <code>p_r</code>, and <code>D_r</code>), and the types of those input variables (all are of type <code>SEXP</code>). <code>SEXP</code> is the generic type of object used in <code>C</code> for variables that <code>R</code> will recognize.</p>
+<p>In Section 3 we are simply defining variables we use in <code>C/C++</code> from the input variables provided in the function. Notice that when defining a variable in <code>C/C++</code> you have to specify the type of the variable prior to the definition of the variable (i.e. <code>double dist = 0.0</code> produces a variable <code>dist</code> of type <code>double</code> with current value <code>0.0</code>).</p>
+<p>In Section 4 we compute the distance matrix, using <code>for</code> loops similar to what we did in <code>rIDist.r</code>. Notice that <code>for</code> loops in <code>C++</code> have slightly different syntax than in <code>R</code>, as the definition consists of the starting value (i.e. <code>i = 0</code>), a condition for when to stop the loop (i.e. <code>i &lt; n1</code>), and a statement that specifies how to iterate the iterator (i.e. <code>i++</code>, which means add 1 to <code>i</code> each time through the loop). We then compute the Euclidean distance between the points using the <code>pow</code> function (used here to square the difference of two coordinates) and the <code>sqrt</code> function. Also notice the statement using the operator <code>+=</code> which is equivalent to <code>dist = dist + pow(coords1[k*n1+i] - coords2[k*n2+j], 2)</code>.</p>
+<p>In Section 5, we return the value <code>R_NilValue</code> which is equivalent to the <code>NULL</code> value in <code>R</code>. Notice that we don’t need to return anything because the <code>C/C++</code> function is directly computing the distance in the variable <code>D</code>, which will be available to us in the <code>R</code> wrapper function we discussed previously.</p>
+<p>Now we’re ready to put everything together. The first thing we have to do is compile the <code>C/C++</code> code to create a <em>shared object</em> that will allow <code>R</code> to connect to the lower level code. This can be done very easily within RStudio by utilizing the Terminal window. Navigate to your Terminal window in RStudio, ensure you are in the correct directory containing the <code>ciDist.cpp</code> file and others (if not change your working directory), and then enter the command <code>R CMD SHLIB cIDist.cpp</code>. This will compile the <code>cIDist.cpp</code> file into a shared object of the form <code>ciDist.so</code> on Linux or macOS or <code>cIDist.dll</code> on Windows.</p>
+<p>We now load the scripts and functions that we want to compare. First, make sure you set the working directory to the directory containing the scripts. We now load the necessary objects below. Take notice that if you are using a Windows machine, you will want to change <code>dyn.load(&quot;cIDist.so&quot;)</code> to <code>dyn.load(&quot;cIDist.dll&quot;)</code> as reflected in the comments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;computing1/&quot;</span>)
+<span class="kw">source</span>(<span class="st">&quot;rIDist.R&quot;</span>)
+<span class="co"># For Linux/macOS</span>
+<span class="kw">dyn.load</span>(<span class="st">&quot;cIDist.so&quot;</span>)
+<span class="co"># For Windows</span>
+<span class="co">#dyn.load(&quot;cIDist.dll&quot;)</span>
+<span class="kw">source</span>(<span class="st">&quot;cIDist.R&quot;</span>)</code></pre></div>
+<p>Notice how we use the <code>dyn.load()</code> function to load our <code>C/C++</code> function from the shared object file we created, and the <code>source()</code> function to run the scripts <code>rIDist.R</code> and <code>cIDist.R</code> and make all the functions and variables contained in these scripts available to us.</p>
+<p>We now make test data to supply to the functions, and run the two different functions to compare their performance</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make data</span>
+n.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">5000</span>
+coords.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span><span class="op">:</span>n.<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span>n.<span class="dv">1</span>)
+
+n.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="dv">5000</span>
+coords.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span><span class="op">:</span>n.<span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span>n.<span class="dv">2</span>)
+
+<span class="co"># Calculate Euclidean distance matrices and print timing</span>
+r.D &lt;-<span class="st"> </span><span class="kw">r.iDist</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>)
+<span class="kw">print</span>(r.D<span class="op">$</span>sys.time)</code></pre></div>
+<pre><code>##    user  system elapsed 
+##  11.303   0.016  11.320</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c.D &lt;-<span class="st"> </span><span class="kw">c.iDist</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>)
+<span class="kw">print</span>(c.D<span class="op">$</span>sys.time)</code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.144   0.000   0.144</code></pre>
+<p>Wow, the <code>C/C++</code> function is substantially faster than the <code>R</code> function. We see there is an increase in computation time of over 10 seconds for this simple case that involves only 5000 data points. Large spatial data can involve millions of locations, so you can imagine how useful it is to combine <code>R</code> with lower level code to increase the efficiency of our computations.</p>
+</div>
+<div id="parallel-computing-with-openmp" class="section level2">
+<h2><span class="header-section-number">16.5</span> Parallel Computing with <code>OpenMP</code></h2>
+<p>In the previous section, we saw a substantial decrease in computation time when computing a Euclidean distance matrix using a <code>C/C++</code> function called from <code>R</code> as opposed to a function coded in <code>R</code>. We can make many computations even more efficient by utilizing <em>shared memory parallel programming</em>.</p>
+<p><code>OpenMP</code> is an industry standard Application Programming Interface (API) of <code>C/C++</code> and <code>FORTRAN</code> for shared memory parallel programming. Here we will just barely scratch the surface of using <code>OpenMP</code> with <code>R</code>. <code>OpenMP</code> is based on two concepts: the use of threads (think CPUs) and the fork/join model of parallelism. Without going into much detail, the fork-join model is a method of executing parallel programs such that the program branches off in parallel at specified locations in the program, and then subsequently come back together at a later point and continue the more traditional sequential execution (see Figure <a href="high-performance-computing-in-r.html#fig:forkJoin">16.1</a><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>).</p>
+<div class="figure"><span id="fig:forkJoin"></span>
+<img src="computing1/OpenMPforkjoin.png" alt="Fork-Join Model" width="100%" />
+<p class="caption">
+FIGURE 16.1: Fork-Join Model
+</p>
+</div>
+<p>Parallel computing with OpenMP has multiple advantages:</p>
+<ol style="list-style-type: decimal">
+<li>High-level directives (<code>pragma</code>) used to define parallel regions simplify coding and decisions</li>
+<li>Parallelism can be added incrementally</li>
+<li>Programs can be run sequentially if needed (i.e. if compilers do not support OpenMP)</li>
+<li>Compilers (or you) can optimize the number of threads needed by parallel region.</li>
+</ol>
+<p>However, as Uncle Ben once said, “With great power comes great responsibility”. You must be sure that what you are doing in parallel regions is <em>thread safe</em>. When working with OpenMP it’s very easy to make mistakes that compile without error, potentially leading to very dangerous code and misinterpreted results. Here we will not go into further detail on this, but we strongly encourage you to seek out further resources for parallel computing with <code>OpenMP</code> after you work through this chapter.</p>
+<p>Now that we have a very broad idea of what <code>OpenMP</code> allows us to do, we’ll adapt our <code>cIDist</code> function to allow for parallel computing with <code>OpenMP</code> and see how this improves the efficiency of our code.</p>
+<p>Check out the file <code>cIDistOMP.R</code>, which we reproduce below for convenience.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c.iDist.omp &lt;-<span class="st"> </span><span class="cf">function</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>, <span class="dt">n.omp.threads=</span><span class="dv">1</span>){
+    
+    <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.matrix</span>(coords.<span class="dv">1</span>))
+        coords.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coords.<span class="dv">1</span>)
+    
+    <span class="cf">if</span>(<span class="kw">missing</span>(coords.<span class="dv">2</span>))
+        coords.<span class="dv">2</span> &lt;-<span class="st"> </span>coords.<span class="dv">1</span>
+    
+    <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.matrix</span>(coords.<span class="dv">2</span>))
+        coords.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coords.<span class="dv">2</span>)
+    
+    <span class="cf">if</span>(<span class="kw">ncol</span>(coords.<span class="dv">1</span>) <span class="op">!=</span><span class="st"> </span><span class="kw">ncol</span>(coords.<span class="dv">2</span>))
+        <span class="kw">stop</span>(<span class="st">&quot;error: ncol(coords.1) != ncol(coords.2)&quot;</span>)
+    
+    p &lt;-<span class="st"> </span><span class="kw">ncol</span>(coords.<span class="dv">1</span>)
+    n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(coords.<span class="dv">1</span>)
+    n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(coords.<span class="dv">2</span>)
+    
+    D &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, n1, n2)
+    
+    <span class="kw">storage.mode</span>(coords.<span class="dv">1</span>) &lt;-<span class="st"> &quot;double&quot;</span>
+    <span class="kw">storage.mode</span>(coords.<span class="dv">2</span>) &lt;-<span class="st"> &quot;double&quot;</span>
+    <span class="kw">storage.mode</span>(D) &lt;-<span class="st"> &quot;double&quot;</span>
+    <span class="kw">storage.mode</span>(n1) &lt;-<span class="st"> &quot;integer&quot;</span>
+    <span class="kw">storage.mode</span>(n2) &lt;-<span class="st"> &quot;integer&quot;</span>
+    <span class="kw">storage.mode</span>(p) &lt;-<span class="st"> &quot;integer&quot;</span>
+    <span class="kw">storage.mode</span>(n.omp.threads) &lt;-<span class="st"> &quot;integer&quot;</span>
+    
+    start.time &lt;-<span class="st"> </span><span class="kw">proc.time</span>()
+    
+    <span class="kw">.Call</span>(<span class="st">&quot;cIDistOMP&quot;</span>, coords.<span class="dv">1</span>, n1, coords.<span class="dv">2</span>, n2, p, D, n.omp.threads)
+    
+    
+    <span class="kw">list</span>(<span class="st">&quot;D&quot;</span>=D, <span class="dt">sys.time=</span><span class="kw">proc.time</span>()<span class="op">-</span>start.time)
+  }</code></pre></div>
+<p>This file is exactly the same as our previous <code>cIDist.R</code> except, we specify the function <code>c.iDist.omp</code> with a third argument called <code>n.omp.threads = 1</code>. This specifies the number of threads we allow <code>OpenMP</code> to use when performing the computation, with a default value of 1. We see that <code>n.omp.threads</code> is also supplied to the function <code>.Call()</code> function, which tells us the <code>C/C++</code> function <code>cIDistOMP</code> must have an argument to take this value in. We analyze the <code>cIDistOMP</code> function in the file <code>cIDistOMP.cpp</code>, again reproduced below</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#include </span><span class="im">&lt;R.h&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;Rmath.h&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;Rinternals.h&gt;</span>
+
+<span class="pp">#ifdef _OPENMP</span>
+<span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span>
+<span class="pp">#endif</span>
+
+<span class="at">extern</span> <span class="st">&quot;C&quot;</span> {
+
+  SEXP cIDistOMP(SEXP coords1_r, SEXP n1_r, SEXP coords2_r, SEXP n2_r, SEXP p_r, SEXP D_r, SEXP nThreads_r){
+    
+    <span class="dt">double</span> *coords1 = REAL(coords1_r);
+    <span class="dt">int</span> n1 = INTEGER(n1_r)[<span class="dv">0</span>];
+    
+    <span class="dt">double</span> *coords2 = REAL(coords2_r);
+    <span class="dt">int</span> n2 = INTEGER(n2_r)[<span class="dv">0</span>];
+    
+    <span class="dt">int</span> p = INTEGER(p_r)[<span class="dv">0</span>];
+
+    <span class="dt">double</span> *D = REAL(D_r);
+
+    <span class="dt">int</span> nThreads = INTEGER(nThreads_r)[<span class="dv">0</span>];
+
+<span class="pp">#ifdef _OPENMP</span>
+    omp_set_num_threads(nThreads);
+<span class="pp">#else</span>
+    <span class="cf">if</span>(nThreads &gt; <span class="dv">1</span>){
+      warning(<span class="st">&quot;n.omp.threads = </span><span class="sc">%i</span><span class="st"> requested however source code was not compiled with OpenMP support.&quot;</span>, nThreads);
+      nThreads = <span class="dv">1</span>;
+    }
+<span class="pp">#endif</span>
+
+    <span class="dt">int</span> i, j, k;
+
+    <span class="dt">double</span> dist = <span class="fl">0.0</span>;
+
+<span class="pp">#ifdef _OPENMP</span>
+<span class="pp">#pragma omp parallel for private(j, dist, k)</span>
+<span class="pp">#endif</span>
+    <span class="cf">for</span>(i = <span class="dv">0</span>; i &lt; n1; i++){
+      <span class="cf">for</span>(j = <span class="dv">0</span>; j &lt; n2; j++){
+          dist = <span class="fl">0.0</span>;
+          <span class="cf">for</span>(k = <span class="dv">0</span>; k &lt; p; k++){
+            dist += pow(coords1[k*n1+i]-coords2[k*n2+j],<span class="dv">2</span>);
+          }
+          D[n1*j+i] = sqrt(dist);
+      }
+    }
+
+    <span class="cf">return</span>(R_NilValue);
+  }  
+}</code></pre></div>
+<p>For the most part this is the same as our previous function, with a few slight differences we’ll now highlight. Notice the use of the <code>#ifdef</code> statement:</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#ifdef _OPENMP</span>
+<span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span>
+<span class="pp">#endif</span></code></pre></div>
+<p>First we check to see if <code>OpenMP</code> is available on the computer. If so, we include the header file <code>omp.h</code>. If not, we don’t include this file.</p>
+<p>Next, notice in the function definition that we have included an additional argument <code>SEXP nThreads_r</code>, which specifies the number of threads we will use for the computation.</p>
+<p>After we define the variables for use in the function to make the code a little more clean, we again use the <code>#ifdef</code> statement:</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#ifdef _OPENMP</span>
+    omp_set_num_threads(nThreads);
+<span class="pp">#else</span>
+    <span class="cf">if</span>(nThreads &gt; <span class="dv">1</span>){
+      warning(<span class="st">&quot;n.omp.threads = </span><span class="sc">%i</span><span class="st"> requested however source code was not compiled with OpenMP support.&quot;</span>, nThreads);
+      nThreads = <span class="dv">1</span>;
+    }
+<span class="pp">#endif</span></code></pre></div>
+<p>This code performs the following logical operations:</p>
+<ol style="list-style-type: decimal">
+<li>If <code>OpenMP</code> is available, set the number of threads to <code>nThreads</code> using <code>omp_set_num_threads(nThreads)</code></li>
+<li>If <code>OpenMP</code> is not available and <code>nThreads &gt; 1</code>, send a warning to the user, and set <code>nThreads = 1</code>.</li>
+</ol>
+<p>The last difference we see is right before the <code>for</code> loop where we compute the Euclidean distance matrix</p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#ifdef _OPENMP</span>
+<span class="pp">#pragma omp parallel for private(j, dist, k)</span>
+<span class="pp">#endif </span></code></pre></div>
+<p>Again, we check to see if <code>OpenMP</code> is available. If it is, we use the <code>#pragma</code> directive to define parallel regions. We then give each parallel region it’s own copy of <code>j</code>, <code>dist</code>, and <code>k</code> to avoid any problems when computing the distance matrix.</p>
+<p>Notice that because we use the <code>#ifdef _OPENMP</code> statement throughout the code, our code will work regardless of whether or not we actually use <code>OpenMP</code>.</p>
+<p>We compile the code just as we did previously:</p>
+<pre><code>R CMD SHLIB cIDistOMP.cpp</code></pre>
+<p>Finally, let’s compare the efficiency of our code with our previous functions. For comparison, we rerun our results of our stand-alone <code>R</code> function <code>r.iDist</code> and our wrapper function <code>c.iDist</code>. Notice when you run this yourself, you may want to change the argument <code>n.ompthreads = 4</code> to a number that works on your machine. My computer has 8 threads, so using 4 threads works just fine. You want to ensure the number of threads you use is less than or equal to the available number of threads on your machine.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;computing1/&quot;</span>)
+
+<span class="kw">source</span>(<span class="st">&quot;rIDist.R&quot;</span>)
+
+<span class="co"># For Linux/macOS</span>
+<span class="kw">dyn.load</span>(<span class="st">&quot;cIDist.so&quot;</span>)
+<span class="co"># For Windows</span>
+<span class="co">#dyn.load(&quot;cIDist.dll&quot;)</span>
+<span class="kw">source</span>(<span class="st">&quot;cIDist.R&quot;</span>)
+
+<span class="co"># For Linux/macOS</span>
+<span class="kw">dyn.load</span>(<span class="st">&quot;cIDistOMP.so&quot;</span>)
+<span class="co"># For Windows</span>
+<span class="co"># dyn.load(&quot;cIDistOMP.dll&quot;)</span>
+<span class="kw">source</span>(<span class="st">&quot;cIDistOMP.R&quot;</span>)
+
+<span class="co"># Make data</span>
+n.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">5000</span>
+coords.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span><span class="op">:</span>n.<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span>n.<span class="dv">1</span>)
+
+n.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="dv">5000</span>
+coords.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span><span class="op">:</span>n.<span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span>n.<span class="dv">2</span>)
+
+<span class="co"># Calculate Euclidean distance matrices and print timing</span>
+r.D &lt;-<span class="st"> </span><span class="kw">r.iDist</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>)
+<span class="kw">print</span>(r.D<span class="op">$</span>sys.time)</code></pre></div>
+<pre><code>##    user  system elapsed 
+##  11.011   0.000  11.012</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c.D &lt;-<span class="st"> </span><span class="kw">c.iDist</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>)
+<span class="kw">print</span>(c.D<span class="op">$</span>sys.time)</code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.158   0.000   0.159</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c.omp.D &lt;-<span class="st"> </span><span class="kw">c.iDist.omp</span>(coords.<span class="dv">1</span>, coords.<span class="dv">2</span>, <span class="dt">n.omp.threads=</span><span class="dv">4</span>)
+<span class="kw">print</span>(c.omp.D<span class="op">$</span>sys.time)</code></pre></div>
+<pre><code>##    user  system elapsed 
+##   0.224   0.008   0.067</code></pre>
+<p>We see that using <code>OpenMP</code> provides us with even more efficient code.</p>
+</div>
+<div id="exercises-12" class="section level2">
+<h2><span class="header-section-number">16.6</span> Exercises</h2>
+
+</div>
+</div>
+
+
+
+
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>This is certainly not the most efficient method for writing this function in <code>R</code>, as we could make use of the <code>apply()</code> family of functions to improve this code. The form using <code>for</code> loops however will be easier to compare to the corresponding <code>C/C++</code> function we describe next.<a href="high-performance-computing-in-r.html#fnref1">↩</a></p></li>
+<li id="fn2"><p>Figure from <a href="https://www.nersc.gov" class="uri">https://www.nersc.gov</a><a href="high-performance-computing-in-r.html#fnref2">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

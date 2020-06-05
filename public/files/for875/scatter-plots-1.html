@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Scatter Plots | R Programming for Data Sciences</title>
+  <meta name="description" content="Chapter 7 Scatter Plots | R Programming for Data Sciences" />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Scatter Plots | R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Scatter Plots | R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser" />
+
+
+<meta name="date" content="2019-05-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="graphics.html">
+<link rel="next" href="data2.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="data.html"><a href="data.html#baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html#world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="data.html"><a href="data.html#email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="data.html"><a href="data.html#handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="data.html"><a href="data.html#looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="data.html"><a href="data.html#how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts-and-r-markdown.html"><a href="scripts-and-r-markdown.html#homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="structures.html"><a href="structures.html#types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="structures.html"><a href="structures.html#modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="structures.html"><a href="structures.html#logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="structures.html"><a href="structures.html#practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="structures.html"><a href="structures.html#homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a></li>
+<li class="chapter" data-level="5.8" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#practice-exercises"><i class="fa fa-check"></i><b>5.8</b> Practice Exercises</a></li>
+<li class="chapter" data-level="5.9" data-path="graphics-in-r-part-1-ggplot2.html"><a href="graphics-in-r-part-1-ggplot2.html#homework-2"><i class="fa fa-check"></i><b>5.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="graphics.html"><a href="graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a></li>
+<li class="chapter" data-level="7" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html"><i class="fa fa-check"></i><b>7</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="7.0.1" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>7.0.1</b> Adding lines to a scatter plot</a></li>
+<li class="chapter" data-level="7.1" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>7.1</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#labels-1"><i class="fa fa-check"></i><b>7.1.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#customizing-axes-1"><i class="fa fa-check"></i><b>7.2</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#text-point-size-and-color-1"><i class="fa fa-check"></i><b>7.2.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#other-types-of-graphics-1"><i class="fa fa-check"></i><b>7.3</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#histograms-1"><i class="fa fa-check"></i><b>7.3.1</b> Histograms</a></li>
+<li class="chapter" data-level="7.3.2" data-path="scatter-plots-1.html"><a href="scatter-plots-1.html#boxplots-1"><i class="fa fa-check"></i><b>7.3.2</b> Boxplots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data2.html"><a href="data2.html"><i class="fa fa-check"></i><b>8</b> Working with Data</a><ul>
+<li class="chapter" data-level="8.1" data-path="data2.html"><a href="data2.html#reading-data-into-r"><i class="fa fa-check"></i><b>8.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="8.2" data-path="data2.html"><a href="data2.html#reading-data-with-missing-observations"><i class="fa fa-check"></i><b>8.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="8.3" data-path="data2.html"><a href="data2.html#summarizing-data-frames"><i class="fa fa-check"></i><b>8.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="data2.html"><a href="data2.html#column-and-row-summaries"><i class="fa fa-check"></i><b>8.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data2.html"><a href="data2.html#apply"><i class="fa fa-check"></i><b>8.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="8.3.3" data-path="data2.html"><a href="data2.html#saving-typing-using-with"><i class="fa fa-check"></i><b>8.3.3</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="data2.html"><a href="data2.html#transforming-a-data-frame"><i class="fa fa-check"></i><b>8.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="data2.html"><a href="data2.html#adding-variables"><i class="fa fa-check"></i><b>8.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="8.4.2" data-path="data2.html"><a href="data2.html#removing-variables"><i class="fa fa-check"></i><b>8.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="8.4.3" data-path="data2.html"><a href="data2.html#transforming-variables"><i class="fa fa-check"></i><b>8.4.3</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="data2.html"><a href="data2.html#rearranging-variables"><i class="fa fa-check"></i><b>8.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="8.6" data-path="data2.html"><a href="data2.html#reshaping-data"><i class="fa fa-check"></i><b>8.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="data2.html"><a href="data2.html#tidyr"><i class="fa fa-check"></i><b>8.6.1</b> <code>tidyr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="data2.html"><a href="data2.html#manipulating-data-with-dplyr-dplyr"><i class="fa fa-check"></i><b>8.7</b> Manipulating Data with <code>dplyr</code> #{dplyr}</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="data2.html"><a href="data2.html#improved-data-frames"><i class="fa fa-check"></i><b>8.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="8.7.2" data-path="data2.html"><a href="data2.html#filtering-data-by-row"><i class="fa fa-check"></i><b>8.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="8.7.3" data-path="data2.html"><a href="data2.html#selecting-variables-by-column"><i class="fa fa-check"></i><b>8.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="8.7.4" data-path="data2.html"><a href="data2.html#pipes"><i class="fa fa-check"></i><b>8.7.4</b> Pipes</a></li>
+<li class="chapter" data-level="8.7.5" data-path="data2.html"><a href="data2.html#arranging-data-by-row"><i class="fa fa-check"></i><b>8.7.5</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="8.7.6" data-path="data2.html"><a href="data2.html#renaming-variables"><i class="fa fa-check"></i><b>8.7.6</b> Renaming Variables</a></li>
+<li class="chapter" data-level="8.7.7" data-path="data2.html"><a href="data2.html#data-summaries-and-grouping"><i class="fa fa-check"></i><b>8.7.7</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="8.7.8" data-path="data2.html"><a href="data2.html#creating-new-variables"><i class="fa fa-check"></i><b>8.7.8</b> Creating New Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="data2.html"><a href="data2.html#practice-exercises-1"><i class="fa fa-check"></i><b>8.8</b> Practice Exercises</a></li>
+<li class="chapter" data-level="8.9" data-path="data2.html"><a href="data2.html#homework-3"><i class="fa fa-check"></i><b>8.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>9</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="9.1" data-path="functions.html"><a href="functions.html#r-functions"><i class="fa fa-check"></i><b>9.1</b> R Functions</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="functions.html"><a href="functions.html#creating-functions"><i class="fa fa-check"></i><b>9.1.1</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="functions.html"><a href="functions.html#programming-conditional-statements"><i class="fa fa-check"></i><b>9.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="functions.html"><a href="functions.html#comparison-and-logical-operators"><i class="fa fa-check"></i><b>9.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="9.2.2" data-path="functions.html"><a href="functions.html#if-else-statements"><i class="fa fa-check"></i><b>9.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="functions.html"><a href="functions.html#arith"><i class="fa fa-check"></i><b>9.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="9.4" data-path="functions.html"><a href="functions.html#loops"><i class="fa fa-check"></i><b>9.4</b> Loops</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="functions.html"><a href="functions.html#a-repeat-loop"><i class="fa fa-check"></i><b>9.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="9.4.2" data-path="functions.html"><a href="functions.html#a-while-loop"><i class="fa fa-check"></i><b>9.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="9.4.3" data-path="functions.html"><a href="functions.html#a-for-loop"><i class="fa fa-check"></i><b>9.4.3</b> A For Loop</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="functions.html"><a href="functions.html#efficiency-considerations"><i class="fa fa-check"></i><b>9.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="functions.html"><a href="functions.html#growing-objects"><i class="fa fa-check"></i><b>9.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="9.5.2" data-path="functions.html"><a href="functions.html#vectorization"><i class="fa fa-check"></i><b>9.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="functions.html"><a href="functions.html#more-on-functions"><i class="fa fa-check"></i><b>9.6</b> More on Functions</a></li>
+<li class="chapter" data-level="9.7" data-path="functions.html"><a href="functions.html#calling-functions"><i class="fa fa-check"></i><b>9.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="functions.html"><a href="functions.html#the-...-argument"><i class="fa fa-check"></i><b>9.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="9.7.2" data-path="functions.html"><a href="functions.html#lazy-evaluation"><i class="fa fa-check"></i><b>9.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="functions.html"><a href="functions.html#homework-4"><i class="fa fa-check"></i><b>9.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="sp.html"><a href="sp.html"><i class="fa fa-check"></i><b>10</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="sp.html"><a href="sp.html#overview"><i class="fa fa-check"></i><b>10.1</b> Overview</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="sp.html"><a href="sp.html#some-spatial-data-packages"><i class="fa fa-check"></i><b>10.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="sp.html"><a href="sp.html#motivating-data"><i class="fa fa-check"></i><b>10.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="10.3" data-path="sp.html"><a href="sp.html#reading-spatial-data-into-r"><i class="fa fa-check"></i><b>10.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="10.4" data-path="sp.html"><a href="sp.html#coordinate-reference-systems"><i class="fa fa-check"></i><b>10.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="10.5" data-path="sp.html"><a href="sp.html#ggmap"><i class="fa fa-check"></i><b>10.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="10.6" data-path="sp.html"><a href="sp.html#illustration-using-leaflet"><i class="fa fa-check"></i><b>10.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="10.7" data-path="sp.html"><a href="sp.html#subsetting-spatial-data"><i class="fa fa-check"></i><b>10.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="10.7.1" data-path="sp.html"><a href="sp.html#fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>10.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="10.7.2" data-path="sp.html"><a href="sp.html#logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>10.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="10.7.3" data-path="sp.html"><a href="sp.html#spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>10.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="10.7.4" data-path="sp.html"><a href="sp.html#spatial-aggregation"><i class="fa fa-check"></i><b>10.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="sp.html"><a href="sp.html#where-to-go-from-here"><i class="fa fa-check"></i><b>10.8</b> Where to go from here</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="shiny.html"><a href="shiny.html"><i class="fa fa-check"></i><b>11</b> Shiny</a><ul>
+<li class="chapter" data-level="11.1" data-path="shiny.html"><a href="shiny.html#running-a-simple-shiny-app"><i class="fa fa-check"></i><b>11.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="11.2" data-path="shiny.html"><a href="shiny.html#adding-user-input"><i class="fa fa-check"></i><b>11.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="11.3" data-path="shiny.html"><a href="shiny.html#adding-output"><i class="fa fa-check"></i><b>11.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="shiny.html"><a href="shiny.html#interactive-server-logic"><i class="fa fa-check"></i><b>11.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="11.3.2" data-path="shiny.html"><a href="shiny.html#interactive-user-interface"><i class="fa fa-check"></i><b>11.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="shiny.html"><a href="shiny.html#more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>11.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="shiny.html"><a href="shiny.html#michigan-campgrounds-ui"><i class="fa fa-check"></i><b>11.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="11.4.2" data-path="shiny.html"><a href="shiny.html#michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>11.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="shiny.html"><a href="shiny.html#adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>11.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="11.6" data-path="shiny.html"><a href="shiny.html#why-use-shiny"><i class="fa fa-check"></i><b>11.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="11.7" data-path="shiny.html"><a href="shiny.html#homework-5"><i class="fa fa-check"></i><b>11.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>12</b> Classification</a><ul>
+<li class="chapter" data-level="12.1" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>12.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="classification.html"><a href="classification.html#adding-predictors"><i class="fa fa-check"></i><b>12.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="12.1.2" data-path="classification.html"><a href="classification.html#more-than-two-classes"><i class="fa fa-check"></i><b>12.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="classification.html"><a href="classification.html#nearest-neighbor-methods"><i class="fa fa-check"></i><b>12.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="classification.html"><a href="classification.html#knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>12.2.1</b> kNN and the Diabetes Data</a></li>
+<li class="chapter" data-level="12.2.2" data-path="classification.html"><a href="classification.html#knn-and-the-iris-data"><i class="fa fa-check"></i><b>12.2.2</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="classification.html"><a href="classification.html#homework-6"><i class="fa fa-check"></i><b>12.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="xml.html"><a href="xml.html"><i class="fa fa-check"></i><b>13</b> Text Data</a><ul>
+<li class="chapter" data-level="13.1" data-path="xml.html"><a href="xml.html#reading-text-data-into-r"><i class="fa fa-check"></i><b>13.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="13.2" data-path="xml.html"><a href="xml.html#the-paste-function"><i class="fa fa-check"></i><b>13.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="13.3" data-path="xml.html"><a href="xml.html#more-string-processing-functions"><i class="fa fa-check"></i><b>13.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="xml.html"><a href="xml.html#tolower-and-toupper"><i class="fa fa-check"></i><b>13.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="13.3.2" data-path="xml.html"><a href="xml.html#nchar-and-strsplit"><i class="fa fa-check"></i><b>13.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="13.3.3" data-path="xml.html"><a href="xml.html#nchar-again"><i class="fa fa-check"></i><b>13.3.3</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="13.3.4" data-path="xml.html"><a href="xml.html#substr-and-strtrim"><i class="fa fa-check"></i><b>13.3.4</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="13.3.5" data-path="xml.html"><a href="xml.html#grep-and-related-functions"><i class="fa fa-check"></i><b>13.3.5</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="xml.html"><a href="xml.html#homework-7"><i class="fa fa-check"></i><b>13.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>14</b> Rcpp</a><ul>
+<li class="chapter" data-level="14.1" data-path="rcpp.html"><a href="rcpp.html#getting-started-with-rcpp"><i class="fa fa-check"></i><b>14.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="rcpp.html"><a href="rcpp.html#installation"><i class="fa fa-check"></i><b>14.1.1</b> Installation</a></li>
+<li class="chapter" data-level="14.1.2" data-path="rcpp.html"><a href="rcpp.html#the-simplest-c-example"><i class="fa fa-check"></i><b>14.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="rcpp.html"><a href="rcpp.html#using-rcpp"><i class="fa fa-check"></i><b>14.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="rcpp.html"><a href="rcpp.html#exporting-c-functions"><i class="fa fa-check"></i><b>14.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="14.2.2" data-path="rcpp.html"><a href="rcpp.html#inline-c-code"><i class="fa fa-check"></i><b>14.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="rcpp.html"><a href="rcpp.html#the-rcpp-interface"><i class="fa fa-check"></i><b>14.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="14.4" data-path="rcpp.html"><a href="rcpp.html#no-input-and-scalar-output"><i class="fa fa-check"></i><b>14.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="rcpp.html"><a href="rcpp.html#scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>14.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="14.4.2" data-path="rcpp.html"><a href="rcpp.html#vector-input-and-scalar-output"><i class="fa fa-check"></i><b>14.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="14.4.3" data-path="rcpp.html"><a href="rcpp.html#vector-input-and-vector-output"><i class="fa fa-check"></i><b>14.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="14.4.4" data-path="rcpp.html"><a href="rcpp.html#matrix-input-and-vector-output"><i class="fa fa-check"></i><b>14.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="14.4.5" data-path="rcpp.html"><a href="rcpp.html#matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>14.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="rcpp.html"><a href="rcpp.html#homework-8"><i class="fa fa-check"></i><b>14.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="databases-and-r.html"><a href="databases-and-r.html"><i class="fa fa-check"></i><b>15</b> Databases and R</a><ul>
+<li class="chapter" data-level="15.1" data-path="databases-and-r.html"><a href="databases-and-r.html#sql-and-database-structure"><i class="fa fa-check"></i><b>15.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="databases-and-r.html"><a href="databases-and-r.html#sql"><i class="fa fa-check"></i><b>15.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="databases-and-r.html"><a href="databases-and-r.html#difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>15.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="15.3" data-path="databases-and-r.html"><a href="databases-and-r.html#using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>15.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="databases-and-r.html"><a href="databases-and-r.html#example-with-rsqlite"><i class="fa fa-check"></i><b>15.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="15.3.2" data-path="databases-and-r.html"><a href="databases-and-r.html#dbplot"><i class="fa fa-check"></i><b>15.3.2</b> <code>dbplot</code></a></li>
+<li class="chapter" data-level="15.3.3" data-path="databases-and-r.html"><a href="databases-and-r.html#using-google-bigquery"><i class="fa fa-check"></i><b>15.3.3</b> Using Google BigQuery</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="databases-and-r.html"><a href="databases-and-r.html#changing-records-in-the-database"><i class="fa fa-check"></i><b>15.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="15.5" data-path="databases-and-r.html"><a href="databases-and-r.html#r-studio-connections-pane"><i class="fa fa-check"></i><b>15.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="15.6" data-path="databases-and-r.html"><a href="databases-and-r.html#other-options"><i class="fa fa-check"></i><b>15.6</b> Other Options</a></li>
+<li class="chapter" data-level="15.7" data-path="databases-and-r.html"><a href="databases-and-r.html#homework-9"><i class="fa fa-check"></i><b>15.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html"><i class="fa fa-check"></i><b>16</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="16.1" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>16.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#sinusoidal-signals"><i class="fa fa-check"></i><b>16.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#noise-and-filters"><i class="fa fa-check"></i><b>16.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="16.3" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>16.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="16.4" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>16.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="16.5" data-path="digial-signal-processing.html"><a href="digial-signal-processing.html#homework-10"><i class="fa fa-check"></i><b>16.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="scatter-plots-1" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Scatter Plots</h1>
+<p>Begin by considering a simple and classic data set sometimes called <em>Fisher’s Iris Data</em>. These data are available in R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(iris)
+<span class="kw">str</span>(iris)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>The data contain measurements on petal and sepal length and width for <code>dim(iris)[1]</code> iris plants. The plants are from one of three species, and the species information is also included in the data frame. The data are commonly used to test classification methods, where the goal would be to correctly determine the species based on the four length and width measurements. To get a preliminary sense of how this might work, we can draw some scatter plots of length versus width. In <code>graphics</code>, making scatter plots is simple:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>We see the <code>plot()</code> function by default creates a basic scatterplot when we supply the function with values for the <code>x</code> and <code>y</code> arguments.</p>
+<p>Looking at the scatter plot and thinking about the focus of finding a method to classify the species, two thoughts come to mind. First, the plot might be improved by shading in the points. And second, using different colors for the points corresponding to the three species would help.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>The <code>pch =</code> argument is used to control the type of symbol used to represent the data points. <code>pch = 19</code> specifies a filled in circle for each data point. You can mess around with different numbers and you’ll see a wide variety of options. The <code>col = iris$Species</code> argument tells the <code>plot()</code> function to assign a different color to each unique value in the the <code>iris$Species</code> vector.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Notice however that there is no legend produced by default, so we don’t know which color represents each species. We can add a legend using the <code>legend()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> iris<span class="op">$</span>Species)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Let’s walk through the additional complexities one at a time:</p>
+<ol style="list-style-type: decimal">
+<li><code>x = 6.4, y = 4.4</code> specifies the location where the legend is drawn. Here I place it in a location where the box will not cover up any data points.</li>
+<li><code>legend = levels(iris$Species)</code> specifies the names of the different categories that will appear in the legend.</li>
+<li><code>col = 1:length(levels(iris$Species))</code> specifies the number of colors that are represented in the function. In this case, we use <code>length(levels(iris$Species))</code> to get the number of unique species in the data set, which turns out to be 3.</li>
+<li><code>pch = 19</code> specifies the type of symbol to include in the legend.</li>
+</ol>
+<p>It may seem like there are a lot of arguments to specify to produce a legend and a simple scatter plot, but this also means we have a lot of control over the graph, which is very useful when you are trying to develop a publication-quality figure for your own work.</p>
+<p>Now perhaps we want to use different shapes as well for the different species. To do this we assign different values for the <code>pch</code> argument to each species, and subsequently change the <code>pch</code> argument in the legend as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>)[iris<span class="op">$</span>Species], <span class="dt">col =</span> iris<span class="op">$</span>Species)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="adding-lines-to-a-scatter-plot-1" class="section level3">
+<h3><span class="header-section-number">7.0.1</span> Adding lines to a scatter plot</h3>
+<p>Next let’s add a fitted least squares line to the scatter plot. This can be done pretty easily using the <code>abline()</code> function to add a straight ine to the curve, and the <code>lm()</code> function to actually compute the least squares line</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>)[iris<span class="op">$</span>Species], <span class="dt">col =</span> iris<span class="op">$</span>Species)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>))
+<span class="kw">abline</span>(<span class="kw">lm</span>(iris<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris<span class="op">$</span>Sepal.Length))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>For the iris data, it probably makes more sense to fit separate lines by species. Below we compute the linear model separately for each species, then use the <code>abline()</code> function to add each line to the graph. Note our use of logical subsetting to obtain separate data frames for each species.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.setosa &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>, ]
+iris.versicolor &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;versicolor&quot;</span>, ]
+iris.virginica &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>, ]
+<span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>)[iris<span class="op">$</span>Species], <span class="dt">col =</span> iris<span class="op">$</span>Species)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>))
+<span class="kw">abline</span>(<span class="kw">lm</span>(iris.setosa<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris.setosa<span class="op">$</span>Sepal.Length), <span class="dt">col =</span> <span class="dv">1</span>)
+<span class="kw">abline</span>(<span class="kw">lm</span>(iris.versicolor<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris.versicolor<span class="op">$</span>Sepal.Length), <span class="dt">col =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="kw">lm</span>(iris.virginica<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>iris.virginica<span class="op">$</span>Sepal.Length), <span class="dt">col =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Note that we could also do this using a <code>for</code> loop, which you will learn about soon in Chapter <a href="functions.html#functions">9</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.setosa &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>, ]
+iris.versicolor &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;versicolor&quot;</span>, ]
+iris.virginica &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>, ]
+<span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>)[iris<span class="op">$</span>Species], <span class="dt">col =</span> iris<span class="op">$</span>Species)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>))
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species))) {
+  curr.species &lt;-<span class="st"> </span>iris[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[i], ]
+  <span class="kw">abline</span>(<span class="kw">lm</span>(curr.species<span class="op">$</span>Sepal.Width <span class="op">~</span><span class="st"> </span>curr.species<span class="op">$</span>Sepal.Length), <span class="dt">col =</span> i)
+}</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Another common use of line segments in a graphic is to connect the points in order. Although it is not clear why this helps in understanding the iris data, the technique is illustrated next. First we connect all lines regardless of species. This is done easily by specifying the argument <code>type = 'b'</code> in the <code>plot()</code> function<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>)[iris<span class="op">$</span>Species], <span class="dt">col =</span> iris<span class="op">$</span>Species, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Now we attempt to only connect the points within a given species. Doing this requires the use of the <code>lines()</code> function to draw three separate lines for each species<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> First we create a plot for the first species, and then subsequently use the <code>lines()</code> function to add each of the remaining two species to the plot. Notice that there are some additional arguments in the original <code>plot()</code> function that we have yet to cover. Don’t worry, we’ll talk about all this fun stuff in the next section :)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>], <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span>], <span class="dt">pch =</span> <span class="dv">17</span>, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">xlim =</span> <span class="kw">range</span>(iris<span class="op">$</span>Sepal.Length), <span class="dt">ylim =</span> <span class="kw">range</span>(iris<span class="op">$</span>Sepal.Width), <span class="dt">xlab =</span> <span class="st">&quot;Sepal Length&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Sepal Width&quot;</span>)
+<span class="kw">lines</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;versicolor&quot;</span>], <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;versicolor&quot;</span>], <span class="dt">pch =</span> <span class="dv">18</span>, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>)
+<span class="kw">lines</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>], <span class="dt">y =</span> iris<span class="op">$</span>Sepal.Width[iris<span class="op">$</span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">3</span>, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>)
+<span class="kw">legend</span>(<span class="dt">x =</span> <span class="fl">6.4</span>, <span class="dt">y =</span> <span class="fl">4.4</span>, <span class="dt">legend =</span> <span class="kw">levels</span>(iris<span class="op">$</span>Species), 
+       <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">levels</span>(iris<span class="op">$</span>Species)), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">19</span>))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="labels-axes-text-etc.-1" class="section level2">
+<h2><span class="header-section-number">7.1</span> Labels, Axes, Text, etc.</h2>
+<p>The default settings of <code>graphics</code> often produce useful graphics, but once a graphic is chosen for dissemination, the user will likely want to customize things like the title, axes, etc. In this section some tools for customization are presented. Most will be illustrated in the context of a data set on crime rates in the 50 states in the United States. These data were made available by Nathan Yau at <a href="http://flowingdata.com/2010/11/23/how-to-make-bubble-charts/" class="uri">http://flowingdata.com/2010/11/23/how-to-make-bubble-charts/</a>. The data include crime rates per 100,000 people for various crimes such as murder and robbery, and also include each state’s population. The crime rates are from the year 2005, while the population numbers are from the year 2008, but the difference in population between the years is not great, and the exact population is not particularly important for what we’ll do below.</p>
+<p>First, read in the data, examine its structure, and produce a simple scatter plot of motor vehicle theft versus burglary.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">u.crime &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/crimeRatesByState2005.csv&quot;</span>
+crime &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.crime, <span class="dt">header=</span><span class="ot">TRUE</span>)
+<span class="kw">str</span>(crime)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  9 variables:
+##  $ state              : Factor w/ 50 levels &quot;Alabama &quot;,&quot;Alaska &quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ murder             : num  8.2 4.8 7.5 6.7 6.9 3.7 2.9 4.4 5 6.2 ...
+##  $ Forcible_rate      : num  34.3 81.1 33.8 42.9 26 43.4 20 44.7 37.1 23.6 ...
+##  $ Robbery            : num  141.4 80.9 144.4 91.1 176.1 ...
+##  $ aggravated_assult  : num  248 465 327 387 317 ...
+##  $ burglary           : num  954 622 948 1085 693 ...
+##  $ larceny_theft      : num  2650 2599 2965 2711 1916 ...
+##  $ motor_vehicle_theft: num  288 391 924 262 713 ...
+##  $ population         : int  4627851 686293 6500180 2855390 36756666 4861515 3501252 873092 18328340 9685744 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div id="labels-1" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Labels</h3>
+<p>By default, axis labels are the values of the <code>x</code> and <code>y</code> values you supply to the <code>plot()</code> function. For making a publication-quality figure, we often want to further customize these labels, as well as potentially add a title to the graph. We can do this using the <code>xlab</code>, <code>ylab</code>, and <code>main</code> arguments in the <code>plot()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">pch =</span> <span class="dv">19</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Burglaries per 100,000 population&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Motor vehicle theft per 100,000 population&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Burglaries vs motor vehicle theft for US states&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Perhaps it may be easier to read the values on the y-axis if they were oritented horizontally instead of vertically. We can do this using the <code>las = 1</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">pch =</span> <span class="dv">19</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Burglaries per 100,000 population&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Motor vehicle theft per 100,000 population&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Burglaries vs motor vehicle theft for US states&quot;</span>, 
+     <span class="dt">las =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+<div id="customizing-axes-1" class="section level2">
+<h2><span class="header-section-number">7.2</span> Customizing Axes</h2>
+<p>The basic <code>plot()</code> function provides defaults for the axis limits, as well as for other axis features (i.e., the box around the plot). These, and other axis features such as tick marks, labels, and transformations, can all be customized. First, we use the <code>xlim</code> and <code>ylim</code> arguments to make the x and y axes start at zero and go to the maxium x and y values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">pch =</span> <span class="dv">19</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Burglaries per 100,000 population&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Motor vehicle theft per 100,000 population&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Burglaries vs motor vehicle theft for US states&quot;</span>, 
+     <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(crime<span class="op">$</span>burglary)), 
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(crime<span class="op">$</span>motor_vehicle_theft)))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Now we eliminate the axes and box automatically drawn by the <code>plot()</code> function, and subsequently add our own axes using the <code>axis()</code> function. We use most of the defaults provided by the <code>axis()</code> function, however, looking at the help page for <code>axis()</code> reveals a large amount of possibilities for customizing the axes in whatever way you desire.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">pch =</span> <span class="dv">19</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Burglaries per 100,000 population&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Motor vehicle theft per 100,000 population&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Burglaries vs motor vehicle theft for US states&quot;</span>, 
+     <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>, 
+     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(crime<span class="op">$</span>burglary)), 
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(crime<span class="op">$</span>motor_vehicle_theft)))
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>)
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">las =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div id="text-point-size-and-color-1" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Text, Point Size, and Color</h3>
+<p>Next we make point size proportional to population, change the color, and add a state label. First we make point size proportional to population size using the <code>symbols()</code> function. We can control the color of the points using the <code>bg</code> argument in the <code>symbols()</code> function. We then use the <code>text()</code> function to add labels to each point.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">symbols</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">pch =</span> <span class="dv">19</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Burglaries per 100,000 population&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Motor vehicle theft per 100,000 population&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Burglaries vs motor vehicle theft for US states&quot;</span>, 
+     <span class="dt">las =</span> <span class="dv">1</span>, 
+     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(crime<span class="op">$</span>burglary)), 
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(crime<span class="op">$</span>motor_vehicle_theft)), 
+     <span class="dt">circles =</span> crime<span class="op">$</span>population, 
+     <span class="dt">inches =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">5</span>, <span class="dt">axes =</span> <span class="ot">FALSE</span>, <span class="dt">bg=</span><span class="st">&quot;steelblue2&quot;</span>)
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>)
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">las =</span> <span class="dv">1</span>)
+<span class="kw">text</span>(crime<span class="op">$</span>burglary, crime<span class="op">$</span>motor_vehicle_theft, <span class="dt">labels=</span>crime<span class="op">$</span>state, <span class="dt">cex=</span><span class="fl">0.9</span>, <span class="dt">font=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>This graph is mind-numbingly busy, and is missing some notable things (i.e. legend). For now, we leave it up to you to add in a legend, make the graph less cluttered, fix the cutoff labels, etc. if you so desire.</p>
+</div>
+</div>
+<div id="other-types-of-graphics-1" class="section level2">
+<h2><span class="header-section-number">7.3</span> Other Types of Graphics</h2>
+<p>Scatter and line plots, which have just been presented, are common but certainly not the only graphical displays in common use. Histograms, boxplots, and bar graphs, as well as more “mathematical” displays such as the graph of a function, are commonly used to represent data. Examples of each are presented below.</p>
+<div id="histograms-1" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Histograms</h3>
+<p>Simon Newcomb conducted several experiments to estimate the speed of light by measuring the time it took for light to travel from his laboratory to a mirror at the base of the Washington Monument, and then back to his lab. This is a distance of <span class="math inline">\(7.44373\)</span> km, and by dividing this distance by the measured time, an estimate for the speed of light is obtained.</p>
+<p>The times are of course quite small, and to avoid working with very small numbers, the data are recoded to be the deviation from <span class="math inline">\(24800\)</span> nanoseconds. For example an observation coded as <span class="math inline">\(28\)</span> represents a time of <span class="math inline">\(24828\)</span> nanoseconds, while an observation coded as <span class="math inline">\(-44\)</span> represents a time of <span class="math inline">\(24756\)</span> nanoseconds.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">u.newcomb &lt;-<span class="st"> &quot;http://blue.for.msu.edu/FOR875/data/Newcomb.csv&quot;</span>
+Newcomb &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.newcomb, <span class="dt">header=</span><span class="ot">TRUE</span>)
+<span class="kw">head</span>(Newcomb)</code></pre></div>
+<pre><code>##   Time
+## 1   28
+## 2   26
+## 3   33
+## 4   24
+## 5   34
+## 6  -44</code></pre>
+<p>To produce a simple histogram of these data in the <code>graphics</code> package, we can use the simple <code>hist()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(Newcomb<span class="op">$</span>Time)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>The function automatically specifies the binwidths for the data, however we can easily change this ourselves to something more suitable using the <code>breaks</code> argument. We also change the axis labels, y-axis label orientation, title, and color of the bins.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(Newcomb<span class="op">$</span>Time, <span class="dt">breaks =</span> <span class="dv">30</span>, <span class="dt">main =</span> <span class="st">&quot;Histogram&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="boxplots-1" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> Boxplots</h3>
+<p>Next we consider some data from the gap minder data set to construct some box plots. These data are available in the <code>gapminder</code> package, which might need to be installed via <code>install.packages(&quot;gapminder&quot;)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)</code></pre></div>
+<pre><code>## Warning: package &#39;gapminder&#39; was built under R version 3.4.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gdpPercap <span class="op">~</span><span class="st"> </span>continent, <span class="dt">data =</span> <span class="kw">subset</span>(gapminder, year <span class="op">==</span><span class="st"> </span><span class="dv">2002</span>), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&#39;lightblue&#39;</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">xlab =</span> <span class="st">&quot;Continent&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;GDP Per-capita&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Here’s the same set of boxplots, but with different colors and the boxes plotted horizontally rather than vertically</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gdpPercap <span class="op">~</span><span class="st"> </span>continent, <span class="dt">data =</span> <span class="kw">subset</span>(gapminder, year <span class="op">==</span><span class="st"> </span><span class="dv">2002</span>), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;lightblue&#39;</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">xlab =</span> <span class="st">&quot;GDP Per-Capita&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Continent&quot;</span>, <span class="dt">horizontal =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>To see the order in which R assigns colors to different values, run the <code>palette()</code> function<a href="scatter-plots-1.html#fnref1">↩</a></p></li>
+<li id="fn2"><p>The “b” stands for “both”. By default, the <code>type</code> argument is set to “p” for “points”. You can also specify that you only want lines using <code>type = 'l'</code>.<a href="scatter-plots-1.html#fnref2">↩</a></p></li>
+<li id="fn3"><p>Note that we could again perhaps simplify this by using a <code>for</code> loop, but we’ll restrain ourselves until we learn about <code>for</code> loops in Chapter <a href="functions.html#functions">9</a>.<a href="scatter-plots-1.html#fnref3">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="graphics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

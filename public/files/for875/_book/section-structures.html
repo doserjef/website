@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Programming for Data Sciences</title>
+  <meta name="description" content="R Programming for Data Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Programming for Data Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Programming for Data Sciences" />
+  
+  
+  
+
+<meta name="author" content="Andrew O. Finley, Vince Melfi, Jeffrey W. Doser">
+
+
+<meta name="date" content="2019-06-05">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-scripts-and-r-markdown.html">
+<link rel="next" href="section-graphics-in-r-part-1-ggplot2.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course Description</a></li>
+<li class="chapter" data-level="1" data-path="section-data.html"><a href="section-data.html"><i class="fa fa-check"></i><b>1</b> Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="section-data.html"><a href="section-data.html#section-baby-crawling-data"><i class="fa fa-check"></i><b>1.1</b> Baby Crawling Data</a></li>
+<li class="chapter" data-level="1.2" data-path="section-data.html"><a href="section-data.html#section-world-bank-data"><i class="fa fa-check"></i><b>1.2</b> World Bank Data</a></li>
+<li class="chapter" data-level="1.3" data-path="section-data.html"><a href="section-data.html#section-email-data"><i class="fa fa-check"></i><b>1.3</b> Email Data</a></li>
+<li class="chapter" data-level="1.4" data-path="section-data.html"><a href="section-data.html#section-handwritten-digit-recognition"><i class="fa fa-check"></i><b>1.4</b> Handwritten Digit Recognition</a></li>
+<li class="chapter" data-level="1.5" data-path="section-data.html"><a href="section-data.html#section-looking-forward"><i class="fa fa-check"></i><b>1.5</b> Looking Forward</a></li>
+<li class="chapter" data-level="1.6" data-path="section-data.html"><a href="section-data.html#section-how-to-learn-the-most-important-section-in-this-book"><i class="fa fa-check"></i><b>1.6</b> How to learn (The most important section in this book!)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a><ul>
+<li class="chapter" data-level="2.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-r"><i class="fa fa-check"></i><b>2.1</b> Obtaining and Installing R</a></li>
+<li class="chapter" data-level="2.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
+<li class="chapter" data-level="2.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-practice-exercise"><i class="fa fa-check"></i><b>2.3.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
+<li class="chapter" data-level="2.5" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
+<li class="chapter" data-level="2.6" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-quality-of-r-code"><i class="fa fa-check"></i><b>2.6</b> Quality of R code</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-files"><i class="fa fa-check"></i><b>2.6.1</b> Naming Files</a></li>
+<li class="chapter" data-level="2.6.2" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-naming-variables"><i class="fa fa-check"></i><b>2.6.2</b> Naming Variables</a></li>
+<li class="chapter" data-level="2.6.3" data-path="section-introduction-to-r-and-rstudio.html"><a href="section-introduction-to-r-and-rstudio.html#section-syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Scripts and R Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-scripts-in-r"><i class="fa fa-check"></i><b>3.1</b> Scripts in R</a></li>
+<li class="chapter" data-level="3.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-r-markdown"><i class="fa fa-check"></i><b>3.2</b> R Markdown</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-creating-and-processing-r-markdown-documents"><i class="fa fa-check"></i><b>3.2.1</b> Creating and processing R Markdown documents</a></li>
+<li class="chapter" data-level="3.2.2" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-text-lists-and-headers"><i class="fa fa-check"></i><b>3.2.2</b> Text: Lists and Headers</a></li>
+<li class="chapter" data-level="3.2.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-code-chunks"><i class="fa fa-check"></i><b>3.2.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="3.2.4" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-output-formats-other-than-html"><i class="fa fa-check"></i><b>3.2.4</b> Output formats other than HTML</a></li>
+<li class="chapter" data-level="3.2.5" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-latex-knitr-and-bookdown"><i class="fa fa-check"></i><b>3.2.5</b> LaTeX, <code>knitr</code>, and <code>bookdown</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="section-scripts-and-r-markdown.html"><a href="section-scripts-and-r-markdown.html#section-homework"><i class="fa fa-check"></i><b>3.3</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-structures.html"><a href="section-structures.html"><i class="fa fa-check"></i><b>4</b> Data Structures</a><ul>
+<li class="chapter" data-level="4.1" data-path="section-structures.html"><a href="section-structures.html#section-vector"><i class="fa fa-check"></i><b>4.1</b> Vectors</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="section-structures.html"><a href="section-structures.html#section-types-conversion-coercion"><i class="fa fa-check"></i><b>4.1.1</b> Types, Conversion, Coercion</a></li>
+<li class="chapter" data-level="4.1.2" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-vectors"><i class="fa fa-check"></i><b>4.1.2</b> Accessing Specific Elements of Vectors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-1"><i class="fa fa-check"></i><b>4.2</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.3" data-path="section-structures.html"><a href="section-structures.html#section-factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="section-structures.html"><a href="section-structures.html#section-names-of-objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Names of Objects in R</a></li>
+<li class="chapter" data-level="4.5" data-path="section-structures.html"><a href="section-structures.html#section-missing-data-infinity-etc."><i class="fa fa-check"></i><b>4.5</b> Missing Data, Infinity, etc.</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-2"><i class="fa fa-check"></i><b>4.5.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="4.5.2" data-path="section-structures.html"><a href="section-structures.html#section-infinity-and-nan"><i class="fa fa-check"></i><b>4.5.2</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="section-structures.html"><a href="section-structures.html#section-dataFrames"><i class="fa fa-check"></i><b>4.6</b> Data Frames</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-data-frames"><i class="fa fa-check"></i><b>4.6.1</b> Accessing Specific Elements of Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="section-structures.html"><a href="section-structures.html#section-lists"><i class="fa fa-check"></i><b>4.7</b> Lists</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="section-structures.html"><a href="section-structures.html#section-accessing-specific-elements-of-lists"><i class="fa fa-check"></i><b>4.7.1</b> Accessing Specific Elements of Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="section-structures.html"><a href="section-structures.html#section-subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with Logical Vectors</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="section-structures.html"><a href="section-structures.html#section-modifying-or-creating-objects-via-subsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying or Creating Objects via Subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="section-structures.html"><a href="section-structures.html#section-logical-subsetting-and-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Logical Subsetting and Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="section-structures.html"><a href="section-structures.html#section-patterned-data"><i class="fa fa-check"></i><b>4.9</b> Patterned Data</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="section-structures.html"><a href="section-structures.html#section-practice-exercise-3"><i class="fa fa-check"></i><b>4.9.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="section-structures.html"><a href="section-structures.html#section-homework-1"><i class="fa fa-check"></i><b>4.10</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Graphics in R Part 1: <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-scatter-plots"><i class="fa fa-check"></i><b>5.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-structure-of-a-typical-ggplot"><i class="fa fa-check"></i><b>5.1.1</b> Structure of a Typical <code>ggplot</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-adding-lines-to-a-scatter-plot"><i class="fa fa-check"></i><b>5.1.2</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels-axes-text-etc."><i class="fa fa-check"></i><b>5.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-labels"><i class="fa fa-check"></i><b>5.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-customizing-axes"><i class="fa fa-check"></i><b>5.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-text-point-size-and-color"><i class="fa fa-check"></i><b>5.3.1</b> Text, Point Size, and Color</a></li>
+<li class="chapter" data-level="5.3.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-4"><i class="fa fa-check"></i><b>5.3.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-other-types-of-graphics"><i class="fa fa-check"></i><b>5.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-histograms"><i class="fa fa-check"></i><b>5.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="5.4.2" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-boxplots"><i class="fa fa-check"></i><b>5.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="5.4.3" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-bar-graphs"><i class="fa fa-check"></i><b>5.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="5.4.4" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-graphs-of-functions"><i class="fa fa-check"></i><b>5.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-themes"><i class="fa fa-check"></i><b>5.5</b> Themes</a></li>
+<li class="chapter" data-level="5.6" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-saving-graphics"><i class="fa fa-check"></i><b>5.6</b> Saving Graphics</a></li>
+<li class="chapter" data-level="5.7" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-more-resources"><i class="fa fa-check"></i><b>5.7</b> More Resources</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-practice-exercise-5"><i class="fa fa-check"></i><b>5.7.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="section-graphics-in-r-part-1-ggplot2.html"><a href="section-graphics-in-r-part-1-ggplot2.html#section-homework-2"><i class="fa fa-check"></i><b>5.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="section-graphics.html"><a href="section-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics in R Part 2: <code>graphics</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-scatter-plots-1"><i class="fa fa-check"></i><b>6.1</b> Scatter Plots</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="section-graphics.html"><a href="section-graphics.html#section-adding-lines-to-a-scatter-plot-1"><i class="fa fa-check"></i><b>6.1.1</b> Adding lines to a scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-axes-text-etc.-1"><i class="fa fa-check"></i><b>6.2</b> Labels, Axes, Text, etc.</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="section-graphics.html"><a href="section-graphics.html#section-labels-1"><i class="fa fa-check"></i><b>6.2.1</b> Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="section-graphics.html"><a href="section-graphics.html#section-customizing-axes-1"><i class="fa fa-check"></i><b>6.3</b> Customizing Axes</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="section-graphics.html"><a href="section-graphics.html#section-text-point-size-and-color-1"><i class="fa fa-check"></i><b>6.3.1</b> Text, Point Size, and Color</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="section-graphics.html"><a href="section-graphics.html#section-other-types-of-graphics-1"><i class="fa fa-check"></i><b>6.4</b> Other Types of Graphics</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="section-graphics.html"><a href="section-graphics.html#section-histograms-1"><i class="fa fa-check"></i><b>6.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="6.4.2" data-path="section-graphics.html"><a href="section-graphics.html#section-boxplots-1"><i class="fa fa-check"></i><b>6.4.2</b> Boxplots</a></li>
+<li class="chapter" data-level="6.4.3" data-path="section-graphics.html"><a href="section-graphics.html#section-bar-graphs-1"><i class="fa fa-check"></i><b>6.4.3</b> Bar Graphs</a></li>
+<li class="chapter" data-level="6.4.4" data-path="section-graphics.html"><a href="section-graphics.html#section-graphs-of-functions-1"><i class="fa fa-check"></i><b>6.4.4</b> Graphs of Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="section-graphics.html"><a href="section-graphics.html#section-saving-graphics-1"><i class="fa fa-check"></i><b>6.5</b> Saving Graphics</a></li>
+<li class="chapter" data-level="6.6" data-path="section-graphics.html"><a href="section-graphics.html#section-a-summary-of-useful-graphics-functions-and-arguments"><i class="fa fa-check"></i><b>6.6</b> A Summary of Useful <code>graphics</code> Functions and Arguments</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="section-graphics.html"><a href="section-graphics.html#section-practice-exercise-6"><i class="fa fa-check"></i><b>6.6.1</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="section-graphics.html"><a href="section-graphics.html#section-homework-3"><i class="fa fa-check"></i><b>6.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="section-data2.html"><a href="section-data2.html"><i class="fa fa-check"></i><b>7</b> Working with Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-into-r"><i class="fa fa-check"></i><b>7.1</b> Reading Data into R</a></li>
+<li class="chapter" data-level="7.2" data-path="section-data2.html"><a href="section-data2.html#section-reading-data-with-missing-observations"><i class="fa fa-check"></i><b>7.2</b> Reading Data with Missing Observations</a></li>
+<li class="chapter" data-level="7.3" data-path="section-data2.html"><a href="section-data2.html#section-summarizing-data-frames"><i class="fa fa-check"></i><b>7.3</b> Summarizing Data Frames</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="section-data2.html"><a href="section-data2.html#section-column-and-row-summaries"><i class="fa fa-check"></i><b>7.3.1</b> Column (and Row) Summaries</a></li>
+<li class="chapter" data-level="7.3.2" data-path="section-data2.html"><a href="section-data2.html#section-apply"><i class="fa fa-check"></i><b>7.3.2</b> The <code>apply()</code> Function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercises"><i class="fa fa-check"></i><b>7.3.3</b> Practice Exercises</a></li>
+<li class="chapter" data-level="7.3.4" data-path="section-data2.html"><a href="section-data2.html#section-saving-typing-using-with"><i class="fa fa-check"></i><b>7.3.4</b> Saving Typing Using <code>with()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-a-data-frame"><i class="fa fa-check"></i><b>7.4</b> Transforming a Data Frame</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="section-data2.html"><a href="section-data2.html#section-adding-variables"><i class="fa fa-check"></i><b>7.4.1</b> Adding Variables</a></li>
+<li class="chapter" data-level="7.4.2" data-path="section-data2.html"><a href="section-data2.html#section-removing-variables"><i class="fa fa-check"></i><b>7.4.2</b> Removing Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-7"><i class="fa fa-check"></i><b>7.4.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.4.4" data-path="section-data2.html"><a href="section-data2.html#section-transforming-variables"><i class="fa fa-check"></i><b>7.4.4</b> Transforming Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="section-data2.html"><a href="section-data2.html#section-rearranging-variables"><i class="fa fa-check"></i><b>7.5</b> Rearranging Variables</a></li>
+<li class="chapter" data-level="7.6" data-path="section-data2.html"><a href="section-data2.html#section-reshaping-data"><i class="fa fa-check"></i><b>7.6</b> Reshaping Data</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="section-data2.html"><a href="section-data2.html#section-tidyr"><i class="fa fa-check"></i><b>7.6.1</b> <code>tidyr</code></a></li>
+<li class="chapter" data-level="7.6.2" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-8"><i class="fa fa-check"></i><b>7.6.2</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="section-data2.html"><a href="section-data2.html#section-dplyr"><i class="fa fa-check"></i><b>7.7</b> Manipulating Data with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.7.1" data-path="section-data2.html"><a href="section-data2.html#section-improved-data-frames"><i class="fa fa-check"></i><b>7.7.1</b> Improved Data Frames</a></li>
+<li class="chapter" data-level="7.7.2" data-path="section-data2.html"><a href="section-data2.html#section-filtering-data-by-row"><i class="fa fa-check"></i><b>7.7.2</b> Filtering Data by Row</a></li>
+<li class="chapter" data-level="7.7.3" data-path="section-data2.html"><a href="section-data2.html#section-selecting-variables-by-column"><i class="fa fa-check"></i><b>7.7.3</b> Selecting variables by column</a></li>
+<li class="chapter" data-level="7.7.4" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-9"><i class="fa fa-check"></i><b>7.7.4</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.5" data-path="section-data2.html"><a href="section-data2.html#section-pipes"><i class="fa fa-check"></i><b>7.7.5</b> Pipes</a></li>
+<li class="chapter" data-level="7.7.6" data-path="section-data2.html"><a href="section-data2.html#section-arranging-data-by-row"><i class="fa fa-check"></i><b>7.7.6</b> Arranging Data by Row</a></li>
+<li class="chapter" data-level="7.7.7" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-10"><i class="fa fa-check"></i><b>7.7.7</b> Practice Exercise</a></li>
+<li class="chapter" data-level="7.7.8" data-path="section-data2.html"><a href="section-data2.html#section-renaming-variables"><i class="fa fa-check"></i><b>7.7.8</b> Renaming Variables</a></li>
+<li class="chapter" data-level="7.7.9" data-path="section-data2.html"><a href="section-data2.html#section-data-summaries-and-grouping"><i class="fa fa-check"></i><b>7.7.9</b> Data Summaries and Grouping</a></li>
+<li class="chapter" data-level="7.7.10" data-path="section-data2.html"><a href="section-data2.html#section-creating-new-variables"><i class="fa fa-check"></i><b>7.7.10</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.7.11" data-path="section-data2.html"><a href="section-data2.html#section-practice-exercise-11"><i class="fa fa-check"></i><b>7.7.11</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="section-data2.html"><a href="section-data2.html#section-homework-4"><i class="fa fa-check"></i><b>7.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section-functions.html"><a href="section-functions.html"><i class="fa fa-check"></i><b>8</b> Functions and Programming</a><ul>
+<li class="chapter" data-level="8.1" data-path="section-functions.html"><a href="section-functions.html#section-r-functions"><i class="fa fa-check"></i><b>8.1</b> R Functions</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-12"><i class="fa fa-check"></i><b>8.1.1</b> Practice Exercise</a></li>
+<li class="chapter" data-level="8.1.2" data-path="section-functions.html"><a href="section-functions.html#section-creating-functions"><i class="fa fa-check"></i><b>8.1.2</b> Creating Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="section-functions.html"><a href="section-functions.html#section-programming-conditional-statements"><i class="fa fa-check"></i><b>8.2</b> Programming: Conditional Statements</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="section-functions.html"><a href="section-functions.html#section-comparison-and-logical-operators"><i class="fa fa-check"></i><b>8.2.1</b> Comparison and Logical Operators</a></li>
+<li class="chapter" data-level="8.2.2" data-path="section-functions.html"><a href="section-functions.html#section-if-else-statements"><i class="fa fa-check"></i><b>8.2.2</b> If else statements</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="section-functions.html"><a href="section-functions.html#section-arith"><i class="fa fa-check"></i><b>8.3</b> Computer Arithmetic</a></li>
+<li class="chapter" data-level="8.4" data-path="section-functions.html"><a href="section-functions.html#section-loops"><i class="fa fa-check"></i><b>8.4</b> Loops</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="section-functions.html"><a href="section-functions.html#section-a-repeat-loop"><i class="fa fa-check"></i><b>8.4.1</b> A Repeat Loop</a></li>
+<li class="chapter" data-level="8.4.2" data-path="section-functions.html"><a href="section-functions.html#section-a-while-loop"><i class="fa fa-check"></i><b>8.4.2</b> A While Loop</a></li>
+<li class="chapter" data-level="8.4.3" data-path="section-functions.html"><a href="section-functions.html#section-a-for-loop"><i class="fa fa-check"></i><b>8.4.3</b> A For Loop</a></li>
+<li class="chapter" data-level="8.4.4" data-path="section-functions.html"><a href="section-functions.html#section-practice-exercise-13"><i class="fa fa-check"></i><b>8.4.4</b> Practice Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="section-functions.html"><a href="section-functions.html#section-efficiency-considerations"><i class="fa fa-check"></i><b>8.5</b> Efficiency Considerations</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="section-functions.html"><a href="section-functions.html#section-growing-objects"><i class="fa fa-check"></i><b>8.5.1</b> Growing Objects</a></li>
+<li class="chapter" data-level="8.5.2" data-path="section-functions.html"><a href="section-functions.html#section-vectorization"><i class="fa fa-check"></i><b>8.5.2</b> Vectorization</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="section-functions.html"><a href="section-functions.html#section-more-on-functions"><i class="fa fa-check"></i><b>8.6</b> More on Functions</a></li>
+<li class="chapter" data-level="8.7" data-path="section-functions.html"><a href="section-functions.html#section-calling-functions"><i class="fa fa-check"></i><b>8.7</b> Calling Functions</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="section-functions.html"><a href="section-functions.html#section-the-...-argument"><i class="fa fa-check"></i><b>8.7.1</b> The <code>...</code> argument</a></li>
+<li class="chapter" data-level="8.7.2" data-path="section-functions.html"><a href="section-functions.html#section-lazy-evaluation"><i class="fa fa-check"></i><b>8.7.2</b> Lazy Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="section-functions.html"><a href="section-functions.html#section-homework-5"><i class="fa fa-check"></i><b>8.8</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="section-sp.html"><a href="section-sp.html"><i class="fa fa-check"></i><b>9</b> Spatial Data Visualization and Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="section-sp.html"><a href="section-sp.html#section-overview"><i class="fa fa-check"></i><b>9.1</b> Overview</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="section-sp.html"><a href="section-sp.html#section-some-spatial-data-packages"><i class="fa fa-check"></i><b>9.1.1</b> Some Spatial Data Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="section-sp.html"><a href="section-sp.html#section-motivating-data"><i class="fa fa-check"></i><b>9.2</b> Motivating Data</a></li>
+<li class="chapter" data-level="9.3" data-path="section-sp.html"><a href="section-sp.html#section-reading-spatial-data-into-r"><i class="fa fa-check"></i><b>9.3</b> Reading Spatial Data into R</a></li>
+<li class="chapter" data-level="9.4" data-path="section-sp.html"><a href="section-sp.html#section-coordinate-reference-systems"><i class="fa fa-check"></i><b>9.4</b> Coordinate Reference Systems</a></li>
+<li class="chapter" data-level="9.5" data-path="section-sp.html"><a href="section-sp.html#section-ggmap"><i class="fa fa-check"></i><b>9.5</b> Illustration using <code>ggmap</code></a></li>
+<li class="chapter" data-level="9.6" data-path="section-sp.html"><a href="section-sp.html#section-illustration-using-leaflet"><i class="fa fa-check"></i><b>9.6</b> Illustration using <code>leaflet</code></a></li>
+<li class="chapter" data-level="9.7" data-path="section-sp.html"><a href="section-sp.html#section-subsetting-spatial-data"><i class="fa fa-check"></i><b>9.7</b> Subsetting Spatial Data</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="section-sp.html"><a href="section-sp.html#section-fetching-and-cropping-data-using-raster"><i class="fa fa-check"></i><b>9.7.1</b> Fetching and Cropping Data using <code>raster</code></a></li>
+<li class="chapter" data-level="9.7.2" data-path="section-sp.html"><a href="section-sp.html#section-logical-index-and-name-subsetting"><i class="fa fa-check"></i><b>9.7.2</b> Logical, Index, and Name Subsetting</a></li>
+<li class="chapter" data-level="9.7.3" data-path="section-sp.html"><a href="section-sp.html#section-spatial-subsetting-and-overlay"><i class="fa fa-check"></i><b>9.7.3</b> Spatial Subsetting and Overlay</a></li>
+<li class="chapter" data-level="9.7.4" data-path="section-sp.html"><a href="section-sp.html#section-spatial-aggregation"><i class="fa fa-check"></i><b>9.7.4</b> Spatial Aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="section-sp.html"><a href="section-sp.html#section-where-to-go-from-here"><i class="fa fa-check"></i><b>9.8</b> Where to go from here</a></li>
+<li class="chapter" data-level="9.9" data-path="section-sp.html"><a href="section-sp.html#section-homework-6"><i class="fa fa-check"></i><b>9.9</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html"><i class="fa fa-check"></i><b>10</b> Shiny: Interactive Web Apps in R</a><ul>
+<li class="chapter" data-level="10.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-running-a-simple-shiny-app"><i class="fa fa-check"></i><b>10.1</b> Running a Simple Shiny App</a></li>
+<li class="chapter" data-level="10.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-user-input"><i class="fa fa-check"></i><b>10.2</b> Adding User Input</a></li>
+<li class="chapter" data-level="10.3" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-output"><i class="fa fa-check"></i><b>10.3</b> Adding Output</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-server-logic"><i class="fa fa-check"></i><b>10.3.1</b> Interactive Server Logic</a></li>
+<li class="chapter" data-level="10.3.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-interactive-user-interface"><i class="fa fa-check"></i><b>10.3.2</b> Interactive User Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-more-advanced-shiny-app-michigan-campgrounds"><i class="fa fa-check"></i><b>10.4</b> More Advanced Shiny App: Michigan Campgrounds</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-ui"><i class="fa fa-check"></i><b>10.4.1</b> Michigan Campgrounds UI</a></li>
+<li class="chapter" data-level="10.4.2" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-michigan-campgrounds-server-logic"><i class="fa fa-check"></i><b>10.4.2</b> Michigan Campgrounds Server Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-adding-leaflet-to-shiny"><i class="fa fa-check"></i><b>10.5</b> Adding Leaflet to Shiny</a></li>
+<li class="chapter" data-level="10.6" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-why-use-shiny"><i class="fa fa-check"></i><b>10.6</b> Why use Shiny?</a></li>
+<li class="chapter" data-level="10.7" data-path="section-shiny-interactive-web-apps-in-r.html"><a href="section-shiny-interactive-web-apps-in-r.html#section-homework-7"><i class="fa fa-check"></i><b>10.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="section-classification.html"><a href="section-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="section-classification.html"><a href="section-classification.html#section-logistic-regression"><i class="fa fa-check"></i><b>11.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="section-classification.html"><a href="section-classification.html#section-adding-predictors"><i class="fa fa-check"></i><b>11.1.1</b> Adding Predictors</a></li>
+<li class="chapter" data-level="11.1.2" data-path="section-classification.html"><a href="section-classification.html#section-more-than-two-classes"><i class="fa fa-check"></i><b>11.1.2</b> More than Two Classes</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="section-classification.html"><a href="section-classification.html#section-nearest-neighbor-methods"><i class="fa fa-check"></i><b>11.2</b> Nearest Neighbor Methods</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-diabetes-data"><i class="fa fa-check"></i><b>11.2.1</b> kNN and the Diabetes Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="section-classification.html"><a href="section-classification.html#section-practice-exercise-14"><i class="fa fa-check"></i><b>11.3</b> Practice Exercise</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="section-classification.html"><a href="section-classification.html#section-knn-and-the-iris-data"><i class="fa fa-check"></i><b>11.3.1</b> kNN and the iris Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="section-classification.html"><a href="section-classification.html#section-homework-8"><i class="fa fa-check"></i><b>11.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="section-xml.html"><a href="section-xml.html"><i class="fa fa-check"></i><b>12</b> Text Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="section-xml.html"><a href="section-xml.html#section-reading-text-data-into-r"><i class="fa fa-check"></i><b>12.1</b> Reading Text Data into R</a></li>
+<li class="chapter" data-level="12.2" data-path="section-xml.html"><a href="section-xml.html#section-the-paste-function"><i class="fa fa-check"></i><b>12.2</b> The <code>paste</code> Function</a></li>
+<li class="chapter" data-level="12.3" data-path="section-xml.html"><a href="section-xml.html#section-more-string-processing-functions"><i class="fa fa-check"></i><b>12.3</b> More String Processing Functions</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="section-xml.html"><a href="section-xml.html#section-tolower-and-toupper"><i class="fa fa-check"></i><b>12.3.1</b> <code>tolower</code> and <code>toupper</code></a></li>
+<li class="chapter" data-level="12.3.2" data-path="section-xml.html"><a href="section-xml.html#section-nchar-and-strsplit"><i class="fa fa-check"></i><b>12.3.2</b> <code>nchar</code> and <code>strsplit</code></a></li>
+<li class="chapter" data-level="12.3.3" data-path="section-xml.html"><a href="section-xml.html#section-practice-exercise-15"><i class="fa fa-check"></i><b>12.3.3</b> Practice Exercise</a></li>
+<li class="chapter" data-level="12.3.4" data-path="section-xml.html"><a href="section-xml.html#section-nchar-again"><i class="fa fa-check"></i><b>12.3.4</b> <code>nchar</code> Again</a></li>
+<li class="chapter" data-level="12.3.5" data-path="section-xml.html"><a href="section-xml.html#section-substr-and-strtrim"><i class="fa fa-check"></i><b>12.3.5</b> <code>substr</code> and <code>strtrim</code></a></li>
+<li class="chapter" data-level="12.3.6" data-path="section-xml.html"><a href="section-xml.html#section-grep-and-related-functions"><i class="fa fa-check"></i><b>12.3.6</b> <code>grep</code> and Related Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="section-xml.html"><a href="section-xml.html#section-homework-9"><i class="fa fa-check"></i><b>12.4</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="section-rcpp.html"><a href="section-rcpp.html"><i class="fa fa-check"></i><b>13</b> Rcpp</a><ul>
+<li class="chapter" data-level="13.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-getting-started-with-rcpp"><i class="fa fa-check"></i><b>13.1</b> Getting Started with Rcpp</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-installation"><i class="fa fa-check"></i><b>13.1.1</b> Installation</a></li>
+<li class="chapter" data-level="13.1.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-simplest-c-example"><i class="fa fa-check"></i><b>13.1.2</b> The Simplest C++ Example</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-using-rcpp"><i class="fa fa-check"></i><b>13.2</b> Using Rcpp</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-exporting-c-functions"><i class="fa fa-check"></i><b>13.2.1</b> Exporting C++ Functions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-inline-c-code"><i class="fa fa-check"></i><b>13.2.2</b> Inline C++ Code</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-the-rcpp-interface"><i class="fa fa-check"></i><b>13.3</b> The Rcpp Interface</a></li>
+<li class="chapter" data-level="13.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-no-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4</b> No input and scalar output</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="section-rcpp.html"><a href="section-rcpp.html#section-scalar-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.1</b> Scalar input and scalar output</a></li>
+<li class="chapter" data-level="13.4.2" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-scalar-output"><i class="fa fa-check"></i><b>13.4.2</b> Vector input and scalar output</a></li>
+<li class="chapter" data-level="13.4.3" data-path="section-rcpp.html"><a href="section-rcpp.html#section-vector-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.3</b> Vector input and vector output</a></li>
+<li class="chapter" data-level="13.4.4" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-vector-output"><i class="fa fa-check"></i><b>13.4.4</b> Matrix input and vector output</a></li>
+<li class="chapter" data-level="13.4.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-matrix-input-and-matrix-output"><i class="fa fa-check"></i><b>13.4.5</b> Matrix input and matrix output</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="section-rcpp.html"><a href="section-rcpp.html#section-homework-10"><i class="fa fa-check"></i><b>13.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html"><i class="fa fa-check"></i><b>14</b> Databases and R</a><ul>
+<li class="chapter" data-level="14.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql-and-database-structure"><i class="fa fa-check"></i><b>14.1</b> SQL and Database Structure</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-sql"><i class="fa fa-check"></i><b>14.1.1</b> SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-difficulties-of-working-with-large-datasets"><i class="fa fa-check"></i><b>14.2</b> Difficulties of Working with Large Datasets</a></li>
+<li class="chapter" data-level="14.3" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-using-dplyr-to-query-the-database"><i class="fa fa-check"></i><b>14.3</b> Using <code>dplyr</code> to Query the Database</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-example-with-rsqlite"><i class="fa fa-check"></i><b>14.3.1</b> Example with RSQLite</a></li>
+<li class="chapter" data-level="14.3.2" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-dbplot"><i class="fa fa-check"></i><b>14.3.2</b> <code>dbplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-changing-records-in-the-database"><i class="fa fa-check"></i><b>14.4</b> Changing Records in the Database</a></li>
+<li class="chapter" data-level="14.5" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-r-studio-connections-pane"><i class="fa fa-check"></i><b>14.5</b> R Studio Connections Pane</a></li>
+<li class="chapter" data-level="14.6" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-other-options"><i class="fa fa-check"></i><b>14.6</b> Other Options</a></li>
+<li class="chapter" data-level="14.7" data-path="section-databases-and-r.html"><a href="section-databases-and-r.html#section-homework-11"><i class="fa fa-check"></i><b>14.7</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html"><i class="fa fa-check"></i><b>15</b> Digial Signal Processing</a><ul>
+<li class="chapter" data-level="15.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-introduction-to-digital-signal-processing"><i class="fa fa-check"></i><b>15.1</b> Introduction to Digital Signal Processing</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-sinusoidal-signals"><i class="fa fa-check"></i><b>15.1.1</b> Sinusoidal Signals</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-noise-and-filters"><i class="fa fa-check"></i><b>15.2</b> Noise and Filters</a></li>
+<li class="chapter" data-level="15.3" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-fourier-transforms-and-spectrograms"><i class="fa fa-check"></i><b>15.3</b> Fourier Transforms and Spectrograms</a></li>
+<li class="chapter" data-level="15.4" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-analyzing-audio-data-with-warbler"><i class="fa fa-check"></i><b>15.4</b> Analyzing Audio Data with <code>warbleR</code></a></li>
+<li class="chapter" data-level="15.5" data-path="section-digial-signal-processing.html"><a href="section-digial-signal-processing.html#section-homework-12"><i class="fa fa-check"></i><b>15.5</b> Homework</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="section-references.html"><a href="section-references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming for Data Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section-structures" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Data Structures</h1>
+<p>A data structure is a format for organizing and storing data. The structure is designed so that data can be accessed and worked with in specific ways. Statistical software and programming languages have methods (or functions) designed to operate on different kinds of data structures.</p>
+<p>This chapter’s focus is on data structures. To help initial understanding, the data in this chapter will be relatively modest in size and complexity. The ideas and methods, however, generalize to larger and more complex data sets.</p>
+<p>The base data structures in R are vectors, matrices, arrays, data frames, and lists. The first three, vectors, matrices, and arrays, require all elements to be of the same type or homogeneous, e.g., all numeric or all character. Data frames and lists allow elements to be of different types or heterogeneous, e.g., some elements of a data frame may be numeric while other elements may be character. These base structures can also be organized by their dimensionality, i.e., 1-dimensional, 2-dimensional, or N-dimensional, as shown in Table <a href="section-structures.html#tab:dataStructures">4.1</a>.</p>
+<table>
+<caption><span id="tab:dataStructures">TABLE 4.1: </span>Dimension and type content of base data structures in R</caption>
+<thead>
+<tr class="header">
+<th align="left">Dimension</th>
+<th align="left">Homogeneous</th>
+<th align="left">Heterogeneous</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Atomic vector</td>
+<td align="left">List</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">Matrix</td>
+<td align="left">Data frame</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">Array</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>R has no scalar types, i.e., 0-dimensional. Individual numbers or strings are actually vectors of length one.</p>
+<p>An efficient way to understand what comprises a given object is to use the <code>str()</code> function. <code>str()</code> is short for structure and prints a compact, human-readable description of any R data structure. For example, in the code below, we prove to ourselves that what we might think of as a scalar value is actually a vector of length one.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span><span class="dv">1</span>
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(a)</code></pre></div>
+<pre><code> num 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.vector</span>(a)</code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(a)</code></pre></div>
+<pre><code>[1] 1</code></pre>
+<p>Here we assigned <code>a</code> the scalar value one. The <code>str(a)</code> prints <code>num 1</code>, which says <code>a</code> is numeric of length one. Then just to be sure we used the function <code>is.vector()</code> to test if <code>a</code> is in fact a vector. Then, just for fun, we asked the length of <code>a</code>, which again returns one. There are a set of similar logical tests for the other base data structures, e.g., <code>is.matrix()</code>, <code>is.array()</code>, <code>is.data.frame()</code>, and <code>is.list()</code>. These will all come in handy as we encounter different R objects.</p>
+<div id="section-vector" class="section level2">
+<h2><span class="header-section-number">4.1</span> Vectors</h2>
+<p>Think of a vector<a href="section-references.html#section-fn21" class="footnoteRef" id="section-fnref21"><sup>21</sup></a> as a structure to represent one variable in a data set. For example a vector might hold the weights, in pounds, of 7 people in a data set. Or another vector might hold the genders of those 7 people. The <code>c()</code> function in R is useful for creating (small) vectors and for modifying existing vectors. Think of <code>c</code> as standing for “combine”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">123</span>, <span class="dv">157</span>, <span class="dv">205</span>, <span class="dv">199</span>, <span class="dv">223</span>, <span class="dv">140</span>, <span class="dv">105</span>)
+<span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 205 199 223 140 105</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gender &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>, 
+<span class="op">+</span><span class="st">             &quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>gender</code></pre></div>
+<pre><code>[1] &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;male&quot;  
+[6] &quot;male&quot;   &quot;female&quot;</code></pre>
+<p>Notice that elements of a vector are separated by commas when using the <code>c()</code> function to create a vector. Also notice that character values are placed inside quotation marks.</p>
+<p>The <code>c()</code> function also can be used to add to an existing vector. For example, if an eighth male person was included in the data set, and his weight was 194 pounds, the existing vectors could be modified as follows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight &lt;-<span class="st"> </span><span class="kw">c</span>(weight, <span class="dv">194</span>)
+<span class="op">&gt;</span><span class="st"> </span>gender &lt;-<span class="st"> </span><span class="kw">c</span>(gender, <span class="st">&quot;male&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gender</code></pre></div>
+<pre><code>[1] &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;male&quot;  
+[6] &quot;male&quot;   &quot;female&quot; &quot;male&quot;  </code></pre>
+<div id="section-types-conversion-coercion" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Types, Conversion, Coercion</h3>
+<p>Clearly it is important to distinguish between different types of vectors. For example, it makes sense to ask R to calculate the mean of the weights stored in <code>weight</code>, but does not make sense to ask R to compute the mean of the genders stored in <code>gender</code>. Vectors in R may have one of six different “types”: character, double, integer, logical, complex, and raw. Only the first four of these will be of interest below, and the distinction between double and integer will not be of great import. To illustrate logical vectors, imagine that each of the eight people in the data set was asked whether he or she was taking blood pressure medication, and the responses were coded as <code>TRUE</code> if the person answered yes, and <code>FALSE</code> if the person answered no.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(weight)</code></pre></div>
+<pre><code>[1] &quot;double&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(gender)</code></pre></div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>bp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)
+<span class="op">&gt;</span><span class="st"> </span>bp</code></pre></div>
+<pre><code>[1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(bp)</code></pre></div>
+<pre><code>[1] &quot;logical&quot;</code></pre>
+<p>It may be surprising to see that the variable <code>weight</code> is of <code>double</code> type, even though its values all are integers. By default R creates a double type vector when numeric values are given via the <code>c()</code> function.</p>
+<p>When it makes sense, it is possible to convert vectors to a different type. Consider the following examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight.int &lt;-<span class="st"> </span><span class="kw">as.integer</span>(weight)
+<span class="op">&gt;</span><span class="st"> </span>weight.int</code></pre></div>
+<pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(weight.int)</code></pre></div>
+<pre><code>[1] &quot;integer&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight.char &lt;-<span class="st"> </span><span class="kw">as.character</span>(weight)
+<span class="op">&gt;</span><span class="st"> </span>weight.char</code></pre></div>
+<pre><code>[1] &quot;123&quot; &quot;157&quot; &quot;205&quot; &quot;199&quot; &quot;223&quot; &quot;140&quot; &quot;105&quot; &quot;194&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>bp.double &lt;-<span class="st"> </span><span class="kw">as.double</span>(bp)
+<span class="op">&gt;</span><span class="st"> </span>bp.double</code></pre></div>
+<pre><code>[1] 0 1 0 0 1 0 1 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gender.oops &lt;-<span class="st"> </span><span class="kw">as.double</span>(gender)</code></pre></div>
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gender.oops</code></pre></div>
+<pre><code>[1] NA NA NA NA NA NA NA NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(bp)</code></pre></div>
+<pre><code>[1] 3</code></pre>
+<p>The integer version of <code>weight</code> doesn’t look any different, but it is stored differently, which can be important both for computational efficiency and for interfacing with other languages such as <code>C++</code>. As noted above, however, we will not worry about the distinction between integer and double types. Converting <code>weight</code> to character goes as expected: The character representations of the numbers replace the numbers themselves. Converting the logical vector <code>bp</code> to double is pretty straightforward too: <code>FALSE</code> is converted to zero, and <code>TRUE</code> is converted to one. Now think about converting the character vector <code>gender</code> to a numeric double vector. It’s not at all clear how to represent “female” and “male” as numbers. In fact in this case what R does is to create a character vector, but with each element set to <code>NA</code>, which is the representation of missing data.<a href="section-references.html#section-fn22" class="footnoteRef" id="section-fnref22"><sup>22</sup></a> Finally consider the code <code>sum(bp)</code>. Now <code>bp</code> is a logical vector, but when R sees that we are asking to sum this logical vector, it automatically converts it to a numerical vector and then adds the zeros and ones representing <code>FALSE</code> and <code>TRUE</code>.</p>
+<p>R also has functions to test whether a vector is of a particular type.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.double</span>(weight)</code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.character</span>(weight)</code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.integer</span>(weight.int)</code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.logical</span>(bp)</code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div id="section-coercion" class="section level4">
+<h4><span class="header-section-number">4.1.1.1</span> Coercion</h4>
+<p>Consider the following examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>xx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>xx</code></pre></div>
+<pre><code>[1] 1 2 3 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>yy &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;dog&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>yy</code></pre></div>
+<pre><code>[1] &quot;1&quot;   &quot;2&quot;   &quot;3&quot;   &quot;dog&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>zz &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="st">&quot;cat&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>zz</code></pre></div>
+<pre><code>[1] &quot;TRUE&quot;  &quot;FALSE&quot; &quot;cat&quot;  </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>bp</code></pre></div>
+<pre><code>[1] 123 158 205 199 224 140 106 194</code></pre>
+<p>Vectors in R can only contain elements of one type. If more than one type is included in a <code>c()</code> function, R silently <em>coerces</em> the vector to be of one type. The examples illustrate the hierarchy—if any element is a character, then the whole vector is character. If some elements are numeric (either integer or double) and other elements are logical, the whole vector is numeric. Note what happened when R was asked to add the numeric vector <code>weight</code> to the logical vector <code>bp</code>. The logical vector was silently coerced to be numeric, so that FALSE became zero and TRUE became one, and then the two numeric vectors were added.</p>
+</div>
+</div>
+<div id="section-accessing-specific-elements-of-vectors" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Accessing Specific Elements of Vectors</h3>
+<p>To access and possibly change specific elements of vectors, refer to the position of the element in square brackets. For example, <code>weight[4]</code> refers to the fourth element of the vector <code>weight</code>. Note that R starts the numbering of elements at 1, i.e., the first element of a vector <code>x</code> is <code>x[1]</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">5</span>]</code></pre></div>
+<pre><code>[1] 223</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</code></pre></div>
+<pre><code>[1] 123 157 205</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(weight)</code></pre></div>
+<pre><code>[1] 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="kw">length</span>(weight)]</code></pre></div>
+<pre><code>[1] 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[]</code></pre></div>
+<pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">202</span>
+<span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<p>Note that including nothing in the square brackets results in the whole vector being returned.</p>
+<p>Negative numbers in the square brackets tell R to omit the corresponding value. And a zero as a subscript returns nothing (more precisely, it returns a length zero vector of the appropriate type).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="op">-</span><span class="dv">3</span>]</code></pre></div>
+<pre><code>[1] 123 157 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="op">-</span><span class="kw">length</span>(weight)]</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>lessWeight &lt;-<span class="st"> </span>weight[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)]
+<span class="op">&gt;</span><span class="st"> </span>lessWeight</code></pre></div>
+<pre><code>[1] 157 199 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">0</span>]</code></pre></div>
+<pre><code>numeric(0)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>)]</code></pre></div>
+<pre><code>[1] 157 123</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>)]</code></pre></div>
+<pre><code>Error in weight[c(-1, 2)]: only 0&#39;s may be mixed with negative subscripts</code></pre>
+<p>Note that mixing zero and other nonzero subscripts is allowed, but mixing negative and positive subscripts is not allowed.</p>
+<p>What about the (usual) case where we don’t know the positions of the elements we want? For example possibly we want the weights of all females in the data. Later we will learn how to subset using logical indices, which is a very powerful way to access desired elements of a vector.</p>
+</div>
+</div>
+<div id="section-practice-exercise-1" class="section level2">
+<h2><span class="header-section-number">4.2</span> Practice Exercise</h2>
+<p>A bad programming technique that often plagues beginners is a technique called <em>hardcoding</em>. Consider the following simple vector containing data on the number of tree species found at diffrent sites.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>tree.sp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">9</span>, <span class="dv">11</span>)</code></pre></div>
+<p>Suppose we are interested in the second to last value of the data set. One way to do this is to first determine the length of vector using the <code>length()</code> function, then taking that value and subtracting 1.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>num.sites &lt;-<span class="st"> </span><span class="kw">length</span>(tree.sp)
+<span class="op">&gt;</span><span class="st"> </span>num.sites</code></pre></div>
+<pre><code>[1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>tree.sp[<span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</code></pre></div>
+<pre><code>[1] 9</code></pre>
+<p>This is an example of <em>hardcoding</em>. But what if we attempt to use the same code on a second vector of tree species data that has a different number of sites?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>tree.sp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>)
+<span class="op">&gt;</span><span class="st"> </span>num.sites &lt;-<span class="st"> </span><span class="kw">length</span>(tree.sp)
+<span class="op">&gt;</span><span class="st"> </span>num.sites</code></pre></div>
+<pre><code>[1] 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>tree.sp[<span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</code></pre></div>
+<pre><code>[1] NA</code></pre>
+<p>That’s clearly not what we want. Fix this code so we can always extract the second to last value in the vector, regardless of the length of the vector.</p>
+</div>
+<div id="section-factors" class="section level2">
+<h2><span class="header-section-number">4.3</span> Factors</h2>
+<p>Categorical variables such as <code>gender</code> can be represented as character vectors. In many cases this simple representation is sufficient. Consider, however, two other categorical variables, one representing age via categories <code>youth</code>, <code>young adult</code>, <code>middle age</code>, <code>senior</code>, and another representing income via categories <code>lower</code>, <code>middle</code>, and <code>upper</code>. Suppose that for the small health data set, all the people are either middle aged or senior citizens. If we just represented the variable via a character vector, there would be no way to know that there are two other categories, representing youth and senior citizens, which happen not to be present in the data set. And for the income variable, the character vector representation does not explicitly indicate that there is an ordering of the levels.</p>
+<p>Factors in R provide a more sophisticated way to represent categorical variables. Factors explicitly contain all possible levels, and allow ordering of levels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>age &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;middle age&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;middle age&quot;</span>, <span class="st">&quot;senior&quot;</span>, 
+<span class="op">+</span><span class="st">          &quot;senior&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;middle age&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>income &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lower&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;upper&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;upper&quot;</span>, 
+<span class="op">+</span><span class="st">             &quot;lower&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;middle&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>age</code></pre></div>
+<pre><code>[1] &quot;middle age&quot; &quot;senior&quot;     &quot;middle age&quot; &quot;senior&quot;    
+[5] &quot;senior&quot;     &quot;senior&quot;     &quot;senior&quot;     &quot;middle age&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>income</code></pre></div>
+<pre><code>[1] &quot;lower&quot;  &quot;lower&quot;  &quot;upper&quot;  &quot;middle&quot; &quot;upper&quot; 
+[6] &quot;lower&quot;  &quot;lower&quot;  &quot;middle&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>age &lt;-<span class="st"> </span><span class="kw">factor</span>(age, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;youth&quot;</span>, <span class="st">&quot;young adult&quot;</span>, <span class="st">&quot;middle age&quot;</span>, 
+<span class="op">+</span><span class="st">                             &quot;senior&quot;</span>))
+<span class="op">&gt;</span><span class="st"> </span>age</code></pre></div>
+<pre><code>[1] middle age senior     middle age senior    
+[5] senior     senior     senior     middle age
+Levels: youth young adult middle age senior</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>income &lt;-<span class="st"> </span><span class="kw">factor</span>(income, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;lower&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;upper&quot;</span>), 
+<span class="op">+</span><span class="st">                  </span><span class="dt">ordered =</span> <span class="ot">TRUE</span>)
+<span class="op">&gt;</span><span class="st"> </span>income</code></pre></div>
+<pre><code>[1] lower  lower  upper  middle upper  lower  lower 
+[8] middle
+Levels: lower &lt; middle &lt; upper</code></pre>
+<p>In the factor version of <code>age</code> the levels are explicitly listed, so it is clear that the two included levels are not all the possible levels. And in the factor version of income, the ordering is explicit.</p>
+<p>In many cases the character vector representation of a categorical variable is sufficient and easier to work with. In this book, factors will not be used extensively. It is important to note that R often by default creates a factor when character data are read in, and sometimes it is necessary to use the argument <code>stringsAsFactors = FALSE</code> to explicitly tell R not to do this. This is shown later in the chapter when data frames are introduced.</p>
+</div>
+<div id="section-names-of-objects-in-r" class="section level2">
+<h2><span class="header-section-number">4.4</span> Names of Objects in R</h2>
+<p>There are few hard and fast restrictions on the names of objects (such as vectors) in R. In addition to these restrictions, there are certain good practices, and many things to avoid as well.</p>
+<p>From the help page for <code>make.names</code> in R, the name of an R object is “syntactically valid” if the name “consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number” and is not one of the “reserved words” in R such as <code>if</code>, <code>TRUE</code>, <code>function</code>, etc. For example, <code>c45t.le_dog</code> and <code>.ty56</code> are both syntactically valid (although not very good names) while <code>4cats</code> and <code>log#@gopher</code> are not.</p>
+<p>A few important comments about naming objects follow:</p>
+<ol style="list-style-type: decimal">
+<li>It is important to be aware that names of objects in R are case-sensitive, so <code>weight</code> and <code>Weight</code> do not refer to the same object.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>Weight</code></pre></div>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;Weight&#39; not found</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>It is unwise to create an object with the same name as a built in R object such as the function <code>c</code> or the function <code>mean</code>. In earlier versions of R this could be somewhat disastrous, but even in current versions, it is definitely not a good idea!</li>
+<li>As much as possible, choose names that are informative. When creating a variable you may initially remember that <code>x</code> contains heights and <code>y</code> contains genders, but after a few hours, a few days, or a few weeks, you probably will forget this. Better options are <code>Height</code> and <code>Gender</code>.</li>
+<li>As much as possible, be consistent in how you name objects. In particular, decide how to separate multi-word names. Some options include:
+<ul>
+<li>Using case to separate: <code>BloodPressure</code> or <code>bloodPressure</code> for example</li>
+<li>Using underscores to separate: <code>blood_pressure</code> for example</li>
+<li>Using a period to separate: <code>blood.pressure</code> for example</li>
+</ul></li>
+</ol>
+</div>
+<div id="section-missing-data-infinity-etc." class="section level2">
+<h2><span class="header-section-number">4.5</span> Missing Data, Infinity, etc.</h2>
+<p>Most real-world data sets have variables where some observations are missing. In a longitudinal study participants may drop out. In a survey, participants may decide not to respond to certain questions. Statistical software should be able to represent missing data and to analyze data sets in which some data are missing.</p>
+<p>In R, the value <code>NA</code> is used for a missing data value. Since missing values may occur in numeric, character, and other types of data, and since R requires that a vector contain only elements of one type, there are different types of <code>NA</code> values. Usually R determines the appropriate type of <code>NA</code> value automatically. It is worth noting that the default type for <code>NA</code> is logical, and that <code>NA</code> is NOT the same as the character string <code>&quot;NA&quot;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>missingCharacter &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;pig&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;horse&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>missingCharacter</code></pre></div>
+<pre><code>[1] &quot;dog&quot;   &quot;cat&quot;   NA      &quot;pig&quot;   NA      &quot;horse&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.na</span>(missingCharacter)</code></pre></div>
+<pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>missingCharacter &lt;-<span class="st"> </span><span class="kw">c</span>(missingCharacter, <span class="st">&quot;NA&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>missingCharacter</code></pre></div>
+<pre><code>[1] &quot;dog&quot;   &quot;cat&quot;   NA      &quot;pig&quot;   NA      &quot;horse&quot;
+[7] &quot;NA&quot;   </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.na</span>(missingCharacter)</code></pre></div>
+<pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>allMissing &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(allMissing)</code></pre></div>
+<pre><code>[1] &quot;logical&quot;</code></pre>
+<p>How should missing data be treated in computations, such as finding the mean or standard deviation of a variable? One possibility is to return <code>NA</code>. Another is to remove the missing value(s) and then perform the computation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="dv">5</span>))</code></pre></div>
+<pre><code>[1] NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="dv">5</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>[1] 2.75</code></pre>
+<p>As this example shows, the default behavior for the <code>mean()</code> function is to return <code>NA</code>. If removal of the missing values and then computing the mean is desired, the argument <code>na.rm</code> is set to <code>TRUE</code>. Different R functions have different default behaviors, and there are other possible actions. Consulting the help for a function provides the details.</p>
+<div id="section-practice-exercise-2" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Practice Exercise</h3>
+<p>Collecting data is often a messy process resulting in multiple errors in the data. Consider the following small vector representing the weights of 10 adults in pounds.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>my.weights &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">150</span>, <span class="dv">138</span>, <span class="dv">289</span>, <span class="dv">239</span>, <span class="dv">12</span>, <span class="dv">103</span>, <span class="dv">310</span>, <span class="dv">200</span>, <span class="dv">218</span>, 
+<span class="op">+</span><span class="st">   </span><span class="dv">178</span>)</code></pre></div>
+<p>As far as I know, it’s not possible for an adult to weigh 12 pounds, so that is most likely an error. Change this value to NA, and then find the standard deviation of the weights after removing the NA value.</p>
+</div>
+<div id="section-infinity-and-nan" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Infinity and NaN</h3>
+<p>What happens if R code requests division by zero, or results in a number that is too large to be represented? Here are some examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">4</span>
+<span class="op">&gt;</span><span class="st"> </span>x</code></pre></div>
+<pre><code>[1] 0 1 2 3 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>x</code></pre></div>
+<pre><code>[1]    Inf 1.0000 0.5000 0.3333 0.2500</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x<span class="op">/</span>x</code></pre></div>
+<pre><code>[1] NaN   1   1   1   1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">1000</span>, <span class="dv">10000</span>)
+<span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span>y</code></pre></div>
+<pre><code>[1]  1.024e+03 1.072e+301        Inf</code></pre>
+<p><code>Inf</code> and <code>-Inf</code> represent infinity and negative infinity (and numbers which are too large in magnitude to be represented as floating point numbers). <code>NaN</code> represents the result of a calculation where the result is undefined, such as dividing zero by zero. All of these are common to a variety of programming languages, including R.</p>
+</div>
+</div>
+<div id="section-dataFrames" class="section level2">
+<h2><span class="header-section-number">4.6</span> Data Frames</h2>
+<p>Commonly, data is rectangular in form, with variables as columns and cases as rows. Continuing with the (contrived) data on weight, gender, and blood pressure medication, each of those variables would be a column of the data set, and each person’s measurements would be a row. In R, such data are represented as a <em>data frame</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>healthData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Weight =</span> weight, <span class="dt">Gender=</span>gender, <span class="dt">bp.meds =</span> bp,
+<span class="op">+</span><span class="st">                          </span><span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)
+<span class="op">&gt;</span><span class="st"> </span>healthData</code></pre></div>
+<pre><code>  Weight Gender bp.meds
+1    123 female   FALSE
+2    157 female    TRUE
+3    202   male   FALSE
+4    199 female   FALSE
+5    223   male    TRUE
+6    140   male   FALSE
+7    105 female    TRUE
+8    194   male   FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(healthData)</code></pre></div>
+<pre><code>[1] &quot;Weight&quot;  &quot;Gender&quot;  &quot;bp.meds&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">colnames</span>(healthData)</code></pre></div>
+<pre><code>[1] &quot;Weight&quot;  &quot;Gender&quot;  &quot;bp.meds&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(healthData) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wt&quot;</span>, <span class="st">&quot;Gdr&quot;</span>, <span class="st">&quot;bp&quot;</span>)
+<span class="op">&gt;</span><span class="st"> </span>healthData</code></pre></div>
+<pre><code>   Wt    Gdr    bp
+1 123 female FALSE
+2 157 female  TRUE
+3 202   male FALSE
+4 199 female FALSE
+5 223   male  TRUE
+6 140   male FALSE
+7 105 female  TRUE
+8 194   male FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rownames</span>(healthData)</code></pre></div>
+<pre><code>[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;8&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(healthData) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Weight&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;bp.meds&quot;</span>)</code></pre></div>
+<p>The <code>data.frame</code> function can be used to create a data frame (although it’s more common to read a data frame into R from an external file, something that will be introduced later). The names of the variables in the data frame are given as arguments, as are the vectors of data that make up the variable’s values. The argument <code>stringsAsFactors=FALSE</code> asks R not to convert character vectors into factors, which R does by default, to the dismay of many users. Names of the columns (variables) can be extracted and set via either <code>names</code> or <code>colnames</code>. In the example, the variable names are changed to <code>Wt, Gdr, bp</code> and then changed back to the original <code>Weight, Gender, bp.meds</code> in this way. Rows can be named also. In this case since specific row names were not provided, the default row names of <code>&quot;1&quot;, &quot;2&quot;</code> etc. are used.</p>
+<p>In the next example a built-in dataset called <code>mtcars</code> is made available by the <code>data</code> function, and then the first and last six rows are displayed using <code>head</code> and <code>tail</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">data</span>(mtcars)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(mtcars)</code></pre></div>
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02
+Valiant           18.1   6  225 105 2.76 3.460 20.22
+                  vs am gear carb
+Mazda RX4          0  1    4    4
+Mazda RX4 Wag      0  1    4    4
+Datsun 710         1  1    4    1
+Hornet 4 Drive     1  0    3    1
+Hornet Sportabout  0  0    3    2
+Valiant            1  0    3    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">tail</span>(mtcars)</code></pre></div>
+<pre><code>                mpg cyl  disp  hp drat    wt qsec vs
+Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0
+Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.9  1
+Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.5  0
+Ferrari Dino   19.7   6 145.0 175 3.62 2.770 15.5  0
+Maserati Bora  15.0   8 301.0 335 3.54 3.570 14.6  0
+Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1
+               am gear carb
+Porsche 914-2   1    5    2
+Lotus Europa    1    5    2
+Ford Pantera L  1    5    4
+Ferrari Dino    1    5    6
+Maserati Bora   1    5    8
+Volvo 142E      1    4    2</code></pre>
+<p>Note that the <code>mtcars</code> data frame does have non-default row names which give the make and model of the cars.</p>
+<div id="section-accessing-specific-elements-of-data-frames" class="section level3">
+<h3><span class="header-section-number">4.6.1</span> Accessing Specific Elements of Data Frames</h3>
+<p>Data frames are two-dimensional, so to access a specific element (or elements) we need to specify both the row and column.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mtcars[<span class="dv">1</span>, <span class="dv">4</span>]</code></pre></div>
+<pre><code>[1] 110</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">3</span>]</code></pre></div>
+<pre><code>[1] 160 160 108</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</code></pre></div>
+<pre><code>              cyl disp
+Mazda RX4       6  160
+Mazda RX4 Wag   6  160
+Datsun 710      4  108</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mtcars[, <span class="dv">1</span>]</code></pre></div>
+<pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2
+[11] 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9
+[21] 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+[31] 15.0 21.4</code></pre>
+<p>Note that <code>mtcars[,1]</code> returns ALL elements in the first column. This agrees with the behavior for vectors, where leaving a subscript out of the square brackets tells R to return all values. In this case we are telling R to return all rows, and the first column.</p>
+<p>For a data frame there is another way to access specific columns, using the <code>$</code> notation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mtcars<span class="op">$</span>mpg</code></pre></div>
+<pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2
+[11] 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9
+[21] 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+[31] 15.0 21.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mtcars<span class="op">$</span>cyl</code></pre></div>
+<pre><code> [1] 6 6 4 6 8 6 8 4 4 6 6 8 8 8 8 8 8 4 4 4 4 8 8 8 8
+[26] 4 4 4 8 6 8 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mpg</code></pre></div>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;mpg&#39; not found</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>cyl</code></pre></div>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;cyl&#39; not found</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<p>Notice that typing the variable name, such as <code>mpg</code>, without the name of the data frame (and a dollar sign) as a prefix, does not work. This is sensible. There may be several data frames that have variables named <code>mpg</code>, and just typing <code>mpg</code> doesn’t provide enough information to know which is desired. But if there is a vector named <code>mpg</code> that is created outside a data frame, it will be retrieved when <code>mpg</code> is typed, which is why typing <code>weight</code> does work, since <code>weight</code> was created outside of a data frame, although ultimately it was incorporated into the <code>healthData</code> data frame.</p>
+</div>
+</div>
+<div id="section-lists" class="section level2">
+<h2><span class="header-section-number">4.7</span> Lists</h2>
+<p>The third main data structure we will work with is a list. Technically a list is a vector, but one in which elements can be of different types. For example a list may have one element that is a vector, one element that is a data frame, and another element that is a function. Consider designing a function that fits a simple linear regression model to two quantitative variables. We might want that function to compute and return several things such as</p>
+<ul>
+<li>The fitted slope and intercept (a numeric vector with two components)</li>
+<li>The residuals (a numeric vector with <span class="math inline">\(n\)</span> components, where <span class="math inline">\(n\)</span> is the number of data points)</li>
+<li>Fitted values for the data (a numeric vector with <span class="math inline">\(n\)</span> components, where <span class="math inline">\(n\)</span> is the number of data points)</li>
+<li>The names of the dependent and independent variables (a character vector with two components)</li>
+</ul>
+<p>In fact R has a function, <code>lm</code>, which does this (and much more).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mpgHpLinMod &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(mpgHpLinMod)</code></pre></div>
+<pre><code>[1] &quot;list&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(mpgHpLinMod)</code></pre></div>
+<pre><code> [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;      
+ [4] &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;       
+ [7] &quot;qr&quot;            &quot;df.residual&quot;   &quot;xlevels&quot;      
+[10] &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;        </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mpgHpLinMod<span class="op">$</span>coefficients</code></pre></div>
+<pre><code>(Intercept)          hp 
+   30.09886    -0.06823 </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>mpgHpLinMod<span class="op">$</span>residuals</code></pre></div>
+<pre><code>          Mazda RX4       Mazda RX4 Wag 
+           -1.59375            -1.59375 
+         Datsun 710      Hornet 4 Drive 
+           -0.95363            -1.19375 
+  Hornet Sportabout             Valiant 
+            0.54109            -4.83489 
+         Duster 360           Merc 240D 
+            0.91707            -1.46871 
+           Merc 230            Merc 280 
+           -0.81717            -2.50678 
+          Merc 280C          Merc 450SE 
+           -3.90678            -1.41777 
+         Merc 450SL         Merc 450SLC 
+           -0.51777            -2.61777 
+ Cadillac Fleetwood Lincoln Continental 
+           -5.71206            -5.02978 
+  Chrysler Imperial            Fiat 128 
+            0.29364             6.80421 
+        Honda Civic      Toyota Corolla 
+            3.84901             8.23598 
+      Toyota Corona    Dodge Challenger 
+           -1.98072            -4.36462 
+        AMC Javelin          Camaro Z28 
+           -4.66462            -0.08293 
+   Pontiac Firebird           Fiat X1-9 
+            1.04109             1.70421 
+      Porsche 914-2        Lotus Europa 
+            2.10991             8.01093 
+     Ford Pantera L        Ferrari Dino 
+            3.71340             1.54109 
+      Maserati Bora          Volvo 142E 
+            7.75761            -1.26198 </code></pre>
+<p>The <code>lm</code> function returns a list (which in the code above has been assigned to the object <code>mpgHpLinMod</code>).<a href="section-references.html#section-fn23" class="footnoteRef" id="section-fnref23"><sup>23</sup></a> One component of the list is the length 2 vector of coefficients, while another component is the length 32 vector of residuals. The code also illustrates that named components of a list can be accessed using the dollar sign notation, as with data frames.</p>
+<p>The <code>list</code> function is used to create lists.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">first=</span>weight, <span class="dt">second=</span>healthData,
+<span class="op">+</span><span class="st">                       </span><span class="dt">pickle=</span><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">b=</span>healthData))
+<span class="op">&gt;</span><span class="st"> </span>temporaryList</code></pre></div>
+<pre><code>$first
+[1] 123 157 202 199 223 140 105 194
+
+$second
+  Weight Gender bp.meds
+1    123 female   FALSE
+2    157 female    TRUE
+3    202   male   FALSE
+4    199 female   FALSE
+5    223   male    TRUE
+6    140   male   FALSE
+7    105 female    TRUE
+8    194   male   FALSE
+
+$pickle
+$pickle$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$pickle$b
+  Weight Gender bp.meds
+1    123 female   FALSE
+2    157 female    TRUE
+3    202   male   FALSE
+4    199 female   FALSE
+5    223   male    TRUE
+6    140   male   FALSE
+7    105 female    TRUE
+8    194   male   FALSE</code></pre>
+<p>Here, for illustration, I assembled a list to hold some of the R data structures we have been working with in this chapter. The first list element, named <code>first</code>, holds the <code>weight</code> vector we created in Section <a href="section-structures.html#section-vector">4.1</a>, the second list element, named <code>second</code>, holds the <code>healthData</code> data frame, and the third list element, named <code>pickle</code>, holds a list with elements named <code>a</code> and <code>b</code> that hold a vector of values 1 through 10 and another copy of the <code>healthData</code> data frame, respectively. As this example shows, a list can contain another list.</p>
+<div id="section-accessing-specific-elements-of-lists" class="section level3">
+<h3><span class="header-section-number">4.7.1</span> Accessing Specific Elements of Lists</h3>
+<p>We already have seen the dollar sign notation works for lists. In addition, the square bracket subsetting notation can be used. There is an added, somewhat subtle wrinkle—using either single or double square brackets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList<span class="op">$</span>first</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(temporaryList<span class="op">$</span>first)</code></pre></div>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList[[<span class="dv">1</span>]]</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(temporaryList[[<span class="dv">1</span>]])</code></pre></div>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList[<span class="dv">1</span>]</code></pre></div>
+<pre><code>$first
+[1] 123 157 202 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(temporaryList[<span class="dv">1</span>])</code></pre></div>
+<pre><code>[1] &quot;list&quot;</code></pre>
+<p>Note the dollar sign and double bracket notation return a numeric vector, while the single bracket notation returns a list. Notice also the difference in results below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]</code></pre></div>
+<pre><code>$first
+[1] 123 157 202 199 223 140 105 194
+
+$second
+  Weight Gender bp.meds
+1    123 female   FALSE
+2    157 female    TRUE
+3    202   male   FALSE
+4    199 female   FALSE
+5    223   male    TRUE
+6    140   male   FALSE
+7    105 female    TRUE
+8    194   male   FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList[[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]]</code></pre></div>
+<pre><code>[1] 157</code></pre>
+<p>The single bracket form returns the first and second elements of the list, while the double bracket form returns the second element in the first element of the list. Generally, do not put a vector of indices or names in a double bracket, you will likely get unexpected results. See, for example, the results below.<a href="section-references.html#section-fn24" class="footnoteRef" id="section-fnref24"><sup>24</sup></a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryList[[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)]]</code></pre></div>
+<pre><code>Error in temporaryList[[c(1, 2, 3)]]: recursive indexing failed at level 2</code></pre>
+<p>So, in summary, there are two main differences between using the single bracket <code>[]</code> and double bracket <code>[[]]</code>. First, the single bracket will return a list that holds the object(s) held at the given indices or names placed in the bracket, whereas the double brackets will return the actual object held at the index or name placed in the innermost bracket. Put differently, a single bracket can be used to access a range of list elements and will return a list, and a double bracket can only access a single element in the list and will return the object held at the index.</p>
+</div>
+</div>
+<div id="section-subsetting" class="section level2">
+<h2><span class="header-section-number">4.8</span> Subsetting with Logical Vectors</h2>
+<p>Consider the <code>healthData</code> data frame. How can we access only those weights which are more than 200? How can we access the genders of those whose weights are more than 200? How can we compute the mean weight of males and the mean weight of females? Or consider the <code>mtcars</code> data frame. How can we obtain the miles per gallon for all six cylinder cars? Both of these data sets are small enough that it would not be too onerous to extract the values by hand. But for larger or more complex data sets, this would be very difficult or impossible to do in a reasonable amount of time, and would likely result in errors.</p>
+<p>R has a powerful method for solving these sorts of problems using a variant of the subsetting methods that we already have learned. When given a logical vector in square brackets, R will return the values corresponding to <code>TRUE</code>. To begin, focus on the <code>weight</code> and <code>gender</code> vectors created in Section <a href="section-structures.html#section-vector">4.1</a>.</p>
+<p>The R code <code>weight &gt; 200</code> returns a <code>TRUE</code> for each value of <code>weight</code> which is more than 200, and a <code>FALSE</code> for each value of <code>weight</code> which is less than or equal to 200. Similarly <code>gender == &quot;female&quot;</code> returns <code>TRUE</code> or <code>FALSE</code> depending on whether an element of <code>gender</code> is equal to <code>female</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span></code></pre></div>
+<pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gender[weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>]</code></pre></div>
+<pre><code>[1] &quot;male&quot; &quot;male&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>]</code></pre></div>
+<pre><code>[1] 202 223</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;female&quot;</span></code></pre></div>
+<pre><code>[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight[gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>]</code></pre></div>
+<pre><code>[1] 123 157 199 105</code></pre>
+<p>Consider the lines of R code one by one.</p>
+<ul>
+<li><code>weight</code> instructs R to display the values in the vector <code>weight</code>.</li>
+<li><code>weight &gt; 200</code> instructs R to check whether each value in <code>weight</code> is greater than 200, and to return <code>TRUE</code> if so, and <code>FALSE</code> otherwise.</li>
+<li>The next line, <code>gender[weight &gt; 200]</code>, does two things. First, inside the square brackets, it does the same thing as the second line, namely, returning <code>TRUE</code> or <code>FALSE</code> depending on whether a value of <code>weight</code> is or is not greater than 200. Second, each element of <code>gender</code> is matched with the corresponding <code>TRUE</code> or <code>FALSE</code> value, and is returned if and only if the corresponding value is <code>TRUE</code>. For example the first value of <code>gender</code> is <code>gender[1]</code>. Since the first <code>TRUE</code> or <code>FALSE</code> value is <code>FALSE</code>, the first value of <code>gender</code> is not returned. Only the third and fifth values of <code>gender</code>, both of which happen to be <code>male</code>, are returned. Briefly, this line returns the genders of those people whose weight is over 200 pounds.</li>
+<li>The fourth line of code, <code>weight[weight &gt; 200]</code>, again begins by returning <code>TRUE</code> or <code>FALSE</code> depending on whether elements of <code>weight</code> are larger than 200. Then those elements of <code>weight</code> corresponding to <code>TRUE</code> values, are returned. So this line returns the weights of those people whose weights are more than 200 pounds.</li>
+<li>The fifth line returns <code>TRUE</code> or <code>FALSE</code> depending on whether elements of <code>gender</code> are equal to <code>female</code> or not.</li>
+<li>The sixth line returns the weights of those whose gender is <code>female</code>.</li>
+</ul>
+<p>There are six comparison operators in R, <code>&gt;, &lt;, &gt;=, &lt;=, ==, !=</code>. Note that to test for equality a “double equals sign” is used, while <code>!=</code> tests for inequality.</p>
+<div id="section-modifying-or-creating-objects-via-subsetting" class="section level3">
+<h3><span class="header-section-number">4.8.1</span> Modifying or Creating Objects via Subsetting</h3>
+<p>The results of subsetting can be assigned to a new (or existing) R object, and subsetting on the left side of an assignment is a common way to modify an existing R object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>weight</code></pre></div>
+<pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>lightweight &lt;-<span class="st"> </span>weight[weight <span class="op">&lt;</span><span class="st"> </span><span class="dv">200</span>]
+<span class="op">&gt;</span><span class="st"> </span>lightweight</code></pre></div>
+<pre><code>[1] 123 157 199 140 105 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
+<span class="op">&gt;</span><span class="st"> </span>x</code></pre></div>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="op">&gt;</span><span class="st"> </span>x</code></pre></div>
+<pre><code> [1]  0  0  0  0  5  6  7  8  9 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">9</span>
+<span class="op">&gt;</span><span class="st"> </span>y</code></pre></div>
+<pre><code> [1] -3 -2 -1  0  1  2  3  4  5  6  7  8  9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>y[y <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+<span class="op">&gt;</span><span class="st"> </span>y</code></pre></div>
+<pre><code> [1] NA NA NA  0  1  2  3  4  5  6  7  8  9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(x)
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(y)</code></pre></div>
+</div>
+<div id="section-logical-subsetting-and-data-frames" class="section level3">
+<h3><span class="header-section-number">4.8.2</span> Logical Subsetting and Data Frames</h3>
+<p>First consider the small and simple <code>healthData</code> data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>healthData</code></pre></div>
+<pre><code>  Weight Gender bp.meds
+1    123 female   FALSE
+2    157 female    TRUE
+3    202   male   FALSE
+4    199 female   FALSE
+5    223   male    TRUE
+6    140   male   FALSE
+7    105 female    TRUE
+8    194   male   FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>healthData<span class="op">$</span>Weight[healthData<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>]</code></pre></div>
+<pre><code>[1] 202 223 140 194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>healthData[healthData<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>, ]</code></pre></div>
+<pre><code>  Weight Gender bp.meds
+1    123 female   FALSE
+2    157 female    TRUE
+4    199 female   FALSE
+7    105 female    TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>healthData[healthData<span class="op">$</span>Weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">190</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</code></pre></div>
+<pre><code>  Gender bp.meds
+3   male   FALSE
+4 female   FALSE
+5   male    TRUE
+8   male   FALSE</code></pre>
+<p>The first example is really just subsetting a vector, since the <code>$</code> notation creates vectors. The second two examples return subsets of the whole data frame. Note that the logical vector subsets the rows of the data frame, choosing those rows where the gender is female or the weight is more than 190. Note also that the specification for the columns (after the comma) is left blank in the first case, telling R to return all the columns. In the second case the second and third columns are requested explicitly.</p>
+<p>Next consider the much larger and more complex <code>WorldBank</code> data frame. Recall, the <code>str</code> function displays the “structure” of an R object. Here is a look at the structure of several R objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(mtcars)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(temporaryList)</code></pre></div>
+<pre><code>List of 3
+ $ first : num [1:8] 123 157 202 199 223 140 105 194
+ $ second:&#39;data.frame&#39;: 8 obs. of  3 variables:
+  ..$ Weight : num [1:8] 123 157 202 199 223 140 105 194
+  ..$ Gender : chr [1:8] &quot;female&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
+  ..$ bp.meds: logi [1:8] FALSE TRUE FALSE FALSE TRUE FALSE ...
+ $ pickle:List of 2
+  ..$ a: int [1:10] 1 2 3 4 5 6 7 8 9 10
+  ..$ b:&#39;data.frame&#39;:   8 obs. of  3 variables:
+  .. ..$ Weight : num [1:8] 123 157 202 199 223 140 105 194
+  .. ..$ Gender : chr [1:8] &quot;female&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
+  .. ..$ bp.meds: logi [1:8] FALSE TRUE FALSE FALSE TRUE FALSE ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(WorldBank)</code></pre></div>
+<pre><code>&#39;data.frame&#39;:   11880 obs. of  15 variables:
+ $ iso2c                       : chr  &quot;AD&quot; &quot;AD&quot; &quot;AD&quot; &quot;AD&quot; ...
+ $ country                     : chr  &quot;Andorra&quot; &quot;Andorra&quot; &quot;Andorra&quot; &quot;Andorra&quot; ...
+ $ year                        : int  1978 1979 1977 2007 1976 2011 2012 2008 1980 1972 ...
+ $ fertility.rate              : num  NA NA NA 1.18 NA NA NA 1.25 NA NA ...
+ $ life.expectancy             : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ population                  : num  33746 34819 32769 81292 31781 ...
+ $ GDP.per.capita.Current.USD  : num  9128 11820 7751 39923 7152 ...
+ $ X15.to.25.yr.female.literacy: num  NA NA NA NA NA NA NA NA NA NA ...
+ $ iso3c                       : chr  &quot;AND&quot; &quot;AND&quot; &quot;AND&quot; &quot;AND&quot; ...
+ $ region                      : chr  &quot;Europe &amp; Central Asia (all income levels)&quot; &quot;Europe &amp; Central Asia (all income levels)&quot; &quot;Europe &amp; Central Asia (all income levels)&quot; &quot;Europe &amp; Central Asia (all income levels)&quot; ...
+ $ capital                     : chr  &quot;Andorra la Vella&quot; &quot;Andorra la Vella&quot; &quot;Andorra la Vella&quot; &quot;Andorra la Vella&quot; ...
+ $ longitude                   : num  1.52 1.52 1.52 1.52 1.52 ...
+ $ latitude                    : num  42.5 42.5 42.5 42.5 42.5 ...
+ $ income                      : chr  &quot;High income: nonOECD&quot; &quot;High income: nonOECD&quot; &quot;High income: nonOECD&quot; &quot;High income: nonOECD&quot; ...
+ $ lending                     : chr  &quot;Not classified&quot; &quot;Not classified&quot; &quot;Not classified&quot; &quot;Not classified&quot; ...</code></pre>
+<p>First we see that <code>mtcars</code> is a data frame which has 32 observations (rows) on each of 11 variables (columns). The names of the variables are given, along with their type (in this case, all numeric), and the first few values of each variable is given.</p>
+<p>Second we see that <code>temporaryList</code> is a list with three components. Each of the components is described separately, with the first few values again given.</p>
+<p>Third we examine the structure of <code>WorldBank</code>. It is a data frame with 11880 observations on each of 15 variables. Some of these are character variables, some are numeric, and one (<code>year</code>) is integer. Looking at the first few values we see that some variables have missing values.</p>
+<p>Consider creating a data frame which only has the observations from one year, say 1971. That’s relatively easy. Just choose rows for which <code>year</code> is equal to 1971.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>WorldBank1971 &lt;-<span class="st"> </span>WorldBank[WorldBank<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">1971</span>, ]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBank1971)</code></pre></div>
+<pre><code>[1] 216  15</code></pre>
+<p>The <code>dim</code> function returns the dimensions of a data frame, i.e., the number of rows and the number of columns. From <code>dim</code> we see that there are <code>dim(WorldBank1971)[1]</code> cases from 1971.</p>
+<p>Next, how can we create a data frame which only contains data from 1971, and also only contains cases for which there are no missing values in the fertility rate variable? R has a built in function <code>is.na</code> which returns <code>TRUE</code> if the observation is missing and returns <code>FALSE</code> otherwise. And <code>!is.na</code> returns the negation, i.e., it returns <code>FALSE</code> if the observation is missing and <code>TRUE</code> if the observation is not missing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>WorldBank1971<span class="op">$</span>fertility.rate[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]</code></pre></div>
+<pre><code> [1]    NA 6.512 7.671 3.517 4.933 3.118 7.264 3.104
+ [9]    NA 2.200 2.961 2.788 4.479 2.260 2.775 2.949
+[17] 6.942 2.210 6.657 2.100 6.293 7.329 6.786    NA
+[25] 5.771</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(WorldBank1971<span class="op">$</span>fertility.rate[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>])</code></pre></div>
+<pre><code> [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [9] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[17]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[25]  TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>WorldBank1971 &lt;-<span class="st"> </span>WorldBank1971[<span class="op">!</span><span class="kw">is.na</span>(WorldBank1971<span class="op">$</span>fertility.rate), 
+<span class="op">+</span><span class="st">   </span>]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBank1971)</code></pre></div>
+<pre><code>[1] 193  15</code></pre>
+<p>From <code>dim</code> we see that there are <code>dim(WorldBank1971)[1]</code> cases from 1971 with non-missing fertility rate data.</p>
+<p>Return attention now to the original <code>WorldBank</code> data frame with data not only from 1971. How can we extract only those cases (rows) which have NO missing data? Consider the following simple example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>temporaryDataFrame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">V1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="ot">NA</span>),
+<span class="op">+</span><span class="st">                                  </span><span class="dt">V2 =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="ot">NA</span>),
+<span class="op">+</span><span class="st">                                  </span><span class="dt">V3 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>))
+<span class="op">&gt;</span><span class="st"> </span>temporaryDataFrame</code></pre></div>
+<pre><code>  V1 V2 V3
+1  1 NA  1
+2  2  1  2
+3  3  4  3
+4  4  5  5
+5 NA NA  7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.na</span>(temporaryDataFrame)</code></pre></div>
+<pre><code>        V1    V2    V3
+[1,] FALSE  TRUE FALSE
+[2,] FALSE FALSE FALSE
+[3,] FALSE FALSE FALSE
+[4,] FALSE FALSE FALSE
+[5,]  TRUE  TRUE FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">is.na</span>(temporaryDataFrame))</code></pre></div>
+<pre><code>[1] 1 0 0 0 2</code></pre>
+<p>First notice that <code>is.na</code> will test each element of a data frame for missingness. Also recall that if R is asked to sum a logical vector, it will first convert the logical vector to numeric and then compute the sum, which effectively counts the number of elements in the logical vector which are <code>TRUE</code>. The <code>rowSums</code> function computes the sum of each row. So <code>rowSums(is.na(temporaryDataFrame))</code> returns a vector with as many elements as there are rows in the data frame. If an element is zero, the corresponding row has no missing values. If an element is greater than zero, the value is the number of variables which are missing in that row. This gives a simple method to return all the cases which have no missing data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBank)</code></pre></div>
+<pre><code>[1] 11880    15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>WorldBankComplete &lt;-<span class="st"> </span>WorldBank[<span class="kw">rowSums</span>(<span class="kw">is.na</span>(WorldBank)) <span class="op">==</span><span class="st"> </span>
+<span class="op">+</span><span class="st">   </span><span class="dv">0</span>, ]
+<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBankComplete)</code></pre></div>
+<pre><code>[1] 564  15</code></pre>
+<p>Out of the <code>dim(WorldBankComplete)[1]</code> rows in the original data frame, only <code>dim(WorldBankComplete)[1]</code> have no missing observations!</p>
+</div>
+</div>
+<div id="section-patterned-data" class="section level2">
+<h2><span class="header-section-number">4.9</span> Patterned Data</h2>
+<p>Sometimes it is useful to generate all the integers from 1 through 20, to generate a sequence of 100 points equally spaced between 0 and 1, etc. The R functions <code>seq()</code> and <code>rep()</code> as well as the “colon operator” <code>:</code> help to generate such sequences.</p>
+<p>The colon operator generates a sequence of values with increments of <span class="math inline">\(1\)</span> or <span class="math inline">\(-1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></code></pre></div>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">3</span></code></pre></div>
+<pre><code>[1] -5 -4 -3 -2 -1  0  1  2  3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">4</span></code></pre></div>
+<pre><code>[1] 10  9  8  7  6  5  4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>pi<span class="op">:</span><span class="dv">7</span></code></pre></div>
+<pre><code>[1] 3.142 4.142 5.142 6.142</code></pre>
+<p>The <code>seq()</code> function generates either a sequence of pre-specified length or a sequence with pre-specified increments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">11</span>)</code></pre></div>
+<pre><code> [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">5</span>, <span class="dt">by =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</code></pre></div>
+<pre><code> [1] 1.000 1.333 1.667 2.000 2.333 2.667 3.000 3.333
+ [9] 3.667 4.000 4.333 4.667 5.000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">3</span>, <span class="dt">to =</span> <span class="op">-</span><span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code> [1]  3.0000  2.5556  2.1111  1.6667  1.2222  0.7778
+ [7]  0.3333 -0.1111 -0.5556 -1.0000</code></pre>
+<p>The <code>rep()</code> function replicates the values in a given vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">length =</span> <span class="dv">9</span>)</code></pre></div>
+<pre><code>[1] 1 2 4 1 2 4 1 2 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">times =</span> <span class="dv">3</span>)</code></pre></div>
+<pre><code>[1] 1 2 4 1 2 4 1 2 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">times =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">7</span>))</code></pre></div>
+<pre><code> [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot;</code></pre>
+<div id="section-practice-exercise-3" class="section level3">
+<h3><span class="header-section-number">4.9.1</span> Practice Exercise</h3>
+<p>Often when using R you will want to simulate data from a specific probability distribution (i.e. normal/Gaussian, bionmial, Poisson). R has a vast suite of functions for working with statistical distributions. To generate values from a statistical distribution, the function has a name beginning with an “r” followed by some abbreviation of the probability distribution. For example to simulate from the three distributions mentioned above, we can use the functions <code>rnorm()</code>, <code>rbinom</code>, and <code>rpois</code>.</p>
+<p>Use the <code>rnorm()</code> function to generate 10,000 values from the standard normal distribution (the normal distribution with mean = 0 and variance = 1). Consult the help page for <code>rnorm()</code> if you need to. Save this vector of variables to a vector named <code>sim.vals</code>. Then use the <code>hist()</code> function to draw a histogram of the simulated data. Does the data look like it follows a normal distribution?</p>
+</div>
+</div>
+<div id="section-homework-1" class="section level2">
+<h2><span class="header-section-number">4.10</span> Homework</h2>
+<p><strong>Exercise 3</strong> Learning objectives: create, subset, and manipulate vector contents and attributes; summarize vector data using R <code>table()</code> and other functions; generate basic graphics using vector data.</p>
+<p><strong>Exercise 4</strong> Learning objectives: use functions to describe data frame characteristics; summarize and generate basic graphics for variables held in data frames; apply the subset function with logical operators; illustrate <code>NA</code>, <code>NaN</code>, <code>Inf</code>, and other special values occur; recognize the implications of using floating point arithmetic with logical operators.</p>
+<p><strong>Exercise 5</strong> Learning objectives: practice with lists, data frames, and associated functions; summarize variables held in lists and data frames; work with R’s linear regression <code>lm()</code> function output; review logical subsetting of vectors for partitioning and assigning of new values; generate and visualize data from mathematical functions.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-scripts-and-r-markdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section-graphics-in-r-part-1-ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

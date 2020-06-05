@@ -1,0 +1,141 @@
+<!-- ## Analyzing Audio Data with `warbleR` -->
+
+<!-- Now that we've explored how we visualize audio signals with Fourier Transforms and spectrograms, let's now explore some of the packages in R used explicitly for bioacoustic analysis of audio signals. The `warbleR` package was written to streamline bioacoustic research inside of R, and it provides numerous different functions for obtaining, manipulating, and visualizing bioacoustic data (and especially bioacoustic data of birds). We are going to go through an example to display some of the many useful functions in the `warbleR` package. Our goal is to analyze the recordings of Cedar Waxwings from the xeno-canto database to determine whether or not there is variation in these calls across large geographical distances. Along the way we will showcase many useful functions in the `warbleR` package, and will compute numerous meausures that give us useful information about the signal. Let's get started! -->
+
+<!-- First off, create a new directory where you want to store the data and change the working directory to that folder. We will produce a lot of files in the following exercise, so it is best to use a new directory to maintain organization. Here is the directory we use, you should change yours accordingly:  -->
+
+<!-- ```{r, eval = FALSE} -->
+<!-- setwd("/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master/") -->
+<!-- ``` -->
+
+<!-- We will extract sounds from a large and very common database in the field of bioacoustics, xeno-canto. `warbleR` allows you to easily query the database and work with the sounds maintained in their library. We are interested in the sounds of Cedar Waxwings, which just so happen to be my favorite species of bird. They are small, beautiful, majestic birds that are fairly common in rural and suburban areas (Figure \@ref(fig:waxwing)). They also have a very large geographical region, spanning across all three countries in North America (no wall can stop Cedar Waxwings from crossing the border).  -->
+
+<!-- The `warbleR` package allows us to first query the database for the recordings of Cedar Waxwings (*Bombycilla cedrorum*) without downloading them.  -->
+
+<!-- ```{r waxwing, echo = FALSE, fig.cap = "Two cedar waxwings, possibly pondering whether or not Ross and Rachel will ever get back together (oh wait no that's me as I write this chapter between binge watching Friends)", out.width = '100%'} -->
+<!-- knitr::include_graphics("figures/cedarWaxwing.jpg") -->
+<!-- ``` -->
+
+
+<!-- ```{r, warning = FALSE, message = FALSE} -->
+<!-- library(warbleR) -->
+<!-- cedarWax <- querxc(qword = "Bombycilla cedrorum", download = FALSE) -->
+<!-- names(cedarWax) -->
+<!-- ``` -->
+
+<!-- We use the `querxc` function to query the database, and use the restriction of the scientific name for Cedar Waxwings so we only obtain recordings of our desired species. We see that this returns a data frame with a lot of useful information, such as the latitude and longitude of the recording, the date, the quality of the recording, and the type of vocalization (since birds have multiple different types of vocalizations).  -->
+
+<!-- Now we produce a map showing the locations of all of the recordings. The `xc_maps` function allows you to either save a map as an image to your hard drive, or you can simply load the image in the R environment. We will load the image in the R environment by setting the `img` argument to `FALSE`.  -->
+
+<!-- ```{r} -->
+<!-- xc_maps(X = cedarWax, img = FALSE) -->
+<!-- ``` -->
+
+<!-- The recordings are mostly in the United States, but you can see there are recordings in Mexico and Canada as well. Now that we have an idea of where these recordings were taken, let's look at what types of recordings we have. We will do this using the `table()` function.  -->
+
+<!-- ```{r} -->
+<!-- table(cedarWax$Vocalization_type) -->
+<!-- ``` -->
+
+<!-- Look closely at the output from this function. This is a great example of the messiness of real-world data. Users from around the world input their data into this website, and this results in many different ways of describing the vocalizations produced by the birds. You can see the users used many different ways to describe the calls of cedar waxwings. There are `r table(cedarWax$Vocalization_type)["call"]` recordings labeled as "call" so we will just focus on these recordings, but keep in mind that in a more serious study, we may want to manipulate the labels and combine vocalizations that are actually of the same type.  -->
+
+<!-- Now that we have the recordings we want to work with, we download them and convert them to wav files. Since this is only an example, we will look specifically at six of the calls within the `cedarWax` recordings to minimize downloading and computation time.^[Sound files are pretty large so working with these files using the warbleR package can be time consuming.] -->
+
+<!-- ```{r}  -->
+<!-- newCedarWax <- subset(cedarWax, cedarWax$Recording_ID %in% c(313682, 313683, 313684, 321881, 329907, 361006)) -->
+<!-- quer_xc(X = newCedarWax) -->
+<!-- ``` -->
+
+<!-- `warbleR` and `seewave` are designed to work with wav files while the xeno-canto database stores its recordings as mp3 files. Luckily there is a very simple function `mp32wav` that converts all the mp3 files in the working directory to wav files. We then remove all the mp3 files from the current directory using the `system` function. -->
+
+<!-- ```{r} -->
+<!-- mp32wav() -->
+<!-- system("rm *.mp3") -->
+<!-- ``` -->
+
+<!-- `warbleR` gives us many easy ways to produce spectrograms for all of our desired sound files at once. To do this, we use the `lspec` function, which produces image files with spectrograms of whole sound files split into multiple rows.  -->
+
+<!-- ```{r, eval = FALSE} -->
+<!-- lspec(ovlp = 10, it = "tiff", rows = 5) -->
+<!-- ``` -->
+
+<!-- Now look in your current directory and you should see .tiff files for all of the sound files. These files could be used to visually inspect sound files and eliminate undesired files as a result of noise, length, or other variables you are not interested in. But for this example we will use all six recordings.  -->
+
+<!-- Remember that our ultimate goal is to determine whether or not Cedar Waxwing calls show some sort of variation across geographical distance.  We need to produce some acoustic measures to compare the different recordings. First, we want to perform *signal detection*. In other words, we want to find the exact parts in the recordings where a cedar waxwing is performing its call. We only want to determine the acoustic parameters during these times, as this will eliminate noise from having any impact on the parameters. We can perform signal detection using the `autodetec` function. This function automatically detects the start and end of vocalizations based on amplitude, duration, and frequency range attributes. In addition, `autodetec` has two types of output: -->
+
+<!-- 1. A data frame containing the recording name, selection, start time, and end time. -->
+<!-- 2. A spectrogram for each recording with red lines showing the beginning and end of the signal.  -->
+
+<!-- `autodetec` has a TON of parameters that you can use to help specify exactly what type of signal you are looking for in your data. To help us figure out what parameters we want to use, let's first look at an example spectrogram of one of the recordings (Figure \@ref(fig:spectrogram)). -->
+
+<!-- ```{r spectrogram, fig.cap = "Example spectrogram of Cedar Waxwing calls", echo = FALSE} -->
+<!-- knitr::include_graphics("figures/sampleSpectrogram.jpg") -->
+<!-- ``` -->
+
+<!-- The calls appear to be between 4-10 kHz in frequency. In this sample they are quite short, with none lasting longer than a second and most being less than half a second. Let's try these two parameters along with a few others and see what we get. Let's first do this on just one of the recordings so we don't waste computing power if we have to change our parameters   -->
+
+<!-- ```{r} -->
+<!-- wavs <- list.files(pattern = ".wav", ignore.case = TRUE) -->
+<!-- subset <- wavs[2] -->
+<!-- autodetec(flist = subset, bp = c(4, 10), threshold = 10, mindur = 0.05,  -->
+<!--           maxdur = 0.5,ssmooth = 800, ls = TRUE,  -->
+<!--           res = 100, flim = c(1, 12), wl = 300, set =TRUE, sxrow = 6,  -->
+<!--           rows = 5, redo = TRUE, it = "jpeg", img =TRUE, smadj = "end") -->
+<!-- ``` -->
+
+<!-- Here is a list of the parameters and what each means: -->
+
+
+<!-- + `flist`: character vector indicating the subset of files to be analyzed -->
+<!-- + `bp`: numeric vector of length two giving the lower and upper bounds of a frequency bandpass filter in kHz -->
+<!-- + `threshold`: specifies the amplitude threshold for detecting signals in percentage -->
+<!-- + `mindur`, `maxdur`: specify the minimum call length and maximum call length respectively -->
+<!-- + `ssmooth`: a numeric vector of length 1 to smooth the amplitude envelope with a sum smooth function -->
+
+<!-- The rest of the parameters above are controlling the output image. We have attached the output image below.  -->
+
+<!-- ```{r autodetec, fig.cap = "Example output of autodetec function"} -->
+<!-- knitr::include_graphics("figures/sampleAutodetec.jpg") -->
+<!-- ``` -->
+
+<!-- Well it looks like we've done a pretty good job! There are a couple signals we are not detecting, but we are not getting any false positives (detecting signals that aren't actually signals) so we will continue on with these parameters (feel free to refine them as much as you want). Let's run the `autodetec` function for all the recordings and save it as a variable. Notice that we switched the `img` argument to `FALSE` since we don't need to produce an image for every recording. In addition, we remove all null values as this would correspond to the rare situation in which the `autodetec` function does not detect a signal in a sound file -->
+
+<!-- ```{r} -->
+<!-- waxwingSignals <- autodetec(flist = wavs, bp = c(4, 10), threshold = 10, mindur = 0.05,  -->
+<!--           maxdur = 0.5,ssmooth = 800, ls = TRUE,  -->
+<!--           res = 100, flim = c(1, 12), set =TRUE, sxrow = 6,  -->
+<!--           rows = 15, redo = TRUE, it = "tiff", img = FALSE, smadj = "end") -->
+<!-- waxwingSignals[is.na(waxwingSignals)] <- 0 -->
+<!-- ``` -->
+
+<!-- Now that we have the locations of all the signals in the recordings, we can begin to compute acoustic parameters. The `warbleR` package provides the fantastic `specan` function that allows us to calculate 22 acoustic parameters at once through a batch process. This is much more efficient than computing all these parameters separately. `specan` uses the time coordinates from the `autodetec` function that we saved in our `waxwingSignals` variable. It then computes these acoustic parameters for the recordings, but only during the times when a signal is being performed.  -->
+
+<!-- ```{r} -->
+<!-- params <- specan(waxwingSignals, bp = c(1, 15)) -->
+<!-- names(params) -->
+<!-- ``` -->
+
+<!-- You can see from the `names` function that there are a wide variety of measures computed for each sound file. Now that we have all these measurements, let's use them to determine whether there is any geographic variation in these cedar waxwing calls. The first step in doing this is joining the geographic location for each recording to the `params` data frame. The geographic location is contained within the `cedarWax` data frame. We will first join these tables based on the recording ID.  -->
+
+<!-- ```{r} -->
+<!-- params$Recording_ID <- gsub('.*-([0-9]+).*','\\1', params$sound.files) -->
+<!-- newCedarWax$Recording_ID <- as.character(newCedarWax$Recording_ID) -->
+<!-- finalData <- inner_join(params, newCedarWax) -->
+<!-- ``` -->
+
+<!-- We will do this using a process called Principal Components Analysis, a statistical dimension reduction technique that can be used to find latent variables that explain large amounts of variation in a data set.  -->
+
+<!-- ```{r, tidy = FALSE} -->
+<!-- # Remove the non-numeric variables and then run the pca -->
+<!-- pca <- prcomp(x = finalData[, sapply(finalData, is.numeric)], scale. = TRUE) -->
+<!-- score <- as.data.frame(pca[[5]]) -->
+<!-- ID <- as.numeric(finalData$Recording_ID) -->
+<!-- ggplot(data = score, mapping = aes(PC1, PC2)) + -->
+<!--   geom_point(aes(color = finalData$Recording_ID, shape = finalData$Country))  -->
+<!-- ``` -->
+
+<!-- From the graph, we see that two birds from the US form a group with a bird from Mexico, and a bird from the US forms a group with two birds from Canada. Depending on where exactly the birds from the US are located, this could potentially suggest some variation across geographical distance. We leave this to you to explore further if you so desire. But for now, we see that the `warbleR` package has some fantastic tools for manipulating and working with audio signals within the R environment.  -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- system("rm *.wav *.tiff *.jpeg") -->
+<!-- ``` -->

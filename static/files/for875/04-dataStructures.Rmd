@@ -1,0 +1,550 @@
+# Data Structures {#structures}
+
+A data structure is a format for organizing and storing data. The structure is designed so that data can be accessed and worked with in specific ways. Statistical software and programming languages have methods (or functions) designed to operate on different kinds of data structures.
+
+This chapter's focus is on data structures. To help initial understanding, the data in this chapter will be relatively modest in size and complexity. The ideas and methods, however, generalize to larger and more complex data sets.
+
+The base data structures in R are vectors, matrices, arrays, data frames, and lists. The first three, vectors, matrices, and arrays, require all elements to be of the same type or homogeneous, e.g., all numeric or all character. Data frames and lists allow elements to be of different types or heterogeneous, e.g., some elements of a data frame may be numeric while other elements may be character. These base structures can also be organized by their dimensionality, i.e., 1-dimensional, 2-dimensional, or N-dimensional, as shown in Table \@ref(tab:dataStructures).
+
+```{r dataStructures, echo = FALSE}
+dat <- data.frame(Dimension = c(1, 2, "N"), Homogeneous = c("Atomic vector", "Matrix", "Array"), Heterogeneous = c("List", "Data frame", ""))
+knitr::kable(
+  dat, booktabs = TRUE,
+  caption = 'Dimension and type content of base data structures
+  in R',
+  row.names = FALSE
+)
+```
+
+R has no scalar types, i.e., 0-dimensional. Individual numbers or strings are actually vectors of length one.
+
+An efficient way to understand what comprises a given object is to use the `str()` function. `str()` is short for structure and prints a compact, human-readable description of any R data structure. For example, in the code below, we prove to ourselves that what we might think of as a scalar value is actually a vector of length one.
+
+```{r}
+a <- 1
+str(a)
+is.vector(a)
+length(a)
+```
+
+Here we assigned `a` the scalar value one. The `str(a)` prints `num 1`, which says `a` is numeric of length one. Then just to be sure we used the function `is.vector()` to test if `a` is in fact a vector. Then, just for fun, we asked the length of `a`, which again returns one. There are a set of similar logical tests for the other base data structures, e.g., `is.matrix()`, `is.array()`, `is.data.frame()`, and `is.list()`. These will all come in handy as we encounter different R objects.
+
+## Vectors {#vector}
+
+Think of a vector^[Technically the objects described in this section are "atomic" vectors (all elements of the same type), since lists, to be described below, also are actually vectors. This will not be an important issue, and the shorter term vector will be used for atomic vectors below.] as a structure to represent one variable in a data set. For example a vector might hold the weights, in pounds, of 7 people in a data set. Or another vector might hold the genders of those 7 people. The `c()` function in R is useful for creating (small) vectors and for modifying existing vectors. Think of `c` as standing for "combine".
+
+```{r, tidy = FALSE}
+weight <- c(123, 157, 205, 199, 223, 140, 105)
+weight
+gender <- c("female", "female", "male", "female", "male",
+            "male", "female")
+gender
+```
+
+Notice that elements of a vector are separated by commas when using the `c()` function to create a vector. Also notice that character values are placed inside quotation marks.
+
+The `c()` function also can be used to add to an existing vector. For example, if an eighth male person was included in the data set, and his weight was 194 pounds, the existing vectors could be modified as follows.
+
+```{r}
+weight <- c(weight, 194)
+gender <- c(gender, "male")
+weight
+gender
+```
+
+### Types, Conversion, Coercion
+
+Clearly it is important to distinguish between different types of vectors. For example, it makes sense to ask R to calculate the mean of the weights stored in `weight`, but does not make sense to ask R to compute the mean of the genders stored in `gender`. Vectors in R may have one of six different "types": character, double, integer, logical, complex, and raw. Only the first four of these will be of interest below, and the distinction between double and integer will not be of great import. To illustrate logical vectors, imagine that each of the eight people in the data set was asked whether he or she was taking blood pressure medication, and the responses were coded as `TRUE` if the person answered yes, and `FALSE` if the person answered no.
+
+```{r}
+typeof(weight)
+typeof(gender)
+bp <- c(FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE)
+bp
+typeof(bp)
+```
+
+It may be surprising to see that the variable `weight` is of `double` type, even though its values all are integers. By default R creates a double type vector when numeric values are given via the `c()` function.
+
+When it makes sense, it is possible to convert vectors to a different type. Consider the following examples.
+
+```{r}
+weight.int <- as.integer(weight)
+weight.int
+typeof(weight.int)
+weight.char <- as.character(weight)
+weight.char
+bp.double <- as.double(bp)
+bp.double
+gender.oops <- as.double(gender)
+gender.oops
+sum(bp)
+```
+
+The integer version of `weight` doesn't look any different, but it is stored differently, which can be important both for computational efficiency and for interfacing with other languages such as `C++`. As noted above, however, we will not worry about the distinction between integer and double types. Converting `weight` to character goes as expected:  The character representations of the numbers replace the numbers themselves. Converting the logical vector `bp` to double is pretty straightforward too: `FALSE` is converted to zero, and `TRUE` is converted to one. Now think about converting the character vector `gender` to a numeric double vector. It's not at all clear how to represent "female" and "male" as numbers. In fact in this case what R does is to create a character vector, but with each element set to `NA`, which is the representation of missing data.^[Missing data will be discussed in more detail later in the chapter.] Finally consider the code `sum(bp)`. Now `bp` is a logical vector, but when R sees that we are asking to sum this logical vector, it automatically converts it to a numerical vector and then adds the zeros and ones representing `FALSE` and `TRUE`.
+
+R also has functions to test whether a vector is of a particular type.
+
+```{r}
+is.double(weight)
+is.character(weight)
+is.integer(weight.int)
+is.logical(bp)
+```
+
+#### Coercion
+
+Consider the following examples.
+
+```{r}
+xx <- c(1, 2, 3, TRUE)
+xx
+yy <- c(1, 2, 3, "dog")
+yy
+zz <- c(TRUE, FALSE, "cat")
+zz
+weight+bp
+```
+
+Vectors in R can only contain elements of one type. If more than one type is included in a `c()` function, R silently *coerces* the vector to be of one type. The examples illustrate the hierarchy---if any element is a character, then the whole vector is character. If some elements are numeric (either integer or double) and other elements are logical, the whole vector is numeric. Note what happened when R was asked to add the numeric vector `weight` to the logical vector `bp`. The logical vector was silently coerced to be numeric, so that FALSE became zero and TRUE became one, and then the two numeric vectors were added.
+
+### Accessing Specific Elements of Vectors
+
+To access and possibly change specific elements of vectors, refer to the position of the element in square brackets. For example, `weight[4]` refers to the fourth element of the vector `weight`. Note that R starts the numbering of elements at 1, i.e., the first element of a vector `x` is `x[1]`.
+
+```{r}
+weight
+weight[5]
+weight[1:3]
+length(weight)
+weight[length(weight)]
+weight[]
+weight[3] <- 202
+weight
+```
+
+Note that including nothing in the square brackets results in the whole vector being returned.
+
+Negative numbers in the square brackets tell R to omit the corresponding value. And a zero as a subscript returns nothing (more precisely, it returns a length zero vector of the appropriate type).
+
+```{r, error = TRUE}
+weight[-3]
+weight[-length(weight)]
+lessWeight <- weight[-c(1,3,5)]
+lessWeight
+weight[0]
+weight[c(0,2,1)]
+weight[c(-1, 2)]
+```
+
+Note that mixing zero and other nonzero subscripts is allowed, but mixing negative and positive subscripts is not allowed.
+
+What about the (usual) case where we don't know the positions of the elements we want? For example possibly we want the weights of all females in the data. Later we will learn how to subset using logical indices, which is a very powerful way to access desired elements of a vector.
+
+### Practice Problem
+
+A bad programming technique that often plagues beginners is a technique called *hardcoding*. Consider the following simple vector containing data on the number of tree species found at different sites.
+
+```{r}
+tree.sp <- c(10, 13, 15, 8, 2, 9, 10, 20, 9, 11)
+```
+
+Suppose we are interested in the second to last value of the data set. One way to do this is to first determine the length of vector using the `length()` function, then taking that value and subtracting 1.
+
+```{r}
+num.sites <- length(tree.sp)
+num.sites
+tree.sp[10 - 1]
+```
+
+This is an example of *hardcoding*. But what if we attempt to use the same code on a second vector of tree species data that has a different number of sites?
+
+```{r, error = TRUE}
+tree.sp <- c(8, 4, 3, 2, 19, 3)
+num.sites <- length(tree.sp)
+num.sites
+tree.sp[10 - 1]
+```
+
+That's clearly not what we want. Fix this code so we can always extract the second to last value in the vector, regardless of the length of the vector.
+
+
+## Factors
+
+Categorical variables such as `gender` can be represented as character vectors. In many cases this simple representation is sufficient. Consider, however, two other categorical variables, one representing age via categories `youth`, `young adult`, `middle age`, `senior`, and another representing income via categories `lower`, `middle`, and `upper`. Suppose that for the small health data set, all the people are either middle aged or senior citizens. If we just represented the variable via a character vector, there would be no way to know that there are two other categories, representing youth and young adults, which happen not to be present in the data set. And for the income variable, the character vector representation does not explicitly indicate that there is an ordering of the levels.
+
+Factors in R provide a more sophisticated way to represent categorical variables. Factors explicitly contain all possible levels, and allow ordering of levels.
+
+```{r, tidy = FALSE}
+age <- c("middle age", "senior", "middle age", "senior",
+         "senior", "senior", "senior", "middle age")
+income <- c("lower", "lower", "upper", "middle", "upper",
+            "lower", "lower", "middle")
+age
+income
+age <- factor(age, levels=c("youth", "young adult", "middle age",
+                            "senior"))
+age
+income <- factor(income, levels=c("lower", "middle", "upper"),
+                 ordered = TRUE)
+income
+```
+
+In the factor version of `age` the levels are explicitly listed, so it is clear that the two included levels are not all the possible levels. And in the factor version of income, the ordering is explicit.
+
+In many cases the character vector representation of a categorical variable is sufficient and easier to work with. In this book, factors will not be used extensively. It is important to note that R often by default creates a factor when character data are read in, and sometimes it is necessary to use the argument `stringsAsFactors = FALSE` to explicitly tell R not to do this. This is shown later in the chapter when data frames are introduced.
+
+## Names of Objects in R
+
+There are few hard and fast restrictions on the names of objects (such as vectors) in R. In addition to these restrictions, there are certain good practices, and many things to avoid as well.
+
+From the help page for `make.names` in R,  the name of an R object is "syntactically valid" if the name "consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number" and is not one of the "reserved words" in R such as `if`, `TRUE`, `function`, etc.  For example, `c45t.le_dog`  and `.ty56` are both syntactically valid (although not very good names) while `4cats` and `log#@gopher` are not.
+
+A few important comments about naming objects follow:
+
+1. It is important to be aware that names of objects in R are case-sensitive, so `weight` and `Weight` do not refer to the same object.
+
+```{r, error = TRUE}
+weight
+Weight
+```
+
+2. It is unwise to create an object with the same name as a built in R object such as the function `c` or the function `mean`. In earlier versions of R this could be somewhat disastrous, but even in current versions, it is definitely not a good idea!
+3. As much as possible, choose names that are informative. When creating a variable you may initially remember that `x` contains heights and `y` contains genders, but after a few hours, a few days, or a few weeks, you probably will forget this. Better options are `Height` and `Gender`.
+4. As much as possible, be consistent in how you name objects. In particular, decide how to separate multi-word names. Some options include:
+    + Using case to separate: `BloodPressure` or `bloodPressure` for example
+    + Using underscores to separate: `blood_pressure` for example
+    + Using a period to separate: `blood.pressure` for example
+
+## Missing Data, Infinity, etc.
+
+Most real-world data sets have variables where some observations are missing. In a longitudinal study participants may drop out. In a survey, participants may decide not to respond to certain questions. Statistical software should be able to represent missing data and to analyze data sets in which some data are missing.
+
+In R, the value `NA` is used for a missing data value. Since missing values may occur in numeric, character, and other types of data, and since R requires that a vector contain only elements of one type, there are different types of `NA` values. Usually R determines the appropriate type of `NA` value automatically. It is worth noting that the default type for `NA` is logical, and that `NA` is NOT the same as the character string `"NA"`.
+
+```{r}
+missingCharacter <- c("dog", "cat", NA, "pig", NA, "horse")
+missingCharacter
+is.na(missingCharacter)
+missingCharacter <- c(missingCharacter, "NA")
+missingCharacter
+is.na(missingCharacter)
+allMissing <- c(NA, NA, NA)
+typeof(allMissing)
+```
+
+How should missing data be treated in computations, such as finding the mean or standard deviation of a variable? One possibility is to return `NA`. Another is to remove the missing value(s) and then perform the computation.
+
+```{r, prompt = TRUE}
+mean(c(1,2,3,NA,5))
+mean(c(1,2,3,NA,5), na.rm=TRUE)
+```
+
+As this example shows, the default behavior for the `mean()` function is to return `NA`. If removal of the missing values and then computing the mean is desired, the argument `na.rm` is set to `TRUE`. Different R functions have different default behaviors, and there are other possible actions. Consulting the help for a function provides the details.
+
+### Practice Problem
+
+Collecting data is often a messy process resulting in multiple errors in the data. Consider the following small vector representing the weights of 10 adults in pounds.
+
+```{r}
+my.weights <- c(150, 138, 289, 239, 12, 103, 310, 200, 218, 178)
+```
+
+As far as I know, it's not possible for an adult to weigh 12 pounds, so that is most likely an error. Change this value to NA, and then find the standard deviation of the weights after removing the NA value.
+
+```{r, include = FALSE, eval = FALSE}
+# Answer
+my.weights[my.weights == 12] <- NA
+sd(my.weights, na.rm = TRUE)
+```
+
+### Infinity and NaN
+
+What happens if R code requests division by zero, or results in a number that is too large to be represented? Here are some examples.
+
+```{r, prompt = TRUE}
+x <- 0:4
+x
+1/x
+x/x
+y <- c(10, 1000, 10000)
+2^y
+```
+
+`Inf` and `-Inf` represent infinity and negative infinity (and numbers which are too large in magnitude to be represented as floating point numbers). `NaN` represents the result of a calculation where the result is undefined, such as dividing zero by zero. All of these are common to a variety of programming languages, including R.
+
+## Data Frames {#dataFrames}
+
+Commonly, data is rectangular in form, with variables as columns and cases as rows. Continuing with the (contrived) data on weight, gender, and blood pressure medication, each of those variables would be a column of the data set, and each person's measurements would be a row. In R, such data are represented as a *data frame*.
+
+```{r, tidy = FALSE}
+healthData <- data.frame(Weight = weight, Gender=gender, bp.meds = bp,
+                         stringsAsFactors=FALSE)
+healthData
+names(healthData)
+colnames(healthData)
+names(healthData) <- c("Wt", "Gdr", "bp")
+healthData
+rownames(healthData)
+names(healthData) <- c("Weight", "Gender", "bp.meds")
+```
+
+The `data.frame` function can be used to create a data frame (although it's more common to read a data frame into R from an external file, something that will be introduced later). The names of the variables in the data frame are given as arguments, as are the vectors of data that make up the variable's values. The argument   `stringsAsFactors=FALSE` asks R not to convert character vectors into factors, which R does by default, to the dismay of many users. Names of the columns (variables) can be extracted and set via either `names` or `colnames`. In the example, the variable names are changed to `Wt, Gdr, bp` and then changed back to the original `Weight, Gender, bp.meds` in this way. Rows can be named also. In this case since specific row names were not provided, the default row names of `"1", "2"` etc. are used.
+
+In the next example a built-in dataset called `mtcars` is made available by the `data` function, and then the first  and last six rows are displayed using `head` and `tail`.
+
+```{r}
+data(mtcars)
+head(mtcars)
+tail(mtcars)
+```
+
+Note that the `mtcars` data frame does have non-default row names which give the make and model of the cars.
+
+### Accessing Specific Elements of Data Frames
+
+Data frames are two-dimensional, so to access a specific element (or elements) we need to specify both the row and column.
+
+```{r}
+mtcars[1,4]
+mtcars[1:3, 3]
+mtcars[1:3, 2:3]
+mtcars[,1]
+```
+
+Note that `mtcars[,1]` returns ALL elements in the first column. This agrees with the behavior for vectors, where leaving a subscript out of the square brackets tells R to return all values. In this case we are telling R to return all rows, and the first column.
+
+For a data frame there is another way to access specific columns, using the `$` notation.
+
+```{r, prompt = TRUE, error = TRUE}
+mtcars$mpg
+mtcars$cyl
+mpg
+cyl
+weight
+```
+
+Notice that typing the variable name, such as `mpg`, without the name of the data frame (and a dollar sign) as a prefix, does not work. This is sensible. There may be several data frames that have variables named `mpg`, and just typing `mpg` doesn't provide enough information to know which is desired. But if there is a vector named `mpg` that is created outside a data frame, it will be retrieved when `mpg` is typed, which is why typing `weight` does work, since `weight` was created outside of a data frame, although ultimately it was incorporated into the `healthData` data frame.
+
+## Lists
+
+The third main data structure we will work with is a list. Technically a list is a vector, but one in which elements can be of different types. For example a list may have one element that is a vector, one element that is a data frame, and another element that is a function. Consider designing a function that fits a simple linear regression model to two quantitative variables. We might want that function to compute and return several things such as
+
++ The fitted slope and intercept (a numeric vector with two components)
++ The residuals (a numeric vector with $n$ components, where $n$ is the number of data points)
++ Fitted values for the data (a numeric vector with $n$ components, where $n$ is the number of data points)
++ The names of the dependent and independent variables (a character vector with two components)
+
+In fact R has a function, `lm`, which does this (and much more).
+
+```{r}
+mpgHpLinMod <- lm(mpg ~ hp, data=mtcars)
+mode(mpgHpLinMod)
+names(mpgHpLinMod)
+mpgHpLinMod$coefficients
+mpgHpLinMod$residuals
+```
+
+The `lm` function returns a list (which in the code above has been assigned to the object `mpgHpLinMod`).^[The `mode` function returns the type or storage mode of an object.] One component of the list is the length `r length(mpgHpLinMod$coefficients)` vector of coefficients, while another component is the length `r length(mpgHpLinMod$residuals)` vector of residuals. The code also illustrates that named components of a list can be accessed using the dollar sign notation, as with data frames.
+
+The `list` function is used to create lists.
+
+```{r, tidy=FALSE}
+temporaryList <- list(first=weight, second=healthData,
+                      pickle=list(a = 1:10, b=healthData))
+temporaryList
+```
+
+Here, for illustration, I assembled a list to hold some of the R data structures we have been working with in this chapter. The first list element, named `first`, holds the `weight` vector we created in Section \@ref(vector), the second list element, named `second`, holds the `healthData` data frame, and the third list element, named `pickle`, holds a list with elements named `a` and `b` that hold a vector of values 1 through 10 and another copy of the `healthData` data frame, respectively. As this example shows, a list can contain another list.
+
+### Accessing Specific Elements of Lists
+
+We already have seen the dollar sign notation works for lists. In addition, the square bracket subsetting notation can be used. There is an added, somewhat subtle wrinkle---using either single or double square brackets.
+
+```{r}
+temporaryList$first
+mode(temporaryList$first)
+temporaryList[[1]]
+mode(temporaryList[[1]])
+temporaryList[1]
+mode(temporaryList[1])
+```
+
+Note the dollar sign and double bracket notation return a numeric vector, while the single bracket notation returns a list. Notice also the difference in results below.
+
+```{r}
+temporaryList[c(1,2)]
+temporaryList[[c(1,2)]]
+```
+
+The single bracket form returns the first and second elements of the list, while the double bracket form returns the second element in the first element of the list. Generally, do not put a vector of indices or names in a double bracket, you will likely get unexpected results. See, for example, the results below.^[Try this example using only single brackets$\ldots$ it will return a list holding elements `first`, `second`, and `pickle`.]
+
+```{r, error = TRUE}
+temporaryList[[c(1,2,3)]]
+```
+
+So, in summary, there are two main differences between using the single bracket `[]` and double bracket `[[]]`. First, the single bracket will return a list that holds the object(s) held at the given indices or names placed in the bracket, whereas the double brackets will return the actual object held at the index or name placed in the innermost bracket. Put differently, a single bracket can be used to access a range of list elements and will return a list, and a double bracket can only access a single element in the list and will return the object held at the index.
+
+## Subsetting with Logical Vectors {#subsetting}
+
+Consider the `healthData` data frame. How can we access only those weights which are more than 200? How can we access the genders of those whose weights are more than 200? How can we compute the mean weight of males and the mean weight of females? Or consider the `mtcars` data frame. How can we obtain the miles per gallon for all six cylinder cars? Both of these data sets are small enough that it would not be too onerous to extract the values by hand. But for larger or more complex data sets, this would be very difficult or impossible to do in a reasonable amount of time, and would likely result in errors.
+
+R has a powerful method for solving these sorts of problems using a variant of the subsetting methods that we already have learned. When given a logical vector in square brackets, R will return the values corresponding to `TRUE`.
+To begin, focus on the `weight` and `gender` vectors created in Section \@ref(vector).
+
+The R code `weight > 200` returns a `TRUE` for each value of `weight` which is more than 200, and a `FALSE` for each value of `weight` which is less than or equal to 200. Similarly `gender == "female"` returns `TRUE` or `FALSE` depending on whether an element of `gender` is equal to `female`.
+
+```{r}
+weight
+weight > 200
+gender[weight > 200]
+weight[weight > 200]
+gender == "female"
+weight[gender == "female"]
+```
+
+Consider the lines of R code one by one.
+
++ `weight` instructs R to display the values in the vector `weight`.
++ `weight > 200` instructs R to check whether each value in `weight` is greater than 200, and to return `TRUE` if so, and `FALSE` otherwise.
++ The next line, `gender[weight > 200]`, does two things. First, inside the square brackets, it does the same thing as the second line, namely, returning `TRUE` or `FALSE` depending on whether a value of `weight` is or is not greater than 200. Second, each element of `gender` is matched with the corresponding `TRUE` or `FALSE` value, and is returned if and only if the corresponding value is `TRUE`. For example the first value of `gender` is ` gender[1]`. Since the first `TRUE` or `FALSE` value is `FALSE`, the first value of `gender` is not returned. Only the third and fifth values of `gender`, both of which happen to be `male`, are returned. Briefly, this line returns the genders of those people whose weight is over 200 pounds.
++ The fourth line of code, `weight[weight > 200]`, again begins by returning `TRUE` or `FALSE` depending on whether elements of `weight` are larger than 200. Then those elements of `weight` corresponding to `TRUE` values, are returned. So this line returns the weights of those people whose weights are more than 200 pounds.
++ The fifth line returns `TRUE` or `FALSE` depending on whether elements of `gender` are equal to `female` or not.
++ The sixth line returns the weights of those whose gender is `female`.
+
+There are six comparison operators in R, `>, <, >=, <=, ==, !=`. Note that to test for equality a "double equals sign" is used, while `!=` tests for inequality.
+
+### Modifying or Creating Objects via Subsetting
+
+The results of subsetting can be assigned to a new (or existing) R object, and subsetting on the left side of an assignment is a common way to modify an existing R object.
+
+```{r}
+weight
+lightweight <- weight[weight < 200]
+lightweight
+x <- 1:10
+x
+x[x < 5] <- 0
+x
+y <- -3:9
+y
+y[y < 0] <- NA
+y
+rm(x)
+rm(y)
+```
+
+### Logical Subsetting and Data Frames
+
+First consider the small and simple `healthData` data frame.
+
+```{r}
+healthData
+healthData$Weight[healthData$Gender == "male"]
+healthData[healthData$Gender == "female", ]
+healthData[healthData$Weight > 190, 2:3]
+```
+
+The first example is really just subsetting a vector, since the `$` notation creates vectors. The second two examples return subsets of the whole data frame. Note that the logical vector subsets the rows of the data frame, choosing those rows where the gender is female or the weight is more than 190. Note also that the specification for the columns (after the comma) is left blank in the first case, telling R to return all the columns. In the second case the second and third columns are requested explicitly.
+
+Next consider the much larger and more complex `WorldBank` data frame. Recall, the `str` function displays the "structure" of an R object. Here is a look at the structure of several R objects.
+
+```{r}
+str(mtcars)
+str(temporaryList)
+str(WorldBank)
+```
+
+First we see that `mtcars` is a data frame which has 32 observations (rows) on each of 11 variables (columns). The names of the variables are given, along with their type (in this case, all numeric), and the first few values of each variable is given.
+
+Second we see that `temporaryList` is a list with three components. Each of the components is described separately, with the first few values again given.
+
+Third we examine the structure of `WorldBank`. It is a data frame with 11880 observations on each of 15 variables. Some of these are character variables, some are numeric, and one (`year`) is integer. Looking at the first few values we see that some variables have missing values.
+
+Consider creating a data frame which only has the observations from one year, say 1971. That's relatively easy. Just choose rows for which `year` is equal to 1971.
+
+```{r}
+WorldBank1971 <- WorldBank[WorldBank$year == 1971, ]
+dim(WorldBank1971)
+```
+
+The `dim` function returns the dimensions of a data frame, i.e., the number of rows and the number of columns. From `dim` we see that there are ` dim(WorldBank1971)[1]` cases from 1971.
+
+Next, how can we create a data frame which only contains data from 1971, and also only contains cases for which there are no  missing values in the fertility rate variable? R has a built in function `is.na` which returns `TRUE` if the observation is missing and returns `FALSE` otherwise. And `!is.na` returns the negation, i.e., it returns `FALSE` if the observation is missing and `TRUE` if the observation is not missing.
+
+```{r}
+WorldBank1971$fertility.rate[1:25]
+!is.na(WorldBank1971$fertility.rate[1:25])
+WorldBank1971 <- WorldBank1971[!is.na(WorldBank1971$fertility.rate),]
+dim(WorldBank1971)
+```
+
+From `dim` we see that there are `r dim(WorldBank1971)[1]` cases from 1971 with non-missing fertility rate data.
+
+Return attention now to the original `WorldBank` data frame with data not only from 1971. How can we extract only those cases (rows) which have NO missing data?  Consider the following simple example:
+```{r, tidy=FALSE}
+temporaryDataFrame <- data.frame(V1 = c(1, 2, 3, 4, NA),
+                                 V2 = c(NA, 1, 4, 5, NA),
+                                 V3 = c(1, 2, 3, 5, 7))
+temporaryDataFrame
+is.na(temporaryDataFrame)
+rowSums(is.na(temporaryDataFrame))
+```
+
+First notice that `is.na` will test each element of a data frame for missingness. Also recall that if R is asked to sum a logical vector, it will first convert the logical vector to numeric and then compute the sum, which effectively counts the number of elements in the logical vector which are `TRUE`. The `rowSums` function computes the sum of each row. So `rowSums(is.na(temporaryDataFrame))` returns a vector with as many elements as there are rows in the data frame. If an element is zero, the corresponding row has no missing values. If an element is greater than zero, the value is the number of variables which are missing in that row. This gives a simple method to return all the cases which have no missing data.
+
+```{r}
+dim(WorldBank)
+WorldBankComplete <- WorldBank[rowSums(is.na(WorldBank)) == 0,]
+dim(WorldBankComplete)
+```
+
+Out of the `r dim(WorldBankComplete)[1]` rows in the original data frame, only `r dim(WorldBankComplete)[1]` have no missing observations!
+
+## Patterned Data
+
+Sometimes it is useful to generate all the integers from 1 through 20, to generate a sequence of 100 points equally spaced between 0 and 1, etc. The R functions `seq()` and `rep()` as well as the "colon operator" `:` help to generate such sequences.
+
+The colon operator generates a sequence of values with increments of $1$ or $-1$.
+```{r}
+1:10
+-5:3
+10:4
+pi:7
+```
+
+The `seq()` function generates either a sequence of pre-specified length or a sequence with pre-specified increments.
+
+```{r}
+seq(from = 0, to = 1, length = 11)
+seq(from = 1, to = 5, by = 1/3)
+seq(from = 3, to = -1, length = 10)
+```
+
+The `rep()` function replicates the values in a given vector.
+
+```{r}
+rep(c(1,2,4), length = 9)
+rep(c(1,2,4), times = 3)
+rep(c("a", "b", "c"), times = c(3, 2, 7))
+```
+
+### Practice Problem
+
+Often when using R you will want to simulate data from a specific probability distribution (i.e. normal/Gaussian, bionmial, Poisson). R has a vast suite of functions for working with statistical distributions. To generate values from a statistical distribution, the function has a name beginning with an "r" followed by some abbreviation of the probability distribution. For example to simulate from the three distributions mentioned above, we can use the functions `rnorm()`, `rbinom()`, and `rpois()`.
+
+Use the `rnorm()` function to generate 10,000 values from the standard normal distribution (the normal distribution with mean = 0 and variance = 1). Consult the help page for `rnorm()` if you need to. Save this vector of variables to a vector named `sim.vals`. Then use the `hist()` function to draw a histogram of the simulated data. Does the data look like it follows a normal distribution?
+
+```{r, include = FALSE, eval = FALSE}
+# Answer
+sim.vals <- rnorm(10000)
+hist(sim.vals)
+```
+
+## Exercises
+
+**Exercise 3** Learning objectives: create, subset, and manipulate vector contents and attributes; summarize vector data using R `table()` and other functions; generate basic graphics using vector data.
+
+**Exercise 4** Learning objectives: use functions to describe data frame characteristics; summarize and generate basic graphics for variables held in data frames; apply the subset function with logical operators; illustrate `NA`, `NaN`, `Inf`, and other special values; recognize the implications of using floating point arithmetic with logical operators.
+
+**Exercise 5** Learning objectives: practice with lists, data frames, and associated functions; summarize variables held in lists and data frames; work with R’s linear regression `lm()` function output; review logical subsetting of vectors for partitioning and assigning of new values; generate and visualize data from mathematical functions.
