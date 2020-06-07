@@ -493,7 +493,7 @@ Notice a few things. Variables can be selected by name or column number. As usua
 
 ### Practice Problem
 
-Use the `contains()` function to select only the columns that contain a `c`
+Use the `contains()` function to select only the columns that contain a `c` in the `gapminder` data set.
 
 ```{r, eval = FALSE, echo = FALSE}
 select(gm, contains('c'))
@@ -716,17 +716,6 @@ gm %>%
   arrange(changeLifeExp)
 ```
 
-That's still not quite right. Because the data are grouped by country, R did the ordering within group. If we want to see the largest drops overall, we need to remove the grouping.
-```{r}
-gm %>% 
-  group_by(country) %>% 
-  mutate(changeLifeExp = lifeExp - lag(lifeExp, order_by = year)) %>% 
-  select(-c(population, gdpPercap)) %>% 
-  ungroup() %>% 
-  arrange(changeLifeExp) %>% 
-  print(n=20)
-```
-
 ### Practice Problem
 
 As you progress in your data science related career, we are sure you will find `dplyr` as one of the most useful packages for your initial data exploration. Here is one more Practice Problem to get more comfortable with the syntax.
@@ -747,4 +736,4 @@ iris %>%
 
 **Exercise 8** Learning objectives: work with messy data; import data from an external spreadsheet; practice using functions in `tidyr` and graphing functions.}
 
-**Exercise 9** {Learning objectives: work with several key **dplyr** functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.}
+**Exercise 9** Learning objectives: work with several key **dplyr** functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.

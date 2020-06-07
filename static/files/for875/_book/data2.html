@@ -24,7 +24,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2020-06-05" />
+<meta name="date" content="2020-06-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1339,7 +1339,7 @@ Valiant            1  0    3    1</code></pre>
 </div>
 <div id="practice-problem-8" class="section level3" number="6.7.4">
 <h3><span class="header-section-number">6.7.4</span> Practice Problem</h3>
-<p>Use the <code>contains()</code> function to select only the columns that contain a <code>c</code></p>
+<p>Use the <code>contains()</code> function to select only the columns that contain a <code>c</code> in the <code>gapminder</code> data set.</p>
 </div>
 <div id="pipes" class="section level3" number="6.7.5">
 <h3><span class="header-section-number">6.7.5</span> Pipes</h3>
@@ -1756,38 +1756,6 @@ Valiant            1  0    3    1</code></pre>
  9 Zimbabwe      2002 Africa       40.0         -6.82
 10 China         1962 Asia         44.5         -6.05
 # … with 1,694 more rows</code></pre>
-<p>That’s still not quite right. Because the data are grouped by country, R did the ordering within group. If we want to see the largest drops overall, we need to remove the grouping.</p>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="data2.html#cb537-1"></a><span class="op">&gt;</span><span class="st"> </span>gm <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb537-2"><a href="data2.html#cb537-2"></a><span class="op">+</span><span class="st">   </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb537-3"><a href="data2.html#cb537-3"></a><span class="op">+</span><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">changeLifeExp =</span> lifeExp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(lifeExp, <span class="dt">order_by =</span> year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb537-4"><a href="data2.html#cb537-4"></a><span class="op">+</span><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(population, gdpPercap)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb537-5"><a href="data2.html#cb537-5"></a><span class="op">+</span><span class="st">   </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb537-6"><a href="data2.html#cb537-6"></a><span class="op">+</span><span class="st">   </span><span class="kw">arrange</span>(changeLifeExp) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb537-7"><a href="data2.html#cb537-7"></a><span class="op">+</span><span class="st">   </span><span class="kw">print</span>(<span class="dt">n=</span><span class="dv">20</span>)</span></code></pre></div>
-<pre><code># A tibble: 1,704 x 5
-   country       year continent lifeExp changeLifeExp
-   &lt;fct&gt;        &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;
- 1 Rwanda        1992 Africa       23.6        -20.4 
- 2 Zimbabwe      1997 Africa       46.8        -13.6 
- 3 Lesotho       2002 Africa       44.6        -11.0 
- 4 Swaziland     2002 Africa       43.9        -10.4 
- 5 Botswana      1997 Africa       52.6        -10.2 
- 6 Cambodia      1977 Asia         31.2         -9.10
- 7 Namibia       2002 Africa       51.5         -7.43
- 8 South Africa  2002 Africa       53.4         -6.87
- 9 Zimbabwe      2002 Africa       40.0         -6.82
-10 China         1962 Asia         44.5         -6.05
-11 Botswana      2002 Africa       46.6         -5.92
-12 Zambia        1997 Africa       40.2         -5.86
-13 Iraq          1992 Asia         59.5         -5.58
-14 Liberia       1992 Africa       40.8         -5.23
-15 Cambodia      1972 Asia         40.3         -5.10
-16 Kenya         1997 Africa       54.4         -4.88
-17 Somalia       1992 Africa       39.7         -4.84
-18 Zambia        1992 Africa       46.1         -4.72
-19 Swaziland     2007 Africa       39.6         -4.26
-20 Uganda        1997 Africa       44.6         -4.25
-# … with 1,684 more rows</code></pre>
 </div>
 <div id="practice-problem-10" class="section level3" number="6.7.11">
 <h3><span class="header-section-number">6.7.11</span> Practice Problem</h3>
@@ -1799,7 +1767,7 @@ Valiant            1  0    3    1</code></pre>
 <h2><span class="header-section-number">6.8</span> Exercises</h2>
 <p><strong>Exercise 7</strong> Learning objectives: introduce <code>with()</code>, <code>tapply()</code>, and <code>cut()</code> functions; summarize data using the <code>table()</code> function with logical subsetting; practice using factor data types.</p>
 <p><strong>Exercise 8</strong> Learning objectives: work with messy data; import data from an external spreadsheet; practice using functions in <code>tidyr</code> and graphing functions.}</p>
-<p><strong>Exercise 9</strong> {Learning objectives: work with several key <strong>dplyr</strong> functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.}</p>
+<p><strong>Exercise 9</strong> Learning objectives: work with several key <strong>dplyr</strong> functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.</p>
 
 </div>
 </div>

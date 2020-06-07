@@ -24,7 +24,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2020-06-05" />
+<meta name="date" content="2020-06-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -492,9 +492,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="r-functions" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> R Functions</h2>
 <p>Data on the yield (pounds per acre) of two types of corn seeds (regular and kiln dried) were collected. Each of the 11 plots of land was split into two subplots, and one of the subplots was planted in regular corn while the other was planted in kiln dried corn. These data were analyzed in a famous paper authored by William Gosset. Here are the data.</p>
-<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="functions.html#cb539-1"></a><span class="op">&gt;</span><span class="st"> </span>u.corn =<span class="st"> &quot;https://www.finley-lab.com/files/data/corn.csv&quot;</span></span>
-<span id="cb539-2"><a href="functions.html#cb539-2"></a><span class="op">&gt;</span><span class="st"> </span>corn =<span class="st"> </span><span class="kw">read.csv</span>(u.corn, <span class="dt">header=</span><span class="ot">TRUE</span>)</span>
-<span id="cb539-3"><a href="functions.html#cb539-3"></a><span class="op">&gt;</span><span class="st"> </span>corn</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="functions.html#cb537-1"></a><span class="op">&gt;</span><span class="st"> </span>u.corn =<span class="st"> &quot;https://www.finley-lab.com/files/data/corn.csv&quot;</span></span>
+<span id="cb537-2"><a href="functions.html#cb537-2"></a><span class="op">&gt;</span><span class="st"> </span>corn =<span class="st"> </span><span class="kw">read.csv</span>(u.corn, <span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb537-3"><a href="functions.html#cb537-3"></a><span class="op">&gt;</span><span class="st"> </span>corn</span></code></pre></div>
 <pre><code>   regular kiln_dried
 1     1903       2009
 2     1935       1915
@@ -517,37 +517,37 @@ t = \frac{\overline d}{S_d/\sqrt{n}}
 \overline d \pm t^* (S_d/\sqrt{n}).
 \end{equation}\]</span></p>
 <p>Here <span class="math inline">\(t^*\)</span> is an appropriate quantile of a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="functions.html#cb541-1"></a><span class="op">&gt;</span><span class="st"> </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(corn<span class="op">$</span>kiln_dried <span class="op">-</span><span class="st"> </span>corn<span class="op">$</span>regular)</span>
-<span id="cb541-2"><a href="functions.html#cb541-2"></a><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(corn<span class="op">$</span>regular)</span>
-<span id="cb541-3"><a href="functions.html#cb541-3"></a><span class="op">&gt;</span><span class="st"> </span>S_d &lt;-<span class="st"> </span><span class="kw">sd</span>(corn<span class="op">$</span>kiln_dried <span class="op">-</span><span class="st"> </span>corn<span class="op">$</span>regular)</span>
-<span id="cb541-4"><a href="functions.html#cb541-4"></a><span class="op">&gt;</span><span class="st"> </span>t_obs &lt;-<span class="st"> </span>dbar<span class="op">/</span>(S_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb541-5"><a href="functions.html#cb541-5"></a><span class="op">&gt;</span><span class="st"> </span>t_obs</span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="functions.html#cb539-1"></a><span class="op">&gt;</span><span class="st"> </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(corn<span class="op">$</span>kiln_dried <span class="op">-</span><span class="st"> </span>corn<span class="op">$</span>regular)</span>
+<span id="cb539-2"><a href="functions.html#cb539-2"></a><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(corn<span class="op">$</span>regular)</span>
+<span id="cb539-3"><a href="functions.html#cb539-3"></a><span class="op">&gt;</span><span class="st"> </span>S_d &lt;-<span class="st"> </span><span class="kw">sd</span>(corn<span class="op">$</span>kiln_dried <span class="op">-</span><span class="st"> </span>corn<span class="op">$</span>regular)</span>
+<span id="cb539-4"><a href="functions.html#cb539-4"></a><span class="op">&gt;</span><span class="st"> </span>t_obs &lt;-<span class="st"> </span>dbar<span class="op">/</span>(S_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb539-5"><a href="functions.html#cb539-5"></a><span class="op">&gt;</span><span class="st"> </span>t_obs</span></code></pre></div>
 <pre><code>[1] 1.69</code></pre>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="functions.html#cb543-1"></a><span class="op">&gt;</span><span class="st"> </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(t_obs), n<span class="dv">-1</span>))</span>
-<span id="cb543-2"><a href="functions.html#cb543-2"></a><span class="op">&gt;</span><span class="st"> </span>pval</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="functions.html#cb541-1"></a><span class="op">&gt;</span><span class="st"> </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(t_obs), n<span class="dv">-1</span>))</span>
+<span id="cb541-2"><a href="functions.html#cb541-2"></a><span class="op">&gt;</span><span class="st"> </span>pval</span></code></pre></div>
 <pre><code>[1] 0.1218</code></pre>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="functions.html#cb545-1"></a><span class="op">&gt;</span><span class="st"> </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)<span class="op">*</span>(S_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb545-2"><a href="functions.html#cb545-2"></a><span class="op">&gt;</span><span class="st"> </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb545-3"><a href="functions.html#cb545-3"></a><span class="op">&gt;</span><span class="st"> </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb545-4"><a href="functions.html#cb545-4"></a><span class="op">&gt;</span><span class="st"> </span>lcl</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="functions.html#cb543-1"></a><span class="op">&gt;</span><span class="st"> </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)<span class="op">*</span>(S_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb543-2"><a href="functions.html#cb543-2"></a><span class="op">&gt;</span><span class="st"> </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb543-3"><a href="functions.html#cb543-3"></a><span class="op">&gt;</span><span class="st"> </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb543-4"><a href="functions.html#cb543-4"></a><span class="op">&gt;</span><span class="st"> </span>lcl</span></code></pre></div>
 <pre><code>[1] -10.73</code></pre>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="functions.html#cb547-1"></a><span class="op">&gt;</span><span class="st"> </span>ucl</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="functions.html#cb545-1"></a><span class="op">&gt;</span><span class="st"> </span>ucl</span></code></pre></div>
 <pre><code>[1] 78.18</code></pre>
 <p>With a few lines of R code we have calculated the t statistic, the p-value, and the confidence interval. Since paired t tests are pretty common, however, it would be helpful to automate this procedure. One obvious reason is to save time and effort, but another important reason is to avoid mistakes. It would be easy to make a mistake (e.g., using <span class="math inline">\(n\)</span> instead of <span class="math inline">\(n-1\)</span> as the degrees of freedom) when repeating the above computations.</p>
 <p>Here is a first basic function which automates the computation.</p>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="functions.html#cb549-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2){</span>
-<span id="cb549-2"><a href="functions.html#cb549-2"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
-<span id="cb549-3"><a href="functions.html#cb549-3"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb549-4"><a href="functions.html#cb549-4"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb549-5"><a href="functions.html#cb549-5"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb549-6"><a href="functions.html#cb549-6"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
-<span id="cb549-7"><a href="functions.html#cb549-7"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb549-8"><a href="functions.html#cb549-8"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb549-9"><a href="functions.html#cb549-9"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb549-10"><a href="functions.html#cb549-10"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl=</span>lcl, <span class="dt">ucl=</span>ucl))</span>
-<span id="cb549-11"><a href="functions.html#cb549-11"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="functions.html#cb547-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2){</span>
+<span id="cb547-2"><a href="functions.html#cb547-2"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
+<span id="cb547-3"><a href="functions.html#cb547-3"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb547-4"><a href="functions.html#cb547-4"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb547-5"><a href="functions.html#cb547-5"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb547-6"><a href="functions.html#cb547-6"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
+<span id="cb547-7"><a href="functions.html#cb547-7"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb547-8"><a href="functions.html#cb547-8"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb547-9"><a href="functions.html#cb547-9"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb547-10"><a href="functions.html#cb547-10"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl=</span>lcl, <span class="dt">ucl=</span>ucl))</span>
+<span id="cb547-11"><a href="functions.html#cb547-11"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
 <p>And here is the function in action</p>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="functions.html#cb550-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dt">x1 =</span> corn<span class="op">$</span>kiln_dried, <span class="dt">x2 =</span> corn<span class="op">$</span>regular)</span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="functions.html#cb548-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dt">x1 =</span> corn<span class="op">$</span>kiln_dried, <span class="dt">x2 =</span> corn<span class="op">$</span>regular)</span></code></pre></div>
 <pre><code>$tstat
 [1] 1.69
 
@@ -568,19 +568,19 @@ $ucl
 <li>Several objects such as <code>n</code> and <code>dbar</code> are created in the body of the function. These objects are NOT available outside the function. We will discuss this further when we cover environments and scope in R.</li>
 </ul>
 <p>Our function has automated the basic calculations. But it is still somewhat limited in usefulness. For example, it only computes a 95% confidence interval, while a user may want a different confidence level. And the function only performs a two-sided test, while a user may want a one-sided procedure. We modify the function slightly to allow the user to specify the confidence level next.</p>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="functions.html#cb552-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>){</span>
-<span id="cb552-2"><a href="functions.html#cb552-2"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
-<span id="cb552-3"><a href="functions.html#cb552-3"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb552-4"><a href="functions.html#cb552-4"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb552-5"><a href="functions.html#cb552-5"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb552-6"><a href="functions.html#cb552-6"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
-<span id="cb552-7"><a href="functions.html#cb552-7"></a><span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb552-8"><a href="functions.html#cb552-8"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb552-9"><a href="functions.html#cb552-9"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb552-10"><a href="functions.html#cb552-10"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb552-11"><a href="functions.html#cb552-11"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl=</span>ucl))</span>
-<span id="cb552-12"><a href="functions.html#cb552-12"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="functions.html#cb553-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular)</span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="functions.html#cb550-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>){</span>
+<span id="cb550-2"><a href="functions.html#cb550-2"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
+<span id="cb550-3"><a href="functions.html#cb550-3"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb550-4"><a href="functions.html#cb550-4"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb550-5"><a href="functions.html#cb550-5"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb550-6"><a href="functions.html#cb550-6"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
+<span id="cb550-7"><a href="functions.html#cb550-7"></a><span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb550-8"><a href="functions.html#cb550-8"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb550-9"><a href="functions.html#cb550-9"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb550-10"><a href="functions.html#cb550-10"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb550-11"><a href="functions.html#cb550-11"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl=</span>ucl))</span>
+<span id="cb550-12"><a href="functions.html#cb550-12"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="functions.html#cb551-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular)</span></code></pre></div>
 <pre><code>$tstat
 [1] 1.69
 
@@ -592,7 +592,7 @@ $lcl
 
 $ucl
 [1] 78.18</code></pre>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="functions.html#cb555-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">cl =</span> <span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="functions.html#cb553-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">cl =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>$tstat
 [1] 1.69
 
@@ -618,7 +618,7 @@ $ucl
 K = (F - 32) * \frac{5}{9} + 273.15
 \]</span></p>
 <p>You should get the following if your function is correct</p>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="functions.html#cb560-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">FtoK</span>(<span class="dv">80</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="functions.html#cb558-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">FtoK</span>(<span class="dv">80</span>)</span></code></pre></div>
 <pre><code>[1] 299.8</code></pre>
 </div>
 <div id="creating-functions" class="section level3" number="7.1.2">
@@ -629,7 +629,7 @@ K = (F - 32) * \frac{5}{9} + 273.15
 <div id="programming-conditional-statements" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Programming: Conditional Statements</h2>
 <p>The <code>paired_t</code> function is somewhat useful, but could be improved in several ways. For example, consider the following:</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="functions.html#cb562-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="functions.html#cb560-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span></code></pre></div>
 <pre><code>Warning in x1 - x2: longer object length is not a
 multiple of shorter object length
 
@@ -649,22 +649,22 @@ $ucl
 <p>The user specified data had different numbers of observations in <code>x1</code> and <code>x2</code>, which of course can’t be data tested by a paired t test. Rather than stopping and letting the user know that this is a problem, the function continued and produced meaningless output.</p>
 <p>Also, the function as written only allows testing against a two-sided alternative hypothesis, and it would be good to allow one-sided alternatives.</p>
 <p>First we will address some checks on arguments specified by the user. For this we will use an <code>if()</code> function and a <code>stop()</code> function.</p>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="functions.html#cb565-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>){</span>
-<span id="cb565-2"><a href="functions.html#cb565-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)){</span>
-<span id="cb565-3"><a href="functions.html#cb565-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors  must have the same length&quot;</span>)</span>
-<span id="cb565-4"><a href="functions.html#cb565-4"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb565-5"><a href="functions.html#cb565-5"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
-<span id="cb565-6"><a href="functions.html#cb565-6"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb565-7"><a href="functions.html#cb565-7"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb565-8"><a href="functions.html#cb565-8"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb565-9"><a href="functions.html#cb565-9"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
-<span id="cb565-10"><a href="functions.html#cb565-10"></a><span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb565-11"><a href="functions.html#cb565-11"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb565-12"><a href="functions.html#cb565-12"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb565-13"><a href="functions.html#cb565-13"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb565-14"><a href="functions.html#cb565-14"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl=</span>ucl))</span>
-<span id="cb565-15"><a href="functions.html#cb565-15"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb565-16"><a href="functions.html#cb565-16"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="functions.html#cb563-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>){</span>
+<span id="cb563-2"><a href="functions.html#cb563-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)){</span>
+<span id="cb563-3"><a href="functions.html#cb563-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors  must have the same length&quot;</span>)</span>
+<span id="cb563-4"><a href="functions.html#cb563-4"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb563-5"><a href="functions.html#cb563-5"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
+<span id="cb563-6"><a href="functions.html#cb563-6"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb563-7"><a href="functions.html#cb563-7"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb563-8"><a href="functions.html#cb563-8"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb563-9"><a href="functions.html#cb563-9"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
+<span id="cb563-10"><a href="functions.html#cb563-10"></a><span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb563-11"><a href="functions.html#cb563-11"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb563-12"><a href="functions.html#cb563-12"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb563-13"><a href="functions.html#cb563-13"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb563-14"><a href="functions.html#cb563-14"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl=</span>ucl))</span>
+<span id="cb563-15"><a href="functions.html#cb563-15"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb563-16"><a href="functions.html#cb563-16"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span></code></pre></div>
 <pre><code>Error in paired_t(1:5, 1:4): The input vectors  must have the same length</code></pre>
 <p>The argument to the <code>if()</code> function is evaluated. If the argument returns <code>TRUE</code> the ensuing code is executed. Otherwise, the ensuing code is skipped and the rest of the function is evaluated. If a <code>stop()</code> function is executed, the function is exited and the argument of <code>stop()</code> is printed.</p>
 <p>To better understand and use <code>if()</code> statements, we need to understand comparison operators and logical operators.</p>
@@ -687,34 +687,34 @@ $ucl
 <li>not: <code>!</code></li>
 </ul>
 <p>The “double” operators <code>&amp;&amp;</code> and <code>||</code> just examine the first element of the two vectors, whereas the “single” operators <code>&amp;</code> and <code>|</code> compare element by element.</p>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="functions.html#cb567-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="functions.html#cb565-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">||</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="functions.html#cb569-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">|</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="functions.html#cb567-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">|</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1]  TRUE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="functions.html#cb571-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="functions.html#cb569-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="functions.html#cb573-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">&amp;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="functions.html#cb571-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>) <span class="op">&amp;</span><span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] FALSE  TRUE FALSE</code></pre>
 <p>We can use the logical operators to check whether a user-specified confidence level is between 0 and 1.</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="functions.html#cb575-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>){</span>
-<span id="cb575-2"><a href="functions.html#cb575-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)){</span>
-<span id="cb575-3"><a href="functions.html#cb575-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors  must have the same length&quot;</span>)</span>
-<span id="cb575-4"><a href="functions.html#cb575-4"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb575-5"><a href="functions.html#cb575-5"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(cl <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>cl <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>){</span>
-<span id="cb575-6"><a href="functions.html#cb575-6"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The confidence level must be between 0 and 1&quot;</span>)</span>
-<span id="cb575-7"><a href="functions.html#cb575-7"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb575-8"><a href="functions.html#cb575-8"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
-<span id="cb575-9"><a href="functions.html#cb575-9"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb575-10"><a href="functions.html#cb575-10"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb575-11"><a href="functions.html#cb575-11"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb575-12"><a href="functions.html#cb575-12"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
-<span id="cb575-13"><a href="functions.html#cb575-13"></a><span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb575-14"><a href="functions.html#cb575-14"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb575-15"><a href="functions.html#cb575-15"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb575-16"><a href="functions.html#cb575-16"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb575-17"><a href="functions.html#cb575-17"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl=</span>ucl))</span>
-<span id="cb575-18"><a href="functions.html#cb575-18"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb575-19"><a href="functions.html#cb575-19"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">cl=</span><span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="functions.html#cb573-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>){</span>
+<span id="cb573-2"><a href="functions.html#cb573-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)){</span>
+<span id="cb573-3"><a href="functions.html#cb573-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors  must have the same length&quot;</span>)</span>
+<span id="cb573-4"><a href="functions.html#cb573-4"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb573-5"><a href="functions.html#cb573-5"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(cl <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>cl <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>){</span>
+<span id="cb573-6"><a href="functions.html#cb573-6"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The confidence level must be between 0 and 1&quot;</span>)</span>
+<span id="cb573-7"><a href="functions.html#cb573-7"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb573-8"><a href="functions.html#cb573-8"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
+<span id="cb573-9"><a href="functions.html#cb573-9"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb573-10"><a href="functions.html#cb573-10"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb573-11"><a href="functions.html#cb573-11"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb573-12"><a href="functions.html#cb573-12"></a><span class="op">+</span><span class="st">     </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
+<span id="cb573-13"><a href="functions.html#cb573-13"></a><span class="op">+</span><span class="st">     </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb573-14"><a href="functions.html#cb573-14"></a><span class="op">+</span><span class="st">     </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb573-15"><a href="functions.html#cb573-15"></a><span class="op">+</span><span class="st">     </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb573-16"><a href="functions.html#cb573-16"></a><span class="op">+</span><span class="st">     </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb573-17"><a href="functions.html#cb573-17"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl =</span> lcl, <span class="dt">ucl=</span>ucl))</span>
+<span id="cb573-18"><a href="functions.html#cb573-18"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb573-19"><a href="functions.html#cb573-19"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">cl=</span><span class="dv">15</span>)</span></code></pre></div>
 <pre><code>Error in paired_t(1:5, 2:6, cl = 15): The confidence level must be between 0 and 1</code></pre>
 </div>
 <div id="if-else-statements" class="section level3" number="7.2.2">
@@ -724,55 +724,55 @@ $ucl
   expression
 }</code></pre>
 <p>Often we want to evaluate one expression if the condition is true, and evaluate a different expression if the condition is false. That is accomplished by the <code>if else</code> statement. Here we determine whether a number is positive, negative, or zero.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="functions.html#cb578-1"></a><span class="op">&gt;</span><span class="st"> </span>Sign &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
-<span id="cb578-2"><a href="functions.html#cb578-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>){</span>
-<span id="cb578-3"><a href="functions.html#cb578-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">print</span>(<span class="st">&quot;the number is negative&quot;</span>)</span>
-<span id="cb578-4"><a href="functions.html#cb578-4"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span> <span class="cf">if</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
-<span id="cb578-5"><a href="functions.html#cb578-5"></a><span class="op">+</span><span class="st">         </span><span class="kw">print</span>(<span class="st">&quot;the number is positive&quot;</span>)</span>
-<span id="cb578-6"><a href="functions.html#cb578-6"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span>{</span>
-<span id="cb578-7"><a href="functions.html#cb578-7"></a><span class="op">+</span><span class="st">         </span><span class="kw">print</span>(<span class="st">&quot;the number is zero&quot;</span>)</span>
-<span id="cb578-8"><a href="functions.html#cb578-8"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb578-9"><a href="functions.html#cb578-9"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb578-10"><a href="functions.html#cb578-10"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="functions.html#cb576-1"></a><span class="op">&gt;</span><span class="st"> </span>Sign &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
+<span id="cb576-2"><a href="functions.html#cb576-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>){</span>
+<span id="cb576-3"><a href="functions.html#cb576-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">print</span>(<span class="st">&quot;the number is negative&quot;</span>)</span>
+<span id="cb576-4"><a href="functions.html#cb576-4"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span> <span class="cf">if</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
+<span id="cb576-5"><a href="functions.html#cb576-5"></a><span class="op">+</span><span class="st">         </span><span class="kw">print</span>(<span class="st">&quot;the number is positive&quot;</span>)</span>
+<span id="cb576-6"><a href="functions.html#cb576-6"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span>{</span>
+<span id="cb576-7"><a href="functions.html#cb576-7"></a><span class="op">+</span><span class="st">         </span><span class="kw">print</span>(<span class="st">&quot;the number is zero&quot;</span>)</span>
+<span id="cb576-8"><a href="functions.html#cb576-8"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb576-9"><a href="functions.html#cb576-9"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb576-10"><a href="functions.html#cb576-10"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>[1] &quot;the number is positive&quot;</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="functions.html#cb580-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="op">-</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="functions.html#cb578-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="op">-</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>[1] &quot;the number is negative&quot;</code></pre>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="functions.html#cb582-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="functions.html#cb580-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">Sign</span>(<span class="dv">0</span>)</span></code></pre></div>
 <pre><code>[1] &quot;the number is zero&quot;</code></pre>
 <p>Notice the “different expression” for the first <code>if</code> statement was itself an <code>if</code> statement.</p>
 <p>Next we modify the <code>paired_t</code> function to allow two-sided and one-sided alternatives.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="functions.html#cb584-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>, <span class="dt">alternative=</span><span class="st">&quot;not.equal&quot;</span>){</span>
-<span id="cb584-2"><a href="functions.html#cb584-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)){</span>
-<span id="cb584-3"><a href="functions.html#cb584-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors must be of the same length&quot;</span>)</span>
-<span id="cb584-4"><a href="functions.html#cb584-4"></a><span class="op">+</span><span class="st">         </span>}</span>
-<span id="cb584-5"><a href="functions.html#cb584-5"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(cl <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>cl <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>){</span>
-<span id="cb584-6"><a href="functions.html#cb584-6"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The confidence level must be between 0 and 1&quot;</span>)</span>
-<span id="cb584-7"><a href="functions.html#cb584-7"></a><span class="op">+</span><span class="st">         </span>}</span>
-<span id="cb584-8"><a href="functions.html#cb584-8"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
-<span id="cb584-9"><a href="functions.html#cb584-9"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb584-10"><a href="functions.html#cb584-10"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
-<span id="cb584-11"><a href="functions.html#cb584-11"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
-<span id="cb584-12"><a href="functions.html#cb584-12"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(alternative <span class="op">==</span><span class="st"> &quot;not.equal&quot;</span>){</span>
-<span id="cb584-13"><a href="functions.html#cb584-13"></a><span class="op">+</span><span class="st">         </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
-<span id="cb584-14"><a href="functions.html#cb584-14"></a><span class="op">+</span><span class="st">         </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb584-15"><a href="functions.html#cb584-15"></a><span class="op">+</span><span class="st">         </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb584-16"><a href="functions.html#cb584-16"></a><span class="op">+</span><span class="st">         </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb584-17"><a href="functions.html#cb584-17"></a><span class="op">+</span><span class="st">         </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb584-18"><a href="functions.html#cb584-18"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span> <span class="cf">if</span>(alternative <span class="op">==</span><span class="st"> &quot;greater&quot;</span>){</span>
-<span id="cb584-19"><a href="functions.html#cb584-19"></a><span class="op">+</span><span class="st">         </span>pval &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(tstat, n<span class="dv">-1</span>)</span>
-<span id="cb584-20"><a href="functions.html#cb584-20"></a><span class="op">+</span><span class="st">         </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(cl, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb584-21"><a href="functions.html#cb584-21"></a><span class="op">+</span><span class="st">         </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
-<span id="cb584-22"><a href="functions.html#cb584-22"></a><span class="op">+</span><span class="st">         </span>ucl &lt;-<span class="st"> </span><span class="ot">Inf</span></span>
-<span id="cb584-23"><a href="functions.html#cb584-23"></a><span class="op">+</span><span class="st">     </span>} <span class="cf">else</span> <span class="cf">if</span>(alternative <span class="op">==</span><span class="st"> &quot;less&quot;</span>){</span>
-<span id="cb584-24"><a href="functions.html#cb584-24"></a><span class="op">+</span><span class="st">         </span>pval &lt;-<span class="st"> </span><span class="kw">pt</span>(tstat, n<span class="dv">-1</span>)</span>
-<span id="cb584-25"><a href="functions.html#cb584-25"></a><span class="op">+</span><span class="st">         </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(cl, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb584-26"><a href="functions.html#cb584-26"></a><span class="op">+</span><span class="st">         </span>lcl &lt;-<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></span>
-<span id="cb584-27"><a href="functions.html#cb584-27"></a><span class="op">+</span><span class="st">         </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
-<span id="cb584-28"><a href="functions.html#cb584-28"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb584-29"><a href="functions.html#cb584-29"></a><span class="op">+</span><span class="st">     </span></span>
-<span id="cb584-30"><a href="functions.html#cb584-30"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl=</span>lcl, <span class="dt">ucl=</span>ucl))</span>
-<span id="cb584-31"><a href="functions.html#cb584-31"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb584-32"><a href="functions.html#cb584-32"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular)</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="functions.html#cb582-1"></a><span class="op">&gt;</span><span class="st"> </span>paired_t &lt;-<span class="st"> </span><span class="cf">function</span>(x1, x2, <span class="dt">cl =</span> <span class="fl">0.95</span>, <span class="dt">alternative=</span><span class="st">&quot;not.equal&quot;</span>){</span>
+<span id="cb582-2"><a href="functions.html#cb582-2"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="kw">length</span>(x1) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(x2)){</span>
+<span id="cb582-3"><a href="functions.html#cb582-3"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The input vectors must be of the same length&quot;</span>)</span>
+<span id="cb582-4"><a href="functions.html#cb582-4"></a><span class="op">+</span><span class="st">         </span>}</span>
+<span id="cb582-5"><a href="functions.html#cb582-5"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(cl <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">||</span><span class="st"> </span>cl <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>){</span>
+<span id="cb582-6"><a href="functions.html#cb582-6"></a><span class="op">+</span><span class="st">         </span><span class="kw">stop</span>(<span class="st">&quot;The confidence level must be between 0 and 1&quot;</span>)</span>
+<span id="cb582-7"><a href="functions.html#cb582-7"></a><span class="op">+</span><span class="st">         </span>}</span>
+<span id="cb582-8"><a href="functions.html#cb582-8"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">length</span>(x1)</span>
+<span id="cb582-9"><a href="functions.html#cb582-9"></a><span class="op">+</span><span class="st">     </span>dbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb582-10"><a href="functions.html#cb582-10"></a><span class="op">+</span><span class="st">     </span>s_d &lt;-<span class="st"> </span><span class="kw">sd</span>(x1 <span class="op">-</span><span class="st"> </span>x2)</span>
+<span id="cb582-11"><a href="functions.html#cb582-11"></a><span class="op">+</span><span class="st">     </span>tstat &lt;-<span class="st"> </span>dbar<span class="op">/</span>(s_d<span class="op">/</span><span class="kw">sqrt</span>(n))</span>
+<span id="cb582-12"><a href="functions.html#cb582-12"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(alternative <span class="op">==</span><span class="st"> &quot;not.equal&quot;</span>){</span>
+<span id="cb582-13"><a href="functions.html#cb582-13"></a><span class="op">+</span><span class="st">         </span>pval &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(tstat), n<span class="dv">-1</span>))</span>
+<span id="cb582-14"><a href="functions.html#cb582-14"></a><span class="op">+</span><span class="st">         </span>pctile &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>cl)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb582-15"><a href="functions.html#cb582-15"></a><span class="op">+</span><span class="st">         </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(pctile, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb582-16"><a href="functions.html#cb582-16"></a><span class="op">+</span><span class="st">         </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb582-17"><a href="functions.html#cb582-17"></a><span class="op">+</span><span class="st">         </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb582-18"><a href="functions.html#cb582-18"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span> <span class="cf">if</span>(alternative <span class="op">==</span><span class="st"> &quot;greater&quot;</span>){</span>
+<span id="cb582-19"><a href="functions.html#cb582-19"></a><span class="op">+</span><span class="st">         </span>pval &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(tstat, n<span class="dv">-1</span>)</span>
+<span id="cb582-20"><a href="functions.html#cb582-20"></a><span class="op">+</span><span class="st">         </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(cl, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb582-21"><a href="functions.html#cb582-21"></a><span class="op">+</span><span class="st">         </span>lcl &lt;-<span class="st"> </span>dbar <span class="op">-</span><span class="st"> </span>margin</span>
+<span id="cb582-22"><a href="functions.html#cb582-22"></a><span class="op">+</span><span class="st">         </span>ucl &lt;-<span class="st"> </span><span class="ot">Inf</span></span>
+<span id="cb582-23"><a href="functions.html#cb582-23"></a><span class="op">+</span><span class="st">     </span>} <span class="cf">else</span> <span class="cf">if</span>(alternative <span class="op">==</span><span class="st"> &quot;less&quot;</span>){</span>
+<span id="cb582-24"><a href="functions.html#cb582-24"></a><span class="op">+</span><span class="st">         </span>pval &lt;-<span class="st"> </span><span class="kw">pt</span>(tstat, n<span class="dv">-1</span>)</span>
+<span id="cb582-25"><a href="functions.html#cb582-25"></a><span class="op">+</span><span class="st">         </span>margin &lt;-<span class="st"> </span><span class="kw">qt</span>(cl, n<span class="dv">-1</span>)<span class="op">*</span>s_d<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb582-26"><a href="functions.html#cb582-26"></a><span class="op">+</span><span class="st">         </span>lcl &lt;-<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></span>
+<span id="cb582-27"><a href="functions.html#cb582-27"></a><span class="op">+</span><span class="st">         </span>ucl &lt;-<span class="st"> </span>dbar <span class="op">+</span><span class="st"> </span>margin</span>
+<span id="cb582-28"><a href="functions.html#cb582-28"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb582-29"><a href="functions.html#cb582-29"></a><span class="op">+</span><span class="st">     </span></span>
+<span id="cb582-30"><a href="functions.html#cb582-30"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">tstat =</span> tstat, <span class="dt">pval =</span> pval, <span class="dt">lcl=</span>lcl, <span class="dt">ucl=</span>ucl))</span>
+<span id="cb582-31"><a href="functions.html#cb582-31"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb582-32"><a href="functions.html#cb582-32"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular)</span></code></pre></div>
 <pre><code>$tstat
 [1] 1.69
 
@@ -784,7 +784,7 @@ $lcl
 
 $ucl
 [1] 78.18</code></pre>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="functions.html#cb586-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="functions.html#cb584-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
 <pre><code>$tstat
 [1] 1.69
 
@@ -796,7 +796,7 @@ $lcl
 
 $ucl
 [1] 69.89</code></pre>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="functions.html#cb588-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="functions.html#cb586-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">paired_t</span>(corn<span class="op">$</span>kiln_dried, corn<span class="op">$</span>regular, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <pre><code>$tstat
 [1] 1.69
 
@@ -814,53 +814,53 @@ $ucl
 <h2><span class="header-section-number">7.3</span> Computer Arithmetic</h2>
 <p>Like most software, R does not perform exact arithmetic. Rather, R follows the IEEE 754 floating point standards. This can have profound effects on how computational algorithms are implemented, but is also important when considering things like comparisons.</p>
 <p>Note first that computer arithmetic does not follow some of the rules of ordinary arithmetic. For example, it is not associative.</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="functions.html#cb590-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^-</span><span class="dv">30</span></span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="functions.html#cb588-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^-</span><span class="dv">30</span></span></code></pre></div>
 <pre><code>[1] 0.0000000009313</code></pre>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="functions.html#cb592-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^-</span><span class="dv">30</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">2</span><span class="op">^</span><span class="dv">30</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="functions.html#cb590-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span><span class="op">^-</span><span class="dv">30</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">2</span><span class="op">^</span><span class="dv">30</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span>)</span></code></pre></div>
 <pre><code>[1] 0.0000000009313</code></pre>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="functions.html#cb594-1"></a><span class="op">&gt;</span><span class="st"> </span>(<span class="dv">2</span><span class="op">^-</span><span class="dv">30</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span>) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span></span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="functions.html#cb592-1"></a><span class="op">&gt;</span><span class="st"> </span>(<span class="dv">2</span><span class="op">^-</span><span class="dv">30</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span>) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">30</span></span></code></pre></div>
 <pre><code>[1] 0</code></pre>
 <p>Computer arithmetic is not exact.</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="functions.html#cb596-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="functions.html#cb594-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span></span></code></pre></div>
 <pre><code>[1] 0.1</code></pre>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="functions.html#cb598-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span> <span class="op">==</span><span class="st"> </span><span class="fl">0.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="functions.html#cb596-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span> <span class="op">==</span><span class="st"> </span><span class="fl">0.1</span></span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="functions.html#cb600-1"></a><span class="op">&gt;</span><span class="st"> </span>(<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span>) <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="functions.html#cb598-1"></a><span class="op">&gt;</span><span class="st"> </span>(<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span>) <span class="op">-</span><span class="st"> </span><span class="fl">0.1</span></span></code></pre></div>
 <pre><code>[1] 0.00000000000000008327</code></pre>
 <p>So for example an <code>if</code> statement that uses an equality test may not give the expected answer. One way to avoid this problem is to test “near equality” using <code>all.equal()</code>. The function takes as arguments two objects to be compared, and a tolerance. If the objects are within the tolerance of each other, the function returns <code>TRUE</code>. The tolerance has a default value of about <span class="math inline">\(1.5\times 10^{-8}\)</span>, which works well in many cases.</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="functions.html#cb602-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">all.equal</span>((<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span>), <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="functions.html#cb600-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">all.equal</span>((<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.4</span>), <span class="fl">0.1</span>)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 </div>
 <div id="loops" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Loops</h2>
 <p>Loops are an important component of any programming language, including R. Vectorized calculations and functions such as <code>apply()</code> make loops a bit less central to R than to many other languages, but an understanding of the three looping structures in R is still quite important.</p>
 <p>We will investigate loops in the context of computing what is sometimes called the “machine epsilon.” Because of the inexact representation of numbers in R (and other languages) sometimes R cannot distinguish between the numbers <code>1</code> and <code>|1 + x|</code> for small values of <code>x</code>. The smallest value of <code>x</code> such that <code>1</code> and <code>|1+x|</code> are not declared equal is the machine epsilon.</p>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="functions.html#cb604-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">10</span><span class="op">^-</span><span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="functions.html#cb602-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">10</span><span class="op">^-</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="functions.html#cb606-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">^-</span><span class="dv">50</span></span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="functions.html#cb604-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span><span class="op">^-</span><span class="dv">50</span></span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 <p>Clearly the machine epsilon is somewhere between <span class="math inline">\(10^{-4}\)</span> and <span class="math inline">\(10^{-50}\)</span>. How can we find its value exactly? Since floating point numbers use a binary representation, we know that the machine epsilon will be equal to <span class="math inline">\(1/2^k\)</span> for some value of <span class="math inline">\(k\)</span>. So to find the machine epsilon, we can keep testing whether <span class="math inline">\(1\)</span> and <span class="math inline">\(1+1/2^k\)</span> are equal, until we find a value <span class="math inline">\(k\)</span> where the two are equal. Then the machine epsilon will be <span class="math inline">\(1/2^{k-1}\)</span>, since it is the smallest value for which the two are NOT equal.</p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="functions.html#cb608-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="functions.html#cb606-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="functions.html#cb610-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="functions.html#cb608-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="functions.html#cb612-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="functions.html#cb610-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span></span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
 <p>Testing by hand like this gets tedious quickly. A loop can automate the process. We will do this with two R loop types, <code>repeat</code> and <code>while</code>.</p>
 <div id="a-repeat-loop" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> A Repeat Loop</h3>
 <p>A <code>repeat</code> loop just repeats a given expression over and over again until a <code>break</code> statement is encountered.</p>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="functions.html#cb614-1"></a><span class="op">&gt;</span><span class="st"> </span>k &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb614-2"><a href="functions.html#cb614-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">repeat</span>{</span>
-<span id="cb614-3"><a href="functions.html#cb614-3"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>k){</span>
-<span id="cb614-4"><a href="functions.html#cb614-4"></a><span class="op">+</span><span class="st">         </span><span class="cf">break</span></span>
-<span id="cb614-5"><a href="functions.html#cb614-5"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span>{</span>
-<span id="cb614-6"><a href="functions.html#cb614-6"></a><span class="op">+</span><span class="st">         </span>k &lt;-<span class="st"> </span>k<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb614-7"><a href="functions.html#cb614-7"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb614-8"><a href="functions.html#cb614-8"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb614-9"><a href="functions.html#cb614-9"></a><span class="op">&gt;</span><span class="st"> </span>k</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="functions.html#cb612-1"></a><span class="op">&gt;</span><span class="st"> </span>k &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb612-2"><a href="functions.html#cb612-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">repeat</span>{</span>
+<span id="cb612-3"><a href="functions.html#cb612-3"></a><span class="op">+</span><span class="st">     </span><span class="cf">if</span>(<span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>k){</span>
+<span id="cb612-4"><a href="functions.html#cb612-4"></a><span class="op">+</span><span class="st">         </span><span class="cf">break</span></span>
+<span id="cb612-5"><a href="functions.html#cb612-5"></a><span class="op">+</span><span class="st">     </span>}<span class="cf">else</span>{</span>
+<span id="cb612-6"><a href="functions.html#cb612-6"></a><span class="op">+</span><span class="st">         </span>k &lt;-<span class="st"> </span>k<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb612-7"><a href="functions.html#cb612-7"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb612-8"><a href="functions.html#cb612-8"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb612-9"><a href="functions.html#cb612-9"></a><span class="op">&gt;</span><span class="st"> </span>k</span></code></pre></div>
 <pre><code>[1] 53</code></pre>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="functions.html#cb616-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>(k<span class="dv">-1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="functions.html#cb614-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>(k<span class="dv">-1</span>)</span></code></pre></div>
 <pre><code>[1] 0.000000000000000222</code></pre>
 <p>This code initializes <code>k</code> at 1. The body of the loop initially checks whether <span class="math inline">\(1\)</span> and <span class="math inline">\(1+1/2^k\)</span> are equal. If they are equal, the <code>break</code> statement is executed and control is transferred outside the loop. If they are not equal, <code>k</code> is increased by 1, and we return to the beginning of the top of the body of the loop.</p>
 </div>
@@ -871,13 +871,13 @@ $ucl
   expression
 }</code></pre>
 <p>As long as the <code>condition</code> is <code>TRUE</code> the <code>expression</code> is evaluated. Once the <code>condition</code> is <code>FALSE</code> control is transferred outside the loop.</p>
-<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="functions.html#cb619-1"></a><span class="op">&gt;</span><span class="st"> </span>k &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb619-2"><a href="functions.html#cb619-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">while</span>(<span class="dv">1</span> <span class="op">!=</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>k){</span>
-<span id="cb619-3"><a href="functions.html#cb619-3"></a><span class="op">+</span><span class="st">     </span>k &lt;-<span class="st"> </span>k<span class="op">+</span><span class="dv">1</span> </span>
-<span id="cb619-4"><a href="functions.html#cb619-4"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb619-5"><a href="functions.html#cb619-5"></a><span class="op">&gt;</span><span class="st"> </span>k</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="functions.html#cb617-1"></a><span class="op">&gt;</span><span class="st"> </span>k &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb617-2"><a href="functions.html#cb617-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">while</span>(<span class="dv">1</span> <span class="op">!=</span><span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>k){</span>
+<span id="cb617-3"><a href="functions.html#cb617-3"></a><span class="op">+</span><span class="st">     </span>k &lt;-<span class="st"> </span>k<span class="op">+</span><span class="dv">1</span> </span>
+<span id="cb617-4"><a href="functions.html#cb617-4"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb617-5"><a href="functions.html#cb617-5"></a><span class="op">&gt;</span><span class="st"> </span>k</span></code></pre></div>
 <pre><code>[1] 53</code></pre>
-<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="functions.html#cb621-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>(k<span class="dv">-1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="functions.html#cb619-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span><span class="op">^</span>(k<span class="dv">-1</span>)</span></code></pre></div>
 <pre><code>[1] 0.000000000000000222</code></pre>
 </div>
 <div id="a-for-loop" class="section level3" number="7.4.3">
@@ -887,30 +887,30 @@ $ucl
   expression
 }</code></pre>
 <p>The <code>for</code> loop sets the <code>variable</code> equal to each element of the <code>vector</code> in succession, and evaluates the <code>expression</code> each time. Here are two different ways to use a <code>for</code> loop to calculate the sum of the elements in a vector.</p>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="functions.html#cb624-1"></a><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
-<span id="cb624-2"><a href="functions.html#cb624-2"></a><span class="op">&gt;</span><span class="st"> </span>S &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb624-3"><a href="functions.html#cb624-3"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)){</span>
-<span id="cb624-4"><a href="functions.html#cb624-4"></a><span class="op">+</span><span class="st">     </span>S &lt;-<span class="st"> </span>S <span class="op">+</span><span class="st"> </span>x[i]</span>
-<span id="cb624-5"><a href="functions.html#cb624-5"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb624-6"><a href="functions.html#cb624-6"></a><span class="op">&gt;</span><span class="st"> </span>S</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="functions.html#cb622-1"></a><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb622-2"><a href="functions.html#cb622-2"></a><span class="op">&gt;</span><span class="st"> </span>S &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb622-3"><a href="functions.html#cb622-3"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)){</span>
+<span id="cb622-4"><a href="functions.html#cb622-4"></a><span class="op">+</span><span class="st">     </span>S &lt;-<span class="st"> </span>S <span class="op">+</span><span class="st"> </span>x[i]</span>
+<span id="cb622-5"><a href="functions.html#cb622-5"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb622-6"><a href="functions.html#cb622-6"></a><span class="op">&gt;</span><span class="st"> </span>S</span></code></pre></div>
 <pre><code>[1] 55</code></pre>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="functions.html#cb626-1"></a><span class="op">&gt;</span><span class="st"> </span>S =<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb626-2"><a href="functions.html#cb626-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span>(value <span class="cf">in</span> x){</span>
-<span id="cb626-3"><a href="functions.html#cb626-3"></a><span class="op">+</span><span class="st">   </span>S =<span class="st"> </span>S <span class="op">+</span><span class="st"> </span>value</span>
-<span id="cb626-4"><a href="functions.html#cb626-4"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb626-5"><a href="functions.html#cb626-5"></a><span class="op">&gt;</span><span class="st"> </span>S</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="functions.html#cb624-1"></a><span class="op">&gt;</span><span class="st"> </span>S =<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb624-2"><a href="functions.html#cb624-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span>(value <span class="cf">in</span> x){</span>
+<span id="cb624-3"><a href="functions.html#cb624-3"></a><span class="op">+</span><span class="st">   </span>S =<span class="st"> </span>S <span class="op">+</span><span class="st"> </span>value</span>
+<span id="cb624-4"><a href="functions.html#cb624-4"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb624-5"><a href="functions.html#cb624-5"></a><span class="op">&gt;</span><span class="st"> </span>S</span></code></pre></div>
 <pre><code>[1] 55</code></pre>
 <p>In the first case we loop over the positions of the vector elements, while in the second case we loop over the elements themselves.</p>
 </div>
 <div id="practice-problem-12" class="section level3" number="7.4.4">
 <h3><span class="header-section-number">7.4.4</span> Practice Problem</h3>
 <p>Often when students initially learn about <code>if()</code> statements and <code>for()</code> loops, they use them more often than is necessary, leading to over complications and often slower, less sophisticated code. Many simple <code>if()</code> statements can be accomplished using logical subsetting and vectorization. Using the ideas you used above, and what you learned in Chapters <a href="structures.html#structures">4</a> and <a href="data2.html#data2">6</a>, we can use logical subsetting to replace the simplest of <code>if()</code> statements. Rewrite the following <code>if()</code> statement and <code>for()</code> loop using logical subsetting.</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="functions.html#cb628-1"></a><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>)</span>
-<span id="cb628-2"><a href="functions.html#cb628-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(a)) {</span>
-<span id="cb628-3"><a href="functions.html#cb628-3"></a><span class="op">+</span><span class="st">   </span><span class="cf">if</span> (a[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {</span>
-<span id="cb628-4"><a href="functions.html#cb628-4"></a><span class="op">+</span><span class="st">     </span>a[i] &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb628-5"><a href="functions.html#cb628-5"></a><span class="op">+</span><span class="st">   </span>}</span>
-<span id="cb628-6"><a href="functions.html#cb628-6"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="functions.html#cb626-1"></a><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb626-2"><a href="functions.html#cb626-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(a)) {</span>
+<span id="cb626-3"><a href="functions.html#cb626-3"></a><span class="op">+</span><span class="st">   </span><span class="cf">if</span> (a[i] <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>) {</span>
+<span id="cb626-4"><a href="functions.html#cb626-4"></a><span class="op">+</span><span class="st">     </span>a[i] &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb626-5"><a href="functions.html#cb626-5"></a><span class="op">+</span><span class="st">   </span>}</span>
+<span id="cb626-6"><a href="functions.html#cb626-6"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
 </div>
 </div>
 <div id="efficiency-considerations" class="section level2" number="7.5">
@@ -922,38 +922,38 @@ $ucl
 <ol style="list-style-type: decimal">
 <li>Start with a zero-length vector, and let it grow:</li>
 </ol>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="functions.html#cb629-1"></a><span class="op">&gt;</span><span class="st"> </span>f1 &lt;-<span class="st"> </span><span class="cf">function</span>(n){</span>
-<span id="cb629-2"><a href="functions.html#cb629-2"></a><span class="op">+</span><span class="st">     </span>x &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="dv">0</span>)</span>
-<span id="cb629-3"><a href="functions.html#cb629-3"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
-<span id="cb629-4"><a href="functions.html#cb629-4"></a><span class="op">+</span><span class="st">         </span>x &lt;-<span class="st"> </span><span class="kw">c</span>(x,i)</span>
-<span id="cb629-5"><a href="functions.html#cb629-5"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb629-6"><a href="functions.html#cb629-6"></a><span class="op">+</span><span class="st">     </span>x</span>
-<span id="cb629-7"><a href="functions.html#cb629-7"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="functions.html#cb627-1"></a><span class="op">&gt;</span><span class="st"> </span>f1 &lt;-<span class="st"> </span><span class="cf">function</span>(n){</span>
+<span id="cb627-2"><a href="functions.html#cb627-2"></a><span class="op">+</span><span class="st">     </span>x &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="dv">0</span>)</span>
+<span id="cb627-3"><a href="functions.html#cb627-3"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb627-4"><a href="functions.html#cb627-4"></a><span class="op">+</span><span class="st">         </span>x &lt;-<span class="st"> </span><span class="kw">c</span>(x,i)</span>
+<span id="cb627-5"><a href="functions.html#cb627-5"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb627-6"><a href="functions.html#cb627-6"></a><span class="op">+</span><span class="st">     </span>x</span>
+<span id="cb627-7"><a href="functions.html#cb627-7"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Start with a vector of length <span class="math inline">\(n\)</span> and fill in the values:</li>
 </ol>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="functions.html#cb630-1"></a><span class="op">&gt;</span><span class="st"> </span>f2 &lt;-<span class="st"> </span><span class="cf">function</span>(n){</span>
-<span id="cb630-2"><a href="functions.html#cb630-2"></a><span class="op">+</span><span class="st">     </span>x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
-<span id="cb630-3"><a href="functions.html#cb630-3"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
-<span id="cb630-4"><a href="functions.html#cb630-4"></a><span class="op">+</span><span class="st">         </span>x[i] &lt;-<span class="st"> </span>i</span>
-<span id="cb630-5"><a href="functions.html#cb630-5"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb630-6"><a href="functions.html#cb630-6"></a><span class="op">+</span><span class="st">     </span>x</span>
-<span id="cb630-7"><a href="functions.html#cb630-7"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="functions.html#cb628-1"></a><span class="op">&gt;</span><span class="st"> </span>f2 &lt;-<span class="st"> </span><span class="cf">function</span>(n){</span>
+<span id="cb628-2"><a href="functions.html#cb628-2"></a><span class="op">+</span><span class="st">     </span>x &lt;-<span class="st"> </span><span class="kw">numeric</span>(n)</span>
+<span id="cb628-3"><a href="functions.html#cb628-3"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb628-4"><a href="functions.html#cb628-4"></a><span class="op">+</span><span class="st">         </span>x[i] &lt;-<span class="st"> </span>i</span>
+<span id="cb628-5"><a href="functions.html#cb628-5"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb628-6"><a href="functions.html#cb628-6"></a><span class="op">+</span><span class="st">     </span>x</span>
+<span id="cb628-7"><a href="functions.html#cb628-7"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
 <p>Here are the two functions in action, with <span class="math inline">\(n = 100000\)</span>.</p>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="functions.html#cb631-1"></a><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">100000</span></span>
-<span id="cb631-2"><a href="functions.html#cb631-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">f1</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="functions.html#cb629-1"></a><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">100000</span></span>
+<span id="cb629-2"><a href="functions.html#cb629-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">f1</span>(n))</span></code></pre></div>
 <pre><code>   user  system elapsed 
  12.252   0.016  12.269 </code></pre>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="functions.html#cb633-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">f2</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="functions.html#cb631-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">f2</span>(n))</span></code></pre></div>
 <pre><code>   user  system elapsed 
   0.008   0.000   0.009 </code></pre>
 <p>It is <em>much</em> more efficient to start with a full-length vector and then fill in values.<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a></p>
 <p>Of course another way to create a vector of integers from 1 to n is to use <code>1:n</code>. Let’s see how fast this is.</p>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="functions.html#cb635-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="functions.html#cb633-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)</span></code></pre></div>
 <pre><code>   user  system elapsed 
       0       0       0 </code></pre>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="functions.html#cb637-1"></a><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">1000000</span></span>
-<span id="cb637-2"><a href="functions.html#cb637-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)      </span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="functions.html#cb635-1"></a><span class="op">&gt;</span><span class="st"> </span>n &lt;-<span class="st"> </span><span class="dv">1000000</span></span>
+<span id="cb635-2"><a href="functions.html#cb635-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)      </span></code></pre></div>
 <pre><code>   user  system elapsed 
       0       0       0 </code></pre>
 <p>For <span class="math inline">\(n=100000\)</span> this is so fast the system time is very close to zero. Even when <span class="math inline">\(n\)</span> is 1000000 the time is very small. So another important lesson is to use built-in R functions whenever possible, since they have had substantial development focused on efficiency, correctness, etc.</p>
@@ -969,54 +969,54 @@ M = \left(\begin{array}{ccc}
 \]</span></p>
 <p>the sums would be <span class="math inline">\(1^2 + 4^2 = 17\)</span>, <span class="math inline">\(2^2 + 5^2 = 29\)</span>, and <span class="math inline">\(3^2 + 6^2 = 45\)</span>.
 One possibility is to have an outer loop that traverses the columns and an inner loop that traverses the rows within a column, squaring the entries and adding them together.</p>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="functions.html#cb639-1"></a><span class="op">&gt;</span><span class="st"> </span>test_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">2</span>)</span>
-<span id="cb639-2"><a href="functions.html#cb639-2"></a><span class="op">&gt;</span><span class="st"> </span>test_matrix</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="functions.html#cb637-1"></a><span class="op">&gt;</span><span class="st"> </span>test_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb637-2"><a href="functions.html#cb637-2"></a><span class="op">&gt;</span><span class="st"> </span>test_matrix</span></code></pre></div>
 <pre><code>     [,1] [,2] [,3]
 [1,]    1    2    3
 [2,]    4    5    6</code></pre>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="functions.html#cb641-1"></a><span class="op">&gt;</span><span class="st"> </span>ss1 &lt;-<span class="st"> </span><span class="cf">function</span>(M){</span>
-<span id="cb641-2"><a href="functions.html#cb641-2"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">1</span>]</span>
-<span id="cb641-3"><a href="functions.html#cb641-3"></a><span class="op">+</span><span class="st">     </span>m &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">2</span>]</span>
-<span id="cb641-4"><a href="functions.html#cb641-4"></a><span class="op">+</span><span class="st">     </span>out &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>,m)</span>
-<span id="cb641-5"><a href="functions.html#cb641-5"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m){</span>
-<span id="cb641-6"><a href="functions.html#cb641-6"></a><span class="op">+</span><span class="st">         </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
-<span id="cb641-7"><a href="functions.html#cb641-7"></a><span class="op">+</span><span class="st">             </span>out[j] &lt;-<span class="st"> </span>out[j] <span class="op">+</span><span class="st"> </span>M[i,j]<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb641-8"><a href="functions.html#cb641-8"></a><span class="op">+</span><span class="st">         </span>} </span>
-<span id="cb641-9"><a href="functions.html#cb641-9"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb641-10"><a href="functions.html#cb641-10"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(out)</span>
-<span id="cb641-11"><a href="functions.html#cb641-11"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb641-12"><a href="functions.html#cb641-12"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ss1</span>(test_matrix)</span></code></pre></div>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="functions.html#cb639-1"></a><span class="op">&gt;</span><span class="st"> </span>ss1 &lt;-<span class="st"> </span><span class="cf">function</span>(M){</span>
+<span id="cb639-2"><a href="functions.html#cb639-2"></a><span class="op">+</span><span class="st">     </span>n &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">1</span>]</span>
+<span id="cb639-3"><a href="functions.html#cb639-3"></a><span class="op">+</span><span class="st">     </span>m &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">2</span>]</span>
+<span id="cb639-4"><a href="functions.html#cb639-4"></a><span class="op">+</span><span class="st">     </span>out &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>,m)</span>
+<span id="cb639-5"><a href="functions.html#cb639-5"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m){</span>
+<span id="cb639-6"><a href="functions.html#cb639-6"></a><span class="op">+</span><span class="st">         </span><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</span>
+<span id="cb639-7"><a href="functions.html#cb639-7"></a><span class="op">+</span><span class="st">             </span>out[j] &lt;-<span class="st"> </span>out[j] <span class="op">+</span><span class="st"> </span>M[i,j]<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb639-8"><a href="functions.html#cb639-8"></a><span class="op">+</span><span class="st">         </span>} </span>
+<span id="cb639-9"><a href="functions.html#cb639-9"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb639-10"><a href="functions.html#cb639-10"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(out)</span>
+<span id="cb639-11"><a href="functions.html#cb639-11"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb639-12"><a href="functions.html#cb639-12"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ss1</span>(test_matrix)</span></code></pre></div>
 <pre><code>[1] 17 29 45</code></pre>
 <p>Another possibility eliminates the inner loop, using the <code>sum()</code> function to compute the sum of the squared entries in the column directly.</p>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="functions.html#cb643-1"></a><span class="op">&gt;</span><span class="st"> </span>ss2 &lt;-<span class="st"> </span><span class="cf">function</span>(M){</span>
-<span id="cb643-2"><a href="functions.html#cb643-2"></a><span class="op">+</span><span class="st">     </span>m &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">2</span>]</span>
-<span id="cb643-3"><a href="functions.html#cb643-3"></a><span class="op">+</span><span class="st">     </span>out &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
-<span id="cb643-4"><a href="functions.html#cb643-4"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m){</span>
-<span id="cb643-5"><a href="functions.html#cb643-5"></a><span class="op">+</span><span class="st">         </span>out[j] &lt;-<span class="st"> </span><span class="kw">sum</span>(M[,j]<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb643-6"><a href="functions.html#cb643-6"></a><span class="op">+</span><span class="st">     </span>}</span>
-<span id="cb643-7"><a href="functions.html#cb643-7"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(out) </span>
-<span id="cb643-8"><a href="functions.html#cb643-8"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb643-9"><a href="functions.html#cb643-9"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ss2</span>(test_matrix)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="functions.html#cb641-1"></a><span class="op">&gt;</span><span class="st"> </span>ss2 &lt;-<span class="st"> </span><span class="cf">function</span>(M){</span>
+<span id="cb641-2"><a href="functions.html#cb641-2"></a><span class="op">+</span><span class="st">     </span>m &lt;-<span class="st"> </span><span class="kw">dim</span>(M)[<span class="dv">2</span>]</span>
+<span id="cb641-3"><a href="functions.html#cb641-3"></a><span class="op">+</span><span class="st">     </span>out &lt;-<span class="st"> </span><span class="kw">numeric</span>(m)</span>
+<span id="cb641-4"><a href="functions.html#cb641-4"></a><span class="op">+</span><span class="st">     </span><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>m){</span>
+<span id="cb641-5"><a href="functions.html#cb641-5"></a><span class="op">+</span><span class="st">         </span>out[j] &lt;-<span class="st"> </span><span class="kw">sum</span>(M[,j]<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb641-6"><a href="functions.html#cb641-6"></a><span class="op">+</span><span class="st">     </span>}</span>
+<span id="cb641-7"><a href="functions.html#cb641-7"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(out) </span>
+<span id="cb641-8"><a href="functions.html#cb641-8"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb641-9"><a href="functions.html#cb641-9"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ss2</span>(test_matrix)</span></code></pre></div>
 <pre><code>[1] 17 29 45</code></pre>
 <p>A third possibility uses the <code>colSums()</code> function.</p>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="functions.html#cb645-1"></a><span class="op">&gt;</span><span class="st"> </span>ss3 &lt;-<span class="st"> </span><span class="cf">function</span>(M){</span>
-<span id="cb645-2"><a href="functions.html#cb645-2"></a><span class="op">+</span><span class="st">     </span>out &lt;-<span class="st"> </span><span class="kw">colSums</span>(M<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb645-3"><a href="functions.html#cb645-3"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(out)</span>
-<span id="cb645-4"><a href="functions.html#cb645-4"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb645-5"><a href="functions.html#cb645-5"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ss3</span>(test_matrix)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="functions.html#cb643-1"></a><span class="op">&gt;</span><span class="st"> </span>ss3 &lt;-<span class="st"> </span><span class="cf">function</span>(M){</span>
+<span id="cb643-2"><a href="functions.html#cb643-2"></a><span class="op">+</span><span class="st">     </span>out &lt;-<span class="st"> </span><span class="kw">colSums</span>(M<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb643-3"><a href="functions.html#cb643-3"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(out)</span>
+<span id="cb643-4"><a href="functions.html#cb643-4"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb643-5"><a href="functions.html#cb643-5"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">ss3</span>(test_matrix)</span></code></pre></div>
 <pre><code>[1] 17 29 45</code></pre>
 <p>Here is a speed comparison, using a <span class="math inline">\(1000\times 10000\)</span> matrix.</p>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="functions.html#cb647-1"></a><span class="op">&gt;</span><span class="st"> </span>mm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">1000</span>)</span>
-<span id="cb647-2"><a href="functions.html#cb647-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss1</span>(mm))</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="functions.html#cb645-1"></a><span class="op">&gt;</span><span class="st"> </span>mm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10000000</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">1000</span>)</span>
+<span id="cb645-2"><a href="functions.html#cb645-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss1</span>(mm))</span></code></pre></div>
 <pre><code>   user  system elapsed 
   0.952   0.000   0.952 </code></pre>
-<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="functions.html#cb649-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss2</span>(mm))</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="functions.html#cb647-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss2</span>(mm))</span></code></pre></div>
 <pre><code>   user  system elapsed 
   0.062   0.012   0.074 </code></pre>
-<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="functions.html#cb651-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss3</span>(mm))</span></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="functions.html#cb649-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">system.time</span>(<span class="kw">ss3</span>(mm))</span></code></pre></div>
 <pre><code>   user  system elapsed 
   0.156   0.016   0.172 </code></pre>
-<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="functions.html#cb653-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(mm)</span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="functions.html#cb651-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(mm)</span></code></pre></div>
 </div>
 </div>
 <div id="more-on-functions" class="section level2" number="7.6">
@@ -1031,16 +1031,16 @@ One possibility is to have an outer loop that traverses the columns and an inner
 <li>By the position of the argument.</li>
 <li>By a partial name of the argument.</li>
 </ol>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="functions.html#cb654-1"></a><span class="op">&gt;</span><span class="st"> </span>tmp_function &lt;-<span class="st"> </span><span class="cf">function</span>(first.arg, second.arg, third.arg, fourth.arg){</span>
-<span id="cb654-2"><a href="functions.html#cb654-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">c</span>(first.arg, second.arg, third.arg, fourth.arg))</span>
-<span id="cb654-3"><a href="functions.html#cb654-3"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb654-4"><a href="functions.html#cb654-4"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">tmp_function</span>(<span class="dv">34</span>, <span class="dv">15</span>, <span class="dt">third.arg =</span> <span class="dv">11</span>, <span class="dt">fou =</span> <span class="dv">99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="functions.html#cb652-1"></a><span class="op">&gt;</span><span class="st"> </span>tmp_function &lt;-<span class="st"> </span><span class="cf">function</span>(first.arg, second.arg, third.arg, fourth.arg){</span>
+<span id="cb652-2"><a href="functions.html#cb652-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">c</span>(first.arg, second.arg, third.arg, fourth.arg))</span>
+<span id="cb652-3"><a href="functions.html#cb652-3"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb652-4"><a href="functions.html#cb652-4"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">tmp_function</span>(<span class="dv">34</span>, <span class="dv">15</span>, <span class="dt">third.arg =</span> <span class="dv">11</span>, <span class="dt">fou =</span> <span class="dv">99</span>)</span></code></pre></div>
 <pre><code>[1] 34 15 11 99</code></pre>
 <p>Positional matching of arguments is convenient, but should be used carefully, and probably limited to the first few, and most commonly used, arguments in a function. Partial does have pitfalls. A partially specified argument must unambiguously match exactly one argument—a requirement that’s not met below.</p>
-<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="functions.html#cb656-1"></a><span class="op">&gt;</span><span class="st"> </span>tmp_function &lt;-<span class="st"> </span><span class="cf">function</span>(first.arg, fourth.arg){</span>
-<span id="cb656-2"><a href="functions.html#cb656-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">c</span>(first.arg, fourth.arg))</span>
-<span id="cb656-3"><a href="functions.html#cb656-3"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb656-4"><a href="functions.html#cb656-4"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">tmp_function</span>(<span class="dv">1</span>, <span class="dt">f=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="functions.html#cb654-1"></a><span class="op">&gt;</span><span class="st"> </span>tmp_function &lt;-<span class="st"> </span><span class="cf">function</span>(first.arg, fourth.arg){</span>
+<span id="cb654-2"><a href="functions.html#cb654-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(<span class="kw">c</span>(first.arg, fourth.arg))</span>
+<span id="cb654-3"><a href="functions.html#cb654-3"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb654-4"><a href="functions.html#cb654-4"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">tmp_function</span>(<span class="dv">1</span>, <span class="dt">f=</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>Error in tmp_function(1, f = 2): argument 2 matches multiple formal arguments</code></pre>
 <div id="the-...-argument" class="section level3" number="7.7.1">
 <h3><span class="header-section-number">7.7.1</span> The <code>...</code> argument</h3>
@@ -1049,52 +1049,52 @@ One possibility is to have an outer loop that traverses the columns and an inner
 <p>The special type of argument `…’ can contain any number of supplied arguments. It is used for a variety of purposes. It allows you to write a function that takes an arbitrary number of arguments. It can be used to absorb some arguments into an intermediate function which can then be extracted by functions called subsequently.</p>
 </blockquote>
 <p>Consider for example the <code>sum()</code> function.</p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="functions.html#cb658-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="functions.html#cb656-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
 <pre><code>[1] 15</code></pre>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="functions.html#cb660-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">90</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="functions.html#cb658-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">90</span>))</span></code></pre></div>
 <pre><code>[1] 112</code></pre>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="functions.html#cb662-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">90</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="functions.html#cb660-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">90</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
 <pre><code>[1] 118</code></pre>
 <p>Think about writing such a function. There is no way to predict in advance the number of arguments a user might specify. So the function is defined with <code>...</code> as the first argument:</p>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="functions.html#cb664-1"></a><span class="op">&gt;</span><span class="st"> </span>sum</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="functions.html#cb662-1"></a><span class="op">&gt;</span><span class="st"> </span>sum</span></code></pre></div>
 <pre><code>function (..., na.rm = FALSE)  .Primitive(&quot;sum&quot;)</code></pre>
 <p>This is true of many commonly-used functions in R such as <code>c()</code> among others.</p>
 <p>Next, consider a function that calls another function in its body. For example, suppose that a collaborator always supplies comma delimited files that have five lines of description, followed by a line containing variable names, followed by the data. You are tired of having to specify <code>skip = 5</code>, <code>header = TRUE</code>, and <code>sep = ","</code> to <code>read.table()</code> and want to create a function <code>my.read()</code> which uses these as defaults.</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="functions.html#cb666-1"></a><span class="op">&gt;</span><span class="st"> </span>my.read &lt;-<span class="st"> </span><span class="cf">function</span>(file, <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">skip =</span> <span class="dv">5</span>, ...){</span>
-<span id="cb666-2"><a href="functions.html#cb666-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">read.table</span>(<span class="dt">file =</span> file, <span class="dt">header =</span> header, <span class="dt">sep =</span> sep, <span class="dt">skip =</span> skip, ...)</span>
-<span id="cb666-3"><a href="functions.html#cb666-3"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="functions.html#cb664-1"></a><span class="op">&gt;</span><span class="st"> </span>my.read &lt;-<span class="st"> </span><span class="cf">function</span>(file, <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">skip =</span> <span class="dv">5</span>, ...){</span>
+<span id="cb664-2"><a href="functions.html#cb664-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">read.table</span>(<span class="dt">file =</span> file, <span class="dt">header =</span> header, <span class="dt">sep =</span> sep, <span class="dt">skip =</span> skip, ...)</span>
+<span id="cb664-3"><a href="functions.html#cb664-3"></a><span class="op">+</span><span class="st"> </span>}</span></code></pre></div>
 <p>The <code>...</code> in the definition of <code>my.read()</code> allows the user to specify other arguments, for example, <code>stringsAsFactors = FALSE</code>. These will be passed on to the <code>read.table()</code> function. In fact, that is how <code>read.csv()</code> is defined.</p>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="functions.html#cb667-1"></a><span class="op">&gt;</span><span class="st"> </span>read.csv</span></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="functions.html#cb665-1"></a><span class="op">&gt;</span><span class="st"> </span>read.csv</span></code></pre></div>
 <pre><code>function (file, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;, dec = &quot;.&quot;, 
     fill = TRUE, comment.char = &quot;&quot;, ...) 
 read.table(file = file, header = header, sep = sep, quote = quote, 
     dec = dec, fill = fill, comment.char = comment.char, ...)
-&lt;bytecode: 0x558cf225cb38&gt;
+&lt;bytecode: 0x5647163998c0&gt;
 &lt;environment: namespace:utils&gt;</code></pre>
 </div>
 <div id="lazy-evaluation" class="section level3" number="7.7.2">
 <h3><span class="header-section-number">7.7.2</span> Lazy Evaluation</h3>
 <p>Arguments to R functions are not evaluated until they are needed, sometimes called <em>lazy</em> evaluation.</p>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="functions.html#cb669-1"></a><span class="op">&gt;</span><span class="st"> </span>f &lt;-<span class="st"> </span><span class="cf">function</span>(a,b){</span>
-<span id="cb669-2"><a href="functions.html#cb669-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">print</span>(a<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb669-3"><a href="functions.html#cb669-3"></a><span class="op">+</span><span class="st">     </span><span class="kw">print</span>(a<span class="op">^</span><span class="dv">3</span>)</span>
-<span id="cb669-4"><a href="functions.html#cb669-4"></a><span class="op">+</span><span class="st">     </span><span class="kw">print</span>(a<span class="op">*</span>b)</span>
-<span id="cb669-5"><a href="functions.html#cb669-5"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb669-6"><a href="functions.html#cb669-6"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dt">a=</span><span class="dv">3</span>, <span class="dt">b=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="functions.html#cb667-1"></a><span class="op">&gt;</span><span class="st"> </span>f &lt;-<span class="st"> </span><span class="cf">function</span>(a,b){</span>
+<span id="cb667-2"><a href="functions.html#cb667-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">print</span>(a<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb667-3"><a href="functions.html#cb667-3"></a><span class="op">+</span><span class="st">     </span><span class="kw">print</span>(a<span class="op">^</span><span class="dv">3</span>)</span>
+<span id="cb667-4"><a href="functions.html#cb667-4"></a><span class="op">+</span><span class="st">     </span><span class="kw">print</span>(a<span class="op">*</span>b)</span>
+<span id="cb667-5"><a href="functions.html#cb667-5"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb667-6"><a href="functions.html#cb667-6"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dt">a=</span><span class="dv">3</span>, <span class="dt">b=</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>[1] 9
 [1] 27
 [1] 6</code></pre>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="functions.html#cb671-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dt">a=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="functions.html#cb669-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dt">a=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>[1] 9
 [1] 27</code></pre>
 <pre><code>Error in print(a * b): argument &quot;b&quot; is missing, with no default</code></pre>
 <p>The first call specified both of the arguments <code>a</code> and <code>b</code>, and produced the expected output. In the second call the argument <code>b</code> was not specified. Since it was not needed until the third <code>print</code> statement, R happily executed the first two <code>print</code> statements, and only reported an error in the third statement, when <code>b</code> was needed to compute <code>a*b</code>.</p>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="functions.html#cb674-1"></a><span class="op">&gt;</span><span class="st"> </span>f &lt;-<span class="st"> </span><span class="cf">function</span>(a,<span class="dt">b =</span> a<span class="op">^</span><span class="dv">3</span>){</span>
-<span id="cb674-2"><a href="functions.html#cb674-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(a<span class="op">*</span>b)</span>
-<span id="cb674-3"><a href="functions.html#cb674-3"></a><span class="op">+</span><span class="st"> </span>}</span>
-<span id="cb674-4"><a href="functions.html#cb674-4"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="functions.html#cb672-1"></a><span class="op">&gt;</span><span class="st"> </span>f &lt;-<span class="st"> </span><span class="cf">function</span>(a,<span class="dt">b =</span> a<span class="op">^</span><span class="dv">3</span>){</span>
+<span id="cb672-2"><a href="functions.html#cb672-2"></a><span class="op">+</span><span class="st">     </span><span class="kw">return</span>(a<span class="op">*</span>b)</span>
+<span id="cb672-3"><a href="functions.html#cb672-3"></a><span class="op">+</span><span class="st"> </span>}</span>
+<span id="cb672-4"><a href="functions.html#cb672-4"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>[1] 16</code></pre>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="functions.html#cb676-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">2</span>,<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="functions.html#cb674-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">f</span>(<span class="dv">2</span>,<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>[1] 20</code></pre>
 <p>In the first call, since <code>b</code> was not specified, it was computed as <code>a^3</code>. In the second call, <code>b</code> was specified, and the specified value was used.</p>
 </div>

@@ -324,7 +324,7 @@ You create a leaflet map using these basic steps:
 
 Here's a brief example.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, eval = FALSE}
 library(leaflet)
 
 m <- leaflet() %>%
@@ -334,6 +334,23 @@ m <- leaflet() %>%
 m      # Print the map
 ```
 
+```{r, tidy = FALSE, echo = FALSE}
+if(knitr::is_html_output()) { 
+  library(leaflet)
+
+  m <- leaflet() %>%
+        addTiles() %>%  # Add default OpenStreetMap map tiles
+        addMarkers(lng=-84.482004, lat=42.727516, 
+                   popup="<b>Here I am!</b>") # Add a clickable marker
+  m      # Print the map
+}
+```
+
+```{r, tidy = FALSE, echo = FALSE, out.width = '100%'}
+if (!knitr::is_html_output()) {
+  knitr::include_graphics("../figures/leaflet-here-i-am.png")
+}
+```
 There are a couple things to note in the code. First, we use the pipe operator `%>%` just like in `dplyr` functions. Second, the `popup` argument in `addMarkers()` takes standard HTML and clicking on the marker makes the text popup. Third, the html version of this text provides the full interactive, dynamic map, so we encourage you to read and interact with the html version of this textbook for this section. The PDF document will simply display a static version of this map and will not do justice to how awesome `leaflet` truly is!
 
 As seen in the `leaflet()` call above, the various `add...` functions can take longitude (i.e., `lng`) and latitude (i.e., `lat`). Alternatively, these functions can extract the necessary spatial information from `sp` objects, e.g., Table \@ref(tab:spatialObjs), when passed to the data argument (which greatly simplifies life compared with map making using `ggmap`).

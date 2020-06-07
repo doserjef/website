@@ -164,12 +164,15 @@
 \makeatother
 
 \frontmatter
+\usepackage{color}
+\usepackage{graphicx}
+\graphicspath{{_bookdown_files/}}
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
 \title{R Programming for Data Sciences}
 \author{Andrew O. Finley, Jeffrey W. Doser, Vince Melfi}
-\date{2020-06-04}
+\date{2020-06-07}
 
 \begin{document}
 \maketitle
@@ -4583,7 +4586,8 @@ We now use the \texttt{pivot\_wider()} function to widen the \texttt{religionLon
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{religionWide \textless{}{-}}\StringTok{ }\KeywordTok{pivot\_wider}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ religionLong, }\DataTypeTok{names\_from =}\NormalTok{ IncomeLevel, }
+\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{religionWide \textless{}{-}}\StringTok{ }\KeywordTok{pivot\_wider}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ religionLong, }
+\OperatorTok{+}\StringTok{               }\DataTypeTok{names\_from =}\NormalTok{ IncomeLevel, }
 \OperatorTok{+}\StringTok{               }\DataTypeTok{values\_from =}\NormalTok{ Frequency)}
 \OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{head}\NormalTok{(religionWide)}
 \end{Highlighting}
@@ -4696,117 +4700,91 @@ Much of the effort (a figure of 80\% is sometimes suggested) in data analysis is
 
 These all combine naturally with a \texttt{group\_by()} function that allows you to perform any operation grouped by values of one or more variables. All the tasks done using \texttt{dplyr} can be accomplished using tools already covered in this text; however, \texttt{dplyr}'s functions provide a potentially more efficient and convenient framework to accomplish these tasks. RStudio provides a convenient \href{https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf}{data wrangling cheat sheet} that covers many aspects of the \texttt{tidyr} and \texttt{dplyr} packages.
 
-This somewhat long section on \texttt{dplyr} adapts the nice introduction by Jenny Bryan, available at \url{http://stat545-ubc.github.io/block010_dplyr-end-single-table.html}.
+This somewhat long section on \texttt{dplyr} adapts the nice introduction by Jenny Bryan, available at \url{https://stat545.com/dplyr-intro.html}.
 
 \hypertarget{improved-data-frames}{%
 \subsection{Improved Data Frames}\label{improved-data-frames}}
 
-The \texttt{dplyr} package provides a couple functions that offer improvements on data frames. First, \texttt{tibble} creates a tibble from a series of vectors\footnote{Reminds me of \href{https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles}{The Trouble with Tribbles}}. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table's dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the \texttt{as\_tibble()} function to convert an existing data frame or list into a tibble. Here is an example using the \texttt{religionWide} data frame.\footnote{The text printed immediately after \texttt{library(dplyr)} means the \texttt{stats} and \texttt{base} packages, which are automatically loaded when you start R, have functions with the same name as functions in \texttt{dplyr}. So, for example, if you call the \texttt{filter()} or \texttt{lag()} functions, R will use \texttt{library(dplyr)}`s functions. Use the \texttt{::} operator to explicity identify which packages' function you want to use, e.g., if you want \texttt{stats}'s \texttt{lag()} then call \texttt{stats::lag()}.}
+The \texttt{dplyr} package provides a couple functions that offer improvements on data frames. First, \texttt{tibble} creates a tibble from a series of vectors\footnote{Reminds me of \href{https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles}{The Trouble with Tribbles}}. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table's dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the \texttt{as\_tibble()} function to convert an existing data frame or list into a tibble. Here is an example using the \texttt{mtcars} data frame.\footnote{The text printed immediately after \texttt{library(dplyr)} means the \texttt{stats} and \texttt{base} packages, which are automatically loaded when you start R, have functions with the same name as functions in \texttt{dplyr}. So, for example, if you call the \texttt{filter()} or \texttt{lag()} functions, R will use \texttt{library(dplyr)}`s functions. Use the \texttt{::} operator to explicity identify which packages' function you want to use, e.g., if you want \texttt{stats}'s \texttt{lag()} then call \texttt{stats::lag()}.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{library}\NormalTok{(dplyr)}
-\OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{head}\NormalTok{(religionWide)}
+\OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{head}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                   mpg cyl disp  hp drat    wt  qsec
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02
+Valiant           18.1   6  225 105 2.76 3.460 20.22
+                  vs am gear carb
+Mazda RX4          0  1    4    4
+Mazda RX4 Wag      0  1    4    4
+Datsun 710         1  1    4    1
+Hornet 4 Drive     1  0    3    1
+Hornet Sportabout  0  0    3    2
+Valiant            1  0    3    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{mtcars[,}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2
+[11] 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9
+[21] 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
+[31] 15.0 21.4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{mtcarsTbl \textless{}{-}}\StringTok{ }\KeywordTok{as\_tibble}\NormalTok{(mtcars)}
+\OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{head}\NormalTok{(mtcarsTbl)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 # A tibble: 6 x 11
-  religion under10k btw10and20k btw20and30k btw30and40k
-  <chr>       <int>       <int>       <int>       <int>
-1 Agnostic       27          34          60          81
-2 Atheist        12          27          37          52
-3 Buddhist       27          21          30          34
-4 Catholic      418         617         732         670
-5 DoNotKn~       15          14          15          11
-6 Evangel~      575         869        1064         982
-# ... with 6 more variables: btw40and50k <int>,
-#   btw50and75k <int>, btw75and100k <int>,
-#   btw100and150k <int>, over150k <int>,
-#   DoNotKnowOrRefused <int>
+    mpg   cyl  disp    hp  drat    wt  qsec    vs    am
+  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+1  21       6   160   110  3.9   2.62  16.5     0     1
+2  21       6   160   110  3.9   2.88  17.0     0     1
+3  22.8     4   108    93  3.85  2.32  18.6     1     1
+4  21.4     6   258   110  3.08  3.22  19.4     1     0
+5  18.7     8   360   175  3.15  3.44  17.0     0     0
+6  18.1     6   225   105  2.76  3.46  20.2     1     0
+# ... with 2 more variables: gear <dbl>, carb <dbl>
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{religionWide[,}\DecValTok{1}\NormalTok{]}
+\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{mtcarsTbl[,}\DecValTok{1}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-# A tibble: 18 x 1
-   religion             
-   <chr>                
- 1 Agnostic             
- 2 Atheist              
- 3 Buddhist             
- 4 Catholic             
- 5 DoNotKnowOrRefused   
- 6 EvangelicalProt      
- 7 Hindu                
- 8 HistoricallyBlackProt
- 9 JehovahsWitness      
-10 Jewish               
-11 MainlineProt         
-12 Mormon               
-13 Muslim               
-14 Orthodox             
-15 OtherChristian       
-16 OtherFaiths          
-17 OtherWorldReligions  
-18 Unaffiliated         
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{religionWideTbl \textless{}{-}}\StringTok{ }\KeywordTok{as\_tibble}\NormalTok{(religionWide)}
-\OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{head}\NormalTok{(religionWideTbl)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-# A tibble: 6 x 11
-  religion under10k btw10and20k btw20and30k btw30and40k
-  <chr>       <int>       <int>       <int>       <int>
-1 Agnostic       27          34          60          81
-2 Atheist        12          27          37          52
-3 Buddhist       27          21          30          34
-4 Catholic      418         617         732         670
-5 DoNotKn~       15          14          15          11
-6 Evangel~      575         869        1064         982
-# ... with 6 more variables: btw40and50k <int>,
-#   btw50and75k <int>, btw75and100k <int>,
-#   btw100and150k <int>, over150k <int>,
-#   DoNotKnowOrRefused <int>
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{religionWideTbl[,}\DecValTok{1}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-# A tibble: 18 x 1
-   religion             
-   <chr>                
- 1 Agnostic             
- 2 Atheist              
- 3 Buddhist             
- 4 Catholic             
- 5 DoNotKnowOrRefused   
- 6 EvangelicalProt      
- 7 Hindu                
- 8 HistoricallyBlackProt
- 9 JehovahsWitness      
-10 Jewish               
-11 MainlineProt         
-12 Mormon               
-13 Muslim               
-14 Orthodox             
-15 OtherChristian       
-16 OtherFaiths          
-17 OtherWorldReligions  
-18 Unaffiliated         
+# A tibble: 32 x 1
+     mpg
+   <dbl>
+ 1  21  
+ 2  21  
+ 3  22.8
+ 4  21.4
+ 5  18.7
+ 6  18.1
+ 7  14.3
+ 8  24.4
+ 9  22.8
+10  19.2
+# ... with 22 more rows
 \end{verbatim}
 
 As seen above, note that once the data frame is reduced to one dimension by subsetting to one column, it is no longer a data frame and has been \emph{simplified} to a vector. This might not seem like a big deal; however, it can be very frustrating and potentially break your code when you expect an object to behave like a data frame and it doesn't because it's now a vector. Alternatively, once we convert \texttt{religionWide} to a \texttt{tibble} via the \texttt{as\_tibble()} function the object remains a data frame even when subsetting down to one dimension (there is no automatic simplification). Converting data frames using \texttt{as\_tibble()} is not required for using \texttt{dplyr} but is convenient. Also, it is important to note that \texttt{tibble} is simply a wrapper around a data frame that provides some additional behaviors. The newly formed \texttt{tibble} object will still behave like a data frame (because it technically still is a data frame) but will have some added niceties (some of which are illustrated below).
@@ -5060,7 +5038,7 @@ Notice a few things. Variables can be selected by name or column number. As usua
 \hypertarget{practice-problem-8}{%
 \subsection{Practice Problem}\label{practice-problem-8}}
 
-Use the \texttt{contains()} function to select only the columns that contain a \texttt{c}
+Use the \texttt{contains()} function to select only the columns that contain a \texttt{c} in the \texttt{gapminder} data set.
 
 \hypertarget{pipes}{%
 \subsection{Pipes}\label{pipes}}
@@ -5273,7 +5251,7 @@ It is worth your while to get comfortable with using pipes. Here is some hard-to
 \begin{Shaded}
 \begin{Highlighting}[]
 \OperatorTok{\textgreater{}}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{select}\NormalTok{(}\KeywordTok{filter}\NormalTok{(gm, country }\OperatorTok{==}\StringTok{ "Afghanistan"}\NormalTok{), }
-\OperatorTok{\textgreater{}}\StringTok{                }\KeywordTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"lifeExp"}\NormalTok{)), }\KeywordTok{desc}\NormalTok{(lifeExp))}
+\OperatorTok{+}\StringTok{                }\KeywordTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"lifeExp"}\NormalTok{)), }\KeywordTok{desc}\NormalTok{(lifeExp))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5743,47 +5721,6 @@ That's not quite what we wanted. We could arrange the results by the life expect
 # ... with 1,694 more rows
 \end{verbatim}
 
-That's still not quite right. Because the data are grouped by country, R did the ordering within group. If we want to see the largest drops overall, we need to remove the grouping.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{gm }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\OperatorTok{+}\StringTok{   }\KeywordTok{group\_by}\NormalTok{(country) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\OperatorTok{+}\StringTok{   }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{changeLifeExp =}\NormalTok{ lifeExp }\OperatorTok{{-}}\StringTok{ }\KeywordTok{lag}\NormalTok{(lifeExp, }\DataTypeTok{order\_by =}\NormalTok{ year)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\OperatorTok{+}\StringTok{   }\KeywordTok{select}\NormalTok{(}\OperatorTok{{-}}\KeywordTok{c}\NormalTok{(population, gdpPercap)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\OperatorTok{+}\StringTok{   }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\OperatorTok{+}\StringTok{   }\KeywordTok{arrange}\NormalTok{(changeLifeExp) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
-\OperatorTok{+}\StringTok{   }\KeywordTok{print}\NormalTok{(}\DataTypeTok{n=}\DecValTok{20}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-# A tibble: 1,704 x 5
-   country       year continent lifeExp changeLifeExp
-   <fct>        <int> <fct>       <dbl>         <dbl>
- 1 Rwanda        1992 Africa       23.6        -20.4 
- 2 Zimbabwe      1997 Africa       46.8        -13.6 
- 3 Lesotho       2002 Africa       44.6        -11.0 
- 4 Swaziland     2002 Africa       43.9        -10.4 
- 5 Botswana      1997 Africa       52.6        -10.2 
- 6 Cambodia      1977 Asia         31.2         -9.10
- 7 Namibia       2002 Africa       51.5         -7.43
- 8 South Africa  2002 Africa       53.4         -6.87
- 9 Zimbabwe      2002 Africa       40.0         -6.82
-10 China         1962 Asia         44.5         -6.05
-11 Botswana      2002 Africa       46.6         -5.92
-12 Zambia        1997 Africa       40.2         -5.86
-13 Iraq          1992 Asia         59.5         -5.58
-14 Liberia       1992 Africa       40.8         -5.23
-15 Cambodia      1972 Asia         40.3         -5.10
-16 Kenya         1997 Africa       54.4         -4.88
-17 Somalia       1992 Africa       39.7         -4.84
-18 Zambia        1992 Africa       46.1         -4.72
-19 Swaziland     2007 Africa       39.6         -4.26
-20 Uganda        1997 Africa       44.6         -4.25
-# ... with 1,684 more rows
-\end{verbatim}
-
 \hypertarget{practice-problem-10}{%
 \subsection{Practice Problem}\label{practice-problem-10}}
 
@@ -5798,7 +5735,7 @@ Recall the \texttt{iris} data set we have worked with multiple times. We want to
 
 \textbf{Exercise 8} Learning objectives: work with messy data; import data from an external spreadsheet; practice using functions in \texttt{tidyr} and graphing functions.\}
 
-\textbf{Exercise 9} \{Learning objectives: work with several key \textbf{dplyr} functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.\}
+\textbf{Exercise 9} Learning objectives: work with several key \textbf{dplyr} functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.
 
 \hypertarget{functions}{%
 \chapter{Functions and Programming}\label{functions}}
@@ -6647,10 +6584,10 @@ Often when students initially learn about \texttt{if()} statements and \texttt{f
 \begin{Highlighting}[]
 \OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{a \textless{}{-}}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{1000}\NormalTok{)}
 \OperatorTok{\textgreater{}}\StringTok{ }\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(a)) \{}
-\OperatorTok{\textgreater{}}\StringTok{   }\ControlFlowTok{if}\NormalTok{ (a[i] }\OperatorTok{\textgreater{}}\StringTok{ }\DecValTok{1}\NormalTok{) \{}
-\OperatorTok{\textgreater{}}\StringTok{     }\NormalTok{a[i] \textless{}{-}}\StringTok{ }\DecValTok{0}
-\OperatorTok{\textgreater{}}\StringTok{   }\NormalTok{\}}
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{\}}
+\OperatorTok{+}\StringTok{   }\ControlFlowTok{if}\NormalTok{ (a[i] }\OperatorTok{\textgreater{}}\StringTok{ }\DecValTok{1}\NormalTok{) \{}
+\OperatorTok{+}\StringTok{     }\NormalTok{a[i] \textless{}{-}}\StringTok{ }\DecValTok{0}
+\OperatorTok{+}\StringTok{   }\NormalTok{\}}
+\OperatorTok{+}\StringTok{ }\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6714,7 +6651,7 @@ Here are the two functions in action, with \(n = 100000\).
 
 \begin{verbatim}
    user  system elapsed 
-  11.99    0.06   12.05 
+ 12.891   0.065  12.996 
 \end{verbatim}
 
 \begin{Shaded}
@@ -6725,7 +6662,7 @@ Here are the two functions in action, with \(n = 100000\).
 
 \begin{verbatim}
    user  system elapsed 
-  0.008   0.000   0.008 
+  0.009   0.000   0.009 
 \end{verbatim}
 
 It is \emph{much} more efficient to start with a full-length vector and then fill in values.\footnote{Roughly speaking, the first option is slower because each time the vector is increased in size, R must resize the vector and re-allocate memory.}
@@ -6740,7 +6677,7 @@ Of course another way to create a vector of integers from 1 to n is to use \text
 
 \begin{verbatim}
    user  system elapsed 
-  0.000   0.000   0.001 
+  0.001   0.000   0.000 
 \end{verbatim}
 
 \begin{Shaded}
@@ -6853,7 +6790,7 @@ Here is a speed comparison, using a \(1000\times 10000\) matrix.
 
 \begin{verbatim}
    user  system elapsed 
-  0.909   0.000   0.909 
+  0.964   0.000   0.963 
 \end{verbatim}
 
 \begin{Shaded}
@@ -6864,7 +6801,7 @@ Here is a speed comparison, using a \(1000\times 10000\) matrix.
 
 \begin{verbatim}
    user  system elapsed 
-  0.063   0.004   0.067 
+  0.089   0.016   0.104 
 \end{verbatim}
 
 \begin{Shaded}
@@ -6875,7 +6812,7 @@ Here is a speed comparison, using a \(1000\times 10000\) matrix.
 
 \begin{verbatim}
    user  system elapsed 
-  0.153   0.020   0.173 
+  0.159   0.020   0.180 
 \end{verbatim}
 
 \begin{Shaded}
@@ -7011,7 +6948,7 @@ function (file, header = TRUE, sep = ",", quote = "\"", dec = ".",
     fill = TRUE, comment.char = "", ...) 
 read.table(file = file, header = header, sep = sep, quote = quote, 
     dec = dec, fill = fill, comment.char = comment.char, ...)
-<bytecode: 0x56085db1c7c8>
+<bytecode: 0x557609c01368>
 <environment: namespace:utils>
 \end{verbatim}
 
@@ -7365,7 +7302,7 @@ rgdal: version: 1.4-4, (SVN revision 833)
 
 \begin{verbatim}
 OGR data source with driver: ESRI Shapefile 
-Source: "/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/PEF", layer: "MU-bounds"
+Source: "/home/jeffdoser/Dropbox/teaching/for875-20/textbook/PEF", layer: "MU-bounds"
 with 40 features
 It has 1 fields
 \end{verbatim}
@@ -7510,7 +7447,7 @@ Next, we query the satellite imagery used to underlay the management units (we'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-200-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-199-1.pdf}
 While the call to \texttt{get\_map} can use a bounding box (\texttt{mu.bbox} in code above) to define the \texttt{basemap} extent, I've found that it's easier to pass it a center point location (\texttt{mu.centroid} note the use of the \texttt{apply} function to find the mean in the easting and northing extents) and \texttt{zoom} value to extract the desired extent. The resulting map looks pretty good! Take a look at the \texttt{get\_map} function manual page and try different options for \texttt{maptype} (e.g., \texttt{maptype="terrain"}).
 
 Next we'll add the forest inventory plots to the map. Begin by reading in the PEF forest inventory plot data held in ``plots.csv''. Recall, foresters have measured forest variables at a set of locations (i.e., inventory plots) within each management unit. The following statement reads these data and displays the resulting data frame structure.
@@ -7614,7 +7551,7 @@ We're now ready to add the forest inventory plots to the existing basemap with m
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-205-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-204-1.pdf}
 
 There is something subtle and easy to miss in the code above. Notice the \texttt{aes} function arguments in \texttt{geom\_points} take geographic longitude and latitude, \texttt{x} and \texttt{y} respectively, from the \texttt{points} data frame (but recall \texttt{easting} and \texttt{northing} were in UTM zone 19). This works because we applied \texttt{spTransform} to reproject the \texttt{points} \texttt{SpatialPointsDataFrame} to geographic coordinates. \texttt{sp} then replaces the values in \texttt{easting} and \texttt{northing} columns with the reprojected coordinate values when converting a \texttt{SpatialPointsDataFrame} to a data frame via \texttt{as.data.frame()}.
 
@@ -7689,7 +7626,7 @@ The calls to \texttt{head()} show the first few rows of \texttt{mu.f} pre- and p
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-208-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-207-1.pdf}
 
 Let's add the roads and some more descriptive labels as a finishing touch. The roads data include a variable called \texttt{type} that identifies the road type. To color roads by type in the map, we need to join the \texttt{roads} data frame with the fortified roads \texttt{roads.f} using the common variable \texttt{id} as a road segment specific identifier. Then \texttt{geom\_path}'s \texttt{color} argument gets this \texttt{type} variable as a factor to create road-specific color. The default coloring of the roads blends in too much with the polygon colors, so we manually set the road colors using the \texttt{scale\_color\_brewer} function. The \texttt{palette} argument in this function accepts a set of key words, e.g., \texttt{"Dark2"}, that specify sets of diverging colors chosen to make map object difference optimally distinct (see, the manual page for \texttt{scale\_color\_brewer}, \url{http://colorbrewer2.org}, and blog \href{https://www.r-bloggers.com/r-using-rcolorbrewer-to-colour-your-figures-in-r}{here}.)\footnote{Install the \texttt{RColorBrewer} package and run \texttt{library(RColorBrewer);\ display.brewer.all()} to get a graphical list of available palettes.}
 
@@ -7701,7 +7638,7 @@ Let's add the roads and some more descriptive labels as a finishing touch. The r
 
 \begin{verbatim}
 OGR data source with driver: ESRI Shapefile 
-Source: "/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/PEF", layer: "roads"
+Source: "/home/jeffdoser/Dropbox/teaching/for875-20/textbook/PEF", layer: "roads"
 with 33 features
 It has 2 fields
 \end{verbatim}
@@ -7741,7 +7678,7 @@ Warning: Removed 616 rows containing missing values
 (geom_path).
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-209-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-208-1.pdf}
 
 The second, and more cryptic, of the two warnings from this code occurs because some of the roads extend beyond the range of the map axes and are removed (nothing to worry about).
 
@@ -7777,12 +7714,11 @@ Here's a brief example.
 \OperatorTok{+}\StringTok{       }\KeywordTok{addTiles}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{  }\CommentTok{\# Add default OpenStreetMap map tiles}
 \OperatorTok{+}\StringTok{       }\KeywordTok{addMarkers}\NormalTok{(}\DataTypeTok{lng=}\OperatorTok{{-}}\FloatTok{84.482004}\NormalTok{, }\DataTypeTok{lat=}\FloatTok{42.727516}\NormalTok{, }
 \OperatorTok{+}\StringTok{                  }\DataTypeTok{popup=}\StringTok{"\textless{}b\textgreater{}Here I am!\textless{}/b\textgreater{}"}\NormalTok{) }\CommentTok{\# Add a clickable marker}
-\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{m  }\CommentTok{\# Print the map}
+\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{m      }\CommentTok{\# Print the map}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{htmlwidget-4b2ba1852a569edfcbe7}{}
-
+\includegraphics[width=1\linewidth]{../figures/leaflet-here-i-am}
 There are a couple things to note in the code. First, we use the pipe operator \texttt{\%\textgreater{}\%} just like in \texttt{dplyr} functions. Second, the \texttt{popup} argument in \texttt{addMarkers()} takes standard HTML and clicking on the marker makes the text popup. Third, the html version of this text provides the full interactive, dynamic map, so we encourage you to read and interact with the html version of this textbook for this section. The PDF document will simply display a static version of this map and will not do justice to how awesome \texttt{leaflet} truly is!
 
 As seen in the \texttt{leaflet()} call above, the various \texttt{add...} functions can take longitude (i.e., \texttt{lng}) and latitude (i.e., \texttt{lat}). Alternatively, these functions can extract the necessary spatial information from \texttt{sp} objects, e.g., Table \ref{tab:spatialObjs}, when passed to the data argument (which greatly simplifies life compared with map making using \texttt{ggmap}).
@@ -7839,7 +7775,7 @@ attr(,"package")
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-213-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-214-1.pdf}
 
 A few things to notice in the code above. First the \texttt{getData} function needs the longitude \texttt{lon} and latitude \texttt{lat} to identify which SRTM raster tile to return (SRTM data come in large raster tiles that cover the globe). As usual, look at the \texttt{getData} function documentation for a description of the arguments. To estimate the PEF's centroid coordinate, we averaged the forest inventory plots' latitude and longitude then assigned the result to \texttt{pef.centroid} (for fun, I used the \texttt{apply} function to do the same task when creating \texttt{mu.centroid} earlier in the chapter). Second, \texttt{srtm} is in a longitude latitude geographic CRS (same as our other PEF data). Finally, the image shows SRTM elevation along the coast of Maine, the PEF plots are those tiny specks of black in the northwest quadrant, and the white region of the image is the Atlantic Ocean.
 
@@ -7854,7 +7790,7 @@ Okay, this is a start, but it would be good to crop the SRTM image to the PEF's 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-214-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-215-1.pdf}
 
 The \texttt{crop} is in effect doing a spatial subsetting of the raster data. We'll return to the \texttt{srtm} data and explore different kinds of subsetting in the subsequent sections.
 
@@ -7931,7 +7867,7 @@ A spatial overlay retrieves the indexes or variables from object \(A\) using the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-217-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-218-1.pdf}
 
 More generally, however, the \texttt{over} function offers consistent overlay operations for \texttt{sp} objects and can return either indexes or variables from object \(A\) given locations from object \(B\), i.e., \texttt{over(B,\ A)} or, equivalently, \texttt{B\%over\%A}. The code below duplicates the result from the preceding example using \texttt{over}.
 
@@ -7997,7 +7933,7 @@ Warning: Removed 483 rows containing missing values
 (geom_point).
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-220-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-221-1.pdf}
 
 In the call to \texttt{geom\_point} above, \texttt{coords.x1} \texttt{coords.x2} are the default names given to longitude and latitude, respectively, when \texttt{sp} coerces \texttt{hikes} to \texttt{hikes.pts}. These points represent the vertices along line segments. I create the vector \texttt{color.vals} that contains the values from \texttt{srtm} that I use in the map argument \texttt{color}.
 
@@ -8058,7 +7994,7 @@ Joining, by = "id"
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-222-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-223-1.pdf}
 
 The \texttt{aggregate()} function will work with all \texttt{sp} objects. For example let's map the variance of pixel values in \texttt{srtm.sp} by management unit. Notice that \texttt{aggregate()} is happy to take a user-specified function for \texttt{FUN}.
 
@@ -8099,7 +8035,7 @@ Joining, by = "id"
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-223-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-224-1.pdf}
 
 \hypertarget{where-to-go-from-here}{%
 \section{Where to go from here}\label{where-to-go-from-here}}
@@ -8126,7 +8062,7 @@ This chapter just scratches the surface of R's spatial data manipulation and vis
 In the bottom panel of the resulting Shiny app (Figure \ref{fig:hello}), we can see the R script that is essential to running any Shiny app: \texttt{app.R}. Take a minute to explore how the app works and how the script code is structured. The first part of the script (\texttt{ui\ \textless{}-}) defines the app's user interface (UI) using directives that partition the resulting web page and placement of input and output elements. The second part of the script defines a function called \texttt{server} with arguments \texttt{input} and \texttt{output}. This function provides the logic required to run the app (in this case, to draw the histogram of the Old Faithful Geyser Data). Third, \texttt{ui} and \texttt{server} are passed to a function called \texttt{shinyApp} which creates the application.\footnote{Since 2014, Shiny has supported single-file applications (one file called app.R that contains UI and server components), but in other resources, you may see two separate source files, \texttt{server.R} and \texttt{ui.R}, that correspond to those two components. We will use the updated one-file system here, but keep in mind that older resources you find on the internet using the Shiny package may employ the two-file approach. Ultimately, the code inside these files is almost identical to that within the single \texttt{app.R} file. See \url{https://shiny.rstudio.com/articles/app-formats.html} for more information.}
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{../../for875-19/figures/hello_shiny} \caption{Hello Shiny example app}\label{fig:hello}
+\includegraphics[width=1\linewidth]{../../figures/hello_shiny} \caption{Hello Shiny example app}\label{fig:hello}
 \end{figure}
 
 All of the example code and data for the remainder of this chapter can be accessed using the following code.
@@ -8562,7 +8498,7 @@ A graph of this function when \(\beta_0=0\) and \(\beta_1 = 1\) shows the charac
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-235-1.pdf}
 
 To make this more concrete, we will consider a data set on a population of women who were over 21 years of age, lived near Phoenix, Arizona, and were of Pima Indian heritage. The data included diabetes status (yes or no) and seven possible predictor variables such as age, number of pregnancies, body mass index, etc. The original data are from the National Institute of Diabetes and Digestive and Kidney Diseases. These data were cleaned and are available in the \texttt{MASS} package in R. In the package the data frame \texttt{Pima.tr} contains 200 randomly selected cases from the full data set, which we will use to find a classifier. The data frame \texttt{Pima.te} contains the remaining 332 cases, which we will use to test the classifier on new data.\footnote{This practice of randomly separating data into training data and testing data is a common practice for many classification methods.}
 
@@ -8716,7 +8652,7 @@ We can plot the fitted probabilities along with the data ``by hand''.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-239-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-240-1.pdf}
 
 The \texttt{ggplot2} package also provides a way to do this more directly, using \texttt{stat\_smooth}.
 
@@ -8729,7 +8665,7 @@ The \texttt{ggplot2} package also provides a way to do this more directly, using
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-240-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-241-1.pdf}
 
 From these graphics we can see that although glucose level and diabetes are related, there are many women with high glucose levels who are not diabetic, and many with low glucose levels who are diabetic, so likely adding other predictors to the model will help.
 
@@ -8946,7 +8882,7 @@ The diabetes training data along with the decision boundary are plotted below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-245-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-246-1.pdf}
 
 \hypertarget{more-than-two-classes}{%
 \subsection{More than Two Classes}\label{more-than-two-classes}}
@@ -8999,7 +8935,7 @@ Logistic regression methods also are applicable to classification contexts where
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-246-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-247-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9008,7 +8944,7 @@ Logistic regression methods also are applicable to classification contexts where
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-246-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-247-2.pdf}
 
 Here the potential predictors are sepal width, sepal length, petal width, and petal length. The goal is to find a classifier that will yield the correct species. From the scatter plots it should be pretty clear that a model with petal length and petal width as predictors would classify the data well. Although in a sense this is too easy, these data do a good job of illustrating logistic regression with more than two classes.
 
@@ -9215,7 +9151,7 @@ First the data are read into R and graphed. The predictors \texttt{x1} and \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-252-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-253-1.pdf}
 
 Next a large set of test data is created using the \texttt{expand.grid} function, which creates a data frame with all possible combinations of the arguments. First a simple example to illustrate the function, then the actual creation of the training set. The test set covers the range of the \texttt{x1} and \texttt{x2} values in the training set.
 
@@ -9337,7 +9273,7 @@ Next the graphs are created. This is somewhat complex, since we want to plot the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-255-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-256-1.pdf}
 
 Next we graph the decision boundary of kNN with \(k=1\).
 
@@ -9378,7 +9314,7 @@ Next we graph the decision boundary of kNN with \(k=1\).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-256-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-257-1.pdf}
 
 \hypertarget{knn-and-the-diabetes-data}{%
 \subsection{kNN and the Diabetes Data}\label{knn-and-the-diabetes-data}}
@@ -10364,7 +10300,7 @@ Now that the vector \texttt{moby\_dick} contains each word in the novel as a sep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-286-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -10401,7 +10337,7 @@ md.data.frame$Freq, max.words = 500, : the could not be
 fit on page. It will not be plotted.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-287-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-288-1.pdf}
 
 \hypertarget{substr-and-strtrim}{%
 \subsection{\texorpdfstring{\texttt{substr} and \texttt{strtrim}}{substr and strtrim}}\label{substr-and-strtrim}}
@@ -10940,10 +10876,10 @@ This is a good example of where C++ is much more efficient than R. As shown by t
 
 \begin{verbatim}
 Unit: microseconds
-    expr    min     lq   mean median     uq      max
-  sum(x)  1.014  1.046  1.212  1.064  1.130    7.317
- sumC(x)  2.354  2.482 13.766  2.570  2.813 1065.628
- sumR(x) 37.282 37.469 70.942 37.614 38.837 2884.008
+    expr    min     lq   mean median     uq     max
+  sum(x)  1.036  1.066  1.459  1.088  1.111   27.99
+ sumC(x)  2.366  2.430 12.594  2.470  2.542  967.16
+ sumR(x) 38.586 38.805 66.756 38.934 39.484 2706.02
  neval cld
    100  a 
    100  ab
@@ -11203,7 +11139,7 @@ Now lets look closer at the chinook database.
 \end{Shaded}
 
 \begin{verbatim}
-src:  sqlite 3.22.0 [/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/chinook.db]
+src:  sqlite 3.22.0 [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
 tbls: albums, artists, customers, employees, genres,
   invoice_items, invoices, media_types,
   playlist_track, playlists, sqlite_sequence,
@@ -11224,7 +11160,7 @@ Now that we know the structure of the database, we can perform some simple queri
 \begin{verbatim}
 # Source:   table<employees> [?? x 15]
 # Database: sqlite 3.22.0
-#   [/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/chinook.db]
+#   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
   EmployeeId LastName FirstName Title ReportsTo
        <int> <chr>    <chr>     <chr>     <int>
 1          1 Adams    Andrew    Gene~        NA
@@ -11267,7 +11203,7 @@ This warning is displayed once per session.
 \begin{verbatim}
 # Source:     lazy query [?? x 4]
 # Database:   sqlite 3.22.0
-#   [/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/chinook.db]
+#   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
 # Ordered by: LastName
   LastName FirstName Phone          Email              
   <chr>    <chr>     <chr>          <chr>              
@@ -11293,7 +11229,7 @@ This warning is displayed once per session.
 \begin{verbatim}
 # Source:     lazy query [?? x 3]
 # Database:   sqlite 3.22.0
-#   [/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/chinook.db]
+#   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
 # Ordered by: LastName
   LastName FirstName Address         
   <chr>    <chr>     <chr>           
@@ -11313,7 +11249,7 @@ This warning is displayed once per session.
 \begin{verbatim}
 # Source:   lazy query [?? x 2]
 # Database: sqlite 3.22.0
-#   [/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/chinook.db]
+#   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
   ReportsTo numberAtLocation
       <int>            <int>
 1        NA                1
@@ -11337,7 +11273,7 @@ You can see by using \texttt{dplyr} you are able to use the same syntax to query
 \begin{verbatim}
 # Source:     lazy query [?? x 3]
 # Database:   sqlite 3.22.0
-#   [/home/jeffdoser/Dropbox/teaching/for875/for875-20/textbook/chinook.db]
+#   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
 # Ordered by: LastName
   LastName FirstName Address         
   <chr>    <chr>     <chr>           
@@ -11399,7 +11335,7 @@ Please use `!!` instead.
 This warning is displayed once per session.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-316-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-317-1.pdf}
 
 We first load the \texttt{dbplot} package. Next we produce the bar plot. Notice that we can continue to use the convenient \texttt{\%\textgreater{}\%} character while producing graphs using \texttt{dbplot}, making the code easy to read. Since \texttt{dbplot} outputs a \texttt{ggplot2} object, we can further customize the graph using familiar functions from \texttt{ggplot2} (so long as the package is loaded).
 
@@ -11414,7 +11350,7 @@ We first load the \texttt{dbplot} package. Next we produce the bar plot. Notice 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-317-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-318-1.pdf}
 
 \hypertarget{using-google-bigquery}{%
 \subsection{Using Google BigQuery}\label{using-google-bigquery}}
@@ -11437,15 +11373,6 @@ We will use data from a great set of sample tables that BigQuery provides to its
 \OperatorTok{+}\StringTok{ }\NormalTok{)}
 \OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{shakespeare \textless{}{-}}\StringTok{ }\NormalTok{con }\OperatorTok{\%\textgreater{}\%}
 \OperatorTok{+}\StringTok{   }\KeywordTok{tbl}\NormalTok{(}\StringTok{"shakespeare"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-Auto-refreshing stale OAuth token.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{shakespeare }\OperatorTok{\%\textgreater{}\%}
 \OperatorTok{+}\StringTok{   }\KeywordTok{group\_by}\NormalTok{(word) }\OperatorTok{\%\textgreater{}\%}
 \OperatorTok{+}\StringTok{   }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{sum}\NormalTok{(word\_count, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}
@@ -11576,7 +11503,7 @@ Further, suppose we are interested in determining how the average wind speed has
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-322-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-323-1.pdf}
 
 Upon first glance at this plot, a naive student might think ``Wow! Wind speeds have decreased dramatically since the 1930s'\,', and just accept this as true since that is what the graph shows. But since we are all data analysts at heart (otherwise you wouldn't be taking this course!), we want to explore this further. We might ask why the wind was so high in the late 1920s and early 1930s? An average wind speed of above 12 miles per hour seems pretty high. Let's explore the entries for all years in the 1930s and 1920s by looking at how many records there are with a mean wind speed for each year before 1940.
 
@@ -11594,16 +11521,16 @@ Upon first glance at this plot, a naive student might think ``Wow! Wind speeds h
 # Database: BigQueryConnection
     year count
    <int> <int>
- 1  1929  2037
- 2  1930  7101
- 3  1933 17708
- 4  1938 51770
- 5  1931  9726
- 6  1934 20334
- 7  1935 26829
- 8  1939 65623
- 9  1936 50514
-10  1937 83310
+ 1  1931  9726
+ 2  1934 20334
+ 3  1935 26829
+ 4  1939 65623
+ 5  1936 50514
+ 6  1937 83310
+ 7  1929  2037
+ 8  1930  7101
+ 9  1933 17708
+10  1938 51770
 # ... with more rows
 \end{verbatim}
 
@@ -11720,7 +11647,7 @@ Next we draw a few plots to show graphically how all these parameters influence 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-324-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-325-1.pdf}
 
 Now that we understand the fundamentals of sinusoids, let's see how we can work with noise and filters on sinusoids using R.
 
@@ -11741,7 +11668,7 @@ For a first example, consider the sinusoid generated below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-325-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-326-1.pdf}
 
 This is a simple sinusoid that has an amplitude of 1 and a frequency of 1. It is not likely that when obtaining a real-world signal you would get a perfect sinusoid without any noise. Let's take this graph and add some noise to it.
 
@@ -11753,7 +11680,7 @@ This is a simple sinusoid that has an amplitude of 1 and a frequency of 1. It is
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-326-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-327-1.pdf}
 
 We add noise to the function by adding a random value (\texttt{0.25*rnorm(length(t)}) to each value in the signal. This is more typical of a real-world signal, as you can somewhat see the general shape (the signal you are interested in), but it is somewhat distorted as a result of noise. The \texttt{signal} package provides a long list of functions for filtering out noise. Here we will utilize the \texttt{butter} function to remove the noise from this signal in an attempt to obtain our original signal. This function generates a variable containing the Butterworth filter polynomial coefficients. The Butterworth filter is a good all-around filter that is often used in radio frequency filter applications. We then use the \texttt{filter} function from the \texttt{signal} package to apply the Butterworth filter to the data. Finally we produce a plot using \texttt{ggplot2} that shows the original signal without noise, the noisy signal, and the recovered signal.
 
@@ -11781,7 +11708,7 @@ This warning is displayed once per session.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-327-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-328-1.pdf}
 
 You can see that the recovered signal is not perfect, as there is still some noise in the signal, and the timing of the peaks in the signal is not exactly matched up with the original. But it is clear that we have nonetheless removed a large portion of the noise from the noisy signal. Mess around with the argument values in the \texttt{butter()} function in the above code. See what changing the parameters does to the recovered graph. You can also explore the wide variety of filter functions available in the \texttt{signal} package by exploring the package documentation \href{https://cran.r-project.org/web/packages/signal/signal.pdf}{here}.
 
@@ -11798,7 +11725,7 @@ For a second example, suppose we are interested in not only the signal, but also
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-328-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-329-1.pdf}
 
 Again, you can easily recognize the pattern is sinusoidal, but there is noise in the signal that you want to extract. Perhaps you are interested in where the noise is coming from and want to analyze the structure of the noise to figure this out. Thus, unlike the previous example, we want to extract the noise from the signal and not simply eliminate it. To do this we can again use the Butterworth filter.
 
@@ -11820,7 +11747,7 @@ Again, you can easily recognize the pattern is sinusoidal, but there is noise in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-329-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-330-1.pdf}
 
 \hypertarget{fourier-transforms-and-spectrograms}{%
 \section{Fourier Transforms and Spectrograms}\label{fourier-transforms-and-spectrograms}}
@@ -11851,7 +11778,7 @@ Let's use a sample audio file provided by the \texttt{seewave} package and produ
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-330-1}
+\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-331-1}
 
 Let's explore more of the parameters for this function to get a better understanding of how it is working. Type in \texttt{?spectro} in the R console. The \texttt{spectro()} function contains a lot of different arguments that allow you to control how the spectrogram is created. The \texttt{f} argument allows you to specify the sampling rate of your sound object. The \texttt{wl} option allows you to control the window length that is used when the successive DFTs are produced (aka the STFT). You can choose which window you want to use with the \texttt{wn} option. You can also specify the amount of \texttt{ovlp} between two successive windows with the \texttt{ovlp} argument. Let's use some of these arguments and compare it to the standard spectrogram we previously produced.
 
@@ -11861,7 +11788,7 @@ Let's explore more of the parameters for this function to get a better understan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-331-1}
+\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-332-1}
 
 You can immediately see that there are some slight differences between the spectrograms. The first spectrogram appears to be more precise than the second spectrogram. Explore these parameters yourself to get a better understanding of how these different properties impact the short-time fourier transform and the spectrogram.
 
@@ -11915,7 +11842,7 @@ The data contain measurements on petal and sepal length and width for \texttt{di
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-334-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-335-1.pdf}
 
 We see the \texttt{plot()} function by default creates a basic scatterplot when we supply the function with values for the \texttt{x} and \texttt{y} arguments.
 
@@ -11927,7 +11854,7 @@ Looking at the scatter plot and thinking about the focus of finding a method to 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-335-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-336-1.pdf}
 
 The \texttt{pch\ =} argument is used to control the type of symbol used to represent the data points. \texttt{pch\ =\ 19} specifies a filled in circle for each data point. You can mess around with different numbers and you'll see a wide variety of options. The \texttt{col\ =\ iris\$Species} argument tells the \texttt{plot()} function to assign a different color to each unique value in the the \texttt{iris\$Species} vector.\footnote{To see the order in which R assigns colors to different values, run the \texttt{palette()} function} Notice however that there is no legend produced by default, so we don't know which color represents each species. We can add a legend using the \texttt{legend()} function.
 
@@ -11939,7 +11866,7 @@ The \texttt{pch\ =} argument is used to control the type of symbol used to repre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-336-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-337-1.pdf}
 
 Let's walk through the additional complexities one at a time:
 
@@ -11968,7 +11895,7 @@ Now perhaps we want to use different shapes as well for the different species. T
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-337-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-338-1.pdf}
 
 \hypertarget{adding-lines-to-a-scatter-plot-1}{%
 \subsection{Adding lines to a scatter plot}\label{adding-lines-to-a-scatter-plot-1}}
@@ -11984,7 +11911,7 @@ Next let's add a fitted least squares line to the scatter plot. This can be done
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-338-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-339-1.pdf}
 
 For the iris data, it probably makes more sense to fit separate lines by species. Below we compute the linear model separately for each species, then use the \texttt{abline()} function to add each line to the graph. Note our use of logical subsetting to obtain separate data frames for each species.
 
@@ -12002,7 +11929,7 @@ For the iris data, it probably makes more sense to fit separate lines by species
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-339-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
 
 Note that we could also do this using a \texttt{for} loop, which you will learn about soon in Chapter \ref{functions}.
 
@@ -12021,7 +11948,7 @@ Note that we could also do this using a \texttt{for} loop, which you will learn 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-340-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
 
 Another common use of line segments in a graphic is to connect the points in order. Although it is not clear why this helps in understanding the iris data, the technique is illustrated next. First we connect all lines regardless of species. This is done easily by specifying the argument \texttt{type\ =\ \textquotesingle{}b\textquotesingle{}} in the \texttt{plot()} function\footnote{The ``b'' stands for ``both''. By default, the \texttt{type} argument is set to ``p'' for ``points''. You can also specify that you only want lines using \texttt{type\ =\ \textquotesingle{}l\textquotesingle{}}.}
 
@@ -12033,7 +11960,7 @@ Another common use of line segments in a graphic is to connect the points in ord
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-341-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-342-1.pdf}
 
 Now we attempt to only connect the points within a given species. Doing this requires the use of the \texttt{lines()} function to draw three separate lines for each species\footnote{Note that we could again perhaps simplify this by using a \texttt{for} loop, but we'll restrain ourselves until we learn about \texttt{for} loops in Chapter \ref{functions}.} First we create a plot for the first species, and then subsequently use the \texttt{lines()} function to add each of the remaining two species to the plot. Notice that there are some additional arguments in the original \texttt{plot()} function that we have yet to cover. Don't worry, we'll talk about all this fun stuff in the next section :)
 
@@ -12047,7 +11974,7 @@ Now we attempt to only connect the points within a given species. Doing this req
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-342-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-343-1.pdf}
 
 \hypertarget{labels-axes-text-etc.-1}{%
 \section{Labels, Axes, Text, etc.}\label{labels-axes-text-etc.-1}}
@@ -12083,7 +12010,7 @@ First, read in the data, examine its structure, and produce a simple scatter plo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-343-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-344-1.pdf}
 
 \hypertarget{labels-1}{%
 \subsection{Labels}\label{labels-1}}
@@ -12099,7 +12026,7 @@ By default, axis labels are the values of the \texttt{x} and \texttt{y} values y
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-344-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
 
 Perhaps it may be easier to read the values on the y-axis if they were oritented horizontally instead of vertically. We can do this using the \texttt{las\ =\ 1} argument.
 
@@ -12113,7 +12040,7 @@ Perhaps it may be easier to read the values on the y-axis if they were oritented
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-346-1.pdf}
 
 \hypertarget{customizing-axes-1}{%
 \section{Customizing Axes}\label{customizing-axes-1}}
@@ -12131,7 +12058,7 @@ The basic \texttt{plot()} function provides defaults for the axis limits, as wel
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-346-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-347-1.pdf}
 
 Now we eliminate the axes and box automatically drawn by the \texttt{plot()} function, and subsequently add our own axes using the \texttt{axis()} function. We use most of the defaults provided by the \texttt{axis()} function, however, looking at the help page for \texttt{axis()} reveals a large amount of possibilities for customizing the axes in whatever way you desire.
 
@@ -12149,7 +12076,7 @@ Now we eliminate the axes and box automatically drawn by the \texttt{plot()} fun
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-347-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-348-1.pdf}
 
 \hypertarget{text-point-size-and-color-1}{%
 \subsection{Text, Point Size, and Color}\label{text-point-size-and-color-1}}
@@ -12173,7 +12100,7 @@ Next we make point size proportional to population, change the color, and add a 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-348-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-349-1.pdf}
 
 This graph is mind-numbingly busy, and is missing some notable things (i.e.~legend). For now, we leave it up to you to add in a legend, make the graph less cluttered, fix the cutoff labels, etc. if you so desire.
 
@@ -12203,7 +12130,7 @@ You run an experiment to see if the number of alcoholic beverages a person has o
 \bottomrule
 \end{tabular}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-350-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-351-1.pdf}
 
 \hypertarget{other-types-of-graphics-1}{%
 \section{Other Types of Graphics}\label{other-types-of-graphics-1}}
@@ -12243,7 +12170,7 @@ To produce a simple histogram of these data in the \texttt{graphics} package, we
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-352-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-353-1.pdf}
 
 The function automatically specifies the binwidths for the data, however we can easily change this ourselves to something more suitable using the \texttt{breaks} argument. We also change the axis labels, y-axis label orientation, title, and color of the bins.
 
@@ -12253,7 +12180,7 @@ The function automatically specifies the binwidths for the data, however we can 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-353-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-354-1.pdf}
 
 \hypertarget{boxplots-1}{%
 \subsection{Boxplots}\label{boxplots-1}}
@@ -12282,7 +12209,7 @@ The following object is masked _by_ '.GlobalEnv':
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-354-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-355-1.pdf}
 
 Here's the same set of boxplots, but with different colors and the boxes plotted horizontally rather than vertically
 
@@ -12292,7 +12219,7 @@ Here's the same set of boxplots, but with different colors and the boxes plotted
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-355-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-356-1.pdf}
 
 However, notice in the last two graphs the y-axis labels were running off the page. Using the \texttt{graphics} package, we have the ability to adjust all the dimensions and parameters of a plot by using the \texttt{par} function. Below we utilize the \texttt{par} function to extend the amount of space in the plot on the left side of the graph.
 
@@ -12303,7 +12230,7 @@ However, notice in the last two graphs the y-axis labels were running off the pa
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-356-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-357-1.pdf}
 
 \hypertarget{bar-graphs-1}{%
 \subsection{Bar Graphs}\label{bar-graphs-1}}
@@ -12355,7 +12282,7 @@ First, a simple bar graph of the most important goal chosen is drawn, followed b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-358-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-359-1.pdf}
 
 Notice that to create a basic bar graph using the graphics package, we first take our variable of interest \texttt{StudentGoals\$Goals} and put it in table format using the \texttt{table()} function. Next we produce a stacked bar graph that also includes the student's gender. Then we subsequently add a side by side bar graph that includes the student's gender.
 
@@ -12367,7 +12294,7 @@ Notice that to create a basic bar graph using the graphics package, we first tak
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-359-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-360-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12377,7 +12304,7 @@ Notice that to create a basic bar graph using the graphics package, we first tak
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-360-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-361-1.pdf}
 
 In this example R counted the number of students who had each goal and used these counts as the height of the bars. Sometimes the data contain the bar heights as a variable. For example, we create a bar graph of India's per capita GDP with separate bars for each year in the data\footnote{R offers a large color palette, run \texttt{colors()} on the console to see a list of color names.}.
 
@@ -12390,7 +12317,7 @@ In this example R counted the number of students who had each goal and used thes
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-361-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-362-1.pdf}
 
 \hypertarget{graphs-of-functions-1}{%
 \subsection{Graphs of Functions}\label{graphs-of-functions-1}}
@@ -12405,7 +12332,7 @@ One way to create a plot of a mathematical function \(f\) is to create a data fr
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-362-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-363-1.pdf}
 
 \hypertarget{saving-graphics-1}{%
 \section{Saving Graphics}\label{saving-graphics-1}}
@@ -12476,40 +12403,6 @@ For additional help, we find that the help pages for most \texttt{graphics} func
 \subsection{Practice Problem}\label{practice-problem-16}}
 
 Go to the help page for the \texttt{par()} function (use \texttt{help(par)} or \texttt{?par()}). Look at the plethora of different arguments that you can use to specialize your plot just the way you like it. List 5 arguments that we didn't use in this chapter, describe what they do, then use them in a graph using the \texttt{iris} data set (you can use any of the variables in the data set and produce any type of graph you like).
-
-\hypertarget{stats}{%
-\chapter{\texorpdfstring{Basic Statistics in \texttt{R}}{Basic Statistics in R}}\label{stats}}
-
-\texttt{R} is at its core a statistical programming langauge. Much of the increase in popularity of \texttt{R} is a result of the need for statisticians, scientists, economists, and others to develop and implement advanced statistical techniques in a streamlined and straightforward manner. \texttt{R} provides just that, and since it is a full programming language, it offers great flexibility in implementing statistical procedures and fine-tuning them to meet the specific needs of different projects, something that is often hard to do using ``point and click'' statistical software packages. In this chapter we provide a brief overview of some basic statistical tools in \texttt{R} with a focus on linear modeling techniques commonly used in disciplines ranging from ecology to economics to engineering. We are not attempting to provide a complete overview of statistical modeling in \texttt{R}, or even linear modeling, but rather seek to provide an introduction to some basic statistical tools in \texttt{R} that should get you on your way to doing all of your statistical analyses in \texttt{R}. Here we also take a very applied approach and do not focus on the underlying theory of how \texttt{R} is implementing the different methods we review. Rather, we assume some basic familiarity with statistical analyeses and focus on how we can use \texttt{R} to implement basic statistical tools. We end the chapter by providing a list of some baic functions and \texttt{R} packages for further statistical analyeses.
-
-\hypertarget{basics-of-linear-models}{%
-\section{Basics of Linear Models}\label{basics-of-linear-models}}
-
-Linear models can be considered the building block of statistics. Many advanced statistical tools are at their simplest forms extensions of linear models to account for additional complexities in data. For example, basic geostatistical models in spatial statitistics are simple extensions of linear models to account for non-independence across two-dimensional space. Generalized linear models are widely used extensions of the basic linear model to accommodate data that cannot reasonably be assumed to follow a normal distribution. Thus, a solid understanding of linear models and how to implement them in \texttt{R} is an essential building block to more complex statistical analyses.
-
-\hypertarget{one-way-analysis-of-variance-anova}{%
-\section{One-Way Analysis of Variance (ANOVA)}\label{one-way-analysis-of-variance-anova}}
-
-\hypertarget{two-way-analyis-of-variance-anova}{%
-\section{Two-Way Analyis of Variance (ANOVA)}\label{two-way-analyis-of-variance-anova}}
-
-\hypertarget{simple-linear-regression}{%
-\section{Simple Linear Regression}\label{simple-linear-regression}}
-
-\hypertarget{multiple-linear-regression}{%
-\section{Multiple Linear Regression}\label{multiple-linear-regression}}
-
-\hypertarget{regresion-diagnostics-and-model-selection}{%
-\section{Regresion Diagnostics and Model Selection}\label{regresion-diagnostics-and-model-selection}}
-
-\hypertarget{basic-linear-mixed-model}{%
-\section{Basic Linear Mixed Model}\label{basic-linear-mixed-model}}
-
-\hypertarget{repeated-measures-design}{%
-\section{Repeated Measures Design}\label{repeated-measures-design}}
-
-\hypertarget{some-other-basic-statistical-tools}{%
-\section{Some Other Basic Statistical Tools}\label{some-other-basic-statistical-tools}}
 
   \bibliography{book.bib,packages.bib}
 
