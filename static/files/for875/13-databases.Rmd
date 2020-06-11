@@ -97,7 +97,7 @@ library(dbplyr)
 library(RSQLite)
 ```
 
-We next use the `DBI` package to connect directly to the database. `DBI` is a backend package that provides a common interface for R to work with many different database management systems using the same code. This package does much of the communication from R to the database that occurs behind the scenes, and is an essential part of using `dplyr` to work with databases. 
+We next use the `DBI` package to connect directly to the database. `DBI` is a backend package that provides a common interface for R to work with many different database management systems using the same code. This package does much of the communication from R to the database that occurs behind the scenes, and is an essential part of using `dplyr` to work with databases. If you have not yet installed the `DBI` package, you can do so using `install.packages("DBI")`.  
 
 ```{r}
 library(DBI)
@@ -123,13 +123,13 @@ employees
 
 Notice how the `employees` table looks mostly like a regular tibble, but has a couple added lines detailing its location as a remote table in a SQLite database.
 
-Now lets use familiar `dplyr` commands to perform queries on the database
+Now lets use familiar `dplyr` commands to perform queries on the database^[You may see a warning here. You can safely ignore it.].
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
 ```
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, warning = FALSE}
 employees %>% 
   select(LastName, FirstName, Phone, Email) %>% 
   arrange(LastName)
@@ -172,7 +172,7 @@ If we can use `dplyr` to analyze the data in a database, you may be wondering wh
 
 We can use the same `chinook` database from SQLite we were using above. Suppose we desire to see how many types of each employee there are in the database. We can produce a barplot to show this. 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, warning = FALSE, message = FALSE}
 library(dbplot)
 employees %>% 
   dbplot_bar(Title)
@@ -268,7 +268,7 @@ Interesting! We see that there are only 2037 records from 1929, while there are 
 
 ## Changing Records in the Database
 
-`dplyr` is fantastic for retrieving data from databases and analyzing it using familiar functions. As detailed in this [video](https://www.rstudio.com/resources/videos/best-practices-for-working-with-databases-webinar/), using `dplyr` is considered a "best practice" when using databases in R because you only have to use one language, you don't need to know any SQL, and you can use the lazy evaluation of R, among many other reasons. As a data analyst, a majority of work can be accomplished by using `dplyr` and other forms of queries against a database. But what if you need to do more than query the data in the database and you have to change some of the records? `dplyr` is not capable of inserting or deleting records in a database, and although updating recordings is possible with `dplyr`, Hadley Wickham strongly recommends against it, as `dplyr` is designed specifically for retrieving data. Thus, we need to use other options for updating/inserting/deleting records in a database. Unlike using `dplyr` this requires a more in depth knowledge of SQL. We will not discuss updating/inserting/deleting records in a database here, but you will briefly learn about methods to do this in this chapter's exercise.
+`dplyr` is fantastic for retrieving data from databases and analyzing it using familiar functions. As detailed in this [video](https://www.rstudio.com/resources/webinars/best-practices-for-working-with-databases/), using `dplyr` is considered a "best practice" when using databases in R because you only have to use one language, you don't need to know any SQL, and you can use the lazy evaluation of R, among many other reasons. As a data analyst, a majority of work can be accomplished by using `dplyr` and other forms of queries against a database. But what if you need to do more than query the data in the database and you have to change some of the records? `dplyr` is not capable of inserting or deleting records in a database, and although updating recordings is possible with `dplyr`, Hadley Wickham strongly recommends against it, as `dplyr` is designed specifically for retrieving data. Thus, we need to use other options for updating/inserting/deleting records in a database. Unlike using `dplyr` this requires a more in depth knowledge of SQL. We will not discuss updating/inserting/deleting records in a database here, but you will briefly learn about methods to do this in this chapter's exercise.
 
 ## R Studio Connections Pane
 
