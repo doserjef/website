@@ -192,8 +192,7 @@ income
 
 In the factor version of `age` the levels are explicitly listed, so it is clear that the two included levels are not all the possible levels. And in the factor version of income, the ordering is explicit.
 
-In many cases the character vector representation of a categorical variable is sufficient and easier to work with. In this book, factors will not be used extensively. It is important to note that R often by default creates a factor when character data are read in, and sometimes it is necessary to use the argument `stringsAsFactors = FALSE` to explicitly tell R not to do this. This is shown later in the chapter when data frames are introduced.
-
+In many cases the character vector representation of a categorical variable is sufficient and easier to work with. In this book, factors will not be used extensively. 
 ## Names of Objects in R
 
 There are few hard and fast restrictions on the names of objects (such as vectors) in R. In addition to these restrictions, there are certain good practices, and many things to avoid as well.
@@ -289,7 +288,7 @@ rownames(healthData)
 names(healthData) <- c("Weight", "Gender", "bp.meds")
 ```
 
-The `data.frame` function can be used to create a data frame (although it's more common to read a data frame into R from an external file, something that will be introduced later). The names of the variables in the data frame are given as arguments, as are the vectors of data that make up the variable's values. The argument   `stringsAsFactors=FALSE` asks R not to convert character vectors into factors, which R does by default, to the dismay of many users. Names of the columns (variables) can be extracted and set via either `names` or `colnames`. In the example, the variable names are changed to `Wt, Gdr, bp` and then changed back to the original `Weight, Gender, bp.meds` in this way. Rows can be named also. In this case since specific row names were not provided, the default row names of `"1", "2"` etc. are used.
+The `data.frame` function can be used to create a data frame (although it's more common to read a data frame into R from an external file, something that will be introduced later). The names of the variables in the data frame are given as arguments, as are the vectors of data that make up the variable's values. The argument   `stringsAsFactors=FALSE` asks R not to convert character vectors into factors. As of version `R 4.0.0`, `R` does not automatically convert character vectors into factors. However, up until this recent version, `R` would automatically convert strings to factors (i.e., `stringsAsFactors = TRUE`), and so to avoid confusion we will typically display `stringsAsFactors=FALSE` throughout most of the book. Names of the columns (variables) can be extracted and set via either `names` or `colnames`. In the example, the variable names are changed to `Wt, Gdr, bp` and then changed back to the original `Weight, Gender, bp.meds` in this way. Rows can be named also. In this case since specific row names were not provided, the default row names of `"1", "2"` etc. are used.
 
 In the next example a built-in dataset called `mtcars` is made available by the `data` function, and then the first  and last six rows are displayed using `head` and `tail`.
 
