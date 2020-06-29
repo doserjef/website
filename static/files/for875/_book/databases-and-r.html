@@ -573,15 +573,15 @@ VALUES (&#39;001&#39;, &#39;doserjef@msu.edu&#39;)</code></pre>
 <p>SQLite is arguably the most widely used relational database management system throughout the world. We will first provide a demonstration using a SQLite database as it is relatively easy to install on your system compared to other database management systems. SQLite is different from most database management systems because you don’t have to set up a separate database server. This makes SQLite great for a demo, and surprisingly it can also be very powerful when working with many gigabytes of data. We will use a sample database provided by SQLite called <code>chinook</code> that contains data on store employees, customers, and the music they purchased.</p>
 <p>First, go to <a href="http://www.sqlitetutorial.net/sqlite-sample-database/" class="uri">http://www.sqlitetutorial.net/sqlite-sample-database/</a> and download the <code>chinook</code> database into your R working directory so you can follow along with this example yourself.</p>
 <p>Upon successful download, the first step we need to do is install/load the necessary packages for connecting to the external database. To help <code>dplyr</code> communicate with the SQL engine, install the <code>dbplyr</code> package using <code>install.packages("dbplyr")</code>. Next we need the <code>RSQLite</code> package for interfacing with the SQLite database. Install this by running <code>install.packages("RSQLite")</code> in the R console. Then load the packages, along with <code>dplyr</code>:</p>
-<div class="sourceCode" id="cb1057"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1057-1"><a href="databases-and-r.html#cb1057-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb1057-2"><a href="databases-and-r.html#cb1057-2"></a><span class="kw">library</span>(dbplyr)</span>
-<span id="cb1057-3"><a href="databases-and-r.html#cb1057-3"></a><span class="kw">library</span>(RSQLite)</span></code></pre></div>
+<div class="sourceCode" id="cb1059"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1059-1"><a href="databases-and-r.html#cb1059-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1059-2"><a href="databases-and-r.html#cb1059-2"></a><span class="kw">library</span>(dbplyr)</span>
+<span id="cb1059-3"><a href="databases-and-r.html#cb1059-3"></a><span class="kw">library</span>(RSQLite)</span></code></pre></div>
 <p>We next use the <code>DBI</code> package to connect directly to the database. <code>DBI</code> is a backend package that provides a common interface for R to work with many different database management systems using the same code. This package does much of the communication from R to the database that occurs behind the scenes, and is an essential part of using <code>dplyr</code> to work with databases. If you have not yet installed the <code>DBI</code> package, you can do so using <code>install.packages("DBI")</code>.</p>
-<div class="sourceCode" id="cb1058"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1058-1"><a href="databases-and-r.html#cb1058-1"></a><span class="kw">library</span>(DBI)</span>
-<span id="cb1058-2"><a href="databases-and-r.html#cb1058-2"></a>chinook &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(<span class="kw">SQLite</span>(), <span class="st">&quot;chinook.db&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1060-1"><a href="databases-and-r.html#cb1060-1"></a><span class="kw">library</span>(DBI)</span>
+<span id="cb1060-2"><a href="databases-and-r.html#cb1060-2"></a>chinook &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(<span class="kw">SQLite</span>(), <span class="st">&quot;chinook.db&quot;</span>)</span></code></pre></div>
 <p>This command creates a reference to the database, and tells R to connect to this database in a specific location (your location could change depending on where you save the <code>chinook.db</code> file). A similar approach could be used to connect to databases of other database management systems like Oracle, MySQL, PostgreSQL, and others. Most databases do not live in a file, but instead live on another server. This causes the above connection to be much more complex, but for now we will focus on this simple case.</p>
 <p>Now lets look closer at the chinook database.</p>
-<div class="sourceCode" id="cb1059"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1059-1"><a href="databases-and-r.html#cb1059-1"></a><span class="kw">src_dbi</span>(chinook)</span></code></pre></div>
+<div class="sourceCode" id="cb1061"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1061-1"><a href="databases-and-r.html#cb1061-1"></a><span class="kw">src_dbi</span>(chinook)</span></code></pre></div>
 <pre><code>src:  sqlite 3.30.1 [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
 tbls: albums, artists, customers, employees, genres,
   invoice_items, invoices, media_types,
@@ -589,8 +589,8 @@ tbls: albums, artists, customers, employees, genres,
   sqlite_stat1, tracks</code></pre>
 <p>The above function displays the location of the database, as well as the tables contained in the database. You can see in the <code>chinook</code> database there are numerous tables regarding customers, employees, and the music that customers purchased. In total, there are 13 tables contained in this database.</p>
 <p>Now that we know the structure of the database, we can perform some simple queries on the data using <code>dplyr</code> syntax. For now, let’s focus on the <code>employees</code> table.</p>
-<div class="sourceCode" id="cb1061"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1061-1"><a href="databases-and-r.html#cb1061-1"></a>employees &lt;-<span class="st"> </span><span class="kw">tbl</span>(chinook, <span class="st">&quot;employees&quot;</span>)</span>
-<span id="cb1061-2"><a href="databases-and-r.html#cb1061-2"></a>employees</span></code></pre></div>
+<div class="sourceCode" id="cb1063"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1063-1"><a href="databases-and-r.html#cb1063-1"></a>employees &lt;-<span class="st"> </span><span class="kw">tbl</span>(chinook, <span class="st">&quot;employees&quot;</span>)</span>
+<span id="cb1063-2"><a href="databases-and-r.html#cb1063-2"></a>employees</span></code></pre></div>
 <pre><code># Source:   table&lt;employees&gt; [?? x 15]
 # Database: sqlite 3.30.1
 #   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
@@ -610,9 +610,9 @@ tbls: albums, artists, customers, employees, genres,
 #   Phone &lt;chr&gt;, Fax &lt;chr&gt;, Email &lt;chr&gt;</code></pre>
 <p>Notice how the <code>employees</code> table looks mostly like a regular tibble, but has a couple added lines detailing its location as a remote table in a SQLite database.</p>
 <p>Now lets use familiar <code>dplyr</code> commands to perform queries on the database<a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a>.</p>
-<div class="sourceCode" id="cb1063"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1063-1"><a href="databases-and-r.html#cb1063-1"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1063-2"><a href="databases-and-r.html#cb1063-2"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Phone, Email) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1063-3"><a href="databases-and-r.html#cb1063-3"></a><span class="st">  </span><span class="kw">arrange</span>(LastName)</span></code></pre></div>
+<div class="sourceCode" id="cb1065"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1065-1"><a href="databases-and-r.html#cb1065-1"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1065-2"><a href="databases-and-r.html#cb1065-2"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Phone, Email) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1065-3"><a href="databases-and-r.html#cb1065-3"></a><span class="st">  </span><span class="kw">arrange</span>(LastName)</span></code></pre></div>
 <pre><code># Source:     lazy query [?? x 4]
 # Database:   sqlite 3.30.1
 #   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
@@ -627,10 +627,10 @@ tbls: albums, artists, customers, employees, genres,
 6 Mitchell Michael   +1 (403) 246-… michael@chinookcor…
 7 Park     Margaret  +1 (403) 263-… margaret@chinookco…
 8 Peacock  Jane      +1 (403) 262-… jane@chinookcorp.c…</code></pre>
-<div class="sourceCode" id="cb1065"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1065-1"><a href="databases-and-r.html#cb1065-1"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1065-2"><a href="databases-and-r.html#cb1065-2"></a><span class="st">  </span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1065-3"><a href="databases-and-r.html#cb1065-3"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1065-4"><a href="databases-and-r.html#cb1065-4"></a><span class="st">  </span><span class="kw">arrange</span>(LastName)</span></code></pre></div>
+<div class="sourceCode" id="cb1067"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1067-1"><a href="databases-and-r.html#cb1067-1"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1067-2"><a href="databases-and-r.html#cb1067-2"></a><span class="st">  </span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1067-3"><a href="databases-and-r.html#cb1067-3"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1067-4"><a href="databases-and-r.html#cb1067-4"></a><span class="st">  </span><span class="kw">arrange</span>(LastName)</span></code></pre></div>
 <pre><code># Source:     lazy query [?? x 3]
 # Database:   sqlite 3.30.1
 #   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
@@ -640,9 +640,9 @@ tbls: albums, artists, customers, employees, genres,
 1 Johnson  Steve     7727B 41 Ave    
 2 Park     Margaret  683 10 Street SW
 3 Peacock  Jane      1111 6 Ave SW   </code></pre>
-<div class="sourceCode" id="cb1067"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1067-1"><a href="databases-and-r.html#cb1067-1"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1067-2"><a href="databases-and-r.html#cb1067-2"></a><span class="st">  </span><span class="kw">group_by</span>(ReportsTo) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1067-3"><a href="databases-and-r.html#cb1067-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">numberAtLocation =</span> <span class="kw">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1069"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1069-1"><a href="databases-and-r.html#cb1069-1"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1069-2"><a href="databases-and-r.html#cb1069-2"></a><span class="st">  </span><span class="kw">group_by</span>(ReportsTo) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1069-3"><a href="databases-and-r.html#cb1069-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">numberAtLocation =</span> <span class="kw">n</span>())</span></code></pre></div>
 <pre><code># Source:   lazy query [?? x 2]
 # Database: sqlite 3.30.1
 #   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
@@ -653,11 +653,11 @@ tbls: albums, artists, customers, employees, genres,
 3         2                3
 4         6                2</code></pre>
 <p>You can see by using <code>dplyr</code> you are able to use the same syntax to query the database as you used to analyze data frames in Chapter <a href="data2.html#data2">6</a>. The most important difference to again note is that when working with remote databases the R code is translated into SQL and executed in the database using the SQL engine, not in R. When doing this, <code>dplyr</code> is as “lazy” as possible as it never pulls data in R unless explicity asked. It collects everything you ask it to do and then sends it to the database all in one step. This is often a very useful feature when desiring to look at a certain group of records in a database. To understand this further, take a look at the following code, which at first you might think will output a <code>tibble</code> or <code>data frame</code>:</p>
-<div class="sourceCode" id="cb1069"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1069-1"><a href="databases-and-r.html#cb1069-1"></a>salesSupportAgents &lt;-<span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1069-2"><a href="databases-and-r.html#cb1069-2"></a><span class="st">  </span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1069-3"><a href="databases-and-r.html#cb1069-3"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1069-4"><a href="databases-and-r.html#cb1069-4"></a><span class="st">  </span><span class="kw">arrange</span>(LastName) </span>
-<span id="cb1069-5"><a href="databases-and-r.html#cb1069-5"></a>salesSupportAgents</span></code></pre></div>
+<div class="sourceCode" id="cb1071"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1071-1"><a href="databases-and-r.html#cb1071-1"></a>salesSupportAgents &lt;-<span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1071-2"><a href="databases-and-r.html#cb1071-2"></a><span class="st">  </span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1071-3"><a href="databases-and-r.html#cb1071-3"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1071-4"><a href="databases-and-r.html#cb1071-4"></a><span class="st">  </span><span class="kw">arrange</span>(LastName) </span>
+<span id="cb1071-5"><a href="databases-and-r.html#cb1071-5"></a>salesSupportAgents</span></code></pre></div>
 <pre><code># Source:     lazy query [?? x 3]
 # Database:   sqlite 3.30.1
 #   [/home/jeffdoser/Dropbox/teaching/for875-20/textbook/chinook.db]
@@ -668,12 +668,12 @@ tbls: albums, artists, customers, employees, genres,
 2 Park     Margaret  683 10 Street SW
 3 Peacock  Jane      1111 6 Ave SW   </code></pre>
 <p>Notice the first two lines in the output. The source is described as a <code>lazy query</code> and the <code>salesSupportAgents</code> is still a database connection and not a local data frame. Because you did not specifically tell R that you wanted to bring the data directly into R, it did not do so. In order to bring the data directly into R in a local tibble you need to use the <code>collect()</code> function. Note that if you are asking the database to send back a lot of data, this could take a while.</p>
-<div class="sourceCode" id="cb1071"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1071-1"><a href="databases-and-r.html#cb1071-1"></a>salesSupportAgents &lt;-<span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1071-2"><a href="databases-and-r.html#cb1071-2"></a><span class="st">  </span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1071-3"><a href="databases-and-r.html#cb1071-3"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1071-4"><a href="databases-and-r.html#cb1071-4"></a><span class="st">  </span><span class="kw">arrange</span>(LastName) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1071-5"><a href="databases-and-r.html#cb1071-5"></a><span class="st">  </span><span class="kw">collect</span>()</span>
-<span id="cb1071-6"><a href="databases-and-r.html#cb1071-6"></a>salesSupportAgents</span></code></pre></div>
+<div class="sourceCode" id="cb1073"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1073-1"><a href="databases-and-r.html#cb1073-1"></a>salesSupportAgents &lt;-<span class="st"> </span>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1073-2"><a href="databases-and-r.html#cb1073-2"></a><span class="st">  </span><span class="kw">filter</span>(Title <span class="op">==</span><span class="st"> &quot;Sales Support Agent&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1073-3"><a href="databases-and-r.html#cb1073-3"></a><span class="st">  </span><span class="kw">select</span>(LastName, FirstName, Address) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1073-4"><a href="databases-and-r.html#cb1073-4"></a><span class="st">  </span><span class="kw">arrange</span>(LastName) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1073-5"><a href="databases-and-r.html#cb1073-5"></a><span class="st">  </span><span class="kw">collect</span>()</span>
+<span id="cb1073-6"><a href="databases-and-r.html#cb1073-6"></a>salesSupportAgents</span></code></pre></div>
 <pre><code># A tibble: 3 x 3
   LastName FirstName Address         
   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;           
@@ -686,40 +686,40 @@ tbls: albums, artists, customers, employees, genres,
 <h3><span class="header-section-number">13.3.2</span> <code>dbplot</code></h3>
 <p>If we can use <code>dplyr</code> to analyze the data in a database, you may be wondering whether or not we can use <code>ggplot2</code> to graph the data in the database. Of course we can! In fact, the package <code>dbplot</code> is designed to process the calculations of a plot inside a database and output a <code>ggplot2</code> object. If not already installed on your system, make sure to install the <code>dbplot</code> package before continuing.</p>
 <p>We can use the same <code>chinook</code> database from SQLite we were using above. Suppose we desire to see how many types of each employee there are in the database. We can produce a barplot to show this.</p>
-<div class="sourceCode" id="cb1073"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1073-1"><a href="databases-and-r.html#cb1073-1"></a><span class="kw">library</span>(dbplot)</span>
-<span id="cb1073-2"><a href="databases-and-r.html#cb1073-2"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1073-3"><a href="databases-and-r.html#cb1073-3"></a><span class="st">  </span><span class="kw">dbplot_bar</span>(Title)</span></code></pre></div>
+<div class="sourceCode" id="cb1075"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1075-1"><a href="databases-and-r.html#cb1075-1"></a><span class="kw">library</span>(dbplot)</span>
+<span id="cb1075-2"><a href="databases-and-r.html#cb1075-2"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1075-3"><a href="databases-and-r.html#cb1075-3"></a><span class="st">  </span><span class="kw">dbplot_bar</span>(Title)</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-317-1.png" width="672" /></p>
 <p>We first load the <code>dbplot</code> package. Next we produce the bar plot. Notice that we can continue to use the convenient <code>%&gt;%</code> character while producing graphs using <code>dbplot</code>, making the code easy to read. Since <code>dbplot</code> outputs a <code>ggplot2</code> object, we can further customize the graph using familiar functions from <code>ggplot2</code> (so long as the package is loaded).</p>
-<div class="sourceCode" id="cb1074"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1074-1"><a href="databases-and-r.html#cb1074-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb1074-2"><a href="databases-and-r.html#cb1074-2"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb1074-3"><a href="databases-and-r.html#cb1074-3"></a><span class="st">  </span><span class="kw">dbplot_bar</span>(Title) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb1074-4"><a href="databases-and-r.html#cb1074-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Employee Types&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb1074-5"><a href="databases-and-r.html#cb1074-5"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Count&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb1074-6"><a href="databases-and-r.html#cb1074-6"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1076"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1076-1"><a href="databases-and-r.html#cb1076-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb1076-2"><a href="databases-and-r.html#cb1076-2"></a>employees <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1076-3"><a href="databases-and-r.html#cb1076-3"></a><span class="st">  </span><span class="kw">dbplot_bar</span>(Title) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb1076-4"><a href="databases-and-r.html#cb1076-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Employee Types&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb1076-5"><a href="databases-and-r.html#cb1076-5"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Count&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb1076-6"><a href="databases-and-r.html#cb1076-6"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-318-1.png" width="672" /></p>
 </div>
 <div id="using-google-bigquery" class="section level3" number="13.3.3">
 <h3><span class="header-section-number">13.3.3</span> Using Google BigQuery</h3>
 <p>For a second example, we will utilize a database from Google BigQuery, Google’s fully managed low cost analytics data warehouse. The package <code>bigrquery</code> provides an R interface to Google BigQuery. If not already installed, install the package with our usual method.</p>
 <p>We will use data from a great set of sample tables that BigQuery provides to its users. First we will look at the <code>shakespeare</code> table that contains a word index of the different works of Shakespeare. Thus, given the data in the table, let’s use <code>bigrquery</code>, <code>DBI</code>, and <code>dplyr</code> to determine the ten words that appear most often in Shakespeare’s works.</p>
-<div class="sourceCode" id="cb1075"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1075-1"><a href="databases-and-r.html#cb1075-1"></a><span class="kw">library</span>(bigrquery)</span>
-<span id="cb1075-2"><a href="databases-and-r.html#cb1075-2"></a><span class="kw">library</span>(DBI)</span>
-<span id="cb1075-3"><a href="databases-and-r.html#cb1075-3"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb1075-4"><a href="databases-and-r.html#cb1075-4"></a>billing &lt;-<span class="st"> &quot;for875-databases&quot;</span></span>
-<span id="cb1075-5"><a href="databases-and-r.html#cb1075-5"></a>con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(</span>
-<span id="cb1075-6"><a href="databases-and-r.html#cb1075-6"></a>  <span class="kw">bigquery</span>(),</span>
-<span id="cb1075-7"><a href="databases-and-r.html#cb1075-7"></a>  <span class="dt">project =</span> <span class="st">&quot;publicdata&quot;</span>,</span>
-<span id="cb1075-8"><a href="databases-and-r.html#cb1075-8"></a>  <span class="dt">dataset =</span> <span class="st">&quot;samples&quot;</span>,</span>
-<span id="cb1075-9"><a href="databases-and-r.html#cb1075-9"></a>  <span class="dt">billing =</span> billing</span>
-<span id="cb1075-10"><a href="databases-and-r.html#cb1075-10"></a>)</span>
-<span id="cb1075-11"><a href="databases-and-r.html#cb1075-11"></a>shakespeare &lt;-<span class="st"> </span>con <span class="op">%&gt;%</span></span>
-<span id="cb1075-12"><a href="databases-and-r.html#cb1075-12"></a><span class="st">  </span><span class="kw">tbl</span>(<span class="st">&quot;shakespeare&quot;</span>)</span>
-<span id="cb1075-13"><a href="databases-and-r.html#cb1075-13"></a>shakespeare <span class="op">%&gt;%</span></span>
-<span id="cb1075-14"><a href="databases-and-r.html#cb1075-14"></a><span class="st">  </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span></span>
-<span id="cb1075-15"><a href="databases-and-r.html#cb1075-15"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">sum</span>(word_count, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb1075-16"><a href="databases-and-r.html#cb1075-16"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span></span>
-<span id="cb1075-17"><a href="databases-and-r.html#cb1075-17"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1077"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1077-1"><a href="databases-and-r.html#cb1077-1"></a><span class="kw">library</span>(bigrquery)</span>
+<span id="cb1077-2"><a href="databases-and-r.html#cb1077-2"></a><span class="kw">library</span>(DBI)</span>
+<span id="cb1077-3"><a href="databases-and-r.html#cb1077-3"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1077-4"><a href="databases-and-r.html#cb1077-4"></a>billing &lt;-<span class="st"> &quot;for875-databases&quot;</span></span>
+<span id="cb1077-5"><a href="databases-and-r.html#cb1077-5"></a>con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(</span>
+<span id="cb1077-6"><a href="databases-and-r.html#cb1077-6"></a>  <span class="kw">bigquery</span>(),</span>
+<span id="cb1077-7"><a href="databases-and-r.html#cb1077-7"></a>  <span class="dt">project =</span> <span class="st">&quot;publicdata&quot;</span>,</span>
+<span id="cb1077-8"><a href="databases-and-r.html#cb1077-8"></a>  <span class="dt">dataset =</span> <span class="st">&quot;samples&quot;</span>,</span>
+<span id="cb1077-9"><a href="databases-and-r.html#cb1077-9"></a>  <span class="dt">billing =</span> billing</span>
+<span id="cb1077-10"><a href="databases-and-r.html#cb1077-10"></a>)</span>
+<span id="cb1077-11"><a href="databases-and-r.html#cb1077-11"></a>shakespeare &lt;-<span class="st"> </span>con <span class="op">%&gt;%</span></span>
+<span id="cb1077-12"><a href="databases-and-r.html#cb1077-12"></a><span class="st">  </span><span class="kw">tbl</span>(<span class="st">&quot;shakespeare&quot;</span>)</span>
+<span id="cb1077-13"><a href="databases-and-r.html#cb1077-13"></a>shakespeare <span class="op">%&gt;%</span></span>
+<span id="cb1077-14"><a href="databases-and-r.html#cb1077-14"></a><span class="st">  </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span></span>
+<span id="cb1077-15"><a href="databases-and-r.html#cb1077-15"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">sum</span>(word_count, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb1077-16"><a href="databases-and-r.html#cb1077-16"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span></span>
+<span id="cb1077-17"><a href="databases-and-r.html#cb1077-17"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code># Source:     lazy query [?? x 2]
 # Database:   BigQueryConnection
 # Ordered by: desc(n)
@@ -740,9 +740,9 @@ tbls: albums, artists, customers, employees, genres,
 <p>From here we can establish a connection to a specific table by using the <code>tbl()</code> function as shown above. We can then use <code>dplyr</code> like we did previously to group the data by words, determine the count of each word, and then order it in decreasing order to obtain the top ten words in Shakespeare’s works. Notice that when you run this code you may obtain a message in red describing the total amount of bytes billed. This is how Google manages how much its users are querying and using its data. We’re just tinkering around here, so we won’t surpass the monthly limit on free queries.</p>
 <p>This code again displays the benefits of the “lazy evaluation” that R employs. The <code>con</code> variable and <code>shakespeare</code> variable do not store the database or the specific table in R itself, instead they serve as references to the database where the specific data they are referencing is contained. Only when the <code>dplyr</code> query is written and called using the <code>collect()</code> function is any data from the database actually brought into R. R waits till the last possible second (i.e. is lazy) to perform any computations.</p>
 <p>A second table in the <code>publicdata</code> project on Google BigQuery contains weather data from NOAA ranging from the years 1929 to 2010. Let’s first make a connection to this table and explore its structure.</p>
-<div class="sourceCode" id="cb1077"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1077-1"><a href="databases-and-r.html#cb1077-1"></a>weather &lt;-<span class="st"> </span>con <span class="op">%&gt;%</span></span>
-<span id="cb1077-2"><a href="databases-and-r.html#cb1077-2"></a><span class="st">  </span><span class="kw">tbl</span>(<span class="st">&quot;gsod&quot;</span>)</span>
-<span id="cb1077-3"><a href="databases-and-r.html#cb1077-3"></a><span class="kw">dbListFields</span>(con, <span class="st">&quot;gsod&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1079"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1079-1"><a href="databases-and-r.html#cb1079-1"></a>weather &lt;-<span class="st"> </span>con <span class="op">%&gt;%</span></span>
+<span id="cb1079-2"><a href="databases-and-r.html#cb1079-2"></a><span class="st">  </span><span class="kw">tbl</span>(<span class="st">&quot;gsod&quot;</span>)</span>
+<span id="cb1079-3"><a href="databases-and-r.html#cb1079-3"></a><span class="kw">dbListFields</span>(con, <span class="st">&quot;gsod&quot;</span>)</span></code></pre></div>
 <pre><code> [1] &quot;station_number&quot;                    
  [2] &quot;wban_number&quot;                       
  [3] &quot;year&quot;                              
@@ -774,9 +774,9 @@ tbls: albums, artists, customers, employees, genres,
 [29] &quot;hail&quot;                              
 [30] &quot;thunder&quot;                           
 [31] &quot;tornado&quot;                           </code></pre>
-<div class="sourceCode" id="cb1079"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1079-1"><a href="databases-and-r.html#cb1079-1"></a>weather <span class="op">%&gt;%</span></span>
-<span id="cb1079-2"><a href="databases-and-r.html#cb1079-2"></a><span class="st">  </span><span class="kw">select</span>(thunder, mean_wind_speed) <span class="op">%&gt;%</span></span>
-<span id="cb1079-3"><a href="databases-and-r.html#cb1079-3"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1081"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1081-1"><a href="databases-and-r.html#cb1081-1"></a>weather <span class="op">%&gt;%</span></span>
+<span id="cb1081-2"><a href="databases-and-r.html#cb1081-2"></a><span class="st">  </span><span class="kw">select</span>(thunder, mean_wind_speed) <span class="op">%&gt;%</span></span>
+<span id="cb1081-3"><a href="databases-and-r.html#cb1081-3"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code># Source:   lazy query [?? x 2]
 # Database: BigQueryConnection
    thunder mean_wind_speed
@@ -792,23 +792,23 @@ tbls: albums, artists, customers, employees, genres,
  9 FALSE             17.5 
 10 FALSE              7.20</code></pre>
 <p>First we establish a connection to the weather table. We then use the <code>dbListFields()</code> function from the <code>DBI</code> package to display the fields in the table. We then view the first 10 records in the table. We see that there are 31 different variables on information for the weather on a given day from 1929 to 2010. Let’s say we are interested in determining the total number of days where the <code>mean_temp &gt; 60</code> and <code>mean_wind_speed &gt; 10</code>.</p>
-<div class="sourceCode" id="cb1081"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1081-1"><a href="databases-and-r.html#cb1081-1"></a>weather <span class="op">%&gt;%</span></span>
-<span id="cb1081-2"><a href="databases-and-r.html#cb1081-2"></a><span class="st">  </span><span class="kw">filter</span>(mean_temp <span class="op">&gt;</span><span class="st"> </span><span class="dv">60</span> <span class="op">&amp;</span><span class="st"> </span>mean_wind_speed <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb1081-3"><a href="databases-and-r.html#cb1081-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1083"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1083-1"><a href="databases-and-r.html#cb1083-1"></a>weather <span class="op">%&gt;%</span></span>
+<span id="cb1083-2"><a href="databases-and-r.html#cb1083-2"></a><span class="st">  </span><span class="kw">filter</span>(mean_temp <span class="op">&gt;</span><span class="st"> </span><span class="dv">60</span> <span class="op">&amp;</span><span class="st"> </span>mean_wind_speed <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></span>
+<span id="cb1083-3"><a href="databases-and-r.html#cb1083-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</span></code></pre></div>
 <pre><code># Source:   lazy query [?? x 1]
 # Database: BigQueryConnection
     count
     &lt;int&gt;
 1 6581146</code></pre>
 <p>Further, suppose we are interested in determining how the average wind speed has changed from 1929 to 2010. We can use <code>dbplot</code> to plot the data.</p>
-<div class="sourceCode" id="cb1083"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1083-1"><a href="databases-and-r.html#cb1083-1"></a>weather <span class="op">%&gt;%</span></span>
-<span id="cb1083-2"><a href="databases-and-r.html#cb1083-2"></a><span class="st">  </span><span class="kw">dbplot_line</span>(year, <span class="dt">average_wind_speed =</span> <span class="kw">mean</span>(mean_wind_speed, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1085"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1085-1"><a href="databases-and-r.html#cb1085-1"></a>weather <span class="op">%&gt;%</span></span>
+<span id="cb1085-2"><a href="databases-and-r.html#cb1085-2"></a><span class="st">  </span><span class="kw">dbplot_line</span>(year, <span class="dt">average_wind_speed =</span> <span class="kw">mean</span>(mean_wind_speed, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-323-1.png" width="672" /></p>
 <p>Upon first glance at this plot, a naive student might think ``Wow! Wind speeds have decreased dramatically since the 1930s’’, and just accept this as true since that is what the graph shows. But since we are all data analysts at heart (otherwise you wouldn’t be taking this course!), we want to explore this further. We might ask why the wind was so high in the late 1920s and early 1930s? An average wind speed of above 12 miles per hour seems pretty high. Let’s explore the entries for all years in the 1930s and 1920s by looking at how many records there are with a mean wind speed for each year before 1940.</p>
-<div class="sourceCode" id="cb1084"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1084-1"><a href="databases-and-r.html#cb1084-1"></a>weather <span class="op">%&gt;%</span></span>
-<span id="cb1084-2"><a href="databases-and-r.html#cb1084-2"></a><span class="st">  </span><span class="kw">filter</span>(year <span class="op">&lt;</span><span class="st"> </span><span class="dv">1940</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(mean_wind_speed)) <span class="op">%&gt;%</span></span>
-<span id="cb1084-3"><a href="databases-and-r.html#cb1084-3"></a><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span></span>
-<span id="cb1084-4"><a href="databases-and-r.html#cb1084-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1086"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1086-1"><a href="databases-and-r.html#cb1086-1"></a>weather <span class="op">%&gt;%</span></span>
+<span id="cb1086-2"><a href="databases-and-r.html#cb1086-2"></a><span class="st">  </span><span class="kw">filter</span>(year <span class="op">&lt;</span><span class="st"> </span><span class="dv">1940</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(mean_wind_speed)) <span class="op">%&gt;%</span></span>
+<span id="cb1086-3"><a href="databases-and-r.html#cb1086-3"></a><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span></span>
+<span id="cb1086-4"><a href="databases-and-r.html#cb1086-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</span></code></pre></div>
 <pre><code># Source:   lazy query [?? x 2]
 # Database: BigQueryConnection
     year count

@@ -971,7 +971,7 @@ $ucl
 <p>Of course another way to create a vector of integers from 1 to n is to use <code>1:n</code>. Let’s see how fast this is.</p>
 <div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="functions.html#cb643-1"></a><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)</span></code></pre></div>
 <pre><code>   user  system elapsed 
-      0       0       0 </code></pre>
+  0.000   0.000   0.001 </code></pre>
 <div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="functions.html#cb645-1"></a>n &lt;-<span class="st"> </span><span class="dv">1000000</span></span>
 <span id="cb645-2"><a href="functions.html#cb645-2"></a><span class="kw">system.time</span>(<span class="dv">1</span><span class="op">:</span>n)      </span></code></pre></div>
 <pre><code>   user  system elapsed 
@@ -1089,7 +1089,7 @@ One possibility is to have an outer loop that traverses the columns and an inner
     fill = TRUE, comment.char = &quot;&quot;, ...) 
 read.table(file = file, header = header, sep = sep, quote = quote, 
     dec = dec, fill = fill, comment.char = comment.char, ...)
-&lt;bytecode: 0x55762a3340c0&gt;
+&lt;bytecode: 0x5616ca76b0c0&gt;
 &lt;environment: namespace:utils&gt;</code></pre>
 </div>
 <div id="lazy-evaluation" class="section level3" number="7.7.2">
@@ -1107,7 +1107,7 @@ read.table(file = file, header = header, sep = sep, quote = quote,
 <div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="functions.html#cb679-1"></a><span class="kw">f</span>(<span class="dt">a=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>[1] 9
 [1] 27</code></pre>
-<pre><code>Error in h(simpleError(msg, call)): error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;print&#39;: argument &quot;b&quot; is missing, with no default</code></pre>
+<pre><code>Error in print(a * b): argument &quot;b&quot; is missing, with no default</code></pre>
 <p>The first call specified both of the arguments <code>a</code> and <code>b</code>, and produced the expected output. In the second call the argument <code>b</code> was not specified. Since it was not needed until the third <code>print</code> statement, R happily executed the first two <code>print</code> statements, and only reported an error in the third statement, when <code>b</code> was needed to compute <code>a*b</code>.</p>
 <div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="functions.html#cb682-1"></a>f &lt;-<span class="st"> </span><span class="cf">function</span>(a,<span class="dt">b =</span> a<span class="op">^</span><span class="dv">3</span>){</span>
 <span id="cb682-2"><a href="functions.html#cb682-2"></a>    <span class="kw">return</span>(a<span class="op">*</span>b)</span>
