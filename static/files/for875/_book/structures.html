@@ -24,7 +24,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2020-06-28" />
+<meta name="date" content="2020-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -541,88 +541,88 @@ in R</caption>
 </table>
 <p>R has no scalar types, i.e., 0-dimensional. Individual numbers or strings are actually vectors of length one.</p>
 <p>An efficient way to understand what comprises a given object is to use the <code>str()</code> function. <code>str()</code> is short for structure and prints a compact, human-readable description of any R data structure. For example, in the code below, we prove to ourselves that what we might think of as a scalar value is actually a vector of length one.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="structures.html#cb61-1"></a><span class="op">&gt;</span><span class="st"> </span>a &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb61-2"><a href="structures.html#cb61-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(a)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="structures.html#cb61-1"></a>a &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb61-2"><a href="structures.html#cb61-2"></a><span class="kw">str</span>(a)</span></code></pre></div>
 <pre><code> num 1</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="structures.html#cb63-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.vector</span>(a)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="structures.html#cb63-1"></a><span class="kw">is.vector</span>(a)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="structures.html#cb65-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(a)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="structures.html#cb65-1"></a><span class="kw">length</span>(a)</span></code></pre></div>
 <pre><code>[1] 1</code></pre>
 <p>Here we assigned <code>a</code> the scalar value one. The <code>str(a)</code> prints <code>num 1</code>, which says <code>a</code> is numeric of length one. Then just to be sure we used the function <code>is.vector()</code> to test if <code>a</code> is in fact a vector. Then, just for fun, we asked the length of <code>a</code>, which again returns one. There are a set of similar logical tests for the other base data structures, e.g., <code>is.matrix()</code>, <code>is.array()</code>, <code>is.data.frame()</code>, and <code>is.list()</code>. These will all come in handy as we encounter different R objects.</p>
 <div id="vector" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Vectors</h2>
 <p>Think of a vector<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a> as a structure to represent one variable in a data set. For example a vector might hold the weights, in pounds, of 7 people in a data set. Or another vector might hold the genders of those 7 people. The <code>c()</code> function in R is useful for creating (small) vectors and for modifying existing vectors. Think of <code>c</code> as standing for “combine”.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="structures.html#cb67-1"></a><span class="op">&gt;</span><span class="st"> </span>weight &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">123</span>, <span class="dv">157</span>, <span class="dv">205</span>, <span class="dv">199</span>, <span class="dv">223</span>, <span class="dv">140</span>, <span class="dv">105</span>)</span>
-<span id="cb67-2"><a href="structures.html#cb67-2"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="structures.html#cb67-1"></a>weight &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">123</span>, <span class="dv">157</span>, <span class="dv">205</span>, <span class="dv">199</span>, <span class="dv">223</span>, <span class="dv">140</span>, <span class="dv">105</span>)</span>
+<span id="cb67-2"><a href="structures.html#cb67-2"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 205 199 223 140 105</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="structures.html#cb69-1"></a><span class="op">&gt;</span><span class="st"> </span>gender &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>,</span>
-<span id="cb69-2"><a href="structures.html#cb69-2"></a><span class="op">+</span><span class="st">             &quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)</span>
-<span id="cb69-3"><a href="structures.html#cb69-3"></a><span class="op">&gt;</span><span class="st"> </span>gender</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="structures.html#cb69-1"></a>gender &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>,</span>
+<span id="cb69-2"><a href="structures.html#cb69-2"></a>            <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)</span>
+<span id="cb69-3"><a href="structures.html#cb69-3"></a>gender</span></code></pre></div>
 <pre><code>[1] &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;male&quot;  
 [6] &quot;male&quot;   &quot;female&quot;</code></pre>
 <p>Notice that elements of a vector are separated by commas when using the <code>c()</code> function to create a vector. Also notice that character values are placed inside quotation marks.</p>
 <p>The <code>c()</code> function also can be used to add to an existing vector. For example, if an eighth male person was included in the data set, and his weight was 194 pounds, the existing vectors could be modified as follows.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="structures.html#cb71-1"></a><span class="op">&gt;</span><span class="st"> </span>weight &lt;-<span class="st"> </span><span class="kw">c</span>(weight, <span class="dv">194</span>)</span>
-<span id="cb71-2"><a href="structures.html#cb71-2"></a><span class="op">&gt;</span><span class="st"> </span>gender &lt;-<span class="st"> </span><span class="kw">c</span>(gender, <span class="st">&quot;male&quot;</span>)</span>
-<span id="cb71-3"><a href="structures.html#cb71-3"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="structures.html#cb71-1"></a>weight &lt;-<span class="st"> </span><span class="kw">c</span>(weight, <span class="dv">194</span>)</span>
+<span id="cb71-2"><a href="structures.html#cb71-2"></a>gender &lt;-<span class="st"> </span><span class="kw">c</span>(gender, <span class="st">&quot;male&quot;</span>)</span>
+<span id="cb71-3"><a href="structures.html#cb71-3"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="structures.html#cb73-1"></a><span class="op">&gt;</span><span class="st"> </span>gender</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="structures.html#cb73-1"></a>gender</span></code></pre></div>
 <pre><code>[1] &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;male&quot;  
 [6] &quot;male&quot;   &quot;female&quot; &quot;male&quot;  </code></pre>
 <div id="types-conversion-coercion" class="section level3" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> Types, Conversion, Coercion</h3>
 <p>Clearly it is important to distinguish between different types of vectors. For example, it makes sense to ask R to calculate the mean of the weights stored in <code>weight</code>, but does not make sense to ask R to compute the mean of the genders stored in <code>gender</code>. Vectors in R may have one of six different “types”: character, double, integer, logical, complex, and raw. Only the first four of these will be of interest below, and the distinction between double and integer will not be of great import. To illustrate logical vectors, imagine that each of the eight people in the data set was asked whether he or she was taking blood pressure medication, and the responses were coded as <code>TRUE</code> if the person answered yes, and <code>FALSE</code> if the person answered no.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="structures.html#cb75-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(weight)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="structures.html#cb75-1"></a><span class="kw">typeof</span>(weight)</span></code></pre></div>
 <pre><code>[1] &quot;double&quot;</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="structures.html#cb77-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(gender)</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="structures.html#cb77-1"></a><span class="kw">typeof</span>(gender)</span></code></pre></div>
 <pre><code>[1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="structures.html#cb79-1"></a><span class="op">&gt;</span><span class="st"> </span>bp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</span>
-<span id="cb79-2"><a href="structures.html#cb79-2"></a><span class="op">&gt;</span><span class="st"> </span>bp</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="structures.html#cb79-1"></a>bp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</span>
+<span id="cb79-2"><a href="structures.html#cb79-2"></a>bp</span></code></pre></div>
 <pre><code>[1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="structures.html#cb81-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(bp)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="structures.html#cb81-1"></a><span class="kw">typeof</span>(bp)</span></code></pre></div>
 <pre><code>[1] &quot;logical&quot;</code></pre>
 <p>It may be surprising to see that the variable <code>weight</code> is of <code>double</code> type, even though its values all are integers. By default R creates a double type vector when numeric values are given via the <code>c()</code> function.</p>
 <p>When it makes sense, it is possible to convert vectors to a different type. Consider the following examples.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="structures.html#cb83-1"></a><span class="op">&gt;</span><span class="st"> </span>weight.int &lt;-<span class="st"> </span><span class="kw">as.integer</span>(weight)</span>
-<span id="cb83-2"><a href="structures.html#cb83-2"></a><span class="op">&gt;</span><span class="st"> </span>weight.int</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="structures.html#cb83-1"></a>weight.int &lt;-<span class="st"> </span><span class="kw">as.integer</span>(weight)</span>
+<span id="cb83-2"><a href="structures.html#cb83-2"></a>weight.int</span></code></pre></div>
 <pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="structures.html#cb85-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(weight.int)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="structures.html#cb85-1"></a><span class="kw">typeof</span>(weight.int)</span></code></pre></div>
 <pre><code>[1] &quot;integer&quot;</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="structures.html#cb87-1"></a><span class="op">&gt;</span><span class="st"> </span>weight.char &lt;-<span class="st"> </span><span class="kw">as.character</span>(weight)</span>
-<span id="cb87-2"><a href="structures.html#cb87-2"></a><span class="op">&gt;</span><span class="st"> </span>weight.char</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="structures.html#cb87-1"></a>weight.char &lt;-<span class="st"> </span><span class="kw">as.character</span>(weight)</span>
+<span id="cb87-2"><a href="structures.html#cb87-2"></a>weight.char</span></code></pre></div>
 <pre><code>[1] &quot;123&quot; &quot;157&quot; &quot;205&quot; &quot;199&quot; &quot;223&quot; &quot;140&quot; &quot;105&quot; &quot;194&quot;</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="structures.html#cb89-1"></a><span class="op">&gt;</span><span class="st"> </span>bp.double &lt;-<span class="st"> </span><span class="kw">as.double</span>(bp)</span>
-<span id="cb89-2"><a href="structures.html#cb89-2"></a><span class="op">&gt;</span><span class="st"> </span>bp.double</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="structures.html#cb89-1"></a>bp.double &lt;-<span class="st"> </span><span class="kw">as.double</span>(bp)</span>
+<span id="cb89-2"><a href="structures.html#cb89-2"></a>bp.double</span></code></pre></div>
 <pre><code>[1] 0 1 0 0 1 0 1 0</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="structures.html#cb91-1"></a><span class="op">&gt;</span><span class="st"> </span>gender.oops &lt;-<span class="st"> </span><span class="kw">as.double</span>(gender)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="structures.html#cb91-1"></a>gender.oops &lt;-<span class="st"> </span><span class="kw">as.double</span>(gender)</span></code></pre></div>
 <pre><code>Warning: NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="structures.html#cb93-1"></a><span class="op">&gt;</span><span class="st"> </span>gender.oops</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="structures.html#cb93-1"></a>gender.oops</span></code></pre></div>
 <pre><code>[1] NA NA NA NA NA NA NA NA</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="structures.html#cb95-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sum</span>(bp)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="structures.html#cb95-1"></a><span class="kw">sum</span>(bp)</span></code></pre></div>
 <pre><code>[1] 3</code></pre>
 <p>The integer version of <code>weight</code> doesn’t look any different, but it is stored differently, which can be important both for computational efficiency and for interfacing with other languages such as <code>C++</code>. As noted above, however, we will not worry about the distinction between integer and double types. Converting <code>weight</code> to character goes as expected: The character representations of the numbers replace the numbers themselves. Converting the logical vector <code>bp</code> to double is pretty straightforward too: <code>FALSE</code> is converted to zero, and <code>TRUE</code> is converted to one. Now think about converting the character vector <code>gender</code> to a numeric double vector. It’s not at all clear how to represent “female” and “male” as numbers. In fact in this case what R does is to create a character vector, but with each element set to <code>NA</code>, which is the representation of missing data.<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a> Finally consider the code <code>sum(bp)</code>. Now <code>bp</code> is a logical vector, but when R sees that we are asking to sum this logical vector, it automatically converts it to a numerical vector and then adds the zeros and ones representing <code>FALSE</code> and <code>TRUE</code>.</p>
 <p>R also has functions to test whether a vector is of a particular type.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="structures.html#cb97-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.double</span>(weight)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="structures.html#cb97-1"></a><span class="kw">is.double</span>(weight)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="structures.html#cb99-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.character</span>(weight)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="structures.html#cb99-1"></a><span class="kw">is.character</span>(weight)</span></code></pre></div>
 <pre><code>[1] FALSE</code></pre>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="structures.html#cb101-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.integer</span>(weight.int)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="structures.html#cb101-1"></a><span class="kw">is.integer</span>(weight.int)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="structures.html#cb103-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.logical</span>(bp)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="structures.html#cb103-1"></a><span class="kw">is.logical</span>(bp)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 <div id="coercion" class="section level4" number="4.1.1.1">
 <h4><span class="header-section-number">4.1.1.1</span> Coercion</h4>
 <p>Consider the following examples.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="structures.html#cb105-1"></a><span class="op">&gt;</span><span class="st"> </span>xx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">TRUE</span>)</span>
-<span id="cb105-2"><a href="structures.html#cb105-2"></a><span class="op">&gt;</span><span class="st"> </span>xx</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="structures.html#cb105-1"></a>xx &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">TRUE</span>)</span>
+<span id="cb105-2"><a href="structures.html#cb105-2"></a>xx</span></code></pre></div>
 <pre><code>[1] 1 2 3 1</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="structures.html#cb107-1"></a><span class="op">&gt;</span><span class="st"> </span>yy &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;dog&quot;</span>)</span>
-<span id="cb107-2"><a href="structures.html#cb107-2"></a><span class="op">&gt;</span><span class="st"> </span>yy</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="structures.html#cb107-1"></a>yy &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;dog&quot;</span>)</span>
+<span id="cb107-2"><a href="structures.html#cb107-2"></a>yy</span></code></pre></div>
 <pre><code>[1] &quot;1&quot;   &quot;2&quot;   &quot;3&quot;   &quot;dog&quot;</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="structures.html#cb109-1"></a><span class="op">&gt;</span><span class="st"> </span>zz &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="st">&quot;cat&quot;</span>)</span>
-<span id="cb109-2"><a href="structures.html#cb109-2"></a><span class="op">&gt;</span><span class="st"> </span>zz</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="structures.html#cb109-1"></a>zz &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="st">&quot;cat&quot;</span>)</span>
+<span id="cb109-2"><a href="structures.html#cb109-2"></a>zz</span></code></pre></div>
 <pre><code>[1] &quot;TRUE&quot;  &quot;FALSE&quot; &quot;cat&quot;  </code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="structures.html#cb111-1"></a><span class="op">&gt;</span><span class="st"> </span>weight<span class="op">+</span>bp</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="structures.html#cb111-1"></a>weight<span class="op">+</span>bp</span></code></pre></div>
 <pre><code>[1] 123 158 205 199 224 140 106 194</code></pre>
 <p>Vectors in R can only contain elements of one type. If more than one type is included in a <code>c()</code> function, R silently <em>coerces</em> the vector to be of one type. The examples illustrate the hierarchy—if any element is a character, then the whole vector is character. If some elements are numeric (either integer or double) and other elements are logical, the whole vector is numeric. Note what happened when R was asked to add the numeric vector <code>weight</code> to the logical vector <code>bp</code>. The logical vector was silently coerced to be numeric, so that FALSE became zero and TRUE became one, and then the two numeric vectors were added.</p>
 </div>
@@ -630,35 +630,35 @@ in R</caption>
 <div id="accessing-specific-elements-of-vectors" class="section level3" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> Accessing Specific Elements of Vectors</h3>
 <p>To access and possibly change specific elements of vectors, refer to the position of the element in square brackets. For example, <code>weight[4]</code> refers to the fourth element of the vector <code>weight</code>. Note that R starts the numbering of elements at 1, i.e., the first element of a vector <code>x</code> is <code>x[1]</code>.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="structures.html#cb113-1"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="structures.html#cb113-1"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="structures.html#cb115-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">5</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="structures.html#cb115-1"></a>weight[<span class="dv">5</span>]</span></code></pre></div>
 <pre><code>[1] 223</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="structures.html#cb117-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="structures.html#cb117-1"></a>weight[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>[1] 123 157 205</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="structures.html#cb119-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(weight)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="structures.html#cb119-1"></a><span class="kw">length</span>(weight)</span></code></pre></div>
 <pre><code>[1] 8</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="structures.html#cb121-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="kw">length</span>(weight)]</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="structures.html#cb121-1"></a>weight[<span class="kw">length</span>(weight)]</span></code></pre></div>
 <pre><code>[1] 194</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="structures.html#cb123-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[]</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="structures.html#cb123-1"></a>weight[]</span></code></pre></div>
 <pre><code>[1] 123 157 205 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="structures.html#cb125-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">202</span></span>
-<span id="cb125-2"><a href="structures.html#cb125-2"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="structures.html#cb125-1"></a>weight[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">202</span></span>
+<span id="cb125-2"><a href="structures.html#cb125-2"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
 <p>Note that including nothing in the square brackets results in the whole vector being returned.</p>
 <p>Negative numbers in the square brackets tell R to omit the corresponding value. And a zero as a subscript returns nothing (more precisely, it returns a length zero vector of the appropriate type).</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="structures.html#cb127-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="op">-</span><span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="structures.html#cb127-1"></a>weight[<span class="op">-</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>[1] 123 157 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="structures.html#cb129-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="op">-</span><span class="kw">length</span>(weight)]</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="structures.html#cb129-1"></a>weight[<span class="op">-</span><span class="kw">length</span>(weight)]</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105</code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="structures.html#cb131-1"></a><span class="op">&gt;</span><span class="st"> </span>lessWeight &lt;-<span class="st"> </span>weight[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)]</span>
-<span id="cb131-2"><a href="structures.html#cb131-2"></a><span class="op">&gt;</span><span class="st"> </span>lessWeight</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="structures.html#cb131-1"></a>lessWeight &lt;-<span class="st"> </span>weight[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)]</span>
+<span id="cb131-2"><a href="structures.html#cb131-2"></a>lessWeight</span></code></pre></div>
 <pre><code>[1] 157 199 140 105 194</code></pre>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="structures.html#cb133-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="dv">0</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="structures.html#cb133-1"></a>weight[<span class="dv">0</span>]</span></code></pre></div>
 <pre><code>numeric(0)</code></pre>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="structures.html#cb135-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="structures.html#cb135-1"></a>weight[<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>)]</span></code></pre></div>
 <pre><code>[1] 157 123</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="structures.html#cb137-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="structures.html#cb137-1"></a>weight[<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>)]</span></code></pre></div>
 <pre><code>Error in weight[c(-1, 2)]: only 0&#39;s may be mixed with negative subscripts</code></pre>
 <p>Note that mixing zero and other nonzero subscripts is allowed, but mixing negative and positive subscripts is not allowed.</p>
 <p>What about the (usual) case where we don’t know the positions of the elements we want? For example possibly we want the weights of all females in the data. Later we will learn how to subset using logical indices, which is a very powerful way to access desired elements of a vector.</p>
@@ -666,19 +666,19 @@ in R</caption>
 <div id="practice-problem" class="section level3" number="4.1.3">
 <h3><span class="header-section-number">4.1.3</span> Practice Problem</h3>
 <p>A bad programming technique that often plagues beginners is a technique called <em>hardcoding</em>. Consider the following simple vector containing data on the number of tree species found at different sites.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="structures.html#cb139-1"></a><span class="op">&gt;</span><span class="st"> </span>tree.sp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">9</span>, <span class="dv">11</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="structures.html#cb139-1"></a>tree.sp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">9</span>, <span class="dv">11</span>)</span></code></pre></div>
 <p>Suppose we are interested in the second to last value of the data set. One way to do this is to first determine the length of vector using the <code>length()</code> function, then taking that value and subtracting 1.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="structures.html#cb140-1"></a><span class="op">&gt;</span><span class="st"> </span>num.sites &lt;-<span class="st"> </span><span class="kw">length</span>(tree.sp)</span>
-<span id="cb140-2"><a href="structures.html#cb140-2"></a><span class="op">&gt;</span><span class="st"> </span>num.sites</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="structures.html#cb140-1"></a>num.sites &lt;-<span class="st"> </span><span class="kw">length</span>(tree.sp)</span>
+<span id="cb140-2"><a href="structures.html#cb140-2"></a>num.sites</span></code></pre></div>
 <pre><code>[1] 10</code></pre>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="structures.html#cb142-1"></a><span class="op">&gt;</span><span class="st"> </span>tree.sp[<span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="structures.html#cb142-1"></a>tree.sp[<span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
 <pre><code>[1] 9</code></pre>
 <p>This is an example of <em>hardcoding</em>. But what if we attempt to use the same code on a second vector of tree species data that has a different number of sites?</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="structures.html#cb144-1"></a><span class="op">&gt;</span><span class="st"> </span>tree.sp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>)</span>
-<span id="cb144-2"><a href="structures.html#cb144-2"></a><span class="op">&gt;</span><span class="st"> </span>num.sites &lt;-<span class="st"> </span><span class="kw">length</span>(tree.sp)</span>
-<span id="cb144-3"><a href="structures.html#cb144-3"></a><span class="op">&gt;</span><span class="st"> </span>num.sites</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="structures.html#cb144-1"></a>tree.sp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">19</span>, <span class="dv">3</span>)</span>
+<span id="cb144-2"><a href="structures.html#cb144-2"></a>num.sites &lt;-<span class="st"> </span><span class="kw">length</span>(tree.sp)</span>
+<span id="cb144-3"><a href="structures.html#cb144-3"></a>num.sites</span></code></pre></div>
 <pre><code>[1] 6</code></pre>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="structures.html#cb146-1"></a><span class="op">&gt;</span><span class="st"> </span>tree.sp[<span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="structures.html#cb146-1"></a>tree.sp[<span class="dv">10</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
 <pre><code>[1] NA</code></pre>
 <p>That’s clearly not what we want. Fix this code so we can always extract the second to last value in the vector, regardless of the length of the vector.</p>
 </div>
@@ -687,25 +687,25 @@ in R</caption>
 <h2><span class="header-section-number">4.2</span> Factors</h2>
 <p>Categorical variables such as <code>gender</code> can be represented as character vectors. In many cases this simple representation is sufficient. Consider, however, two other categorical variables, one representing age via categories <code>youth</code>, <code>young adult</code>, <code>middle age</code>, <code>senior</code>, and another representing income via categories <code>lower</code>, <code>middle</code>, and <code>upper</code>. Suppose that for the small health data set, all the people are either middle aged or senior citizens. If we just represented the variable via a character vector, there would be no way to know that there are two other categories, representing youth and young adults, which happen not to be present in the data set. And for the income variable, the character vector representation does not explicitly indicate that there is an ordering of the levels.</p>
 <p>Factors in R provide a more sophisticated way to represent categorical variables. Factors explicitly contain all possible levels, and allow ordering of levels.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="structures.html#cb148-1"></a><span class="op">&gt;</span><span class="st"> </span>age &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;middle age&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;middle age&quot;</span>, <span class="st">&quot;senior&quot;</span>,</span>
-<span id="cb148-2"><a href="structures.html#cb148-2"></a><span class="op">+</span><span class="st">          &quot;senior&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;middle age&quot;</span>)</span>
-<span id="cb148-3"><a href="structures.html#cb148-3"></a><span class="op">&gt;</span><span class="st"> </span>income &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lower&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;upper&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;upper&quot;</span>,</span>
-<span id="cb148-4"><a href="structures.html#cb148-4"></a><span class="op">+</span><span class="st">             &quot;lower&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;middle&quot;</span>)</span>
-<span id="cb148-5"><a href="structures.html#cb148-5"></a><span class="op">&gt;</span><span class="st"> </span>age</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="structures.html#cb148-1"></a>age &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;middle age&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;middle age&quot;</span>, <span class="st">&quot;senior&quot;</span>,</span>
+<span id="cb148-2"><a href="structures.html#cb148-2"></a>         <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;senior&quot;</span>, <span class="st">&quot;middle age&quot;</span>)</span>
+<span id="cb148-3"><a href="structures.html#cb148-3"></a>income &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lower&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;upper&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;upper&quot;</span>,</span>
+<span id="cb148-4"><a href="structures.html#cb148-4"></a>            <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;middle&quot;</span>)</span>
+<span id="cb148-5"><a href="structures.html#cb148-5"></a>age</span></code></pre></div>
 <pre><code>[1] &quot;middle age&quot; &quot;senior&quot;     &quot;middle age&quot; &quot;senior&quot;    
 [5] &quot;senior&quot;     &quot;senior&quot;     &quot;senior&quot;     &quot;middle age&quot;</code></pre>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="structures.html#cb150-1"></a><span class="op">&gt;</span><span class="st"> </span>income</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="structures.html#cb150-1"></a>income</span></code></pre></div>
 <pre><code>[1] &quot;lower&quot;  &quot;lower&quot;  &quot;upper&quot;  &quot;middle&quot; &quot;upper&quot; 
 [6] &quot;lower&quot;  &quot;lower&quot;  &quot;middle&quot;</code></pre>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="structures.html#cb152-1"></a><span class="op">&gt;</span><span class="st"> </span>age &lt;-<span class="st"> </span><span class="kw">factor</span>(age, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;youth&quot;</span>, <span class="st">&quot;young adult&quot;</span>, <span class="st">&quot;middle age&quot;</span>,</span>
-<span id="cb152-2"><a href="structures.html#cb152-2"></a><span class="op">+</span><span class="st">                             &quot;senior&quot;</span>))</span>
-<span id="cb152-3"><a href="structures.html#cb152-3"></a><span class="op">&gt;</span><span class="st"> </span>age</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="structures.html#cb152-1"></a>age &lt;-<span class="st"> </span><span class="kw">factor</span>(age, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;youth&quot;</span>, <span class="st">&quot;young adult&quot;</span>, <span class="st">&quot;middle age&quot;</span>,</span>
+<span id="cb152-2"><a href="structures.html#cb152-2"></a>                            <span class="st">&quot;senior&quot;</span>))</span>
+<span id="cb152-3"><a href="structures.html#cb152-3"></a>age</span></code></pre></div>
 <pre><code>[1] middle age senior     middle age senior    
 [5] senior     senior     senior     middle age
 Levels: youth young adult middle age senior</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="structures.html#cb154-1"></a><span class="op">&gt;</span><span class="st"> </span>income &lt;-<span class="st"> </span><span class="kw">factor</span>(income, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;lower&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;upper&quot;</span>),</span>
-<span id="cb154-2"><a href="structures.html#cb154-2"></a><span class="op">+</span><span class="st">                  </span><span class="dt">ordered =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb154-3"><a href="structures.html#cb154-3"></a><span class="op">&gt;</span><span class="st"> </span>income</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="structures.html#cb154-1"></a>income &lt;-<span class="st"> </span><span class="kw">factor</span>(income, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;lower&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;upper&quot;</span>),</span>
+<span id="cb154-2"><a href="structures.html#cb154-2"></a>                 <span class="dt">ordered =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb154-3"><a href="structures.html#cb154-3"></a>income</span></code></pre></div>
 <pre><code>[1] lower  lower  upper  middle upper  lower  lower 
 [8] middle
 Levels: lower &lt; middle &lt; upper</code></pre>
@@ -718,9 +718,9 @@ Levels: lower &lt; middle &lt; upper</code></pre>
 <ol style="list-style-type: decimal">
 <li>It is important to be aware that names of objects in R are case-sensitive, so <code>weight</code> and <code>Weight</code> do not refer to the same object.</li>
 </ol>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="structures.html#cb156-1"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="structures.html#cb156-1"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="structures.html#cb158-1"></a><span class="op">&gt;</span><span class="st"> </span>Weight</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="structures.html#cb158-1"></a>Weight</span></code></pre></div>
 <pre><code>Error in eval(expr, envir, enclos): object &#39;Weight&#39; not found</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>It is unwise to create an object with the same name as a built in R object such as the function <code>c</code> or the function <code>mean</code>. In earlier versions of R this could be somewhat disastrous, but even in current versions, it is definitely not a good idea!</li>
@@ -737,19 +737,19 @@ Levels: lower &lt; middle &lt; upper</code></pre>
 <h2><span class="header-section-number">4.3</span> Missing Data, Infinity, etc.</h2>
 <p>Most real-world data sets have variables where some observations are missing. In a longitudinal study participants may drop out. In a survey, participants may decide not to respond to certain questions. Statistical software should be able to represent missing data and to analyze data sets in which some data are missing.</p>
 <p>In R, the value <code>NA</code> is used for a missing data value. Since missing values may occur in numeric, character, and other types of data, and since R requires that a vector contain only elements of one type, there are different types of <code>NA</code> values. Usually R determines the appropriate type of <code>NA</code> value automatically. It is worth noting that the default type for <code>NA</code> is logical, and that <code>NA</code> is NOT the same as the character string <code>"NA"</code>.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="structures.html#cb160-1"></a><span class="op">&gt;</span><span class="st"> </span>missingCharacter &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;pig&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;horse&quot;</span>)</span>
-<span id="cb160-2"><a href="structures.html#cb160-2"></a><span class="op">&gt;</span><span class="st"> </span>missingCharacter</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="structures.html#cb160-1"></a>missingCharacter &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;pig&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;horse&quot;</span>)</span>
+<span id="cb160-2"><a href="structures.html#cb160-2"></a>missingCharacter</span></code></pre></div>
 <pre><code>[1] &quot;dog&quot;   &quot;cat&quot;   NA      &quot;pig&quot;   NA      &quot;horse&quot;</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="structures.html#cb162-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.na</span>(missingCharacter)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="structures.html#cb162-1"></a><span class="kw">is.na</span>(missingCharacter)</span></code></pre></div>
 <pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="structures.html#cb164-1"></a><span class="op">&gt;</span><span class="st"> </span>missingCharacter &lt;-<span class="st"> </span><span class="kw">c</span>(missingCharacter, <span class="st">&quot;NA&quot;</span>)</span>
-<span id="cb164-2"><a href="structures.html#cb164-2"></a><span class="op">&gt;</span><span class="st"> </span>missingCharacter</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="structures.html#cb164-1"></a>missingCharacter &lt;-<span class="st"> </span><span class="kw">c</span>(missingCharacter, <span class="st">&quot;NA&quot;</span>)</span>
+<span id="cb164-2"><a href="structures.html#cb164-2"></a>missingCharacter</span></code></pre></div>
 <pre><code>[1] &quot;dog&quot;   &quot;cat&quot;   NA      &quot;pig&quot;   NA      &quot;horse&quot;
 [7] &quot;NA&quot;   </code></pre>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="structures.html#cb166-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.na</span>(missingCharacter)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="structures.html#cb166-1"></a><span class="kw">is.na</span>(missingCharacter)</span></code></pre></div>
 <pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="structures.html#cb168-1"></a><span class="op">&gt;</span><span class="st"> </span>allMissing &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)</span>
-<span id="cb168-2"><a href="structures.html#cb168-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">typeof</span>(allMissing)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="structures.html#cb168-1"></a>allMissing &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>)</span>
+<span id="cb168-2"><a href="structures.html#cb168-2"></a><span class="kw">typeof</span>(allMissing)</span></code></pre></div>
 <pre><code>[1] &quot;logical&quot;</code></pre>
 <p>How should missing data be treated in computations, such as finding the mean or standard deviation of a variable? One possibility is to return <code>NA</code>. Another is to remove the missing value(s) and then perform the computation.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="structures.html#cb170-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="ot">NA</span>,<span class="dv">5</span>))</span></code></pre></div>
@@ -760,7 +760,7 @@ Levels: lower &lt; middle &lt; upper</code></pre>
 <div id="practice-problem-1" class="section level3" number="4.3.1">
 <h3><span class="header-section-number">4.3.1</span> Practice Problem</h3>
 <p>Collecting data is often a messy process resulting in multiple errors in the data. Consider the following small vector representing the weights of 10 adults in pounds.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="structures.html#cb174-1"></a><span class="op">&gt;</span><span class="st"> </span>my.weights &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">150</span>, <span class="dv">138</span>, <span class="dv">289</span>, <span class="dv">239</span>, <span class="dv">12</span>, <span class="dv">103</span>, <span class="dv">310</span>, <span class="dv">200</span>, <span class="dv">218</span>, <span class="dv">178</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="structures.html#cb174-1"></a>my.weights &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">150</span>, <span class="dv">138</span>, <span class="dv">289</span>, <span class="dv">239</span>, <span class="dv">12</span>, <span class="dv">103</span>, <span class="dv">310</span>, <span class="dv">200</span>, <span class="dv">218</span>, <span class="dv">178</span>)</span></code></pre></div>
 <p>As far as I know, it’s not possible for an adult to weigh 12 pounds, so that is most likely an error. Change this value to NA, and then find the standard deviation of the weights after removing the NA value.</p>
 </div>
 <div id="infinity-and-nan" class="section level3" number="4.3.2">
@@ -782,9 +782,9 @@ Levels: lower &lt; middle &lt; upper</code></pre>
 <div id="dataFrames" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Data Frames</h2>
 <p>Commonly, data is rectangular in form, with variables as columns and cases as rows. Continuing with the (contrived) data on weight, gender, and blood pressure medication, each of those variables would be a column of the data set, and each person’s measurements would be a row. In R, such data are represented as a <em>data frame</em>.</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="structures.html#cb183-1"></a><span class="op">&gt;</span><span class="st"> </span>healthData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Weight =</span> weight, <span class="dt">Gender=</span>gender, <span class="dt">bp.meds =</span> bp,</span>
-<span id="cb183-2"><a href="structures.html#cb183-2"></a><span class="op">+</span><span class="st">                          </span><span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)</span>
-<span id="cb183-3"><a href="structures.html#cb183-3"></a><span class="op">&gt;</span><span class="st"> </span>healthData</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="structures.html#cb183-1"></a>healthData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Weight =</span> weight, <span class="dt">Gender=</span>gender, <span class="dt">bp.meds =</span> bp,</span>
+<span id="cb183-2"><a href="structures.html#cb183-2"></a>                         <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)</span>
+<span id="cb183-3"><a href="structures.html#cb183-3"></a>healthData</span></code></pre></div>
 <pre><code>  Weight Gender bp.meds
 1    123 female   FALSE
 2    157 female    TRUE
@@ -794,12 +794,12 @@ Levels: lower &lt; middle &lt; upper</code></pre>
 6    140   male   FALSE
 7    105 female    TRUE
 8    194   male   FALSE</code></pre>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="structures.html#cb185-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(healthData)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="structures.html#cb185-1"></a><span class="kw">names</span>(healthData)</span></code></pre></div>
 <pre><code>[1] &quot;Weight&quot;  &quot;Gender&quot;  &quot;bp.meds&quot;</code></pre>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="structures.html#cb187-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">colnames</span>(healthData)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="structures.html#cb187-1"></a><span class="kw">colnames</span>(healthData)</span></code></pre></div>
 <pre><code>[1] &quot;Weight&quot;  &quot;Gender&quot;  &quot;bp.meds&quot;</code></pre>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="structures.html#cb189-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(healthData) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wt&quot;</span>, <span class="st">&quot;Gdr&quot;</span>, <span class="st">&quot;bp&quot;</span>)</span>
-<span id="cb189-2"><a href="structures.html#cb189-2"></a><span class="op">&gt;</span><span class="st"> </span>healthData</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="structures.html#cb189-1"></a><span class="kw">names</span>(healthData) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Wt&quot;</span>, <span class="st">&quot;Gdr&quot;</span>, <span class="st">&quot;bp&quot;</span>)</span>
+<span id="cb189-2"><a href="structures.html#cb189-2"></a>healthData</span></code></pre></div>
 <pre><code>   Wt    Gdr    bp
 1 123 female FALSE
 2 157 female  TRUE
@@ -809,13 +809,13 @@ Levels: lower &lt; middle &lt; upper</code></pre>
 6 140   male FALSE
 7 105 female  TRUE
 8 194   male FALSE</code></pre>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="structures.html#cb191-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rownames</span>(healthData)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="structures.html#cb191-1"></a><span class="kw">rownames</span>(healthData)</span></code></pre></div>
 <pre><code>[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;8&quot;</code></pre>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="structures.html#cb193-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(healthData) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Weight&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;bp.meds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="structures.html#cb193-1"></a><span class="kw">names</span>(healthData) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Weight&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;bp.meds&quot;</span>)</span></code></pre></div>
 <p>The <code>data.frame</code> function can be used to create a data frame (although it’s more common to read a data frame into R from an external file, something that will be introduced later). The names of the variables in the data frame are given as arguments, as are the vectors of data that make up the variable’s values. The argument <code>stringsAsFactors=FALSE</code> asks R not to convert character vectors into factors. As of version <code>R 4.0.0</code>, <code>R</code> does not automatically convert character vectors into factors. However, up until this recent version, <code>R</code> would automatically convert strings to factors (i.e., <code>stringsAsFactors = TRUE</code>), and so to avoid confusion we will typically display <code>stringsAsFactors=FALSE</code> throughout most of the book. Names of the columns (variables) can be extracted and set via either <code>names</code> or <code>colnames</code>. In the example, the variable names are changed to <code>Wt, Gdr, bp</code> and then changed back to the original <code>Weight, Gender, bp.meds</code> in this way. Rows can be named also. In this case since specific row names were not provided, the default row names of <code>"1", "2"</code> etc. are used.</p>
 <p>In the next example a built-in dataset called <code>mtcars</code> is made available by the <code>data</code> function, and then the first and last six rows are displayed using <code>head</code> and <code>tail</code>.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="structures.html#cb194-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">data</span>(mtcars)</span>
-<span id="cb194-2"><a href="structures.html#cb194-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">head</span>(mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="structures.html#cb194-1"></a><span class="kw">data</span>(mtcars)</span>
+<span id="cb194-2"><a href="structures.html#cb194-2"></a><span class="kw">head</span>(mtcars)</span></code></pre></div>
 <pre><code>                   mpg cyl disp  hp drat    wt  qsec
 Mazda RX4         21.0   6  160 110 3.90 2.620 16.46
 Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02
@@ -830,7 +830,7 @@ Datsun 710         1  1    4    1
 Hornet 4 Drive     1  0    3    1
 Hornet Sportabout  0  0    3    2
 Valiant            1  0    3    1</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="structures.html#cb196-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">tail</span>(mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="structures.html#cb196-1"></a><span class="kw">tail</span>(mtcars)</span></code></pre></div>
 <pre><code>                mpg cyl  disp  hp drat    wt qsec vs
 Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0
 Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.9  1
@@ -849,16 +849,16 @@ Volvo 142E      1    4    2</code></pre>
 <div id="accessing-specific-elements-of-data-frames" class="section level3" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> Accessing Specific Elements of Data Frames</h3>
 <p>Data frames are two-dimensional, so to access a specific element (or elements) we need to specify both the row and column.</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="structures.html#cb198-1"></a><span class="op">&gt;</span><span class="st"> </span>mtcars[<span class="dv">1</span>,<span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="structures.html#cb198-1"></a>mtcars[<span class="dv">1</span>,<span class="dv">4</span>]</span></code></pre></div>
 <pre><code>[1] 110</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="structures.html#cb200-1"></a><span class="op">&gt;</span><span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="structures.html#cb200-1"></a>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">3</span>]</span></code></pre></div>
 <pre><code>[1] 160 160 108</code></pre>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="structures.html#cb202-1"></a><span class="op">&gt;</span><span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="structures.html#cb202-1"></a>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>              cyl disp
 Mazda RX4       6  160
 Mazda RX4 Wag   6  160
 Datsun 710      4  108</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="structures.html#cb204-1"></a><span class="op">&gt;</span><span class="st"> </span>mtcars[,<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="structures.html#cb204-1"></a>mtcars[,<span class="dv">1</span>]</span></code></pre></div>
 <pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2
 [11] 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9
 [21] 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
@@ -892,18 +892,18 @@ Datsun 710      4  108</code></pre>
 <li>The names of the dependent and independent variables (a character vector with two components)</li>
 </ul>
 <p>In fact R has a function, <code>lm</code>, which does this (and much more).</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="structures.html#cb216-1"></a><span class="op">&gt;</span><span class="st"> </span>mpgHpLinMod &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data=</span>mtcars)</span>
-<span id="cb216-2"><a href="structures.html#cb216-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(mpgHpLinMod)</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="structures.html#cb216-1"></a>mpgHpLinMod &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data=</span>mtcars)</span>
+<span id="cb216-2"><a href="structures.html#cb216-2"></a><span class="kw">mode</span>(mpgHpLinMod)</span></code></pre></div>
 <pre><code>[1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="structures.html#cb218-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(mpgHpLinMod)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="structures.html#cb218-1"></a><span class="kw">names</span>(mpgHpLinMod)</span></code></pre></div>
 <pre><code> [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;      
  [4] &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;       
  [7] &quot;qr&quot;            &quot;df.residual&quot;   &quot;xlevels&quot;      
 [10] &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;        </code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="structures.html#cb220-1"></a><span class="op">&gt;</span><span class="st"> </span>mpgHpLinMod<span class="op">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="structures.html#cb220-1"></a>mpgHpLinMod<span class="op">$</span>coefficients</span></code></pre></div>
 <pre><code>(Intercept)          hp 
    30.09886    -0.06823 </code></pre>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="structures.html#cb222-1"></a><span class="op">&gt;</span><span class="st"> </span>mpgHpLinMod<span class="op">$</span>residuals</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="structures.html#cb222-1"></a>mpgHpLinMod<span class="op">$</span>residuals</span></code></pre></div>
 <pre><code>          Mazda RX4       Mazda RX4 Wag 
            -1.59375            -1.59375 
          Datsun 710      Hornet 4 Drive 
@@ -938,9 +938,9 @@ Datsun 710      4  108</code></pre>
             7.75761            -1.26198 </code></pre>
 <p>The <code>lm</code> function returns a list (which in the code above has been assigned to the object <code>mpgHpLinMod</code>).<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> One component of the list is the length 2 vector of coefficients, while another component is the length 32 vector of residuals. The code also illustrates that named components of a list can be accessed using the dollar sign notation, as with data frames.</p>
 <p>The <code>list</code> function is used to create lists.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="structures.html#cb224-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">first=</span>weight, <span class="dt">second=</span>healthData,</span>
-<span id="cb224-2"><a href="structures.html#cb224-2"></a><span class="op">+</span><span class="st">                       </span><span class="dt">pickle=</span><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">b=</span>healthData))</span>
-<span id="cb224-3"><a href="structures.html#cb224-3"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="structures.html#cb224-1"></a>temporaryList &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">first=</span>weight, <span class="dt">second=</span>healthData,</span>
+<span id="cb224-2"><a href="structures.html#cb224-2"></a>                      <span class="dt">pickle=</span><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">b=</span>healthData))</span>
+<span id="cb224-3"><a href="structures.html#cb224-3"></a>temporaryList</span></code></pre></div>
 <pre><code>$first
 [1] 123 157 202 199 223 140 105 194
 
@@ -973,21 +973,21 @@ $pickle$b
 <div id="accessing-specific-elements-of-lists" class="section level3" number="4.5.1">
 <h3><span class="header-section-number">4.5.1</span> Accessing Specific Elements of Lists</h3>
 <p>We already have seen the dollar sign notation works for lists. In addition, the square bracket subsetting notation can be used. There is an added, somewhat subtle wrinkle—using either single or double square brackets.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="structures.html#cb226-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList<span class="op">$</span>first</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="structures.html#cb226-1"></a>temporaryList<span class="op">$</span>first</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="structures.html#cb228-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(temporaryList<span class="op">$</span>first)</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="structures.html#cb228-1"></a><span class="kw">mode</span>(temporaryList<span class="op">$</span>first)</span></code></pre></div>
 <pre><code>[1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="structures.html#cb230-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="structures.html#cb230-1"></a>temporaryList[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="structures.html#cb232-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(temporaryList[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="structures.html#cb232-1"></a><span class="kw">mode</span>(temporaryList[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>[1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="structures.html#cb234-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="structures.html#cb234-1"></a>temporaryList[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>$first
 [1] 123 157 202 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="structures.html#cb236-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">mode</span>(temporaryList[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="structures.html#cb236-1"></a><span class="kw">mode</span>(temporaryList[<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>[1] &quot;list&quot;</code></pre>
 <p>Note the dollar sign and double bracket notation return a numeric vector, while the single bracket notation returns a list. Notice also the difference in results below.</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="structures.html#cb238-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="structures.html#cb238-1"></a>temporaryList[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
 <pre><code>$first
 [1] 123 157 202 199 223 140 105 194
 
@@ -1001,10 +1001,10 @@ $second
 6    140   male   FALSE
 7    105 female    TRUE
 8    194   male   FALSE</code></pre>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="structures.html#cb240-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList[[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]]</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="structures.html#cb240-1"></a>temporaryList[[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]]</span></code></pre></div>
 <pre><code>[1] 157</code></pre>
 <p>The single bracket form returns the first and second elements of the list, while the double bracket form returns the second element in the first element of the list. Generally, do not put a vector of indices or names in a double bracket, you will likely get unexpected results. See, for example, the results below.<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a></p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="structures.html#cb242-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryList[[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)]]</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="structures.html#cb242-1"></a>temporaryList[[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)]]</span></code></pre></div>
 <pre><code>Error in temporaryList[[c(1, 2, 3)]]: recursive indexing failed at level 2</code></pre>
 <p>So, in summary, there are two main differences between using the single bracket <code>[]</code> and double bracket <code>[[]]</code>. First, the single bracket will return a list that holds the object(s) held at the given indices or names placed in the bracket, whereas the double brackets will return the actual object held at the index or name placed in the innermost bracket. Put differently, a single bracket can be used to access a range of list elements and will return a list, and a double bracket can only access a single element in the list and will return the object held at the index.</p>
 </div>
@@ -1015,17 +1015,17 @@ $second
 <p>R has a powerful method for solving these sorts of problems using a variant of the subsetting methods that we already have learned. When given a logical vector in square brackets, R will return the values corresponding to <code>TRUE</code>.
 To begin, focus on the <code>weight</code> and <code>gender</code> vectors created in Section <a href="structures.html#vector">4.1</a>.</p>
 <p>The R code <code>weight &gt; 200</code> returns a <code>TRUE</code> for each value of <code>weight</code> which is more than 200, and a <code>FALSE</code> for each value of <code>weight</code> which is less than or equal to 200. Similarly <code>gender == "female"</code> returns <code>TRUE</code> or <code>FALSE</code> depending on whether an element of <code>gender</code> is equal to <code>female</code>.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="structures.html#cb244-1"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="structures.html#cb244-1"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="structures.html#cb246-1"></a><span class="op">&gt;</span><span class="st"> </span>weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span></span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="structures.html#cb246-1"></a>weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span></span></code></pre></div>
 <pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="structures.html#cb248-1"></a><span class="op">&gt;</span><span class="st"> </span>gender[weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="structures.html#cb248-1"></a>gender[weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>]</span></code></pre></div>
 <pre><code>[1] &quot;male&quot; &quot;male&quot;</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="structures.html#cb250-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="structures.html#cb250-1"></a>weight[weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>]</span></code></pre></div>
 <pre><code>[1] 202 223</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="structures.html#cb252-1"></a><span class="op">&gt;</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;female&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="structures.html#cb252-1"></a>gender <span class="op">==</span><span class="st"> &quot;female&quot;</span></span></code></pre></div>
 <pre><code>[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="structures.html#cb254-1"></a><span class="op">&gt;</span><span class="st"> </span>weight[gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="structures.html#cb254-1"></a>weight[gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>]</span></code></pre></div>
 <pre><code>[1] 123 157 199 105</code></pre>
 <p>Consider the lines of R code one by one.</p>
 <ul>
@@ -1040,30 +1040,30 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
 <div id="modifying-or-creating-objects-via-subsetting" class="section level3" number="4.6.1">
 <h3><span class="header-section-number">4.6.1</span> Modifying or Creating Objects via Subsetting</h3>
 <p>The results of subsetting can be assigned to a new (or existing) R object, and subsetting on the left side of an assignment is a common way to modify an existing R object.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="structures.html#cb256-1"></a><span class="op">&gt;</span><span class="st"> </span>weight</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="structures.html#cb256-1"></a>weight</span></code></pre></div>
 <pre><code>[1] 123 157 202 199 223 140 105 194</code></pre>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="structures.html#cb258-1"></a><span class="op">&gt;</span><span class="st"> </span>lightweight &lt;-<span class="st"> </span>weight[weight <span class="op">&lt;</span><span class="st"> </span><span class="dv">200</span>]</span>
-<span id="cb258-2"><a href="structures.html#cb258-2"></a><span class="op">&gt;</span><span class="st"> </span>lightweight</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="structures.html#cb258-1"></a>lightweight &lt;-<span class="st"> </span>weight[weight <span class="op">&lt;</span><span class="st"> </span><span class="dv">200</span>]</span>
+<span id="cb258-2"><a href="structures.html#cb258-2"></a>lightweight</span></code></pre></div>
 <pre><code>[1] 123 157 199 140 105 194</code></pre>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="structures.html#cb260-1"></a><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
-<span id="cb260-2"><a href="structures.html#cb260-2"></a><span class="op">&gt;</span><span class="st"> </span>x</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="structures.html#cb260-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
+<span id="cb260-2"><a href="structures.html#cb260-2"></a>x</span></code></pre></div>
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="structures.html#cb262-1"></a><span class="op">&gt;</span><span class="st"> </span>x[x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb262-2"><a href="structures.html#cb262-2"></a><span class="op">&gt;</span><span class="st"> </span>x</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="structures.html#cb262-1"></a>x[x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb262-2"><a href="structures.html#cb262-2"></a>x</span></code></pre></div>
 <pre><code> [1]  0  0  0  0  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="structures.html#cb264-1"></a><span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="dv">-3</span><span class="op">:</span><span class="dv">9</span></span>
-<span id="cb264-2"><a href="structures.html#cb264-2"></a><span class="op">&gt;</span><span class="st"> </span>y</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="structures.html#cb264-1"></a>y &lt;-<span class="st"> </span><span class="dv">-3</span><span class="op">:</span><span class="dv">9</span></span>
+<span id="cb264-2"><a href="structures.html#cb264-2"></a>y</span></code></pre></div>
 <pre><code> [1] -3 -2 -1  0  1  2  3  4  5  6  7  8  9</code></pre>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="structures.html#cb266-1"></a><span class="op">&gt;</span><span class="st"> </span>y[y <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb266-2"><a href="structures.html#cb266-2"></a><span class="op">&gt;</span><span class="st"> </span>y</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="structures.html#cb266-1"></a>y[y <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb266-2"><a href="structures.html#cb266-2"></a>y</span></code></pre></div>
 <pre><code> [1] NA NA NA  0  1  2  3  4  5  6  7  8  9</code></pre>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="structures.html#cb268-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(x)</span>
-<span id="cb268-2"><a href="structures.html#cb268-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rm</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="structures.html#cb268-1"></a><span class="kw">rm</span>(x)</span>
+<span id="cb268-2"><a href="structures.html#cb268-2"></a><span class="kw">rm</span>(y)</span></code></pre></div>
 </div>
 <div id="logical-subsetting-and-data-frames" class="section level3" number="4.6.2">
 <h3><span class="header-section-number">4.6.2</span> Logical Subsetting and Data Frames</h3>
 <p>First consider the small and simple <code>healthData</code> data frame.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="structures.html#cb269-1"></a><span class="op">&gt;</span><span class="st"> </span>healthData</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="structures.html#cb269-1"></a>healthData</span></code></pre></div>
 <pre><code>  Weight Gender bp.meds
 1    123 female   FALSE
 2    157 female    TRUE
@@ -1073,15 +1073,15 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
 6    140   male   FALSE
 7    105 female    TRUE
 8    194   male   FALSE</code></pre>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="structures.html#cb271-1"></a><span class="op">&gt;</span><span class="st"> </span>healthData<span class="op">$</span>Weight[healthData<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="structures.html#cb271-1"></a>healthData<span class="op">$</span>Weight[healthData<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>]</span></code></pre></div>
 <pre><code>[1] 202 223 140 194</code></pre>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="structures.html#cb273-1"></a><span class="op">&gt;</span><span class="st"> </span>healthData[healthData<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="structures.html#cb273-1"></a>healthData[healthData<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>, ]</span></code></pre></div>
 <pre><code>  Weight Gender bp.meds
 1    123 female   FALSE
 2    157 female    TRUE
 4    199 female   FALSE
 7    105 female    TRUE</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="structures.html#cb275-1"></a><span class="op">&gt;</span><span class="st"> </span>healthData[healthData<span class="op">$</span>Weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">190</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="structures.html#cb275-1"></a>healthData[healthData<span class="op">$</span>Weight <span class="op">&gt;</span><span class="st"> </span><span class="dv">190</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>  Gender bp.meds
 3   male   FALSE
 4 female   FALSE
@@ -1089,7 +1089,7 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
 8   male   FALSE</code></pre>
 <p>The first example is really just subsetting a vector, since the <code>$</code> notation creates vectors. The second two examples return subsets of the whole data frame. Note that the logical vector subsets the rows of the data frame, choosing those rows where the gender is female or the weight is more than 190. Note also that the specification for the columns (after the comma) is left blank in the first case, telling R to return all the columns. In the second case the second and third columns are requested explicitly.</p>
 <p>Next consider the much larger and more complex <code>WorldBank</code> data frame. Recall, the <code>str</code> function displays the “structure” of an R object. Here is a look at the structure of several R objects.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="structures.html#cb277-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(mtcars)</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="structures.html#cb277-1"></a><span class="kw">str</span>(mtcars)</span></code></pre></div>
 <pre><code>&#39;data.frame&#39;:	32 obs. of  11 variables:
  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
@@ -1102,7 +1102,7 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="structures.html#cb279-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(temporaryList)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="structures.html#cb279-1"></a><span class="kw">str</span>(temporaryList)</span></code></pre></div>
 <pre><code>List of 3
  $ first : num [1:8] 123 157 202 199 223 140 105 194
  $ second:&#39;data.frame&#39;:	8 obs. of  3 variables:
@@ -1115,7 +1115,7 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
   .. ..$ Weight : num [1:8] 123 157 202 199 223 140 105 194
   .. ..$ Gender : chr [1:8] &quot;female&quot; &quot;female&quot; &quot;male&quot; &quot;female&quot; ...
   .. ..$ bp.meds: logi [1:8] FALSE TRUE FALSE FALSE TRUE FALSE ...</code></pre>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="structures.html#cb281-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(WorldBank)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="structures.html#cb281-1"></a><span class="kw">str</span>(WorldBank)</span></code></pre></div>
 <pre><code>&#39;data.frame&#39;:	11880 obs. of  15 variables:
  $ iso2c                       : chr  &quot;AD&quot; &quot;AD&quot; &quot;AD&quot; &quot;AD&quot; ...
  $ country                     : chr  &quot;Andorra&quot; &quot;Andorra&quot; &quot;Andorra&quot; &quot;Andorra&quot; ...
@@ -1136,50 +1136,50 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
 <p>Second we see that <code>temporaryList</code> is a list with three components. Each of the components is described separately, with the first few values again given.</p>
 <p>Third we examine the structure of <code>WorldBank</code>. It is a data frame with 11880 observations on each of 15 variables. Some of these are character variables, some are numeric, and one (<code>year</code>) is integer. Looking at the first few values we see that some variables have missing values.</p>
 <p>Consider creating a data frame which only has the observations from one year, say 1971. That’s relatively easy. Just choose rows for which <code>year</code> is equal to 1971.</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="structures.html#cb283-1"></a><span class="op">&gt;</span><span class="st"> </span>WorldBank1971 &lt;-<span class="st"> </span>WorldBank[WorldBank<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">1971</span>, ]</span>
-<span id="cb283-2"><a href="structures.html#cb283-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBank1971)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="structures.html#cb283-1"></a>WorldBank1971 &lt;-<span class="st"> </span>WorldBank[WorldBank<span class="op">$</span>year <span class="op">==</span><span class="st"> </span><span class="dv">1971</span>, ]</span>
+<span id="cb283-2"><a href="structures.html#cb283-2"></a><span class="kw">dim</span>(WorldBank1971)</span></code></pre></div>
 <pre><code>[1] 216  15</code></pre>
 <p>The <code>dim</code> function returns the dimensions of a data frame, i.e., the number of rows and the number of columns. From <code>dim</code> we see that there are <code>dim(WorldBank1971)[1]</code> cases from 1971.</p>
 <p>Next, how can we create a data frame which only contains data from 1971, and also only contains cases for which there are no missing values in the fertility rate variable? R has a built in function <code>is.na</code> which returns <code>TRUE</code> if the observation is missing and returns <code>FALSE</code> otherwise. And <code>!is.na</code> returns the negation, i.e., it returns <code>FALSE</code> if the observation is missing and <code>TRUE</code> if the observation is not missing.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="structures.html#cb285-1"></a><span class="op">&gt;</span><span class="st"> </span>WorldBank1971<span class="op">$</span>fertility.rate[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="structures.html#cb285-1"></a>WorldBank1971<span class="op">$</span>fertility.rate[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>]</span></code></pre></div>
 <pre><code> [1]    NA 6.512 7.671 3.517 4.933 3.118 7.264 3.104
  [9]    NA 2.200 2.961 2.788 4.479 2.260 2.775 2.949
 [17] 6.942 2.210 6.657 2.100 6.293 7.329 6.786    NA
 [25] 5.771</code></pre>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="structures.html#cb287-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(WorldBank1971<span class="op">$</span>fertility.rate[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="structures.html#cb287-1"></a><span class="op">!</span><span class="kw">is.na</span>(WorldBank1971<span class="op">$</span>fertility.rate[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>])</span></code></pre></div>
 <pre><code> [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
  [9] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 [17]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
 [25]  TRUE</code></pre>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="structures.html#cb289-1"></a><span class="op">&gt;</span><span class="st"> </span>WorldBank1971 &lt;-<span class="st"> </span>WorldBank1971[<span class="op">!</span><span class="kw">is.na</span>(WorldBank1971<span class="op">$</span>fertility.rate),]</span>
-<span id="cb289-2"><a href="structures.html#cb289-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBank1971)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="structures.html#cb289-1"></a>WorldBank1971 &lt;-<span class="st"> </span>WorldBank1971[<span class="op">!</span><span class="kw">is.na</span>(WorldBank1971<span class="op">$</span>fertility.rate),]</span>
+<span id="cb289-2"><a href="structures.html#cb289-2"></a><span class="kw">dim</span>(WorldBank1971)</span></code></pre></div>
 <pre><code>[1] 193  15</code></pre>
 <p>From <code>dim</code> we see that there are 193 cases from 1971 with non-missing fertility rate data.</p>
 <p>Return attention now to the original <code>WorldBank</code> data frame with data not only from 1971. How can we extract only those cases (rows) which have NO missing data? Consider the following simple example:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="structures.html#cb291-1"></a><span class="op">&gt;</span><span class="st"> </span>temporaryDataFrame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">V1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="ot">NA</span>),</span>
-<span id="cb291-2"><a href="structures.html#cb291-2"></a><span class="op">+</span><span class="st">                                  </span><span class="dt">V2 =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="ot">NA</span>),</span>
-<span id="cb291-3"><a href="structures.html#cb291-3"></a><span class="op">+</span><span class="st">                                  </span><span class="dt">V3 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>))</span>
-<span id="cb291-4"><a href="structures.html#cb291-4"></a><span class="op">&gt;</span><span class="st"> </span>temporaryDataFrame</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="structures.html#cb291-1"></a>temporaryDataFrame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">V1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="ot">NA</span>),</span>
+<span id="cb291-2"><a href="structures.html#cb291-2"></a>                                 <span class="dt">V2 =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="ot">NA</span>),</span>
+<span id="cb291-3"><a href="structures.html#cb291-3"></a>                                 <span class="dt">V3 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>))</span>
+<span id="cb291-4"><a href="structures.html#cb291-4"></a>temporaryDataFrame</span></code></pre></div>
 <pre><code>  V1 V2 V3
 1  1 NA  1
 2  2  1  2
 3  3  4  3
 4  4  5  5
 5 NA NA  7</code></pre>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="structures.html#cb293-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">is.na</span>(temporaryDataFrame)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="structures.html#cb293-1"></a><span class="kw">is.na</span>(temporaryDataFrame)</span></code></pre></div>
 <pre><code>        V1    V2    V3
 [1,] FALSE  TRUE FALSE
 [2,] FALSE FALSE FALSE
 [3,] FALSE FALSE FALSE
 [4,] FALSE FALSE FALSE
 [5,]  TRUE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="structures.html#cb295-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">is.na</span>(temporaryDataFrame))</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="structures.html#cb295-1"></a><span class="kw">rowSums</span>(<span class="kw">is.na</span>(temporaryDataFrame))</span></code></pre></div>
 <pre><code>[1] 1 0 0 0 2</code></pre>
 <p>First notice that <code>is.na</code> will test each element of a data frame for missingness. Also recall that if R is asked to sum a logical vector, it will first convert the logical vector to numeric and then compute the sum, which effectively counts the number of elements in the logical vector which are <code>TRUE</code>. The <code>rowSums</code> function computes the sum of each row. So <code>rowSums(is.na(temporaryDataFrame))</code> returns a vector with as many elements as there are rows in the data frame. If an element is zero, the corresponding row has no missing values. If an element is greater than zero, the value is the number of variables which are missing in that row. This gives a simple method to return all the cases which have no missing data.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="structures.html#cb297-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBank)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="structures.html#cb297-1"></a><span class="kw">dim</span>(WorldBank)</span></code></pre></div>
 <pre><code>[1] 11880    15</code></pre>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="structures.html#cb299-1"></a><span class="op">&gt;</span><span class="st"> </span>WorldBankComplete &lt;-<span class="st"> </span>WorldBank[<span class="kw">rowSums</span>(<span class="kw">is.na</span>(WorldBank)) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,]</span>
-<span id="cb299-2"><a href="structures.html#cb299-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(WorldBankComplete)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="structures.html#cb299-1"></a>WorldBankComplete &lt;-<span class="st"> </span>WorldBank[<span class="kw">rowSums</span>(<span class="kw">is.na</span>(WorldBank)) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,]</span>
+<span id="cb299-2"><a href="structures.html#cb299-2"></a><span class="kw">dim</span>(WorldBankComplete)</span></code></pre></div>
 <pre><code>[1] 564  15</code></pre>
 <p>Out of the 564 rows in the original data frame, only 564 have no missing observations!</p>
 </div>
@@ -1188,29 +1188,29 @@ To begin, focus on the <code>weight</code> and <code>gender</code> vectors creat
 <h2><span class="header-section-number">4.7</span> Patterned Data</h2>
 <p>Sometimes it is useful to generate all the integers from 1 through 20, to generate a sequence of 100 points equally spaced between 0 and 1, etc. The R functions <code>seq()</code> and <code>rep()</code> as well as the “colon operator” <code>:</code> help to generate such sequences.</p>
 <p>The colon operator generates a sequence of values with increments of <span class="math inline">\(1\)</span> or <span class="math inline">\(-1\)</span>.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="structures.html#cb301-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="structures.html#cb301-1"></a><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span></code></pre></div>
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="structures.html#cb303-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">-5</span><span class="op">:</span><span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="structures.html#cb303-1"></a><span class="dv">-5</span><span class="op">:</span><span class="dv">3</span></span></code></pre></div>
 <pre><code>[1] -5 -4 -3 -2 -1  0  1  2  3</code></pre>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="structures.html#cb305-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="structures.html#cb305-1"></a><span class="dv">10</span><span class="op">:</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>[1] 10  9  8  7  6  5  4</code></pre>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="structures.html#cb307-1"></a><span class="op">&gt;</span><span class="st"> </span>pi<span class="op">:</span><span class="dv">7</span></span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="structures.html#cb307-1"></a>pi<span class="op">:</span><span class="dv">7</span></span></code></pre></div>
 <pre><code>[1] 3.142 4.142 5.142 6.142</code></pre>
 <p>The <code>seq()</code> function generates either a sequence of pre-specified length or a sequence with pre-specified increments.</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="structures.html#cb309-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">11</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="structures.html#cb309-1"></a><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">11</span>)</span></code></pre></div>
 <pre><code> [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="structures.html#cb311-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">5</span>, <span class="dt">by =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="structures.html#cb311-1"></a><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">5</span>, <span class="dt">by =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code> [1] 1.000 1.333 1.667 2.000 2.333 2.667 3.000 3.333
  [9] 3.667 4.000 4.333 4.667 5.000</code></pre>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="structures.html#cb313-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">3</span>, <span class="dt">to =</span> <span class="dv">-1</span>, <span class="dt">length =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="structures.html#cb313-1"></a><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">3</span>, <span class="dt">to =</span> <span class="dv">-1</span>, <span class="dt">length =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code> [1]  3.0000  2.5556  2.1111  1.6667  1.2222  0.7778
  [7]  0.3333 -0.1111 -0.5556 -1.0000</code></pre>
 <p>The <code>rep()</code> function replicates the values in a given vector.</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="structures.html#cb315-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="dt">length =</span> <span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="structures.html#cb315-1"></a><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="dt">length =</span> <span class="dv">9</span>)</span></code></pre></div>
 <pre><code>[1] 1 2 4 1 2 4 1 2 4</code></pre>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="structures.html#cb317-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="dt">times =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="structures.html#cb317-1"></a><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>), <span class="dt">times =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>[1] 1 2 4 1 2 4 1 2 4</code></pre>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="structures.html#cb319-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">times =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="structures.html#cb319-1"></a><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">times =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">7</span>))</span></code></pre></div>
 <pre><code> [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot;</code></pre>
 <div id="practice-problem-2" class="section level3" number="4.7.1">
 <h3><span class="header-section-number">4.7.1</span> Practice Problem</h3>
