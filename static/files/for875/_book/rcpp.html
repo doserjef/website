@@ -24,7 +24,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2020-07-23" />
+<meta name="date" content="2020-07-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -689,15 +689,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1048-2"><a href="rcpp.html#cb1048-2"></a></span>
 <span id="cb1048-3"><a href="rcpp.html#cb1048-3"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1000</span>)</span>
 <span id="cb1048-4"><a href="rcpp.html#cb1048-4"></a><span class="kw">microbenchmark</span>(<span class="kw">sum</span>(x), <span class="kw">sumC</span>(x), <span class="kw">sumR</span>(x))</span></code></pre></div>
-<pre><code>Unit: microseconds
-    expr    min     lq   mean median     uq     max
-  sum(x)  1.056  1.115  1.742  1.151  1.200   25.51
- sumC(x)  2.437  2.551 13.848  2.632  3.041 1044.61
- sumR(x) 31.320 31.490 73.233 31.558 31.857 3748.55
- neval cld
-   100   a
-   100   a
-   100   a</code></pre>
+<pre><code>Unit: nanoseconds
+    expr   min    lq  mean median    uq     max neval
+  sum(x)   982  1071  1384   1124  1153   18165   100
+ sumC(x)  2290  2464 15164   2536  2628 1216373   100
+ sumR(x) 27866 29404 66312  29496 29662 3562318   100
+ cld
+   a
+   a
+   a</code></pre>
 <p>The <code>microbenchmark()</code> function runs each function it’s passed 100 times and provides summary statistics for the multiple execution times. This is a very handy tool for testing various function implementations (as illustrated above).</p>
 </div>
 <div id="vector-input-and-vector-output" class="section level3" number="12.4.3">
