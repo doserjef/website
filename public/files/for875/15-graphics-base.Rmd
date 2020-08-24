@@ -1,6 +1,6 @@
 # Graphics in R Part 2: `graphics` {#graphics}
 
-## Scatter Plots
+## Scatter Plots {#graphics1}
 
 Begin by considering a simple and classic data set sometimes called *Fisher's Iris Data*. These data are available in R.
 
@@ -48,7 +48,7 @@ legend(x = 6.4, y = 4.4, legend = levels(iris$Species),
        col = 1:length(levels(iris$Species)), pch = c(17, 18, 19))
 ```
 
-### Adding lines to a scatter plot
+### Adding lines to a scatter plot {#graphics2}
 
 Next let's add a fitted least squares line to the scatter plot. This can be done pretty easily using the `abline()` function to add a straight ine to the curve, and the `lm()` function to actually compute the least squares line
 
@@ -106,7 +106,7 @@ legend(x = 6.4, y = 4.4, legend = levels(iris$Species),
        col = 1:length(levels(iris$Species)), pch = c(17, 18, 19))
 ```
 
-## Labels, Axes, Text, etc. 
+## Labels, Axes, Text, etc. {#graphics3}
 
 The default settings of `graphics` often produce useful graphics, but once a graphic is chosen for dissemination, the user will likely want to customize things like the title, axes, etc. In this section some tools for customization are presented. Most will be illustrated in the context of a data set on crime rates in the 50 states in the United States. These data were made available by Nathan Yau at http://flowingdata.com/2010/11/23/how-to-make-bubble-charts/. The data include crime rates per 100,000 people for various crimes such as murder and robbery, and also include each state's population. The crime rates are from the year 2005, while the population numbers are from the year 2008, but the difference in population between the years is not great, and the exact population is not particularly important for what we'll do below.
 
@@ -119,7 +119,7 @@ str(crime)
 plot(crime$burglary, crime$motor_vehicle_theft, pch = 19)
 ```
 
-### Labels
+### Labels {#graphics4}
 
 By default, axis labels are the values of the `x` and `y` values you supply to the `plot()` function. For making a publication-quality figure, we often want to further customize these labels, as well as potentially add a title to the graph. We can do this using the `xlab`, `ylab`, and `main` arguments in the `plot()` function. 
 
@@ -140,7 +140,7 @@ plot(crime$burglary, crime$motor_vehicle_theft, pch = 19,
      las = 1)
 ```
 
-## Customizing Axes
+## Customizing Axes {#graphics5}
 
 The basic `plot()` function provides defaults for the axis limits, as well as for other axis features (i.e., the box around the plot). These, and other axis features such as tick marks, labels, and transformations, can all be customized. First, we use the `xlim` and `ylim` arguments to make the x and y axes start at zero and go to the maxium x and y values. 
 
@@ -167,7 +167,7 @@ axis(side = 1)
 axis(side = 2, las = 1)
 ```
 
-### Text, Point Size, and Color
+### Text, Point Size, and Color {#graphics6}
 
 Next we make point size proportional to population, change the color, and add a state label. First we make point size proportional to population size using the `symbols()` function. We can control the color of the points using the `bg` argument in the `symbols()` function. We then use the `text()` function to add labels to each point. 
 
@@ -206,11 +206,11 @@ plot(alc.drinks, alc.weights, xlab = "Number of Drinks", ylab = "Weight",
      pch = 15, col = 'blue', las = 1)
 ```
 
-## Other Types of Graphics
+## Other Types of Graphics {#graphics7}
 
 Scatter and line plots, which have just been presented, are common but certainly not the only graphical displays in common use. Histograms, boxplots, and bar graphs, as well as more "mathematical" displays such as the graph of a function, are commonly used to represent data. Examples of each are presented below. 
 
-### Histograms
+### Histograms {#graphics8}
 
 Simon Newcomb conducted several experiments to estimate the speed of light by measuring the time it took for light to travel from his laboratory to a mirror at the base of the Washington Monument, and then back to his lab. This is a distance of $7.44373$ km, and by dividing this distance by the measured time, an estimate for the speed of light is obtained. 
 
@@ -233,7 +233,7 @@ The function automatically specifies the binwidths for the data, however we can 
 hist(Newcomb$Time, breaks = 30, main = "Histogram", xlab = "Time", las = 1, col = 'blue')
 ```
 
-### Boxplots
+### Boxplots {#graphics9}
 
 Next we consider some data from the gap minder data set to construct some box plots. These data are available in the `gapminder` package, which might need to be installed via `install.packages("gapminder")`. 
 
@@ -255,7 +255,7 @@ par(mar=c(6,4,4,2))
 boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), pch = 19, border = 'red', col = 'lightblue', las = 1, xlab = "GDP Per-Capita", ylab = "Continent", horizontal = TRUE)
 ```
 
-### Bar Graphs
+### Bar Graphs {#graphics10}
 
 As part of a study, elementary school students were asked which was more important to them: good grades, popularity, or athletic ability. Here is a brief look at the data.
 
@@ -296,7 +296,7 @@ names(gdp.india) <- india$year
 barplot(gdp.india, xlab = "Year", ylab = "GDP Per Capita", main = "India's per-capita GDP", col = "steelblue2")
 ```
 
-### Graphs of Functions
+### Graphs of Functions {#graphics11}
 
 One way to create a plot of a mathematical function $f$ is to create a data frame with $x$ values in one column and $f(x)$ values in another column, and then draw a line plot. 
 
@@ -306,7 +306,7 @@ sin.x <- sin(x)
 plot(x, sin.x, type = 'l')
 ```
 
-## Saving Graphics
+## Saving Graphics {#graphics12}
 
 We often want to export our graphics to use in an external document or share with colleagues. There are numerous functions available to export graphic files in different formats. Below we demonstrate the use of the `png()` function to export the image of the sin curve we created above. 
 
@@ -319,7 +319,7 @@ dev.off()
 Inside the `png()` function, we specify the name the image is given when it is saved. There are also arguments to specify the width and height of the saved image. This function opens a png file where the image will be saved. There are analagous functions for other types of files (i.e. `pdf()`, `jpeg()`). The second line `plot(x, sin.x, type = 'l')` simply creates the plot we desire to save. The `dev.off()` function closes the png file. 
 
 
-## A Summary of Useful `graphics` Functions and Arguments
+## A Summary of Useful `graphics` Functions and Arguments {#graphics13}
 
 Upon initial learning, making plots with the `graphics` package may seem overwhelming due to the variety of different functions and arguments that control different features of the image that is produced. However, after some practice, you will find that the `graphics` method of graphing gives you great flexibility in making your images just the way you like them. This flexibility and control is one of the main reasons we produce most of our visualizations using `graphics`. 
 
@@ -345,6 +345,6 @@ The functions listed above certainly do not cover the realm of plots you can pro
 
 For additional help, we find that the help pages for most `graphics` functions are quite helpful. The online documentation for the package available [here](https://rdrr.io/r/graphics/graphics-package.html#heading-0) perhaps provides a more user friendly version of the help pages within R. There are also numerous books and online tutorials available for working with these functions, so a simple google search is often the best way to find additional help :)
 
-### Practice Problem
+### Practice Problem {#graphics14}
 
 Go to the help page for the `par()` function (use `help(par)` or `?par()`). Look at the plethora of different arguments that you can use to specialize your plot just the way you like it. List 5 arguments that we didn't use in this chapter, describe what they do, then use them in a graph using the `iris` data set (you can use any of the variables in the data set and produce any type of graph you like). 

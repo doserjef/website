@@ -24,9 +24,9 @@ date_format = "Jan 2006"
   company_url = "https://scc.anr.msu.edu/"
   location = "East Lansing, Michigan"
   date_start = "2019-09-01"
-  date_end = ""
+  date_end = "2020-08-17"
   description = """
-  Provide statistical and programming advice to graduate students, technicians, and faculty members employed by the College of Agriculture and Natural Resources or with AgBioResearch.
+  Provided statistical and programming advice to graduate students, technicians, and faculty members employed by the College of Agriculture and Natural Resources or with AgBioResearch.
   """
   
 [[experience]]

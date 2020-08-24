@@ -14,8 +14,8 @@ education:
     year: 2018
 email: ""
 interests:
-- Bayesian Modeling
-- Environmental Statistics
+- Bayesian Modelling
+- Statistical Ecology
 - Wildlife Management
 name: Jeff Doser
 organizations:
@@ -26,12 +26,12 @@ social:
 - icon: envelope
   icon_pack: fas
   link: '#contact'
-- icon: twitter
-  icon_pack: fab
-  link: https://twitter.com/jeffdoser18
 - icon: github
   icon_pack: fab
   link: https://github.com/doserjef
+- icon: google-scholar
+  icon_pack: ai
+  link: https://scholar.google.com/citations?user=VSKVc84AAAAJ&hl=en&oi=ao
   
 superuser: true
 user_groups:
