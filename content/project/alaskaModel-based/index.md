@@ -5,7 +5,7 @@ image:
   focal_point: Smart
 slides:
 summary: ""
-title: Spatial process models for interior forest biomass estimation in interior Alaska
+title: Spatial process models for forest biomass estimation in interior Alaska
 url_code: ""
 url_pdf: ""
 url_slides: ""
