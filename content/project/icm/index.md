@@ -1,11 +1,11 @@
 ---
-date: "2020-08-23T00:00:00Z"
+date: "2020-12-02T00:00:00Z"
 external_link: ""
 image:
   focal_point: Smart
 slides:
 summary: ""
-title: Integrating acoustic recordings and point-count surveys for efficient estimation of bird abundance
+title: Integrated community models for estimation of bird abundance 
 url_code: ""
 url_pdf: ""
 url_slides: ""

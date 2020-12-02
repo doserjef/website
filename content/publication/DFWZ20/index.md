@@ -1,0 +1,32 @@
+---
+abstract: "Monitoring wildlife abundance across space and time is an essential task for effective management. Acoustic recording units (ARUs) are a promising technology for efficiently monitoring bird populations and communities. While current acoustic data models provide information on the presence/absence of individual species, new approaches are needed to monitor population sizes (i.e., abundance) across potentially large spatio-temporal regions. We present an integrated modeling framework that combines high-quality but temporally sparse bird point count survey data with acoustic recordings to deliver superior accuracy and precision of abundance at a lower cost/effort than traditional count-based methods. Our models account for imperfect detection in both data types and false positive errors in the acoustic data. Using simulations, we compare the accuracy and precision of abundance estimates obtained from models using differing amounts of acoustic vocalizations obtained from a clustering algorithm, point count data, and a subset of manually validated acoustic vocalizations. We also use our modeling framework in a case study to estimate abundance of the Eastern Wood-Pewee (*Contopus virens*) in Vermont, U.S.A. Simulation study results indicate combining acoustic and point count data via an integrated model improves accuracy and precision of abundance estimates compared with models informed by either acoustic or point count data alone. Improvements in precision and accuracy are obtained across a wide-range of scenarios, with the largest gains occurring when detection probability for the point count data is low. Combining acoustic data with only a small number of point count surveys yields precise and accurate estimates of abundance without the need for validating any of the identified vocalizations from the acoustic data. Within our case study, the integrated models confirmed previous results that indicate the decline of the Eastern Wood-Pewee in this region. Our integrated modeling approach combines dense acoustic data with few point count surveys to deliver reliable estimates of species abundance without the need for manual identification of acoustic vocalizations or a prohibitively expensive large number of repeated point count surveys. Our proposed approach offers  efficient monitoring across large spatio-temporal regions."
+authors:
+- Jeffrey W. Doser
+- Andrew O. Finley
+- Aaron S. Weed
+- Elise F. Zipkin
+date: "2020-12-01T00:00:00Z"
+doi: ""
+featured: false
+links:
+- name: arXiv
+  url: https://arxiv.org/pdf/2011.11047.pdf
+publication: "In review"
+publication_short: ""
+publication_types:
+- "3"
+publishDate: "2020-12-01T00:00:00Z"
+slides: ''
+summary: ''
+title: "Integrating automated acoustic vocalization data and point count surveys for efficient estimation of bird abundance"
+url_code: ''
+url_dataset: ''
+url_pdf: ''
+url_poster: ''
+url_project: ''
+url_slides: ''
+url_source: ''
+url_video: ''
+---
+
+

@@ -10,6 +10,9 @@ date: "2020-08-23T00:00:00Z"
 doi: ""
 featured: false
 links:
+links:
+- name: arXiv
+  url: https://arxiv.org/pdf/2008.12184.pdf
 publication: "In review: Ecological Applications"
 publication_short: ""
 publication_types:
