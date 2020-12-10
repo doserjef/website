@@ -21,7 +21,7 @@ publishDate: "2020-08-23T00:00:00Z"
 slides: ''
 summary: ''
 title: "Trends in bird abundance differ among protected forests but not bird guilds"
-url_code: ''
+url_code: 'https://github.com/doserjef/Doser_etal_2020_MR-MS-RS'
 url_dataset: ''
 url_pdf: ''
 url_poster: ''
