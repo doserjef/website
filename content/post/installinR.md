@@ -9,8 +9,6 @@ lastmod: "2021-04-08T00:00:00Z"
 projects: []
 subtitle: 'Quick instructions for installing R and RStudio'
 summary: Quick instructions for installing R and RStudio
-tags:
-- Academic
 title: 'Installing R and RStudio'
 ---
 
