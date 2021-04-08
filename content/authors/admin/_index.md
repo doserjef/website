@@ -21,7 +21,7 @@ name: Jeff Doser
 organizations:
 - name: Michigan State University
   url: ""
-role: PhD Student
+role: PhD Candidate
 social:
 - icon: envelope
   icon_pack: fas
