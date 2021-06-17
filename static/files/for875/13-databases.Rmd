@@ -12,7 +12,7 @@ Data analysts and data scientists require a method to do tasks like that describ
 
 ### SQL
 
-SQL^[The pronunciation of SQL is highly debated. I prefer to pronounce it like the word "sequel", but many others prefer to say it as "ess-que-ell". See https://softwareengineering.stackexchange.com/questions/8588/whats-the-history-of-the-non-official-pronunciation-of-sql for a good debate], or Structured Query Language, is an incredibly useful tool for querying and managing relational databases. SQL is common to all major database management systems, such as Oracle, MariaDB, PostgreSQL, MySQL, SQLite, and SQL Server. Each system has slight differences in syntax for certain commands, but the overall basic structure is the same across all database management systems. In order to work with databases, at least a basic understanding of the SQL language is desirable. Here we will give a *brief* overview of the main structure of a SQL query. If you have minimal SQL background and desire to learn more about databases, we encourage you to use numerous free online resources to help gain experience in using SQL. Some of my favorites include tutorials from [W3Schools](https://www.w3schools.com/sql/), [tutorialspoint](https://www.tutorialspoint.com/sql/index.htm), and [SQL Tutorial](http://www.sqltutorial.org/). There are also numerous free online courses available (i.e. this [Stanford](https://lagunita.stanford.edu/courses/Engineering/db/2014\_1/about) course) that you can enroll in and gain experience in querying on sample databases. 
+SQL^[The pronunciation of SQL is highly debated. I prefer to pronounce it like the word "sequel", but many others prefer to say it as "ess-que-ell". See https://softwareengineering.stackexchange.com/questions/8588/whats-the-history-of-the-non-official-pronunciation-of-sql for a good debate], or Structured Query Language, is an incredibly useful tool for querying and managing relational databases. SQL is common to all major database management systems, such as Oracle, MariaDB, PostgreSQL, MySQL, SQLite, and SQL Server. Each system has slight differences in syntax for certain commands, but the overall basic structure is the same across all database management systems. In order to work with databases, at least a basic understanding of the SQL language is desirable. Here we will give a *brief* overview of the main structure of a SQL query. If you have minimal SQL background and desire to learn more about databases, we encourage you to use numerous free online resources to help gain experience in using SQL. Some of my favorites include tutorials from [W3Schools](https://www.w3schools.com/sql/), [tutorialspoint](https://www.tutorialspoint.com/sql/index.htm), and [SQL Tutorial](http://www.sqltutorial.org/).  
 
 #### A Basic Query
 
@@ -129,7 +129,7 @@ Now lets use familiar `dplyr` commands to perform queries on the database^[You m
 library(dplyr)
 ```
 
-```{r, tidy = FALSE, warning = FALSE}
+```{r, tidy = FALSE, warning = FALSE, prompt = FALSE}
 employees %>% 
   select(LastName, FirstName, Phone, Email) %>% 
   arrange(LastName)
@@ -145,7 +145,7 @@ employees %>%
 
 You can see by using `dplyr` you are able to use the same syntax to query the database as you used to analyze data frames in Chapter \@ref(data2). The most important difference to again note is that when working with remote databases the R code is translated into SQL and executed in the database using the SQL engine, not in R. When doing this, `dplyr` is as "lazy" as possible as it never pulls data in R unless explicity asked. It collects everything you ask it to do and then sends it to the database all in one step. This is often a very useful feature when desiring to look at a certain group of records in a database. To understand this further, take a look at the following code, which at first you might think will output a `tibble` or `data frame`:
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 salesSupportAgents <- employees %>% 
   filter(Title == "Sales Support Agent") %>% 
   select(LastName, FirstName, Address) %>% 
@@ -155,7 +155,7 @@ salesSupportAgents
 
 Notice the first two lines in the output. The source is described as a `lazy query` and the `salesSupportAgents` is still a database connection and not a local data frame. Because you did not specifically tell R that you wanted to bring the data directly into R, it did not do so. In order to bring the data directly into R in a local tibble you need to use the `collect()` function. Note that if you are asking the database to send back a lot of data, this could take a while. 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 salesSupportAgents <- employees %>% 
   filter(Title == "Sales Support Agent") %>% 
   select(LastName, FirstName, Address) %>% 
@@ -172,7 +172,7 @@ If we can use `dplyr` to analyze the data in a database, you may be wondering wh
 
 We can use the same `chinook` database from SQLite we were using above. Suppose we desire to see how many types of each employee there are in the database. We can produce a barplot to show this. 
 
-```{r, tidy = FALSE, warning = FALSE, message = FALSE}
+```{r, tidy = FALSE, prompt = FALSE, warning = FALSE, message = FALSE}
 library(dbplot)
 employees %>% 
   dbplot_bar(Title)
@@ -180,7 +180,7 @@ employees %>%
 
 We first load the `dbplot` package. Next we produce the bar plot. Notice that we can continue to use the convenient `%>%` character while producing graphs using `dbplot`, making the code easy to read. Since `dbplot` outputs a `ggplot2` object, we can further customize the graph using familiar functions from `ggplot2` (so long as the package is loaded). 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 library(ggplot2)
 employees %>% 
   dbplot_bar(Title) + 
@@ -200,7 +200,7 @@ path = "/home/jeffdoser/.httr-oauth"
 options(httr_oauth_cache = path)
 ```
 
-```{r, tidy = FALSE, message = FALSE, warning = FALSE}
+```{r, tidy = FALSE, prompt = FALSE, message = FALSE, warning = FALSE}
 library(bigrquery)
 library(DBI)
 library(dplyr)
@@ -230,7 +230,7 @@ This code again displays the benefits of the "lazy evaluation" that R employs. T
 
 A second table in the `publicdata` project on Google BigQuery contains weather data from NOAA ranging from the years 1929 to 2010. Let's first make a connection to this table and explore its structure.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 weather <- con %>%
   tbl("gsod")
 dbListFields(con, "gsod")
@@ -241,7 +241,7 @@ weather %>%
 
 First we establish a connection to the weather table. We then use the `dbListFields()` function from the `DBI` package to display the fields in the table. We then view the first 10 records in the table. We see that there are 31 different variables on information for the weather on a given day from 1929 to 2010. Let's say we are interested in determining the total number of days where the `mean_temp > 60` and `mean_wind_speed > 10`.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 weather %>%
   filter(mean_temp > 60 & mean_wind_speed > 10) %>%
   summarize(count = n())
@@ -249,14 +249,14 @@ weather %>%
 
 Further, suppose we are interested in determining how the average wind speed has changed from 1929 to 2010. We can use `dbplot` to plot the data.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 weather %>%
   dbplot_line(year, average_wind_speed = mean(mean_wind_speed, na.rm = TRUE))
 ```
 
 Upon first glance at this plot, a naive student might think ``Wow! Wind speeds have decreased dramatically since the 1930s'', and just accept this as true since that is what the graph shows. But since we are all data analysts at heart (otherwise you wouldn't be taking this course!), we want to explore this further. We might ask why the wind was so high in the late 1920s and early 1930s? An average wind speed of above 12 miles per hour seems pretty high. Let's explore the entries for all years in the 1930s and 1920s by looking at how many records there are with a mean wind speed for each year before 1940.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 weather %>%
   filter(year < 1940 & !is.na(mean_wind_speed)) %>%
   group_by(year) %>%

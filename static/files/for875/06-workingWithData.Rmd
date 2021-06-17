@@ -1,123 +1,6 @@
 # Working with Data {#data2}
 
-Bringing data into R, exporting data from R in a form that is readable by other software, cleaning and reshaping data, and other data manipulation tasks are an important and often overlooked component of data science. The book @SpectorDataManipulation, while a few years old, is still an excellent reference for data-related issues, and is available for free at http://catalog.lib.msu.edu/record=b7254984~S39a. And the \emph{R Data Import/Export} manual, available online at https://cran.r-project.org/doc/manuals/R-data.pdf, is an up-to-date (and free) reference on importing a wide variety of datasets into R and on exporting data in various forms.
-
-## Reading Data into R
-
-Data come in a dizzying variety of forms. It might be in a proprietary format such as an [.xlsx](https://en.wikipedia.org/wiki/Microsoft\_Excel) Excel file, a [.sav](https://en.wikipedia.org/wiki/SPSS) SPSS file, or a [.mtw](https://en.wikipedia.org/wiki/Minitab) Minitab file. It might be structured using a [relational model](https://en.wikipedia.org/wiki/Relational_model}{relational model) comprising many tables that need to be connected via key-value pairs. It might be a data-interchange format such as [JSON](http://www.json.org/) (JavaScript Object Notation),  or a markup language such as [XML](https://en.wikipedia.org/wiki/XML) (Extensible Markup Language), perhaps with specialized standards for describing ecological information, see [EML](https://en.wikipedia.org/wiki/Ecological_Metadata_Language) (Ecological Metadata Language). Both XML and EML are common data metadata formats (i.e., data that provides information about other data). Fortunately many datasets are (or can be) saved as plain text files, and most software can both read and write such files, so our initial focus will be on reading plain text files into R and saving data from R in plain text format. RStudio provides a handy [data import cheat sheet](http://www.rstudio.com/resources/cheatsheets) for many of the read functions detailed in this section.
-
-The `foreign` R package provides functions to directly read data saved in some of the proprietary formats into R, which is sometimes unavoidable, but if possible it is good to save data from  another package as plain text and then read this plain text file into R. In Chapter \@ref(xml) methods for reading web-based data sets into R will be discussed.
-
-The function `read.table()` and its offshoots such as `read.csv()` are used to read in rectangular data from a text file. For example, the file `BrainAndBody.csv` contains data^[These data come from the `MASS` R library.] on the brain weight, body weight, and name of some terrestrial animals. Here are the first few lines of that file:
-
-```
-body,brain,name
-1.35,8.1,Mountain beaver
-465,423,Cow
-36.33,119.5,Grey wolf
-27.66,115,Goat
-1.04,5.5,Guinea pig
-```
-
-As is evident, the first line of the file contains the names of the three variables, separated (delimited) by commas. Each subsequent line contains the body weight, brain weight, and name of a specific terrestrial animal.
-
-This file is accessible at the url https://www.finley-lab.com/files/data/BrainAndBody.csv. The `read.table()` function is used to read these data into an R data frame.
-
-```{r, tidy = FALSE}
-u.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.csv"
-BrainBody <- read.table(file = u.bb, header = TRUE, sep = ",", 
-                        stringsAsFactors = FALSE)
-head(BrainBody)
-```
-
-The arguments used in this call to `read.table()` include:
-
-1. `file = u.bb`, which tells R the location of the file. In this case the string `https://www.finley-lab.com/files/data/BrainAndBody.csv` giving the location is rather long, so it was first assigned to the object `u.bb`.
-2. `header = TRUE`, which tells R the first line of the file gives the names of the variables.
-3. `sep = ","`, which tells R that a comma separates the fields in the file.
-4. `stringsAsFactors = FALSE` which tells R not to convert character vectors to factors.
-
-The function `read.csv()` is the same as `read.table()` except the default separator is a comma, whereas the default separator for `read.table()` is whitespace. 
-
-The file `BrainAndBody.tsv` contains the same data, except a tab is used in place of a comma to separate fields. The only change needed to read in the data in this file is in the `sep` argument (and of course the `file` argument, since the data are stored in a different file):
-
-```{r, tidy = FALSE}
-u.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.tsv"
-BrainBody2 <- read.table(file = u.bb, header = TRUE, sep = "\t", 
-                         stringsAsFactors = FALSE)
-head(BrainBody2)
-```
-
-File extensions, e.g., `.csv` or `.tsv`, are naming conventions only and are there to remind us how the columns are separated. In other words, they have no influence on R's file read functions.
-
-A third file, `BrainAndBody.txt`, contains the same data, but also contains a few lines of explanatory text above the names of the variables. It also uses whitespace rather than a comma or a tab as a separator. Here are the first several lines of the file.
-
-```
-This file contains data
-on brain and body
-weights of several terrestrial animals
-
-"body" "brain" "name"
-1.35 8.1 "Mountain beaver"
-465 423 "Cow"
-36.33 119.5 "Grey wolf"
-27.66 115 "Goat"
-1.04 5.5 "Guinea pig"
-11700 50 "Dipliodocus"
-2547 4603 "Asian elephant"
-```
-
-Notice that in this file the values of `name` are put inside of quotation marks. This is necessary since instead R would (reasonably) assume the first line contained the values of four variables, the values being `1.35`, `8.1`, `Mountain`, and `beaver` while in reality there are only three values desired, with `Mountain beaver` being the third. 
-
-To read in this file we need to tell R to skip the first five lines and to use whitespace as the separator. The `skip` argument handles the first, and the `sep` argument the second. First let's see what happens if we don't use the `skip` argument.
-
-```{r, tidy = FALSE, error = TRUE}
-u.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.txt"
-BrainBody3 <- read.table(u.bb, header = TRUE, sep = " ", 
-                         stringsAsFactors = FALSE)
-```
-
-R assumed the first line of the file contained the variable names, since `header = TRUE` was specified, and counted four including `This`, `file`, `contains`, and `data`. So in the first line of actual data, R expected four columns containing data plus possibly a fifth column containing row names for the data set, and complained that "line 1 did not have 5 elements." The error message is somewhat mysterious, since it starts with "Error in scan." This happens because `read.table()` actually uses a more basic R function called `scan()` to do the work. 
-
-Here's how to read in the file correctly.
-
-```{r, tidy = FALSE}
-u.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.txt"
-BrainBody3 <- read.table(u.bb, header = TRUE, sep = " ", 
-                         stringsAsFactors = FALSE, skip = 4)
-BrainBody3[1:10,]
-```
-
-## Reading Data with Missing Observations
-
-Missing data are represented in many ways. Sometimes a missing data point is just that, i.e., the place where it should be in the file is blank. Other times specific numbers such as $-9999$ or specific symbols are used. The `read.table()` function has an argument `na.string` that allows the user to specify how missing data is indicated in the source file.
-
-The site http://www.wunderground.com/history/ makes weather data available for locations around the world from dates going back to 1945. The file `WeatherKLAN2014.csv` contains weather data for Lansing, Michigan for the year 2014. Here are the first few lines of that file:
-
-```
-EST,Max TemperatureF,Min TemperatureF, Events
-1/1/14,14,9,Snow
-1/2/14,13,-3,Snow
-1/3/14,13,-11,Snow
-1/4/14,31,13,Snow
-1/5/14,29,16,Fog-Snow
-1/6/14,16,-12,Fog-Snow
-1/7/14,2,-13,Snow
-1/8/14,17,-1,Snow
-1/9/14,21,2,Snow
-1/10/14,39,21,Fog-Rain-Snow
-1/11/14,41,32,Fog-Rain
-1/12/14,39,31,
-```
-
-Look at the last line, and notice that instead of an `Event` such as `Snow` or `Fog-Snow` there is nothing after the comma. This observation is missing, but rather than using an explicit code such as `NA`, the site just leaves that entry blank. To read these data into R we will supply the argument `na.string = ""` which tells R the file indicates missing data by leaving the appropriate entry blank.
-
-```{r, tidy = FALSE}
-u.weather <- "https://www.finley-lab.com/files/data/WeatherKLAN2014.csv"
-WeatherKLAN2014 <- read.csv(u.weather, header=TRUE, 
-                            stringsAsFactors = FALSE, na.string = "")
-WeatherKLAN2014[1:15,]
-```
+Cleaning data, reshaping data, wrangling data, and other data manipulation tasks are an important and often overlooked component of data science. The book @SpectorDataManipulation, while a few years old, is still an excellent reference for data-related issues, and is available for free at http://catalog.lib.msu.edu/record=b7254984~S39a. In this chapter we will present a variety of tools for common data analysis tasks you will encounter in R. 
 
 ## Summarizing Data Frames
 
@@ -433,15 +316,15 @@ This somewhat long section on `dplyr` adapts the nice introduction by Jenny Brya
 
 ### Improved Data Frames
 
-The `dplyr` package provides a couple functions that offer improvements on data frames. First, `tibble` creates a tibble from a series of vectors^[Reminds me of [The Trouble with Tribbles](https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles)]. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table's dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the `as_tibble()` function to convert an existing data frame or list into a tibble. Here is an example using the `mtcars` data frame.^[The text printed immediately after `library(dplyr)` means the `stats` and `base` packages, which are automatically loaded when you start R, have functions with the same name as functions in `dplyr`. So, for example, if you call the `filter()` or `lag()` functions, R will use `library(dplyr)`'s functions. Use the `::` operator to explicity identify which packages' function you want to use, e.g., if you want `stats`'s `lag()` then call `stats::lag()`.]
+The `dplyr` package provides a couple functions that offer improvements on data frames. First, `tibble` creates a tibble from a series of vectors^[Reminds me of [The Trouble with Tribbles](https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles)]. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table's dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the `as_tibble()` function to convert an existing data frame or list into a tibble. Here is an example using the `religionWide` data frame.^[The text printed immediately after `library(dplyr)` means the `stats` and `base` packages, which are automatically loaded when you start R, have functions with the same name as functions in `dplyr`. So, for example, if you call the `filter()` or `lag()` functions, R will use `library(dplyr)`'s functions. Use the `::` operator to explicity identify which packages' function you want to use, e.g., if you want `stats`'s `lag()` then call `stats::lag()`.]
 
 ```{r}
 library(dplyr)
-head(mtcars)
-mtcars[,1]
-mtcarsTbl <- as_tibble(mtcars)
-head(mtcarsTbl)
-mtcarsTbl[,1]
+head(religionWide)
+religionWide[,1]
+religionWideTbl <- as_tibble(religionWide)
+head(religionWideTbl)
+religionWideTbl[,1]
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -510,7 +393,7 @@ select(filter(gm, continent %in% c("Asia", "Europe")), country, year, pop)
 
 Even a two-step process like this becomes hard to follow in this nested form, and often we will want to perform more than two operations. There is a nice feature in `dplyr` that allows us to "feed" results of one function into the first argument of a subsequent function. Another way of saying this is that we are "piping" the results into another function. The `%>%` operator does the piping. Here we again restrict attention to country, year, and population for countries in Asia or Europe^[Notice the indentation used in the code. This is not necessary, as the code could be all on one line, but I often find it easier to read in this more organized format]. 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   filter(continent %in% c("Asia", "Europe")) %>% 
   select(country, year, pop)
@@ -531,13 +414,14 @@ head(gm, 15)
 
 Possibly arranging the data by year and then country would be desired. The `arrange()` function makes this easy. We will again use pipes.
 
-```{r}
-gm %>% arrange(year, country)
+```{r, prompt = FALSE, tidy = FALSE}
+gm %>% 
+  arrange(year, country)
 ```
 
 How about the data for Rwanda, arranged in order of life expectancy.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   filter(country == "Rwanda") %>% 
   arrange(lifeExp)
@@ -545,7 +429,7 @@ gm %>%
 
 Possibly we want these data to be in decreasing (descending) order. Here, `desc()` is one of many `dplyr` helper functions.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   filter(country == "Rwanda") %>% 
   arrange(desc(lifeExp))
@@ -553,7 +437,7 @@ gm %>%
 
 Possibly we want to include only the year and life expectancy, to make the message more stark.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   filter(country == "Rwanda") %>% 
   select(year, lifeExp) %>% 
@@ -572,7 +456,7 @@ arrange(select(filter(gm, country == "Afghanistan"),
                c("year", "lifeExp")), desc(lifeExp))
 ```
 
-```{r, echo = FALSE, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 gm %>% 
   filter(country == 'Afghanistan') %>% 
   select(c("year", "lifeExp")) %>% 
@@ -592,7 +476,7 @@ head(gm)
 
 The `summarize()` function computes summary statistics using user provided functions for one or more columns of data in a data frame. 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 summarize(gm, meanpop = mean(population), medpop = median(population))
 ##or
 gm %>% 
@@ -611,7 +495,7 @@ median(gm$lifeExp[gm$continent == "Oceania"])
 
 The `group_by()` function makes this easier, and makes the output more useful.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(continent) %>% 
   summarize(medLifeExp = median(lifeExp)) 
@@ -619,7 +503,7 @@ gm %>%
 
 Or if we want the results ordered by the median life expectancy:
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(continent) %>% 
   summarize(medLifeExp = median(lifeExp)) %>% 
@@ -628,7 +512,7 @@ gm %>%
 
 As another example, we calculate the number of observations we have per continent (using the `n()` helper function), and then, among continents, how many distinct countries are represented (using `n_distinct()`). 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(continent) %>% 
   summarize(numObs = n())
@@ -639,7 +523,7 @@ gm %>%
 
 Here is a bit more involved example that calculates the minimum and maximum life expectancies for countries in Africa by year. 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>%
   filter(continent == "Africa") %>%
   group_by(year) %>%
@@ -648,7 +532,7 @@ gm %>%
 
 This is interesting, but the results don't include the countries that achieved the minimum and maximum life expectancies. Here is one way to achieve that. We will start with the minimum life expectancy. Note the rank of the minimum value will be 1.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   select(country, continent, year, lifeExp) %>% 
   group_by(year) %>% 
@@ -666,7 +550,7 @@ desc(c("a", "c", "b", "w", "e"))
 
 We now use this to extract the maximum life expectancy. Recall that `|` represents "or". Also by default only the first few rows of a `tibble` object will be printed. To see all the rows we pipe the output to `print(n = 24)` to ask for all 24 rows to be printed.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   select(country, continent, year, lifeExp) %>% 
   group_by(year) %>% 
@@ -679,7 +563,7 @@ gm %>%
 
 The `$` notation provides a simple way to create new variables in a data frame. The `mutate()` function provides another, sometimes cleaner way to do this. We will use `mutate()` along with the `lag()` function to investigate changes in life expectancy over five years for the `gapminder` data. We'll do this in a few steps. First, we create a variable that measures the change in life expectancy and remove the population and GDP variables that are not of interest. We have to be careful to first group by country, since we want to calculate the change in life expectancy by country.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(country) %>% 
   mutate(changeLifeExp = lifeExp - lag(lifeExp, order_by = year)) %>% 
@@ -688,7 +572,7 @@ gm %>%
 
 Next, summarize by computing the largest drop in life expectancy.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(country) %>% 
   mutate(changeLifeExp = lifeExp - lag(lifeExp, order_by = year)) %>% 
@@ -698,7 +582,7 @@ gm %>%
 
 Oops. We forgot that since we don't have data from before 1952, the first drop will be `NA`. Let's try again. 
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(country) %>% 
   mutate(changeLifeExp = lifeExp - lag(lifeExp, order_by = year)) %>% 
@@ -708,12 +592,24 @@ gm %>%
 
 That's not quite what we wanted. We could arrange the results by the life expectancy drop, but it would be good to have both the continent and year printed out also. So we'll take a slightly different approach, by arranging the results in increasing order.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 gm %>% 
   group_by(country) %>% 
   mutate(changeLifeExp = lifeExp - lag(lifeExp, order_by = year)) %>% 
   select(-c(population, gdpPercap)) %>% 
   arrange(changeLifeExp)
+```
+
+That's still not quite right. Because the data are grouped by country, R did the ordering within group. If we want to see the largest drops overall, we need to remove the grouping.
+
+```{r, prompt = FALSE}
+gm %>% 
+  group_by(country) %>% 
+  mutate(changeLifeExp = lifeExp - lag(lifeExp, order_by = year)) %>% 
+  select(-c(population, gdpPercap)) %>% 
+  ungroup() %>% 
+  arrange(changeLifeExp) %>% 
+  print(n=20)
 ```
 
 ### Practice Problem {#ch6PP6}

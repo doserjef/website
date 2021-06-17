@@ -54,17 +54,34 @@ gender
 
 ### Types, Conversion, Coercion
 
-Clearly it is important to distinguish between different types of vectors. For example, it makes sense to ask R to calculate the mean of the weights stored in `weight`, but does not make sense to ask R to compute the mean of the genders stored in `gender`. Vectors in R may have one of six different "types": character, double, integer, logical, complex, and raw. Only the first four of these will be of interest below, and the distinction between double and integer will not be of great import. To illustrate logical vectors, imagine that each of the eight people in the data set was asked whether he or she was taking blood pressure medication, and the responses were coded as `TRUE` if the person answered yes, and `FALSE` if the person answered no.
+Clearly it is important to distinguish between different types of vectors. For example, it makes sense to ask R to calculate the mean of the weights stored in `weight`, but does not make sense to ask R to compute the mean of the genders stored in `gender`. Vectors in R may have one of six different "types": character, double, integer, logical, complex, and raw. Vectors in R may have one of six different "types": character, double, integer, logical, complex, and raw. We will not encounter the complex and raw types in everyday data analysis, and so we focus on the first four data types.
+
+1. `character`: consists of letters or words. Our vector `gender` is a character vector because it consists of the genders for each person in our dataset. 
+
+```{r}
+typeof(gender)
+```
+
+2. `double`: a numeric object that can be an integer or non-integer value (e.g., 10, 4.2). Our vector `weight` is a double vector.
 
 ```{r}
 typeof(weight)
-typeof(gender)
-bp <- c(FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE)
+```
+
+3. `integer`: a numeric object that can only be an integer. It may be surprising to see the weight variable `weight` is of type `double`, even though its values are all integers. By default, R creates a double type vector when numeric values are given via the `c` function. We can create an integer vector of weight variables by placing the letter `L` next to each of the numbers when we place it in the vector:
+
+```{r}
+weight.int <- c(123L, 157L, 205L, 199L, 223L, 140L, 105L, 194L)
+typeof(weight.int)
+```
+
+4. `logical`: used to represent variables that can take values `TRUE` or `FALSE`. To illustrate logical vectors, imagine that each of the eight people in the data setwas asked whether they were taking blood pressure medication, and the responses were coded as `TRUE` if the person answered yes, and `FALSE` if the person answered no.
+
+```{r}
+bp <- c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE)
 bp
 typeof(bp)
 ```
-
-It may be surprising to see that the variable `weight` is of `double` type, even though its values all are integers. By default R creates a double type vector when numeric values are given via the `c()` function.
 
 When it makes sense, it is possible to convert vectors to a different type. Consider the following examples.
 
@@ -171,7 +188,7 @@ That's clearly not what we want. Fix this code so we can always extract the seco
 
 ## Factors
 
-Categorical variables such as `gender` can be represented as character vectors. In many cases this simple representation is sufficient. Consider, however, two other categorical variables, one representing age via categories `youth`, `young adult`, `middle age`, `senior`, and another representing income via categories `lower`, `middle`, and `upper`. Suppose that for the small health data set, all the people are either middle aged or senior citizens. If we just represented the variable via a character vector, there would be no way to know that there are two other categories, representing youth and young adults, which happen not to be present in the data set. And for the income variable, the character vector representation does not explicitly indicate that there is an ordering of the levels.
+Categorical variables can be represented as character vectors. In many cases this simple representation is sufficient. Consider, however, two other categorical variables, one representing age via categories `youth`, `young adult`, `middle age`, `senior`, and another representing income via categories `lower`, `middle`, and `upper`. Suppose that for the small health data set, all the people are either middle aged or senior citizens. If we just represented the variable via a character vector, there would be no way to know that there are two other categories, representing youth and young adults, which happen not to be present in the data set. And for the income variable, the character vector representation does not explicitly indicate that there is an ordering of the levels.
 
 Factors in R provide a more sophisticated way to represent categorical variables. Factors explicitly contain all possible levels, and allow ordering of levels.
 
@@ -192,30 +209,7 @@ income
 
 In the factor version of `age` the levels are explicitly listed, so it is clear that the two included levels are not all the possible levels. And in the factor version of income, the ordering is explicit.
 
-In many cases the character vector representation of a categorical variable is sufficient and easier to work with. In this book, factors will not be used extensively. 
-
-
-## Names of Objects in R
-
-There are few hard and fast restrictions on the names of objects (such as vectors) in R. In addition to these restrictions, there are certain good practices, and many things to avoid as well.
-
-From the help page for `make.names` in R,  the name of an R object is "syntactically valid" if the name "consists of letters, numbers and the dot or underline characters and starts with a letter or the dot not followed by a number" and is not one of the "reserved words" in R such as `if`, `TRUE`, `function`, etc.  For example, `c45t.le_dog`  and `.ty56` are both syntactically valid (although not very good names) while `4cats` and `log#@gopher` are not.
-
-A few important comments about naming objects follow:
-
-1. It is important to be aware that names of objects in R are case-sensitive, so `weight` and `Weight` do not refer to the same object.
-
-```{r, error = TRUE}
-weight
-Weight
-```
-
-2. It is unwise to create an object with the same name as a built in R object such as the function `c` or the function `mean`. In earlier versions of R this could be somewhat disastrous, but even in current versions, it is definitely not a good idea!
-3. As much as possible, choose names that are informative. When creating a variable you may initially remember that `x` contains heights and `y` contains genders, but after a few hours, a few days, or a few weeks, you probably will forget this. Better options are `Height` and `Gender`.
-4. As much as possible, be consistent in how you name objects. In particular, decide how to separate multi-word names. Some options include:
-    + Using case to separate: `BloodPressure` or `bloodPressure` for example
-    + Using underscores to separate: `blood_pressure` for example
-    + Using a period to separate: `blood.pressure` for example
+In many cases the character vector representation of a categorical variable is sufficient and easier to work with. In this book, factors will not be used extensively. It is important to note that R often by default creates a factor when character data are read in, and sometimes it is necessary to use the argument `stringsAsFactors = FALSE` to explicitly tell R not to do this. This is shown later in the chapter when data frames are introduced.
 
 ## Missing Data, Infinity, etc.
 
@@ -386,6 +380,96 @@ temporaryList[[c(1,2,3)]]
 
 So, in summary, there are two main differences between using the single bracket `[]` and double bracket `[[]]`. First, the single bracket will return a list that holds the object(s) held at the given indices or names placed in the bracket, whereas the double brackets will return the actual object held at the index or name placed in the innermost bracket. Put differently, a single bracket can be used to access a range of list elements and will return a list, and a double bracket can only access a single element in the list and will return the object held at the index.
 
+## Comparison and logical operators {#logicalOperators}
+
+*Comparison operators* are binary operators that test a comparative condition between the operands and return a logical value to indicate the test result. We often use comparison operators to gain access to only part of an R object that passes some logical test. You're likely already familiar with many comparison operators.
+
+The basic idea of comparison operators is quite simple. We have a logical test (e.g., what weights are greater than 200) and want to determine what values in a vector (or some other R object) pass the test. When we apply a comparison operator, the results are logical values that indicate whether or not the specific element in the vector passes the test (`TRUE`) or not (`FALSE`).
+
+Let's walk through the comparison operators available in R. We'll present the operator and its definition, followed by an example using the `weight` and `gender` vectors created in Section \@ref(vector). First, let's recall the values held in these vectors.
+
+```{r}
+weight
+gender
+```
+
+1. `==` the equality operator: The "double equals sign" tests if operands are equal. Below we perform a logical test to determine which `gender` vector elements equal `male`.
+  ```{r}
+  gender == "male"
+  ```
+Not surprisingly, the third, fifth, sixth, and eigth elements return `TRUE` and all other elements return `FALSE`. Notice we're using the `==` sign, not the `=` sign. Mixing up the comparison operator `==` and assignment operator `=` is a common error.
+
+2. `!=` the inequality operator: Tests if operands are not equal, and is thus the inverse of `==`. We see this by testing which `gender` vector elements do not equal `male`.
+```{r}
+gender != "male"
+```
+
+3. `<`, `<=`, `>`, `>=` less than, less than or equal to, greater than, and greater than or equal to operators, respectively. Using the `weights` vector, determine which elements are greater than 194 and then greater than or equal to 194.
+
+```{r}
+weight > 194
+weight >= 194
+```
+
+Suppose we want to know which `weight` vector elements are greater than 194 *and* less than 210. Answering this question requires use of two comparison operators, i.e., $<$ and $>$. In such cases, logical operators are used to combine multiple comparison operations into a single logical statement. We consider the following *logical operators* "and", "or", "xor", and "negation".
+
+Importantly, in order of operation, comparison operators precede logical operators. The `Syntax` manual page (i.e., run `?Syntax` on the Console) lists R operators' order of operation, where you'll notice the comparison operators are listed before the logical operators in the precedence groups under the Details Section.
+
+Let's walk through each of the logical operators:
+
+1. `&` the "and" operator: A comparison using the `&` operator returns `TRUE` when both operands are `TRUE` and `FALSE` otherwise.  The `&` operator works elementwise for operand vectors. Consider the following example.
+
+```{r}
+weight < 210
+weight > 194
+weight < 210 & weight > 194
+```
+
+First we show the results of `weight < 210` and `weight > 194` separately. When combining the comparison operations using the `&` operator, R first performs `weight < 210` and `weight > 194`, then applies `&` elementwise on the logical vector operands. The elementwise `&` returns `TRUE` when the element in the `weight < 210` vector is `TRUE` and the element in the `weight > 194` vector is `TRUE`. The key point to remember is that `&` returns `TRUE` only if both operands are `TURE`.
+
+2. `|` the "or" operator: A comparison using the `|` operator returns `TRUE` if at least one operand is `TRUE` and `FALSE` otherwise. Similar to the `&` operator, the `|` operator works element by element. Let's use the same example as before, but now we'll return individuals with a weight less than 210 or a weight greater than 194.
+
+```{r}
+weight < 210 | weight > 194
+```
+
+Not surprisingly, this operation returns `TRUE` for all elements, because all elements in `weight` are either greater than 194 or less than 210.
+
+3. `xor` the "exclusive or" operator: A comparison using the `xor` operator returns `TRUE` if one of the operands is `TRUE` and `FALSE` otherwise.
+
+```{r}
+xor(weight < 210, weight > 194)
+```
+
+While we can imagine cases where this operator would be handy, we've never found the occasion to use it in our own code.
+
+4. `!` the "negation" or "not" operator: The exclamation point `!` (called "bang" in programmer's slang) reverses a logical value, i.e. `!TRUE` is `FALSE` and `!FALSE` is `TRUE`. The code below returns `TRUE` for weight values not greater than 194 (while not required, the parentheses emphasize the order of operation).
+
+```{r}
+!(weight > 194)
+```
+
+There is a "&&" and "||" variant of "&" and "|", respectively. These "double" operators examine only the first element of operand vectors in a comparison rather than comparing element by element. There are a few cases where using `&&` and `||` are useful when writing conditional statements in functions (see, e.g., Chapter \@ref(functions)), however, we'll generally not use them in this book.
+
+### The `%in%` operator {#inOperator}
+
+Suppose we want to identify the `weight` vector elements equal to 123, 199, or 140. We can do this using the equality operator `==` and the `|` operator as follows.
+
+```{r}
+weight
+weight == 123 | weight == 199 | weight == 140
+```
+
+However, this is a little clunky, involves a lot of typing, and generally makes code hard to read.  Lucky for us, R has the "in" operator, `%in%`, to accomplish this task in a more intuitive and easy-to-read manner.
+
+```{r}
+weight %in% c(123, 199, 140)
+```
+
+In the spirit of coding techniques to promote efficient and reproducible code, we'll use the `%in%` operator throughout the book.
+
+Comparison and logical operators are invaluable to identify subsets of data that meet specified conditions. The next section explores how conditional and logical operators facilitate subsetting vectors, data frames, and lists.
+
 ## Subsetting with Logical Vectors {#subsetting}
 
 Consider the `healthData` data frame. How can we access only those weights which are more than 200? How can we access the genders of those whose weights are more than 200? How can we compute the mean weight of males and the mean weight of females? Or consider the `mtcars` data frame. How can we obtain the miles per gallon for all six cylinder cars? Both of these data sets are small enough that it would not be too onerous to extract the values by hand. But for larger or more complex data sets, this would be very difficult or impossible to do in a reasonable amount of time, and would likely result in errors.
@@ -413,7 +497,6 @@ Consider the lines of R code one by one.
 + The fifth line returns `TRUE` or `FALSE` depending on whether elements of `gender` are equal to `female` or not.
 + The sixth line returns the weights of those whose gender is `female`.
 
-There are six comparison operators in R, `>, <, >=, <=, ==, !=`. Note that to test for equality a "double equals sign" is used, while `!=` tests for inequality.
 
 ### Modifying or Creating Objects via Subsetting
 
@@ -421,8 +504,8 @@ The results of subsetting can be assigned to a new (or existing) R object, and s
 
 ```{r}
 weight
-lightweight <- weight[weight < 200]
-lightweight
+light.weight <- weight[weight < 200]
+light.weight
 x <- 1:10
 x
 x[x < 5] <- 0

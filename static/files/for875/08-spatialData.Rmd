@@ -81,7 +81,10 @@ class(sp.pts.df)
 If, for example, you already have a data frame that includes the spatial coordinate columns and other variables, then you can promote it to a `SpatialPointsDataFrame` by indicating which columns contain point coordinates. You can extract or access the data frame associated with the spatial object using `@data`. You can also access individual variables directly from the spatial object using `$` or by name or column number to the right of the comma in `[,]` (analogues to accessing variables in a data frame).
 
 ```{r}
-df <- data.frame(x = c(3,2,5,6), y=c(2,5,6,7), var.1 = c("a", "b", "c", "d"), var.2 = 1:4)
+df <- data.frame(x = c(3,2,5,6), 
+		 y=c(2,5,6,7), 
+		 var.1 = c("a", "b", "c", "d"), 
+		 var.2 = 1:4)
 class(df)
 
 #promote to a SpatialPointsDataFrame
@@ -181,20 +184,33 @@ head(mu.f)
 
 Notice the `id` column in the fortified version of `mu` holds each polygon's `mu_id` value (this will be important later when we link data to the polygons).
 
-Next, we query the satellite imagery used to underlay the management units (we'll generally refer to this underlying map as the basemap). As of October 2018, Google requires you to set up a Google API account to download imagery. This is free, but it does require a credit card to obtain the API Key that is required to make the `ggmap` package work. Here I provide you with an API key for a project I created for this class that should allow you to run the following function if you desire. If you are interested in obtaining your own API key, see the page [here](https://developers.google.com/maps/documentation/geocoding/get-api-key) for learning about how to use Google maps web services. 
+Next, we query the satellite imagery used to underlay the management units (we'll generally refer to this underlying map as the basemap). As of October 2018, Google requires you to set up a Google API account to download imagery. This is free, but it does require a credit card to obtain the API Key that is required to make the `ggmap` package work. Because of the potential security risk of sharing keys, we do not show the key necessary to run the following code. Instead, you will need to create your own API key to run all the code in this chapter. See the page [here](https://developers.google.com/maps/documentation/geocoding/get-api-key) for learning about how to use Google maps web services. 
 
-```{r, tidy = FALSE, warning = FALSE, message = FALSE}
-register_google(key = "AIzaSyBPAwSY5x8vQqlnG-QwiCAWQW12U3CTLZY")
+```{r, tidy = FALSE, warning = FALSE, message = FALSE, echo = FALSE}
+register_google(key = "AIzaSyBTZmiMO1UOygL4KqQSPhth5ZKbxoE_epQ")
 mu.bbox <- bbox(mu)
 mu.centroid <- apply(mu.bbox, 1, mean)
 
-basemap <- get_map(location=mu.centroid, zoom=14, maptype = "satellite", source = "google")
+basemap <- get_map(location=mu.centroid, zoom=14, 
+		   maptype = "satellite", source = "google")
                                     
 ggmap(basemap) + 
   geom_polygon(data=mu.f, aes(x = long, y = lat, group=group), 
                  fill=NA, size=0.2, color="orange")
-
 ```
+
+```{r, tidy = FALSE, warning = FALSE, message = FALSE, eval = FALSE}
+register_google(key = "YOUR-KEY-HERE")
+mu.bbox <- bbox(mu)
+mu.centroid <- apply(mu.bbox, 1, mean)
+
+basemap <- get_map(location=mu.centroid, zoom=14, maptype = "satellite", source = "google")
+
+ggmap(basemap) +
+  geom_polygon(data=mu.f, aes(x = long, y = lat, group=group),
+                 fill=NA, size=0.2, color="orange")
+```
+
 While the call to `get_map` can use a bounding box (`mu.bbox` in code above) to define the `basemap` extent, I've found that it's easier to pass it a center point location (`mu.centroid` note the use of the `apply` function to find the mean in the easting and northing extents) and `zoom` value to extract the desired extent. The resulting map looks pretty good! Take a look at the `get_map` function manual page and try different options for `maptype` (e.g., `maptype="terrain"`). 
 
 Next we'll add the forest inventory plots to the map. Begin by reading in the PEF forest inventory plot data held in "plots.csv". Recall, foresters have measured forest variables at a set of locations (i.e., inventory plots) within each management unit. The following statement reads these data and displays the resulting data frame structure. 

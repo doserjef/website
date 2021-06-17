@@ -14,7 +14,7 @@ p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}.
 
 A graph of this function when $\beta_0=0$ and $\beta_1 = 1$ shows the characteristic shape.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 library(ggplot2)
 logistic <- function(x){exp(x)/(1 + exp(x))}
 ggplot(data.frame(x = c(-6, 6)), aes(x)) +
@@ -46,8 +46,9 @@ Usually maximum likelihood methods are used to fit the model.
 
 In R we will use the function `glm` to fit logistic regression models. The `glm` function fits a wide variety of models. To  specify the logistic regression model we specify `family = binomial` as an argument to `glm`. We also must specify the predictor and response variables via the model formula, which in our case will be `diabetes ~ glu` to indicate that `diabetes` (i.e., `type` recoded) is the response and `glu` is the predictor; also we specify the data frame, which in our case is `Pima.tr`.
 
-```{r}
-diabetes.lr1 <- glm(diabetes ~ glu, data = Pima.tr, family = binomial)
+```{r, tidy = FALSE, prompt = FALSE}
+diabetes.lr1 <- glm(diabetes ~ glu, data = Pima.tr, 
+		    family = binomial)
 diabetes.lr1
 summary(diabetes.lr1)
 beta0.lr.1 <- coef(diabetes.lr1)[1]
@@ -66,7 +67,7 @@ exp(-5.504 + 0.038*150)/(1 + exp(-5.504 + 0.038*150))
 
 We can plot the fitted probabilities along with the data "by hand".
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 diabetes.logistic.1 <- function(x){
   exp(beta0.lr.1+ beta1.lr.1*x)/(1 + exp(beta0.lr.1+ 
                                            beta1.lr.1*x))
@@ -77,7 +78,7 @@ ggplot(Pima.tr, aes(x = glu, y = diabetes)) +
 
 The `ggplot2` package also provides a way to do this more directly, using `stat_smooth`.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 ggplot(Pima.tr, aes(x = glu, y = diabetes)) + 
   geom_point() + 
   stat_smooth(method = "glm", 
@@ -153,7 +154,7 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 
 The diabetes training data along with the decision boundary are plotted below.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 lr.int <- -coef(diabetes.lr2)[1]/coef(diabetes.lr2)[3]
 lr.slope <- -coef(diabetes.lr2)[2]/coef(diabetes.lr2)[3]
 ggplot(Pima.tr, aes(x = glu, y = bmi)) + 
@@ -165,7 +166,7 @@ ggplot(Pima.tr, aes(x = glu, y = bmi)) +
 
 Logistic regression methods also are applicable to classification contexts where there are more than two classes. Consider for example Fisher's iris data.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 data(iris)
 head(iris)
 str(iris)
@@ -247,7 +248,7 @@ An example from @hastieESL will be used to give a better sense of the role of $k
 
 First the data are read into R and graphed. The predictors `x1` and `x2`, while not standardized, have very similar standard deviations, so we will not standardize these data before applying kNN.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, prompt = FALSE}
 u.knn <- "https://www.finley-lab.com/files/data/knnExample.csv"
 knnExample <- read.csv(u.knn, header=TRUE)
 str(knnExample)
@@ -264,46 +265,65 @@ min(knnExample$x1)
 max(knnExample$x1)
 min(knnExample$x2)
 max(knnExample$x2)
-x.test <- expand.grid(x1 = seq(-2.6, 4.2, by=0.1), x2 = seq(-2, 2.9, by=0.1))
+x.test <- expand.grid(x1 = seq(-2.6, 4.2, by = 0.1), 
+		      x2 = seq(-2, 2.9, by = 0.1))
 ```
 
 Next the kNN with $k=15$ is fit. Notice that the first argument gives the $x$ values in the training set, the next argument gives the $x$ values in the test set, the third argument gives the $y$ values (labels) from the training set. The fourth argument gives $k$, and the fifth argument asks for the function to return the probabilities of membership (that is, the proportion of the nearest neighbors which were in the majority class) as well as the class assignments.
 
 ```{r}
 library(class)
-Example_knn <- knn(knnExample[,c(1,2)], x.test, knnExample[,3], k = 15, prob = TRUE)
+Example_knn <- knn(knnExample[,c(1,2)], x.test, knnExample[,3], 
+		   k = 15, prob = TRUE)
 prob <- attr(Example_knn, "prob")
 head(prob)
 ```
 
 Next the graphs are created. This is somewhat complex, since we want to plot the test data colored by the class they were assigned to by the kNN classifier as background, the training data (using a different symbol), and the decision boundary. 
 
-```{r}
+```{r, prompt = FALSE}
 library(dplyr)
-df1 <- mutate(x.test, prob = prob, class = 0,  prob_cls = ifelse(Example_knn == class, 1, 0))
+df1 <- mutate(x.test, prob = prob, class = 0,  
+	      prob_cls = ifelse(Example_knn == class, 1, 0))
 str(df1)
-df2 <- mutate(x.test, prob = prob, class = 1,  prob_cls = ifelse(Example_knn == class, 1, 0))
+df2 <- mutate(x.test, prob = prob, class = 1,  
+	      prob_cls = ifelse(Example_knn == class, 1, 0))
 bigdf <- bind_rows(df1, df2)
 
 names(knnExample)
 ggplot(bigdf) + 
-   geom_point(aes(x=x1, y =x2, col=class), data = mutate(x.test, class = Example_knn), size = 0.5) + 
-   geom_point(aes(x = x1, y = x2, col = as.factor(class)), size = 4, shape = 1, data = knnExample) + 
-   geom_contour(aes(x = x1, y = x2, z = prob_cls, group = as.factor(class), color = as.factor(class)), size = 1, bins = 1, data = bigdf) + theme_bw()
+   geom_point(aes(x=x1, y =x2, col=class), 
+	      data = mutate(x.test, class = Example_knn), 
+	      size = 0.5) + 
+   geom_point(aes(x = x1, y = x2, col = as.factor(class)), 
+	      size = 4, shape = 1, data = knnExample) + 
+   geom_contour(aes(x = x1, y = x2, z = prob_cls, 
+		    group = as.factor(class), color = as.factor(class)), 
+		size = 1, bins = 1, data = bigdf) + theme_bw()
 ```
 
 Next we graph the decision boundary of kNN with $k=1$. 
 
-```{r, warning = FALSE}
-Example_knn <- knn(knnExample[,c(1,2)], x.test, knnExample[,3], k = 1, prob = TRUE)
+```{r, warning = FALSE, prompt = FALSE, tidy = FALSE}
+Example_knn <- knn(knnExample[,c(1,2)], x.test, 
+		   knnExample[,3], k = 1, prob = TRUE)
 prob <- attr(Example_knn, "prob")
 head(prob)
-df1 <- mutate(x.test, prob = prob, class = 0,  prob_cls = ifelse(Example_knn == class, 1, 0))
+df1 <- mutate(x.test, prob = prob, class = 0,  
+	      prob_cls = ifelse(Example_knn == class, 1, 0))
 str(df1)
-df2 <- mutate(x.test, prob = prob, class = 1,  prob_cls = ifelse(Example_knn == class, 1, 0))
+df2 <- mutate(x.test, prob = prob, class = 1,  
+	      prob_cls = ifelse(Example_knn == class, 1, 0))
 bigdf <- bind_rows(df1, df2)
 
-ggplot(bigdf) + geom_point(aes(x = x1, y = x2, col = class), data = mutate(x.test, class = Example_knn), size = 0.5) + geom_point(aes(x = x1, y = x2, col = as.factor(class)), size = 4, shape = 1, data = knnExample) + geom_contour(aes(x = x1, y = x2, z = prob_cls, group = as.factor(class), color = as.factor(class)), size = 1, bins = 1, data = bigdf) + theme_bw()
+ggplot(bigdf) + 
+  geom_point(aes(x = x1, y = x2, col = class), 
+	     data = mutate(x.test, class = Example_knn), size = 0.5) +
+  geom_point(aes(x = x1, y = x2, col = as.factor(class)), 
+	     size = 4, shape = 1, data = knnExample) + 
+  geom_contour(aes(x = x1, y = x2, z = prob_cls, group = as.factor(class), 
+		   color = as.factor(class)), size = 1, bins = 1, data = bigdf) + 
+  theme_bw()
 ```
 
 ### kNN and the Diabetes Data
@@ -313,7 +333,8 @@ Next kNN is applied to the diabetes data. We will use the same predictors, `glu`
 ```{r}
 Pima.tr[,1:7] <- scale(Pima.tr[,1:7], center = TRUE, scale = TRUE)
 Pima.te[,1:7] <- scale(Pima.te[,1:7], center = TRUE, scale = TRUE)
-knn_Pima <- knn(Pima.tr[,c(2,5)], Pima.te[,c(2,5)], Pima.tr[,8], k = 15, prob=TRUE)
+knn_Pima <- knn(Pima.tr[,c(2,5)], Pima.te[,c(2,5)], Pima.tr[,8], 
+		k = 15, prob=TRUE)
 table(knn_Pima, Pima.te[,8])
 ```
 
@@ -346,11 +367,14 @@ Now kNN is used to classify the iris data. As before we use petal length and wid
 sd(iris.train$Petal.Width)
 sd(iris.train$Petal.Length) 
 head(iris.train)
-knn_iris <- knn(iris.train[,c(3,4)], iris.test[,c(3,4)], iris.train[,5], k=1, prob=TRUE)
+knn_iris <- knn(iris.train[,c(3,4)], iris.test[,c(3,4)], 
+		iris.train[,5], k=1, prob=TRUE)
 table(knn_iris, iris.test[,5])
-knn_iris <- knn(iris.train[,c(3,4)], iris.test[,c(3,4)], iris.train[,5], k=3, prob=TRUE)
+knn_iris <- knn(iris.train[,c(3,4)], iris.test[,c(3,4)], 
+		iris.train[,5], k=3, prob=TRUE)
 table(knn_iris, iris.test[,5])
-knn_iris <- knn(iris.train[,c(3,4)], iris.test[,c(3,4)], iris.train[,5], k=15, prob=TRUE)
+knn_iris <- knn(iris.train[,c(3,4)], iris.test[,c(3,4)], 
+		iris.train[,5], k=15, prob=TRUE)
 table(knn_iris, iris.test[,5])
 ```
 

@@ -10,7 +10,7 @@ Working with text data requires functions that will, for example, concatenate an
 
 As with most tasks, there are a variety of ways to accomplish these text processing tasks in R. The `base` R package has functions which work with and modify text strings. Another useful package which approaches these tasks in a slightly different way is `stringr`. As with graphics, we will focus mainly on one package to avoid confusion. In this case we will focus on the base R string processing functions, but will emphasize that `stringr` is also worth knowing.
 
-The application to analyzing *Moby Dick* below comes from the book *{Text Analysis with R for Students of Literature* by Matthew L. Jockers.
+The application to analyzing *Moby Dick* below comes from the book *Text Analysis with R for Students of Literature* by Matthew L. Jockers.
 
 ## Reading Text Data into R
 
@@ -164,7 +164,7 @@ paste(c("a", "b"), 1:9, sep = "")
 
 Next, consider writing a function which simulates repeatedly tossing a coin $n$ times, counting the number of HEADS out of the $n$ tosses. For the first five repetitions of $n$ tosses, the function will print out the number of HEADS (for example if there are 7 HEADS in the $n=10$ tosses the function prints "The number of HEADS out of 10 tosses is 7." The function returns a histogram of the number of HEADS, with a title stating "Number of HEADS in ?? tosses" where ?? is replaced by the number of tosses. The `paste` function will help greatly.
 
-```{r cointoss}
+```{r cointoss, prompt = FALSE}
 coin_toss <- function(n=10, iter = 500){
   require(ggplot2)
   df <- data.frame(numheads = numeric(iter))
@@ -183,7 +183,7 @@ coin_toss(n = 25, iter=1000)
 
 Let's now return to the object `moby_dick` that contains the text of the novel. If we want to analyze word choice, word frequency, etc., it would be helpful to form a vector in which each element is a word from the novel. One way to do this is to first paste the current version of the `moby_dick` variable into a new version which is one long vector with the lines pasted together. To illustrate, we will first do this with a much smaller object that shares the structure of `moby_dick`.
 
-```{r}
+```{r, prompt = FALSE}
 small_novel <- c("First line", "Second somewhat longer line", 
                  "third line.")
 small_novel
@@ -239,7 +239,7 @@ By default `nchar` returns NA for a missing value. If you want `nchar` to return
 
 The function `strsplit` splits the elements of a character vector. The function returns a list, and often the `unlist` function is useful to convert the list into an atomic vector. 
 
-```{r}
+```{r, prompt = FALSE}
 strsplit(c("mail.msu.edu", "mail.google.com", "www.amazon.com"),
          split = ".", fixed = TRUE)
 unlist(strsplit(c("mail.msu.edu", "mail.google.com", "www.amazon.com"),
@@ -250,14 +250,14 @@ unlist(strsplit(c("dog", "cat", "pig", "horse"),
 
 Setting the argument `fixed` to `TRUE` tells R to match the value of `split` exactly when performing the split. The function can be much more powerful if the value of `split` is a *regular expression*, which can for example ask for splits at any vowels, etc. We will not go in depth on Regular Expressions here, but we will make some use of regular expressions on a case-by-case basis prior to that. Regular expressions are very powerful, so if this chapter interests you, we suggest researching regular expressions on your own (as always there are plenty of free resources online). 
 
-```{r}
+```{r, prompt = FALSE}
 unlist(strsplit(c("dog", "cat", "pig", "horse", "rabbit"), 
                 split = "[aeiou]"))
 ```
 
 The regular expression `[aeiou]` represents any of the letters a, e, i, o, u. In general a string of characters enclosed in square brackets indicates any one character in the string.
 
-```{r}
+```{r, prompt = FALSE}
 unlist(strsplit(c("dog", "cat", "pig", "horse", "rabbit"), 
                 split = "[aorb]"))
 ```
@@ -278,7 +278,7 @@ The regular expression `[a-z]` represents any lower case letter. The caret `^` i
 
 Recall that the `moby_dick` vector now contains one long character string which includes the entire text of the novel, and that we would like to split it into separate words. We now know how to do this using `strsplit` and a regular expression. First a smaller example.
 
-```{r}
+```{r, prompt = FALSE}
 unlist(strsplit(c("the rain", "in Spain stays mainly", "in", "the plain"), 
                 split = "[^0-9A-Za-z]"))
 unlist(strsplit(c("the rain", "in Spain stays mainly", "in", "the plain"), 
@@ -301,8 +301,9 @@ moby_dick[1:50]
 
 There is a small problem: Some of the "words" are blank. The following small example indicates why this happened.
 
-```{r}
-unlist(strsplit(c("the rain", "in Spain    stays mainly", "in", "the plain"), split = "[^0-9A-Za-z]"))
+```{r, prompt = FALSE}
+unlist(strsplit(c("the rain", "in Spain    stays mainly", "in", "the plain"), 
+		split = "[^0-9A-Za-z]"))
 ```
 
 It is not too hard to remove the blank words.
@@ -363,7 +364,7 @@ moby_dick_word_table[1:50]
 
 The goal of this exercise is to generate a wordcloud image of the 50 most frqeuent words in *Moby Dick* that we identifid above. To do this, we need the `wordcloud` package (you may also need to install the package `tm`). Look at the R documentation for the `wordcloud` function included in the `wordcloud` package and create a wordcloud image of the most popular 500 words in the novel. Here is what mine looks like
 
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library(wordcloud)
 md.data.frame <- as.data.frame(moby_dick_word_table)
 wordcloud(md.data.frame$moby_dick, md.data.frame$Freq, max.words = 500, colors = rainbow(20), random.color = TRUE)
@@ -400,7 +401,7 @@ The `grep` function searches for a specified pattern and returns either the loca
 
 Here are some examples. All use `fixed = TRUE` since at this point we are using fixed character strings rather than regular expressions.
 
-```{r}
+```{r, prompt = FALSE}
 grep("a", c("the rain", "in Spain    stays mainly", "in", "the plain"), 
      fixed = TRUE)
 grep("a", c("the rain", "in Spain    stays mainly", "in", "the plain"), 
@@ -411,7 +412,7 @@ grepl("a", c("the rain", "in Spain    stays mainly", "in", "the plain"),
 
 The `sub` and `gsub` functions replace a specified character string. The `sub` function only replaces the first occurrence, while `gsub` replaces all occurrences.
 
-```{r}
+```{r, prompt = FALSE}
 gsub("a", "?", c("the rain", "in Spain    stays mainly", "in", 
                  "the plain"), fixed = TRUE)
 sub("a", "?", c("the rain", "in Spain    stays mainly", "in", 
