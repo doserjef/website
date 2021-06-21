@@ -241,7 +241,7 @@
 
 \title{R Programming for Data Sciences}
 \author{Andrew O. Finley, Jeffrey W. Doser, Vince Melfi}
-\date{2021-06-17}
+\date{2021-06-21}
 
 \begin{document}
 \maketitle
@@ -884,277 +884,20 @@ For Practice Problems 2.2-2.5, perform the following simple calculations in the 
 \textbf{Practice Problem 2.8}: Run the code \texttt{plot(car.hp,\ car.mpg,\ pch\ =\ 19,\ col\ =\ \textquotesingle{}blue\textquotesingle{},\ xlab\ =\ \textquotesingle{}Horsepower\textquotesingle{})} in the console. What does the \texttt{xlab\ =\ \textquotesingle{}Horsepower\textquotesingle{}} do? There is a similar argument called \texttt{ylab}. Try to figure out a way to change the label of the y-axis to \texttt{Miles\ per\ Gallon}.
 
 \hypertarget{scripts}{%
-\chapter{Data import/export, scripts, and reproducible workflow}\label{scripts}}
+\chapter{Scripts and R Markdown}\label{scripts}}
 
 Data analysis, whether for a professional project or research, typically involves many steps and iterations. For example, creating a figure effective at communicating results can involve trying out several different graphical representations, and then tens if not hundreds of iterations to fine-tune the chosen representation. Each of these iterations might require several lines of R code to create. Although this all could be accomplished by typing and re-typing code lines at the R Console, it's easier and more efficient to write the code in a \emph{script} that can then be submitted to the R console either a line at a time, several lines at a time, or all together.
 
 In addition to making the workflow more efficient, R scripts provide another great benefit. Often we work on one part of an exercise or project for a few hours, then move on to something else, and then return to the original part a few days, months, or sometimes even years later. In such cases we might have forgotten how we created a particularly nice graphic or how to replicate an analysis, with the result being several hours or days of work to rewrite the necessary code. If we save a script file, we have the ingredients immediately available when we return to a portion of a project.\footnote{In principle the R history mechanism provides a similar record. But with history we have to search through a lot of other code to find what we're looking for, and scripts are a much cleaner mechanism to record our work.}
 
-Next consider a larger scientific endeavor. Ideally a scientific study will be reproducible, meaning that an independent group of researchers (or the original researchers) will be able to duplicate the study. Reproducible research means the steps taken in a study can be replicated, from importing external data sets and wrangling them into formats for data analysis, to creating tables and figures using the analysis results. In principle this entire process could be detailed in a step-by-step guide using words; however, in practice, it's typically difficult or impossible to reproduce a full data analysis based on a written explanation. It's much more effective to include the actual data sets and computer code that accomplished all the steps in the report, whether the report is an exercise or research paper. Tools in R such as scripts with commented annotation facilitate this process.
-
-In this chapter, we will present a thorough introduction of R scripts and how they can be used to facilitiate the process of reproducible research. We will introduce essential functions for importing external data sets into R as well as for exporting data from R to an external file. While providing further motivation for the use of scripts, we will provide recommendations on how to write high quality and reproducible R code including best practices for file naming, variable naming, directory structures, and code formatting. While many of the recommendations may initially seem tedious and unnecessary, we speak from experience that by using scripts, staying organized, and using a reproducible workflow you will save yourself tremendous amounts of time and headaches in the long run.
-
-\hypertarget{import}{%
-\section{Data import}\label{import}}
-
-Data come in a dizzying variety of formats. It might be a proprietary format used by commercial software such as Excel, SPSS, or SAS. It might be structured using a relational model, for example, the USDA Forest Service Forest Inventory and Analysis database \citep{FIADB}. It might be a data-interchange format such as JSON (JavaScript Object Notation; \citet{JSON16}), or a markup language format such as XML (Extensible Markup Language; \citet{XML2008}) perhaps with specialized standards for describing ecological information such as EML (Ecological Metadata Language; \citet{EML2019}). The good news is we've yet to encounter a data format unreadable by R. This is thanks to the large community of R package developers and data formats specific to their respective disciplines. For example, the \texttt{foreign} and \texttt{haven} packages provide functions for reading and writing data in common proprietary statistical software formats. Similarly, as we'll see in Chapter \ref{spatial}, the \texttt{rgdal} and \texttt{raster} packages read and write pretty much any spatial data formats used in popular GIS software.
-
-Fortunately many datasets are (or can be) saved as plain text files. Most software can read and write such files, so our initial focus is on reading and writing plain text files.
-
-The function \texttt{read.table} and its offshoots, such as \texttt{read.csv}, are used to read 2-dimensional data, i.e., rows and columns, from a plain text file and are the core functions for reading external datasets into R. For example, the file \texttt{BrainAndBody.csv} contains data\footnote{These data come from the \texttt{MASS} R library.} on the brain weight, body weight, and name of some terrestrial animals. Here are the first few lines of that file:
-
-\begin{verbatim}
-body,brain,name
-1.35,8.1,Mountain beaver
-465,423,Cow
-36.33,119.5,Grey wolf
-27.66,115,Goat
-1.04,5.5,Guinea pig
-\end{verbatim}
-
-As is evident, the first line of the file contains the names of the three variables, separated (delimited) by commas. Each subsequent line (row) contains the body weight, brain weight, and name of a specific terrestrial animal.
-
-This file is accessible at the url \url{https://www.finley-lab.com/files/data/BrainAndBody.csv}. The \texttt{read.table} function is used to read these data into an R data frame. A data frame is a common rectangular (i.e., two-dimensional) data structure in R that consists of rows and columns. We will cover data frames extensively in Chapter \ref{structures}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{link.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.csv"}
-\NormalTok{BrainBody \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ link.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{","}\NormalTok{, }
-                        \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
-\KeywordTok{str}\NormalTok{(BrainBody)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 'data.frame':    28 obs. of  3 variables:
-##  $ body : num  1.35 465 36.33 27.66 1.04 ...
-##  $ brain: num  8.1 423 119.5 115 5.5 ...
-##  $ name : chr  "Mountain beaver" "Cow" "Grey wolf" "Goat" ...
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{head}\NormalTok{(BrainBody)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##       body brain            name
-## 1     1.35   8.1 Mountain beaver
-## 2   465.00 423.0             Cow
-## 3    36.33 119.5       Grey wolf
-## 4    27.66 115.0            Goat
-## 5     1.04   5.5      Guinea pig
-## 6 11700.00  50.0     Dipliodocus
-\end{verbatim}
-
-The \texttt{read.table} arguments and associated values used above include:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \texttt{file\ =\ link.bb} identifies the file location. In this case the string \texttt{https://www.finley-lab.com/files/data/BrainAndBody.csv} giving the location is rather long, so it was first assigned to the object \texttt{link.bb}.
-\item
-  \texttt{header\ =\ TRUE} specifies the column names are held in the file's first row, known as the ``header''.
-\item
-  \texttt{sep\ =\ ","} defines the comma as the character delimiter between the file's columns.
-\item
-  \texttt{stringsAsFactors\ =\ FALSE} tells R not to convert character vectors to factors. While we have yet to discuss the different types of vectors in R, prior to R 4.0.0 \texttt{stringsAsFactors=TRUE} was the default behavior, and so we will often explicitly include this argument in our call to \texttt{read.table} to avoid any differences across R versions. The new default value is \texttt{FALSE} so we could have chosen not to include this in the code).
-\end{enumerate}
-
-When we call \texttt{read.table} or \texttt{read.csv}, the resulting object is read into R and represented as a data frame. The \texttt{str} function and \texttt{head} are two useful functions for looking at the structure of a data frame (or any R object). The \texttt{str} function displays the structure of the object \texttt{BrainBody} that contains the data from the \texttt{BrainAndBody.csv} file. Notice the object is a data frame with 28 observations (i.e., rows) and 3 variables (i.e., columns). The column names are displayed following the \texttt{\$}\footnote{The use of the \texttt{\$} will become clear in Chapter \ref{structures}.}. The \texttt{head} function displays the the first six rows and all columns of the data frame. An alternative way to view a data frame is to use the \texttt{View} function, which opens up a spreadsheet interface in R. Try this out by running \texttt{View(BrainBody)} in your console.
-
-The function \texttt{read.csv} is the same as \texttt{read.table} except the default separator is a comma, whereas the default separator for \texttt{read.table} is whitespace.
-
-The file \texttt{BrainAndBody.tsv} contains the same data, except a tab is used in place of a comma to separate fields. The only change needed to read in the data in this file is in the \texttt{sep} argument (and of course the \texttt{file} argument, since the data are stored in a different file):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.tsv"}
-\NormalTok{BrainBody2 \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }
-                         \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(BrainBody2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##       body brain            name
-## 1     1.35   8.1 Mountain beaver
-## 2   465.00 423.0             Cow
-## 3    36.33 119.5       Grey wolf
-## 4    27.66 115.0            Goat
-## 5     1.04   5.5      Guinea pig
-## 6 11700.00  50.0     Dipliodocus
-\end{verbatim}
-
-File extensions, e.g., \texttt{.csv} or \texttt{.tsv}, are naming conventions only and are there to remind us how the columns are separated. In other words, they have no influence on R's file read functions.
-
-A third file, \texttt{BrainAndBody.txt}, contains the same data, but also contains a few lines of explanatory text above the names of the variables. It also uses whitespace rather than a comma or a tab as a separator. Here are the first several lines of the file.
-
-\begin{verbatim}
-This file contains data
-on brain and body
-weights of several terrestrial animals
-
-"body" "brain" "name"
-1.35 8.1 "Mountain beaver"
-465 423 "Cow"
-36.33 119.5 "Grey wolf"
-27.66 115 "Goat"
-1.04 5.5 "Guinea pig"
-11700 50 "Dipliodocus"
-2547 4603 "Asian elephant"
-\end{verbatim}
-
-Notice that in this file the values of \texttt{name} are put inside of quotation marks. This is necessary since instead R would (reasonably) assume the first line contained the values of four variables, the values being \texttt{1.35}, \texttt{8.1}, \texttt{Mountain}, and \texttt{beaver} while in reality there are only three values desired, with \texttt{Mountain\ beaver} being the third.
-
-To read in this file we need to tell R to skip the first five lines and to use whitespace as the separator. The \texttt{skip} argument handles the first, and the \texttt{sep} argument the second. First let's see what happens if we don't use the \texttt{skip} argument.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.txt"}
-\NormalTok{BrainBody3 \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(file.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{,}
-                         \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : line 1 did not have 5 elements
-\end{verbatim}
-
-R assumed the first line of the file contained the variable names, since \texttt{header\ =\ TRUE} was specified, and counted four including \texttt{This}, \texttt{file}, \texttt{contains}, and \texttt{data}. So in the first line of actual data, R expected four columns containing data plus possibly a fifth column containing row names for the data set, and complained that ``line 1 did not have 5 elements.'' The error message is somewhat mysterious, since it starts with ``Error in scan.'' This happens because \texttt{read.table} actually uses a more basic R function called \texttt{scan} to do the work.
-
-Here's how to read in the file correctly.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{file.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.txt"}
-\NormalTok{BrainBody3 \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(file.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{,}
-                         \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{skip =} \DecValTok{4}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(BrainBody3)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##       body brain            name
-## 1     1.35   8.1 Mountain beaver
-## 2   465.00 423.0             Cow
-## 3    36.33 119.5       Grey wolf
-## 4    27.66 115.0            Goat
-## 5     1.04   5.5      Guinea pig
-## 6 11700.00  50.0     Dipliodocus
-\end{verbatim}
-
-\hypertarget{importing-data-with-missing-observations}{%
-\section{Importing data with missing observations}\label{importing-data-with-missing-observations}}
-
-Missing data are represented in many ways. Sometimes a missing data point is just that, i.e., the place where it should be in the file is blank. Other times specific numbers such as \(-9999\) or specific symbols are used. The \texttt{read.table()} function has an argument \texttt{na.string} that allows the user to specify how missing data is indicated in the source file.
-
-The site \url{http://www.wunderground.com/history/} makes weather data available for locations around the world from dates going back to 1945. The file \texttt{WeatherKLAN2014.csv} contains weather data for Lansing, Michigan for the year 2014. Here are the first few lines of that file:
-
-\begin{verbatim}
-EST,Max TemperatureF,Min TemperatureF, Events
-1/1/14,14,9,Snow
-1/2/14,13,-3,Snow
-1/3/14,13,-11,Snow
-1/4/14,31,13,Snow
-1/5/14,29,16,Fog-Snow
-1/6/14,16,-12,Fog-Snow
-1/7/14,2,-13,Snow
-1/8/14,17,-1,Snow
-1/9/14,21,2,Snow
-1/10/14,39,21,Fog-Rain-Snow
-1/11/14,41,32,Fog-Rain
-1/12/14,39,31,
-\end{verbatim}
-
-Look at the last line, and notice that instead of an \texttt{Event} such as \texttt{Snow} or \texttt{Fog-Snow} there is nothing after the comma. This observation is missing, but rather than using an explicit code such as \texttt{NA}\footnote{Recall \texttt{NA} stands for ``Not Available''.}, the site just leaves that entry blank. To read these data into R we will supply the argument \texttt{na.string\ =\ ""} which tells R the file indicates missing data by leaving the appropriate entry blank. We then print a subset of the resulting data frame to make sure the offending missing values were replaced with \texttt{NA}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{u.weather \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/WeatherKLAN2014.csv"}
-\NormalTok{WeatherKLAN2014 \textless{}{-}}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(u.weather, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{,}
-                            \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{na.string =} \StringTok{""}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(WeatherKLAN2014, }\DataTypeTok{n =} \DecValTok{15}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##        EST Max.TemperatureF Min.TemperatureF
-## 1   1/1/14               14                9
-## 2   1/2/14               13               -3
-## 3   1/3/14               13              -11
-## 4   1/4/14               31               13
-## 5   1/5/14               29               16
-## 6   1/6/14               16              -12
-## 7   1/7/14                2              -13
-## 8   1/8/14               17               -1
-## 9   1/9/14               21                2
-## 10 1/10/14               39               21
-## 11 1/11/14               41               32
-## 12 1/12/14               39               31
-## 13 1/13/14               44               34
-## 14 1/14/14               37               26
-## 15 1/15/14               27               18
-##           Events
-## 1           Snow
-## 2           Snow
-## 3           Snow
-## 4           Snow
-## 5       Fog-Snow
-## 6       Fog-Snow
-## 7           Snow
-## 8           Snow
-## 9           Snow
-## 10 Fog-Rain-Snow
-## 11      Fog-Rain
-## 12          <NA>
-## 13          Rain
-## 14     Rain-Snow
-## 15          Snow
-\end{verbatim}
-
-Notice the use of the argument \texttt{n\ =\ 15} in the \texttt{head} function, which displays the first 15 rows of the \texttt{WeatherKLAN2014} data frame\footnote{Look at the help page for \texttt{head}. The default value is \texttt{n\ =\ 6}.}.
-
-\hypertarget{data-export}{%
-\section{Data export}\label{data-export}}
-
-Data stored in external text files are rarely in the format required for data analysis and summarization. We may need to create new variables in the data set, transform variables to different scales, rearrange the data, or manipulate the data to fix incorrect observations. The process of identifying and ultimating fixing incorrect observations from a data set is called \emph{data cleaning}, while \emph{data wrangling} is the process of obtaining and transforming data to answer a specific data analysis question. R has a vast suite of tools for data cleaning and data wrangling that we will cover extensively in Chapter \ref{tidyverse}. After cleaning and wrangling the data in R, we may want to create a new external text file that contains the data in the desired data analysis format for use in a separate project, submission to an agency, or archiving on a data repository. The R function \texttt{write.table} allows us to take a data set in R and save it as an external file.
-
-To illustrate \texttt{write.table}, let's try to create a new csv file in our current working directory named \texttt{WeatherKLAN2014New.csv} from the \texttt{WeatherKLAN2014} object we previously created. We do this with the following code.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{write.table}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ WeatherKLAN2014, }\DataTypeTok{file =} \StringTok{\textquotesingle{}WeatherKLAN2014New.csv\textquotesingle{}}\NormalTok{, }\DataTypeTok{sep =} \StringTok{\textquotesingle{},\textquotesingle{}}\NormalTok{,}
-        \DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{na =} \StringTok{\textquotesingle{}NA\textquotesingle{}}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Let's walk through each of the arguments and associated values used in the previous code chunk:
-
-\begin{itemize}
-\tightlist
-\item
-  \texttt{x\ =\ WeatherKLAN2014} is the R object we want to write to an external file, in this case the \texttt{WeatherKLAN2014} data set.
-\item
-  \texttt{file\ =\ \textquotesingle{}WeatherKLAN2014New.csv\textquotesingle{}} is the name of the file in which we want to store the data specified in argument \texttt{x}. The file will be created relative in our current working directory as this is the directory R uses for relative paths (Section \ref{paths}).
-\item
-  \texttt{sep\ =\ \textquotesingle{},\textquotesingle{}} defines the comma as the character delimiter between the file's columns, just as we saw with \texttt{read.table}.
-\item
-  \texttt{row.names\ =\ FALSE} tells R not to create a column in the external data set that contains the row names of the associated R object \texttt{x}. This argument is by default \texttt{row.names\ =\ TRUE}. We do not recommend storing data in the row names of R objects, and so we usually set \texttt{row.names\ =\ FALSE}.
-\item
-  \texttt{na\ =\ NA} tells R to use the value \texttt{NA} to represent missing data in the resulting text file.
-\end{itemize}
-
-Similar changes can be made to \texttt{write.table} to create tab-separated files, plain text files, or other simple text files by changing the \texttt{sep} argument and the file extension in the \texttt{file} argument.
+Next consider a larger scientific endeavor. Ideally a scientific study will be reproducible, meaning that an independent group of researchers (or the original researchers) will be able to duplicate the study. Reproducible research means the steps taken in a study can be replicated, from importing external data sets and wrangling them into formats for data analysis, to creating tables and figures using the analysis results. In principle this entire process could be detailed in a step-by-step guide using words; however, in practice, it's typically difficult or impossible to reproduce a full data analysis based on a written explanation. It's much more effective to include the actual data sets and computer code that accomplished all the steps in the report, whether the report is an exercise or research paper. Tools in R such as scripts with commented annotation and R Markdown facilitate this process.
 
 \hypertarget{scripts-in-r}{%
 \section{Scripts in R}\label{scripts-in-r}}
 
 Scripts help to make working with data more efficient and provide a record of how data are managed and analyzed. Below we describe an example. This example uses features of R that we have not yet discussed, so don't worry about the details, but rather about how it motivates the use of a script file.
 
-First we read in a data set containing data on (among other things) fertility rate and life expectancy for countries throughout the world, for the years 1960 through 2014.
+First we read in a data set containing data on (among other things) fertility rate and life expectancy for countries throughout the world, for the years 1960 through 2014. Don't be worried about the specific details, as we will learn much more reading data into R in Section \ref{import}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1223,7 +966,7 @@ We see that some countries do not have data for 1960. R represents missing data 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-26-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 The scatter plot shows that as life expectancy increases, fertility rate tends to decrease in what appears to be a nonlinear relationship. Now that we have a basic scatter plot, it is tempting to make it more informative. We will do this by adding two features. One is to make the points' size proportional to the country's population, and the second is to make the points' color represent the region of the world the country resides in. We'll first extract the population and region variables for 1960.
 
@@ -1268,7 +1011,7 @@ To create the scatter plot we will do two things. First we will create the axes,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-22-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1277,7 +1020,7 @@ To create the scatter plot we will do two things. First we will create the axes,
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-28-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-22-2.pdf}
 
 Of course we should have a key which tells the viewer which region each color represents, and a way to determine which country each point represents, and a lot of other refinements. For now we will resist such temptations.
 
@@ -1380,58 +1123,8 @@ Here are some other coding best practices that help readability:
   Consolidate calls to packages (using the \texttt{library} function) at the top of the R script rather than interspersing them throughout the script. We'll demonstrate this later when working with packages not included in base R (Section \ref{packages}).
 \end{itemize}
 
-\hypertarget{paths}{%
-\section{Relative and absolute paths}\label{paths}}
-
-In Section \ref{workingDirectory}, we introduced the concept of a working directory. A working directory is the directory associated with each R session from which R reads and writes files. Your current working directory is shown at the top of the console window (e.g., see bottom of Figure \ref{fig:rstudioPic}). You can change the working directory using methods discussed in Section \ref{workingDirectory}, such as the \texttt{setwd} function.
-
-Consider the following example where we set our working directory to the directory containing all materials for the course and subsequently read in a data set from the Fernow Experimental Forest (FEF) of the United States Forest Service (USFS) containing information on tree form and structure.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{setwd}\NormalTok{(}\StringTok{\textquotesingle{}/Users/andy/FOR{-}875/\textquotesingle{}}\NormalTok{)}
-\NormalTok{fef.trees \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/FEF\_trees.csv"}\NormalTok{,}
-                        \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{","}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-When we read in the FEF data set, we list the file path as \texttt{data/FEF\_trees.csv}. A \emph{path} is the location where some file is located on your computer. There are two types of paths, known as absolute and relative paths. An \emph{absolute path} is the complete path to a file. In other words, an absolute path will lead to the same final destination regardless of your working directory. A \emph{relative path} gives the path to a location \emph{relative} to the current working directory. In R, when you use a relative path to locate a file, R will look for it in the working directory. In our example, the file path \texttt{data/FEF\_trees.csv} is a relative path, because we have not given the complete path of the file. The path is relative to the current working directory, which was set to \texttt{/Users/andy/FOR-875/}. Given that the working directory is properly set, R will locate the \texttt{datasets} folder inside \texttt{/Users/andy/FOR-875/}, and then will look for a file called \texttt{FEF\_trees.csv}.
-
-Alternatively, we could have used an absolute path in our call to \texttt{read.table} so that the \texttt{file} argument was \texttt{/Users/andy/FOR-875/data/FEF\_trees.csv}. While it may seem attractive to work with absolute paths as you don't need to worry about setting the working directory, we \textbf{do not recommend} the use of absolute paths in your R code. Every directory structure on a computer is different, so the absolute path to a file on your computer will be different to the absolute path of a file on any other computer. This makes sharing code and developing reproducible research extremely difficult, especially when considering differences in directory structuring across operating systems. The use of relative paths will greatly facilitate sharing your code with others, which is why we always recommend using relative paths. Further, the use of RStudio Projects can make working with relative paths even more simple.
-
-\hypertarget{projects}{%
-\section{RStudio Projects}\label{projects}}
-
-It may see cumbersome to keep track of the current working directory to ensure you are reading and writing files in the correct directory. One way to make this a bit easier is to set the working directory at the top of each R script you write using \texttt{setwd} as opposed to using the buttons provided in RStudio (Section \ref{workingDirectory}). When working on a project, it is best to keep all parts of the project in an organized directory structure (Section \ref{directories}). For an entire project you will likely use \texttt{setwd} to set the working directory to a common directory across all phases of a project. Because of this common task, RStudio has created what they call \emph{projects} to help maintain organization and eliminate the constant use of \texttt{setwd}.
-
-To create an RStudio project, click on the \texttt{File} bar at the top of the RStudio window followed by \texttt{New\ Project}. This will open up a menu with three options: New Directory, Existing Directory, or Version Control. Click on \texttt{New\ Directory} to start an R project in a new directory. The next window will ask you to specify the \texttt{Project\ Type}, where you should choose \texttt{Empty\ Project}. The final window titled \texttt{Create\ New\ Project} will ask you to give a name to the directory and a location to place the directory. We encourage you to create a new project for this course titled \texttt{FOR-875} in a location of your choice. Once you have specified the directory name and location of the new directory, click \texttt{Create\ Project}. In the top right corner of your RStudio screen, you should now see your project name (\texttt{FOR-875}) that indicates you are currently working on that project. Clicking on that tab should reveal a menu that allows you to switch between different projects, create a project, and control the default behavior of projects.
-
-The primary benefit of an Rstudio Project is that each project is automatically associated with it's own working directory. In other words, whenever you open an RStudio project, the working directory is immediately set to the directory where the project is located. If you look at the top of the console window after creating the \texttt{FOR-875} project, you should see the absolute path of your current working directory, which is the \texttt{FOR-875} project location. Each project is also associated with its own history, which can be useful if you ever forget to save some important code in a script. By automatically setting the working directory and maintaining a history of all code written in the project, projects allow for better organization, less troubleshooting errors with specifying incorrect working directories, and improved reproducibility.
-
-\hypertarget{directories}{%
-\section{Directory structure}\label{directories}}
-
-While the use of RStudio projects alone provides many practical benefits, maintaining an organized and clear directory structure within each project is crucial for organization and efficiency. A clear directory structure becomes even more important when a project involves multiple people or when the project may potentially be used by others after posting it on a public repository. There is no single way to structure directories. As you learn R and become more familiar with the procedures involved in data analysis, you will learn how you like to name your directories, how many different sub-directories you have, and how this can vary depending on the purpose of the project. Despite the high specifictiy for structuring directories, we will suggest a single, hierarchical structuring approach that is commonly used in computational biology, among other fields \citep[\citet{wilson2017good}]{sandve2013ten}. Figure \ref{fig:directoryEx} shows an example project using our suggested directory structure for a project modeling the distribution of the invasive Emerald Ash Borer (EAB) in Michigan.
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{figures/directory} \caption{An example project using a hierarchical directory structure.}\label{fig:directoryEx}
-\end{figure}
-
-In the main project directory we suggest having two files and four sub-directories. The first file is the RStudio project file itself, which has an extension of \texttt{.Rproj}. The second file is called a README file, which provides basic metadata in the form of a simple text file (\texttt{.txt}) on the purpose of the overall project, the contencts of the project and each sub-directory, and a short description on the purpose of each file. We strongly suggest starting each project with a README.txt file and adding information to the file as the project progresses\footnote{The README file could also be a markdown (.md) file. See Chapter \ref{reports}.}. This process will not only help you keep track of where you store different files, but it is crucial for effective collaboration and sharing of your research.
-
-The four sub-directories are called \texttt{data}, \texttt{results}, \texttt{doc}, and \texttt{src}. The \texttt{data} directory should contain raw data and metadata used in the analysis. Depending on how much data you are working with you may have multiple sub-directories within the \texttt{data} directory. In Figure \ref{fig:directoryEx}, the data directory consists of two files, one containing counts of EAB across Michigan (\texttt{EAB\_MI\_counts.csv}) and a second containing data from forest plots (\texttt{forest\_plot\_data.csv}) that we ultimately seek to relate to the EAB distribution. The \texttt{results} directory should contain any files generated during the analysis, such as cleaned and tidy data sets (Section \ref{tidyr}, as well as finished products such as figures (Chapter \ref{ggplot2}) and tables (Section \ref{kables}). For large projects, it is useful to have a separate sub-directory inside the \texttt{results} directory called \texttt{figures} where final figures are stored. The \texttt{doc} directory contains any sort of text document associated with the project. Depending on the purpose of the project this can include files for manuscripts, notes, lectures, or professional reports). In Figure \ref{fig:directoryEx}, the \texttt{doc} directory consists of three files used to write a manuscript in LaTeX. Again, subdirectories may be neccessary depending upon the size of the project. Lastly, the \texttt{src} directory (short for ``source code'') contains all code written for the project\footnote{The second author prefers to name this directory \texttt{code}. Another common alternative is \texttt{analysis}.}. As we suggest throughout this chapter, your code will primarily be in the form of R scripts.
-
-Employing this hierarchical directory structure, along with proper documentation in the \texttt{README} file, will create an organized directory structure that will improve your efficiency as you work on a project and will make your work more accessible to collaborators, or your future self if you revisit a project a few months or years later. By employing the use of RStudio projects, you can easily use relative paths when reading or writing files in R. For example, to read the file \texttt{EAB\_MI\_counts.csv} for use in the \texttt{EAB\_MI\_data\_prep.R} script, we will load our RStudio project (which will automatically set the working directory to \texttt{EAB\_MI\_dist}), and specify our relative path as \texttt{data/oak-regen.csv} in a call to \texttt{read.csv}.
-
-While we have presented a specific hierarchical structure for data analysis projects using R, we again emphasize that the specific directory names are not as important as ensuring a systematic and intuitive approach for organizing large projects. Your organization structure will likely be constantly adapting as you learn more about what works and what doesn't.
-
-\hypertarget{exCh3}{%
-\section{Exercises}\label{exCh3}}
-
-\textbf{Exercise 1} Learning objectives: set up an RStudio Project and a hierarchical directory structure for the course; explore the workspace within RStudio and associated commands; produce basic descriptive statistics and graphics; practice reading in different types of data sets.
-
 \hypertarget{markdown}{%
-\chapter{R Markdown}\label{markdown}}
+\section{R Markdown}\label{markdown}}
 
 People typically work on data with a larger purpose in mind. Possibly the purpose is to understand a biological system more clearly. Possibly the purpose is to refine a system that recommends movies to users in an online streaming movie service. Possibly the purpose is to complete a homework assignment and demonstrate to the instructor an understanding of an aspect of data analysis. Whatever the purpose, a key aspect is communicating with the desired audience.
 
@@ -1680,24 +1373,26 @@ While basic R Markdown provides substantial flexibility and power, it lacks feat
 \hypertarget{practiceProblemsRMarkdown}{%
 \section{Practice Problems}\label{practiceProblemsRMarkdown}}
 
-Practice Problems 4.1-4.6 use the code shown in Figure \ref{fig:script} to create a script file called \texttt{WorldBank.R} and an R Markdown document called \texttt{ch-4-practice-problems.Rmd}. Each problem builds upon the previous one.
+Practice Problems 3.1-3.6 use the code shown in Figure \ref{fig:script} to create a script file called \texttt{WorldBank.R} and an R Markdown document called \texttt{ch-3-practice-problems.Rmd}. Each problem builds upon the previous one.
 
-\textbf{Practice Problem 4.1}: Recreate the script shown in Figure \ref{fig:script} and save it as \texttt{WorldBank.R} in your code directory. To become accustomed to typing and properly formatting code, please refrain from simply copying and pasting the code into your script.
+\textbf{Practice Problem 3.1}: Recreate the script shown in Figure \ref{fig:script} and save it as \texttt{WorldBank.R}. To become accustomed to typing and properly formatting code, please refrain from simply copying and pasting the code into your script.
 
-\textbf{Practice Problem 4.2}: Using the script you created in \ref{exr:scripts1}, create an R Markdown document that has a single code chunk with all the code from the script. Save the R Markdown document as \texttt{ch-4-practice-problems.Rmd} in your code directory. Knit the markdown document to create an HTML document that contains all the code and the resulting figure.
+\textbf{Practice Problem 3.2}: Using the script you created in \ref{exr:scripts1}, create an R Markdown document that has a single code chunk with all the code from the script. Save the R Markdown document as \texttt{ch-3-practice-problems.Rmd}. Knit the markdown document to create an HTML document that contains all the code and the resulting figure.
 
-\textbf{Practice Problem 4.3}: In your \texttt{ch-4-practice-problems.Rmd} document, split up the one large code chunk into multiple R code chunks. The first code chunk should consist of lines 1-2 shown in \ref{fig:script} that reads in the dataset. The second code chunk should consist of lines 3-6 that extracts the data from 1960. The third code chunk should consist of lines 7 - 9 that create the plot. Before each code chunk, include text in the R Markdown document that briefly describes what each code chunk does.
+\textbf{Practice Problem 3.3}: In your \texttt{ch-3-practice-problems.Rmd} document, split up the one large code chunk into multiple R code chunks. The first code chunk should consist of lines 1-2 shown in \ref{fig:script} that reads in the dataset. The second code chunk should consist of lines 3-6 that extracts the data from 1960. The third code chunk should consist of lines 7 - 9 that create the plot. Before each code chunk, include text in the R Markdown document that briefly describes what each code chunk does.
 
-\textbf{Practice Problem 4.4}: Include an R code chunk argument to prevent the code from displaying in the last code chunk that produces the final plot.
+\textbf{Practice Problem 3.4}: Include an R code chunk argument to prevent the code from displaying in the last code chunk that produces the final plot.
 
-\textbf{Pracitce Problem 4.5}: At the end of the \texttt{ch-4-practice-problems.Rmd} document, add a new second level header labeled \texttt{Practice\ Problem\ 5}. Underneath this header, recreate the following text using the LaTeX symbols shown in Figures \ref{fig:latex} and \ref{fig:headers}:
+\textbf{Pracitce Problem 3.5}: At the end of the \texttt{ch-3-practice-problems.Rmd} document, add a new second level header labeled \texttt{Practice\ Problem\ 5}. Underneath this header, recreate the following text using the LaTeX symbols shown in Figures \ref{fig:latex} and \ref{fig:headers}:
 
 LaTeX is a cool typesetting system that allows us to easily incorporate commonly used mathematical symbols into our R Markdown documents, such as \(\phi\), \(\rho\), \(\gamma\), and \(\delta\). We can even easily write integrals if we seek to brush up on any previous calculus that we may have learned, such as \(\int x^n dx\).
 
-\textbf{Practice Problem 4.6}: Create a new second level header called \texttt{Some\ Code\ Chunk\ Info}. Recreate the first four bulleted points shown in Section \ref{chunks} pertaining to different code chunk options.
+\textbf{Practice Problem 3.6}: Create a new second level header called \texttt{Some\ Code\ Chunk\ Info}. Recreate the first four bulleted points shown in Section \ref{chunks} pertaining to different code chunk options.
 
-\hypertarget{exercises}{%
-\section{Exercises}\label{exercises}}
+\hypertarget{exCh3}{%
+\section{Exercises}\label{exCh3}}
+
+\textbf{Exercise 1} Learning objectives: explore the workspace within RStudio and associated commands; produce basic descriptive statistics and graphics; practice reading in different types of data sets.
 
 \textbf{Exercise 2} Learning objectives: practice working within RStudio; create a R Markdown document and resulting html document in RStudio; calculate descriptive statistics and produce graphics.
 
@@ -3844,7 +3539,7 @@ Next a basic scatter plot is drawn. We'll keep the focus on sepal length and wid
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-87-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-80-1.pdf}
 
 In this case the first argument to the \texttt{ggplot} function is the name of the data frame. Second, the \texttt{aes} (short for aesthetics) function specifies the mapping to the \texttt{x} and \texttt{y} axes. By itself the \texttt{ggplot} function as written doesn't tell R what sort of graphical display is desired. That is done by adding a \texttt{geom} (short for geometry) specification, in this case \texttt{geom\_point}.
 
@@ -3857,7 +3552,7 @@ Looking at the scatter plot and thinking about the focus of finding a method to 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-88-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-81-1.pdf}
 
 Notice that a legend showing what the colors represent is automatically generated and included in the graphic. Next, the size of the points seems a bit big now, and it might be helpful to use different shapes for the different species.
 
@@ -3868,7 +3563,7 @@ Notice that a legend showing what the colors represent is automatically generate
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-89-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-82-1.pdf}
 
 Here we see that the legend automatically changes to include species specific color and shape. The size of the points seems more appropriate.
 
@@ -3887,7 +3582,7 @@ Typically many graphics are created and discarded in the search for an informati
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-90-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-83-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3896,7 +3591,7 @@ Typically many graphics are created and discarded in the search for an informati
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-90-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-83-2.pdf}
 
 \hypertarget{adding-lines-to-a-scatter-plot}{%
 \subsection{Adding lines to a scatter plot}\label{adding-lines-to-a-scatter-plot}}
@@ -3910,7 +3605,7 @@ To add a fitted least squares line to a scatter plot, use \texttt{stat\_smooth},
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-91-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-84-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3924,7 +3619,7 @@ To add a fitted least squares line to a scatter plot, use \texttt{stat\_smooth},
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-91-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-84-2.pdf}
 
 For the iris data, it probably makes more sense to fit separate lines by species. This can be specified using the \texttt{aes()} function inside \texttt{stat\_smooth()}.
 
@@ -3940,7 +3635,7 @@ For the iris data, it probably makes more sense to fit separate lines by species
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-92-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-85-1.pdf}
 
 In this case we specified the same color aesthetic for the points and the lines. If we know we want this color aesthetic (colors corresponding to species) for all aspects of the graphic, we can specify it in the main \texttt{ggplot()} function:
 
@@ -3955,7 +3650,7 @@ In this case we specified the same color aesthetic for the points and the lines.
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-93-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-86-1.pdf}
 
 Another common use of line segments in a graphic is to connect the points in order, accomplished via the \texttt{geom\_line()} function. Although it is not clear why this helps in understanding the iris data, the technique is illustrated next, first doing this for all the points in the graphic, and second doing this separately for the three species.
 
@@ -3967,7 +3662,7 @@ Another common use of line segments in a graphic is to connect the points in ord
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-94-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-87-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3977,7 +3672,7 @@ Another common use of line segments in a graphic is to connect the points in ord
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-95-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-88-1.pdf}
 
 \hypertarget{labels-axes-text-etc.}{%
 \section{Labels, Axes, Text, etc.}\label{labels-axes-text-etc.}}
@@ -4014,7 +3709,7 @@ First, read in the data, examine its structure, and produce a simple scatter plo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-96-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-89-1.pdf}
 
 \hypertarget{labels}{%
 \subsection{Labels}\label{labels}}
@@ -4034,7 +3729,7 @@ By default axis and legend labels are the names of the relevant columns in the d
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-97-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-90-1.pdf}
 
 \hypertarget{customizing-axes}{%
 \section{Customizing Axes}\label{customizing-axes}}
@@ -4052,7 +3747,7 @@ By default axis and legend labels are the names of the relevant columns in the d
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-98-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-91-1.pdf}
 
 \hypertarget{text-point-size-and-color}{%
 \subsection{Text, Point Size, and Color}\label{text-point-size-and-color}}
@@ -4073,7 +3768,7 @@ Next we make point size proportional to population, change the color, and add a 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-99-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-92-1.pdf}
 
 The labels are helpful but just too cluttered. There are some additional arguments that can go into \texttt{geom\_label()} that allow for label offset; however, this won't help us much here. Instead, we can try the \texttt{ggrepel} package by Kamil Slowikowski. This useful package will automatically adjust labels so that they don't overlap. First we need to download and add the package using either RStudio's install package buttons or via \texttt{install.packages("ggrepel")}. Next to make all of \texttt{ggrepel}'s functions available we can call \texttt{library(ggrepel)} function or, if we know which function we want, we can load only that particular function using the \texttt{::} operators. We use \texttt{::} below to make clear which function is coming from \texttt{ggrepel} and which is coming from \texttt{ggplot2}.
 
@@ -4096,7 +3791,7 @@ The labels are helpful but just too cluttered. There are some additional argumen
 ## overlaps). Consider increasing max.overlaps
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-100-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-93-1.pdf}
 
 This looks a bit better. We'll resist making additional improvements to the figure for now.
 
@@ -4129,7 +3824,7 @@ You run an experiment to see if the number of alcoholic beverages a person has o
 \bottomrule
 \end{tabular}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-102-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-95-1.pdf}
 
 \hypertarget{other-types-of-graphics}{%
 \section{Other Types of Graphics}\label{other-types-of-graphics}}
@@ -4173,7 +3868,7 @@ The times are of course quite small, and to avoid working with very small number
 ## with `binwidth`.
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-104-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-97-1.pdf}
 
 The software has an algorithm to calculate bin widths for the histogram. Sometimes the algorithm makes choices that aren't suitable (hence the R message above), and these can be changed by specifying a \texttt{binwidth}. In addition, the appearance of the bars also can be changed.
 
@@ -4184,7 +3879,7 @@ The software has an algorithm to calculate bin widths for the histogram. Sometim
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-105-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-98-1.pdf}
 
 \hypertarget{boxplots}{%
 \subsection{Boxplots}\label{boxplots}}
@@ -4200,7 +3895,7 @@ Next we consider some data from the gapminder data set to construct some box plo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-106-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-99-1.pdf}
 
 Here's the same set of boxplots, but with different colors, different axis labels, and the boxes plotted horizontally rather than vertically.
 
@@ -4214,7 +3909,7 @@ Here's the same set of boxplots, but with different colors, different axis label
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-107-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-100-1.pdf}
 
 \hypertarget{bar-graphs}{%
 \subsection{Bar Graphs}\label{bar-graphs}}
@@ -4255,7 +3950,7 @@ First, a simple bar graph of the most important goal chosen is drawn, followed b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-109-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4264,7 +3959,7 @@ First, a simple bar graph of the most important goal chosen is drawn, followed b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-109-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-102-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4273,7 +3968,7 @@ First, a simple bar graph of the most important goal chosen is drawn, followed b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-109-3.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-102-3.pdf}
 
 In this example R counted the number of students who had each goal and used these counts as the height of the bars. Sometimes the data contain the bar heights as a variable. For example, we create a bar graph of India's per capita GDP with separate bars for each year in the data\footnote{R offers a large color palette, run \texttt{colors()} on the console to see a list of color names.}.
 
@@ -4285,7 +3980,7 @@ In this example R counted the number of students who had each goal and used thes
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-110-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-103-1.pdf}
 
 \hypertarget{graphs-of-functions}{%
 \subsection{Graphs of Functions}\label{graphs-of-functions}}
@@ -4302,7 +3997,7 @@ One way to create a plot of a mathematical function \(f\) is to create a data fr
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-104-1.pdf}
 
 This method works well, but with a better understanding of functions in R we will be able to plot mathematical functions in a simpler and more natural way.
 
@@ -4320,7 +4015,7 @@ The theme defines non-data aspects of the plot's characteristics such as backgro
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-105-1.pdf}
 
 The \texttt{ggthemes} add-on package {[}\url{https://github.com/jrnold/ggthemes}{]} by Jeffrey Arnold provides a large selection of themes beyond the eight themes that come with \texttt{ggplot2}. When specifying the theme of a ggplot, one particularly useful argument in the \texttt{theme\_*()} function is \texttt{base\_size}, which allows you to change the default text size for all axes labels. Next we change the size of all text size along the x and y axes to 18.
 
@@ -4333,7 +4028,7 @@ The \texttt{ggthemes} add-on package {[}\url{https://github.com/jrnold/ggthemes}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-113-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-106-1.pdf}
 
 \hypertarget{saving-graphics}{%
 \section{Saving Graphics}\label{saving-graphics}}
@@ -4384,7 +4079,262 @@ Check out the \texttt{ggplot2} cheatsheet found at \url{https://www.rstudio.com/
 \hypertarget{data2}{%
 \chapter{Working with Data}\label{data2}}
 
-Cleaning data, reshaping data, wrangling data, and other data manipulation tasks are an important and often overlooked component of data science. The book \citet{SpectorDataManipulation}, while a few years old, is still an excellent reference for data-related issues, and is available for free at \url{http://catalog.lib.msu.edu/record=b7254984~S39a}. In this chapter we will present a variety of tools for common data analysis tasks you will encounter in R.
+Importing/exporting data, cleaning data, reshaping data, wrangling data, and other data manipulation tasks are an important and often overlooked component of data science. The book \citet{SpectorDataManipulation}, while a few years old, is still an excellent reference for data-related issues, and is available for free at \url{http://catalog.lib.msu.edu/record=b7254984~S39a}. In this chapter we will present a variety of tools for common data analysis tasks you will encounter in R.
+
+\hypertarget{import}{%
+\section{Data import}\label{import}}
+
+Data come in a dizzying variety of formats. It might be a proprietary format used by commercial software such as Excel, SPSS, or SAS. It might be structured using a relational model, for example, the USDA Forest Service Forest Inventory and Analysis database \citep{FIADB}. It might be a data-interchange format such as JSON (JavaScript Object Notation; \citet{JSON16}), or a markup language format such as XML (Extensible Markup Language; \citet{XML2008}) perhaps with specialized standards for describing ecological information such as EML (Ecological Metadata Language; \citet{EML2019}). The good news is we've yet to encounter a data format unreadable by R. This is thanks to the large community of R package developers and data formats specific to their respective disciplines. For example, the \texttt{foreign} and \texttt{haven} packages provide functions for reading and writing data in common proprietary statistical software formats. Similarly, as we'll see in Chapter \ref{spatial}, the \texttt{rgdal} and \texttt{raster} packages read and write pretty much any spatial data formats used in popular GIS software.
+
+Fortunately many datasets are (or can be) saved as plain text files. Most software can read and write such files, so our initial focus is on reading and writing plain text files.
+
+The function \texttt{read.table} and its offshoots, such as \texttt{read.csv}, are used to read 2-dimensional data, i.e., rows and columns, from a plain text file and are the core functions for reading external datasets into R. For example, the file \texttt{BrainAndBody.csv} contains data\footnote{These data come from the \texttt{MASS} R library.} on the brain weight, body weight, and name of some terrestrial animals. Here are the first few lines of that file:
+
+\begin{verbatim}
+body,brain,name
+1.35,8.1,Mountain beaver
+465,423,Cow
+36.33,119.5,Grey wolf
+27.66,115,Goat
+1.04,5.5,Guinea pig
+\end{verbatim}
+
+As is evident, the first line of the file contains the names of the three variables, separated (delimited) by commas. Each subsequent line (row) contains the body weight, brain weight, and name of a specific terrestrial animal.
+
+This file is accessible at the url \url{https://www.finley-lab.com/files/data/BrainAndBody.csv}. The \texttt{read.table} function is used to read these data into an R data frame. A data frame is a common rectangular (i.e., two-dimensional) data structure in R that consists of rows and columns. We will cover data frames extensively in Chapter \ref{structures}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{link.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.csv"}
+\NormalTok{BrainBody \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ link.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{","}\NormalTok{, }
+                        \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{str}\NormalTok{(BrainBody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    28 obs. of  3 variables:
+##  $ body : num  1.35 465 36.33 27.66 1.04 ...
+##  $ brain: num  8.1 423 119.5 115 5.5 ...
+##  $ name : chr  "Mountain beaver" "Cow" "Grey wolf" "Goat" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(BrainBody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       body brain            name
+## 1     1.35   8.1 Mountain beaver
+## 2   465.00 423.0             Cow
+## 3    36.33 119.5       Grey wolf
+## 4    27.66 115.0            Goat
+## 5     1.04   5.5      Guinea pig
+## 6 11700.00  50.0     Dipliodocus
+\end{verbatim}
+
+The \texttt{read.table} arguments and associated values used above include:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{file\ =\ link.bb} identifies the file location. In this case the string \texttt{https://www.finley-lab.com/files/data/BrainAndBody.csv} giving the location is rather long, so it was first assigned to the object \texttt{link.bb}.
+\item
+  \texttt{header\ =\ TRUE} specifies the column names are held in the file's first row, known as the ``header''.
+\item
+  \texttt{sep\ =\ ","} defines the comma as the character delimiter between the file's columns.
+\item
+  \texttt{stringsAsFactors\ =\ FALSE} tells R not to convert character vectors to factors. While we have yet to discuss the different types of vectors in R, prior to R 4.0.0 \texttt{stringsAsFactors=TRUE} was the default behavior, and so we will often explicitly include this argument in our call to \texttt{read.table} to avoid any differences across R versions. The new default value is \texttt{FALSE} so we could have chosen not to include this in the code).
+\end{enumerate}
+
+When we call \texttt{read.table} or \texttt{read.csv}, the resulting object is read into R and represented as a data frame. The \texttt{str} function and \texttt{head} are two useful functions for looking at the structure of a data frame (or any R object). The \texttt{str} function displays the structure of the object \texttt{BrainBody} that contains the data from the \texttt{BrainAndBody.csv} file. Notice the object is a data frame with 28 observations (i.e., rows) and 3 variables (i.e., columns). The column names are displayed following the \texttt{\$}\footnote{The use of the \texttt{\$} will become clear in Chapter \ref{structures}.}. The \texttt{head} function displays the the first six rows and all columns of the data frame. An alternative way to view a data frame is to use the \texttt{View} function, which opens up a spreadsheet interface in R. Try this out by running \texttt{View(BrainBody)} in your console.
+
+The function \texttt{read.csv} is the same as \texttt{read.table} except the default separator is a comma, whereas the default separator for \texttt{read.table} is whitespace.
+
+The file \texttt{BrainAndBody.tsv} contains the same data, except a tab is used in place of a comma to separate fields. The only change needed to read in the data in this file is in the \texttt{sep} argument (and of course the \texttt{file} argument, since the data are stored in a different file):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.tsv"}
+\NormalTok{BrainBody2 \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }
+                         \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(BrainBody2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       body brain            name
+## 1     1.35   8.1 Mountain beaver
+## 2   465.00 423.0             Cow
+## 3    36.33 119.5       Grey wolf
+## 4    27.66 115.0            Goat
+## 5     1.04   5.5      Guinea pig
+## 6 11700.00  50.0     Dipliodocus
+\end{verbatim}
+
+File extensions, e.g., \texttt{.csv} or \texttt{.tsv}, are naming conventions only and are there to remind us how the columns are separated. In other words, they have no influence on R's file read functions.
+
+A third file, \texttt{BrainAndBody.txt}, contains the same data, but also contains a few lines of explanatory text above the names of the variables. It also uses whitespace rather than a comma or a tab as a separator. Here are the first several lines of the file.
+
+\begin{verbatim}
+This file contains data
+on brain and body
+weights of several terrestrial animals
+
+"body" "brain" "name"
+1.35 8.1 "Mountain beaver"
+465 423 "Cow"
+36.33 119.5 "Grey wolf"
+27.66 115 "Goat"
+1.04 5.5 "Guinea pig"
+11700 50 "Dipliodocus"
+2547 4603 "Asian elephant"
+\end{verbatim}
+
+Notice that in this file the values of \texttt{name} are put inside of quotation marks. This is necessary since instead R would (reasonably) assume the first line contained the values of four variables, the values being \texttt{1.35}, \texttt{8.1}, \texttt{Mountain}, and \texttt{beaver} while in reality there are only three values desired, with \texttt{Mountain\ beaver} being the third.
+
+To read in this file we need to tell R to skip the first five lines and to use whitespace as the separator. The \texttt{skip} argument handles the first, and the \texttt{sep} argument the second. First let's see what happens if we don't use the \texttt{skip} argument.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.txt"}
+\NormalTok{BrainBody3 \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(file.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{,}
+                         \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : line 1 did not have 5 elements
+\end{verbatim}
+
+R assumed the first line of the file contained the variable names, since \texttt{header\ =\ TRUE} was specified, and counted four including \texttt{This}, \texttt{file}, \texttt{contains}, and \texttt{data}. So in the first line of actual data, R expected four columns containing data plus possibly a fifth column containing row names for the data set, and complained that ``line 1 did not have 5 elements.'' The error message is somewhat mysterious, since it starts with ``Error in scan.'' This happens because \texttt{read.table} actually uses a more basic R function called \texttt{scan} to do the work.
+
+Here's how to read in the file correctly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file.bb \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/BrainAndBody.txt"}
+\NormalTok{BrainBody3 \textless{}{-}}\StringTok{ }\KeywordTok{read.table}\NormalTok{(file.bb, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{,}
+                         \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{skip =} \DecValTok{4}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(BrainBody3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       body brain            name
+## 1     1.35   8.1 Mountain beaver
+## 2   465.00 423.0             Cow
+## 3    36.33 119.5       Grey wolf
+## 4    27.66 115.0            Goat
+## 5     1.04   5.5      Guinea pig
+## 6 11700.00  50.0     Dipliodocus
+\end{verbatim}
+
+\hypertarget{importing-data-with-missing-observations}{%
+\section{Importing data with missing observations}\label{importing-data-with-missing-observations}}
+
+Missing data are represented in many ways. Sometimes a missing data point is just that, i.e., the place where it should be in the file is blank. Other times specific numbers such as \(-9999\) or specific symbols are used. The \texttt{read.table()} function has an argument \texttt{na.string} that allows the user to specify how missing data is indicated in the source file.
+
+The site \url{http://www.wunderground.com/history/} makes weather data available for locations around the world from dates going back to 1945. The file \texttt{WeatherKLAN2014.csv} contains weather data for Lansing, Michigan for the year 2014. Here are the first few lines of that file:
+
+\begin{verbatim}
+EST,Max TemperatureF,Min TemperatureF, Events
+1/1/14,14,9,Snow
+1/2/14,13,-3,Snow
+1/3/14,13,-11,Snow
+1/4/14,31,13,Snow
+1/5/14,29,16,Fog-Snow
+1/6/14,16,-12,Fog-Snow
+1/7/14,2,-13,Snow
+1/8/14,17,-1,Snow
+1/9/14,21,2,Snow
+1/10/14,39,21,Fog-Rain-Snow
+1/11/14,41,32,Fog-Rain
+1/12/14,39,31,
+\end{verbatim}
+
+Look at the last line, and notice that instead of an \texttt{Event} such as \texttt{Snow} or \texttt{Fog-Snow} there is nothing after the comma. This observation is missing, but rather than using an explicit code such as \texttt{NA}\footnote{Recall \texttt{NA} stands for ``Not Available''.}, the site just leaves that entry blank. To read these data into R we will supply the argument \texttt{na.string\ =\ ""} which tells R the file indicates missing data by leaving the appropriate entry blank. We then print a subset of the resulting data frame to make sure the offending missing values were replaced with \texttt{NA}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{u.weather \textless{}{-}}\StringTok{ "https://www.finley{-}lab.com/files/data/WeatherKLAN2014.csv"}
+\NormalTok{WeatherKLAN2014 \textless{}{-}}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(u.weather, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{,}
+                            \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{na.string =} \StringTok{""}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(WeatherKLAN2014, }\DataTypeTok{n =} \DecValTok{15}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        EST Max.TemperatureF Min.TemperatureF
+## 1   1/1/14               14                9
+## 2   1/2/14               13               -3
+## 3   1/3/14               13              -11
+## 4   1/4/14               31               13
+## 5   1/5/14               29               16
+## 6   1/6/14               16              -12
+## 7   1/7/14                2              -13
+## 8   1/8/14               17               -1
+## 9   1/9/14               21                2
+## 10 1/10/14               39               21
+## 11 1/11/14               41               32
+## 12 1/12/14               39               31
+## 13 1/13/14               44               34
+## 14 1/14/14               37               26
+## 15 1/15/14               27               18
+##           Events
+## 1           Snow
+## 2           Snow
+## 3           Snow
+## 4           Snow
+## 5       Fog-Snow
+## 6       Fog-Snow
+## 7           Snow
+## 8           Snow
+## 9           Snow
+## 10 Fog-Rain-Snow
+## 11      Fog-Rain
+## 12          <NA>
+## 13          Rain
+## 14     Rain-Snow
+## 15          Snow
+\end{verbatim}
+
+Notice the use of the argument \texttt{n\ =\ 15} in the \texttt{head} function, which displays the first 15 rows of the \texttt{WeatherKLAN2014} data frame\footnote{Look at the help page for \texttt{head}. The default value is \texttt{n\ =\ 6}.}.
+
+\hypertarget{data-export}{%
+\section{Data export}\label{data-export}}
+
+Data stored in external text files are rarely in the format required for data analysis and summarization. We may need to create new variables in the data set, transform variables to different scales, rearrange the data, or manipulate the data to fix incorrect observations. The process of identifying and ultimating fixing incorrect observations from a data set is called \emph{data cleaning}, while \emph{data wrangling} is the process of obtaining and transforming data to answer a specific data analysis question. R has a vast suite of tools for data cleaning and data wrangling that we will cover extensively in Chapter \ref{tidyverse}. After cleaning and wrangling the data in R, we may want to create a new external text file that contains the data in the desired data analysis format for use in a separate project, submission to an agency, or archiving on a data repository. The R function \texttt{write.table} allows us to take a data set in R and save it as an external file.
+
+To illustrate \texttt{write.table}, let's try to create a new csv file in our current working directory named \texttt{WeatherKLAN2014New.csv} from the \texttt{WeatherKLAN2014} object we previously created. We do this with the following code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{write.table}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ WeatherKLAN2014, }\DataTypeTok{file =} \StringTok{\textquotesingle{}WeatherKLAN2014New.csv\textquotesingle{}}\NormalTok{, }\DataTypeTok{sep =} \StringTok{\textquotesingle{},\textquotesingle{}}\NormalTok{,}
+        \DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{na =} \StringTok{\textquotesingle{}NA\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's walk through each of the arguments and associated values used in the previous code chunk:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{x\ =\ WeatherKLAN2014} is the R object we want to write to an external file, in this case the \texttt{WeatherKLAN2014} data set.
+\item
+  \texttt{file\ =\ \textquotesingle{}WeatherKLAN2014New.csv\textquotesingle{}} is the name of the file in which we want to store the data specified in argument \texttt{x}. The file will be created relative in our current working directory as this is the directory R uses for relative path.
+\item
+  \texttt{sep\ =\ \textquotesingle{},\textquotesingle{}} defines the comma as the character delimiter between the file's columns, just as we saw with \texttt{read.table}.
+\item
+  \texttt{row.names\ =\ FALSE} tells R not to create a column in the external data set that contains the row names of the associated R object \texttt{x}. This argument is by default \texttt{row.names\ =\ TRUE}. We do not recommend storing data in the row names of R objects, and so we usually set \texttt{row.names\ =\ FALSE}.
+\item
+  \texttt{na\ =\ NA} tells R to use the value \texttt{NA} to represent missing data in the resulting text file.
+\end{itemize}
+
+Similar changes can be made to \texttt{write.table} to create tab-separated files, plain text files, or other simple text files by changing the \texttt{sep} argument and the file extension in the \texttt{file} argument.
 
 \hypertarget{summarizing-data-frames}{%
 \section{Summarizing Data Frames}\label{summarizing-data-frames}}
@@ -7553,7 +7503,7 @@ The \texttt{...} in the definition of \texttt{my.read()} allows the user to spec
 ##     fill = TRUE, comment.char = "", ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## <bytecode: 0x5581aaf98530>
+## <bytecode: 0x555dfad7c8e8>
 ## <environment: namespace:utils>
 \end{verbatim}
 
@@ -8040,7 +7990,7 @@ Notice the \texttt{id} column in the fortified version of \texttt{mu} holds each
 
 Next, we query the satellite imagery used to underlay the management units (we'll generally refer to this underlying map as the basemap). As of October 2018, Google requires you to set up a Google API account to download imagery. This is free, but it does require a credit card to obtain the API Key that is required to make the \texttt{ggmap} package work. Because of the potential security risk of sharing keys, we do not show the key necessary to run the following code. Instead, you will need to create your own API key to run all the code in this chapter. See the page \href{https://developers.google.com/maps/documentation/geocoding/get-api-key}{here} for learning about how to use Google maps web services.
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-225-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-224-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8159,7 +8109,7 @@ We're now ready to add the forest inventory plots to the existing basemap with m
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-231-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-230-1.pdf}
 
 There is something subtle and easy to miss in the code above. Notice the \texttt{aes} function arguments in \texttt{geom\_points} take geographic longitude and latitude, \texttt{x} and \texttt{y} respectively, from the \texttt{points} data frame (but recall \texttt{easting} and \texttt{northing} were in UTM zone 19). This works because we applied \texttt{spTransform} to reproject the \texttt{points} \texttt{SpatialPointsDataFrame} to geographic coordinates. \texttt{sp} then replaces the values in \texttt{easting} and \texttt{northing} columns with the reprojected coordinate values when converting a \texttt{SpatialPointsDataFrame} to a data frame via \texttt{as.data.frame()}.
 
@@ -8234,7 +8184,7 @@ The calls to \texttt{head()} show the first few rows of \texttt{mu.f} pre- and p
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-233-1.pdf}
 
 Let's add the roads and some more descriptive labels as a finishing touch. The roads data include a variable called \texttt{type} that identifies the road type. To color roads by type in the map, we need to join the \texttt{roads} data frame with the fortified roads \texttt{roads.f} using the common variable \texttt{id} as a road segment specific identifier. Then \texttt{geom\_path}'s \texttt{color} argument gets this \texttt{type} variable as a factor to create road-specific color. The default coloring of the roads blends in too much with the polygon colors, so we manually set the road colors using the \texttt{scale\_color\_brewer} function. The \texttt{palette} argument in this function accepts a set of key words, e.g., \texttt{"Dark2"}, that specify sets of diverging colors chosen to make map object difference optimally distinct (see, the manual page for \texttt{scale\_color\_brewer}, \url{http://colorbrewer2.org}, and blog \href{https://www.r-bloggers.com/r-using-rcolorbrewer-to-colour-your-figures-in-r}{here}.)\footnote{Install the \texttt{RColorBrewer} package and run \texttt{library(RColorBrewer);\ display.brewer.all()} to get a graphical list of available palettes.}
 
@@ -8277,7 +8227,7 @@ Let's add the roads and some more descriptive labels as a finishing touch. The r
 ## (geom_path).
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-235-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-234-1.pdf}
 
 The second, and more cryptic, of the two warnings from this code occurs because some of the roads extend beyond the range of the map axes and are removed (nothing to worry about).
 
@@ -8374,7 +8324,7 @@ Let's download SRTM surface elevation data for the PEF, check the resulting obje
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-241-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-240-1.pdf}
 
 A few things to notice in the code above. First the \texttt{getData} function needs the longitude \texttt{lon} and latitude \texttt{lat} to identify which SRTM raster tile to return (SRTM data come in large raster tiles that cover the globe). As usual, look at the \texttt{getData} function documentation for a description of the arguments. To estimate the PEF's centroid coordinate, we averaged the forest inventory plots' latitude and longitude then assigned the result to \texttt{pef.centroid} (for fun, I used the \texttt{apply} function to do the same task when creating \texttt{mu.centroid} earlier in the chapter). Second, \texttt{srtm} is in a longitude latitude geographic CRS (same as our other PEF data). Finally, the image shows SRTM elevation along the coast of Maine, the PEF plots are those tiny specks of black in the northwest quadrant, and the white region of the image is the Atlantic Ocean.
 
@@ -8389,7 +8339,7 @@ Okay, this is a start, but it would be good to crop the SRTM image to the PEF's 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-242-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-241-1.pdf}
 
 The \texttt{crop} is in effect doing a spatial subsetting of the raster data. We'll return to the \texttt{srtm} data and explore different kinds of subsetting in the subsequent sections.
 
@@ -8466,7 +8416,7 @@ A spatial overlay retrieves the indexes or variables from object \(A\) using the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-245-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-244-1.pdf}
 
 More generally, however, the \texttt{over} function offers consistent overlay operations for \texttt{sp} objects and can return either indexes or variables from object \(A\) given locations from object \(B\), i.e., \texttt{over(B,\ A)} or, equivalently, \texttt{B\%over\%A}. The code below duplicates the result from the preceding example using \texttt{over}.
 
@@ -8532,7 +8482,7 @@ Now let's do something similar using the \texttt{srtm} elevation raster. Say we 
 ## (geom_point).
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-248-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-247-1.pdf}
 
 In the call to \texttt{geom\_point} above, \texttt{coords.x1} \texttt{coords.x2} are the default names given to longitude and latitude, respectively, when \texttt{sp} coerces \texttt{hikes} to \texttt{hikes.pts}. These points represent the vertices along line segments. I create the vector \texttt{color.vals} that contains the values from \texttt{srtm} that I use in the map argument \texttt{color}.
 
@@ -8593,7 +8543,7 @@ With \texttt{mu\_id} rendered useless, we do not have a variable that uniquely i
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-250-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-249-1.pdf}
 
 The \texttt{aggregate()} function will work with all \texttt{sp} objects. For example let's map the variance of pixel values in \texttt{srtm.sp} by management unit. Notice that \texttt{aggregate()} is happy to take a user-specified function for \texttt{FUN}.
 
@@ -8634,7 +8584,7 @@ The \texttt{aggregate()} function will work with all \texttt{sp} objects. For ex
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-251-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-250-1.pdf}
 
 \hypertarget{where-to-go-from-here}{%
 \section{Where to go from here}\label{where-to-go-from-here}}
@@ -8685,19 +8635,19 @@ Shiny apps allow users to interact with a data set. Let's say we have access to 
 ##  $ Sex  : chr  "F" "M" "F" "F" ...
 \end{verbatim}
 
-Given the \texttt{namesDF} data, our goal over the next few sections is to develop a Shiny application that allows users to explore age distributions for males and females. We begin by defining a very basic Shiny application script upon which we can build the desired functionality. The script file that defines this basic application is called \texttt{app.R} and is provided in the code block below called ``version 1''. Follow the subsequent steps to create and run this Shiny app (note these steps are already done for you in the ``ShinyPractice'' directory in ``shiny\_chapter\_code.zip'', but you might want to do it yourself):
+Given the \texttt{namesDF} data, our goal over the next few sections is to develop a Shiny application that allows users to explore age distributions for males and females. We begin by defining a very basic Shiny application script upon which we can build the desired functionality. The script file that defines this basic application is called \texttt{app.R} and is provided in the code block below called ``version 1''. Follow the subsequent steps to create and run this Shiny app:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Create a new directory called ``ShinyPractice'' in your \texttt{code} directory.
+  Create a new directory called ``ShinyPractice''.
 \item
   In the ``ShinyPractice'' directory, create a blank R script called \texttt{app.R}.
 \item
   Copy the code in ``app.R version 1'' into \texttt{app.R}.
 \item
-  Run the Shiny app from RStudio. There are two ways to do this: 1) use the RStudio button in the top right of the script window or; 2) type the function \texttt{runApp(\textquotesingle{}file\ location\textquotesingle{})} in the RStudio console, where \texttt{file\ location} is replaced with the relative path to the directory where \texttt{app.R} is saved. If you're following along with the course directory structure we presented in Section \ref{directories}, this should be \texttt{code/ShinyPractice.}
+  Run the Shiny app from RStudio. There are two ways to do this: 1) use the RStudio button in the top right of the script window or; 2) type the function \texttt{runApp(\textquotesingle{}file\ location\textquotesingle{})} in the RStudio console, where \texttt{file\ location} is replaced with the relative path to the directory where \texttt{app.R} is saved.
 \end{enumerate}
 
 \begin{Shaded}
@@ -8924,7 +8874,7 @@ The Michigan Department of Natural Resources (DNR) has made substantial investme
 ##  $ Long       : num  -84.4 -84.4 -83.8 -83.8 -83.8 ...
 \end{verbatim}
 
-We see that Michigan has 151 state park campgrounds, and our data frame contains 19 variables. Let's create a Shiny app UI in which the user selects desired campground specifications, and the app displays the list of resulting campgrounds and their location on a map. The complete Shiny \texttt{app.R} is shown below. Create a new subdirectory in your \texttt{code} directory called \texttt{CampsitesMI}, and copy and paste the following code into a script file called \texttt{app.R}. Start out by running the application to see how it works. Examine the example code and how it relates to the application that you are running. The following sections detail each of the app's components.
+We see that Michigan has 151 state park campgrounds, and our data frame contains 19 variables. Let's create a Shiny app UI in which the user selects desired campground specifications, and the app displays the list of resulting campgrounds and their location on a map. The complete Shiny \texttt{app.R} is shown below. Create a new directory called \texttt{CampsitesMI}, and copy and paste the following code into a script file called \texttt{app.R}. Start out by running the application to see how it works. Examine the example code and how it relates to the application that you are running. The following sections detail each of the app's components.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9091,7 +9041,7 @@ This repeated code can be avoided using Shiny's reactive expressions. These expr
 \hypertarget{adding-leaflet-to-shiny}{%
 \section{Adding Leaflet to Shiny}\label{adding-leaflet-to-shiny}}
 
-\href{https://rstudio.github.io/leaflet}{Leaflet} can be easily incorporated in Shiny apps (See Chapter \ref{sp} of this text to learn more about spatial data). In the Michigan Campgrounds example code, we used \texttt{plotOutput} and \texttt{renderPlot} to put a plot widget in our Shiny app. Similarly, in this code, we will use \texttt{leafletOutput} and \texttt{renderLeaflet} to add Leaflet widgets to our app. Create a new subdirectory in the \texttt{code} directory called \texttt{CampsitesMI\_Leaflet} and copy the following code into a new \texttt{app.R} script file.
+\href{https://rstudio.github.io/leaflet}{Leaflet} can be easily incorporated in Shiny apps (See Chapter \ref{sp} of this text to learn more about spatial data). In the Michigan Campgrounds example code, we used \texttt{plotOutput} and \texttt{renderPlot} to put a plot widget in our Shiny app. Similarly, in this code, we will use \texttt{leafletOutput} and \texttt{renderLeaflet} to add Leaflet widgets to our app. Create a new directory called \texttt{CampsitesMI\_Leaflet} and copy the following code into a new \texttt{app.R} script file.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9293,7 +9243,7 @@ A graph of this function when \(\beta_0=0\) and \(\beta_1 = 1\) shows the charac
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-263-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-262-1.pdf}
 
 To make this more concrete, we will consider a data set on a population of women who were over 21 years of age, lived near Phoenix, Arizona, and were of Pima Indian heritage. The data included diabetes status (yes or no) and seven possible predictor variables such as age, number of pregnancies, body mass index, etc. The original data are from the National Institute of Diabetes and Digestive and Kidney Diseases. These data were cleaned and are available in the \texttt{MASS} package in R. In the package the data frame \texttt{Pima.tr} contains 200 randomly selected cases from the full data set, which we will use to find a classifier. The data frame \texttt{Pima.te} contains the remaining 332 cases, which we will use to test the classifier on new data.\footnote{This practice of randomly separating data into training data and testing data is a common practice for many classification methods.}
 
@@ -9450,7 +9400,7 @@ We can plot the fitted probabilities along with the data ``by hand''.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-268-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-267-1.pdf}
 
 The \texttt{ggplot2} package also provides a way to do this more directly, using \texttt{stat\_smooth}.
 
@@ -9467,7 +9417,7 @@ The \texttt{ggplot2} package also provides a way to do this more directly, using
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-269-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-268-1.pdf}
 
 From these graphics we can see that although glucose level and diabetes are related, there are many women with high glucose levels who are not diabetic, and many with low glucose levels who are diabetic, so likely adding other predictors to the model will help.
 
@@ -9686,7 +9636,7 @@ The diabetes training data along with the decision boundary are plotted below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-273-1.pdf}
 
 \hypertarget{more-than-two-classes}{%
 \subsection{More than Two Classes}\label{more-than-two-classes}}
@@ -9739,7 +9689,7 @@ Logistic regression methods also are applicable to classification contexts where
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-275-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9748,7 +9698,7 @@ Logistic regression methods also are applicable to classification contexts where
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-275-2.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-274-2.pdf}
 
 Here the potential predictors are sepal width, sepal length, petal width, and petal length. The goal is to find a classifier that will yield the correct species. From the scatter plots it should be pretty clear that a model with petal length and petal width as predictors would classify the data well. Although in a sense this is too easy, these data do a good job of illustrating logistic regression with more than two classes.
 
@@ -9948,7 +9898,7 @@ First the data are read into R and graphed. The predictors \texttt{x1} and \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-281-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-280-1.pdf}
 
 Next a large set of test data is created using the \texttt{expand.grid} function, which creates a data frame with all possible combinations of the arguments. First a simple example to illustrate the function, then the actual creation of the training set. The test set covers the range of the \texttt{x1} and \texttt{x2} values in the training set.
 
@@ -10085,7 +10035,7 @@ Next the graphs are created. This is somewhat complex, since we want to plot the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-283-1.pdf}
 
 Next we graph the decision boundary of kNN with \(k=1\).
 
@@ -10142,7 +10092,7 @@ Next we graph the decision boundary of kNN with \(k=1\).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-285-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-284-1.pdf}
 
 \hypertarget{knn-and-the-diabetes-data}{%
 \subsection{kNN and the Diabetes Data}\label{knn-and-the-diabetes-data}}
@@ -11133,7 +11083,7 @@ Now that the vector \texttt{moby\_dick} contains each word in the novel as a sep
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-314-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-313-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11164,7 +11114,7 @@ Now that the vector \texttt{moby\_dick} contains each word in the novel as a sep
 
 The goal of this exercise is to generate a wordcloud image of the 50 most frqeuent words in \emph{Moby Dick} that we identifid above. To do this, we need the \texttt{wordcloud} package (you may also need to install the package \texttt{tm}). Look at the R documentation for the \texttt{wordcloud} function included in the \texttt{wordcloud} package and create a wordcloud image of the most popular 500 words in the novel. Here is what mine looks like
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-316-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-315-1.pdf}
 
 \hypertarget{substr-and-strtrim}{%
 \subsection{\texorpdfstring{\texttt{substr} and \texttt{strtrim}}{substr and strtrim}}\label{substr-and-strtrim}}
@@ -11704,9 +11654,9 @@ This is a good example of where C++ is much more efficient than R. As shown by t
 \begin{verbatim}
 ## Unit: microseconds
 ##     expr    min     lq   mean median     uq     max
-##   sum(x)  1.054  1.095  2.024  1.114  1.165   23.48
-##  sumC(x)  2.786  2.923 19.223  2.976  3.138 1552.96
-##  sumR(x) 29.284 29.453 62.314 29.547 30.062 2904.98
+##   sum(x)  1.031  1.084  1.299  1.107  1.153   12.34
+##  sumC(x)  2.776  2.881 19.878  2.917  3.018 1599.38
+##  sumR(x) 29.402 29.499 64.196 29.571 30.272 2949.71
 ##  neval cld
 ##    100   a
 ##    100   a
@@ -12137,7 +12087,7 @@ We can use the same \texttt{chinook} database from SQLite we were using above. S
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-344-1.pdf}
 
 We first load the \texttt{dbplot} package. Next we produce the bar plot. Notice that we can continue to use the convenient \texttt{\%\textgreater{}\%} character while producing graphs using \texttt{dbplot}, making the code easy to read. Since \texttt{dbplot} outputs a \texttt{ggplot2} object, we can further customize the graph using familiar functions from \texttt{ggplot2} (so long as the package is loaded).
 
@@ -12152,7 +12102,7 @@ We first load the \texttt{dbplot} package. Next we produce the bar plot. Notice 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-346-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-345-1.pdf}
 
 \hypertarget{using-google-bigquery}{%
 \subsection{Using Google BigQuery}\label{using-google-bigquery}}
@@ -12266,16 +12216,16 @@ A second table in the \texttt{publicdata} project on Google BigQuery contains we
 ## # Database: BigQueryConnection
 ##    thunder mean_wind_speed
 ##    <lgl>             <dbl>
-##  1 FALSE              7   
-##  2 FALSE             14.5 
-##  3 FALSE             28.7 
-##  4 FALSE             15.5 
-##  5 FALSE              0   
-##  6 FALSE             15   
-##  7 FALSE             15   
-##  8 FALSE             21   
-##  9 FALSE              8.90
-## 10 TRUE              13
+##  1 FALSE              5.70
+##  2 FALSE             23.9 
+##  3 FALSE              7.20
+##  4 FALSE              3.5 
+##  5 FALSE              4.80
+##  6 FALSE              3.5 
+##  7 FALSE              7.20
+##  8 FALSE             14.7 
+##  9 FALSE             17.5 
+## 10 FALSE              7.20
 \end{verbatim}
 
 First we establish a connection to the weather table. We then use the \texttt{dbListFields()} function from the \texttt{DBI} package to display the fields in the table. We then view the first 10 records in the table. We see that there are 31 different variables on information for the weather on a given day from 1929 to 2010. Let's say we are interested in determining the total number of days where the \texttt{mean\_temp\ \textgreater{}\ 60} and \texttt{mean\_wind\_speed\ \textgreater{}\ 10}.
@@ -12305,7 +12255,7 @@ Further, suppose we are interested in determining how the average wind speed has
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-351-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-350-1.pdf}
 
 Upon first glance at this plot, a naive student might think ``Wow! Wind speeds have decreased dramatically since the 1930s'\,', and just accept this as true since that is what the graph shows. But since we are all data analysts at heart (otherwise you wouldn't be taking this course!), we want to explore this further. We might ask why the wind was so high in the late 1920s and early 1930s? An average wind speed of above 12 miles per hour seems pretty high. Let's explore the entries for all years in the 1930s and 1920s by looking at how many records there are with a mean wind speed for each year before 1940.
 
@@ -12323,16 +12273,16 @@ Upon first glance at this plot, a naive student might think ``Wow! Wind speeds h
 ## # Database: BigQueryConnection
 ##     year count
 ##    <int> <int>
-##  1  1931  9726
-##  2  1934 20334
-##  3  1935 26829
-##  4  1939 65623
-##  5  1932 10751
-##  6  1929  2037
-##  7  1930  7101
-##  8  1933 17708
-##  9  1938 51770
-## 10  1936 50514
+##  1  1936 50514
+##  2  1937 83310
+##  3  1931  9726
+##  4  1934 20334
+##  5  1935 26829
+##  6  1939 65623
+##  7  1929  2037
+##  8  1930  7101
+##  9  1933 17708
+## 10  1938 51770
 ## # ... with more rows
 \end{verbatim}
 
@@ -12449,7 +12399,7 @@ Next we draw a few plots to show graphically how all these parameters influence 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-353-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-352-1.pdf}
 
 Now that we understand the fundamentals of sinusoids, let's see how we can work with noise and filters on sinusoids using R.
 
@@ -12470,7 +12420,7 @@ For a first example, consider the sinusoid generated below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-354-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-353-1.pdf}
 
 This is a simple sinusoid that has an amplitude of 1 and a frequency of 1. It is not likely that when obtaining a real-world signal you would get a perfect sinusoid without any noise. Let's take this graph and add some noise to it.
 
@@ -12482,7 +12432,7 @@ This is a simple sinusoid that has an amplitude of 1 and a frequency of 1. It is
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-355-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-354-1.pdf}
 
 We add noise to the function by adding a random value (\texttt{0.25*rnorm(length(t)}) to each value in the signal. This is more typical of a real-world signal, as you can somewhat see the general shape (the signal you are interested in), but it is somewhat distorted as a result of noise. The \texttt{signal} package provides a long list of functions for filtering out noise. Here we will utilize the \texttt{butter} function to remove the noise from this signal in an attempt to obtain our original signal. This function generates a variable containing the Butterworth filter polynomial coefficients. The Butterworth filter is a good all-around filter that is often used in radio frequency filter applications. We then use the \texttt{filter} function from the \texttt{signal} package to apply the Butterworth filter to the data. Finally we produce a plot using \texttt{ggplot2} that shows the original signal without noise, the noisy signal, and the recovered signal.
 
@@ -12499,7 +12449,7 @@ We add noise to the function by adding a random value (\texttt{0.25*rnorm(length
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-356-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-355-1.pdf}
 
 You can see that the recovered signal is not perfect, as there is still some noise in the signal, and the timing of the peaks in the signal is not exactly matched up with the original. But it is clear that we have nonetheless removed a large portion of the noise from the noisy signal. Mess around with the argument values in the \texttt{butter()} function in the above code. See what changing the parameters does to the recovered graph. You can also explore the wide variety of filter functions available in the \texttt{signal} package by exploring the package documentation \href{https://cran.r-project.org/web/packages/signal/signal.pdf}{here}.
 
@@ -12516,7 +12466,7 @@ For a second example, suppose we are interested in not only the signal, but also
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-357-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-356-1.pdf}
 
 Again, you can easily recognize the pattern is sinusoidal, but there is noise in the signal that you want to extract. Perhaps you are interested in where the noise is coming from and want to analyze the structure of the noise to figure this out. Thus, unlike the previous example, we want to extract the noise from the signal and not simply eliminate it. To do this we can again use the Butterworth filter.
 
@@ -12538,7 +12488,7 @@ Again, you can easily recognize the pattern is sinusoidal, but there is noise in
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-358-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-357-1.pdf}
 
 \hypertarget{fourier-transforms-and-spectrograms}{%
 \section{Fourier Transforms and Spectrograms}\label{fourier-transforms-and-spectrograms}}
@@ -12569,7 +12519,7 @@ Let's use a sample audio file provided by the \texttt{seewave} package and produ
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-359-1}
+\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-358-1}
 
 Let's explore more of the parameters for this function to get a better understanding of how it is working. Type in \texttt{?spectro} in the R console. The \texttt{spectro()} function contains a lot of different arguments that allow you to control how the spectrogram is created. The \texttt{f} argument allows you to specify the sampling rate of your sound object. The \texttt{wl} option allows you to control the window length that is used when the successive DFTs are produced (aka the STFT). You can choose which window you want to use with the \texttt{wn} option. You can also specify the amount of \texttt{ovlp} between two successive windows with the \texttt{ovlp} argument. Let's use some of these arguments and compare it to the standard spectrogram we previously produced.
 
@@ -12579,7 +12529,7 @@ Let's explore more of the parameters for this function to get a better understan
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-360-1}
+\includegraphics[width=1\linewidth]{bookdown_files/figure-latex/unnamed-chunk-359-1}
 
 You can immediately see that there are some slight differences between the spectrograms. The first spectrogram appears to be more precise than the second spectrogram. Explore these parameters yourself to get a better understanding of how these different properties impact the short-time fourier transform and the spectrogram.
 
@@ -12613,7 +12563,7 @@ The \texttt{warbleR} package allows us to first query the database for the recor
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(warbleR)}
 \NormalTok{cedarWax \textless{}{-}}\StringTok{ }\KeywordTok{query\_xc}\NormalTok{(}\DataTypeTok{qword =} \StringTok{"Bombycilla cedrorum"}\NormalTok{, }\DataTypeTok{download =} \OtherTok{FALSE}\NormalTok{, }
-             \DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{)}
+             \DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12649,7 +12599,7 @@ The \texttt{warbleR} package allows us to first query the database for the recor
 ## [37] "Other_species8"
 \end{verbatim}
 
-We use the \texttt{query\_xc} function to query the database, and use the restriction of the scientific name for Cedar Waxwings so we only obtain recordings of our desired species. Notice the \texttt{path\ =\ \textquotesingle{}data/warbleR\textquotesingle{}} argument, which indicates the directory where the audio files will be saved. We see the \texttt{query\_xc} function returns a data frame with a lot of useful information, such as the latitude and longitude of the recording, the date, the quality of the recording, and the type of vocalization (since birds have multiple different types of vocalizations).
+We use the \texttt{query\_xc} function to query the database, and use the restriction of the scientific name for Cedar Waxwings so we only obtain recordings of our desired species. Notice the \texttt{path\ =\ \textquotesingle{}warbleR\textquotesingle{}} argument, which indicates the directory (here called \texttt{warbleR}) where the audio files will be saved. We see the \texttt{query\_xc} function returns a data frame with a lot of useful information, such as the latitude and longitude of the recording, the date, the quality of the recording, and the type of vocalization (since birds have multiple different types of vocalizations).
 
 Now we produce a map showing the locations of all of the recordings. The \texttt{xcmaps} function allows you to either save a map as an image to your hard drive, or you can simply load the image in the R environment. We will load the image in the R environment by setting the \texttt{img} argument to \texttt{FALSE}.
 
@@ -12741,7 +12691,7 @@ Now that we have the recordings we want to work with, we download them and conve
 \begin{Highlighting}[]
 \NormalTok{newCedarWax \textless{}{-}}\StringTok{ }\KeywordTok{subset}\NormalTok{(cedarWax, cedarWax}\OperatorTok{$}\NormalTok{Recording\_ID }\OperatorTok{\%in\%}\StringTok{ }
 \StringTok{              }\KeywordTok{c}\NormalTok{(}\DecValTok{313682}\NormalTok{, }\DecValTok{313683}\NormalTok{, }\DecValTok{313684}\NormalTok{, }\DecValTok{321881}\NormalTok{, }\DecValTok{329907}\NormalTok{, }\DecValTok{361006}\NormalTok{))}
-\KeywordTok{query\_xc}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ newCedarWax, }\DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{)}
+\KeywordTok{query\_xc}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ newCedarWax, }\DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12754,8 +12704,8 @@ Now that we have the recordings we want to work with, we download them and conve
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{mp32wav}\NormalTok{(}\DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{)}
-\KeywordTok{system}\NormalTok{(}\StringTok{"rm data/warbleR/*.mp3"}\NormalTok{)}
+\KeywordTok{mp32wav}\NormalTok{(}\DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{)}
+\KeywordTok{system}\NormalTok{(}\StringTok{"rm warbleR/*.mp3"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12763,11 +12713,11 @@ Now that we have the recordings we want to work with, we download them and conve
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{lspec}\NormalTok{(}\DataTypeTok{ovlp =} \DecValTok{10}\NormalTok{, }\DataTypeTok{it =} \StringTok{"tiff"}\NormalTok{, }\DataTypeTok{rows =} \DecValTok{5}\NormalTok{, }\DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{)}
+\KeywordTok{lspec}\NormalTok{(}\DataTypeTok{ovlp =} \DecValTok{10}\NormalTok{, }\DataTypeTok{it =} \StringTok{"tiff"}\NormalTok{, }\DataTypeTok{rows =} \DecValTok{5}\NormalTok{, }\DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Now look in your \texttt{data/warbleR} directory and you should see .tiff files for all of the sound files. These files could be used to visually inspect sound files and eliminate undesired files as a result of noise, length, or other variables you are not interested in. But for this example we will use all six recordings.
+Now look in your \texttt{warbleR} directory and you should see .tiff files for all of the sound files. These files could be used to visually inspect sound files and eliminate undesired files as a result of noise, length, or other variables you are not interested in. But for this example we will use all six recordings.
 
 Remember that our ultimate goal is to determine whether or not Cedar Waxwing calls show some sort of variation across geographical distance. We need to produce some acoustic measures to compare the different recordings. First, we want to perform \emph{signal detection}. In other words, we want to find the exact parts in the recordings where a cedar waxwing is performing its call. We only want to determine the acoustic parameters during these times, as this will eliminate noise from having any impact on the parameters. We can perform signal detection using the \texttt{autodetec} function. This function automatically detects the start and end of vocalizations based on amplitude, duration, and frequency range attributes. \texttt{autodetec} will output a data frame containing the recording name, selection, start time, and end time.
 
@@ -12781,12 +12731,12 @@ The calls appear to be between 4-10 kHz in frequency. In this sample they are qu
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{wavs \textless{}{-}}\StringTok{ }\KeywordTok{list.files}\NormalTok{(}\DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{, }\DataTypeTok{pattern =} \StringTok{".wav"}\NormalTok{, }
+\NormalTok{wavs \textless{}{-}}\StringTok{ }\KeywordTok{list.files}\NormalTok{(}\DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{, }\DataTypeTok{pattern =} \StringTok{".wav"}\NormalTok{, }
            \DataTypeTok{ignore.case =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{subset \textless{}{-}}\StringTok{ }\NormalTok{wavs[}\DecValTok{2}\NormalTok{]}
 \NormalTok{single.rec \textless{}{-}}\StringTok{ }\KeywordTok{auto\_detec}\NormalTok{(}\DataTypeTok{flist =}\NormalTok{ subset, }\DataTypeTok{bp =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{10}\NormalTok{), }\DataTypeTok{threshold =} \DecValTok{10}\NormalTok{, }
              \DataTypeTok{mindur =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{maxdur =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{ssmooth =} \DecValTok{800}\NormalTok{, }
-             \DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{) }
+             \DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -12816,7 +12766,7 @@ The \texttt{auto\_detec} function itself does not generate a plot of the spectro
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{full\_spectrograms}\NormalTok{(single.rec, }\DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{)}
+\KeywordTok{full\_spectrograms}\NormalTok{(single.rec, }\DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12831,7 +12781,7 @@ Looking at Figure \ref{fig:labeledSpec}, it looks like we've done a pretty good 
 \NormalTok{waxwingSignals \textless{}{-}}\StringTok{ }\KeywordTok{autodetec}\NormalTok{(}\DataTypeTok{flist =}\NormalTok{ wavs, }\DataTypeTok{bp =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{10}\NormalTok{), }
                 \DataTypeTok{threshold =} \DecValTok{10}\NormalTok{, }\DataTypeTok{mindur =} \FloatTok{0.05}\NormalTok{,  }
                 \DataTypeTok{maxdur =} \FloatTok{0.5}\NormalTok{,}\DataTypeTok{ssmooth =} \DecValTok{800}\NormalTok{, }
-                \DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{)}
+                \DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -12849,7 +12799,7 @@ Now that we have the locations of all the signals in the recordings, we can begi
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{specan}\NormalTok{(waxwingSignals, }\DataTypeTok{bp =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{15}\NormalTok{), }\DataTypeTok{path =} \StringTok{\textquotesingle{}data/warbleR\textquotesingle{}}\NormalTok{) }
+\NormalTok{params \textless{}{-}}\StringTok{ }\KeywordTok{specan}\NormalTok{(waxwingSignals, }\DataTypeTok{bp =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{15}\NormalTok{), }\DataTypeTok{path =} \StringTok{\textquotesingle{}warbleR\textquotesingle{}}\NormalTok{) }
 \KeywordTok{names}\NormalTok{(params) }
 \end{Highlighting}
 \end{Shaded}
@@ -12896,7 +12846,7 @@ We will do this using a process called Principal Components Analysis, a statisti
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-373-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-372-1.pdf}
 
 From the graph, we see that two birds from the US form a group with a bird from Mexico, and a bird from the US forms a group with two birds from Canada. Depending on where exactly the birds from the US are located, this could potentially suggest some variation across geographical distance. We leave this to you to explore further if you so desire. But for now, we see that the \texttt{warbleR} package has some fantastic tools for manipulating and working with audio signals within the R environment.
 
@@ -12937,7 +12887,7 @@ The data contain measurements on petal and sepal length and width for \texttt{di
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-375-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-374-1.pdf}
 
 We see the \texttt{plot()} function by default creates a basic scatterplot when we supply the function with values for the \texttt{x} and \texttt{y} arguments.
 
@@ -12949,7 +12899,7 @@ Looking at the scatter plot and thinking about the focus of finding a method to 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-376-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-375-1.pdf}
 
 The \texttt{pch\ =} argument is used to control the type of symbol used to represent the data points. \texttt{pch\ =\ 19} specifies a filled in circle for each data point. You can mess around with different numbers and you'll see a wide variety of options. The \texttt{col\ =\ iris\$Species} argument tells the \texttt{plot()} function to assign a different color to each unique value in the the \texttt{iris\$Species} vector.\footnote{To see the order in which R assigns colors to different values, run the \texttt{palette()} function} Notice however that there is no legend produced by default, so we don't know which color represents each species. We can add a legend using the \texttt{legend()} function.
 
@@ -12961,7 +12911,7 @@ The \texttt{pch\ =} argument is used to control the type of symbol used to repre
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-377-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-376-1.pdf}
 
 Let's walk through the additional complexities one at a time:
 
@@ -12990,7 +12940,7 @@ Now perhaps we want to use different shapes as well for the different species. T
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-378-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-377-1.pdf}
 
 \hypertarget{graphics2}{%
 \subsection{Adding lines to a scatter plot}\label{graphics2}}
@@ -13006,7 +12956,7 @@ Next let's add a fitted least squares line to the scatter plot. This can be done
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-379-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-378-1.pdf}
 
 For the iris data, it probably makes more sense to fit separate lines by species. Below we compute the linear model separately for each species, then use the \texttt{abline()} function to add each line to the graph. Note our use of logical subsetting to obtain separate data frames for each species.
 
@@ -13024,7 +12974,7 @@ For the iris data, it probably makes more sense to fit separate lines by species
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-380-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-379-1.pdf}
 
 Note that we could also do this using a \texttt{for} loop, which you will learn about soon in Chapter \ref{functions}.
 
@@ -13043,7 +12993,7 @@ Note that we could also do this using a \texttt{for} loop, which you will learn 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-381-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-380-1.pdf}
 
 Another common use of line segments in a graphic is to connect the points in order. Although it is not clear why this helps in understanding the iris data, the technique is illustrated next. First we connect all lines regardless of species. This is done easily by specifying the argument \texttt{type\ =\ \textquotesingle{}b\textquotesingle{}} in the \texttt{plot()} function\footnote{The ``b'' stands for ``both''. By default, the \texttt{type} argument is set to ``p'' for ``points''. You can also specify that you only want lines using \texttt{type\ =\ \textquotesingle{}l\textquotesingle{}}.}
 
@@ -13055,7 +13005,7 @@ Another common use of line segments in a graphic is to connect the points in ord
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-382-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-381-1.pdf}
 
 Now we attempt to only connect the points within a given species. Doing this requires the use of the \texttt{lines()} function to draw three separate lines for each species\footnote{Note that we could again perhaps simplify this by using a \texttt{for} loop, but we'll restrain ourselves until we learn about \texttt{for} loops in Chapter \ref{functions}.} First we create a plot for the first species, and then subsequently use the \texttt{lines()} function to add each of the remaining two species to the plot. Notice that there are some additional arguments in the original \texttt{plot()} function that we have yet to cover. Don't worry, we'll talk about all this fun stuff in the next section :)
 
@@ -13069,7 +13019,7 @@ Now we attempt to only connect the points within a given species. Doing this req
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-383-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-382-1.pdf}
 
 \hypertarget{graphics3}{%
 \section{Labels, Axes, Text, etc.}\label{graphics3}}
@@ -13105,7 +13055,7 @@ First, read in the data, examine its structure, and produce a simple scatter plo
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-384-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-383-1.pdf}
 
 \hypertarget{graphics4}{%
 \subsection{Labels}\label{graphics4}}
@@ -13121,7 +13071,7 @@ By default, axis labels are the values of the \texttt{x} and \texttt{y} values y
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-385-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-384-1.pdf}
 
 Perhaps it may be easier to read the values on the y-axis if they were oritented horizontally instead of vertically. We can do this using the \texttt{las\ =\ 1} argument.
 
@@ -13135,7 +13085,7 @@ Perhaps it may be easier to read the values on the y-axis if they were oritented
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-386-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-385-1.pdf}
 
 \hypertarget{graphics5}{%
 \section{Customizing Axes}\label{graphics5}}
@@ -13153,7 +13103,7 @@ The basic \texttt{plot()} function provides defaults for the axis limits, as wel
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-387-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-386-1.pdf}
 
 Now we eliminate the axes and box automatically drawn by the \texttt{plot()} function, and subsequently add our own axes using the \texttt{axis()} function. We use most of the defaults provided by the \texttt{axis()} function, however, looking at the help page for \texttt{axis()} reveals a large amount of possibilities for customizing the axes in whatever way you desire.
 
@@ -13171,7 +13121,7 @@ Now we eliminate the axes and box automatically drawn by the \texttt{plot()} fun
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-388-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-387-1.pdf}
 
 \hypertarget{graphics6}{%
 \subsection{Text, Point Size, and Color}\label{graphics6}}
@@ -13195,7 +13145,7 @@ Next we make point size proportional to population, change the color, and add a 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-389-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-388-1.pdf}
 
 This graph is mind-numbingly busy, and is missing some notable things (i.e.~legend). For now, we leave it up to you to add in a legend, make the graph less cluttered, fix the cutoff labels, etc. if you so desire.
 
@@ -13225,7 +13175,7 @@ You run an experiment to see if the number of alcoholic beverages a person has o
 \bottomrule
 \end{tabular}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-391-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-390-1.pdf}
 
 \hypertarget{graphics7}{%
 \section{Other Types of Graphics}\label{graphics7}}
@@ -13265,7 +13215,7 @@ To produce a simple histogram of these data in the \texttt{graphics} package, we
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-393-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-392-1.pdf}
 
 The function automatically specifies the binwidths for the data, however we can easily change this ourselves to something more suitable using the \texttt{breaks} argument. We also change the axis labels, y-axis label orientation, title, and color of the bins.
 
@@ -13276,7 +13226,7 @@ The function automatically specifies the binwidths for the data, however we can 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-394-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-393-1.pdf}
 
 \hypertarget{graphics9}{%
 \subsection{Boxplots}\label{graphics9}}
@@ -13308,7 +13258,7 @@ Next we consider some data from the gap minder data set to construct some box pl
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-395-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-394-1.pdf}
 
 Here's the same set of boxplots, but with different colors and the boxes plotted horizontally rather than vertically
 
@@ -13320,7 +13270,7 @@ Here's the same set of boxplots, but with different colors and the boxes plotted
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-396-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-395-1.pdf}
 
 However, notice in the last two graphs the y-axis labels were running off the page. Using the \texttt{graphics} package, we have the ability to adjust all the dimensions and parameters of a plot by using the \texttt{par} function. Below we utilize the \texttt{par} function to extend the amount of space in the plot on the left side of the graph.
 
@@ -13333,7 +13283,7 @@ However, notice in the last two graphs the y-axis labels were running off the pa
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-397-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-396-1.pdf}
 
 \hypertarget{graphics10}{%
 \subsection{Bar Graphs}\label{graphics10}}
@@ -13386,7 +13336,7 @@ First, a simple bar graph of the most important goal chosen is drawn, followed b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-399-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-398-1.pdf}
 
 Notice that to create a basic bar graph using the graphics package, we first take our variable of interest \texttt{StudentGoals\$Goals} and put it in table format using the \texttt{table()} function. Next we produce a stacked bar graph that also includes the student's gender. Then we subsequently add a side by side bar graph that includes the student's gender.
 
@@ -13400,7 +13350,7 @@ Notice that to create a basic bar graph using the graphics package, we first tak
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-400-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-399-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13412,7 +13362,7 @@ Notice that to create a basic bar graph using the graphics package, we first tak
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-401-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-400-1.pdf}
 
 In this example R counted the number of students who had each goal and used these counts as the height of the bars. Sometimes the data contain the bar heights as a variable. For example, we create a bar graph of India's per capita GDP with separate bars for each year in the data\footnote{R offers a large color palette, run \texttt{colors()} on the console to see a list of color names.}.
 
@@ -13426,7 +13376,7 @@ In this example R counted the number of students who had each goal and used thes
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-402-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-401-1.pdf}
 
 \hypertarget{graphics11}{%
 \subsection{Graphs of Functions}\label{graphics11}}
@@ -13441,7 +13391,7 @@ One way to create a plot of a mathematical function \(f\) is to create a data fr
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown_files/figure-latex/unnamed-chunk-403-1.pdf}
+\includegraphics{bookdown_files/figure-latex/unnamed-chunk-402-1.pdf}
 
 \hypertarget{graphics12}{%
 \section{Saving Graphics}\label{graphics12}}

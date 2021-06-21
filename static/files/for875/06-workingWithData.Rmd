@@ -1,6 +1,149 @@
 # Working with Data {#data2}
 
-Cleaning data, reshaping data, wrangling data, and other data manipulation tasks are an important and often overlooked component of data science. The book @SpectorDataManipulation, while a few years old, is still an excellent reference for data-related issues, and is available for free at http://catalog.lib.msu.edu/record=b7254984~S39a. In this chapter we will present a variety of tools for common data analysis tasks you will encounter in R. 
+Importing/exporting data, cleaning data, reshaping data, wrangling data, and other data manipulation tasks are an important and often overlooked component of data science. The book @SpectorDataManipulation, while a few years old, is still an excellent reference for data-related issues, and is available for free at http://catalog.lib.msu.edu/record=b7254984~S39a. In this chapter we will present a variety of tools for common data analysis tasks you will encounter in R. 
+
+## Data import {#import}
+
+Data come in a dizzying variety of formats. It might be a proprietary format used by commercial software such as Excel, SPSS, or SAS. It might be structured using a relational model, for example, the USDA Forest Service Forest Inventory and Analysis database [@FIADB]. It might be a data-interchange format such as JSON (JavaScript Object Notation; @JSON16), or a markup language format such as XML (Extensible Markup Language; @XML2008) perhaps with specialized standards for describing ecological information such as EML (Ecological Metadata Language; @EML2019). The good news is we've yet to encounter a data format unreadable by R. This is thanks to the large community of R package developers and data formats specific to their respective disciplines. For example, the `foreign` and `haven` packages provide functions for reading and writing data in common proprietary statistical software formats. Similarly, as we'll see in Chapter \@ref(spatial), the `rgdal` and `raster` packages read and write pretty much any spatial data formats used in popular GIS software.
+
+Fortunately many datasets are (or can be) saved as plain text files. Most software can read and write such files, so our initial focus is on reading and writing plain text files.
+
+The function `read.table` and its offshoots, such as `read.csv`, are used to read 2-dimensional data, i.e., rows and columns, from a plain text file and are the core functions for reading external datasets into R. For example, the file `BrainAndBody.csv` contains data^[These data come from the `MASS` R library.] on the brain weight, body weight, and name of some terrestrial animals. Here are the first few lines of that file:
+
+```
+body,brain,name
+1.35,8.1,Mountain beaver
+465,423,Cow
+36.33,119.5,Grey wolf
+27.66,115,Goat
+1.04,5.5,Guinea pig
+```
+
+As is evident, the first line of the file contains the names of the three variables, separated (delimited) by commas. Each subsequent line (row) contains the body weight, brain weight, and name of a specific terrestrial animal.
+
+This file is accessible at the url https://www.finley-lab.com/files/data/BrainAndBody.csv. The `read.table` function is used to read these data into an R data frame. A data frame is a common rectangular (i.e., two-dimensional) data structure in R that consists of rows and columns. We will cover data frames extensively in Chapter \@ref(structures). 
+
+```{r, tidy = FALSE}
+link.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.csv"
+BrainBody <- read.table(file = link.bb, header = TRUE, sep = ",", 
+                        stringsAsFactors = FALSE)
+str(BrainBody)
+head(BrainBody)
+```
+
+The `read.table` arguments and associated values used above include:
+
+1. `file = link.bb` identifies the file location. In this case the string `https://www.finley-lab.com/files/data/BrainAndBody.csv` giving the location is rather long, so it was first assigned to the object `link.bb`.
+2. `header = TRUE` specifies the column names are held in the file's first row, known as the "header".
+3. `sep = ","` defines the comma as the character delimiter between the file's columns.
+4. `stringsAsFactors = FALSE` tells R not to convert character vectors to factors. While we have yet to discuss the different types of vectors in R, prior to R 4.0.0 `stringsAsFactors=TRUE` was the default behavior, and so we will often explicitly include this argument in our call to `read.table` to avoid any differences across R versions. The new default value is `FALSE` so we could have chosen not to include this in the code). 
+
+When we call `read.table` or `read.csv`, the resulting object is read into R and represented as a data frame. The `str` function and `head` are two useful functions for looking at the structure of a data frame (or any R object). The `str` function displays the structure of the object `BrainBody` that contains the data from the `BrainAndBody.csv` file. Notice the object is a data frame with `r nrow(BrainBody)` observations (i.e., rows) and `r ncol(BrainBody)` variables (i.e., columns). The column names are displayed following the `$`^[The use of the `$` will become clear in Chapter \@ref(structures).]. The `head` function displays the the first six rows and all columns of the data frame. An alternative way to view a data frame is to use the `View` function, which opens up a spreadsheet interface in R. Try this out by running `View(BrainBody)` in your console.
+
+The function `read.csv` is the same as `read.table` except the default separator is a comma, whereas the default separator for `read.table` is whitespace.
+
+The file `BrainAndBody.tsv` contains the same data, except a tab is used in place of a comma to separate fields. The only change needed to read in the data in this file is in the `sep` argument (and of course the `file` argument, since the data are stored in a different file):
+
+```{r, tidy = FALSE}
+file.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.tsv"
+BrainBody2 <- read.table(file = file.bb, header = TRUE, sep = "\t", 
+                         stringsAsFactors = FALSE)
+head(BrainBody2)
+```
+
+File extensions, e.g., `.csv` or `.tsv`, are naming conventions only and are there to remind us how the columns are separated. In other words, they have no influence on R's file read functions.
+
+A third file, `BrainAndBody.txt`, contains the same data, but also contains a few lines of explanatory text above the names of the variables. It also uses whitespace rather than a comma or a tab as a separator. Here are the first several lines of the file.
+
+```
+This file contains data
+on brain and body
+weights of several terrestrial animals
+
+"body" "brain" "name"
+1.35 8.1 "Mountain beaver"
+465 423 "Cow"
+36.33 119.5 "Grey wolf"
+27.66 115 "Goat"
+1.04 5.5 "Guinea pig"
+11700 50 "Dipliodocus"
+2547 4603 "Asian elephant"
+```
+
+Notice that in this file the values of `name` are put inside of quotation marks. This is necessary since instead R would (reasonably) assume the first line contained the values of four variables, the values being `1.35`, `8.1`, `Mountain`, and `beaver` while in reality there are only three values desired, with `Mountain beaver` being the third.
+
+To read in this file we need to tell R to skip the first five lines and to use whitespace as the separator. The `skip` argument handles the first, and the `sep` argument the second. First let's see what happens if we don't use the `skip` argument.
+
+```{r, tidy = FALSE, error = TRUE}
+file.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.txt"
+BrainBody3 <- read.table(file.bb, header = TRUE, sep = " ",
+                         stringsAsFactors = FALSE)
+```
+
+R assumed the first line of the file contained the variable names, since `header = TRUE` was specified, and counted four including `This`, `file`, `contains`, and `data`. So in the first line of actual data, R expected four columns containing data plus possibly a fifth column containing row names for the data set, and complained that "line 1 did not have 5 elements." The error message is somewhat mysterious, since it starts with "Error in scan." This happens because `read.table` actually uses a more basic R function called `scan` to do the work.
+
+Here's how to read in the file correctly.
+
+```{r, tidy = FALSE}
+file.bb <- "https://www.finley-lab.com/files/data/BrainAndBody.txt"
+BrainBody3 <- read.table(file.bb, header = TRUE, sep = " ",
+                         stringsAsFactors = FALSE, skip = 4)
+head(BrainBody3)
+```
+
+## Importing data with missing observations
+
+Missing data are represented in many ways. Sometimes a missing data point is just that, i.e., the place where it should be in the file is blank. Other times specific numbers such as $-9999$ or specific symbols are used. The `read.table()` function has an argument `na.string` that allows the user to specify how missing data is indicated in the source file.
+
+The site http://www.wunderground.com/history/ makes weather data available for locations around the world from dates going back to 1945. The file `WeatherKLAN2014.csv` contains weather data for Lansing, Michigan for the year 2014. Here are the first few lines of that file:
+
+```
+EST,Max TemperatureF,Min TemperatureF, Events
+1/1/14,14,9,Snow
+1/2/14,13,-3,Snow
+1/3/14,13,-11,Snow
+1/4/14,31,13,Snow
+1/5/14,29,16,Fog-Snow
+1/6/14,16,-12,Fog-Snow
+1/7/14,2,-13,Snow
+1/8/14,17,-1,Snow
+1/9/14,21,2,Snow
+1/10/14,39,21,Fog-Rain-Snow
+1/11/14,41,32,Fog-Rain
+1/12/14,39,31,
+```
+
+Look at the last line, and notice that instead of an `Event` such as `Snow` or `Fog-Snow` there is nothing after the comma. This observation is missing, but rather than using an explicit code such as `NA`^[Recall `NA` stands for "Not Available".], the site just leaves that entry blank. To read these data into R we will supply the argument `na.string = ""` which tells R the file indicates missing data by leaving the appropriate entry blank. We then print a subset of the resulting data frame to make sure the offending missing values were replaced with `NA`. 
+
+```{r, tidy = FALSE}
+u.weather <- "https://www.finley-lab.com/files/data/WeatherKLAN2014.csv"
+WeatherKLAN2014 <- read.csv(u.weather, header=TRUE,
+                            stringsAsFactors = FALSE, na.string = "")
+head(WeatherKLAN2014, n = 15)
+```
+
+Notice the use of the argument `n = 15` in the `head` function, which displays the first 15 rows of the `WeatherKLAN2014` data frame^[Look at the help page for `head`. The default value is `n = 6`.]. 
+
+## Data export
+
+Data stored in external text files are rarely in the format required for data analysis and summarization. We may need to create new variables in the data set, transform variables to different scales, rearrange the data, or manipulate the data to fix incorrect observations. The process of identifying and ultimating fixing incorrect observations from a data set is called *data cleaning*, while *data wrangling* is the process of obtaining and transforming data to answer a specific data analysis question. R has a vast suite of tools for data cleaning and data wrangling that we will cover extensively in Chapter \@ref(tidyverse). After cleaning and wrangling the data in R, we may want to create a new external text file that contains the data in the desired data analysis format for use in a separate project, submission to an agency, or archiving on a data repository. The R function `write.table` allows us to take a data set in R and save it as an external file.
+
+To illustrate `write.table`, let's try to create a new csv file in our current working directory named `WeatherKLAN2014New.csv` from the `WeatherKLAN2014` object we previously created. We do this with the following code.
+
+```{r, eval = FALSE}
+write.table(x = WeatherKLAN2014, file = 'WeatherKLAN2014New.csv', sep = ',',
+	    row.names = FALSE, na = 'NA')
+```
+
+Let's walk through each of the arguments and associated values used in the previous code chunk:
+
++ `x = WeatherKLAN2014` is the R object we want to write to an external file, in this case the `WeatherKLAN2014` data set.
++ `file = 'WeatherKLAN2014New.csv'` is the name of the file in which we want to store the data specified in argument `x`. The file will be created relative in our current working directory as this is the directory R uses for relative path.
++ `sep = ','` defines the comma as the character delimiter between the file's columns, just as we saw with `read.table`.
++ `row.names = FALSE` tells R not to create a column in the external data set that contains the row names of the associated R object `x`. This argument is by default `row.names = TRUE`. We do not recommend storing data in the row names of R objects, and so we usually set `row.names = FALSE`.
++ `na = NA` tells R to use the value `NA` to represent missing data in the resulting text file.
+
+Similar changes can be made to `write.table` to create tab-separated files, plain text files, or other simple text files by changing the `sep` argument and the file extension in the `file` argument.
 
 ## Summarizing Data Frames
 

@@ -199,11 +199,11 @@ knitr::include_graphics("figures/cedarWaxwing.jpg")
 ```{r, warning = FALSE, message = FALSE}
 library(warbleR)
 cedarWax <- query_xc(qword = "Bombycilla cedrorum", download = FALSE, 
-		     path = 'data/warbleR')
+		     path = 'warbleR')
 names(cedarWax)
 ``` 
 
-We use the `query_xc` function to query the database, and use the restriction of the scientific name for Cedar Waxwings so we only obtain recordings of our desired species. Notice the `path = 'data/warbleR'` argument, which indicates the directory where the audio files will be saved. We see the `query_xc` function returns a data frame with a lot of useful information, such as the latitude and longitude of the recording, the date, the quality of the recording, and the type of vocalization (since birds have multiple different types of vocalizations).
+We use the `query_xc` function to query the database, and use the restriction of the scientific name for Cedar Waxwings so we only obtain recordings of our desired species. Notice the `path = 'warbleR'` argument, which indicates the directory (here called `warbleR`) where the audio files will be saved. We see the `query_xc` function returns a data frame with a lot of useful information, such as the latitude and longitude of the recording, the date, the quality of the recording, and the type of vocalization (since birds have multiple different types of vocalizations).
 
 Now we produce a map showing the locations of all of the recordings. The `xcmaps` function allows you to either save a map as an image to your hard drive, or you can simply load the image in the R environment. We will load the image in the R environment by setting the `img` argument to `FALSE`. 
 
@@ -224,23 +224,23 @@ Now that we have the recordings we want to work with, we download them and conve
 ```{r, prompt = FALSE}
 newCedarWax <- subset(cedarWax, cedarWax$Recording_ID %in% 
 		      c(313682, 313683, 313684, 321881, 329907, 361006))
-query_xc(X = newCedarWax, path = 'data/warbleR')
+query_xc(X = newCedarWax, path = 'warbleR')
 ```
 
 `warbleR` and `seewave` are designed to work with wav files while the xeno-canto database stores its recordings as mp3 files. Luckily there is a very simple function `mp32wav` that converts all the mp3 files in the working directory to wav files. We then remove all the mp3 files from the current directory using the `system` function.
 
 ```{r}
-mp32wav(path = 'data/warbleR')
-system("rm data/warbleR/*.mp3")
+mp32wav(path = 'warbleR')
+system("rm warbleR/*.mp3")
 ```
 
 `warbleR` gives us many easy ways to produce spectrograms for all of our desired sound files at once. To do this, we use the `lspec` function, which produces image files with spectrograms of whole sound files split into multiple rows.
 
 ```{r, eval = FALSE}
-lspec(ovlp = 10, it = "tiff", rows = 5, path = 'data/warbleR')
+lspec(ovlp = 10, it = "tiff", rows = 5, path = 'warbleR')
 ```
 
-Now look in your `data/warbleR` directory and you should see .tiff files for all of the sound files. These files could be used to visually inspect sound files and eliminate undesired files as a result of noise, length, or other variables you are not interested in. But for this example we will use all six recordings.
+Now look in your `warbleR` directory and you should see .tiff files for all of the sound files. These files could be used to visually inspect sound files and eliminate undesired files as a result of noise, length, or other variables you are not interested in. But for this example we will use all six recordings.
 
 Remember that our ultimate goal is to determine whether or not Cedar Waxwing calls show some sort of variation across geographical distance.  We need to produce some acoustic measures to compare the different recordings. First, we want to perform *signal detection*. In other words, we want to find the exact parts in the recordings where a cedar waxwing is performing its call. We only want to determine the acoustic parameters during these times, as this will eliminate noise from having any impact on the parameters. We can perform signal detection using the `autodetec` function. This function automatically detects the start and end of vocalizations based on amplitude, duration, and frequency range attributes. `autodetec` will output a data frame containing the recording name, selection, start time, and end time. 
 
@@ -253,12 +253,12 @@ knitr::include_graphics("figures/sampleSpectrogram.jpg")
 The calls appear to be between 4-10 kHz in frequency. In this sample they are quite short, with none lasting longer than a second and most being less than half a second. Let's try these two parameters along with a few others and see what we get. Let's first do this on just one of the recordings so we don't waste computing power if we have to change our parameters
 
 ```{r, message = FALSE, warning = FALSE}
-wavs <- list.files(path = 'data/warbleR', pattern = ".wav", 
+wavs <- list.files(path = 'warbleR', pattern = ".wav", 
 		   ignore.case = TRUE)
 subset <- wavs[2]
 single.rec <- auto_detec(flist = subset, bp = c(4, 10), threshold = 10, 
 			 mindur = 0.05, maxdur = 0.5, ssmooth = 800, 
-			 path = 'data/warbleR') 
+			 path = 'warbleR') 
 ```
 
 Here is a list of the parameters and what each means:
@@ -274,7 +274,7 @@ Here is a list of the parameters and what each means:
 The `auto_detec` function itself does not generate a plot of the spectrogram and the identified calls. To generate a labelled spectogram saved in an image file, we use the `full_spectrograms` function on the output from `auto_detec`.  
 
 ```{r, message = FALSE, warning = FALSE, eval = FALSE}
-full_spectrograms(single.rec, path = 'data/warbleR')
+full_spectrograms(single.rec, path = 'warbleR')
 ```
 
 ```{r labeledSpec, echo = FALSE, fig.cap = 'Spectrogram of identified Cedar Waxwing calls'}
@@ -287,14 +287,14 @@ Looking at Figure \@ref(fig:labeledSpec), it looks like we've done a pretty good
 waxwingSignals <- autodetec(flist = wavs, bp = c(4, 10), 
 			    threshold = 10, mindur = 0.05,  
 			    maxdur = 0.5,ssmooth = 800, 
-			    path = 'data/warbleR')
+			    path = 'warbleR')
 waxwingSignals[is.na(waxwingSignals)] <- 0 
 ``` 
 
 Now that we have the locations of all the signals in the recordings, we can begin to compute acoustic parameters. The `warbleR` package provides the fantastic `specan` function that allows us to calculate 22 acoustic parameters at once through a batch process. This is much more efficient than computing all these parameters separately. `specan` uses the time coordinates from the `autodetec` function that we saved in our `waxwingSignals` variable. It then computes these acoustic parameters for the recordings, but only during the times when a signal is being performed.  
 
 ```{r} 
-params <- specan(waxwingSignals, bp = c(1, 15), path = 'data/warbleR') 
+params <- specan(waxwingSignals, bp = c(1, 15), path = 'warbleR') 
 names(params) 
 ``` 
 
