@@ -7232,7 +7232,7 @@ Of course another way to create a vector of integers from 1 to n is to use \text
 
 \begin{verbatim}
 ##    user  system elapsed 
-##   0.000   0.000   0.001
+##       0       0       0
 \end{verbatim}
 
 \begin{Shaded}
@@ -7244,7 +7244,7 @@ Of course another way to create a vector of integers from 1 to n is to use \text
 
 \begin{verbatim}
 ##    user  system elapsed 
-##   0.000   0.000   0.001
+##       0       0       0
 \end{verbatim}
 
 For \(n=100000\) this is so fast the system time is very close to zero. Even when \(n\) is 1000000 the time is very small. So another important lesson is to use built-in R functions whenever possible, since they have had substantial development focused on efficiency, correctness, etc.
@@ -7503,7 +7503,7 @@ The \texttt{...} in the definition of \texttt{my.read()} allows the user to spec
 ##     fill = TRUE, comment.char = "", ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## <bytecode: 0x55a65dc82550>
+## <bytecode: 0x55b2062a0890>
 ## <environment: namespace:utils>
 \end{verbatim}
 
@@ -11654,13 +11654,13 @@ This is a good example of where C++ is much more efficient than R. As shown by t
 \begin{verbatim}
 ## Unit: microseconds
 ##     expr    min     lq   mean median     uq     max
-##   sum(x)  1.341  1.393  1.871  1.433  1.535   25.19
-##  sumC(x)  3.639  3.750 33.635  3.854  4.123 2853.24
-##  sumR(x) 41.245 41.483 87.304 41.704 42.198 4494.88
+##   sum(x)  1.333  1.386  1.786  1.434  1.506   15.41
+##  sumC(x)  3.600  3.718 17.963  3.804  3.933 1358.14
+##  sumR(x) 37.944 38.148 79.917 38.329 38.862 3866.30
 ##  neval cld
-##    100   a
-##    100   a
-##    100   a
+##    100  a 
+##    100  ab
+##    100   b
 \end{verbatim}
 
 The \texttt{microbenchmark()} function runs each function it's passed 100 times and provides summary statistics for the multiple execution times. This is a very handy tool for testing various function implementations (as illustrated above).
@@ -13462,6 +13462,201 @@ For additional help, we find that the help pages for most \texttt{graphics} func
 \subsection{Practice Problem}\label{graphics14}}
 
 Go to the help page for the \texttt{par()} function (use \texttt{help(par)} or \texttt{?par()}). Look at the plethora of different arguments that you can use to specialize your plot just the way you like it. List 5 arguments that we didn't use in this chapter, describe what they do, then use them in a graph using the \texttt{iris} data set (you can use any of the variables in the data set and produce any type of graph you like).
+
+\hypertarget{solutions-to-selected-practice-problems}{%
+\chapter{Solutions to Selected Practice Problems}\label{solutions-to-selected-practice-problems}}
+
+\hypertarget{section}{%
+\section*{2.5.3}\label{section}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a \textless{}{-}}\StringTok{ }\NormalTok{(}\KeywordTok{exp}\NormalTok{(}\DecValTok{14}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{log10}\NormalTok{(}\DecValTok{8}\NormalTok{)) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\NormalTok{b \textless{}{-}}\StringTok{ }\KeywordTok{log}\NormalTok{(}\DecValTok{4}\NormalTok{) }\OperatorTok{{-}}\StringTok{ }\NormalTok{(}\DecValTok{5} \OperatorTok{*}\StringTok{ }\DecValTok{10}\OperatorTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{a }\OperatorTok{/}\StringTok{ }\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-1}{%
+\section*{4.1.3}\label{section-1}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree.sp[}\KeywordTok{length}\NormalTok{(tree.sp) }\OperatorTok{{-}}\StringTok{ }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-2}{%
+\section*{4.3.1}\label{section-2}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my.weights[my.weights }\OperatorTok{==}\StringTok{ }\DecValTok{12}\NormalTok{] \textless{}{-}}\StringTok{ }\OtherTok{NA}
+\KeywordTok{sd}\NormalTok{(my.weights, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-3}{%
+\section*{4.8.1}\label{section-3}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sim.vals \textless{}{-}}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10000}\NormalTok{)}
+\KeywordTok{hist}\NormalTok{(sim.vals)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-4}{%
+\section*{5.3.2}\label{section-4}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ alc.dat, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ alc.drinks, }\DataTypeTok{y =}\NormalTok{ alc.weights)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\DataTypeTok{col =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{shape =} \StringTok{"square"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Number of Drinks"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{a}{%
+\section*{6.4.3 (a)}\label{a}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{apply}\NormalTok{(WeatherKLAN2014Full[,}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\OperatorTok{:}\DecValTok{19}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{23}\NormalTok{)], }\DecValTok{2}\NormalTok{, sd, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{b}{%
+\section*{6.4.3 (b)}\label{b}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{apply}\NormalTok{(iris[, }\DecValTok{{-}5}\NormalTok{], }\DecValTok{2}\NormalTok{, median)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-5}{%
+\section*{6.7.2}\label{section-5}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{separate}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data.birds, }\DataTypeTok{col =}\NormalTok{ recordingInfo, }\DataTypeTok{sep =} \StringTok{"{-}"}\NormalTok{,}
+     \DataTypeTok{into =} \KeywordTok{c}\NormalTok{(}\StringTok{"site"}\NormalTok{, }\StringTok{"year"}\NormalTok{, }\StringTok{"month"}\NormalTok{, }\StringTok{"day"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-6}{%
+\section*{6.8.4}\label{section-6}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{select}\NormalTok{(gm, }\KeywordTok{contains}\NormalTok{(}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-7}{%
+\section*{6.8.7}\label{section-7}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gm }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(country }\OperatorTok{==}\StringTok{ \textquotesingle{}Afghanistan\textquotesingle{}}\NormalTok{) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"lifeExp"}\NormalTok{)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(lifeExp))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-8}{%
+\section*{6.8.11}\label{section-8}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{s.p.ratio =}\NormalTok{ Sepal.Length }\OperatorTok{/}\StringTok{ }\NormalTok{Petal.Length) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{group\_by}\NormalTok{(Species) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{mean.ratio =} \KeywordTok{mean}\NormalTok{(s.p.ratio)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(mean.ratio))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-9}{%
+\section*{7.1.1}\label{section-9}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{FtoK \textless{}{-}}\StringTok{ }\ControlFlowTok{function}\NormalTok{(F) \{}
+\NormalTok{  K \textless{}{-}}\StringTok{ }\NormalTok{((F }\OperatorTok{{-}}\StringTok{ }\DecValTok{32}\NormalTok{) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{5} \OperatorTok{/}\StringTok{ }\DecValTok{9}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\FloatTok{273.15}
+  \KeywordTok{return}\NormalTok{(K)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-10}{%
+\section*{7.4.4}\label{section-10}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a[a }\OperatorTok{\textgreater{}}\StringTok{ }\DecValTok{1}\NormalTok{] \textless{}{-}}\StringTok{ }\DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-11}{%
+\section*{10.2.2}\label{section-11}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{falsePositives \textless{}{-}}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{40}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(falsePositives)) \{}
+\NormalTok{  knn\_Pima \textless{}{-}}\StringTok{ }\KeywordTok{knn}\NormalTok{(Pima.tr[,}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{)], Pima.te[,}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{)], Pima.tr[,}\DecValTok{8}\NormalTok{], }\DataTypeTok{k =}\NormalTok{ i, }\DataTypeTok{prob=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{  falsePositives[i] \textless{}{-}}\StringTok{ }\KeywordTok{table}\NormalTok{(knn\_Pima, Pima.te[,}\DecValTok{8}\NormalTok{])[}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+\CommentTok{\# Using graphics}
+\KeywordTok{plot}\NormalTok{(falsePositives, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{, }\DataTypeTok{las =} \DecValTok{1}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"k"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"\# of False Positives"}\NormalTok{)}
+\CommentTok{\# Using ggplot2}
+\NormalTok{dat \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{k =} \DecValTok{1}\OperatorTok{:}\DecValTok{40}\NormalTok{, falsePositives)}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ dat, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ k, }\DataTypeTok{y =}\NormalTok{ falsePositives)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y =} \StringTok{"\# of False Positives"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-12}{%
+\section*{11.3.3}\label{section-12}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unlist}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(strings, }\DataTypeTok{split =} \StringTok{\textquotesingle{}[{-}|.]\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{section-13}{%
+\section*{11.3.5}\label{section-13}}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(wordcloud)}
+\NormalTok{md.data.frame \textless{}{-}}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(moby\_dick\_word\_table)}
+\KeywordTok{wordcloud}\NormalTok{(md.data.frame}\OperatorTok{$}\NormalTok{moby\_dick, md.data.frame}\OperatorTok{$}\NormalTok{Freq, }\DataTypeTok{max.words =} \DecValTok{500}\NormalTok{, }\DataTypeTok{colors =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{20}\NormalTok{), }\DataTypeTok{random.color =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib,packages.bib}
 
