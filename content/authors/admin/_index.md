@@ -5,16 +5,16 @@ education:
   courses:
   - course: PhD in Forestry
     institution: Michigan State University
-    year: Current
+    year: Expected 2022
   - course: MS in Applied Statistics
     institution: Michigan State University
-    year: Expected December 2020
+    year: May 2021
   - course: B.S. in Biology and Mathematics
     institution: State University of New York at Geneseo
-    year: 2018
+    year: May 2018
 email: ""
 interests:
-- Bayesian Modelling
+- Bayesian Modeling
 - Statistical Ecology
 - Wildlife Management
 name: Jeff Doser
@@ -42,4 +42,4 @@ user_groups:
 - Visitors
 ---
 
-I am a graduate student at Michigan State University in the [Geospatial Lab](https://www.finley-lab.com/) of Dr. Andrew Finley. My research interests lie in the development of Bayesian hierarchical models for environmental monitoring and decision making. More specifically, I am interested in the development and application of statistical models for methods of monitoring wildlife populations across large spatio-temporal regions, including public science data and acoustic recordings. 
+I am a graduate student in the Department of Forestry and Ecology, Evolution, and Behavior Program at Michigan State University in the [Geospatial Lab](https://www.finley-lab.com/) of Dr. Andrew Finley. My research interests lie in the development of Bayesian hierarchical models for environmental monitoring and decision making. More specifically, I am interested in the development and application of statistical models for methods of monitoring wildlife populations across large spatio-temporal regions, including community science data and acoustic recordings. 

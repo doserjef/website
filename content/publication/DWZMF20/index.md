@@ -13,7 +13,7 @@ links:
 links:
 - name: arXiv
   url: https://arxiv.org/pdf/2008.12184.pdf
-publication: "In press: Ecological Applications"
+publication: "In Ecological Applications: https://doi.org/10.1002/eap.2377"
 publication_short: ""
 publication_types:
 - "2"
@@ -22,8 +22,8 @@ slides: ''
 summary: ''
 title: "Trends in bird abundance differ among protected forests but not bird guilds"
 url_code: 'https://github.com/zipkinlab/Doser_etal_2021_EcoApps'
-url_dataset: 'https://github.com/zipkinlab/Doser_etal_2021_EcoApps'
-url_pdf: ''
+url_dataset: 'https://zenodo.org/record/4701477#.YNM4tJYpCXI'
+url_pdf: 'https://github.com/zipkinlab/Doser_etal_2021_EcoApps/blob/master/doser2021EcoApps.pdf'
 url_poster: ''
 url_project: ''
 url_slides: ''

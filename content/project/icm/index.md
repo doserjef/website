@@ -5,7 +5,7 @@ image:
   focal_point: Smart
 slides:
 summary: ""
-title: Integrated community models for estimation of bird abundance 
+title: Integrated community occupancy models 
 url_code: ""
 url_pdf: ""
 url_slides: ""

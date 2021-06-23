@@ -18,7 +18,7 @@ summary: ''
 title: "Integrating automated acoustic vocalization data and point count surveys for estimation of bird abundance"
 url_code: 'https://github.com/zipkinlab/Doser_etal_2021_MEE'
 url_dataset: 'https://zenodo.org/record/4532175#.YDO3aN-YVhE'
-url_pdf: 'https://doi.org/10.1111/2041-210X.13578'
+url_pdf: 'https://github.com/zipkinlab/Doser_etal_2021_MEE/blob/main/doser2021MEE.pdf'
 url_poster: ''
 url_project: ''
 url_slides: ''
