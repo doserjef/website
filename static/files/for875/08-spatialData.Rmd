@@ -449,8 +449,10 @@ mu.10k <- mu[plots.10k,]## A[B,]
 mu.10k.f <- fortify(mu.10k, region="mu_id")
 
 ggmap(basemap) +
-    geom_polygon(data=mu.10k.f, aes(x = long, y = lat, group=group), fill="transparent", size=0.2, color="orange") +
-    geom_point(data=as.data.frame(plots.10k), aes(x = easting, y = northing), color="white")
+    geom_polygon(data=mu.10k.f, aes(x = long, y = lat, group=group), 
+		 fill="transparent", size=0.2, color="orange") +
+    geom_point(data=as.data.frame(plots.10k), 
+	       aes(x = easting, y = northing), color="white")
 ``` 
 
 More generally, however, the `over` function offers consistent overlay operations for `sp` objects and can return either indexes or variables from object $A$ given locations from object $B$, i.e., `over(B, A)` or, equivalently, `B%over%A`. The code below duplicates the result from the preceding example using `over`.
@@ -485,7 +487,8 @@ srtm.sp <- as(srtm, "SpatialPixelsDataFrame")
 
 hikes.pts$srtm <- over(hikes.pts, srtm.sp)
 
-basemap <- get_map(location=mu.centroid, zoom=14, maptype = "terrain", source = "google")
+basemap <- get_map(location=mu.centroid, zoom=14, 
+		   maptype = "terrain", source = "google")
 
 color.vals <- srtm@data@values[1:length(hikes.pts)]
 

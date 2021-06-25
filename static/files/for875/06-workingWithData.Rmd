@@ -4,7 +4,7 @@ Importing/exporting data, cleaning data, reshaping data, wrangling data, and oth
 
 ## Data import {#import}
 
-Data come in a dizzying variety of formats. It might be a proprietary format used by commercial software such as Excel, SPSS, or SAS. It might be structured using a relational model, for example, the USDA Forest Service Forest Inventory and Analysis database [@FIADB]. It might be a data-interchange format such as JSON (JavaScript Object Notation; @JSON16), or a markup language format such as XML (Extensible Markup Language; @XML2008) perhaps with specialized standards for describing ecological information such as EML (Ecological Metadata Language; @EML2019). The good news is we've yet to encounter a data format unreadable by R. This is thanks to the large community of R package developers and data formats specific to their respective disciplines. For example, the `foreign` and `haven` packages provide functions for reading and writing data in common proprietary statistical software formats. Similarly, as we'll see in Chapter \@ref(spatial), the `rgdal` and `raster` packages read and write pretty much any spatial data formats used in popular GIS software.
+Data come in a dizzying variety of formats. It might be a proprietary format used by commercial software such as Excel, SPSS, or SAS. It might be structured using a relational model, for example, the USDA Forest Service Forest Inventory and Analysis database [@FIADB]. It might be a data-interchange format such as JSON (JavaScript Object Notation; @JSON16), or a markup language format such as XML (Extensible Markup Language; @XML2008) perhaps with specialized standards for describing ecological information such as EML (Ecological Metadata Language; @EML2019). The good news is we've yet to encounter a data format unreadable by R. This is thanks to the large community of R package developers and data formats specific to their respective disciplines. For example, the `foreign` and `haven` packages provide functions for reading and writing data in common proprietary statistical software formats. Similarly, as we'll see in Chapter \@ref(sp), the `rgdal` and `raster` packages read and write pretty much any spatial data formats used in popular GIS software.
 
 Fortunately many datasets are (or can be) saved as plain text files. Most software can read and write such files, so our initial focus is on reading and writing plain text files.
 
@@ -126,7 +126,7 @@ Notice the use of the argument `n = 15` in the `head` function, which displays t
 
 ## Data export
 
-Data stored in external text files are rarely in the format required for data analysis and summarization. We may need to create new variables in the data set, transform variables to different scales, rearrange the data, or manipulate the data to fix incorrect observations. The process of identifying and ultimating fixing incorrect observations from a data set is called *data cleaning*, while *data wrangling* is the process of obtaining and transforming data to answer a specific data analysis question. R has a vast suite of tools for data cleaning and data wrangling that we will cover extensively in Chapter \@ref(tidyverse). After cleaning and wrangling the data in R, we may want to create a new external text file that contains the data in the desired data analysis format for use in a separate project, submission to an agency, or archiving on a data repository. The R function `write.table` allows us to take a data set in R and save it as an external file.
+Data stored in external text files are rarely in the format required for data analysis and summarization. We may need to create new variables in the data set, transform variables to different scales, rearrange the data, or manipulate the data to fix incorrect observations. The process of identifying and ultimating fixing incorrect observations from a data set is called *data cleaning*, while *data wrangling* is the process of obtaining and transforming data to answer a specific data analysis question. R has a vast suite of tools for data cleaning and data wrangling that we will cover extensively in Section \@ref(dplyr). After cleaning and wrangling the data in R, we may want to create a new external text file that contains the data in the desired data analysis format for use in a separate project, submission to an agency, or archiving on a data repository. The R function `write.table` allows us to take a data set in R and save it as an external file.
 
 To illustrate `write.table`, let's try to create a new csv file in our current working directory named `WeatherKLAN2014New.csv` from the `WeatherKLAN2014` object we previously created. We do this with the following code.
 
@@ -322,7 +322,7 @@ gapminder <- within(gapminder, lifeExp <- lifeExp * 12)
 gapminder$lifeExp[1:5]
 ```
 
-## Rearranging Variables
+### Rearranging Variables
 
 Consider the full weather data set again. 
 
@@ -424,19 +424,19 @@ unite(firstLast, col=name, first, last, sep="_")
 
 ### Practice Problem {#Ch6PP3}
 
-```{r, echo = FALSE}
+Consider the `data.birds` data frame produced below
+
+```{r}
 birds <- c(10, 38, 29, 88, 42, 177, 200)
 recordingInfo <- c("LA-2017-01-01", "DF-2011-03-02", "OG-2078-05-11", "YA-2000-11-18", 
                    "LA-2019-03-17", "OG-2016-10-10", "YA-2001-03-22")
 data.birds <- data.frame(birds, recordingInfo)
-```
-
-The `separate()` function from the `tidyr` library is especially useful when working with real data as multiple pieces of information can be combined into one column in a data set. For example, consider the following data frame
-
-```{r}
 data.birds
 ```
-"RecordingInfo" that contains the site where data was collected, as well as the year, month, and date the data were recorded. The data are coded as follows: `site-year-month-day`. Write a line of code that will extract the desired data from the `data.birds` data frame into separate columns named `site`, `year`, `month` and `day`. 
+
+The `separate()` function from the `tidyr` library is especially useful when working with real data as multiple pieces of information can be combined into one column in a data set. 
+
+The column "RecordingInfo" contains the site where data was collected, as well as the year, month, and date the data were recorded. The data are coded as follows: `site-year-month-day`. Write a line of code that will extract the desired data from the `data.birds` data frame into separate columns named `site`, `year`, `month` and `day`. 
 
 ```{r, echo = FALSE, eval = FALSE}
 separate(data = data.birds, col = recordingInfo, sep = "-", 
@@ -773,6 +773,6 @@ iris %>%
 
 **Exercise 7** Learning objectives: introduce `with()`, `tapply()`, and `cut()` functions; summarize data using the `table()` function with logical subsetting; practice using factor data types.
 
-**Exercise 8** Learning objectives: work with messy data; import data from an external spreadsheet; practice using functions in `tidyr` and graphing functions.}
+**Exercise 8** Learning objectives: work with messy data; import data from an external spreadsheet; practice using functions in `tidyr` and graphing functions.
 
 **Exercise 9** Learning objectives: work with several key **dplyr** functions; manipulate data frames (actually tibbles); summarize and visualize data from large data files.
