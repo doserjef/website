@@ -5,7 +5,7 @@ image:
   focal_point: Smart
 slides:
 summary: ""
-title: "spOccupancy: Spatial occupancy models in R"
+title: "Spatial occupancy models in R"
 url_code: "https://github.com/doserjef/spOccupancy"
 url_pdf: ""
 url_slides: ""

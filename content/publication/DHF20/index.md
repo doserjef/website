@@ -20,7 +20,7 @@ summary: We develop a modeling framework to characterize the functional relation
 title: "Characterizing functional relationships between anthropogenic and biological sounds: A western New York state soundscape case study"
 url_code: 'https://github.com/doserjef/DHF20'
 url_dataset: ''
-url_pdf: 'https://jeffdoser.com/files/pubs/doser2020lansEco'
+url_pdf: 'https://jeffdoser.com/files/pubs/doser2020lansEco.pdf'
 url_poster: ''
 url_project: ''
 url_slides: ''
