@@ -20,7 +20,7 @@ summary: ''
 title: "ForestFit: An R package for modeling plant size distributions"
 url_code: ''
 url_dataset: ''
-url_pdf: https://arxiv.org/pdf/1911.11002.pdf
+url_pdf: https://jeffdoser.com/files/pubs/teimouri2020EMS.pdf
 url_poster: ''
 url_project: https://cran.r-project.org/web/packages/ForestFit/index.html
 url_slides: ''

@@ -25,7 +25,7 @@ summary: A Bayesian approach to hypothesis testing to assess the influence of a 
 title: "Assessing soundscape disturbance through hierarchical models and acoustic indices: A case study on a shelterwood logged northern Michigan forest"
 url_code: 'https://github.com/doserjef/DFKG19'
 url_dataset: 'https://www.remoteenvironmentalassessmentlaboratory.com/'
-url_pdf: https://arxiv.org/pdf/1911.03278.pdf
+url_pdf: 'https://jeffdoser.com/files/pubs/doser2020EI.pdf/'
 url_poster: ''
 url_project: ''
 url_slides: ''
