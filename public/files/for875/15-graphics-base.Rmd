@@ -230,7 +230,8 @@ hist(Newcomb$Time)
 The function automatically specifies the binwidths for the data, however we can easily change this ourselves to something more suitable using the `breaks` argument. We also change the axis labels, y-axis label orientation, title, and color of the bins. 
 
 ```{r}
-hist(Newcomb$Time, breaks = 30, main = "Histogram", xlab = "Time", las = 1, col = 'blue')
+hist(Newcomb$Time, breaks = 30, main = "Histogram", xlab = "Time", 
+     las = 1, col = 'blue')
 ```
 
 ### Boxplots {#graphics9}
@@ -239,20 +240,26 @@ Next we consider some data from the gap minder data set to construct some box pl
 
 ```{r}
 library(gapminder)
-boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), pch = 19, col = 'lightblue', las = 1, xlab = "Continent", ylab = "GDP Per-capita")
+boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), 
+	pch = 19, col = 'lightblue', las = 1, xlab = "Continent", 
+	ylab = "GDP Per-capita")
 ```
 
 Here's the same set of boxplots, but with different colors and the boxes plotted horizontally rather than vertically
 
 ```{r}
-boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), pch = 19, border = 'red', col = 'lightblue', las = 1, xlab = "GDP Per-Capita", ylab = "Continent", horizontal = TRUE)
+boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), 
+	pch = 19, border = 'red', col = 'lightblue', las = 1, 
+	xlab = "GDP Per-Capita", ylab = "Continent", horizontal = TRUE)
 ```
 
 However, notice in the last two graphs the y-axis labels were running off the page. Using the `graphics` package, we have the ability to adjust all the dimensions and parameters of a plot by using the `par` function. Below we utilize the `par` function to extend the amount of space in the plot on the left side of the graph. 
 
 ```{r}
 par(mar=c(6,4,4,2))
-boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), pch = 19, border = 'red', col = 'lightblue', las = 1, xlab = "GDP Per-Capita", ylab = "Continent", horizontal = TRUE)
+boxplot(gdpPercap ~ continent, data = subset(gapminder, year == 2002), 
+	pch = 19, border = 'red', col = 'lightblue', las = 1, 
+	xlab = "GDP Per-Capita", ylab = "Continent", horizontal = TRUE)
 ```
 
 ### Bar Graphs {#graphics10}
@@ -277,14 +284,18 @@ Notice that to create a basic bar graph using the graphics package, we first tak
 
 ```{r}
 gender.counts <- table(StudentGoals$Gender, StudentGoals$Goals)
-barplot(gender.counts, col = c("red", "lightblue"), las = 1, ylab = "Count", xlab = "Goals")
-legend(x = "topright", legend = row.names(gender.counts), col = c("red", "lightblue"), pch = 15)
+barplot(gender.counts, col = c("red", "lightblue"), las = 1, 
+	ylab = "Count", xlab = "Goals")
+legend(x = "topright", legend = row.names(gender.counts), 
+       col = c("red", "lightblue"), pch = 15)
 ```
 
 ```{r}
 gender.counts <- table(StudentGoals$Gender, StudentGoals$Goals)
-barplot(gender.counts, col = c("red", "lightblue"), las = 1, ylab = "Count", xlab = "Goals", beside = TRUE)
-legend(x = "topright", legend = row.names(gender.counts), col = c("red", "lightblue"), pch = 15)
+barplot(gender.counts, col = c("red", "lightblue"), las = 1, 
+	ylab = "Count", xlab = "Goals", beside = TRUE)
+legend(x = "topright", legend = row.names(gender.counts), 
+       col = c("red", "lightblue"), pch = 15)
 ```
 
 In this example R counted the number of students who had each goal and used these counts as the height of the bars. Sometimes the data contain the bar heights as a variable. For example, we create a bar graph of India's per capita GDP with separate bars for each year in the data^[R offers a large color palette, run `colors()` on the console to see a list of color names.]. 
@@ -293,7 +304,8 @@ In this example R counted the number of students who had each goal and used thes
 india <- subset(gapminder, country == "India")
 gdp.india <- india$gdpPercap
 names(gdp.india) <- india$year
-barplot(gdp.india, xlab = "Year", ylab = "GDP Per Capita", main = "India's per-capita GDP", col = "steelblue2")
+barplot(gdp.india, xlab = "Year", ylab = "GDP Per Capita", 
+	main = "India's per-capita GDP", col = "steelblue2")
 ```
 
 ### Graphs of Functions {#graphics11}

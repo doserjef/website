@@ -10,18 +10,7 @@ runExample("01_hello")
 In the bottom panel of the resulting Shiny app (Figure \@ref(fig:hello)), we can see the R script that is essential to running any Shiny app: `app.R`. Take a minute to explore how the app works and how the script code is structured. The first part of the script (`ui <-`) defines the app's user interface (UI) using directives that partition the resulting web page and placement of input and output elements. The second part of the script defines a function called `server` with arguments `input` and `output`. This function provides the logic required to run the app (in this case, to draw the histogram of the Old Faithful Geyser Data). Third, `ui` and `server` are passed to a function called `shinyApp` which creates the application.^[Since 2014, Shiny has supported single-file applications (one file called app.R that contains UI and server components), but in other resources, you may see two separate source files, `server.R` and `ui.R`, that correspond to those two components. We will use the updated one-file system here, but keep in mind that older resources you find on the internet using the Shiny package may employ the two-file approach. Ultimately, the code inside these files is almost identical to that within the single `app.R` file. See https://shiny.rstudio.com/articles/app-formats.html for more information.]
 
 ```{r hello, fig.cap = "Hello Shiny example app", echo = FALSE, out.width = '100%'}
-knitr::include_graphics("../figures/hello_shiny.png")
-```
-
-All of the example code and data for the remainder of this chapter can be accessed using the following code.
-
-```{r, prompt=FALSE, eval = FALSE}
-library(downloader)
-
-download("https://www.finley-lab.com/files/data/shiny_chapter_code.zip", 
-         destfile="./shiny_chapter_code.zip", mode="wb")
-
-unzip("shiny_chapter_code.zip", exdir = ".")
+knitr::include_graphics("figures/hello_shiny.png")
 ```
 
 ## Running a Simple Shiny App
@@ -34,12 +23,12 @@ namesDF <- read.csv("https://www.finley-lab.com/files/data/name_list.csv",
 str(namesDF)
 ```
 
-Given the `namesDF` data, our goal over the next few sections is to develop a Shiny application that allows users to explore age distributions for males and females. We begin by defining a very basic Shiny application script upon which we can build the desired functionality. The script file that defines this basic application is called `app.R` and is provided in the code block below called "version 1". Follow the subsequent steps to create and run this Shiny app (note these steps are already done for you in the "ShinyPractice" directory in "shiny_chapter_code.zip", but you might want to do it yourself):
+Given the `namesDF` data, our goal over the next few sections is to develop a Shiny application that allows users to explore age distributions for males and females. We begin by defining a very basic Shiny application script upon which we can build the desired functionality. The script file that defines this basic application is called `app.R` and is provided in the code block below called "version 1". Follow the subsequent steps to create and run this Shiny app:
 
 1. Create a new directory called "ShinyPractice".
 2. In the "ShinyPractice" directory, create a blank R script called `app.R`. 
 3. Copy the code in "app.R version 1" into `app.R`.
-4. Run the Shiny app from RStudio. There are two ways to do this: 1) use the RStudio button (See Figure \@ref(fig:fig1)) or; 2) type the function `runApp()` in the RStudio console.
+4. Run the Shiny app from RStudio. There are two ways to do this: 1) use the RStudio button in the top right of the script window or; 2) type the function `runApp('file location')` in the RStudio console, where `file location` is replaced with the relative path to the directory where `app.R` is saved. 
 
 ```{r, prompt=FALSE, eval = FALSE}
 # app.R version 1
@@ -68,10 +57,6 @@ server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
 ```
 
-
-```{r fig1, fig.cap = "Running a Shiny app locally", echo = FALSE, out.width = '100%'}
-knitr::include_graphics("../figures/RStudio_runApp.png")
-```
 
 If everything compiles correctly, you should get a window that looks like Figure \@ref(fig:fig2). There are a few things to notice. First, we read in the CSV file at the beginning of the `app.R` script so that these data can be accessed in subsquent development steps (although we don't use it yet in this initial application). Second, our Shiny app is not interactive yet because there is no way for a user to input any data---the page is view-only. Third, the function `function(input,output) {}` in `app.R` does not include any code, reflecting that we are not yet using any user inputs or creating any outputs. 
 
@@ -231,11 +216,110 @@ The Michigan Department of Natural Resources (DNR) has made substantial investme
 
 ```{r, eval = TRUE}
 u <- "https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv"
-sites <- read.csv(u, stringsAsFactors = F)
+sites <- read.csv(u, stringsAsFactors = TRUE)
 str(sites)
 ```
 
-We see that Michigan has 151 state park campgrounds, and our data frame contains 19 variables. Let's create a Shiny app UI in which the user selects desired campground specifications, and the app displays the list of resulting campgrounds and their location on a map. The complete Shiny `app.R` is provided in the "CampsitesMI" directory in "shiny_chapter_code.zip." Start out by running the application to see how it works. Examine the example code and how it relates to the application that you are running. The following sections detail each of the app's components.
+We see that Michigan has 151 state park campgrounds, and our data frame contains 19 variables. Let's create a Shiny app UI in which the user selects desired campground specifications, and the app displays the list of resulting campgrounds and their location on a map. The complete Shiny `app.R` is shown below. Create a new directory called `CampsitesMI`, and copy and paste the following code into a script file called `app.R`. Start out by running the application to see how it works. Examine the example code and how it relates to the application that you are running. The following sections detail each of the app's components.
+
+```{r, eval = FALSE, prompt = FALSE}
+# app.R
+# CampsitesMI
+
+library(shiny)
+library(maps)
+library(ggplot2)
+
+sites <- read.csv(
+ "https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv", 
+  stringsAsFactors = TRUE)
+
+ui <- fluidPage(
+
+  titlePanel("Michigan Campsite Search"),
+
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("rangeNum",
+                  label = "Number of campsites:",
+                  min = 0,
+                  max = 420,
+                  value = c(0,420),
+                  step=20
+      ),
+
+      selectInput("type",
+                  label = "Type of campsites:",
+                  levels(sites$Camp_type)
+      ),
+
+      checkboxInput("ada",
+                    label = "ADA Sites Available:",
+                    FALSE)
+    ),
+
+
+    mainPanel(
+      plotOutput("plot1"),
+      br(),
+      htmlOutput("text1")
+    )
+  )
+)
+
+server <- function(input, output) {
+
+  output$text1 <- renderText({
+
+    sites1 <- subset(sites,
+                     TOTAL_SITE >= input$rangeNum[1] &
+                       TOTAL_SITE <= input$rangeNum[2] &
+                       Camp_type == input$type &
+                       if(input$ada){ ADA_SITES > 0 } else {ADA_SITES >= 0})
+
+    if(nrow(sites1) > 0){
+      outStr <- "<ul>"
+      for(site in sites1$FACILITY){
+        outStr <- paste0(outStr,"<li>",site,"</li>")
+      }
+      outStr <- paste0(outStr,"</ul>")
+    } else {
+      outStr <- ""
+    }
+
+    paste("<p>There are",
+          nrow(sites1),
+          "campgrounds that match your search:</p>",
+          outStr)
+
+  })
+
+  output$plot1 <- renderPlot({
+    sites1 <- subset(sites,
+                     TOTAL_SITE >= input$rangeNum[1] &
+                       TOTAL_SITE <= input$rangeNum[2] &
+                       Camp_type == input$type &
+                       if(input$ada){ ADA_SITES > 0 } else {ADA_SITES >= 0})
+
+    miMap <- map_data("state", region = "michigan")
+    plt <- ggplot() +
+      geom_polygon(data=miMap, aes(x=long,y=lat,group=group), 
+		   colour="black", fill="gray") +
+      coord_fixed(ratio = 1)
+
+    if(nrow(sites1) > 0){
+      plt <- plt + geom_point(data = sites1,aes(x=Long,y=Lat), colour="red")
+    }
+
+    plot(plt)
+
+  })
+
+}
+
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+```
 
 ### Michigan Campgrounds UI
 
@@ -286,9 +370,122 @@ sites1 <- subset(sites,
 
 ## Adding Leaflet to Shiny
 
-[Leaflet](https://rstudio.github.io/leaflet) can be easily incorporated in Shiny apps (See Chapter \@ref(sp) of this text to learn more about spatial data). In the Michigan Campgrounds example code, we used `plotOutput` and `renderPlot` to put a plot widget in our Shiny app. Similarly, in this code, we will use `leafletOutput` and `renderLeaflet` to add Leaflet widgets to our app. Run the Shiny app in the `CampsitesMI_Leaflet` directory. What are the differences between the plot widget in this app and the plot widget in the previous app (using `ggplot2`)?
+[Leaflet](https://rstudio.github.io/leaflet) can be easily incorporated in Shiny apps (See Chapter \@ref(sp) of this text to learn more about spatial data). In the Michigan Campgrounds example code, we used `plotOutput` and `renderPlot` to put a plot widget in our Shiny app. Similarly, in this code, we will use `leafletOutput` and `renderLeaflet` to add Leaflet widgets to our app. Create a new directory called `CampsitesMI_Leaflet` and copy the following code into a new `app.R` script file. 
 
-Our code inside `renderLeaflet` is displayed below. As a reminder from our previous use of Leaflet, we can use the `magrittr` package's pipe operator, `%>%`, to add properties to our Leaflet plot.
+```{r, eval = FALSE, prompt = FALSE}
+# app.R
+# CampsitesMI - Leaflet
+
+library(shiny)
+library(leaflet)
+library(htmltools)
+
+sites <- read.csv(
+ "https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv", 
+  stringsAsFactors = TRUE)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+  # Application title
+  titlePanel("Michigan Campsite Search"),
+
+  # Sidebar
+  sidebarLayout(
+    sidebarPanel(
+      # slider input for number of campsites
+      sliderInput("rangeNum",
+                  label = "Number of campsites:",
+                  min = 0,
+                  max = 420,
+                  value = c(0,420),
+                  step=20
+      ),
+
+      selectInput("type",
+                  label = "Type of campsites:",
+                  levels(sites$Camp_type)
+      ),
+
+      checkboxInput("ada",
+                    label = "ADA Sites Available:",
+                    FALSE)
+
+
+    ),
+
+
+    mainPanel(
+      # Show the map of campgrounds
+      leafletOutput("plot1"),
+      br(),
+      # Show the text list of campgrounds
+      htmlOutput("text1")
+    )
+  )
+)
+
+
+server <- function(input, output) {
+  sites <- read.csv("Michigan_State_Park_Campgrounds.csv")
+
+  output$text1 <- renderText({
+    # create a subset of campsites based on inputs
+    sites1 <- subset(sites,
+                     TOTAL_SITE >= input$rangeNum[1] &
+                       TOTAL_SITE <= input$rangeNum[2] &
+                       Camp_type == input$type &
+                       if(input$ada){ ADA_SITES > 0 } else {ADA_SITES >= 0})
+    # create an HTML-formatted character string to be output
+    outStr <- "<ul>"
+    for(site in sites1$FACILITY){
+      outStr <- paste0(outStr,"<li>",site,"</li>")
+    }
+    outStr <- paste0(outStr,"</ul>")
+
+    #
+    paste("<p>There are",
+          nrow(sites1),
+          "campgrounds that match your search:</p>",
+          outStr)
+
+  })
+
+  output$plot1 <- renderLeaflet({
+    # create a subset of campsites based on inputs
+    sites1 <- subset(sites,
+                     TOTAL_SITE >= input$rangeNum[1] &
+                       TOTAL_SITE <= input$rangeNum[2] &
+                       Camp_type == input$type &
+                       if(input$ada){ ADA_SITES > 0 } else {ADA_SITES >= 0})
+
+    if(nrow(sites1) > 0){
+      leaflet(sites1) %>% addTiles()  %>%
+        addCircleMarkers(lng = ~Long, lat = ~Lat,
+                         radius = 5,
+                         color = "red",
+                         label = mapply(function(x,y) {
+                           HTML(sprintf('<em>%s</em><br>%s site(s)',
+                                        htmlEscape(x),
+                                        htmlEscape(y)))},
+                           sites1$FACILITY,sites1$TOTAL_SITE, SIMPLIFY = F)
+        )
+    } else {
+      leaflet() %>% addTiles() %>%
+        setView( -84.5555, 42.7325,   zoom = 7)
+    }
+
+  })
+
+}
+
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+```
+
+Run the Shiny app in the `CampsitesMI_Leaflet` directory. What are the differences between the plot widget in this app and the plot widget in the previous app (using `ggplot2`)?
+
+The code inside `renderLeaflet` is displayed again below. As a reminder from our previous use of Leaflet, we can use the `magrittr` package's pipe operator, `%>%`, to add properties to our Leaflet plot.
 In the `addCircleMarkers` function, you can see that we used the `mapply` function to apply HTML code to each of the markers. The HTML code simply prints the site name and number of sites within each marker label. The `else` statement serves the purpsose that if our subset, `sites1`, is empty, we render a map centered on Lansing, MI.
 
 }
@@ -328,10 +525,11 @@ output$plot1 <- renderLeaflet({
 
 In this chapter, we learned what a Shiny app is, what it's components are, how to run the app, and how to incorporate Leaflet plots. We can also host these apps online on our own server or the [shinyapps.io](https://www.shinyapps.io/) server, which can be accessed directly from RStudio. Hosting our apps on a server allows anyone with internet access to interact with our widgets.
 
-The shinyapps.io server allows free hosting of apps within the monthly limits of 5 applications and 25 active hours. Paid plans are also available. A user guide to deploying your application on shinyapps.io is available [here](http://docs.rstudio.com/shinyapps.io/index.html). Set up a free account and impress your friends by sending them links to your Shiny apps! In addition to hosting your applications, here are a couple more things to discover with Shiny:
+The shinyapps.io server allows free hosting of apps within the monthly limits of 5 applications and 25 active hours. Paid plans are also available. A user guide to deploying your application on shinyapps.io is available [here](http://docs.rstudio.com/shinyapps.io/index.html). Set up a free account and impress your friends by sending them links to your Shiny apps! In addition to hosting your applications, here are a few more things to discover with Shiny:
 
-+ [Dive deeper](https://shiny.rstudio.com/tutorial/) into development by working through the RStudio Shiny tutorial series.
++ [Dive deeper](https://shiny.rstudio.com/tutorial/}) into development by working through the RStudio Shiny tutorial series.
 + [Incorporate](https://shiny.rstudio.com/articles/css.html) CSS stylesheets to make your apps fancier.
++ [Explore](https://shiny.rstudio.com/articles/single-file.html) the single-file Shiny app structure.
 
 ## Exercises {#shinyEx}
 

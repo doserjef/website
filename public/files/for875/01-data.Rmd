@@ -4,9 +4,9 @@
 
 Data science is a field that intersects with statistics, mathematics, computer science, and a wide range of applied fields, such as marketing, biology, and physics. As such, it is hard to formally define data science, but obviously data are central to data science, and it is useful at the start to consider some types of data that are of interest.
 
-## Baby Crawling Data
+## Baby crawling data
 
-When thinking about data, we might initially have in mind a modest-sized and uncomplicated data set consisting primarily of numbers. As an example of such a data set, a study was done to assess the possible relationship between the age at which babies first begin to crawl and the temperature at the time of first crawling. Participants in the study were volunteers.^[More correctly, were volunteered by their parents.] The data set from this study separates the babies by birth month, and reports the birth month, the average age (in weeks) when first crawling for that month, the standard deviation of the crawling ages for that month, the number of infants for that month, and the average temperature during the month when crawling commenced. The data are shown in Table \@ref(tab:crawling) below.^[These data were retrieved from http://lib.stat.cmu.edu/DASL/Datafiles/Crawling.html.]
+When thinking about data, we might initially have in mind a modest-sized and uncomplicated data set consisting primarily of numbers. As an example of such a data set, a study was done to assess the possible relationship between the age at which babies first begin to crawl and the temperature at the time of first crawling. Participants in the study were volunteers.^[More correctly, were volunteered by their parents.] The data set from this study separates the babies by birth month, and reports the birth month, the average age (in weeks) when first crawling for that month, the standard deviation of the crawling ages for that month, the number of infants for that month, and the average temperature during the month when crawling commenced. The data are shown in Table \@ref(tab:crawling) below.^[These data were originally retrieved from https://kilthub.cmu.edu/, although the data set since been removed.]
 
 ```{r}
 u <- "https://www.finley-lab.com/files/data/BabyCrawling.tsv"
@@ -16,14 +16,14 @@ BabyCrawling <- read.table(u, header=T)
 ```{r crawling, echo = FALSE}
 knitr::kable(
   BabyCrawling, booktabs = TRUE,
-  caption = 'Data on age at crawling', 
+  caption = 'Data on age at crawling.', 
   row.names = FALSE
 )
 ```
 
 This data set has many simple properties: it is relatively small, there are no missing observations, the variables are easily understood, etc.
 
-## World Bank Data
+## World bank data
 
 ```{r, echo = F}
 u <- "https://www.finley-lab.com/files/data/WorldBank.csv"
@@ -43,9 +43,10 @@ knitr::kable(
 )
 ```
 
-Notice that many observations contain missing data for fertility rate and life expectancy. If all the variables were shown, we would see much more missing data.  This data set is also substantially larger than the baby crawling age data, with `r dim(WorldBank)[1]` rows and `r dim(WorldBank)[2]` columns of data in the full data set. (Each column represents one of the variables. Each row represents one country during one year).
+Notice that many observations contain missing data for fertility rate and life expectancy. If all the variables were shown, we would see much more missing data.  This data set is also substantially larger than the baby crawling age data, with `r dim(WorldBank)[1]` rows and `r dim(WorldBank)[2]` columns of data in the full data set. Each column represents one of the variables. Each row represents one country during one year.
 
-## Email Data
+## Email data
+
 It is estimated that in 2015, 90\% of the total 205 billion emails sent were spam.^[Radicati Group http://www.radicati.com] Spam filters use large amounts of data from emails to learn what distinguishes spam messages from non-spam (sometimes called "ham") messages. Below we include one spam message followed by a ham message.^[These messages both come from the large collection of spam and ham messages at http://spamassassin.apache.org.]
 
 ```
@@ -118,7 +119,7 @@ Euro Disney. Link[1] Discuss[2]
 
 To implement a spam filter we would have to get the data from these email messages (and thousands of others) into a software package, extract and separate potentially important features such as the `To:` line, the `Subject:` line, the message body, etc., and then compare spam and non-spam messages to find a method to classify new emails correctly. These steps are not simple in this example. In particular, we would need to become skilled at working with *text data*.
 
-## Handwritten Digit Recognition
+## Handwritten digit recognition
 
 Correct recognition of handwritten digits by a machine is commonly required in today's world. For example, the postal service must scan and recognize zip codes on handwritten mail. Roughly speaking, a handwritten digit is scanned and converted to a digital image. To keep things simple we will assume the scanning creates a grayscale rather than a color image. When converting an image to a grayscale digital image, a grid of "pixels" is used to represent the handwritten image, where each pixel has a black intensity value. For concreteness we'll assume that intensities are recorded on a scale from $-1$ (no black intensity at all) to $1$ (maximum black intensity). If the pixel grid is 16 by 16 then the resulting digitized image will contain 256 intensity values, one for each of the $16\times 16 = 256$ pixels.
 
@@ -133,7 +134,7 @@ for(i in 1:26){
 }
 ```
 
-```{r digit, fig.cap = "A digitized version of a handwritten 6", echo = FALSE}
+```{r digit, fig.cap = "A digitized version of a handwritten 6.", echo = FALSE}
 bbb <- matrix(zip.train[1,-1], nrow=16, ncol=16)
 bbb <- bbb[,16:1]
 par(mfrow=c(1,1))
@@ -145,7 +146,7 @@ Looking at the digitized images, it may seem simple to correctly identify a hand
 Figure \@ref(fig:25digits) shows the digitized images of the first 25 numerals in the data set, and Figure \@ref(fig:25Sevens) shows the digitized images of the first 25 numeral sevens in the data set. These give some idea of the variability in how digits are written.^[Actually, these data were already pre-processed to get the orientation correct. Actual handwritten digits would be even more variable.]
 
 
-```{r 25digits, echo = FALSE, fig.cap = "The first 25 handwritten numerals, digitized"}
+```{r 25digits, echo = FALSE, fig.cap = "The first 25 handwritten numerals, digitized."}
 par(mar = c(1,1,1,1))
 par(mfrow=c(5,5))
 for(i in 1:25) {
@@ -157,7 +158,7 @@ par(mar = c(5.1, 4.1, 4.1, 2.1))
 par(mfrow=c(1,1))
 ```
 
-```{r 25Sevens, echo = FALSE, fig.cap = "The first 25 numeral sevens, digitized"}
+```{r 25Sevens, echo = FALSE, fig.cap = "The first 25 numeral sevens, digitized."}
 sevens = which(zip.train[,1] == 7)[1:25]
 par(mar = c(1,1,1,1))
 par(mfrow=c(5,5))
@@ -170,7 +171,7 @@ par(mar = c(5.1, 4.1, 4.1, 2.1))
 par(mfrow=c(1,1))
 ```
 
-## Looking Forward
+## Looking forward
 
 The four examples above illustrate a small sample of the wide variety of data sets that may be encountered in data science. Each of these provides its own challenges. The baby crawling data present challenges that are more statistical in nature. For example, how might the study design (which isn't described here) affect methods of analysis and conclusions drawn from the study? Similar challenges are also present within the other data sets, but these data sets also present more substantial challenges prior to (and during) the analysis stage, such as how to work with the missing data in the World Bank data set, or how to effectively and efficiently process the email data to extract features of interest.
 
@@ -183,7 +184,7 @@ This book and associated material introduce tools to tackle some of the challeng
 5. Programming and writing functions in R
 
 
-## How to learn (The most important section in this book!)
+## How to learn (the most important section in this book!)
 
 There are several ways to engage with the content of this book and associated materials. 
 
@@ -195,5 +196,5 @@ A third way to engage is to read the book while you're at a computer, enter the 
 
 A fourth strategy is even better. In addition to reading, entering the commands given in the book, and working through the practice exercises, you think about what you're doing, and ask yourself questions (which you then go on to answer). For example after working through some R code computing the logarithm of positive numbers you might ask yourself, "What would R do if I asked it to calculate the logarithm of a negative number? What would R do if I asked it to calculate the logarithm of a really large number such as one trillion?" You could explore these questions easily by just trying things out in the R Console window. 
 
-If your goal is to maximize the time you have to binge-watch \emph{Stranger Things} Season 2 on Netflix, the first strategy may be optimal. But if your goal is to learn a lot about computational tools for data science, the fourth strategy is probably going to be best.
+If your goal is to maximize the time you have to binge-watch \emph{Stranger Things} on Netflix, the first strategy may be optimal. But if your goal is to learn a lot about computational tools for data science, the fourth strategy is probably going to be best.
 
