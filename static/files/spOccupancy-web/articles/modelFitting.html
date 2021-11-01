@@ -93,7 +93,7 @@
 </h1>
                         <h4 class="author">Jeffrey W. Doser, Andrew O. Finley, Elise F. Zipkin</h4>
             
-            <h4 class="date">October 30, 2021</h4>
+            <h4 class="date">November 01, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/doserjef/spOccupancy/blob/master/vignettes/modelFitting.Rmd"><code>vignettes/modelFitting.Rmd</code></a></small>
       <div class="hidden name"><code>modelFitting.Rmd</code></div>
@@ -114,7 +114,7 @@
 <li>Integrated occupancy model using <code><a href="../reference/intPGOcc.html">intPGOcc()</a></code>.</li>
 <li>Spatial integrated occupancy model using <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code>.</li>
 </ol>
-<p>In this vignette, we will provide a brief description of each model, with full statistical details provided in a separate MCMC sampler vignette. We will also show how <code>spOccupancy</code> provides functions for posterior predictive checks as a Goodness of Fit assessment, model comparison and assessment using the Widely Applicable Information Criterion (WAIC) and k-fold cross-validation, and out of sample predictions using standard R helper functions (i.e., <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>).</p>
+<p>In this vignette, we will provide a brief description of each model, with full statistical details provided in a separate MCMC sampler vignette. We will also show how <code>spOccupancy</code> provides functions for posterior predictive checks as a Goodness of Fit assessment, model comparison and assessment using the Widely Applicable Information Criterion (WAIC), k-fold cross-validation, and out of sample predictions using standard R helper functions (e.g., <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>).</p>
 <p>To get started, we load the <code>spOccupancy</code> package, as well as the <code>coda</code> package, which we will use for some MCMC diagnostics. We will also use the <code>stars</code> and <code>ggplot2</code> packages to create some very basic plots of our results. We then set a seed so we can reproduce the same results.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web">spOccupancy</a></span><span class="op">)</span>
@@ -155,7 +155,7 @@
 <pre><code>
   0   1 
 518 588 </code></pre>
-<p>We see OVEN is detected at a few more than half of all site-replicate combinations.</p>
+<p>We see OVEN is detected at little over half of all site-replicate combinations.</p>
 </div>
 </div>
 <div id="single-species-occupancy-models" class="section level1">
@@ -214,7 +214,7 @@
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:373] "1" "2" "3" "4" ...
   .. ..$ : chr [1:2] "X" "Y"</code></pre>
-<p>Next, we specify the starting values for the MCMC sampler in <code>starting</code>. <code><a href="../reference/PGOcc.html">PGOcc()</a></code> (and all other <code>spOccupancy</code> model fitting functions) will set starting values by default, but here we will do this explicitly. Starting values are specified in a list with the following tags: <code>z</code> (latent occurrence values), <code>alpha</code> (detection regression coefficients), and <code>beta</code> (occurrence regression coefficients). Below we set all initial values of the regression coefficients to 0, and set starting values for <code>z</code> based on the detection-nondetection data matrix. For the occurrence (<code>beta</code>) and detection (<code>alpha</code>) regression coefficients, the starting values are passed in either as a vector of length corresponding to the number of estimated parameters, or as a single value if setting the same starting value for all parameters. Below we take the latter approach.</p>
+<p>Next, we specify the starting values for the MCMC sampler in <code>starting</code>. <code><a href="../reference/PGOcc.html">PGOcc()</a></code> (and all other <code>spOccupancy</code> model fitting functions) will set starting values by default, but here we will do this explicitly. Starting values are specified in a list with the following tags: <code>z</code> (latent occurrence values), <code>alpha</code> (detection regression coefficients), and <code>beta</code> (occurrence regression coefficients). Below we set all initial values of the regression coefficients to 0, and set starting values for <code>z</code> based on the detection-nondetection data matrix. For the occurrence (<code>beta</code>) and detection (<code>alpha</code>) regression coefficients, the starting values are passed in either as a vector of length corresponding to the number of estimated parameters, or as a single value if setting the same starting value for all parameters. Below we take the latter approach. To specify the starting values for the latent occurrence at each site (<code>z</code>), we must ensure we set the value to 1 at all sites where OVEN was detected, because if we detect OVEN at a site then the value of <code>z</code> is 1 with complete certainty. If the initial value for <code>z</code> at a site is set to 0 when the species was detected there, the occupancy model will fail. <code>spOccupancy</code> will provide a clear error message if the supplied starting values for <code>z</code> are invalid. Below we use the raw detection-nondetection data and the <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> function to set the initial values to 1 if OVEN was detected at that site and 0 otherwise.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oven.starting</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0</span>, 
                       beta <span class="op">=</span> <span class="fl">0</span>, 
@@ -293,16 +293,16 @@ Total Posterior Samples: 1000
 
 Occurrence: 
                          2.5%     25%     50%     75%   97.5%
-(Intercept)            1.6637  1.9505  2.1199  2.2978  2.7366
-scale(Elevation)      -2.3413 -1.8297 -1.6292 -1.4699 -1.2230
-I(scale(Elevation)^2) -0.7780 -0.5599 -0.4351 -0.3027 -0.0172
+(Intercept)            1.6319  1.9347  2.0991  2.2853  2.7161
+scale(Elevation)      -2.3900 -1.7959 -1.6043 -1.4371 -1.1831
+I(scale(Elevation)^2) -0.7957 -0.5639 -0.4444 -0.3112  0.0052
 
 Detection: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)      0.5673  0.7101  0.8018  0.8832 1.0307
-scale(day)      -0.2564 -0.1411 -0.0938 -0.0403 0.0692
-scale(tod)      -0.2047 -0.0972 -0.0488 -0.0030 0.1053
-I(scale(day)^2) -0.1534 -0.0407  0.0241  0.0875 0.2020</code></pre>
+(Intercept)      0.5290  0.7068  0.7984  0.8841 1.0200
+scale(day)      -0.2422 -0.1429 -0.0894 -0.0399 0.0553
+scale(tod)      -0.1911 -0.1009 -0.0452  0.0067 0.1029
+I(scale(day)^2) -0.1556 -0.0341  0.0252  0.0905 0.2129</code></pre>
 <p>Note that all coefficients are printed on the logit scale. We see OVEN is fairly prominent in the forest given the large intercept value, and the negative linear and quadratic terms for <code>Elevation</code> suggest occurrence probability peaks at mid-elevations.</p>
 </div>
 <div id="convergence-diagnostics" class="section level2">
@@ -351,9 +351,9 @@ I(scale(day)^2) -0.1534 -0.0407  0.0241  0.0875 0.2020</code></pre>
 <pre><code>Potential scale reduction factors:
 
                       Point est. Upper C.I.
-(Intercept)                 1.00       1.01
+(Intercept)                 1.00       1.00
 scale(Elevation)            1.01       1.03
-I(scale(Elevation)^2)       1.01       1.02
+I(scale(Elevation)^2)       1.01       1.04
 
 Multivariate psrf
 
@@ -365,10 +365,10 @@ Multivariate psrf
 <pre><code>Potential scale reduction factors:
 
                 Point est. Upper C.I.
-(Intercept)          1.000       1.00
-scale(day)           1.002       1.01
-scale(tod)           1.001       1.01
-I(scale(day)^2)      0.999       1.00
+(Intercept)          1.001          1
+scale(day)           1.000          1
+scale(tod)           0.999          1
+I(scale(day)^2)      1.000          1
 
 Multivariate psrf
 
@@ -400,9 +400,9 @@ Burn-in: 3000
 Thin: 2
 Total Posterior Samples: 1000
 
-Bayesian p-value:  0.185 
+Bayesian p-value:  0.191 
 Fit statistic:  freeman-tukey </code></pre>
-<p>The Bayesian p-value is the proportion of posterior samples of the fit statistic of the model generated data that are greater than the corresponding fit statistic of the true data, summed across all “grouped” data points. We can create a visual representation of the Bayesian p-value as follows, which is highly motivated by <span class="citation">Kéry and Royle (2015)</span>.</p>
+<p>The Bayesian p-value is the proportion of posterior samples of the fit statistic of the model generated data that are greater than the corresponding fit statistic of the true data, summed across all “grouped” data points. We can create a visual representation of the Bayesian p-value as follows <span class="citation">(Kéry and Royle 2015)</span>:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ppc.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">ppc.out</span><span class="op">$</span><span class="va">fit.y</span>, 
                      fit.rep <span class="op">=</span> <span class="va">ppc.out</span><span class="op">$</span><span class="va">fit.y.rep</span>, 
@@ -433,7 +433,7 @@ Fit statistic:  freeman-tukey </code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></code></pre></div>
 <pre><code>       elpd          pD        WAIC 
--632.926606    6.247885 1278.348983 </code></pre>
+-632.939388    6.297987 1278.474749 </code></pre>
 <p>Next we rerun the OVEN model, but this time we assume occurrence is constant across the HBEF, and subsequently compare the WAIC value to the full model</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.small</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PGOcc.html">PGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, 
@@ -448,14 +448,14 @@ Fit statistic:  freeman-tukey </code></pre>
                    n.thin <span class="op">=</span> <span class="va">n.thin</span><span class="op">)</span>
 <span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.small</span><span class="op">)</span></code></pre></div>
 <pre><code>       elpd          pD        WAIC 
--692.072297    4.856254 1393.857102 </code></pre>
+-692.043309    4.876644 1393.839905 </code></pre>
 <p>Smaller values of WAIC indicate models with better performance. We see the WAIC for the model with elevation is smaller than the intercept only model, indicating elevation is an important predictor for OVEN occurrence in HBEF.</p>
 <p>When focused primarily on predictive performance, a k-fold cross-validation approach is another attractive (but more computationally intensive) alternative to compare a series of models, especially since WAIC may not always be reliable for occupancy models <span class="citation">(Broms, Hooten, and Fitzpatrick 2016)</span>. In <code>spOccupancy</code>, k-fold cross-validation is accomplished using the arguments <code>k.fold</code>, <code>k.fold.threads</code>, and <code>k.fold.seed</code> in the model fitting function. A k-fold cross validation approach requires fitting a model <span class="math inline">\(k\)</span> times, where each time the model is fit using <span class="math inline">\(J / k\)</span> data points, where <span class="math inline">\(J\)</span> is the total number of sites surveyed at least once in the data set. Each time the model is fit, it uses a different portion of the data and then predicts the remaining <span class="math inline">\(J - J/k\)</span> hold out values. Because the data are not used to fit the model, this yields true samples from the posterior predictive distribution that we can use to assess the predictive capacity of the model.</p>
 <p>As a measure of out-of-sample predictive performance, we use the deviance as a cross-validation score following <span class="citation">Hooten and Hobbs (2015)</span>. For K-fold cross-validation, our scoring function is computed as</p>
 <p><span class="math display">\[\begin{equation}
 -2 \sum_{k = 1}^K \text{log}\Bigg(\frac{\sum_{q = 1}^Q \text{Bernoulli}(\boldsymbol{y}_k \mid \boldsymbol{p}^{(q)}\boldsymbol{z}_k^{(q)})}{Q}\Bigg), 
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(\boldsymbol{p}^{(q)}\)</span> and <span class="math inline">\(\boldsymbol{z}_k^{(q)}\)</span> are MCMC samples of detection probability and latent occurrence, respectively, arising from a model that is fit without the observations <span class="math inline">\(\boldsymbol{y}_k\)</span>, and Q$ is the total number of posterior samples from the MCMC sampler. The -2 is used so that smaller values indicate better model fit, which aligns with most information criteria used for model assessment (like the WAIC implemented using <code><a href="../reference/waicOcc.html">waicOcc()</a></code>).</p>
+<p>where <span class="math inline">\(\boldsymbol{p}^{(q)}\)</span> and <span class="math inline">\(\boldsymbol{z}_k^{(q)}\)</span> are MCMC samples of detection probability and latent occurrence, respectively, arising from a model that is fit without the observations <span class="math inline">\(\boldsymbol{y}_k\)</span>, and <span class="math inline">\(Q\)</span> is the total number of posterior samples from the MCMC sampler. The -2 is used so that smaller values indicate better model fit, which aligns with most information criteria used for model assessment (like the WAIC implemented using <code><a href="../reference/waicOcc.html">waicOcc()</a></code>).</p>
 <p>The final three arguments (<code>k.fold</code>, <code>k.fold.threads</code>, <code>k.fold.seed</code>) in <code><a href="../reference/PGOcc.html">PGOcc()</a></code> control whether or not k-fold cross validation is performed following the complete fit of the model using the entire data set. The <code>k.fold</code> argument indicates the number of <span class="math inline">\(k\)</span> folds to use for cross-validation. If <code>k.fold</code> is not specified, cross-validation is not performed and <code>k.fold.threads</code> and <code>k.fold.seed</code> are ignored. The <code>k.fold.threads</code> argument indicates the number of threads to use for running the <span class="math inline">\(k\)</span> models in parallel across multiple threads. Parallel processing is accomplished using the R packages <code>foreach</code> and <code>doParallel</code>. Specifying <code>k.fold.threads &gt; 1</code> can substantially decrease run time since it allows for models to be fit simultaneously on different threads rather than sequentially. The <code>k.fold.seed</code> indicates the seed used to randomly split the data into <span class="math inline">\(k\)</span> groups. This is by default set to 100.</p>
 <p>Below we refit the occupancy model with elevation (linear and quadratic) as an occurrence predictor this time performing 4-fold cross-validation. We set <code>k.fold = 4</code> to perform 4-fold cross-validation and <code>k.fold.threads = 1</code> to run the model using 1 thread. Normally we would set <code>k.fold.threads = 4</code>, but using multiple threads leads to complications when compiling this vignette, so we leave that to you to explore the computational improvements of performing cross-validation across multiple cores. We subsequently refit the intercept only occupancy model, and compare the deviance metrics from the 4-fold cross-validation.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
@@ -521,10 +521,10 @@ Sampled: 5000 of 5000, 100.00%
 <p>The cross-validation metric (model deviance) is stored in the <code>k.fold.deviance</code> tag of the resulting model object.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1518.292</code></pre>
+<pre><code>[1] 1520.209</code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.int.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1532.871</code></pre>
+<pre><code>[1] 1532.275</code></pre>
 <p>Similar to the results from the WAIC, we see the model including elevation with a predictor outperforms the intercept only model.</p>
 </div>
 <div id="prediction" class="section level2">
@@ -548,7 +548,8 @@ Sampled: 5000 of 5000, 100.00%
 <code class="sourceCode R"><span class="va">plot.dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hbefElev</span><span class="op">$</span><span class="va">Easting</span>, 
                        y <span class="op">=</span> <span class="va">hbefElev</span><span class="op">$</span><span class="va">Northing</span>, 
                        mean.psi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">out.pred</span><span class="op">$</span><span class="va">psi.0.samples</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span>, 
-                       sd.psi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">out.pred</span><span class="op">$</span><span class="va">psi.0.samples</span>, <span class="fl">2</span>, <span class="va">sd</span><span class="op">)</span><span class="op">)</span>
+                       sd.psi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">out.pred</span><span class="op">$</span><span class="va">psi.0.samples</span>, <span class="fl">2</span>, <span class="va">sd</span><span class="op">)</span>, 
+               stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="va">dat.stars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/stars/reference/st_as_stars.html">st_as_stars</a></span><span class="op">(</span><span class="va">plot.dat</span>, dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="st">'y'</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
@@ -702,15 +703,15 @@ Adaptive Metropolis with target acceptance rate: 43.0
 Sampling ... 
 Batch: 100 of 400, 25.00%
     parameter   acceptance  tuning
-    phi     32.0        0.42741
+    phi     20.0        0.40252
 -------------------------------------------------
 Batch: 200 of 400, 50.00%
     parameter   acceptance  tuning
-    phi     52.0        0.29820
+    phi     32.0        0.30422
 -------------------------------------------------
 Batch: 300 of 400, 75.00%
     parameter   acceptance  tuning
-    phi     36.0        0.28650
+    phi     52.0        0.31664
 -------------------------------------------------
 Batch: 400 of 400, 100.00%</code></pre>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
@@ -742,21 +743,21 @@ Total Posterior Samples: 1000
 
 Occurrence: 
                          2.5%     25%     50%     75%   97.5%
-(Intercept)            1.8640  2.5163  2.9095  3.4169  4.5606
-scale(Elevation)      -3.8157 -2.8678 -2.4538 -2.0898 -1.6022
-I(scale(Elevation)^2) -1.3798 -0.9144 -0.6843 -0.4568 -0.0158
+(Intercept)            1.7048  2.5334  3.0266  3.5033  4.5483
+scale(Elevation)      -3.7423 -2.9058 -2.5023 -2.1738 -1.5217
+I(scale(Elevation)^2) -1.5299 -0.9976 -0.7292 -0.4910 -0.0149
 
 Detection: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)      0.5667  0.7368  0.8227  0.9038 1.0594
-scale(day)      -0.2394 -0.1427 -0.0942 -0.0394 0.0519
-scale(tod)      -0.1972 -0.0937 -0.0411  0.0081 0.1000
-I(scale(day)^2) -0.1623 -0.0406  0.0291  0.0935 0.2202
+(Intercept)      0.5966  0.7413  0.8225  0.9113 1.0606
+scale(day)      -0.2436 -0.1446 -0.0947 -0.0383 0.0665
+scale(tod)      -0.2014 -0.1005 -0.0476  0.0029 0.0899
+I(scale(day)^2) -0.1635 -0.0361  0.0235  0.0834 0.1985
 
 Covariance: 
            2.5%    25%    50%    75%   97.5%
-sigma.sq 1.4302 3.2186 4.9808 7.1836 14.2862
-phi      0.0009 0.0015 0.0020 0.0027  0.0043</code></pre>
+sigma.sq 1.4244 3.6259 5.3438 7.5034 14.1127
+phi      0.0009 0.0016 0.0020 0.0026  0.0039</code></pre>
 <p>We see <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code> returns a list of class <code>spPGOcc</code> and consists of posterior samples for all parameters. Note that posterior samples for spatial parameters are stored in the list element <code>theta.samples</code>.</p>
 </div>
 <div id="convergence-diagnostics-1" class="section level2">
@@ -791,7 +792,7 @@ Burn-in: 2000
 Thin: 8
 Total Posterior Samples: 1000
 
-Bayesian p-value:  0.778 
+Bayesian p-value:  0.801 
 Fit statistic:  freeman-tukey </code></pre>
 <p>The Bayesian p-value indicates adequate model fit of the spatial occupancy model.</p>
 </div>
@@ -802,12 +803,12 @@ Fit statistic:  freeman-tukey </code></pre>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.sp</span><span class="op">)</span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--566.98570   47.97119 1229.91377 </code></pre>
+-565.55907   48.65455 1228.42723 </code></pre>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Compare to non-spatial model</span>
 <span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></code></pre></div>
 <pre><code>       elpd          pD        WAIC 
--632.926606    6.247885 1278.348983 </code></pre>
+-632.939388    6.297987 1278.474749 </code></pre>
 <p>We see the WAIC value for the spatial model is smaller than that of the nonspatial model, indicating that incorporation of the spatial random effects yields improvement in predictive performance.</p>
 <p>k-fold cross-validation is accomplished by specifying the <code>k.fold</code> argument in <code>spPGOcc</code> just as we saw in <code>PGOcc</code>.</p>
 </div>
@@ -966,7 +967,7 @@ Sampled: 20000 of 20000, 100.00%</code></pre>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.ms</span><span class="op">$</span><span class="va">run.time</span></code></pre></div>
 <pre><code>   user  system elapsed 
-177.605   0.069 177.737 </code></pre>
+153.462   0.027 153.517 </code></pre>
 <p>We see <code><a href="../reference/msPGOcc.html">msPGOcc()</a></code> took less than 3 minutes to run the multispecies occupancy model with 373 sites and 12 species for a total of 20,000 iterations. The resulting object <code>out.ms</code> is a list of class <code><a href="../reference/msPGOcc.html">msPGOcc()</a></code> consisting primarily of posterior samples of all community and species level parameters, as well as some additional objects that are used for summaries, prediction, and model fit evaluation. We can display a nice summary of these results using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function. For multispecies objects, when using summary we need to specify the level of parameters we want to summarize. We do this using the argument <code>level</code>, which takes values <code>community</code>, <code>species</code>, or <code>both</code> to print results for community-level parameters, species-level parameters, or all parameters. <code>level</code> is the second argument, so we can also avoid typing it out explicitly every time we want to call it</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">out.ms</span>, level <span class="op">=</span> <span class="st">'both'</span><span class="op">)</span></code></pre></div>
@@ -988,122 +989,122 @@ Total Posterior Samples: 1000
 ----------------------------------------
 Occurrence Means: 
                          2.5%     25%     50%     75%  97.5%
-(Intercept)           -1.3379 -0.1706  0.4171  0.9602 2.2428
-scale(Elevation)      -0.7511 -0.0335  0.2932  0.6188 1.2336
-I(scale(Elevation)^2) -0.6715 -0.3728 -0.2112 -0.0476 0.2817
+(Intercept)           -1.1674 -0.1434  0.3722  0.9592 2.1565
+scale(Elevation)      -0.7468 -0.0378  0.2963  0.6409 1.3294
+I(scale(Elevation)^2) -0.7241 -0.3664 -0.2223 -0.0872 0.2958
 
 Occurrence Variances: 
-                        2.5%    25%    50%     75%   97.5%
-(Intercept)           4.0772 7.2815 9.8399 14.0423 31.9594
-scale(Elevation)      1.0165 1.8327 2.6076  3.6402  7.5717
-I(scale(Elevation)^2) 0.1528 0.3257 0.5015  0.7567  1.8345
+                        2.5%    25%     50%     75%   97.5%
+(Intercept)           4.4527 7.2311 10.0068 14.1847 34.0497
+scale(Elevation)      1.0152 1.7255  2.5276  3.6466  7.9175
+I(scale(Elevation)^2) 0.1472 0.3109  0.4567  0.6837  1.5888
 
 Detection Means: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)     -1.7178 -1.0931 -0.7800 -0.4911 0.0915
-scale(day)      -0.1303  0.0039  0.0540  0.1138 0.2306
-scale(tod)      -0.1929 -0.0907 -0.0402  0.0108 0.1071
-I(scale(day)^2) -0.2094 -0.0850 -0.0191  0.0329 0.1506
+(Intercept)     -1.6106 -1.0276 -0.7525 -0.4765 0.1162
+scale(day)      -0.1076 -0.0016  0.0541  0.1078 0.2243
+scale(tod)      -0.1908 -0.0863 -0.0374  0.0065 0.1076
+I(scale(day)^2) -0.2060 -0.0797 -0.0236  0.0300 0.1367
 
 Detection Variances: 
                   2.5%    25%    50%    75%  97.5%
-(Intercept)     0.9072 1.5753 2.2088 3.1974 6.9694
-scale(day)      0.0249 0.0404 0.0569 0.0807 0.1687
-scale(tod)      0.0154 0.0288 0.0404 0.0575 0.1466
-I(scale(day)^2) 0.0179 0.0327 0.0490 0.0700 0.1702
+(Intercept)     0.8906 1.5137 2.1419 3.0173 6.3253
+scale(day)      0.0229 0.0395 0.0558 0.0776 0.1713
+scale(tod)      0.0164 0.0290 0.0410 0.0589 0.1377
+I(scale(day)^2) 0.0182 0.0324 0.0466 0.0681 0.1453
 
 ----------------------------------------
     Species Level
 ----------------------------------------
 Occurrence: 
                               2.5%     25%     50%     75%   97.5%
-(Intercept)-AMRE           -4.5295 -3.3091 -2.5244 -1.2865  2.3699
-(Intercept)-BAWW           -0.1338  1.1354  2.0602  3.3248  6.6132
-(Intercept)-BHVI            0.0945  1.4192  2.9775  5.1950 10.3564
-(Intercept)-BLBW            1.7166  2.1501  2.4227  2.8068  4.2020
-(Intercept)-BLPW           -5.9108 -5.0269 -4.6061 -4.2551 -3.4801
-(Intercept)-BTBW            2.8180  3.3220  3.6144  3.9370  4.7970
-(Intercept)-BTNW            1.8561  2.1750  2.3825  2.6209  3.2183
-(Intercept)-CAWA           -3.0714 -2.4576 -2.1416 -1.7507 -0.5481
-(Intercept)-MAWA           -2.2140 -1.8793 -1.7195 -1.5428 -1.1668
-(Intercept)-NAWA           -3.6183 -2.9072 -2.5208 -2.1631 -1.4682
-(Intercept)-OVEN            1.6425  1.9717  2.1478  2.3255  2.7516
-(Intercept)-REVI            2.3821  2.8431  3.1141  3.4387  4.3405
-scale(Elevation)-AMRE      -1.1011  0.2624  0.7120  1.2973  2.7352
-scale(Elevation)-BAWW      -3.6094 -1.0111 -0.5009 -0.1157  1.3984
-scale(Elevation)-BHVI      -2.0112 -0.5676  0.1987  0.8701  2.3147
-scale(Elevation)-BLBW      -0.9932 -0.5389 -0.3967 -0.2682 -0.0640
-scale(Elevation)-BLPW       1.6972  2.2161  2.6239  3.0643  4.1115
-scale(Elevation)-BTBW      -0.8750 -0.6111 -0.4955 -0.3796 -0.1810
-scale(Elevation)-BTNW       0.2188  0.4533  0.6168  0.8072  1.3888
-scale(Elevation)-CAWA       0.8682  1.4287  1.7863  2.2446  3.4516
-scale(Elevation)-MAWA       1.0924  1.3619  1.5493  1.7528  2.1691
-scale(Elevation)-NAWA       0.5431  0.9125  1.1266  1.3789  1.9708
-scale(Elevation)-OVEN      -2.2732 -1.8298 -1.6556 -1.4889 -1.2180
-scale(Elevation)-REVI      -3.9012 -2.6071 -2.1054 -1.6844 -1.1427
-I(scale(Elevation)^2)-AMRE -2.0841 -1.1221 -0.6945 -0.3300  0.4041
-I(scale(Elevation)^2)-BAWW -2.0182 -1.3646 -1.0145 -0.6553  0.2636
-I(scale(Elevation)^2)-BHVI -0.8406  0.0212  0.3867  0.8572  2.2390
-I(scale(Elevation)^2)-BLBW -1.0261 -0.6812 -0.5495 -0.4477 -0.2635
-I(scale(Elevation)^2)-BLPW -0.0825  0.5159  0.7944  1.0347  1.4402
-I(scale(Elevation)^2)-BTBW -1.3880 -1.1275 -1.0208 -0.9188 -0.7382
-I(scale(Elevation)^2)-BTNW -0.4477 -0.2552 -0.1504 -0.0310  0.2498
-I(scale(Elevation)^2)-CAWA -1.4081 -0.7226 -0.4491 -0.1985  0.3475
-I(scale(Elevation)^2)-MAWA -0.1679  0.1295  0.2842  0.4510  0.7648
-I(scale(Elevation)^2)-NAWA -0.2440  0.1233  0.2924  0.4671  0.8708
-I(scale(Elevation)^2)-OVEN -0.7597 -0.5534 -0.4360 -0.3092 -0.0114
-I(scale(Elevation)^2)-REVI -0.6332 -0.2595 -0.0081  0.2422  0.7429
+(Intercept)-AMRE           -4.7455 -3.5230 -2.6948 -1.5687  2.9051
+(Intercept)-BAWW           -0.0939  0.9627  1.6113  2.6925  4.5317
+(Intercept)-BHVI            0.1358  1.7296  3.7029  6.0122 13.4476
+(Intercept)-BLBW            1.7266  2.1648  2.4338  2.7990  4.3383
+(Intercept)-BLPW           -5.9659 -5.0322 -4.6216 -4.2452 -3.6219
+(Intercept)-BTBW            2.8030  3.2905  3.5685  3.9299  4.6465
+(Intercept)-BTNW            1.8421  2.1864  2.3997  2.6200  3.1849
+(Intercept)-CAWA           -3.2245 -2.5801 -2.2236 -1.8854 -1.1395
+(Intercept)-MAWA           -2.1986 -1.8796 -1.7064 -1.5201 -1.1526
+(Intercept)-NAWA           -3.5178 -2.8713 -2.5023 -2.1308 -1.3682
+(Intercept)-OVEN            1.6602  1.9634  2.1394  2.3399  2.7382
+(Intercept)-REVI            2.3269  2.8099  3.0477  3.3729  4.2241
+scale(Elevation)-AMRE      -0.5079  0.4078  0.9134  1.5693  3.4387
+scale(Elevation)-BAWW      -3.5585 -1.0485 -0.5582 -0.1469  0.6697
+scale(Elevation)-BHVI      -2.5489 -0.5056  0.0917  0.7763  2.4391
+scale(Elevation)-BLBW      -1.0737 -0.5415 -0.4055 -0.2787 -0.0267
+scale(Elevation)-BLPW       1.7931  2.2917  2.6498  3.1598  4.1931
+scale(Elevation)-BTBW      -0.8480 -0.6072 -0.4952 -0.3768 -0.1843
+scale(Elevation)-BTNW       0.2186  0.4648  0.6197  0.8162  1.3220
+scale(Elevation)-CAWA       0.9367  1.4670  1.8403  2.2035  3.2684
+scale(Elevation)-MAWA       1.0489  1.3824  1.5552  1.7478  2.1517
+scale(Elevation)-NAWA       0.5727  0.9198  1.1466  1.3880  1.9433
+scale(Elevation)-OVEN      -2.2908 -1.8225 -1.6388 -1.4721 -1.1971
+scale(Elevation)-REVI      -3.5864 -2.4651 -1.9691 -1.5628 -1.0470
+I(scale(Elevation)^2)-AMRE -1.9074 -1.0203 -0.6432 -0.3057  0.5394
+I(scale(Elevation)^2)-BAWW -1.9382 -1.2439 -0.9742 -0.7084  0.2309
+I(scale(Elevation)^2)-BHVI -1.0179 -0.1278  0.2968  0.7472  1.7699
+I(scale(Elevation)^2)-BLBW -1.0258 -0.6727 -0.5514 -0.4504 -0.2437
+I(scale(Elevation)^2)-BLPW -0.0961  0.4679  0.7421  0.9924  1.4558
+I(scale(Elevation)^2)-BTBW -1.3433 -1.1360 -1.0138 -0.9051 -0.7326
+I(scale(Elevation)^2)-BTNW -0.4484 -0.2554 -0.1457 -0.0348  0.2062
+I(scale(Elevation)^2)-CAWA -1.3673 -0.7876 -0.5360 -0.3171  0.1737
+I(scale(Elevation)^2)-MAWA -0.1473  0.1376  0.2993  0.4419  0.7697
+I(scale(Elevation)^2)-NAWA -0.2314  0.1064  0.2861  0.4538  0.8005
+I(scale(Elevation)^2)-OVEN -0.7856 -0.5601 -0.4426 -0.3124 -0.0262
+I(scale(Elevation)^2)-REVI -0.6605 -0.3235 -0.0737  0.1784  0.6402
 
 Detection: 
                         2.5%     25%     50%     75%   97.5%
-(Intercept)-AMRE     -5.3619 -3.5961 -2.5999 -1.6812 -0.4293
-(Intercept)-BAWW     -3.4370 -3.0075 -2.7965 -2.5274 -1.8519
-(Intercept)-BHVI     -3.1347 -2.8789 -2.7417 -2.5607 -2.1556
-(Intercept)-BLBW     -0.2943 -0.1346 -0.0470  0.0441  0.2207
-(Intercept)-BLPW     -0.9998 -0.6398 -0.4679 -0.2863  0.0340
-(Intercept)-BTBW      0.4227  0.5616  0.6330  0.7052  0.8508
-(Intercept)-BTNW      0.3656  0.5144  0.5893  0.6615  0.8042
-(Intercept)-CAWA     -2.8158 -1.9982 -1.5885 -1.2452 -0.6366
-(Intercept)-MAWA     -1.2122 -0.9257 -0.7647 -0.6122 -0.3234
-(Intercept)-NAWA     -2.5054 -1.8621 -1.5197 -1.1656 -0.6108
-(Intercept)-OVEN      0.5559  0.7174  0.7992  0.8811  1.0065
-(Intercept)-REVI      0.3251  0.4665  0.5433  0.6150  0.7684
-scale(day)-AMRE      -0.4562 -0.1125  0.0433  0.1971  0.5406
-scale(day)-BAWW      -0.0464  0.1115  0.2062  0.3105  0.4885
-scale(day)-BHVI      -0.0352  0.1175  0.1975  0.2770  0.4380
-scale(day)-BLBW      -0.3688 -0.2683 -0.2228 -0.1748 -0.0878
-scale(day)-BLPW      -0.2558 -0.0519  0.0615  0.1706  0.3856
-scale(day)-BTBW       0.1319  0.2245  0.2656  0.3109  0.3931
-scale(day)-BTNW       0.0153  0.1050  0.1528  0.1928  0.2816
-scale(day)-CAWA      -0.3608 -0.1259 -0.0293  0.0953  0.3334
-scale(day)-MAWA      -0.1445  0.0186  0.1060  0.1887  0.3646
-scale(day)-NAWA      -0.3274 -0.1037  0.0109  0.1276  0.3710
-scale(day)-OVEN      -0.2199 -0.1260 -0.0750 -0.0257  0.0764
-scale(day)-REVI      -0.1975 -0.1164 -0.0668 -0.0255  0.0622
-scale(tod)-AMRE      -0.4443 -0.1615 -0.0351  0.0959  0.3707
-scale(tod)-BAWW      -0.4633 -0.2716 -0.1820 -0.0897  0.0731
-scale(tod)-BHVI      -0.2857 -0.1181 -0.0502  0.0190  0.1689
-scale(tod)-BLBW      -0.0687  0.0109  0.0581  0.1040  0.1858
-scale(tod)-BLPW      -0.1828  0.0062  0.1038  0.2032  0.3941
-scale(tod)-BTBW      -0.1676 -0.0785 -0.0339  0.0080  0.0960
-scale(tod)-BTNW      -0.0892 -0.0046  0.0377  0.0792  0.1659
-scale(tod)-CAWA      -0.5739 -0.3069 -0.2008 -0.1002  0.0687
-scale(tod)-MAWA      -0.2097 -0.0562  0.0220  0.1006  0.2491
-scale(tod)-NAWA      -0.3777 -0.1762 -0.0835  0.0265  0.2371
-scale(tod)-OVEN      -0.1873 -0.0921 -0.0442  0.0037  0.0896
-scale(tod)-REVI      -0.1886 -0.1214 -0.0793 -0.0317  0.0506
-I(scale(day)^2)-AMRE -0.6215 -0.2561 -0.1067  0.0433  0.2841
-I(scale(day)^2)-BAWW -0.3446 -0.1301 -0.0234  0.0729  0.2629
-I(scale(day)^2)-BHVI -0.2134 -0.0399  0.0525  0.1373  0.3149
-I(scale(day)^2)-BLBW -0.3480 -0.2193 -0.1721 -0.1168 -0.0240
-I(scale(day)^2)-BLPW -0.1320  0.0724  0.1976  0.3238  0.5969
-I(scale(day)^2)-BTBW -0.2120 -0.1154 -0.0643 -0.0150  0.0853
-I(scale(day)^2)-BTNW -0.2106 -0.1111 -0.0576 -0.0088  0.0831
-I(scale(day)^2)-CAWA -0.3973 -0.1572 -0.0409  0.0747  0.3115
-I(scale(day)^2)-MAWA -0.2599 -0.0878  0.0025  0.0961  0.2789
-I(scale(day)^2)-NAWA -0.5274 -0.2504 -0.1226 -0.0063  0.2013
-I(scale(day)^2)-OVEN -0.1593 -0.0390  0.0172  0.0723  0.1804
-I(scale(day)^2)-REVI -0.1206 -0.0177  0.0371  0.0915  0.1986</code></pre>
+(Intercept)-AMRE     -5.5229 -3.5190 -2.4385 -1.5607 -0.3273
+(Intercept)-BAWW     -3.2862 -2.8996 -2.6907 -2.4617 -1.8826
+(Intercept)-BHVI     -3.1377 -2.8832 -2.7498 -2.5973 -2.2487
+(Intercept)-BLBW     -0.2956 -0.1307 -0.0451  0.0463  0.2028
+(Intercept)-BLPW     -1.0282 -0.6236 -0.4617 -0.2788  0.0708
+(Intercept)-BTBW      0.4226  0.5497  0.6313  0.7036  0.8619
+(Intercept)-BTNW      0.3503  0.5116  0.5927  0.6648  0.8187
+(Intercept)-CAWA     -2.5337 -1.8278 -1.4742 -1.1118 -0.4749
+(Intercept)-MAWA     -1.2342 -0.9380 -0.7700 -0.6204 -0.3237
+(Intercept)-NAWA     -2.5358 -1.8728 -1.5142 -1.1704 -0.6173
+(Intercept)-OVEN      0.5686  0.7201  0.8013  0.8812  1.0401
+(Intercept)-REVI      0.3206  0.4724  0.5450  0.6226  0.7638
+scale(day)-AMRE      -0.4451 -0.1203  0.0246  0.1900  0.4648
+scale(day)-BAWW      -0.0491  0.1198  0.2021  0.2990  0.5062
+scale(day)-BHVI      -0.0247  0.1211  0.2034  0.2858  0.4341
+scale(day)-BLBW      -0.3616 -0.2717 -0.2260 -0.1829 -0.0881
+scale(day)-BLPW      -0.2453 -0.0315  0.0614  0.1613  0.3883
+scale(day)-BTBW       0.1364  0.2245  0.2732  0.3150  0.3959
+scale(day)-BTNW       0.0273  0.1034  0.1447  0.1878  0.2738
+scale(day)-CAWA      -0.3879 -0.1417 -0.0158  0.0995  0.2885
+scale(day)-MAWA      -0.1265  0.0244  0.1117  0.1958  0.3554
+scale(day)-NAWA      -0.3205 -0.0920  0.0294  0.1370  0.3432
+scale(day)-OVEN      -0.2213 -0.1210 -0.0751 -0.0219  0.0692
+scale(day)-REVI      -0.2063 -0.1225 -0.0716 -0.0268  0.0585
+scale(tod)-AMRE      -0.5248 -0.1813 -0.0388  0.1049  0.4102
+scale(tod)-BAWW      -0.4747 -0.2687 -0.1785 -0.0961  0.0710
+scale(tod)-BHVI      -0.2567 -0.1208 -0.0519  0.0258  0.1585
+scale(tod)-BLBW      -0.0708  0.0128  0.0620  0.1031  0.1822
+scale(tod)-BLPW      -0.1554  0.0186  0.1092  0.2103  0.4162
+scale(tod)-BTBW      -0.1542 -0.0789 -0.0353  0.0129  0.1035
+scale(tod)-BTNW      -0.0868 -0.0080  0.0384  0.0776  0.1648
+scale(tod)-CAWA      -0.5886 -0.3147 -0.1961 -0.0982  0.0805
+scale(tod)-MAWA      -0.1843 -0.0468  0.0277  0.1029  0.2471
+scale(tod)-NAWA      -0.3966 -0.1584 -0.0596  0.0342  0.2389
+scale(tod)-OVEN      -0.1863 -0.0965 -0.0480  0.0018  0.0859
+scale(tod)-REVI      -0.1978 -0.1189 -0.0760 -0.0316  0.0476
+I(scale(day)^2)-AMRE -0.5983 -0.2499 -0.1150  0.0293  0.3057
+I(scale(day)^2)-BAWW -0.3396 -0.1304 -0.0342  0.0565  0.2213
+I(scale(day)^2)-BHVI -0.1922 -0.0266  0.0523  0.1375  0.2959
+I(scale(day)^2)-BLBW -0.3251 -0.2220 -0.1688 -0.1178 -0.0255
+I(scale(day)^2)-BLPW -0.1606  0.0727  0.2011  0.3190  0.5751
+I(scale(day)^2)-BTBW -0.2173 -0.1136 -0.0576 -0.0018  0.1055
+I(scale(day)^2)-BTNW -0.2273 -0.1170 -0.0640 -0.0147  0.0834
+I(scale(day)^2)-CAWA -0.4114 -0.1577 -0.0504  0.0880  0.3335
+I(scale(day)^2)-MAWA -0.2620 -0.0875  0.0038  0.0980  0.3071
+I(scale(day)^2)-NAWA -0.5009 -0.2478 -0.1328 -0.0168  0.1673
+I(scale(day)^2)-OVEN -0.1451 -0.0386  0.0150  0.0692  0.1747
+I(scale(day)^2)-REVI -0.1141 -0.0176  0.0368  0.0942  0.1970</code></pre>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Or</span>
 <span class="co"># summary(out.ms, 'both')</span></code></pre></div>
@@ -1155,23 +1156,23 @@ Total Posterior Samples: 1000
 ----------------------------------------
     Community Level
 ----------------------------------------
-Bayesian p-value:  0.3636667 
+Bayesian p-value:  0.3745833 
 
 ----------------------------------------
     Species Level
 ----------------------------------------
-AMRE Bayesian p-value: 0.616
-BAWW Bayesian p-value: 0.637
-BHVI Bayesian p-value: 0.567
-BLBW Bayesian p-value: 0.099
-BLPW Bayesian p-value: 0.632
-BTBW Bayesian p-value: 0.207
-BTNW Bayesian p-value: 0.043
-CAWA Bayesian p-value: 0.407
-MAWA Bayesian p-value: 0.488
-NAWA Bayesian p-value: 0.524
-OVEN Bayesian p-value: 0.057
-REVI Bayesian p-value: 0.087
+AMRE Bayesian p-value: 0.622
+BAWW Bayesian p-value: 0.666
+BHVI Bayesian p-value: 0.582
+BLBW Bayesian p-value: 0.081
+BLPW Bayesian p-value: 0.604
+BTBW Bayesian p-value: 0.233
+BTNW Bayesian p-value: 0.049
+CAWA Bayesian p-value: 0.485
+MAWA Bayesian p-value: 0.497
+NAWA Bayesian p-value: 0.526
+OVEN Bayesian p-value: 0.062
+REVI Bayesian p-value: 0.088
 Fit statistic:  chi-square </code></pre>
 <p>The Bayesian p-value for the overall community suggests an adequate model fit, but looking closer at each individual species reveals the model may not be fitting well for all species. We should explore this further in a complete analysis (and also of course run the model longer to ensure convergence, as this is likely contributing to many of the extreme values).</p>
 </div>
@@ -1182,7 +1183,7 @@ Fit statistic:  chi-square </code></pre>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.ms</span><span class="op">)</span></code></pre></div>
 <pre><code>       elpd          pD        WAIC 
--4532.06692    65.85188  9195.83758 </code></pre>
+-4531.66364    65.19794  9193.72317 </code></pre>
 <p>k-fold cross-validation is again accomplished using the <code>k.fold</code> argument as we have seen previously. For multispecies occupancy models, using multiple threads can greatly reduce the time needed for k-fold cross-validation, so we encourage the use of multiple threads if such computing power is readily available. Using up to <span class="math inline">\(k\)</span> threads will generally involve substnatial decreases in run time. For multispecies models, a separate deviance measure is reported for each species as a measure of predictive capacity, allowing for comparisons across multiple models for individual species, as well as for the entire community (by summing all species-specific values).</p>
 </div>
 <div id="prediction-2" class="section level2">
@@ -1318,46 +1319,46 @@ Adaptive Metropolis with target acceptance rate: 43.0
 Sampling ... 
 Batch: 100 of 400, 25.00%
     parameter   acceptance  tuning
-    phi[0]      56.0        0.64201
-    phi[1]      84.0        0.58092
-    phi[2]      24.0        0.66821
-    phi[3]      80.0        0.54709
-    phi[4]      80.0        0.42183
-    phi[5]      80.0        0.38940
-    phi[6]      48.0        0.39727
-    phi[7]      52.0        0.33853
-    phi[8]      56.0        0.30025
-    phi[9]      52.0        0.92022
-    phi[10]     40.0        0.31881
-    phi[11]     56.0        0.38940
+    phi[0]      60.0        0.52564
+    phi[1]      76.0        0.78416
+    phi[2]      32.0        0.90199
+    phi[3]      24.0        0.53625
+    phi[4]      28.0        0.37413
+    phi[5]      36.0        0.37413
+    phi[6]      80.0        0.52564
+    phi[7]      28.0        0.43035
+    phi[8]      36.0        0.31250
+    phi[9]      8.0     0.73849
+    phi[10]     32.0        0.31250
+    phi[11]     24.0        0.42183
 Batch: 200 of 400, 50.00%
     parameter   acceptance  tuning
-    phi[0]      72.0        0.73849
-    phi[1]      40.0        0.46620
-    phi[2]      16.0        0.78416
-    phi[3]      20.0        0.59265
-    phi[4]      24.0        0.40529
-    phi[5]      48.0        0.59265
-    phi[6]      24.0        0.45697
-    phi[7]      36.0        0.51523
-    phi[8]      52.0        0.35946
-    phi[9]      32.0        1.07988
-    phi[10]     60.0        0.32525
-    phi[11]     44.0        0.35234
+    phi[0]      52.0        0.84947
+    phi[1]      52.0        0.99686
+    phi[2]      56.0        1.26725
+    phi[3]      60.0        0.56941
+    phi[4]      48.0        0.30025
+    phi[5]      40.0        0.34537
+    phi[6]      100.0       0.51523
+    phi[7]      44.0        0.35946
+    phi[8]      48.0        0.30025
+    phi[9]      64.0        0.88413
+    phi[10]     40.0        0.29430
+    phi[11]     68.0        0.48522
 Batch: 300 of 400, 75.00%
     parameter   acceptance  tuning
-    phi[0]      68.0        1.10170
-    phi[1]      80.0        0.73849
-    phi[2]      52.0        1.16982
-    phi[3]      48.0        0.65498
-    phi[4]      40.0        0.34537
-    phi[5]      36.0        0.35234
-    phi[6]      76.0        0.44792
-    phi[7]      76.0        0.54709
-    phi[8]      52.0        0.31881
-    phi[9]      32.0        0.93881
-    phi[10]     36.0        0.31250
-    phi[11]     40.0        0.41348
+    phi[0]      4.0     0.78416
+    phi[1]      76.0        0.90199
+    phi[2]      56.0        1.42883
+    phi[3]      28.0        0.65498
+    phi[4]      64.0        0.38169
+    phi[5]      92.0        0.33183
+    phi[6]      32.0        0.41348
+    phi[7]      48.0        0.46620
+    phi[8]      32.0        0.31881
+    phi[9]      88.0        1.16982
+    phi[10]     40.0        0.28847
+    phi[11]     64.0        0.35946
 Batch: 400 of 400, 100.00%</code></pre>
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">out.sp.ms</span>, level <span class="op">=</span> <span class="st">'both'</span><span class="op">)</span></code></pre></div>
@@ -1380,150 +1381,150 @@ Total Posterior Samples: 1000
     Community Level
 ----------------------------------------
 Occurrence Means: 
-                         2.5%     25%     50%     75%  97.5%
-(Intercept)           -1.5010 -0.2897  0.4476  1.0733 2.2481
-scale(Elevation)      -1.1725 -0.1494  0.2908  0.7159 1.4847
-I(scale(Elevation)^2) -0.9289 -0.4849 -0.2683 -0.0546 0.4147
+                         2.5%     25%     50%    75%  97.5%
+(Intercept)           -1.5147 -0.0297  0.6581 1.3952 2.8082
+scale(Elevation)      -1.3452 -0.2264  0.2667 0.7643 1.7833
+I(scale(Elevation)^2) -0.9054 -0.4496 -0.2263 0.0047 0.5024
 
 Occurrence Variances: 
                         2.5%     25%     50%     75%   97.5%
-(Intercept)           7.7699 12.4935 17.3545 25.2675 51.7293
-scale(Elevation)      1.8314  3.3000  4.6838  7.1998 16.1313
-I(scale(Elevation)^2) 0.2820  0.5878  0.8992  1.4589  4.4267
+(Intercept)           8.1663 14.8386 20.5031 30.4290 69.1727
+scale(Elevation)      2.3501  4.6061  6.8199 10.2519 21.8341
+I(scale(Elevation)^2) 0.2583  0.5760  0.9004  1.3929  3.2332
 
 Detection Means: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)     -1.6112 -1.0071 -0.7083 -0.4323 0.1746
-scale(day)      -0.1189  0.0034  0.0534  0.1089 0.2201
-scale(tod)      -0.2094 -0.0923 -0.0408  0.0101 0.1072
-I(scale(day)^2) -0.1951 -0.0853 -0.0263  0.0274 0.1353
+(Intercept)     -1.8214 -1.1799 -0.8680 -0.5673 0.1608
+scale(day)      -0.1148  0.0022  0.0615  0.1146 0.2256
+scale(tod)      -0.1904 -0.0877 -0.0373  0.0089 0.1062
+I(scale(day)^2) -0.2024 -0.0782 -0.0239  0.0376 0.1458
 
 Detection Variances: 
                   2.5%    25%    50%    75%  97.5%
-(Intercept)     0.8508 1.4525 1.9733 2.9009 6.2421
-scale(day)      0.0236 0.0432 0.0590 0.0818 0.1778
-scale(tod)      0.0163 0.0287 0.0412 0.0589 0.1404
-I(scale(day)^2) 0.0187 0.0322 0.0468 0.0673 0.1660
+(Intercept)     1.1240 2.1359 3.0319 4.1930 8.1738
+scale(day)      0.0240 0.0400 0.0554 0.0800 0.1624
+scale(tod)      0.0167 0.0292 0.0409 0.0610 0.1370
+I(scale(day)^2) 0.0184 0.0340 0.0485 0.0709 0.1551
 
 ----------------------------------------
     Species Level
 ----------------------------------------
 Occurrence: 
                               2.5%     25%     50%     75%   97.5%
-(Intercept)-AMRE           -5.4358 -4.1628 -3.1790 -2.0471  0.8178
-(Intercept)-BAWW           -0.7214  0.5453  1.5467  3.1752  8.3676
-(Intercept)-BHVI           -0.4657  1.2242  2.9970  5.6478 10.7256
-(Intercept)-BLBW            1.8594  2.5380  3.0517  3.6799  4.9619
-(Intercept)-BLPW           -7.5730 -6.0499 -5.4496 -4.9351 -4.1547
-(Intercept)-BTBW            3.3103  4.0582  4.5346  5.2007  8.1927
-(Intercept)-BTNW            2.2725  2.8766  3.6063  4.8889  7.5057
-(Intercept)-CAWA           -4.5108 -3.3440 -2.8280 -2.3854 -1.5814
-(Intercept)-MAWA           -7.4237 -4.4999 -3.4746 -2.7639 -1.3226
-(Intercept)-NAWA           -4.9350 -3.7599 -3.2153 -2.7531 -1.6627
-(Intercept)-OVEN            2.3412  3.1277  3.7117  4.4714  7.7475
-(Intercept)-REVI            2.9043  3.5780  4.1066  4.9157  7.3915
-scale(Elevation)-AMRE      -0.7652  0.3932  0.9731  1.6683  3.4366
-scale(Elevation)-BAWW      -5.2146 -1.1871 -0.6314 -0.2121  0.4070
-scale(Elevation)-BHVI      -2.9178 -0.7604  0.2277  0.9791  2.9476
-scale(Elevation)-BLBW      -1.0872 -0.6337 -0.4465 -0.2775  0.0090
-scale(Elevation)-BLPW       1.9100  2.5169  2.8796  3.3779  4.4508
-scale(Elevation)-BTBW      -1.1462 -0.7553 -0.5853 -0.4189 -0.0982
-scale(Elevation)-BTNW       0.2389  0.6503  0.9191  1.2666  2.4260
-scale(Elevation)-CAWA       0.9951  1.6846  2.2067  2.7863  3.9553
-scale(Elevation)-MAWA       1.7384  2.4935  2.9901  3.6638  5.5780
-scale(Elevation)-NAWA       0.6007  1.0672  1.3153  1.6323  2.6013
-scale(Elevation)-OVEN      -6.3274 -3.5498 -2.9277 -2.4334 -1.7345
-scale(Elevation)-REVI      -5.5163 -3.3585 -2.6114 -2.0613 -1.3359
-I(scale(Elevation)^2)-AMRE -2.3846 -1.3401 -0.8350 -0.4830  0.3110
-I(scale(Elevation)^2)-BAWW -2.7844 -1.5294 -1.1758 -0.8471  0.1058
-I(scale(Elevation)^2)-BHVI -1.0686 -0.0126  0.5455  1.2432  3.4975
-I(scale(Elevation)^2)-BLBW -1.2259 -0.8584 -0.6853 -0.5412 -0.2489
-I(scale(Elevation)^2)-BLPW  0.0733  0.7110  1.0221  1.3083  2.0119
-I(scale(Elevation)^2)-BTBW -2.4476 -1.5476 -1.3063 -1.1415 -0.9178
-I(scale(Elevation)^2)-BTNW -0.8048 -0.3891 -0.2059 -0.0373  0.4293
-I(scale(Elevation)^2)-CAWA -1.7436 -1.0278 -0.6718 -0.3402  0.2211
-I(scale(Elevation)^2)-MAWA -0.1659  0.3099  0.6264  0.9849  1.9287
-I(scale(Elevation)^2)-NAWA -0.2428  0.1755  0.3863  0.6014  1.1881
-I(scale(Elevation)^2)-OVEN -2.0516 -1.0999 -0.8245 -0.5360  0.0836
-I(scale(Elevation)^2)-REVI -0.9651 -0.4386 -0.0860  0.2422  0.9878
+(Intercept)-AMRE           -7.0184 -1.4887  0.4120  2.1041 10.5938
+(Intercept)-BAWW           -0.4844  1.7676  3.5901  5.5563 10.8423
+(Intercept)-BHVI           -0.0488  2.8788  5.8778  8.2045 12.7793
+(Intercept)-BLBW            2.0900  2.7268  3.2245  3.9150  6.7417
+(Intercept)-BLPW           -9.5447 -6.8079 -6.0208 -5.3651 -4.4501
+(Intercept)-BTBW            3.3325  4.0476  4.6432  5.3927  8.0150
+(Intercept)-BTNW            2.1804  2.8009  3.3701  4.0689  5.9717
+(Intercept)-CAWA           -6.2369 -3.9329 -3.0663 -2.4868 -1.6580
+(Intercept)-MAWA           -7.9887 -4.6660 -3.8234 -3.1755 -2.2595
+(Intercept)-NAWA           -4.3127 -3.4631 -2.9867 -2.5342 -1.1195
+(Intercept)-OVEN            2.1101  3.0274  3.5544  4.1551  5.7770
+(Intercept)-REVI            3.0366  3.8989  4.4965  5.2606  8.9160
+scale(Elevation)-AMRE      -2.4835 -0.0372  0.9437  2.5408  7.1346
+scale(Elevation)-BAWW      -7.8651 -3.8118 -1.4471 -0.5514  0.5944
+scale(Elevation)-BHVI      -3.0426 -0.9082  0.2068  1.3196  4.0218
+scale(Elevation)-BLBW      -1.4417 -0.7134 -0.4908 -0.3122  0.0653
+scale(Elevation)-BLPW       2.0150  2.8069  3.2923  4.0146  5.9509
+scale(Elevation)-BTBW      -1.3712 -0.8069 -0.6033 -0.4417 -0.1239
+scale(Elevation)-BTNW       0.1885  0.5731  0.8213  1.1317  1.8509
+scale(Elevation)-CAWA       1.0806  1.8893  2.3913  3.0662  4.9506
+scale(Elevation)-MAWA       1.7207  2.5593  3.0927  3.8947  6.5739
+scale(Elevation)-NAWA       0.6264  1.0358  1.2969  1.5836  2.6545
+scale(Elevation)-OVEN      -4.6135 -3.3837 -2.9412 -2.4534 -1.7570
+scale(Elevation)-REVI      -6.4107 -4.1393 -3.2739 -2.6267 -1.5935
+I(scale(Elevation)^2)-AMRE -2.4807 -1.0310 -0.4556  0.2063  1.6393
+I(scale(Elevation)^2)-BAWW -2.4624 -1.5039 -1.0406 -0.5905  0.6167
+I(scale(Elevation)^2)-BHVI -1.1331 -0.1411  0.3340  0.9731  2.4508
+I(scale(Elevation)^2)-BLBW -1.4249 -0.8937 -0.7182 -0.5518 -0.2787
+I(scale(Elevation)^2)-BLPW -0.1468  0.6099  1.0223  1.3569  2.0802
+I(scale(Elevation)^2)-BTBW -2.3145 -1.5705 -1.3377 -1.1759 -0.8741
+I(scale(Elevation)^2)-BTNW -0.7636 -0.3804 -0.2029 -0.0450  0.2801
+I(scale(Elevation)^2)-CAWA -2.0714 -1.0176 -0.6696 -0.3247  0.3598
+I(scale(Elevation)^2)-MAWA -0.2299  0.3473  0.6923  1.0420  2.2381
+I(scale(Elevation)^2)-NAWA -0.1844  0.1733  0.3883  0.5842  1.0017
+I(scale(Elevation)^2)-OVEN -1.6500 -1.0921 -0.8019 -0.5746 -0.0546
+I(scale(Elevation)^2)-REVI -0.9667 -0.2421  0.1244  0.5352  1.3291
 
 Detection: 
                         2.5%     25%     50%     75%   97.5%
-(Intercept)-AMRE     -5.0361 -3.4669 -2.4812 -1.6343 -0.3204
-(Intercept)-BAWW     -3.2776 -2.8606 -2.5605 -2.2243 -1.7288
-(Intercept)-BHVI     -3.1639 -2.8740 -2.7063 -2.5219 -2.1194
-(Intercept)-BLBW     -0.2414 -0.0885 -0.0117  0.0750  0.2406
-(Intercept)-BLPW     -0.9228 -0.6014 -0.4298 -0.2536  0.0852
-(Intercept)-BTBW      0.4254  0.5545  0.6333  0.7096  0.8564
-(Intercept)-BTNW      0.3910  0.5198  0.5957  0.6709  0.8154
-(Intercept)-CAWA     -2.3879 -1.7441 -1.3932 -1.0811 -0.5862
-(Intercept)-MAWA     -1.1344 -0.8335 -0.6731 -0.5354 -0.2275
-(Intercept)-NAWA     -2.5421 -1.7727 -1.4430 -1.1142 -0.5369
-(Intercept)-OVEN      0.5946  0.7380  0.8133  0.8946  1.0514
-(Intercept)-REVI      0.3566  0.4730  0.5387  0.6150  0.7524
-scale(day)-AMRE      -0.4605 -0.1220  0.0303  0.1912  0.4868
-scale(day)-BAWW      -0.0781  0.1212  0.2130  0.3093  0.4920
-scale(day)-BHVI      -0.0234  0.1238  0.2039  0.2854  0.4460
-scale(day)-BLBW      -0.3557 -0.2694 -0.2275 -0.1801 -0.0922
-scale(day)-BLPW      -0.2850 -0.0319  0.0624  0.1731  0.3833
-scale(day)-BTBW       0.1411  0.2193  0.2706  0.3171  0.4053
-scale(day)-BTNW       0.0170  0.1025  0.1467  0.1945  0.2926
-scale(day)-CAWA      -0.3580 -0.1424 -0.0146  0.1006  0.3215
-scale(day)-MAWA      -0.1368  0.0166  0.1143  0.1953  0.3605
-scale(day)-NAWA      -0.3567 -0.1140  0.0083  0.1350  0.3674
-scale(day)-OVEN      -0.2220 -0.1344 -0.0826 -0.0356  0.0747
-scale(day)-REVI      -0.2173 -0.1228 -0.0760 -0.0312  0.0551
-scale(tod)-AMRE      -0.4534 -0.1606 -0.0353  0.0932  0.3757
-scale(tod)-BAWW      -0.4588 -0.2655 -0.1702 -0.0859  0.0715
-scale(tod)-BHVI      -0.2639 -0.1244 -0.0491  0.0348  0.1715
-scale(tod)-BLBW      -0.0732  0.0144  0.0553  0.1021  0.1855
-scale(tod)-BLPW      -0.1557  0.0095  0.1034  0.1987  0.4062
-scale(tod)-BTBW      -0.1531 -0.0727 -0.0293  0.0110  0.1029
-scale(tod)-BTNW      -0.0827  0.0001  0.0385  0.0813  0.1623
-scale(tod)-CAWA      -0.5886 -0.3118 -0.2055 -0.0932  0.1034
-scale(tod)-MAWA      -0.2200 -0.0568  0.0169  0.0947  0.2407
-scale(tod)-NAWA      -0.4057 -0.1662 -0.0625  0.0249  0.2345
-scale(tod)-OVEN      -0.1808 -0.0953 -0.0471  0.0005  0.0954
-scale(tod)-REVI      -0.2183 -0.1201 -0.0753 -0.0296  0.0603
-I(scale(day)^2)-AMRE -0.6125 -0.2593 -0.1079  0.0274  0.3131
-I(scale(day)^2)-BAWW -0.3421 -0.1450 -0.0392  0.0560  0.2548
-I(scale(day)^2)-BHVI -0.1947 -0.0285  0.0553  0.1444  0.3168
-I(scale(day)^2)-BLBW -0.3379 -0.2280 -0.1756 -0.1231 -0.0222
-I(scale(day)^2)-BLPW -0.1544  0.0662  0.1861  0.3178  0.5469
-I(scale(day)^2)-BTBW -0.2119 -0.1148 -0.0642 -0.0091  0.0961
-I(scale(day)^2)-BTNW -0.2159 -0.1192 -0.0594 -0.0094  0.0860
-I(scale(day)^2)-CAWA -0.4048 -0.1555 -0.0346  0.0791  0.3310
-I(scale(day)^2)-MAWA -0.2472 -0.0887  0.0052  0.1003  0.2755
-I(scale(day)^2)-NAWA -0.5051 -0.2442 -0.1238 -0.0063  0.2440
-I(scale(day)^2)-OVEN -0.1533 -0.0362  0.0169  0.0702  0.1909
-I(scale(day)^2)-REVI -0.1114 -0.0094  0.0399  0.0954  0.1935
+(Intercept)-AMRE     -5.9631 -5.1236 -4.6160 -3.8274 -0.8154
+(Intercept)-BAWW     -3.4270 -3.0985 -2.8796 -2.6061 -1.8152
+(Intercept)-BHVI     -3.1773 -2.9168 -2.7805 -2.6368 -2.2615
+(Intercept)-BLBW     -0.2805 -0.1164 -0.0213  0.0696  0.2119
+(Intercept)-BLPW     -0.9548 -0.5958 -0.4145 -0.2260  0.1235
+(Intercept)-BTBW      0.4222  0.5579  0.6338  0.7039  0.8445
+(Intercept)-BTNW      0.3917  0.5343  0.6094  0.6840  0.8136
+(Intercept)-CAWA     -2.3465 -1.7953 -1.4503 -1.1249 -0.5394
+(Intercept)-MAWA     -1.1618 -0.8664 -0.7140 -0.5573 -0.2612
+(Intercept)-NAWA     -2.7039 -1.8486 -1.5148 -1.1808 -0.6099
+(Intercept)-OVEN      0.6072  0.7489  0.8312  0.9015  1.0598
+(Intercept)-REVI      0.3347  0.4637  0.5363  0.6101  0.7571
+scale(day)-AMRE      -0.4152 -0.0945  0.0511  0.2097  0.4976
+scale(day)-BAWW      -0.0538  0.1239  0.2114  0.3062  0.4992
+scale(day)-BHVI      -0.0249  0.1281  0.2002  0.2841  0.4194
+scale(day)-BLBW      -0.3586 -0.2671 -0.2209 -0.1748 -0.0910
+scale(day)-BLPW      -0.2245 -0.0410  0.0586  0.1687  0.3712
+scale(day)-BTBW       0.1238  0.2162  0.2639  0.3145  0.3948
+scale(day)-BTNW       0.0218  0.1067  0.1509  0.2003  0.2766
+scale(day)-CAWA      -0.3790 -0.1206 -0.0121  0.0956  0.3131
+scale(day)-MAWA      -0.1370  0.0266  0.0969  0.1781  0.3470
+scale(day)-NAWA      -0.3260 -0.1037  0.0239  0.1275  0.3665
+scale(day)-OVEN      -0.2261 -0.1215 -0.0731 -0.0200  0.0741
+scale(day)-REVI      -0.1974 -0.1197 -0.0759 -0.0344  0.0547
+scale(tod)-AMRE      -0.4204 -0.1490 -0.0170  0.1199  0.3792
+scale(tod)-BAWW      -0.4573 -0.2699 -0.1767 -0.0913  0.0847
+scale(tod)-BHVI      -0.2833 -0.1265 -0.0516  0.0188  0.1692
+scale(tod)-BLBW      -0.0647  0.0207  0.0597  0.1027  0.1894
+scale(tod)-BLPW      -0.1785  0.0071  0.1070  0.2024  0.3937
+scale(tod)-BTBW      -0.1618 -0.0763 -0.0329  0.0101  0.0916
+scale(tod)-BTNW      -0.0883 -0.0064  0.0359  0.0815  0.1667
+scale(tod)-CAWA      -0.5442 -0.3090 -0.1964 -0.1024  0.1088
+scale(tod)-MAWA      -0.2051 -0.0617  0.0114  0.0853  0.2482
+scale(tod)-NAWA      -0.3956 -0.1781 -0.0739  0.0251  0.1935
+scale(tod)-OVEN      -0.1940 -0.0939 -0.0427  0.0031  0.0913
+scale(tod)-REVI      -0.2001 -0.1191 -0.0776 -0.0374  0.0436
+I(scale(day)^2)-AMRE -0.6370 -0.2558 -0.1021  0.0233  0.2933
+I(scale(day)^2)-BAWW -0.3297 -0.1195 -0.0223  0.0671  0.2649
+I(scale(day)^2)-BHVI -0.1995 -0.0223  0.0620  0.1431  0.3111
+I(scale(day)^2)-BLBW -0.3410 -0.2302 -0.1742 -0.1197 -0.0185
+I(scale(day)^2)-BLPW -0.1584  0.0745  0.2004  0.3358  0.5885
+I(scale(day)^2)-BTBW -0.2128 -0.1155 -0.0646 -0.0101  0.0783
+I(scale(day)^2)-BTNW -0.2161 -0.1149 -0.0677 -0.0210  0.0951
+I(scale(day)^2)-CAWA -0.3665 -0.1553 -0.0321  0.0958  0.3052
+I(scale(day)^2)-MAWA -0.2607 -0.0856  0.0074  0.0954  0.2682
+I(scale(day)^2)-NAWA -0.5214 -0.2455 -0.1196 -0.0042  0.2441
+I(scale(day)^2)-OVEN -0.1649 -0.0476  0.0126  0.0689  0.1848
+I(scale(day)^2)-REVI -0.1115 -0.0128  0.0395  0.0890  0.1923
 
 Covariance: 
-                2.5%    25%     50%     75%   97.5%
-sigma.sq-AMRE 0.3946 0.8139  1.2253  2.0427  8.9817
-sigma.sq-BAWW 0.4059 0.8537  1.5025  3.3275 16.0369
-sigma.sq-BHVI 0.3059 0.7379  1.2294  2.1061  9.3632
-sigma.sq-BLBW 0.3863 0.7475  1.6151  3.8536 10.7605
-sigma.sq-BLPW 0.3612 0.8069  1.2943  2.3138  6.4270
-sigma.sq-BTBW 0.4917 0.9830  1.6360  2.7943 11.5931
-sigma.sq-BTNW 0.5050 1.4638  4.1055 10.5194 29.2436
-sigma.sq-CAWA 0.3527 0.7354  1.2461  2.4216  7.1230
-sigma.sq-MAWA 3.1839 6.4526 10.0187 15.5617 52.7097
-sigma.sq-NAWA 0.4054 0.8051  1.3094  2.2231  7.6344
-sigma.sq-OVEN 2.4315 4.6516  7.3237 12.7701 34.2699
-sigma.sq-REVI 0.5409 1.2294  2.0850  4.1064 13.4472
-phi-AMRE      0.0018 0.0089  0.0153  0.0222  0.0291
-phi-BAWW      0.0015 0.0042  0.0101  0.0187  0.0279
-phi-BHVI      0.0031 0.0088  0.0151  0.0217  0.0292
-phi-BLBW      0.0014 0.0043  0.0093  0.0176  0.0280
-phi-BLPW      0.0013 0.0023  0.0045  0.0138  0.0283
-phi-BTBW      0.0006 0.0023  0.0047  0.0107  0.0225
-phi-BTNW      0.0022 0.0047  0.0077  0.0131  0.0268
-phi-CAWA      0.0006 0.0028  0.0088  0.0195  0.0285
-phi-MAWA      0.0005 0.0013  0.0017  0.0024  0.0038
-phi-NAWA      0.0020 0.0093  0.0160  0.0232  0.0293
-phi-OVEN      0.0009 0.0016  0.0022  0.0028  0.0043
-phi-REVI      0.0016 0.0028  0.0050  0.0096  0.0261</code></pre>
+                2.5%    25%    50%     75%   97.5%
+sigma.sq-AMRE 0.3210 0.7882 1.5518  4.1027 18.8186
+sigma.sq-BAWW 0.4162 0.8872 1.5943  2.9590 10.1221
+sigma.sq-BHVI 0.3674 0.7556 1.1944  2.0279  7.2041
+sigma.sq-BLBW 0.4372 1.1757 2.1060  4.1295 20.7922
+sigma.sq-BLPW 0.5502 1.2256 2.1432  3.6531 11.8295
+sigma.sq-BTBW 0.5145 1.0622 1.8090  2.9138  9.7392
+sigma.sq-BTNW 0.3949 1.2950 2.7985  5.7489 17.4880
+sigma.sq-CAWA 0.4574 1.0293 2.0665  4.6883 18.3556
+sigma.sq-MAWA 3.0264 6.9829 9.9736 15.7992 63.2292
+sigma.sq-NAWA 0.3269 0.6600 1.0337  1.6048  3.7702
+sigma.sq-OVEN 1.8387 4.5851 6.7671  9.7807 16.8897
+sigma.sq-REVI 0.4559 1.2772 2.3004  3.9863 21.4446
+phi-AMRE      0.0024 0.0082 0.0141  0.0215  0.0292
+phi-BAWW      0.0036 0.0088 0.0150  0.0222  0.0295
+phi-BHVI      0.0057 0.0125 0.0181  0.0243  0.0290
+phi-BLBW      0.0026 0.0060 0.0102  0.0180  0.0279
+phi-BLPW      0.0011 0.0021 0.0033  0.0062  0.0238
+phi-BTBW      0.0006 0.0015 0.0027  0.0044  0.0182
+phi-BTNW      0.0022 0.0042 0.0071  0.0150  0.0280
+phi-CAWA      0.0005 0.0021 0.0048  0.0125  0.0259
+phi-MAWA      0.0008 0.0014 0.0019  0.0024  0.0042
+phi-NAWA      0.0035 0.0092 0.0157  0.0230  0.0292
+phi-OVEN      0.0008 0.0015 0.0020  0.0025  0.0038
+phi-REVI      0.0012 0.0027 0.0044  0.0079  0.0247</code></pre>
 <p>The resulting object <code>out.sp.ms</code> is a list of class <code>spMsPGOcc</code> consisting primarily of posterior samples of all community and species-level parameters, as well as some additional objects that are used for summaries, predictions, and model fit evaluation.</p>
 </div>
 <div id="convergence-diagnostics-3" class="section level2">
@@ -1571,23 +1572,23 @@ Total Posterior Samples: 1000
 ----------------------------------------
     Community Level
 ----------------------------------------
-Bayesian p-value:  0.506 
+Bayesian p-value:  0.5174167 
 
 ----------------------------------------
     Species Level
 ----------------------------------------
-AMRE Bayesian p-value: 0.749
-BAWW Bayesian p-value: 0.549
-BHVI Bayesian p-value: 0.551
-BLBW Bayesian p-value: 0.281
-BLPW Bayesian p-value: 0.37
-BTBW Bayesian p-value: 0.504
-BTNW Bayesian p-value: 0.501
-CAWA Bayesian p-value: 0.537
-MAWA Bayesian p-value: 0.578
-NAWA Bayesian p-value: 0.589
-OVEN Bayesian p-value: 0.389
-REVI Bayesian p-value: 0.474
+AMRE Bayesian p-value: 0.77
+BAWW Bayesian p-value: 0.55
+BHVI Bayesian p-value: 0.591
+BLBW Bayesian p-value: 0.302
+BLPW Bayesian p-value: 0.396
+BTBW Bayesian p-value: 0.497
+BTNW Bayesian p-value: 0.498
+CAWA Bayesian p-value: 0.59
+MAWA Bayesian p-value: 0.591
+NAWA Bayesian p-value: 0.607
+OVEN Bayesian p-value: 0.345
+REVI Bayesian p-value: 0.472
 Fit statistic:  freeman-tukey </code></pre>
 </div>
 <div id="model-selection-using-waic" class="section level2">
@@ -1597,11 +1598,11 @@ Fit statistic:  freeman-tukey </code></pre>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.sp.ms</span><span class="op">)</span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--4189.7350   322.0117  9023.4935 </code></pre>
+-4204.1879   304.6262  9017.6280 </code></pre>
 <div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.ms</span><span class="op">)</span></code></pre></div>
 <pre><code>       elpd          pD        WAIC 
--4532.06692    65.85188  9195.83758 </code></pre>
+-4531.66364    65.19794  9193.72317 </code></pre>
 <p>The WAIC for the spatial model is smaller than that for the nonspatial model, indicating the species-specific spatial processes improve prediction across the entire community. However, in a complete analysis we should ensure the models fully converge before performing any model selection or comparison.</p>
 <p>k-fold cross-validation proceeds using the <code>k.fold</code> argument as we have seen previously, returning a spearate scoring rule (deviance) for each species.</p>
 </div>
@@ -1835,23 +1836,23 @@ Total Posterior Samples: 1000
 
 Occurrence: 
                          2.5%     25%     50%     75%   97.5%
-(Intercept)            1.7899  2.0826  2.2287  2.3854  2.7020
-scale(Elevation)      -1.6987 -1.3892 -1.2568 -1.1355 -0.9105
-I(scale(Elevation)^2) -0.8733 -0.7008 -0.5982 -0.4919 -0.2541
+(Intercept)            1.8136  2.0868  2.2521  2.4152  2.8010
+scale(Elevation)      -1.7015 -1.4076 -1.2686 -1.1461 -0.9450
+I(scale(Elevation)^2) -0.8953 -0.6922 -0.5956 -0.4968 -0.2727
 
 Data source 1 Detection: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)      0.5677  0.7224  0.7995  0.8900 1.0469
-scale(day)      -0.2497 -0.1458 -0.0962 -0.0404 0.0625
-scale(tod)      -0.1851 -0.0922 -0.0437  0.0095 0.1075
-I(scale(day)^2) -0.1467 -0.0300  0.0345  0.0985 0.2178
+(Intercept)      0.5573  0.7252  0.8095  0.8928 1.0536
+scale(day)      -0.2445 -0.1453 -0.0955 -0.0379 0.0639
+scale(tod)      -0.2030 -0.1003 -0.0419  0.0108 0.1103
+I(scale(day)^2) -0.1661 -0.0433  0.0260  0.0948 0.2234
 
 Data source 2 Detection: 
                    2.5%     25%     50%     75%   97.5%
-(Intercept)      1.0136  1.7057  2.1360  2.5366  3.3282
-scale(day)       0.2648  0.6596  0.9012  1.1367  1.6620
-scale(tod)      -0.2539  0.4299  0.8149  1.1437  1.7170
-I(scale(day)^2) -1.5159 -1.0332 -0.8002 -0.5802 -0.1545</code></pre>
+(Intercept)      0.9261  1.6396  2.0741  2.4796  3.2630
+scale(day)       0.2456  0.6518  0.9073  1.1672  1.7002
+scale(tod)      -0.2874  0.5898  0.9070  1.2215  1.7550
+I(scale(day)^2) -1.5468 -1.0500 -0.7936 -0.5754 -0.1370</code></pre>
 <p>The <code>summary</code> function for integrated models returns the detection parameters separately for each detection covariate. Looking at the occurrence parameters, we see fairly similar estimates to those from the single data source model using HBEF data only.</p>
 </div>
 <div id="convergence-diagnostics-4" class="section level2">
@@ -1882,12 +1883,12 @@ Total Posterior Samples: 1000
 
 Data Source 1 
 
-Bayesian p-value: 0.765 
+Bayesian p-value: 0.788 
 Fit statistic: freeman-tukey 
 
 Data Source 2 
 
-Bayesian p-value: 0.091 
+Bayesian p-value: 0.079 
 Fit statistic: freeman-tukey </code></pre>
 <p>The low Bayesian p-value for NEON suggests a potential lack of fit which we would explore in a complete analysis.</p>
 </div>
@@ -1897,9 +1898,9 @@ Fit statistic: freeman-tukey </code></pre>
 <p>We use <code><a href="../reference/waicOcc.html">waicOcc()</a></code> to compute the WAIC for integrated occupancy models. Similar to the posterior predictive check, individual WAIC values are reported for each data set. These can be summed across all data sources for an overall WAIC value if desired.</p>
 <div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.int</span><span class="op">)</span></code></pre></div>
-<pre><code>         elpd         pD        WAIC
-1 -633.480254 5.71813170 1278.396772
-2   -4.685152 0.05545094    9.481205</code></pre>
+<pre><code>         elpd         pD       WAIC
+1 -633.357515 6.06008388 1278.83520
+2   -4.537069 0.05880082    9.19174</code></pre>
 <p>k-fold cross-validation is implemented using the <code>k.fold</code> argument as we have seen in previous <code>spoccupancy</code> model functions. Cross-validation for models without multiple data sources is not as straightforward as single data source models, and we could envision splitting the data in multiple different ways to assess predictive performance, depending on the purpose of our comparison. In <code>spOccupancy</code>, we implement two approaches for cross-validation of integrated occupancy models. In our first approach, we hold out locations irrespective of what data source they came from. This results in a scoring rule (deviance) for each individual data source based on the hold out sites where that data source is sampled. More specifically, our first algorithm for K-fold cross-validation is:</p>
 <ol style="list-style-type: decimal">
 <li>Randomly split the total number of sites with at least one data source into <span class="math inline">\(K\)</span> groups.</li>
@@ -1999,10 +2000,10 @@ Sampled: 8000 of 8000, 100.00%
 <pre><code>Performing 4-fold cross-validation using 1 thread(s).</code></pre>
 <div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.int.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1509.2746  156.2865</code></pre>
+<pre><code>[1] 1508.7073  157.2054</code></pre>
 <div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.int.k.fold.small</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1533.5178  205.9259</code></pre>
+<pre><code>[1] 1533.5920  205.2914</code></pre>
 <p>We see the deviance for the full model is lower for both data sources compared to the intercept only model.</p>
 <p>Alternatively, we may not wish to compare different integrated occupancy models together, but rather wish to assess whether or not data integration is necessary compared to using a single data source occupancy model. To accomplish this task, we can perform cross-validation with the integrated occupancy model using only a single data source as the hold out set, and then compare the deviance scoring rule to a scoring rule obtained from cross-validation with a single data source occupancy model. We accomplish this by using the argument <code>k.fold.data</code>. If <code>k.fold.data</code> is specified as an integer between 1 and the number of data sources integrated (in this case 2), only the data source corresponding to that integer will be used in the hold out and k-fold cross-validation process. If <code>k.fold.data</code> is not specified, k-fold cross-validation holds out data irrespective of the data sources at the given location. Here, we set <code>k.fold.data = 1</code> and compare the cross-validation results of the integrated model to the occupancy model using only HBEF we fit with <code><a href="../reference/PGOcc.html">PGOcc()</a></code> (which is stored in the <code>out.k.fold</code> object).</p>
 <div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
@@ -2054,11 +2055,11 @@ Sampled: 8000 of 8000, 100.00%
 <div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Single data source model</span>
 <span class="va">out.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1518.292</code></pre>
+<pre><code>[1] 1520.209</code></pre>
 <div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Integrated model</span>
 <span class="va">out.int.k.fold.hbef</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1521.535</code></pre>
+<pre><code>[1] 1522.563</code></pre>
 <p>Here we see that integration of the two data sources does not improve predictive performance at HBEF. We should also do the same thing with the NEON data. We close this section by emphasizing that there are potentially numerous other benefits to data integration than predictive performance that must be carefully considered when trying to determine if data integration is necessary or not. See <span class="citation">Simmonds et al. (2020)</span> and discussion in <span class="citation">Doser et al. (2021)</span> for more on this topic.</p>
 </div>
 <div id="prediction-4" class="section level2">
@@ -2194,15 +2195,15 @@ Adaptive Metropolis with target acceptance rate: 43.0
 Sampling ... 
 Batch: 100 of 400, 25.00%
     parameter   acceptance  tuning
-    phi     28.0        0.36422
+    phi     24.0        0.37158
 -------------------------------------------------
 Batch: 200 of 400, 50.00%
     parameter   acceptance  tuning
-    phi     44.0        0.22091
+    phi     44.0        0.24414
 -------------------------------------------------
 Batch: 300 of 400, 75.00%
     parameter   acceptance  tuning
-    phi     48.0        0.22993
+    phi     32.0        0.20805
 -------------------------------------------------
 Batch: 400 of 400, 100.00%</code></pre>
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
@@ -2223,28 +2224,28 @@ Total Posterior Samples: 5000
 
 Occurrence: 
                          2.5%     25%     50%     75%   97.5%
-(Intercept)            1.8219  2.6627  3.0832  3.5564  4.7563
-scale(Elevation)      -3.2493 -2.4857 -2.1396 -1.8565 -1.3450
-I(scale(Elevation)^2) -1.7015 -1.1862 -0.9581 -0.7441 -0.3287
+(Intercept)            2.0511  2.7243  3.1140  3.5601  4.7729
+scale(Elevation)      -3.5199 -2.5380 -2.1763 -1.8780 -1.3846
+I(scale(Elevation)^2) -1.7411 -1.1614 -0.9274 -0.7177 -0.3633
 
 Data source 1 Detection: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)      0.5871  0.7450  0.8259  0.9082 1.0693
-scale(day)      -0.2385 -0.1439 -0.0926 -0.0435 0.0585
-scale(tod)      -0.1999 -0.0990 -0.0463  0.0068 0.1025
-I(scale(day)^2) -0.1595 -0.0346  0.0284  0.0942 0.2205
+(Intercept)      0.5884  0.7431  0.8248  0.9078 1.0654
+scale(day)      -0.2466 -0.1421 -0.0911 -0.0408 0.0610
+scale(tod)      -0.2017 -0.0984 -0.0443  0.0081 0.1038
+I(scale(day)^2) -0.1583 -0.0358  0.0300  0.0918 0.2193
 
 Data source 2 Detection: 
                    2.5%     25%     50%     75%  97.5%
-(Intercept)      0.9974  1.7337  2.1275  2.5298 3.3410
-scale(day)      -0.5262  0.3968  0.7455  1.0504 1.6413
-scale(tod)      -0.7127  0.0487  0.4920  0.9199 1.5745
-I(scale(day)^2) -1.4247 -0.9126 -0.6209 -0.1958 1.0308
+(Intercept)      0.9310  1.7484  2.1663  2.6015 3.3906
+scale(day)      -0.4245  0.4695  0.7917  1.0898 1.6735
+scale(tod)      -0.7114  0.0617  0.4854  0.9047 1.6353
+I(scale(day)^2) -1.4452 -0.9449 -0.6638 -0.2790 1.0530
 
 Covariance: 
            2.5%    25%    50%    75%   97.5%
-sigma.sq 2.1479 4.3257 6.2521 8.9081 14.3737
-phi      0.0005 0.0012 0.0017 0.0024  0.0037</code></pre>
+sigma.sq 2.2262 4.2083 5.6572 8.7029 16.1757
+phi      0.0006 0.0014 0.0019 0.0025  0.0039</code></pre>
 </div>
 <div id="convergence-diagnostics-5" class="section level2">
 <h2 class="hasAnchor">
@@ -2273,12 +2274,12 @@ Total Posterior Samples: 5000
 
 Data Source 1 
 
-Bayesian p-value: 0.7914 
+Bayesian p-value: 0.7684 
 Fit statistic: freeman-tukey 
 
 Data Source 2 
 
-Bayesian p-value: 0.1652 
+Bayesian p-value: 0.1604 
 Fit statistic: freeman-tukey </code></pre>
 <p>According to the Bayesian p-values, there is no lack of fit for either the HBEF or NEON data.</p>
 </div>
@@ -2288,14 +2289,14 @@ Fit statistic: freeman-tukey </code></pre>
 <p>We can perform model selection using WAIC with the <code><a href="../reference/waicOcc.html">waicOcc()</a></code> function as we have seen previously. Here we compare the WAIC from the spatial integrated model to the non-spatial integrated model.</p>
 <div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.int</span><span class="op">)</span></code></pre></div>
-<pre><code>         elpd         pD        WAIC
-1 -633.480254 5.71813170 1278.396772
-2   -4.685152 0.05545094    9.481205</code></pre>
+<pre><code>         elpd         pD       WAIC
+1 -633.357515 6.06008388 1278.83520
+2   -4.537069 0.05880082    9.19174</code></pre>
 <div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.sp.int</span><span class="op">)</span></code></pre></div>
-<pre><code>         elpd       pD       WAIC
-1 -563.803643 49.21745 1226.04218
-2   -5.291701  2.36243   15.30826</code></pre>
+<pre><code>         elpd        pD       WAIC
+1 -563.077681 49.620952 1225.39727
+2   -5.007027  2.281568   14.57719</code></pre>
 <p>Interestingly, the spatial model performs better for the HBEF data but worse for the NEON data. However, we should ensure convergence of the model prior to assigning any weight to these results.</p>
 <p>Two forms of k-fold cross-validation are implemented for <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code>, analogous to those discussed for non-spatial integrated occupancy models. We first use cross-validation to compare the predictive performance of the spatial integrated model to the nonspatial integrated model across all sites.</p>
 <div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
@@ -2315,11 +2316,11 @@ Fit statistic: freeman-tukey </code></pre>
                     k.fold <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> 
 <span class="co"># Non-spatial model</span>
 <span class="va">out.int.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1509.2746  156.2865</code></pre>
+<pre><code>[1] 1508.7073  157.2054</code></pre>
 <div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Spatial model</span>
 <span class="va">out.sp.int.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1528.5135  150.1577</code></pre>
+<pre><code>[1] 1523.6331  149.9654</code></pre>
 <p>Again, we don’t interpret these results here as the models have not fully converged. Further, we perform cross-validation using only the HBEF data source as a hold out data source to compare with single data source models to assess the benefit of integration.</p>
 <div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.sp.int.k.fold.hbef</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spIntPGOcc.html">spIntPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="va">occ.formula.int</span>, 
@@ -2338,11 +2339,11 @@ Fit statistic: freeman-tukey </code></pre>
                          k.fold <span class="op">=</span> <span class="fl">4</span>, 
                                      k.fold.data <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
 <span class="va">out.sp.int.k.fold.hbef</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1524.279</code></pre>
+<pre><code>[1] 1528.306</code></pre>
 <div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Non-spatial single data source model</span>
 <span class="va">out.k.fold</span><span class="op">$</span><span class="va">k.fold.deviance</span></code></pre></div>
-<pre><code>[1] 1518.292</code></pre>
+<pre><code>[1] 1520.209</code></pre>
 </div>
 <div id="prediction-5" class="section level2">
 <h2 class="hasAnchor">
