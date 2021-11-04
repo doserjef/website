@@ -140,7 +140,7 @@
     <p>The function <code>spMsPGOcc</code> fits multispecies spatial occupancy models using Polya-Gamma latent variables. Models can be fit using either a full Gaussian process or a Nearest Neighbor Gaussian Process for large data sets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>spMsPGOcc</span><span class='op'>(</span><span class='va'>occ.formula</span>, <span class='va'>det.formula</span>, <span class='va'>data</span>, <span class='va'>starting</span>, <span class='va'>priors</span>, <span class='va'>tuning</span>, 
+    <pre class="usage"><span class='fu'>spMsPGOcc</span><span class='op'>(</span><span class='va'>occ.formula</span>, <span class='va'>det.formula</span>, <span class='va'>data</span>, <span class='va'>inits</span>, <span class='va'>priors</span>, <span class='va'>tuning</span>, 
     cov.model <span class='op'>=</span> <span class='st'>'exponential'</span>, NNGP <span class='op'>=</span> <span class='cn'>TRUE</span>, 
     n.neighbors <span class='op'>=</span> <span class='fl'>15</span>, search.type <span class='op'>=</span> <span class='st'>'cb'</span>, <span class='va'>n.batch</span>, 
     <span class='va'>batch.length</span>, accept.rate <span class='op'>=</span> <span class='fl'>0.43</span>, n.omp.threads <span class='op'>=</span> <span class='fl'>1</span>, 
@@ -183,13 +183,13 @@
     \(J \times 2\) matrix of the observation coordinates.</p></td>
     </tr>
     <tr>
-      <th>starting</th>
+      <th>inits</th>
       <td><p>a list with each tag corresponding to a parameter name.
     Valid tags are <code>alpha.comm</code>, <code>beta.comm</code>, <code>beta</code>, 
     <code>alpha</code>, <code>tau.sq.beta</code>, <code>tau.sq.alpha</code>, <code>z</code>, <code>sigma.sq</code>, 
     <code>phi</code>, <code>w</code>, and <code>nu</code>. <code>nu</code> is only specified if 
     <code>cov.model = "matern"</code>. The value portion of each tag is 
-    the parameter's starting value. See <code>priors</code> description for definition
+    the parameter's initial value. See <code>priors</code> description for definition
     of each parameter name.</p></td>
     </tr>
     <tr>
@@ -372,7 +372,8 @@
   <em>Journal of Computational and Graphical Statistics</em>, 18(2):349-367.</p>
 <p>Bates, Douglas, Martin Maechler, Ben Bolker, Steve Walker (2015).
   Fitting Linear Mixed-Effects Models Using lme4. Journal of
-  Statistical Software, 67(1), 1-48. <a href='doi:10.18637/jss.v067.i01'>doi:10.18637/jss.v067.i01</a>.</p>
+  Statistical Software, 67(1), 1-48. doi: <a href='https://doi.org/10.18637/jss.v067.i01'>10.18637/jss.v067.i01</a>
+.</p>
 <p>Hooten, M. B., and Hobbs, N. T. (2015). A guide to Bayesian model 
   selection for ecologists. <em>Ecological Monographs</em>, 85(1), 3-28.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -495,24 +496,24 @@
        tau.sq.alpha.ig <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>0.1</span>, b <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>,
        phi.unif <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>3</span><span class='op'>/</span><span class='fl'>1</span>, b <span class='op'>=</span> <span class='fl'>3</span><span class='op'>/</span><span class='fl'>.1</span><span class='op'>)</span>, 
        sigma.sq.ig <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>2</span>, b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> 
-<span class='co'># Starting values</span>
-<span class='va'>starting.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha.comm <span class='op'>=</span> <span class='fl'>0</span>, 
-          beta.comm <span class='op'>=</span> <span class='fl'>0</span>, 
-          beta <span class='op'>=</span> <span class='fl'>0</span>, 
-          alpha <span class='op'>=</span> <span class='fl'>0</span>,
-          tau.sq.beta <span class='op'>=</span> <span class='fl'>1</span>, 
-          tau.sq.alpha <span class='op'>=</span> <span class='fl'>1</span>, 
-          phi <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>/</span> <span class='fl'>.5</span>, 
-          sigma.sq <span class='op'>=</span> <span class='fl'>2</span>,
-          w <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>, nrow <span class='op'>=</span> <span class='va'>N</span>, ncol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span>,
-          z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>max</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Initial values</span>
+<span class='va'>inits.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha.comm <span class='op'>=</span> <span class='fl'>0</span>, 
+       beta.comm <span class='op'>=</span> <span class='fl'>0</span>, 
+       beta <span class='op'>=</span> <span class='fl'>0</span>, 
+       alpha <span class='op'>=</span> <span class='fl'>0</span>,
+       tau.sq.beta <span class='op'>=</span> <span class='fl'>1</span>, 
+       tau.sq.alpha <span class='op'>=</span> <span class='fl'>1</span>, 
+       phi <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>/</span> <span class='fl'>.5</span>, 
+       sigma.sq <span class='op'>=</span> <span class='fl'>2</span>,
+       w <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>, nrow <span class='op'>=</span> <span class='va'>N</span>, ncol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span>,
+       z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>max</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># Tuning</span>
 <span class='va'>tuning.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>phi <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> 
 
 <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>spMsPGOcc</span><span class='op'>(</span>occ.formula <span class='op'>=</span> <span class='op'>~</span> <span class='va'>occ.cov</span>, 
      det.formula <span class='op'>=</span> <span class='op'>~</span> <span class='va'>det.cov.1</span> <span class='op'>+</span> <span class='va'>det.cov.2</span>, 
      data <span class='op'>=</span> <span class='va'>data.list</span>,
-     starting <span class='op'>=</span> <span class='va'>starting.list</span>, 
+     inits <span class='op'>=</span> <span class='va'>inits.list</span>, 
      n.batch <span class='op'>=</span> <span class='va'>n.batch</span>, 
      batch.length <span class='op'>=</span> <span class='va'>batch.length</span>, 
      accept.rate <span class='op'>=</span> <span class='fl'>0.43</span>, 

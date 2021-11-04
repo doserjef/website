@@ -140,7 +140,7 @@
     <p>The function <code>spPGOcc</code> fits single species spatial occupancy models using Polya-Gamma latent variables. Models can be fit using either a full Gaussian process or a Nearest Neighbor Gaussian Process for large data sets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>spPGOcc</span><span class='op'>(</span><span class='va'>occ.formula</span>, <span class='va'>det.formula</span>, <span class='va'>data</span>, <span class='va'>starting</span>, <span class='va'>priors</span>, 
+    <pre class="usage"><span class='fu'>spPGOcc</span><span class='op'>(</span><span class='va'>occ.formula</span>, <span class='va'>det.formula</span>, <span class='va'>data</span>, <span class='va'>inits</span>, <span class='va'>priors</span>, 
   <span class='va'>tuning</span>, cov.model <span class='op'>=</span> <span class='st'>"exponential"</span>, NNGP <span class='op'>=</span> <span class='cn'>TRUE</span>, 
   n.neighbors <span class='op'>=</span> <span class='fl'>15</span>, search.type <span class='op'>=</span> <span class='st'>"cb"</span>, <span class='va'>n.batch</span>,
   <span class='va'>batch.length</span>, accept.rate <span class='op'>=</span> <span class='fl'>0.43</span>, 
@@ -184,13 +184,13 @@
     <code>coords</code> is a \(J \times 2\) matrix of the observation coordinates.</p></td>
     </tr>
     <tr>
-      <th>starting</th>
+      <th>inits</th>
       <td><p>a list with each tag corresponding to a parameter name.
     Valid tags are <code>z</code>, <code>beta</code>, <code>alpha</code>, <code>sigma.sq</code>, 
     <code>phi</code>, <code>w</code>, <code>nu</code>, and <code>sigma.sq.p</code>. 
     <code>nu</code> is only specified if <code>cov.model = "matern"</code> and <code>sigma.sq.p</code>
     is only specified if there are random effects in <code>det.formula</code>. 
-    The value portion of each tag is the parameter's starting value. See <code>priors</code>
+    The value portion of each tag is the parameter's initial value. See <code>priors</code>
     description for definition of each parameter name.</p></td>
     </tr>
     <tr>
@@ -346,7 +346,8 @@
 
 <p>Bates, Douglas, Martin Maechler, Ben Bolker, Steve Walker (2015).
   Fitting Linear Mixed-Effects Models Using lme4. Journal of
-  Statistical Software, 67(1), 1-48. <a href='doi:10.18637/jss.v067.i01'>doi:10.18637/jss.v067.i01</a>.</p>
+  Statistical Software, 67(1), 1-48. doi: <a href='https://doi.org/10.18637/jss.v067.i01'>10.18637/jss.v067.i01</a>
+.</p>
 <p>Datta, A., S. Banerjee, A.O. Finley, and A.E. Gelfand. (2016)
   Hierarchical Nearest-Neighbor Gaussian process models for large
   geostatistical datasets. <em>Journal of the American Statistical
@@ -453,19 +454,19 @@
        alpha.normal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mean <span class='op'>=</span> <span class='fl'>0</span>, var <span class='op'>=</span> <span class='fl'>2.72</span><span class='op'>)</span>,
        sigma.sq.ig <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, 
        phi.unif <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>/</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>/</span><span class='fl'>.1</span><span class='op'>)</span><span class='op'>)</span> 
-<span class='co'># Starting values</span>
-<span class='va'>starting.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0</span>, beta <span class='op'>=</span> <span class='fl'>0</span>,
-          phi <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>/</span> <span class='fl'>.5</span>, 
-          sigma.sq <span class='op'>=</span> <span class='fl'>2</span>,
-          w <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span>,
-          z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='fl'>1</span>, <span class='va'>max</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Initial values</span>
+<span class='va'>inits.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0</span>, beta <span class='op'>=</span> <span class='fl'>0</span>,
+       phi <span class='op'>=</span> <span class='fl'>3</span> <span class='op'>/</span> <span class='fl'>.5</span>, 
+       sigma.sq <span class='op'>=</span> <span class='fl'>2</span>,
+       w <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span><span class='op'>)</span>,
+       z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='fl'>1</span>, <span class='va'>max</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># Tuning</span>
 <span class='va'>tuning.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>phi <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> 
 
 <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>spPGOcc</span><span class='op'>(</span>occ.formula <span class='op'>=</span> <span class='op'>~</span> <span class='va'>occ.cov</span>, 
          det.formula <span class='op'>=</span> <span class='op'>~</span> <span class='va'>det.cov.1</span> <span class='op'>+</span> <span class='va'>det.cov.2</span>, 
          data <span class='op'>=</span> <span class='va'>data.list</span>, 
-         starting <span class='op'>=</span> <span class='va'>starting.list</span>, 
+         inits <span class='op'>=</span> <span class='va'>inits.list</span>, 
          n.batch <span class='op'>=</span> <span class='va'>n.batch</span>, 
          batch.length <span class='op'>=</span> <span class='va'>batch.length</span>, 
          priors <span class='op'>=</span> <span class='va'>prior.list</span>,

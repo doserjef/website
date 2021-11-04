@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Simulate Single-Species Detection-Nondetection Data — simOcc" />
-<meta property="og:description" content="The function simOcc simulates single-species occurrence data for simulation studies, power assessments, or function testing. Data can be optionally simulated with a spatial Gaussian Process in the occurrence portion of the model following an exponential correlation function. Random intercepts can also be included in the detection or occurrence portions of the occupancy model." />
+<meta property="og:description" content="The function simOcc simulates single-species occurrence data for simulation studies, power assessments, or function testing. Data can be optionally simulated with a spatial Gaussian Process in the occurrence portion of the model. Non-spatial random intercepts can also be included in the detection or occurrence portions of the occupancy model." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,11 +137,11 @@
     </div>
 
     <div class="ref-description">
-    <p>The function <code>simOcc</code> simulates single-species occurrence data for simulation studies, power assessments, or function testing. Data can be optionally simulated with a spatial Gaussian Process in the occurrence portion of the model following an exponential correlation function. Random intercepts can also be included in the detection or occurrence portions of the occupancy model.</p>
+    <p>The function <code>simOcc</code> simulates single-species occurrence data for simulation studies, power assessments, or function testing. Data can be optionally simulated with a spatial Gaussian Process in the occurrence portion of the model. Non-spatial random intercepts can also be included in the detection or occurrence portions of the occupancy model.</p>
     </div>
 
     <pre class="usage"><span class='fu'>simOcc</span><span class='op'>(</span><span class='va'>J.x</span>, <span class='va'>J.y</span>, <span class='va'>n.rep</span>, <span class='va'>beta</span>, <span class='va'>alpha</span>, psi.RE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, 
-       p.RE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, sigma.sq <span class='op'>=</span> <span class='fl'>2</span>, phi <span class='op'>=</span> <span class='fl'>3</span><span class='op'>/</span><span class='fl'>0.5</span>, sp <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+       p.RE <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, sp <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>cov.model</span>, <span class='va'>sigma.sq</span>, <span class='va'>phi</span>, <span class='va'>nu</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +175,14 @@
       <td><p>a list used to specify the non-spatial random intercepts included in the detection portion of the model. The list must have two tags: <code>levels</code> and <code>sigma.sq.p</code>. <code>levels</code> is a vector of length equal to the number of distinct random intercepts to include in the model and contains the number of levels there are in each intercept. <code>sigma.sq.p</code> is a vector of length equal to the number of distinct random intercepts to include in the model and contains the variances for each random effect. If not specified, no random effects are included in the detection portion of the model.</p></td>
     </tr>
     <tr>
+      <th>sp</th>
+      <td><p>a logical value indicating whether to simulate a spatially-explicit occupancy model with a Gaussian process and exponential correlation function. By default set to <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>cov.model</th>
+      <td><p>a quoted keyword that specifies the covariance function used to model the spatial dependence structure among the latent occurrence values.  Supported covariance model key words are: <code>"exponential"</code>, <code>"matern"</code>, <code>"spherical"</code>, and <code>"gaussian"</code>.</p></td>
+    </tr>
+    <tr>
       <th>sigma.sq</th>
       <td><p>a numeric value indicating the spatial variance parameter. Ignored when <code>sp = FALSE</code>.</p></td>
     </tr>
@@ -183,8 +191,8 @@
       <td><p>a numeric value indicating the spatial range parameter. Ignored when <code>sp = FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>sp</th>
-      <td><p>a logical value indicating whether to simulate a spatially-explicit occupancy model with a Gaussian process and exponential correlation function. By default set to <code>FALSE</code>.</p></td>
+      <th>nu</th>
+      <td><p>a numeric value indicating the spatial smoothness parameter. Only used when <code>sp = TRUE</code> and <code>cov.model = "matern"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -203,7 +211,6 @@
 <dt>X</dt><dd><p>a \(J \times p.occ\) numeric design matrix for the occupancy portion of the model.</p></dd>
   <dt>X.p</dt><dd><p>a three-dimensional numeric array with dimensions corresponding to sites, repeat visits, and number of detection regression coefficients. This is the design matrix used for the detection portion of the occupancy model.</p></dd>
   <dt>coords</dt><dd><p>a \(J \times J\) numeric matrix of coordinates of each occupancy site. Required for spatial models.</p></dd>
-  <dt>D</dt><dd><p>a \(J \times J\) numeric matrix consisting of the distances between all occupancy sites.</p></dd>
   <dt>w</dt><dd><p>a \(J \times 1\) matrix of the spatial random effects. Only used to simulate data when <code>sp = TRUE</code>.</p></dd>
   <dt>psi</dt><dd><p>a \(J \times 1\) matrix of the occupancy probabilities for each site.</p></dd>
   <dt>z</dt><dd><p>a length \(J\) vector of the latent occupancy states at each site.</p></dd>
@@ -229,8 +236,8 @@
 <span class='va'>p.RE</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>levels <span class='op'>=</span> <span class='fl'>15</span>, 
        sigma.sq.p <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>simOcc</span><span class='op'>(</span>J.x <span class='op'>=</span> <span class='va'>J.x</span>, J.y <span class='op'>=</span> <span class='va'>J.y</span>, n.rep <span class='op'>=</span> <span class='va'>n.rep</span>, beta <span class='op'>=</span> <span class='va'>beta</span>, alpha <span class='op'>=</span> <span class='va'>alpha</span>,
-        psi.RE <span class='op'>=</span> <span class='va'>psi.RE</span>, p.RE <span class='op'>=</span> <span class='va'>p.RE</span>, sigma.sq <span class='op'>=</span> <span class='va'>sigma.sq</span>, 
-        phi <span class='op'>=</span> <span class='va'>phi</span>, sp <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+        psi.RE <span class='op'>=</span> <span class='va'>psi.RE</span>, p.RE <span class='op'>=</span> <span class='va'>p.RE</span>, sp <span class='op'>=</span> <span class='cn'>TRUE</span>, cov.model <span class='op'>=</span> <span class='st'>'spherical'</span>, 
+        sigma.sq <span class='op'>=</span> <span class='va'>sigma.sq</span>, phi <span class='op'>=</span> <span class='va'>phi</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

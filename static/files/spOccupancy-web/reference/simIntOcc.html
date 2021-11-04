@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Simulate Single-Species Detection-Nondetection Data from Multiple Data Sources — simIntOcc" />
-<meta property="og:description" content="The function simIntOcc simulates single-species detection-nondetection data from multiple data sources for simulation studies, power assessments, or function testing of integrated occupancy models. Data can optionally be simulated with a spatial Gaussian Process on the occupancy process following an exponential correlation function." />
+<meta property="og:description" content="The function simIntOcc simulates single-species detection-nondetection data from multiple data sources for simulation studies, power assessments, or function testing of integrated occupancy models. Data can optionally be simulated with a spatial Gaussian Process on the occurrence process." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,11 +137,11 @@
     </div>
 
     <div class="ref-description">
-    <p>The function <code>simIntOcc</code> simulates single-species detection-nondetection data from multiple data sources for simulation studies, power assessments, or function testing of integrated occupancy models. Data can optionally be simulated with a spatial Gaussian Process on the occupancy process following an exponential correlation function.</p>
+    <p>The function <code>simIntOcc</code> simulates single-species detection-nondetection data from multiple data sources for simulation studies, power assessments, or function testing of integrated occupancy models. Data can optionally be simulated with a spatial Gaussian Process on the occurrence process.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>simIntOcc</span><span class='op'>(</span><span class='va'>n.data</span>, <span class='va'>J.x</span>, <span class='va'>J.y</span>, <span class='va'>J.obs</span>, <span class='va'>n.rep</span>, <span class='va'>beta</span>, <span class='va'>alpha</span>, sigma.sq <span class='op'>=</span> <span class='fl'>2</span>, 
-    phi <span class='op'>=</span> <span class='fl'>3</span><span class='op'>/</span><span class='fl'>0.5</span>, sp <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>simIntOcc</span><span class='op'>(</span><span class='va'>n.data</span>, <span class='va'>J.x</span>, <span class='va'>J.y</span>, <span class='va'>J.obs</span>, <span class='va'>n.rep</span>, <span class='va'>beta</span>, <span class='va'>alpha</span>,
+    sp <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>cov.model</span>, <span class='va'>sigma.sq</span>, <span class='va'>phi</span>, <span class='va'>nu</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +175,14 @@
       <td><p>a list of length <code>n.data</code>. Each element is a numeric vector containing the intercept and regression coefficient parameters for the detection portion of the single-species occupancy model for each data source.</p></td>
     </tr>
     <tr>
+      <th>sp</th>
+      <td><p>a logical value indicating whether to simulate a spatially-explicit occupancy model with a Gaussian process and exponential correlation function. By default set to <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>cov.model</th>
+      <td><p>a quoted keyword that specifies the covariance function used to model the spatial dependence structure among the latent occurrence values.  Supported covariance model key words are: <code>"exponential"</code>, <code>"matern"</code>, <code>"spherical"</code>, and <code>"gaussian"</code>.</p></td>
+    </tr>
+    <tr>
       <th>sigma.sq</th>
       <td><p>a numeric value indicating the spatial variance parameter. Ignored when <code>sp = FALSE</code>.</p></td>
     </tr>
@@ -183,8 +191,8 @@
       <td><p>a numeric value indicating the spatial range parameter. Ignored when <code>sp = FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>sp</th>
-      <td><p>a logical value indicating whether to simulate a spatially-explicit occupancy model with a Gaussian process and exponential correlation function. By default set to <code>FALSE</code>.</p></td>
+      <th>nu</th>
+      <td><p>a numeric value indicating the spatial smoothness parameter. Only used when <code>sp = TRUE</code> and <code>cov.model = "matern"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -250,8 +258,8 @@
 
 <span class='co'># Simulate occupancy data. </span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'>simIntOcc</span><span class='op'>(</span>n.data <span class='op'>=</span> <span class='va'>n.data</span>, J.x <span class='op'>=</span> <span class='va'>J.x</span>, J.y <span class='op'>=</span> <span class='va'>J.y</span>, J.obs <span class='op'>=</span> <span class='va'>J.obs</span>, 
-     n.rep <span class='op'>=</span> <span class='va'>n.rep</span>, beta <span class='op'>=</span> <span class='va'>beta</span>, alpha <span class='op'>=</span> <span class='va'>alpha</span>, sigma.sq <span class='op'>=</span> <span class='va'>sigma.sq</span>, 
-     phi <span class='op'>=</span> <span class='va'>phi</span>, sp <span class='op'>=</span> <span class='va'>sp</span><span class='op'>)</span>
+     n.rep <span class='op'>=</span> <span class='va'>n.rep</span>, beta <span class='op'>=</span> <span class='va'>beta</span>, alpha <span class='op'>=</span> <span class='va'>alpha</span>, sp <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+     cov.model <span class='op'>=</span> <span class='st'>'gaussian'</span>, sigma.sq <span class='op'>=</span> <span class='va'>sigma.sq</span>, phi <span class='op'>=</span> <span class='va'>phi</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
