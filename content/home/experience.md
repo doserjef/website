@@ -23,7 +23,7 @@ date_format = "Jan 2006"
   company = "Michigan State University"
   company_url = ""
   location = "East Lansing, Michigan"
-  date_start = "2022-01-10"
+  date_start = "2021-07-01"
   date_end = ""
   description = """
   Courses: 

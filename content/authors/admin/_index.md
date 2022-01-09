@@ -9,7 +9,7 @@ education:
   - course: MS Applied Statistics
     institution: Michigan State University
     year: 2021
-  - course: BS in Mathematics and Biology
+  - course: BS Mathematics and Biology
     institution: State University of New York at Geneseo
     year: 2018
 email: ""
