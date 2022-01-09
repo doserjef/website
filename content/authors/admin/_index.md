@@ -3,15 +3,15 @@ authors:
 - admin
 education:
   courses:
-  - course: PhD in Forestry
+  - course: PhD Forestry and Ecology, Evolution, and Behavior
     institution: Michigan State University
-    year: Expected 2022
-  - course: MS in Applied Statistics
+    year: 2021
+  - course: MS Applied Statistics
     institution: Michigan State University
-    year: May 2021
-  - course: B.S. in Mathematics and Biology
+    year: 2021
+  - course: BS in Mathematics and Biology
     institution: State University of New York at Geneseo
-    year: May 2018
+    year: 2018
 email: ""
 interests:
 - Bayesian Modeling
@@ -21,7 +21,7 @@ name: Jeff Doser
 organizations:
 - name: Michigan State University
   url: ""
-role: PhD Candidate
+role: Postdoctoral Research Associate
 social:
 - icon: envelope
   icon_pack: fas
@@ -42,4 +42,4 @@ user_groups:
 - Visitors
 ---
 
-I am a graduate student in the Department of Forestry and Ecology, Evolution, and Behavior Program at Michigan State University working with the [Geospatial Lab](https://www.finley-lab.com/) of Dr. Andrew Finley and the [Zipkin Quantitative Ecology Lab](https://ezipkin.github.io/). My research interests lie in the development of Bayesian hierarchical models for environmental monitoring and decision making. More specifically, I am interested in the development and application of statistical models for methods of monitoring wildlife populations across large spatio-temporal regions, including citizen science data and acoustic recordings. 
+I am a postdoctoral research associate in the Department of Integrative Biology at Michigan State University in the [Zipkin Quantitative Ecology Lab](https://ezipkin.github.io/). I received my PhD in Forestry and Ecology, Evolution, and Behavior at Michigan State University in the [Geospatial Lab](https://www.finley-lab.com/) of Dr. Andrew Finley. My research interests lie in the development of Bayesian hierarchical models for environmental monitoring and decision making. More specifically, I am interested in the development and application of statistical models for methods of monitoring wildlife populations across large spatio-temporal regions, including citizen science data and acoustic recordings. 

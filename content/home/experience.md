@@ -19,6 +19,20 @@ date_format = "Jan 2006"
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 
 [[experience]]
+  title = "Co-Instructor"
+  company = "Michigan State University"
+  company_url = ""
+  location = "East Lansing, Michigan"
+  date_start = "2022-01-10"
+  date_end = ""
+  description = """
+  Courses: 
+
+  + FOR/STT 875: R Programming for Data Sciences (Summer 2021)
+  + IBIO 831: Statistical Methods in Ecology and Evolution (Spring 2022)
+  """
+
+[[experience]]
   title = "Statistical Consultant"
   company = "Michigan State University College of Agriculture and Natural Resources"
   company_url = "https://scc.anr.msu.edu/"
@@ -35,7 +49,7 @@ date_format = "Jan 2006"
   company_url = ""
   location = "East Lansing, Michigan"
   date_start = "2018-07-01"
-  date_end = ""
+  date_end = "2020-09-01"
   description = """
   Courses: 
   
