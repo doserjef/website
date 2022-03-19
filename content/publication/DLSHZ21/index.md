@@ -12,14 +12,14 @@ featured: false
 publication: "In: Methods in Ecology and Evolution (2022) https://doi.org/10.1111/2041-210X.13811"
 publication_short: ""
 publication_types:
-- "3"
+- "2"
 publishDate: "2022-02-12T00:00:00Z"
 slides: ''
 summary: "We present an integrated community occupancy model that units principles of data integration and hierarchical community modeling."
 title: "Integrated community occupancy models: A framework to assess occurrence and biodiversity dynamics using multiple data sources"
 url_code: 'https://github.com/zipkinlab/Doser_etal_2022_MEE'
 url_dataset: 'https://github.com/zipkinlab/Doser_etal_2022_MEE/tree/main/data'
-url_pdf: 'https://arxiv.org/pdf/2109.01894.pdf'
+url_pdf: 'https://github.com/zipkinlab/Doser_etal_2022_MEE/blob/main/Doser_etal_2022_MEE_ICOM.pdf'
 url_poster: ''
 url_project: ''
 url_slides: ''
