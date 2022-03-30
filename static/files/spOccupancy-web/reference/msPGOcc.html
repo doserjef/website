@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -32,10 +32,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/factorModels.html">Joint species distribution models with imperfect detection in `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/mcmcFactorModels.pdf">MCMC samplers for joint species distribution models in `spOccupancy` (PDF)</a>
+    </li>
+    <li>
       <a href="../articles/mcmcSamplers.pdf">MCMC samplers for models fit in `spOccupancy` (PDF)</a>
     </li>
     <li>
       <a href="../articles/modelFitting.html">Fitting occupancy models with `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/randomEffects.html">Fitting occupancy models with random intercepts in `spOccupancy`</a>
     </li>
   </ul></li>
 <li>
@@ -102,13 +111,18 @@
 <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
   Valid tags are <code>alpha.comm</code>, <code>beta.comm</code>, <code>beta</code>, 
-  <code>alpha</code>, <code>tau.sq.beta</code>, <code>tau.sq.alpha</code>, <code>z</code>. 
+  <code>alpha</code>, <code>tau.sq.beta</code>, <code>tau.sq.alpha</code>, <code>sigma.sq.psi</code>, 
+  <code>sigma.sq.p</code>, and <code>z</code>. 
   The value portion of each tag is the parameter's initial value. See 
-  <code>priors</code> description for definition of each parameter name.</p></dd>
+  <code>priors</code> description for definition of each parameter name.
+  Additionally, the tag <code>fix</code> can be set to <code>TRUE</code> 
+  to fix the starting values across all chains. If <code>fix</code> is not specified
+  (the default), starting values are varied randomly across chains.</p></dd>
 <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
   Valid tags are <code>beta.comm.normal</code>, <code>alpha.comm.normal</code>, 
-  <code>tau.sq.beta.ig</code>, and <code>tau.sq.alpha.ig</code>. Community-level occurrence 
+  <code>tau.sq.beta.ig</code>, <code>tau.sq.alpha.ig</code>, <code>sigma.sq.psi.ig</code>, and 
+  <code>sigma.sq.p.ig</code>. Community-level occurrence 
   (<code>beta.comm</code>) and detection (<code>alpha.comm</code>) regression coefficients 
   are assumed to follow a normal distribution. The hyperparameters of the 
   normal distribution are passed as a list of length two with the first
@@ -124,7 +138,14 @@
   corresponding to the shape and scale parameters, which are each specified
   as vectors of length equal to the number of coefficients to be estimated 
   or a single value if all parameters are assigned the same prior. 
-  If not specified, prior shape and scale parameters are set to 0.1.</p></dd>
+  If not specified, prior shape and scale parameters are set to 0.1. <code>sigma.sq.psi</code> and 
+  <code>sigma.sq.p</code> are the random effect variances for any occurrence or 
+  detection random effects, respectively, and are assumed to follow an inverse
+  Gamma distribution. The hyperparameters of the inverse-Gamma distribution
+  are passed as a list of length two with first and second elements corresponding
+  to the shape and scale parameters, respectively, which are each specified as
+  vectors of length equal to the number of random intercepts or of length one 
+  if priors are the same for all random effect variances.</p></dd>
 <dt>n.samples</dt>
 <dd><p>the number of posterior samples to collect in each chain.</p></dd>
 <dt>n.omp.threads</dt>
@@ -132,7 +153,8 @@
   to use for SMP parallel processing. The package must be compiled for 
   OpenMP support. For most Intel-based machines, we recommend setting 
   <code>n.omp.threads</code> up to the number of hypterthreaded cores. Note, 
-  <code>n.omp.threads</code> &gt; 1 might not work on some systems.</p></dd>
+  <code>n.omp.threads</code> &gt; 1 might not work on some systems. Currently only 
+  relevant for spatial models.</p></dd>
 <dt>verbose</dt>
 <dd><p>if <code>TRUE</code>, messages about data preparation, 
   model specification, and progress of the sampler are printed to the screen. 
@@ -243,6 +265,15 @@
 <dd><p>a <code>coda</code> object of posterior samples
     for the detection random effects. Only included if random intercepts 
     are specified in <code>det.formula</code>.</p></dd>
+<dt>like.samples</dt>
+<dd><p>a three-dimensional array of posterior samples
+    for the likelihood value associated with each site and species. 
+    Used for calculating WAIC.</p></dd>
+<dt>rhat</dt>
+<dd><p>a list of Gelman-Rubin diagnostic values for some of the model
+    parameters.</p></dd>
+<dt>ESS</dt>
+<dd><p>a list of effective sample sizes for some of the model parameters.</p></dd>
 <dt>run.time</dt>
 <dd><p>MCMC sampler execution time reported using <code><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time()</a></code>.</p></dd>
 <dt>k.fold.deviance</dt>
@@ -250,7 +281,9 @@
     A separate value is reported for each species. 
     Only included if <code>k.fold</code> is specified in function call.</p></dd>
 </dl><p>The return object will include additional objects used for 
-  subsequent prediction and/or model fit evaluation.</p>
+  subsequent prediction and/or model fit evaluation. Note that detection probability
+  estimated values are not included in the model object, but can be extracted
+  using <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code>.</p>
     </div>
 
     <div id="ref-examples">
@@ -259,7 +292,7 @@
 <span class="r-in"><span class="va">J.x</span> <span class="op">&lt;-</span> <span class="fl">8</span></span>
 <span class="r-in"><span class="va">J.y</span> <span class="op">&lt;-</span> <span class="fl">8</span></span>
 <span class="r-in"><span class="va">J</span> <span class="op">&lt;-</span> <span class="va">J.x</span> <span class="op">*</span> <span class="va">J.y</span></span>
-<span class="r-in"><span class="va">n.rep</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, size <span class="op">=</span> <span class="va">J</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">n.rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, size <span class="op">=</span> <span class="va">J</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span class="r-in"><span class="co"># Community-level covariate effects</span></span>
 <span class="r-in"><span class="co"># Occurrence</span></span>
@@ -281,7 +314,7 @@
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simMsOcc.html">simMsOcc</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, N <span class="op">=</span> <span class="va">N</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>,</span>
-<span class="r-in">    sp <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in">                sp <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span>
 <span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X</span></span>
 <span class="r-in"><span class="va">X.p</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X.p</span></span>
@@ -289,44 +322,43 @@
 <span class="r-in"><span class="va">occ.covs</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">[</span>, <span class="fl">2</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">occ.covs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'occ.cov'</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">det.covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>det.cov.1 <span class="op">=</span> <span class="va">X.p</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>, </span>
-<span class="r-in">     det.cov.2 <span class="op">=</span> <span class="va">X.p</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span></span>
-<span class="r-in">     <span class="op">)</span></span>
+<span class="r-in">                 det.cov.2 <span class="op">=</span> <span class="va">X.p</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, </span>
-<span class="r-in">      occ.covs <span class="op">=</span> <span class="va">occ.covs</span>,</span>
-<span class="r-in">      det.covs <span class="op">=</span> <span class="va">det.covs</span><span class="op">)</span></span>
+<span class="r-in">                  occ.covs <span class="op">=</span> <span class="va">occ.covs</span>,</span>
+<span class="r-in">                  det.covs <span class="op">=</span> <span class="va">det.covs</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Occupancy initial values</span></span>
 <span class="r-in"><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">2.72</span><span class="op">)</span>, </span>
-<span class="r-in">       alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">2.72</span><span class="op">)</span>, </span>
-<span class="r-in">       tau.sq.beta.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, </span>
-<span class="r-in">       tau.sq.alpha.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">2.72</span><span class="op">)</span>, </span>
+<span class="r-in">                   tau.sq.beta.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, </span>
+<span class="r-in">                   tau.sq.alpha.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># Initial values</span></span>
 <span class="r-in"><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha.comm <span class="op">=</span> <span class="fl">0</span>, </span>
-<span class="r-in">       beta.comm <span class="op">=</span> <span class="fl">0</span>, </span>
-<span class="r-in">       beta <span class="op">=</span> <span class="fl">0</span>, </span>
-<span class="r-in">       alpha <span class="op">=</span> <span class="fl">0</span>,</span>
-<span class="r-in">       tau.sq.beta <span class="op">=</span> <span class="fl">1</span>, </span>
-<span class="r-in">       tau.sq.alpha <span class="op">=</span> <span class="fl">1</span>, </span>
-<span class="r-in">       z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="va">max</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   beta.comm <span class="op">=</span> <span class="fl">0</span>, </span>
+<span class="r-in">                   beta <span class="op">=</span> <span class="fl">0</span>, </span>
+<span class="r-in">                   alpha <span class="op">=</span> <span class="fl">0</span>,</span>
+<span class="r-in">                   tau.sq.beta <span class="op">=</span> <span class="fl">1</span>, </span>
+<span class="r-in">                   tau.sq.alpha <span class="op">=</span> <span class="fl">1</span>, </span>
+<span class="r-in">                   z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="va">max</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">n.samples</span> <span class="op">&lt;-</span> <span class="fl">3000</span></span>
 <span class="r-in"><span class="va">n.burn</span> <span class="op">&lt;-</span> <span class="fl">2000</span></span>
 <span class="r-in"><span class="va">n.thin</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">msPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov</span>, </span>
-<span class="r-in">         det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span> <span class="op">+</span> <span class="va">det.cov.2</span>, </span>
-<span class="r-in">         data <span class="op">=</span> <span class="va">data.list</span>, </span>
-<span class="r-in">         inits <span class="op">=</span> <span class="va">inits.list</span>, </span>
-<span class="r-in">         n.samples <span class="op">=</span> <span class="va">n.samples</span>, </span>
-<span class="r-in">         priors <span class="op">=</span> <span class="va">prior.list</span>, </span>
+<span class="r-in">               det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span> <span class="op">+</span> <span class="va">det.cov.2</span>, </span>
+<span class="r-in">               data <span class="op">=</span> <span class="va">data.list</span>, </span>
+<span class="r-in">               inits <span class="op">=</span> <span class="va">inits.list</span>, </span>
+<span class="r-in">               n.samples <span class="op">=</span> <span class="va">n.samples</span>, </span>
+<span class="r-in">               priors <span class="op">=</span> <span class="va">prior.list</span>, </span>
 <span class="r-in">               n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span>
-<span class="r-in">         verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">         n.report <span class="op">=</span> <span class="fl">1000</span>, </span>
-<span class="r-in">         n.burn <span class="op">=</span> <span class="va">n.burn</span>, </span>
-<span class="r-in">         n.thin <span class="op">=</span> <span class="va">n.thin</span>, </span>
-<span class="r-in">         n.chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in">               verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span class="r-in">               n.report <span class="op">=</span> <span class="fl">1000</span>, </span>
+<span class="r-in">               n.burn <span class="op">=</span> <span class="va">n.burn</span>, </span>
+<span class="r-in">               n.thin <span class="op">=</span> <span class="va">n.thin</span>, </span>
+<span class="r-in">               n.chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing the data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Model description</span>
@@ -366,32 +398,32 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 1000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0217</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Means (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.0638 0.4657 -0.8644 0.0734 0.9959   NA 831.9728</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.5493 0.4264 -0.2839 0.5400 1.4973   NA 702.9376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.0433 0.4451 -0.8884 0.0358 0.9192   NA 703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.5692 0.4922 -0.4980 0.5543 1.6181   NA 859</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Variances (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 1.4129 1.6424 0.2594 0.9145 5.6108   NA 516.2143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     1.1548 1.3975 0.1299 0.7628 4.5921   NA 285.1825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 1.3118 1.6551 0.2357 0.8732 5.0599   NA 663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     1.3853 1.5761 0.1590 0.9023 5.5833   NA 293</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Means (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.3379 0.2016 -0.0724  0.3471 0.7089   NA 312.5669</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1    0.2531 0.2345 -0.2036  0.2514 0.7306   NA 638.8874</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   -0.4134 0.4635 -1.3451 -0.4077 0.5215   NA 818.1991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.3530 0.1942 -0.0526  0.3513 0.7138   NA 415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1    0.2445 0.2203 -0.2121  0.2446 0.7063   NA 576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   -0.4385 0.4401 -1.3007 -0.4333 0.4085   NA 912</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Variances (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1598 0.1983 0.0289 0.1007 0.6176   NA 561.5702</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.2698 0.2940 0.0398 0.1721 1.0698   NA 598.0138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   1.3624 1.4138 0.2643 0.9149 5.0558   NA 647.4420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1634 0.2072 0.0302 0.1085 0.6689   NA 595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.2493 0.2730 0.0390 0.1654 1.0531   NA 516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   1.3239 1.3286 0.2749 0.9386 5.2119   NA 616</span>
 </code></pre></div>
     </div>
   </div>

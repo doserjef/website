@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -32,10 +32,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/factorModels.html">Joint species distribution models with imperfect detection in `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/mcmcFactorModels.pdf">MCMC samplers for joint species distribution models in `spOccupancy` (PDF)</a>
+    </li>
+    <li>
       <a href="../articles/mcmcSamplers.pdf">MCMC samplers for models fit in `spOccupancy` (PDF)</a>
     </li>
     <li>
       <a href="../articles/modelFitting.html">Fitting occupancy models with `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/randomEffects.html">Fitting occupancy models with random intercepts in `spOccupancy`</a>
     </li>
   </ul></li>
 <li>
@@ -60,6 +69,23 @@
       <small>Source: <a href="https://github.com/doserjef/spOccupancy/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.3.0" id="spoccupancy-030">spOccupancy 0.3.0<small>2022-03-29</small><a class="anchor" aria-label="anchor" href="#spoccupancy-030"></a></h2>
+<p>spOccupancy Version 0.3.0 contains numerous substantial updates that provide new functionality, improved computational performance for model fitting and subsequent model checking/comparison, and minor bug fixes. The changes include:</p>
+<ul><li>Additional functionality for fitting spatial and non-spatial multi-species occupancy models with residual species correlations (i.e., joint species distribution models with imperfect detection). See documentation for <code><a href="../reference/lfMsPGOcc.html">lfMsPGOcc()</a></code> and <code><a href="../reference/sfMsPGOcc.html">sfMsPGOcc()</a></code>. We also included the functions <code><a href="../reference/lfJSDM.html">lfJSDM()</a></code> and <code><a href="../reference/sfJSDM.html">sfJSDM()</a></code> which are more typical joint species distribution models that fail to explicitly account for imperfect detection.</li>
+<li>All single-species and multi-species models allow for unstructured random intercepts in both the occurrence and detection portions of the occupancy model. Prior to this version, random intercepts were not supported in the occurrence portion of spatially-explicit models.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions for single-species and multi-species models now include the argument <code>type</code>, which allows for prediction of detection probability (<code>type = 'detection'</code>) at a set of covariate values as well as predictions of occurrence (<code>type = 'occupancy'</code>).</li>
+<li>All models are substantially faster than version 0.2.1. We improved performance by implementing a change in how we sample the latent Polya-Gamma variables in the detection component of the model. This results in substantial increases in speed for models where the number of replicates varies across sites. We additionally updated how non-spatial random effects were sampled, which also contributes to improved computational performance.</li>
+<li>All model fitting functions now include the object <code>like.samples</code> in the resulting model object, which contains model likelihood values needed for calculation of WAIC. This leads to much shorter run times for <code><a href="../reference/waicOcc.html">waicOcc()</a></code> compared to previous versions.</li>
+<li>All <code>fitted.*()</code> functions now return both the fitted values and the estimated detection probability samples from a fitted <code>spOccupancy</code> model.</li>
+<li>Improved error handling for models with missing values and random effects.</li>
+<li>Added the argument <code>ignore.RE</code> to all <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions. If non-spatial random intercepts are included when fitting the model, setting <code>ignore.RE = TRUE</code> will yield predictions that ignore the values of the random effects. If <code>ignore.RE = FALSE</code>, the model will predict new values using the random intercepts for both sampled and non-sampled levels of the effects.<br></li>
+<li>Fixed a bug in the cross-validation component of all <code>spOccupancy</code> model fitting functions that occurred when random effects were included in the occurrence and/or detection component of the model.</li>
+<li>Fixed minor bug in <code><a href="../reference/simOcc.html">simOcc()</a></code> and <code><a href="../reference/simMsOcc.html">simMsOcc()</a></code> that prevented simulating data with multiple random intercepts on detection.</li>
+<li>Fixed minor bug in spatially-explicit models that resulted in an error when setting <code>NNGP = FALSE</code> and not specifying initial values for the spatial range parameter <code>phi</code>.</li>
+<li>Fixed a bug in the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions for <code>spMsPGOcc</code> and <code>spPGOcc</code> objects that resulted in potentially inaccurate predictions when <code>n.omp.threads</code> &gt; 1.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.1" id="spoccupancy-021">spOccupancy 0.2.1<small>2022-01-07</small><a class="anchor" aria-label="anchor" href="#spoccupancy-021"></a></h2>
 <ul><li>Minor changes related to arguments in C++ code in header files to pass CRAN additional issues.</li>

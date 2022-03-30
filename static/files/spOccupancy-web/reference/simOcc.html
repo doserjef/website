@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -32,10 +32,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/factorModels.html">Joint species distribution models with imperfect detection in `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/mcmcFactorModels.pdf">MCMC samplers for joint species distribution models in `spOccupancy` (PDF)</a>
+    </li>
+    <li>
       <a href="../articles/mcmcSamplers.pdf">MCMC samplers for models fit in `spOccupancy` (PDF)</a>
     </li>
     <li>
       <a href="../articles/modelFitting.html">Fitting occupancy models with `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/randomEffects.html">Fitting occupancy models with random intercepts in `spOccupancy`</a>
     </li>
   </ul></li>
 <li>
@@ -87,7 +96,7 @@
 <dt>p.RE</dt>
 <dd><p>a list used to specify the non-spatial random intercepts included in the detection portion of the model. The list must have two tags: <code>levels</code> and <code>sigma.sq.p</code>. <code>levels</code> is a vector of length equal to the number of distinct random intercepts to include in the model and contains the number of levels there are in each intercept. <code>sigma.sq.p</code> is a vector of length equal to the number of distinct random intercepts to include in the model and contains the variances for each random effect. If not specified, no random effects are included in the detection portion of the model.</p></dd>
 <dt>sp</dt>
-<dd><p>a logical value indicating whether to simulate a spatially-explicit occupancy model with a Gaussian process and exponential correlation function. By default set to <code>FALSE</code>.</p></dd>
+<dd><p>a logical value indicating whether to simulate a spatially-explicit occupancy model with a Gaussian process. By default set to <code>FALSE</code>.</p></dd>
 <dt>cov.model</dt>
 <dd><p>a quoted keyword that specifies the covariance function used to model the spatial dependence structure among the latent occurrence values.  Supported covariance model key words are: <code>"exponential"</code>, <code>"matern"</code>, <code>"spherical"</code>, and <code>"gaussian"</code>.</p></dd>
 <dt>sigma.sq</dt>
@@ -144,12 +153,12 @@
 <span class="r-in"><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.6</span></span>
 <span class="r-in"><span class="va">sigma.sq</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span class="r-in"><span class="va">psi.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fl">10</span>, </span>
-<span class="r-in">         sigma.sq.psi <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span>
+<span class="r-in">               sigma.sq.psi <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">p.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fl">15</span>, </span>
-<span class="r-in">       sigma.sq.p <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
+<span class="r-in">             sigma.sq.p <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">simOcc</span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>,</span>
-<span class="r-in">        psi.RE <span class="op">=</span> <span class="va">psi.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="cn">TRUE</span>, cov.model <span class="op">=</span> <span class="st">'spherical'</span>, </span>
-<span class="r-in">        sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span><span class="op">)</span></span>
+<span class="r-in">              psi.RE <span class="op">=</span> <span class="va">psi.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="cn">TRUE</span>, cov.model <span class="op">=</span> <span class="st">'spherical'</span>, </span>
+<span class="r-in">              sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span><span class="op">)</span></span>
 </code></pre></div>
     </div>
   </div>

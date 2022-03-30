@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -32,10 +32,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/factorModels.html">Joint species distribution models with imperfect detection in `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/mcmcFactorModels.pdf">MCMC samplers for joint species distribution models in `spOccupancy` (PDF)</a>
+    </li>
+    <li>
       <a href="../articles/mcmcSamplers.pdf">MCMC samplers for models fit in `spOccupancy` (PDF)</a>
     </li>
     <li>
       <a href="../articles/modelFitting.html">Fitting occupancy models with `spOccupancy`</a>
+    </li>
+    <li>
+      <a href="../articles/randomEffects.html">Fitting occupancy models with random intercepts in `spOccupancy`</a>
     </li>
   </ul></li>
 <li>
@@ -107,7 +116,8 @@
   while observation-level covariates are specified as a matrix or data frame 
   with the number of rows equal to the number of observed sites of that data source
   and number of columns equal to the maximum number of replicates at a given site. 
-  <code>coords</code> is a matrix of the observation site coordinates.</p></dd>
+  <code>coords</code> is a matrix of the observation site coordinates. Note that <code>spOccupancy</code> assumes coordinates are specified 
+  in a projected coordinate system.</p></dd>
 <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
   Valid tags are <code>z</code>, <code>beta</code>, <code>alpha</code>, <code>sigma.sq</code>, <code>phi</code>, 
@@ -117,7 +127,10 @@
   Each element of the list should be a vector of initial values for all detection 
   parameters in the given data source or a single value for each data source to 
   assign all parameters for a given data source the same initial value. See 
-  <code>priors</code> description for definition of each parameter name.</p></dd>
+  <code>priors</code> description for definition of each parameter name.
+  Additionally, the tag <code>fix</code> can be set to <code>TRUE</code> 
+  to fix the starting values across all chains. If <code>fix</code> is not specified
+  (the default), starting values are varied randomly across chains.</p></dd>
 <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
     Valid tags are <code>beta.normal</code>, <code>alpha.normal</code>, <code>phi.unif</code>, 
@@ -296,6 +309,11 @@
 <dt>w.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
     for latent spatial random effects.</p></dd>
+<dt>rhat</dt>
+<dd><p>a list of Gelman-Rubin diagnostic values for some of the model
+    parameters.</p></dd>
+<dt>ESS</dt>
+<dd><p>a list of effective sample sizes for some of the model parameters.</p></dd>
 <dt>run.time</dt>
 <dd><p>execution time reported using <code><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time()</a></code>.</p></dd>
 <dt>k.fold.deviance</dt>
@@ -304,7 +322,9 @@
     <code>k.fold</code> is specified in function call. Only a single value is returned
     if <code>k.fold.data</code> is specified.</p></dd>
 </dl><p>The return object will include additional objects used for 
-  subsequent prediction and/or model fit evaluation.</p>
+  subsequent prediction and/or model fit evaluation. Note that detection
+  probability estimated values are not included in the model object, but can be 
+  extracted using <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code>.</p>
     </div>
 
     <div id="ref-examples">
@@ -343,8 +363,8 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Simulate occupancy data from multiple data sources. </span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simIntOcc.html">simIntOcc</a></span><span class="op">(</span>n.data <span class="op">=</span> <span class="va">n.data</span>, J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, J.obs <span class="op">=</span> <span class="va">J.obs</span>, </span>
-<span class="r-in">     n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, sp <span class="op">=</span> <span class="va">sp</span>, </span>
-<span class="r-in">     sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, cov.model <span class="op">=</span> <span class="st">'exponential'</span><span class="op">)</span></span>
+<span class="r-in">                 n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, sp <span class="op">=</span> <span class="va">sp</span>, </span>
+<span class="r-in">                 sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, cov.model <span class="op">=</span> <span class="st">'exponential'</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span>
 <span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X.obs</span></span>
@@ -362,87 +382,77 @@
 <span class="r-in"><span class="co"># Add covariates one by one</span></span>
 <span class="r-in"><span class="va">det.covs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>det.cov.1.1 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">det.covs</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>det.cov.2.1 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>, </span>
-<span class="r-in">          det.cov.2.2 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">                      det.cov.2.2 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">det.covs</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>det.cov.3.1 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">det.covs</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>det.cov.4.1 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>, </span>
-<span class="r-in">          det.cov.4.2 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span>, </span>
-<span class="r-in">          det.cov.4.3 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">                      det.cov.4.2 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span>, </span>
+<span class="r-in">                      det.cov.4.3 <span class="op">=</span> <span class="va">X.p</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, , <span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, </span>
-<span class="r-in">      occ.covs <span class="op">=</span> <span class="va">occ.covs</span>,</span>
-<span class="r-in">      det.covs <span class="op">=</span> <span class="va">det.covs</span>, </span>
-<span class="r-in">      sites <span class="op">=</span> <span class="va">sites</span>, </span>
-<span class="r-in">      coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span></span>
+<span class="r-in">                  occ.covs <span class="op">=</span> <span class="va">occ.covs</span>,</span>
+<span class="r-in">                  det.covs <span class="op">=</span> <span class="va">det.covs</span>, </span>
+<span class="r-in">                  sites <span class="op">=</span> <span class="va">sites</span>, </span>
+<span class="r-in">                  coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">J</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">z.obs</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Initial values</span></span>
 <span class="r-in"><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, </span>
-<span class="r-in">          beta <span class="op">=</span> <span class="fl">0</span>, </span>
-<span class="r-in">          phi <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.5</span>, </span>
-<span class="r-in">          sigma.sq <span class="op">=</span> <span class="fl">2</span>, </span>
-<span class="r-in">          w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">J</span><span class="op">)</span>, </span>
-<span class="r-in">          z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">J</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   beta <span class="op">=</span> <span class="fl">0</span>, </span>
+<span class="r-in">                   phi <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.5</span>, </span>
+<span class="r-in">                   sigma.sq <span class="op">=</span> <span class="fl">2</span>, </span>
+<span class="r-in">                   w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">J</span><span class="op">)</span>, </span>
+<span class="r-in">                   z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">J</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># Priors</span></span>
 <span class="r-in"><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">2.72</span><span class="op">)</span>, </span>
-<span class="r-in">       alpha.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, </span>
-<span class="r-in">               var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2.72</span>, <span class="fl">2.72</span>, <span class="fl">2.72</span>, <span class="fl">2.72</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">       phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">/</span><span class="fl">.1</span><span class="op">)</span>, </span>
-<span class="r-in">       sigma.sq.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   alpha.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, </span>
+<span class="r-in">                                       var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2.72</span>, <span class="fl">2.72</span>, <span class="fl">2.72</span>, <span class="fl">2.72</span><span class="op">)</span><span class="op">)</span>,</span>
+<span class="r-in">                   phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">/</span><span class="fl">.1</span><span class="op">)</span>, </span>
+<span class="r-in">                   sigma.sq.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># Tuning</span></span>
 <span class="r-in"><span class="va">tuning.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>phi <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Number of batches</span></span>
-<span class="r-in"><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">40</span></span>
+<span class="r-in"><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span class="r-in"><span class="co"># Batch length</span></span>
 <span class="r-in"><span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">spIntPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov</span>, </span>
-<span class="r-in">      det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>f.1 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1.1</span>, </span>
-<span class="r-in">             f.2 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.2.1</span> <span class="op">+</span> <span class="va">det.cov.2.2</span>, </span>
-<span class="r-in">             f.3 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.3.1</span>, </span>
-<span class="r-in">             f.4 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.4.1</span> <span class="op">+</span> <span class="va">det.cov.4.2</span> <span class="op">+</span> <span class="va">det.cov.4.3</span><span class="op">)</span>, </span>
-<span class="r-in">      data <span class="op">=</span> <span class="va">data.list</span>,  </span>
-<span class="r-in">      inits <span class="op">=</span> <span class="va">inits.list</span>, </span>
-<span class="r-in">      n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span>
-<span class="r-in">      batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span>
-<span class="r-in">      accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span>
-<span class="r-in">      priors <span class="op">=</span> <span class="va">prior.list</span>, </span>
-<span class="r-in">      cov.model <span class="op">=</span> <span class="st">"exponential"</span>, </span>
-<span class="r-in">      tuning <span class="op">=</span> <span class="va">tuning.list</span>, </span>
-<span class="r-in">      n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span>
-<span class="r-in">      verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">      NNGP <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">      n.neighbors <span class="op">=</span> <span class="fl">5</span>, </span>
-<span class="r-in">      search.type <span class="op">=</span> <span class="st">'cb'</span>, </span>
-<span class="r-in">      n.report <span class="op">=</span> <span class="fl">10</span>, </span>
-<span class="r-in">      n.burn <span class="op">=</span> <span class="fl">500</span>, </span>
-<span class="r-in">      n.thin <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in">                  det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>f.1 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1.1</span>, </span>
+<span class="r-in">                                     f.2 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.2.1</span> <span class="op">+</span> <span class="va">det.cov.2.2</span>, </span>
+<span class="r-in">                                     f.3 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.3.1</span>, </span>
+<span class="r-in">                                     f.4 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.4.1</span> <span class="op">+</span> <span class="va">det.cov.4.2</span> <span class="op">+</span> <span class="va">det.cov.4.3</span><span class="op">)</span>, </span>
+<span class="r-in">                  data <span class="op">=</span> <span class="va">data.list</span>,  </span>
+<span class="r-in">                  inits <span class="op">=</span> <span class="va">inits.list</span>, </span>
+<span class="r-in">                  n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span>
+<span class="r-in">                  batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span>
+<span class="r-in">                  accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span>
+<span class="r-in">                  priors <span class="op">=</span> <span class="va">prior.list</span>, </span>
+<span class="r-in">                  cov.model <span class="op">=</span> <span class="st">"exponential"</span>, </span>
+<span class="r-in">                  tuning <span class="op">=</span> <span class="va">tuning.list</span>, </span>
+<span class="r-in">                  n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span>
+<span class="r-in">                  verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span class="r-in">                  NNGP <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span class="r-in">                  n.report <span class="op">=</span> <span class="fl">10</span>, </span>
+<span class="r-in">                  n.burn <span class="op">=</span> <span class="fl">50</span>, </span>
+<span class="r-in">                  n.thin <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing the data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Building the neighbor list</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Building the neighbors of neighbors list</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Model description</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NNGP Integrated Occupancy Model with Polya-Gamma latent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Integrated Occupancy Model with Polya-Gamma latent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> variable fit with 54 sites.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Integrating 4 occupancy data sets.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per chain: 1000 (40 batches of length 25)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per chain: 250 (10 batches of length 25)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 50 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Using the exponential spatial correlation model.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Using 5 nearest neighbors.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Source compiled with OpenMP support and model fit using 1 thread(s).</span>
@@ -452,19 +462,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Chain 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling ... </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 10 of 40, 25.00%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	84.0		0.33488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 20 of 40, 50.00%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	72.0		0.37010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 30 of 40, 75.00%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	76.0		0.40903</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 40 of 40, 100.00%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 10 of 10, 100.00%</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -473,49 +471,49 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     f.2 = ~det.cov.2.1 + det.cov.2.2, f.3 = ~det.cov.3.1, f.4 = ~det.cov.4.1 + </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         det.cov.4.2 + det.cov.4.3), data = data.list, inits = inits.list, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     priors = prior.list, tuning = tuning.list, cov.model = "exponential", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     NNGP = TRUE, n.neighbors = 5, search.type = "cb", n.batch = n.batch, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     batch.length = batch.length, accept.rate = 0.43, n.omp.threads = 1, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     verbose = TRUE, n.report = 10, n.burn = 500, n.thin = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     NNGP = FALSE, n.batch = n.batch, batch.length = batch.length, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accept.rate = 0.43, n.omp.threads = 1, verbose = TRUE, n.report = 10, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n.burn = 50, n.thin = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per Chain: 1000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per Chain: 250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0045</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.7585 0.4504 -0.0017 0.7195 1.7818   NA 102.6176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.1809 0.3507 -0.4822 0.1606 0.9104   NA 203.0460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.7335 0.5454 -0.2718 0.6961 1.8040   NA  48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.1606 0.3817 -0.5249 0.1257 0.9959   NA  91</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.5010 0.7117 -0.8233 0.4732 2.0170   NA 234.2804</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 1.2722 0.6694  0.1720 1.1921 2.8132   NA 221.9391</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2954 0.7117 -1.1302 0.2643 1.6533   NA  68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 1.2099 0.5756  0.1221 1.1799 2.2773   NA 107</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.1684 0.3820  0.4839  1.1438 1.9419   NA 253.7558</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -0.0127 0.3549 -0.7188 -0.0129 0.6731   NA 370.2345</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2  0.5236 0.3462 -0.1369  0.5057 1.3007   NA 302.1562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.1153 0.3745  0.3668  1.1135 1.8668   NA 127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -0.0327 0.3585 -0.7070 -0.0409 0.6584   NA 200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2  0.4901 0.3500 -0.0867  0.4786 1.1910   NA 117</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat     ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.3047 0.3120 -0.9276 -0.2840 0.2914   NA 375.218</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.3.1  0.5332 0.2738  0.0536  0.5173 1.1017   NA 500.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.3423 0.3107 -0.9399 -0.3303 0.2785   NA 200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.3.1  0.5030 0.2887 -0.0314  0.4943 1.0759   NA 200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat      ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0828 0.3886 -0.6990  0.0941 0.7802   NA 504.9962</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.1  0.4484 0.3421 -0.2079  0.4321 1.1219   NA 316.6427</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.2 -0.5962 0.3758 -1.3701 -0.5642 0.0396   NA 300.8014</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.3 -0.2609 0.4061 -1.0430 -0.2632 0.5528   NA 500.0000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0964 0.4002 -0.7675  0.1212 0.8345   NA 130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.1  0.4217 0.3688 -0.2137  0.3973 1.2238   NA 190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.2 -0.5598 0.3925 -1.3171 -0.5443 0.0423   NA 129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.3 -0.2643 0.3612 -0.9707 -0.2273 0.3606   NA 145</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Mean     SD   2.5%     50%   97.5% Rhat     ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq  1.7717 1.7171 0.2773  1.2607  7.1924   NA 19.4416</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi      19.4196 7.3089 5.1301 20.3592 29.0360   NA  8.2160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Mean     SD   2.5%    50%   97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq 1.6289 0.8438 0.5608 1.5186  3.7069   NA  11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi      8.9427 2.1874 5.9459 8.6636 13.7956   NA   9</span>
 </code></pre></div>
     </div>
   </div>
