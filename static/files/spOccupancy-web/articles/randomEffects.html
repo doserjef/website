@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@
 </h1>
                         <h4 data-toc-skip class="author">Jeffrey W. Doser</h4>
             
-            <h4 data-toc-skip class="date">April 15, 2022</h4>
+            <h4 data-toc-skip class="date">May 20, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/doserjef/spOccupancy/blob/HEAD/vignettes/randomEffects.Rmd" class="external-link"><code>vignettes/randomEffects.Rmd</code></a></small>
       <div class="hidden name"><code>randomEffects.Rmd</code></div>
@@ -125,7 +125,7 @@
 <p><code>J.x</code> and <code>J.y</code> indicate the number of spatial locations to simulate data along a horizontal and vertical axis, respectively, such that <code>J.x * J.y</code> is the total number of sites (i.e., <code>J</code>). <code>n.rep</code> is a numeric vector of length <code>J</code> that indicates the number of replicates at each of the J sites. <code>beta</code> and <code>alpha</code> are numeric vectors containing the intercept and any regression coefficient parameters for the occurrence and detection portions of the occupancy model, respectively. <code>psi.RE</code> and <code>p.RE</code> are lists that are used to specify random intercepts on occurrence and detection, respectively. These are only specified when we want to simulate data with random intercepts. Each list should be comprised of two tags: <code>levels</code>, a vector that specifies the number of levels for each random effect included in the model, and <code>sigma.sq.psi</code> or <code>sigma.sq.p</code>, which specify the variances of the random effects for each random effect included in the model. <code>sp</code> is a logical value indicating whether to simulate data with a spatial Gaussian process. <code>cov.model</code> specifies the covariance function used to model the spatial dependence structure, with supported values of <code>exponential</code>, <code>matern</code>, <code>spherical</code>, and <code>gaussian</code>. Finally, <code>sigma.sq</code> is the spatial variance parameter, <code>phi</code> is the spatial range parameter, and <code>nu</code> is the spatial smoothness parameter (only applicable when <code>cov.model = 'matern'</code>). Below we simulate data across 225 sites with 1-4 replicates at a given site, a single covariate effect on occurrence, a single covariate effect on detection, spatial autocorrelation following a spherical correlation function, and a random intercept on occurrence and detection.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>
 <span class="va">J.x</span> <span class="op">&lt;-</span> <span class="fl">20</span>
 <span class="va">J.y</span> <span class="op">&lt;-</span> <span class="fl">20</span>
 <span class="co"># Total number of sites</span>
@@ -133,25 +133,25 @@
 <pre><code>[1] 400</code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Number of replicates at each site</span>
-<span class="va">n.rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="va">J</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">n.rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, <span class="va">J</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co"># Intercept and covariate effect on occurrence</span>
-<span class="va">beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.7</span><span class="op">)</span>
+<span class="va">beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.2</span><span class="op">)</span>
 <span class="co"># Intercept and covariate effect on detection</span>
-<span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.2</span><span class="op">)</span>
+<span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span>
 <span class="co"># Single random intercept on occurrence</span>
-<span class="va">psi.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fl">10</span>, sigma.sq.psi <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span>
+<span class="va">psi.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fl">20</span>, sigma.sq.psi <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span>
 <span class="co"># Single random intercept on detection </span>
-<span class="va">p.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fl">25</span>, sigma.sq.p <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>
+<span class="va">p.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fl">25</span>, sigma.sq.p <span class="op">=</span> <span class="fl">1.1</span><span class="op">)</span>
 <span class="co"># Spatial range</span>
-<span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.7</span>
+<span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.3</span>
 <span class="co"># Spatial variance</span>
-<span class="va">sigma.sq</span> <span class="op">&lt;-</span> <span class="fl">2</span>
+<span class="va">sigma.sq</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="co"># Simulate the data</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simOcc.html">simOcc</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>, 
               alpha <span class="op">=</span> <span class="va">alpha</span>, psi.RE <span class="op">=</span> <span class="va">psi.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, 
               sp <span class="op">=</span> <span class="cn">TRUE</span>, sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, 
               cov.model <span class="op">=</span> <span class="st">'spherical'</span><span class="op">)</span></code></pre></div>
-<p>For the occurrence random effect, we assumed there were 10 levels and a variance of 2.5. For example, we could suppose these levels corresponded to different administrative units across the 225 sites we simulated, and we want to account for potential correlation between sites within each of the units. For the detection random effect, we assumed there were 25 levels and a variance of 1.5. For example, we could suppose there were 25 different observers that collected the data, and we wanted to account for variation in observer skill (and thus detection probability) across the different observers.</p>
+<p>For the occurrence random effect, we assumed there were 20 levels and a variance of 0.75. For example, we could suppose these levels corresponded to different administrative units across the 225 sites we simulated, and we want to account for potential correlation between sites within each of the units. For the detection random effect, we assumed there were 25 levels and a variance of 1.1. For example, we could suppose there were 25 different observers that collected the data, and we wanted to account for variation in observer skill (and thus detection probability) across the different observers.</p>
 <p>Next, let’s explore the simulated data a bit before we move on (plotting code adapted from <span class="citation">Hooten and Hefley (2019)</span>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
@@ -162,15 +162,15 @@
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : NULL
   .. ..$ : chr [1:2] "Var1" "Var2"
- $ w         : num [1:400, 1] 0.199 1.18 0.613 -1.119 -0.87 ...
- $ psi       : num [1:400, 1] 0.8297 0.9565 0.5235 0.0113 0.8812 ...
- $ z         : int [1:400] 0 1 0 0 1 1 0 1 1 1 ...
- $ p         : num [1:400, 1:4] 0.326 0.419 0.449 0.651 0.418 ...
- $ y         : int [1:400, 1:4] 0 0 0 0 1 1 0 1 1 0 ...
- $ X.p.re    : int [1:400, 1:4, 1] 17 13 5 14 23 25 23 19 22 13 ...
- $ X.re      : int [1:400, 1] 7 6 9 5 6 9 9 3 7 6 ...
- $ alpha.star: num [1:25] 3.6871 -0.0362 -1.0974 -1.5214 0.5956 ...
- $ beta.star : num [1:10] 0.904 0.612 0.214 1.489 -3.708 ...</code></pre>
+ $ w         : num [1:400, 1] -0.177 -0.626 0.617 1.225 0.825 ...
+ $ psi       : num [1:400, 1] 0.0779 0.1235 0.7022 0.6459 0.2335 ...
+ $ z         : int [1:400] 0 0 1 1 0 0 1 1 0 0 ...
+ $ p         : num [1:400, 1:4] 0.543 0.836 0.625 0.731 0.595 ...
+ $ y         : int [1:400, 1:4] 0 0 1 1 0 0 1 1 0 0 ...
+ $ X.p.re    : int [1:400, 1:4, 1] 22 14 25 3 9 12 14 2 19 16 ...
+ $ X.re      : int [1:400, 1] 15 14 12 5 15 11 13 18 17 10 ...
+ $ alpha.star: num [1:25] 0.4124 -0.0664 0.2088 -0.1104 0.1463 ...
+ $ beta.star : num [1:20] -0.4814 -1.0351 -0.6181 0.4122 -0.0491 ...</code></pre>
 <p>The simulated data object consists of the following objects: <code>X</code> (the occurrence design matrix), <code>X.p</code> (the detection design matrix), <code>coords</code> (the spatial coordinates of each site), <code>w</code> (the latent spatial process, <code>psi</code> (occurrence probability), <code>z</code> (the latent occupancy status), <code>y</code> (the detection-nondetection data, <code>X.p.re</code> (the detection random effect levels for each site), <code>X.re</code> (the occurrence random effect levels for each site), <code>alpha.star</code> (the detection random effects for each level of the random effect), <code>beta.star</code> (the occurrence random effects for each level of the random effect).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Detection-nondetection data</span>
@@ -204,20 +204,20 @@
                  det.factor.1 <span class="op">=</span> <span class="va">X.p.re</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># Package into a list for spOccupancy</span>
 <span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, 
-          occ.covs <span class="op">=</span> <span class="va">occ.covs</span>, 
-          det.covs <span class="op">=</span> <span class="va">det.covs</span>, 
-          coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span>
+                  occ.covs <span class="op">=</span> <span class="va">occ.covs</span>, 
+                  det.covs <span class="op">=</span> <span class="va">det.covs</span>, 
+                  coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span>
 <span class="co"># Take a look at the data structure.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">data.list</span><span class="op">)</span></code></pre></div>
 <pre><code>List of 4
- $ y       : int [1:400, 1:4] 0 0 0 0 1 1 0 1 1 0 ...
- $ occ.covs: num [1:400, 1:2] 0.0282 -0.3567 0.8526 0.5134 1.0182 ...
+ $ y       : int [1:400, 1:4] 0 0 1 1 0 0 1 1 0 0 ...
+ $ occ.covs: num [1:400, 1:2] -0.261 2.343 -0.378 0.372 -1.663 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : NULL
   .. ..$ : chr [1:2] "occ.cov.1" "occ.factor.1"
  $ det.covs:List of 2
-  ..$ det.cov.1   : num [1:400, 1:4] 1.934 -1.252 -1.499 -0.841 -1.367 ...
-  ..$ det.factor.1: int [1:400, 1:4] 17 13 5 14 23 25 23 19 22 13 ...
+  ..$ det.cov.1   : num [1:400, 1:4] -1.246 1.402 -0.871 0.371 -0.815 ...
+  ..$ det.factor.1: int [1:400, 1:4] 22 14 25 3 9 12 14 2 19 16 ...
  $ coords  : num [1:400, 1:2] 0 0.0526 0.1053 0.1579 0.2105 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : NULL
@@ -226,34 +226,36 @@
 <code class="sourceCode R"><span class="co"># Take a look at the occurrence covariates</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">occ.covs</span><span class="op">)</span></code></pre></div>
 <pre><code>       occ.cov.1 occ.factor.1
-[1,]  0.02817177            7
-[2,] -0.35670341            6
-[3,]  0.85262638            9
-[4,]  0.51336525            5
-[5,]  1.01820300            6
-[6,] -1.02147908            9</code></pre>
+[1,] -0.26139909           15
+[2,]  2.34325562           14
+[3,] -0.37798960           12
+[4,]  0.37215428            5
+[5,] -1.66296763           15
+[6,]  0.07117392           11</code></pre>
 <p>One important thing to note about including random effects in <code>spOccupancy</code> is that we must supply the random effects in as numeric values. Notice in the <code>occ.factor.1</code> column in <code>occ.covs</code>, the random effect levels are specified as a numeric value, which indicates the specific level of the random effect at that given site. <code>spOccupancy</code> will return an informative error if we supply random effects as factors or character vectors and will tell us to convert them to numeric in order to fit the model.</p>
 </div>
 <div class="section level1">
 <h1 id="fit-the-model-using-sppgocc">Fit the model using <code>spPGOcc()</code><a class="anchor" aria-label="anchor" href="#fit-the-model-using-sppgocc"></a>
 </h1>
-<p>We now fit the model using <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>. Random effects are included in the model formulas using standard <code>lme4</code> notation. Below we run a spatially-explicit occupancy model for 400 batches each of length 25 (10000 total MCMC iterations) using a spherical correlation function. We use the default intial values, priors, and tuning values that <code>spOccupancy</code> provides. We use a Nearest Neighbor Gaussian Process with 5 neighbors and the spherical spatial correlation function.</p>
+<p>We now fit the model using <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>. Random effects are included in the model formulas using standard <code>lme4</code> notation. Below we run a spatially-explicit occupancy model for 400 batches each of length 25 (10000 total MCMC iterations). We use the default tuning and prior values that <code>spOccupancy</code> provides. We use a Nearest Neighbor Gaussian Process with 10 neighbors and the spherical spatial correlation function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">400</span>
-<span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span>
+<code class="sourceCode R"><span class="va">inits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0</span>, beta <span class="op">=</span> <span class="fl">0</span>, sigma.sq.psi <span class="op">=</span> <span class="fl">0.5</span>, 
+              sigma.sq.p <span class="op">=</span> <span class="fl">0.5</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">y</span>, <span class="fl">1</span>, <span class="va">max</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, 
+              sigma.sq <span class="op">=</span> <span class="fl">1</span>, phi <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="va">out.full</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spPGOcc.html">spPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov.1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">occ.factor.1</span><span class="op">)</span>, 
                     det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">det.factor.1</span><span class="op">)</span>, 
                     data <span class="op">=</span> <span class="va">data.list</span>, 
-                    n.batch <span class="op">=</span> <span class="va">n.batch</span>, 
-                    batch.length <span class="op">=</span> <span class="va">batch.length</span>, 
+                    n.batch <span class="op">=</span> <span class="fl">400</span>, 
+                    batch.length <span class="op">=</span> <span class="fl">25</span>, 
+                    inits <span class="op">=</span> <span class="va">inits</span>, 
                     accept.rate <span class="op">=</span> <span class="fl">0.43</span>, 
                     cov.model <span class="op">=</span> <span class="st">"spherical"</span>, 
                     NNGP <span class="op">=</span> <span class="cn">TRUE</span>, 
-                    n.neighbors <span class="op">=</span> <span class="fl">5</span>,
+                    n.neighbors <span class="op">=</span> <span class="fl">10</span>,
                     n.report <span class="op">=</span> <span class="fl">100</span>, 
-                    n.burn <span class="op">=</span> <span class="fl">2000</span>, 
-                    n.thin <span class="op">=</span> <span class="fl">4</span>, 
-                    n.chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </code></pre></div>
+                    n.burn <span class="op">=</span> <span class="fl">5000</span>, 
+                    n.thin <span class="op">=</span> <span class="fl">5</span>, 
+                    n.chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
 <pre><code>----------------------------------------
     Preparing to run the model
 ----------------------------------------</code></pre>
@@ -263,28 +265,14 @@ Setting prior mean to 0 and prior variance to 2.72</code></pre>
 Setting prior mean to 0 and prior variance to 2.72</code></pre>
 <pre><code>No prior specified for phi.unif.
 Setting uniform bounds based on the range of observed spatial coordinates.</code></pre>
-<pre><code>No prior specified for sigma.sq.ig.
-Setting the shape parameter to 2 and scale parameter to 1.</code></pre>
+<pre><code>No prior specified for sigma.sq.
+Using an inverse-Gamma prior with the shape parameter set to 2 and scale parameter to 1.</code></pre>
 <pre><code>No prior specified for sigma.sq.psi.ig.
 Setting prior shape to 0.1 and prior scale to 0.1</code></pre>
 <pre><code>No prior specified for sigma.sq.p.ig.
 Setting prior shape to 0.1 and prior scale to 0.1</code></pre>
-<pre><code>z.inits is not specified in initial values.
-Setting initial values based on observed data</code></pre>
-<pre><code>beta is not specified in initial values.
-Setting initial values to random values from the prior distribution</code></pre>
-<pre><code>alpha is not specified in initial values.
-Setting initial values to random values from the prior distribution</code></pre>
-<pre><code>phi is not specified in initial values.
-Setting initial value to random value from the prior distribution</code></pre>
-<pre><code>sigma.sq is not specified in initial values.
-Setting initial value to random value from the prior distribution</code></pre>
 <pre><code>w is not specified in initial values.
 Setting initial value to 0</code></pre>
-<pre><code>sigma.sq.psi is not specified in initial values.
-Setting initial values to random values between 0.5 and 10</code></pre>
-<pre><code>sigma.sq.p is not specified in initial values.
-Setting initial values to random values between 0.5 and 10</code></pre>
 <pre><code>----------------------------------------
     Building the neighbor list
 ----------------------------------------
@@ -298,14 +286,14 @@ NNGP Occupancy model with Polya-Gamma latent
 variable fit with 400 sites.
 
 Samples per chain: 10000 (400 batches of length 25)
-Burn-in: 2000 
-Thinning Rate: 4 
-Number of Chains: 2 
-Total Posterior Samples: 4000 
+Burn-in: 5000 
+Thinning Rate: 5 
+Number of Chains: 1 
+Total Posterior Samples: 1000 
 
 Using the spherical spatial correlation model.
 
-Using 5 nearest neighbors.
+Using 10 nearest neighbors.
 
 Source compiled with OpenMP support and model fit using 1 thread(s).
 
@@ -315,89 +303,73 @@ Adaptive Metropolis with target acceptance rate: 43.0
 ----------------------------------------
 Sampling ... 
 Batch: 100 of 400, 25.00%
-    Acceptance  Tuning
-    32.0        0.53259
+    Parameter   Acceptance  Tuning
+    phi     76.0        0.73345
 -------------------------------------------------
 Batch: 200 of 400, 50.00%
-    Acceptance  Tuning
-    80.0        0.61263
+    Parameter   Acceptance  Tuning
+    phi     32.0        1.09417
 -------------------------------------------------
 Batch: 300 of 400, 75.00%
-    Acceptance  Tuning
-    8.0     0.95123
--------------------------------------------------
-Batch: 400 of 400, 100.00%
-----------------------------------------
-    Chain 2
-----------------------------------------
-Sampling ... 
-Batch: 100 of 400, 25.00%
-    Acceptance  Tuning
-    52.0        0.34994
--------------------------------------------------
-Batch: 200 of 400, 50.00%
-    Acceptance  Tuning
-    44.0        0.31037
--------------------------------------------------
-Batch: 300 of 400, 75.00%
-    Acceptance  Tuning
-    44.0        0.32956
+    Parameter   Acceptance  Tuning
+    phi     72.0        1.16183
 -------------------------------------------------
 Batch: 400 of 400, 100.00%</code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out.full</span><span class="op">)</span></code></pre></div>
 <pre><code>
 Call:
 spPGOcc(occ.formula = ~occ.cov.1 + (1 | occ.factor.1), det.formula = ~det.cov.1 + 
-    (1 | det.factor.1), data = data.list, cov.model = "spherical", 
-    NNGP = TRUE, n.neighbors = 5, n.batch = n.batch, batch.length = batch.length, 
-    accept.rate = 0.43, n.report = 100, n.burn = 2000, n.thin = 4, 
-    n.chains = 2)
+    (1 | det.factor.1), data = data.list, inits = inits, cov.model = "spherical", 
+    NNGP = TRUE, n.neighbors = 10, n.batch = 400, batch.length = 25, 
+    accept.rate = 0.43, n.report = 100, n.burn = 5000, n.thin = 5, 
+    n.chains = 1)
 
 Samples per Chain: 10000
-Burn-in: 2000
-Thinning Rate: 4
-Number of Chains: 2
-Total Posterior Samples: 4000
-Run Time (min): 1.1276
+Burn-in: 5000
+Thinning Rate: 5
+Number of Chains: 1
+Total Posterior Samples: 1000
+Run Time (min): 0.9729
 
 Occurrence (logit scale): 
-              Mean     SD    2.5%    50%  97.5%   Rhat ESS
-(Intercept) 0.6180 0.7220 -0.7989 0.5984 2.1680 1.0425 203
-occ.cov.1   0.4137 0.2477 -0.0160 0.3919 0.9725 1.0082 318
+               Mean     SD    2.5%     50%   97.5% Rhat ESS
+(Intercept) -0.4042 0.2167 -0.8612 -0.3947 -0.0061   NA 444
+occ.cov.1   -0.2600 0.1431 -0.5746 -0.2488  0.0074   NA 447
 
 Occurrence Random Effect Variances (logit scale): 
-               Mean     SD   2.5%    50%   97.5%   Rhat ESS
-occ.factor.1 5.3481 6.0866 0.8146 3.5048 21.8106 1.0573  76
+               Mean     SD   2.5%    50%  97.5% Rhat ESS
+occ.factor.1 0.5251 0.3632 0.1091 0.4322 1.4317   NA 182
 
 Detection (logit scale): 
-               Mean     SD    2.5%     50%  97.5%   Rhat  ESS
-(Intercept) -0.3112 0.2843 -0.8829 -0.3064 0.2405 1.0009  720
-det.cov.1    0.1793 0.0977 -0.0156  0.1783 0.3704 1.0022 3755
+               Mean     SD    2.5%     50%   97.5% Rhat  ESS
+(Intercept)  1.0690 0.2290  0.6301  1.0579  1.5437   NA  438
+det.cov.1   -0.2875 0.1172 -0.5223 -0.2875 -0.0577   NA 1000
 
 Detection Random Effect Variances (logit scale): 
-               Mean     SD 2.5%    50%  97.5%   Rhat  ESS
-det.factor.1 1.6918 0.6995 0.75 1.5593 3.3737 1.0031 3177
+               Mean     SD   2.5%    50%  97.5% Rhat ESS
+det.factor.1 0.9354 0.4614 0.3268 0.8385 2.1823   NA 615
 
 Spatial Covariance: 
-            Mean      SD   2.5%    50%   97.5%   Rhat ESS
-sigma.sq  3.4699  4.1275 0.2726 1.9947 15.3300 1.1261  33
-phi      10.6015 13.0671 2.5956 5.1516 51.1839 5.1448   9</code></pre>
+            Mean      SD   2.5%     50%   97.5% Rhat ESS
+sigma.sq  1.0422  1.3793 0.1831  0.5945  4.4560   NA  14
+phi      29.3014 16.1444 4.9999 29.6395 56.0119   NA  17</code></pre>
 <p>The summary of the model output shows our model recovers the values we used to simulate the data. Let’s also fit a model that doesn’t include the occurrence and detection random effects, and compare their performance using the WAIC <span class="citation">(Watanabe 2010)</span>.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out.no.re</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spPGOcc.html">spPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov.1</span>, 
                      det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>, 
                      data <span class="op">=</span> <span class="va">data.list</span>, 
-                     n.batch <span class="op">=</span> <span class="va">n.batch</span>, 
-                     batch.length <span class="op">=</span> <span class="va">batch.length</span>, 
+                     n.batch <span class="op">=</span> <span class="fl">400</span>, 
+                     batch.length <span class="op">=</span> <span class="fl">25</span>, 
+                     inits <span class="op">=</span> <span class="va">inits</span>,
                      accept.rate <span class="op">=</span> <span class="fl">0.43</span>, 
                      cov.model <span class="op">=</span> <span class="st">"spherical"</span>, 
                      NNGP <span class="op">=</span> <span class="cn">TRUE</span>, 
-                     n.neighbors <span class="op">=</span> <span class="fl">5</span>,
+                     n.neighbors <span class="op">=</span> <span class="fl">10</span>,
                      n.report <span class="op">=</span> <span class="fl">100</span>, 
-                     n.burn <span class="op">=</span> <span class="fl">2000</span>, 
-                     n.thin <span class="op">=</span> <span class="fl">2</span>, 
-                     n.chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </code></pre></div>
+                     n.burn <span class="op">=</span> <span class="fl">5000</span>, 
+                     n.thin <span class="op">=</span> <span class="fl">5</span>, 
+                     n.chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </code></pre></div>
 <pre><code>----------------------------------------
     Preparing to run the model
 ----------------------------------------</code></pre>
@@ -407,18 +379,8 @@ Setting prior mean to 0 and prior variance to 2.72</code></pre>
 Setting prior mean to 0 and prior variance to 2.72</code></pre>
 <pre><code>No prior specified for phi.unif.
 Setting uniform bounds based on the range of observed spatial coordinates.</code></pre>
-<pre><code>No prior specified for sigma.sq.ig.
-Setting the shape parameter to 2 and scale parameter to 1.</code></pre>
-<pre><code>z.inits is not specified in initial values.
-Setting initial values based on observed data</code></pre>
-<pre><code>beta is not specified in initial values.
-Setting initial values to random values from the prior distribution</code></pre>
-<pre><code>alpha is not specified in initial values.
-Setting initial values to random values from the prior distribution</code></pre>
-<pre><code>phi is not specified in initial values.
-Setting initial value to random value from the prior distribution</code></pre>
-<pre><code>sigma.sq is not specified in initial values.
-Setting initial value to random value from the prior distribution</code></pre>
+<pre><code>No prior specified for sigma.sq.
+Using an inverse-Gamma prior with the shape parameter set to 2 and scale parameter to 1.</code></pre>
 <pre><code>w is not specified in initial values.
 Setting initial value to 0</code></pre>
 <pre><code>----------------------------------------
@@ -434,14 +396,14 @@ NNGP Occupancy model with Polya-Gamma latent
 variable fit with 400 sites.
 
 Samples per chain: 10000 (400 batches of length 25)
-Burn-in: 2000 
-Thinning Rate: 2 
-Number of Chains: 2 
-Total Posterior Samples: 8000 
+Burn-in: 5000 
+Thinning Rate: 5 
+Number of Chains: 1 
+Total Posterior Samples: 1000 
 
 Using the spherical spatial correlation model.
 
-Using 5 nearest neighbors.
+Using 10 nearest neighbors.
 
 Source compiled with OpenMP support and model fit using 1 thread(s).
 
@@ -451,45 +413,28 @@ Adaptive Metropolis with target acceptance rate: 43.0
 ----------------------------------------
 Sampling ... 
 Batch: 100 of 400, 25.00%
-    Acceptance  Tuning
-    44.0        2.24791
+    Parameter   Acceptance  Tuning
+    phi     12.0        0.77880
 -------------------------------------------------
 Batch: 200 of 400, 50.00%
-    Acceptance  Tuning
-    52.0        2.48432
+    Parameter   Acceptance  Tuning
+    phi     16.0        0.33622
 -------------------------------------------------
 Batch: 300 of 400, 75.00%
-    Acceptance  Tuning
-    8.0     1.03045
--------------------------------------------------
-Batch: 400 of 400, 100.00%
-----------------------------------------
-    Chain 2
-----------------------------------------
-Sampling ... 
-Batch: 100 of 400, 25.00%
-    Acceptance  Tuning
-    88.0        0.37908
--------------------------------------------------
-Batch: 200 of 400, 50.00%
-    Acceptance  Tuning
-    40.0        0.28650
--------------------------------------------------
-Batch: 300 of 400, 75.00%
-    Acceptance  Tuning
-    56.0        0.30422
+    Parameter   Acceptance  Tuning
+    phi     48.0        0.74826
 -------------------------------------------------
 Batch: 400 of 400, 100.00%</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.full</span><span class="op">)</span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--410.44238   66.47957  953.84390 </code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+-457.90402   74.59346 1064.99497 </code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.no.re</span><span class="op">)</span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--526.17948   34.92296 1122.20488 </code></pre>
+-496.84115   62.20407 1118.09043 </code></pre>
 <p>We see the WAIC is substantially smaller for the model that includes the occurrence and detection random effects. Finally, let’s look at the predicted occurrence values from the full model to see how they compare to the values we used to simulate the data.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://r-spatial.github.io/stars/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coords</span>, type <span class="op">=</span> <span class="st">"n"</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>, asp <span class="op">=</span> <span class="cn">TRUE</span>, main <span class="op">=</span> <span class="st">"Simulated Occurrence"</span>, 
      bty <span class="op">=</span> <span class="st">'n'</span><span class="op">)</span>
@@ -500,73 +445,73 @@ Batch: 400 of 400, 100.00%</code></pre>
      bty <span class="op">=</span> <span class="st">'n'</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">coords</span>, pch<span class="op">=</span><span class="fl">15</span>, cex <span class="op">=</span> <span class="fl">2.1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">(</span><span class="va">psi.means</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">psi.means</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">psi.means</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="randomEffects_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>Just like with models with only fixed effects, we can predict new values of occurrence or detection probability given a set of covariate values and spatial coordinates using the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function. However, prediction becomes a bit more complicated when we have non-structured random effects in the model, as we could imagine predicting at observed levels of the random effect, or predicting at new levels of the random effect. <code>spOccupancy</code> allows for prediction at both observed levels and new levels of random effects, and also allows for prediction to take into account the random effects, or simply ignore the random effects when making predictions and just generate predictions using the fixed effects. All <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions for <code>spOccupancy</code> objects contain the argument <code>ignore.RE</code>, which is a logical value that takes value <code>TRUE</code> or <code>FALSE</code>. When <code>ignore.RE = FALSE</code> (the default), both sampled levels and non-sampled levels of random effects are supported for prediction. For sampled levels, the posterior distribution for the random intercept corresponding to that level of the random effect will be used in the prediction, which will likely result in a more accurate estimate of occurrence/detection probability for that site. For non-sampled levels, random values are drawn from a normal distribution using the posterior samples of the random effect variance, which results in fully propagated uncertainty in predictions with models that incorporate random effects. Alternatively, if <code>ignore.RE = TRUE</code>, the random effects will not be used for prediction and predictions will simply be generated using the fixed effects in the model.</p>
+<p>We see the model does a fairly decent job of identifying the spatial structure in occurrence across the simulated region, with our mean predicted occurrence being more smooth than the single simulated occurrence data set, as we would expect. Just like with models with only fixed effects, we can predict new values of occurrence or detection probability given a set of covariate values and spatial coordinates using the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function. However, prediction becomes a bit more complicated when we have non-structured random effects in the model, as we could imagine predicting at observed levels of the random effect, or predicting at new levels of the random effect. <code>spOccupancy</code> allows for prediction at both observed levels and new levels of random effects, and also allows for prediction to take into account the random effects, or simply ignore the random effects when making predictions and just generate predictions using the fixed effects. All <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions for <code>spOccupancy</code> objects contain the argument <code>ignore.RE</code>, which is a logical value that takes value <code>TRUE</code> or <code>FALSE</code>. When <code>ignore.RE = FALSE</code> (the default), both sampled levels and non-sampled levels of random effects are supported for prediction. For sampled levels, the posterior distribution for the random intercept corresponding to that level of the random effect will be used in the prediction, which will likely result in a more accurate estimate of occurrence/detection probability for that site. For non-sampled levels, random values are drawn from a normal distribution using the posterior samples of the random effect variance, which results in fully propagated uncertainty in predictions with models that incorporate random effects. Alternatively, if <code>ignore.RE = TRUE</code>, the random effects will not be used for prediction and predictions will simply be generated using the fixed effects in the model.</p>
 <p>Suppose we wish to predict occurrence at a new site, which has spatial coordinates <code>(0.32, 0.55)</code>, a value of <code>0.34</code> for our occurrence covariate (<code>occ.cov.1</code>) and a random effect level of 5 (which is a level that is sampled in our original data set). Below we predict occurrence at this new site, using the random effect in the prediction by setting <code>ignore.RE = FALSE</code> (which we could just not specify since it is the default). Note that when predicting using random effects, the column name of the random effect must match the name of the random effect used when fitting the model.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create the design matrix for the new site</span>
 <span class="va">X.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.34</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="co"># Make sure column names of random effects align with how we fit the model. </span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X.0</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'intercept'</span>, <span class="st">'occ.cov.1'</span>, <span class="st">'occ.factor.1'</span><span class="op">)</span>
-<span class="co"># Coordinates of new cite</span>
+<span class="co"># Coordinates of new site</span>
 <span class="va">coords.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">0.32</span>, <span class="fl">0.55</span><span class="op">)</span>
 <span class="co"># Predict at new site</span>
 <span class="va">pred.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">out.full</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, ignore.RE <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">pred.out</span><span class="op">)</span></code></pre></div>
 <pre><code>List of 6
- $ z.0.samples  : 'mcmc' num [1:4000, 1] 0 0 1 0 0 0 0 0 0 0 ...
-  ..- attr(*, "mcpar")= num [1:3] 1 4000 1
- $ w.0.samples  : 'mcmc' num [1:4000, 1] 1.227 2.762 4.773 3.094 0.482 ...
-  ..- attr(*, "mcpar")= num [1:3] 1 4000 1
- $ psi.0.samples: 'mcmc' num [1:4000, 1] 0.1221 0.1964 0.4221 0.1158 0.0408 ...
-  ..- attr(*, "mcpar")= num [1:3] 1 4000 1
- $ run.time     : 'proc_time' Named num [1:5] 0.022 0.012 0.017 0 0
+ $ z.0.samples  : 'mcmc' num [1:1000, 1] 0 1 1 1 1 1 0 1 0 0 ...
+  ..- attr(*, "mcpar")= num [1:3] 1 1000 1
+ $ w.0.samples  : 'mcmc' num [1:1000, 1] -0.316 0.8364 -0.1135 0.0316 0.8146 ...
+  ..- attr(*, "mcpar")= num [1:3] 1 1000 1
+ $ psi.0.samples: 'mcmc' num [1:1000, 1] 0.559 0.673 0.368 0.469 0.774 ...
+  ..- attr(*, "mcpar")= num [1:3] 1 1000 1
+ $ run.time     : 'proc_time' Named num [1:5] 0.023 0.01 0.012 0 0
   ..- attr(*, "names")= chr [1:5] "user.self" "sys.self" "elapsed" "user.child" ...
  $ call         : language predict.spPGOcc(object = out.full, X.0 = X.0, coords.0 = coords.0, verbose = FALSE,      ignore.RE = FALSE)
  $ object.class : chr "spPGOcc"
  - attr(*, "class")= chr "predict.spPGOcc"</code></pre>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get summary of occurrence probability at new site</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pred.out</span><span class="op">$</span><span class="va">psi.0.samples</span><span class="op">)</span></code></pre></div>
 <pre><code>
-Iterations = 1:4000
+Iterations = 1:1000
 Thinning interval = 1 
 Number of chains = 1 
-Sample size per chain = 4000 
+Sample size per chain = 1000 
 
 1. Empirical mean and standard deviation for each variable,
    plus standard error of the mean:
 
           Mean             SD       Naive SE Time-series SE 
-      0.161912       0.185694       0.002936       0.005340 
+      0.472722       0.206218       0.006521       0.007391 
 
 2. Quantiles for each variable:
 
    2.5%     25%     50%     75%   97.5% 
-0.00128 0.03645 0.09282 0.21976 0.71707 </code></pre>
+0.08834 0.32291 0.46729 0.61758 0.90349 </code></pre>
 <p>Alternatively, we can just predict occurrence probability at the new site using the fixed effects only by setting <code>ignore.RE = TRUE</code>.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Remove random effect from design matrix</span>
 <span class="va">X.0</span> <span class="op">&lt;-</span> <span class="va">X.0</span><span class="op">[</span>, <span class="op">-</span><span class="fl">3</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span> 
 <span class="va">pred.no.re</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">out.full</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, ignore.RE <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co"># Get summary of occurrence probability</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pred.no.re</span><span class="op">$</span><span class="va">psi.0.samples</span><span class="op">)</span></code></pre></div>
 <pre><code>
-Iterations = 1:4000
+Iterations = 1:1000
 Thinning interval = 1 
 Number of chains = 1 
-Sample size per chain = 4000 
+Sample size per chain = 1000 
 
 1. Empirical mean and standard deviation for each variable,
    plus standard error of the mean:
 
           Mean             SD       Naive SE Time-series SE 
-      0.768754       0.208005       0.003289       0.011166 
+      0.412960       0.187755       0.005937       0.008445 
 
 2. Quantiles for each variable:
 
-  2.5%    25%    50%    75%  97.5% 
-0.2324 0.6594 0.8261 0.9346 0.9974 </code></pre>
-<p>Notice that here we see a large discrepancy between the predicted occurrence probability when we use the random effect and when we don’t use the random effect. Predicting with random effects will allow you to fully propagate uncertainty in our predictions, but may not be desired if predicting at new locations where the level of the random effect is unknown or not sampled in the data.</p>
+   2.5%     25%     50%     75%   97.5% 
+0.08028 0.28984 0.39833 0.52687 0.86121 </code></pre>
+<p>Here we see a relatively small discrepancy between the predicted occurrence probability when we use the random effect and when we don’t use the random effect. Predicting with random effects will allow you to fully propagate uncertainty in our predictions, but may not be desired if predicting at new locations where the level of the random effect is unknown or not sampled in the data.</p>
 </div>
 <div class="section level1 unnumbered">
 <h1 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

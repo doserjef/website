@@ -5,7 +5,7 @@ education:
   courses:
   - course: PhD Forestry and Ecology, Evolution, and Behavior
     institution: Michigan State University
-    year: 2021
+    year: 2022
   - course: MS Applied Statistics
     institution: Michigan State University
     year: 2021
@@ -42,4 +42,4 @@ user_groups:
 - Visitors
 ---
 
-I am a postdoctoral research associate in the Department of Integrative Biology at Michigan State University in the [Zipkin Quantitative Ecology Lab](https://ezipkin.github.io/). I received my PhD in Forestry and Ecology, Evolution, and Behavior at Michigan State University in the [Geospatial Lab](https://www.finley-lab.com/) of Dr. Andrew Finley. My research interests lie in the development of Bayesian hierarchical models for environmental monitoring and decision making. More specifically, I am interested in the development and application of statistical models for methods of monitoring wildlife populations across large spatio-temporal regions, including citizen science data and acoustic recordings. 
+I am a postdoctoral research associate in the Department of Integrative Biology at Michigan State University in the [Zipkin Quantitative Ecology Lab](https://ezipkin.github.io/). I received my PhD in Forestry and Ecology, Evolution, and Behavior at Michigan State University in the [Geospatial Lab](https://www.finley-lab.com/) of Dr. Andrew Finley. My research interests lie in the development of Bayesian hierarchical models for environmental monitoring and decision making. More specifically, I am interested in the development and application of statistical models for methods of monitoring wildlife populations across large spatio-temporal regions by leveraging a variety of data sources, including citizen science data and acoustic recordings. 

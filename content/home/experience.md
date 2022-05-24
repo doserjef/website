@@ -28,7 +28,7 @@ date_format = "Jan 2006"
   description = """
   Courses: 
 
-  + FOR/STT 875: R Programming for Data Sciences (Summer 2021)
+  + FOR/STT 875: R Programming for Data Sciences (Summer 2021-2022)
   + IBIO 831: Statistical Methods in Ecology and Evolution (Spring 2022)
   """
 

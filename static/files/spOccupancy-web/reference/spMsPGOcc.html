@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@
 <dd><p>a list with each tag corresponding to a parameter name. 
   Valid tags are <code>beta.comm.normal</code>, <code>alpha.comm.normal</code>, 
   <code>tau.sq.beta.ig</code>, <code>tau.sq.alpha.ig</code>, <code>phi.unif</code>, <code>sigma.sq.ig</code>, 
-  <code>nu.unif</code>, <code>sigma.sq.psi</code>, <code>sigma.sq.p</code>. 
+  <code>sigma.sq.unif</code>, <code>nu.unif</code>, <code>sigma.sq.psi</code>, <code>sigma.sq.p</code>. 
   Community-level occurrence (<code>beta.comm</code>) and detection 
   (<code>alpha.comm</code>) regression coefficients are assumed to follow a 
   normal distribution. The hyperparameters of the normal distribution
@@ -149,8 +149,10 @@
   coefficients to be estimated or a single value if priors are the same for all 
   parameters. If not specified, prior shape and scale 
   parameters are set to 0.1. The species-specific spatial variance parameter, 
-  <code>sigma.sq</code>, is assumed to follow an inverse-Gamma distribution, whereas
-  the spatial decay <code>phi</code> and smoothness <code>nu</code> parameters are assumed
+  <code>sigma.sq</code>, is assumed to follow an inverse-Gamma distribution or a uniform
+  distribution (default is inverse-Gamma). <code>sigma.sq</code> of all species
+  can also be fixed at its initial value by setting the prior value to <code>"fixed"</code>.
+  The spatial decay <code>phi</code> and smoothness <code>nu</code> parameters are assumed
   to follow Uniform distributions. The hyperparameters of the inverse-Gamma are
   passed as a list of length two, with the list elements being vectors of length 
   N corresponding to the species-specific shape and scale parameters, respectively, 
@@ -496,20 +498,20 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling ... </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 10 of 30, 33.33%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Species		Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	1		68.0		1.11628</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	2		68.0		1.11628</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	3		68.0		1.11628</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	4		72.0		1.11628</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	5		84.0		1.11628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	Species		Parameter	Acceptance	Tuning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	1		phi		68.0		1.11628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	2		phi		68.0		1.11628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	3		phi		68.0		1.11628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	4		phi		72.0		1.11628</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	5		phi		84.0		1.11628</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 20 of 30, 66.67%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	Species		Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	1		64.0		1.23368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	2		76.0		1.20925</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	3		68.0		1.23368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	4		76.0		1.23368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	5		48.0		1.20925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	Species		Parameter	Acceptance	Tuning</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	1		phi		64.0		1.23368</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	2		phi		76.0		1.20925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	3		phi		68.0		1.23368</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	4		phi		76.0		1.23368</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	5		phi		48.0		1.20925</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 30 of 30, 100.00%</span>
 <span class="r-in"></span>
@@ -528,7 +530,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0249</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>

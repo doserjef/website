@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -134,7 +134,8 @@
 <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
     Valid tags are <code>beta.normal</code>, <code>alpha.normal</code>, <code>phi.unif</code>, 
-    <code>sigma.sq.ig</code>, and <code>nu.unif</code>. Occurrence (<code>beta</code>) and detection 
+    <code>sigma.sq.ig</code>, <code>sigma.sq.unif</code>, and <code>nu.unif</code>. 
+    Occurrence (<code>beta</code>) and detection 
     (<code>alpha</code>) regression coefficients are assumed to follow a normal 
     distribution. For <code>beta</code> hyperparameters of the normal distribution 
     are passed as a list of length two with the first and second elements 
@@ -147,7 +148,10 @@
     detection parameters in a given data source. If not specified, prior means 
     are set to 0 and prior variances set to 2.73 for normal priors. The 
     spatial variance parameter, <code>sigma.sq</code>, is assumed to follow an 
-    inverse-Gamma distribution, whereas the spatial decay <code>phi</code> and 
+    inverse-Gamma distribution or a uniform distribution (default is 
+    inverse-Gamma). <code>sigma.sq</code> can also be fixed at its 
+    initial value by setting the prior value to 
+    <code>"fixed"</code>. The spatial decay <code>phi</code> and 
     smoothness <code>nu</code> parameters are assumed to follow Uniform 
     distributions. The hyperparameters of the inverse-Gamma are passed as 
     a vector of length two, with the first and second elements corresponding

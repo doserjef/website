@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -130,7 +130,8 @@
 <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
     Valid tags are <code>beta.normal</code>, <code>alpha.normal</code>, <code>phi.unif</code>, 
-    <code>sigma.sq.ig</code>, <code>nu.unif</code>, <code>sigma.sq.psi.ig</code>, and <code>sigma.sq.p.ig</code>. Occurrence 
+    <code>sigma.sq.ig</code>, <code>sigma.sq.unif</code>, <code>nu.unif</code>, 
+    <code>sigma.sq.psi.ig</code>, and <code>sigma.sq.p.ig</code>. Occurrence 
     (<code>beta</code>) and detection (<code>alpha</code>) regression coefficients 
     are assumed to follow a normal distribution. The hyperparameters of the 
     normal distribution are passed as a list of length two with the first
@@ -140,7 +141,10 @@
     one if priors are the same for all coefficients. If not
     specified, prior means are set to 0 and prior variances set to 2.73. The 
     spatial variance parameter, <code>sigma.sq</code>, is assumed to follow an 
-    inverse-Gamma distribution, whereas the spatial decay <code>phi</code> and 
+    inverse-Gamma distribution or a uniform distribution (default is 
+    inverse-Gamma). <code>sigma.sq</code> can also be fixed at its 
+    initial value by setting the prior value to 
+    <code>"fixed"</code>. The spatial decay <code>phi</code> and 
     smoothness <code>nu</code> parameters are assumed to follow Uniform 
     distributions. The hyperparameters of the inverse-Gamma for <code>sigma.sq</code> 
     are passed as a vector of length two, with the first and second 
@@ -445,7 +449,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0036</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>

@@ -5,20 +5,20 @@ authors:
 - Andrew O. Finley
 - Marc K&eacute;ry
 - Elise F. Zipkin
-date: "2021-11-25T00:00:00Z"
+date: "2022-03-25T00:00:00Z"
 doi: ""
 featured: false
-publication: ""
+publication: "In: Methods in Ecology and Evolution (2022) https://doi.org/10.1111/2041-210X.13897"
 publication_short: ""
 publication_types:
-- "3"
-publishDate: "2021-09-06T00:00:00Z"
+- "2"
+publishDate: "2022-03-25T00:00:00Z"
 slides: ''
 summary: "We present the spOccupancy R package for fitting spatially-explicit occupancy models"
-title: "spOccupancy: An R package for fitting single species, multispecies, and integrated spatial occupancy models"
-url_code: 'https://github.com/doserjef/Doser_etal_2021_spOccupancy'
-url_dataset: 'https://github.com/doserjef/Doser_etal_2021_spOccupancy'
-url_pdf: 'https://arxiv.org/pdf/2111.12163.pdf'
+title: "spOccupancy: An R package for fitting single-species, multi-species, and integrated spatial occupancy models"
+url_code: 'https://github.com/zipkinlab/Doser_etal_2022_MEE_A'
+url_dataset: 'https://github.com/zipkinlab/Doser_etal_2022_MEE_A'
+url_pdf: 'https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13897'
 url_poster: ''
 url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''
