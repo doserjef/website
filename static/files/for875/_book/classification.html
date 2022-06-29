@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Classification | R Programming for Data Sciences</title>
   <meta name="description" content="Chapter 10 Classification | R Programming for Data Sciences" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Classification | R Programming for Data Sciences" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2021-06-25" />
+<meta name="date" content="2022-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="shiny-interactive-web-apps-in-r.html"/>
 <link rel="next" href="xml.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
 <script src="libs/accessible-code-block/empty-anchor.js"></script>
 <link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections/anchor-sections.js"></script>
 <script src="libs/kePrint/kePrint.js"></script>
 <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -529,25 +528,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="classification" class="section level1" number="10">
-<h1><span class="header-section-number">Chapter 10</span> Classification</h1>
+<div id="classification" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Classification<a href="classification.html#classification" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Classification problems are quite common. For example a spam filter is asked to classify incoming messages into spam or non-spam, based on factors such as the sender’s address, the subject of the message, the contents of the message, and so on. As another example, a doctor diagnosing a patient into one of four possible diagnoses based on symptoms, blood tests, and medical history is another form of classification. Or a bank may want to determine (prior to giving a loan) whether an applicant for a loan will default on the loan, again based on several variables such as income, financial history, etc.</p>
 <p>Classification methods are both extremely useful and an active area of research in statistics. In this chapter we will learn about two common, and somewhat different, classification methods, logistic regression and <span class="math inline">\(k\)</span> nearest neighbors. A very good introduction to classification and many other “Statistical Learning” methods is <span class="citation">James et al. (<a href="#ref-JamesEtAl" role="doc-biblioref">2014</a>)</span>. The abbreviated treatment in this chapter draws from <span class="citation">James et al. (<a href="#ref-JamesEtAl" role="doc-biblioref">2014</a>)</span>.</p>
-<div id="logistic-regression" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Logistic Regression</h2>
+<div id="logistic-regression" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Logistic Regression<a href="classification.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Logistic regression is widely used to relate a categorical response variable to one or more (continuous or categorical) predictors. Initially we will consider the simplest case where the response <span class="math inline">\(Y\)</span> has only two possible values (we’ll assume the values are <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>) and where there is only one continuous predictor <span class="math inline">\(X\)</span>. We would like to predict the value of <span class="math inline">\(Y\)</span> based on the value of the predictor <span class="math inline">\(X\)</span>. Let <span class="math inline">\(p(X) = P(Y = 1 | X)\)</span>.<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a>. We will model <span class="math inline">\(p(X)\)</span> with the <em>logistic function</em>, which takes values between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, which is of course appropriate for modeling a probability:</p>
 <p><span class="math display">\[
 p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}.
 \]</span></p>
 <p>A graph of this function when <span class="math inline">\(\beta_0=0\)</span> and <span class="math inline">\(\beta_1 = 1\)</span> shows the characteristic shape.</p>
-<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="classification.html#cb807-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb807-2"><a href="classification.html#cb807-2"></a>logistic &lt;-<span class="st"> </span><span class="cf">function</span>(x){<span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(x))}</span>
-<span id="cb807-3"><a href="classification.html#cb807-3"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span></span>
-<span id="cb807-4"><a href="classification.html#cb807-4"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> logistic)</span></code></pre></div>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="classification.html#cb809-1" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb809-2"><a href="classification.html#cb809-2" aria-hidden="true"></a>logistic &lt;-<span class="st"> </span><span class="cf">function</span>(x){<span class="kw">exp</span>(x)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(x))}</span>
+<span id="cb809-3"><a href="classification.html#cb809-3" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span></span>
+<span id="cb809-4"><a href="classification.html#cb809-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> logistic)</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-261-1.svg" width="672" /></p>
 <p>To make this more concrete, we will consider a data set on a population of women who were over 21 years of age, lived near Phoenix, Arizona, and were of Pima Indian heritage. The data included diabetes status (yes or no) and seven possible predictor variables such as age, number of pregnancies, body mass index, etc. The original data are from the National Institute of Diabetes and Digestive and Kidney Diseases. These data were cleaned and are available in the <code>MASS</code> package in R. In the package the data frame <code>Pima.tr</code> contains 200 randomly selected cases from the full data set, which we will use to find a classifier. The data frame <code>Pima.te</code> contains the remaining 332 cases, which we will use to test the classifier on new data.<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a></p>
-<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="classification.html#cb808-1"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb808-2"><a href="classification.html#cb808-2"></a><span class="kw">head</span>(Pima.tr)</span></code></pre></div>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="classification.html#cb810-1" aria-hidden="true"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb810-2"><a href="classification.html#cb810-2" aria-hidden="true"></a><span class="kw">head</span>(Pima.tr)</span></code></pre></div>
 <pre><code>##   npreg glu bp skin  bmi   ped age type
 ## 1     5  86 68   28 30.2 0.364  24   No
 ## 2     7 195 70   33 25.1 0.163  55  Yes
@@ -556,9 +555,9 @@ p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}.
 ## 5     0 107 60   25 26.4 0.133  23   No
 ## 6     5  97 76   27 35.6 0.378  52  Yes</code></pre>
 <p>It will be more convenient to code the presence or absence of diabetes by 1 and 0, so we first create another column in the data frame with this coding:</p>
-<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="classification.html#cb810-1"></a>Pima.tr<span class="op">$</span>diabetes &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(Pima.tr)[<span class="dv">1</span>])</span>
-<span id="cb810-2"><a href="classification.html#cb810-2"></a>Pima.tr<span class="op">$</span>diabetes[Pima.tr<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;Yes&quot;</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb810-3"><a href="classification.html#cb810-3"></a><span class="kw">head</span>(Pima.tr)</span></code></pre></div>
+<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="classification.html#cb812-1" aria-hidden="true"></a>Pima.tr<span class="op">$</span>diabetes &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">dim</span>(Pima.tr)[<span class="dv">1</span>])</span>
+<span id="cb812-2"><a href="classification.html#cb812-2" aria-hidden="true"></a>Pima.tr<span class="op">$</span>diabetes[Pima.tr<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;Yes&quot;</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb812-3"><a href="classification.html#cb812-3" aria-hidden="true"></a><span class="kw">head</span>(Pima.tr)</span></code></pre></div>
 <pre><code>##   npreg glu bp skin  bmi   ped age type diabetes
 ## 1     5  86 68   28 30.2 0.364  24   No        0
 ## 2     7 195 70   33 25.1 0.163  55  Yes        1
@@ -572,9 +571,9 @@ P(\text{yes} | \text{glu}) = \frac{e^{\beta_0 + \beta_1 (\text{glu})}}{1 + e^{\b
 \]</span></p>
 <p>Usually maximum likelihood methods are used to fit the model.</p>
 <p>In R we will use the function <code>glm</code> to fit logistic regression models. The <code>glm</code> function fits a wide variety of models. To specify the logistic regression model we specify <code>family = binomial</code> as an argument to <code>glm</code>. We also must specify the predictor and response variables via the model formula, which in our case will be <code>diabetes ~ glu</code> to indicate that <code>diabetes</code> (i.e., <code>type</code> recoded) is the response and <code>glu</code> is the predictor; also we specify the data frame, which in our case is <code>Pima.tr</code>.</p>
-<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="classification.html#cb812-1"></a>diabetes.lr1 &lt;-<span class="st"> </span><span class="kw">glm</span>(diabetes <span class="op">~</span><span class="st"> </span>glu, <span class="dt">data =</span> Pima.tr, </span>
-<span id="cb812-2"><a href="classification.html#cb812-2"></a>            <span class="dt">family =</span> binomial)</span>
-<span id="cb812-3"><a href="classification.html#cb812-3"></a>diabetes.lr1</span></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="classification.html#cb814-1" aria-hidden="true"></a>diabetes.lr1 &lt;-<span class="st"> </span><span class="kw">glm</span>(diabetes <span class="op">~</span><span class="st"> </span>glu, <span class="dt">data =</span> Pima.tr, </span>
+<span id="cb814-2"><a href="classification.html#cb814-2" aria-hidden="true"></a>            <span class="dt">family =</span> binomial)</span>
+<span id="cb814-3"><a href="classification.html#cb814-3" aria-hidden="true"></a>diabetes.lr1</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = diabetes ~ glu, family = binomial, data = Pima.tr)
 ## 
@@ -585,7 +584,7 @@ P(\text{yes} | \text{glu}) = \frac{e^{\beta_0 + \beta_1 (\text{glu})}}{1 + e^{\b
 ## Degrees of Freedom: 199 Total (i.e. Null);  198 Residual
 ## Null Deviance:       256 
 ## Residual Deviance: 207   AIC: 211</code></pre>
-<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="classification.html#cb814-1"></a><span class="kw">summary</span>(diabetes.lr1)</span></code></pre></div>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="classification.html#cb816-1" aria-hidden="true"></a><span class="kw">summary</span>(diabetes.lr1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = diabetes ~ glu, family = binomial, data = Pima.tr)
@@ -612,36 +611,36 @@ P(\text{yes} | \text{glu}) = \frac{e^{\beta_0 + \beta_1 (\text{glu})}}{1 + e^{\b
 ## AIC: 211.4
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="classification.html#cb816-1"></a>beta0.lr<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">coef</span>(diabetes.lr1)[<span class="dv">1</span>]</span>
-<span id="cb816-2"><a href="classification.html#cb816-2"></a>beta1.lr<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">coef</span>(diabetes.lr1)[<span class="dv">2</span>]</span>
-<span id="cb816-3"><a href="classification.html#cb816-3"></a>beta0.lr<span class="fl">.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="classification.html#cb818-1" aria-hidden="true"></a>beta0.lr<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">coef</span>(diabetes.lr1)[<span class="dv">1</span>]</span>
+<span id="cb818-2"><a href="classification.html#cb818-2" aria-hidden="true"></a>beta1.lr<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">coef</span>(diabetes.lr1)[<span class="dv">2</span>]</span>
+<span id="cb818-3"><a href="classification.html#cb818-3" aria-hidden="true"></a>beta0.lr<span class="fl">.1</span></span></code></pre></div>
 <pre><code>## (Intercept) 
 ##      -5.504</code></pre>
-<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="classification.html#cb818-1"></a>beta1.lr<span class="fl">.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="classification.html#cb820-1" aria-hidden="true"></a>beta1.lr<span class="fl">.1</span></span></code></pre></div>
 <pre><code>##     glu 
 ## 0.03778</code></pre>
 <p>The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are approximately -5.504 and
 0.038, respectively. So for example we can estimate the probability that a woman in this population whose glucose level is 150 would be diabetic as</p>
-<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="classification.html#cb820-1"></a><span class="kw">exp</span>(<span class="op">-</span><span class="fl">5.504</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.038</span><span class="op">*</span><span class="dv">150</span>)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">5.504</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.038</span><span class="op">*</span><span class="dv">150</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="classification.html#cb822-1" aria-hidden="true"></a><span class="kw">exp</span>(<span class="op">-</span><span class="fl">5.504</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.038</span><span class="op">*</span><span class="dv">150</span>)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span><span class="fl">5.504</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.038</span><span class="op">*</span><span class="dv">150</span>))</span></code></pre></div>
 <pre><code>## [1] 0.5488</code></pre>
 <p>We can plot the fitted probabilities along with the data “by hand”.</p>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="classification.html#cb822-1"></a>diabetes.logistic<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
-<span id="cb822-2"><a href="classification.html#cb822-2"></a>  <span class="kw">exp</span>(beta0.lr<span class="fl">.1</span><span class="op">+</span><span class="st"> </span>beta1.lr<span class="fl">.1</span><span class="op">*</span>x)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(beta0.lr<span class="fl">.1</span><span class="op">+</span><span class="st"> </span></span>
-<span id="cb822-3"><a href="classification.html#cb822-3"></a><span class="st">                                           </span>beta1.lr<span class="fl">.1</span><span class="op">*</span>x))</span>
-<span id="cb822-4"><a href="classification.html#cb822-4"></a>}</span>
-<span id="cb822-5"><a href="classification.html#cb822-5"></a><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> diabetes)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb822-6"><a href="classification.html#cb822-6"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> diabetes.logistic<span class="fl">.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="classification.html#cb824-1" aria-hidden="true"></a>diabetes.logistic<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
+<span id="cb824-2"><a href="classification.html#cb824-2" aria-hidden="true"></a>  <span class="kw">exp</span>(beta0.lr<span class="fl">.1</span><span class="op">+</span><span class="st"> </span>beta1.lr<span class="fl">.1</span><span class="op">*</span>x)<span class="op">/</span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(beta0.lr<span class="fl">.1</span><span class="op">+</span><span class="st"> </span></span>
+<span id="cb824-3"><a href="classification.html#cb824-3" aria-hidden="true"></a><span class="st">                                           </span>beta1.lr<span class="fl">.1</span><span class="op">*</span>x))</span>
+<span id="cb824-4"><a href="classification.html#cb824-4" aria-hidden="true"></a>}</span>
+<span id="cb824-5"><a href="classification.html#cb824-5" aria-hidden="true"></a><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> diabetes)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb824-6"><a href="classification.html#cb824-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> diabetes.logistic<span class="fl">.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-266-1.svg" width="672" /></p>
 <p>The <code>ggplot2</code> package also provides a way to do this more directly, using <code>stat_smooth</code>.</p>
-<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="classification.html#cb823-1"></a><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> diabetes)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb823-2"><a href="classification.html#cb823-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb823-3"><a href="classification.html#cb823-3"></a><span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, </span>
-<span id="cb823-4"><a href="classification.html#cb823-4"></a>              <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="classification.html#cb825-1" aria-hidden="true"></a><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> diabetes)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb825-2"><a href="classification.html#cb825-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb825-3"><a href="classification.html#cb825-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, </span>
+<span id="cb825-4"><a href="classification.html#cb825-4" aria-hidden="true"></a>              <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-267-1.svg" width="672" /></p>
 <p>From these graphics we can see that although glucose level and diabetes are related, there are many women with high glucose levels who are not diabetic, and many with low glucose levels who are diabetic, so likely adding other predictors to the model will help.</p>
 <p>Next let’s see how the model does in predicting diabetes status in the data we did not use for fitting the model. We will predict diabetes for anyone whose glucose level leads to a model-based probability greater than <span class="math inline">\(1/2\)</span>. First we use the <code>predict</code> function to compute the probabilities, and then use these to make predictions.</p>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="classification.html#cb825-1"></a><span class="kw">head</span>(Pima.te)</span></code></pre></div>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="classification.html#cb827-1" aria-hidden="true"></a><span class="kw">head</span>(Pima.te)</span></code></pre></div>
 <pre><code>##   npreg glu bp skin  bmi   ped age type
 ## 1     6 148 72   35 33.6 0.627  50  Yes
 ## 2     1  85 66   29 26.6 0.351  31   No
@@ -649,34 +648,34 @@ P(\text{yes} | \text{glu}) = \frac{e^{\beta_0 + \beta_1 (\text{glu})}}{1 + e^{\b
 ## 4     3  78 50   32 31.0 0.248  26  Yes
 ## 5     2 197 70   45 30.5 0.158  53  Yes
 ## 6     5 166 72   19 25.8 0.587  51  Yes</code></pre>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="classification.html#cb827-1"></a>diabetes.probs<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(diabetes.lr1, Pima.te, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb827-2"><a href="classification.html#cb827-2"></a><span class="kw">head</span>(diabetes.probs<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="classification.html#cb829-1" aria-hidden="true"></a>diabetes.probs<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(diabetes.lr1, Pima.te, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb829-2"><a href="classification.html#cb829-2" aria-hidden="true"></a><span class="kw">head</span>(diabetes.probs<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>##       1       2       3       4       5       6 
 ## 0.52207 0.09179 0.10519 0.07199 0.87433 0.68319</code></pre>
 <p>The <code>predict</code> function (with <code>type = "response"</code> specified) provides <span class="math inline">\(p(x) = P(Y = 1 | X = x)\)</span> for all the <span class="math inline">\(x\)</span> values in a data frame. In this case we specified the data frame <code>Pima.te</code> since we want to know how the model does in predicting diabetes in a new population, i.e., in a population that wasn’t used to “train” the model.</p>
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="classification.html#cb829-1"></a>diabetes.predict<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>])</span>
-<span id="cb829-2"><a href="classification.html#cb829-2"></a>diabetes.predict<span class="fl">.1</span>[diabetes.probs<span class="fl">.1</span> <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;Yes&quot;</span></span>
-<span id="cb829-3"><a href="classification.html#cb829-3"></a><span class="kw">head</span>(diabetes.predict<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="classification.html#cb831-1" aria-hidden="true"></a>diabetes.predict<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>])</span>
+<span id="cb831-2"><a href="classification.html#cb831-2" aria-hidden="true"></a>diabetes.predict<span class="fl">.1</span>[diabetes.probs<span class="fl">.1</span> <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;Yes&quot;</span></span>
+<span id="cb831-3"><a href="classification.html#cb831-3" aria-hidden="true"></a><span class="kw">head</span>(diabetes.predict<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Yes&quot; &quot;No&quot;  &quot;No&quot;  &quot;No&quot;  &quot;Yes&quot; &quot;Yes&quot;</code></pre>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="classification.html#cb831-1"></a><span class="kw">table</span>(diabetes.predict<span class="fl">.1</span>, Pima.te<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="classification.html#cb833-1" aria-hidden="true"></a><span class="kw">table</span>(diabetes.predict<span class="fl">.1</span>, Pima.te<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>##                   
 ## diabetes.predict.1  No Yes
 ##                No  206  58
 ##                Yes  17  51</code></pre>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="classification.html#cb833-1"></a><span class="kw">length</span>(diabetes.predict<span class="fl">.1</span>[diabetes.predict<span class="fl">.1</span> <span class="op">==</span><span class="st"> </span>Pima.te<span class="op">$</span>type])<span class="op">/</span></span>
-<span id="cb833-2"><a href="classification.html#cb833-2"></a><span class="st">  </span><span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="classification.html#cb835-1" aria-hidden="true"></a><span class="kw">length</span>(diabetes.predict<span class="fl">.1</span>[diabetes.predict<span class="fl">.1</span> <span class="op">==</span><span class="st"> </span>Pima.te<span class="op">$</span>type])<span class="op">/</span></span>
+<span id="cb835-2"><a href="classification.html#cb835-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.7741</code></pre>
 <p>The table (sometimes called a <em>confusion matrix</em>) has the predictions of the model in the rows, so for example we see that the model predicts that <span class="math inline">\(206 + 58 = 264\)</span> of the women will not be diabetic, and that <span class="math inline">\(17+51 = 68\)</span> of the women will be diabetic. More interesting of course are the cells themselves. For example, of the <span class="math inline">\(206 + 17 = 223\)</span> women who are not diabetic in <code>Pima.te</code>, the model correctly classifies 206, and misclassifies 17. A classifier that predicted perfectly for the test data would have zeros off the diagonal.</p>
-<div id="adding-predictors" class="section level3" number="10.1.1">
-<h3><span class="header-section-number">10.1.1</span> Adding Predictors</h3>
+<div id="adding-predictors" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> Adding Predictors<a href="classification.html#adding-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If we have <span class="math inline">\(p\)</span> predictors <span class="math inline">\(X = (X_1, \dots, X_p)\)</span>, the logistic model becomes</p>
 <p><span class="math display">\[
 p(X) = p(X) = \frac{e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}.
 \]</span></p>
 <p>Although there is a lot more notation to keep track of, the basic ideas are the same as they were for the one predictor model. We will next see how adding <code>bmi</code>, the body mass index, affects predictions of diabetes.</p>
-<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="classification.html#cb835-1"></a>diabetes.lr2 &lt;-<span class="st"> </span><span class="kw">glm</span>(diabetes <span class="op">~</span><span class="st"> </span>glu <span class="op">+</span><span class="st"> </span>bmi, </span>
-<span id="cb835-2"><a href="classification.html#cb835-2"></a>                    <span class="dt">data =</span> Pima.tr, <span class="dt">family =</span> binomial)</span>
-<span id="cb835-3"><a href="classification.html#cb835-3"></a>diabetes.lr2</span></code></pre></div>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="classification.html#cb837-1" aria-hidden="true"></a>diabetes.lr2 &lt;-<span class="st"> </span><span class="kw">glm</span>(diabetes <span class="op">~</span><span class="st"> </span>glu <span class="op">+</span><span class="st"> </span>bmi, </span>
+<span id="cb837-2"><a href="classification.html#cb837-2" aria-hidden="true"></a>                    <span class="dt">data =</span> Pima.tr, <span class="dt">family =</span> binomial)</span>
+<span id="cb837-3"><a href="classification.html#cb837-3" aria-hidden="true"></a>diabetes.lr2</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = diabetes ~ glu + bmi, family = binomial, data = Pima.tr)
 ## 
@@ -687,7 +686,7 @@ p(X) = p(X) = \frac{e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}{1 + e^{\beta_
 ## Degrees of Freedom: 199 Total (i.e. Null);  197 Residual
 ## Null Deviance:       256 
 ## Residual Deviance: 198   AIC: 204</code></pre>
-<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="classification.html#cb837-1"></a><span class="kw">summary</span>(diabetes.lr2)</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="classification.html#cb839-1" aria-hidden="true"></a><span class="kw">summary</span>(diabetes.lr2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = diabetes ~ glu + bmi, family = binomial, data = Pima.tr)
@@ -717,21 +716,21 @@ p(X) = p(X) = \frac{e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}{1 + e^{\beta_
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>Now we look at predictions from this model.</p>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="classification.html#cb839-1"></a>diabetes.probs<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(diabetes.lr2, Pima.te, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb839-2"><a href="classification.html#cb839-2"></a><span class="kw">head</span>(diabetes.probs<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="classification.html#cb841-1" aria-hidden="true"></a>diabetes.probs<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">predict</span>(diabetes.lr2, Pima.te, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb841-2"><a href="classification.html#cb841-2" aria-hidden="true"></a><span class="kw">head</span>(diabetes.probs<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>##       1       2       3       4       5       6 
 ## 0.52359 0.05810 0.07530 0.06662 0.82713 0.50879</code></pre>
-<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="classification.html#cb841-1"></a>diabetes.predict<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>])</span>
-<span id="cb841-2"><a href="classification.html#cb841-2"></a>diabetes.predict<span class="fl">.2</span>[diabetes.probs<span class="fl">.2</span> <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;Yes&quot;</span></span>
-<span id="cb841-3"><a href="classification.html#cb841-3"></a><span class="kw">head</span>(diabetes.predict<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="classification.html#cb843-1" aria-hidden="true"></a>diabetes.predict<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>])</span>
+<span id="cb843-2"><a href="classification.html#cb843-2" aria-hidden="true"></a>diabetes.predict<span class="fl">.2</span>[diabetes.probs<span class="fl">.2</span> <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>] &lt;-<span class="st"> &quot;Yes&quot;</span></span>
+<span id="cb843-3"><a href="classification.html#cb843-3" aria-hidden="true"></a><span class="kw">head</span>(diabetes.predict<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Yes&quot; &quot;No&quot;  &quot;No&quot;  &quot;No&quot;  &quot;Yes&quot; &quot;Yes&quot;</code></pre>
-<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="classification.html#cb843-1"></a><span class="kw">table</span>(diabetes.predict<span class="fl">.2</span>, Pima.te<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="classification.html#cb845-1" aria-hidden="true"></a><span class="kw">table</span>(diabetes.predict<span class="fl">.2</span>, Pima.te<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>##                   
 ## diabetes.predict.2  No Yes
 ##                No  204  54
 ##                Yes  19  55</code></pre>
-<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="classification.html#cb845-1"></a><span class="kw">length</span>(diabetes.predict<span class="fl">.2</span>[diabetes.predict<span class="fl">.2</span> <span class="op">==</span><span class="st"> </span>Pima.te<span class="op">$</span>type])<span class="op">/</span></span>
-<span id="cb845-2"><a href="classification.html#cb845-2"></a><span class="st">  </span><span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="classification.html#cb847-1" aria-hidden="true"></a><span class="kw">length</span>(diabetes.predict<span class="fl">.2</span>[diabetes.predict<span class="fl">.2</span> <span class="op">==</span><span class="st"> </span>Pima.te<span class="op">$</span>type])<span class="op">/</span></span>
+<span id="cb847-2"><a href="classification.html#cb847-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">dim</span>(Pima.te)[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.7801</code></pre>
 <p>Adding <code>bmi</code> as a predictor did not improve the predictions by very much!</p>
 <p>Let <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> represent glucose and bmi levels. We classify a subject as “diabetic” if the fitted <span class="math inline">\(p(X)\)</span> is greater than <span class="math inline">\(0.5\)</span>, i.e., if the fitted probability of diabetes is greater than the fitted probability of not diabetes. The boundary for our decision is where these two fitted probabilities are equal, i.e., where</p>
@@ -743,18 +742,18 @@ p(X) = p(X) = \frac{e^{\beta_0 + \beta_1 X + \dots + \beta_p X_p}}{1 + e^{\beta_
 x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 \]</span></p>
 <p>The diabetes training data along with the decision boundary are plotted below.</p>
-<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="classification.html#cb847-1"></a>lr.int &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">1</span>]<span class="op">/</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">3</span>]</span>
-<span id="cb847-2"><a href="classification.html#cb847-2"></a>lr.slope &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">2</span>]<span class="op">/</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">3</span>]</span>
-<span id="cb847-3"><a href="classification.html#cb847-3"></a><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> bmi)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb847-4"><a href="classification.html#cb847-4"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb847-5"><a href="classification.html#cb847-5"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> lr.int, <span class="dt">slope =</span> lr.slope)</span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="classification.html#cb849-1" aria-hidden="true"></a>lr.int &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">1</span>]<span class="op">/</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">3</span>]</span>
+<span id="cb849-2"><a href="classification.html#cb849-2" aria-hidden="true"></a>lr.slope &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">2</span>]<span class="op">/</span><span class="kw">coef</span>(diabetes.lr2)[<span class="dv">3</span>]</span>
+<span id="cb849-3"><a href="classification.html#cb849-3" aria-hidden="true"></a><span class="kw">ggplot</span>(Pima.tr, <span class="kw">aes</span>(<span class="dt">x =</span> glu, <span class="dt">y =</span> bmi)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb849-4"><a href="classification.html#cb849-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb849-5"><a href="classification.html#cb849-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> lr.int, <span class="dt">slope =</span> lr.slope)</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-272-1.svg" width="672" /></p>
 </div>
-<div id="more-than-two-classes" class="section level3" number="10.1.2">
-<h3><span class="header-section-number">10.1.2</span> More than Two Classes</h3>
+<div id="more-than-two-classes" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> More than Two Classes<a href="classification.html#more-than-two-classes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Logistic regression methods also are applicable to classification contexts where there are more than two classes. Consider for example Fisher’s iris data.</p>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="classification.html#cb848-1"></a><span class="kw">data</span>(iris)</span>
-<span id="cb848-2"><a href="classification.html#cb848-2"></a><span class="kw">head</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="classification.html#cb850-1" aria-hidden="true"></a><span class="kw">data</span>(iris)</span>
+<span id="cb850-2"><a href="classification.html#cb850-2" aria-hidden="true"></a><span class="kw">head</span>(iris)</span></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ## 1          5.1         3.5          1.4         0.2
 ## 2          4.9         3.0          1.4         0.2
@@ -769,30 +768,30 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ## 4  setosa
 ## 5  setosa
 ## 6  setosa</code></pre>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="classification.html#cb850-1"></a><span class="kw">str</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="classification.html#cb852-1" aria-hidden="true"></a><span class="kw">str</span>(iris)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
 ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
 ##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 ##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="classification.html#cb852-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb852-2"><a href="classification.html#cb852-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</span></code></pre></div>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="classification.html#cb854-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb854-2"><a href="classification.html#cb854-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-273-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="classification.html#cb853-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">y =</span> Petal.Width)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb853-2"><a href="classification.html#cb853-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</span></code></pre></div>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="classification.html#cb855-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length, <span class="dt">y =</span> Petal.Width)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb855-2"><a href="classification.html#cb855-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-273-2.svg" width="672" /></p>
 <p>Here the potential predictors are sepal width, sepal length, petal width, and petal length. The goal is to find a classifier that will yield the correct species. From the scatter plots it should be pretty clear that a model with petal length and petal width as predictors would classify the data well. Although in a sense this is too easy, these data do a good job of illustrating logistic regression with more than two classes.</p>
 <p>Before doing that we randomly choose 75 of the 150 rows of the data frame to be the training sample, with the other 75 being the test sample.</p>
-<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="classification.html#cb854-1"></a><span class="kw">set.seed</span>(<span class="dv">321</span>)</span>
-<span id="cb854-2"><a href="classification.html#cb854-2"></a>selected &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">size =</span> <span class="dv">75</span>)</span>
-<span id="cb854-3"><a href="classification.html#cb854-3"></a>iris.train &lt;-<span class="st"> </span>iris[selected,]</span>
-<span id="cb854-4"><a href="classification.html#cb854-4"></a>iris.test &lt;-<span class="st"> </span>iris[<span class="op">-</span>selected,]</span></code></pre></div>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="classification.html#cb856-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">321</span>)</span>
+<span id="cb856-2"><a href="classification.html#cb856-2" aria-hidden="true"></a>selected &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">size =</span> <span class="dv">75</span>)</span>
+<span id="cb856-3"><a href="classification.html#cb856-3" aria-hidden="true"></a>iris.train &lt;-<span class="st"> </span>iris[selected,]</span>
+<span id="cb856-4"><a href="classification.html#cb856-4" aria-hidden="true"></a>iris.test &lt;-<span class="st"> </span>iris[<span class="op">-</span>selected,]</span></code></pre></div>
 <p>There are several packages which implement logistic regression for data with more than two classes. We will use the <code>VGAM</code> package. The function <code>vglm</code> within <code>VGAM</code> implements logistic regression (and much more).</p>
-<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="classification.html#cb855-1"></a><span class="kw">library</span>(VGAM)</span>
-<span id="cb855-2"><a href="classification.html#cb855-2"></a>iris.lr &lt;-<span class="st"> </span><span class="kw">vglm</span>(Species <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Petal.Length, </span>
-<span id="cb855-3"><a href="classification.html#cb855-3"></a>                <span class="dt">data =</span> iris.train, <span class="dt">family =</span> multinomial)</span>
-<span id="cb855-4"><a href="classification.html#cb855-4"></a><span class="kw">summary</span>(iris.lr)</span></code></pre></div>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="classification.html#cb857-1" aria-hidden="true"></a><span class="kw">library</span>(VGAM)</span>
+<span id="cb857-2"><a href="classification.html#cb857-2" aria-hidden="true"></a>iris.lr &lt;-<span class="st"> </span><span class="kw">vglm</span>(Species <span class="op">~</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>Petal.Length, </span>
+<span id="cb857-3"><a href="classification.html#cb857-3" aria-hidden="true"></a>                <span class="dt">data =</span> iris.train, <span class="dt">family =</span> multinomial)</span>
+<span id="cb857-4"><a href="classification.html#cb857-4" aria-hidden="true"></a><span class="kw">summary</span>(iris.lr)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## vglm(formula = Species ~ Petal.Width + Petal.Length, family = multinomial, 
@@ -826,8 +825,8 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ## Reference group is level  3  of the response</code></pre>
 <p>Notice that the family is specified as <code>multinomial</code> rather than <code>binomial</code> since we have more than two classes. When run with these data, the <code>vglm</code> function returns several (about 20) warnings. These occur mainly because the classes are so easily separated, and are suppressed above.</p>
 <p>Next we compute the probabilities for the test data.</p>
-<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="classification.html#cb857-1"></a>iris.probs &lt;-<span class="st"> </span><span class="kw">predict</span>(iris.lr, iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb857-2"><a href="classification.html#cb857-2"></a><span class="kw">head</span>(iris.probs)</span></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="classification.html#cb859-1" aria-hidden="true"></a>iris.probs &lt;-<span class="st"> </span><span class="kw">predict</span>(iris.lr, iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb859-2"><a href="classification.html#cb859-2" aria-hidden="true"></a><span class="kw">head</span>(iris.probs)</span></code></pre></div>
 <pre><code>##    setosa          versicolor
 ## 2       1 0.00000000000009874
 ## 5       1 0.00000000000009874
@@ -843,22 +842,22 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ## 10 0.00000000000000000000000000000003543
 ## 11 0.00000000000000000000000000000225863</code></pre>
 <p>At least for the first six cases, one probability is close to one and the other two are close to zero, reflecting the fact that this is an easy classification problem. Next we extract the actual predictions. For these, we want to choose the highest probability in each row. The <code>which.max</code> function makes this easy. Before applying this to the fitted probabilities, we illustrate its use. Take notice that <code>which.max()</code> returns the position of the highest probability, and not the actualy highest probability itself.</p>
-<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="classification.html#cb859-1"></a><span class="kw">which.max</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="classification.html#cb861-1" aria-hidden="true"></a><span class="kw">which.max</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="classification.html#cb861-1"></a><span class="kw">which.max</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="classification.html#cb863-1" aria-hidden="true"></a><span class="kw">which.max</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="classification.html#cb863-1"></a>class.predictions &lt;-<span class="st"> </span><span class="kw">apply</span>(iris.probs, <span class="dv">1</span>, which.max)</span>
-<span id="cb863-2"><a href="classification.html#cb863-2"></a><span class="kw">head</span>(class.predictions)</span></code></pre></div>
+<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="classification.html#cb865-1" aria-hidden="true"></a>class.predictions &lt;-<span class="st"> </span><span class="kw">apply</span>(iris.probs, <span class="dv">1</span>, which.max)</span>
+<span id="cb865-2"><a href="classification.html#cb865-2" aria-hidden="true"></a><span class="kw">head</span>(class.predictions)</span></code></pre></div>
 <pre><code>##  2  5  6  7 10 11 
 ##  1  1  1  1  1  1</code></pre>
-<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="classification.html#cb865-1"></a>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">1</span>]</span>
-<span id="cb865-2"><a href="classification.html#cb865-2"></a>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">2</span>]</span>
-<span id="cb865-3"><a href="classification.html#cb865-3"></a>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">3</span>]</span>
-<span id="cb865-4"><a href="classification.html#cb865-4"></a><span class="kw">head</span>(class.predictions)</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="classification.html#cb867-1" aria-hidden="true"></a>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">1</span>]</span>
+<span id="cb867-2"><a href="classification.html#cb867-2" aria-hidden="true"></a>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">2</span>]</span>
+<span id="cb867-3"><a href="classification.html#cb867-3" aria-hidden="true"></a>class.predictions[class.predictions <span class="op">==</span><span class="st"> </span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">levels</span>(iris<span class="op">$</span>Species)[<span class="dv">3</span>]</span>
+<span id="cb867-4"><a href="classification.html#cb867-4" aria-hidden="true"></a><span class="kw">head</span>(class.predictions)</span></code></pre></div>
 <pre><code>##        2        5        6        7       10       11 
 ## &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot;</code></pre>
 <p>Next we create the confusion matrix.</p>
-<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="classification.html#cb867-1"></a><span class="kw">table</span>(class.predictions, iris.test<span class="op">$</span>Species)</span></code></pre></div>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="classification.html#cb869-1" aria-hidden="true"></a><span class="kw">table</span>(class.predictions, iris.test<span class="op">$</span>Species)</span></code></pre></div>
 <pre><code>##                  
 ## class.predictions setosa versicolor virginica
 ##        setosa         25          0         0
@@ -866,8 +865,8 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ##        virginica       0          0        27</code></pre>
 </div>
 </div>
-<div id="nearest-neighbor-methods" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Nearest Neighbor Methods</h2>
+<div id="nearest-neighbor-methods" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Nearest Neighbor Methods<a href="classification.html#nearest-neighbor-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Nearest neighbor methods provide a rather different way to construct classifiers, and have strengths (minimal assumptions, flexible decision boundaries) and weaknesses (computational burden, lack of interpretability) compared to logistic regression models.</p>
 <p>In principle the idea is simple. Recall that the training set will have both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values known, while the test set will have only <span class="math inline">\(x\)</span> values known. Begin by choosing a positive integer <span class="math inline">\(k\)</span> which will specify the number of neighbors to use in classification. To classify a point <span class="math inline">\(x\)</span> in the training set, find the <span class="math inline">\(k\)</span> closest <span class="math inline">\(x\)</span> values in the training set, and choose the class which has the highest representation among the <span class="math inline">\(k\)</span> points. The algorithm is called kNN for “k Nearest Neighbors”.</p>
 <p>For example, suppose that <span class="math inline">\(k=10\)</span> and the 10 nearest neighbors to a training <span class="math inline">\(x\)</span> have classes <span class="math inline">\(1, 1, 3, 2, 3, 3, 3, 2, 3, 2\)</span>. Since there are five 3s, three 2s, and two 1s, the training point is assigned to class 3. Suppose that for another <span class="math inline">\(x\)</span> the 10 nearest neighbors have classes <span class="math inline">\(1,1,1,2,3,1,3,3,3,2\)</span>. In this case there are four 1s and four 3s, so there is a tie for the lead. The nearest neighbor algorithm then will choose between 1 and 3 at random.</p>
@@ -879,19 +878,19 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 <p>There are at least three R packages which implement kNN, including <code>class</code>, <code>kknn</code>, and <code>RWeka</code>. We will use <code>class</code> below.</p>
 <p>An example from <span class="citation">Hastie, Tibshirani, and Friedman (<a href="#ref-hastieESL" role="doc-biblioref">2009</a>)</span> will be used to give a better sense of the role of <span class="math inline">\(k\)</span> in the kNN algorithm. The example uses simulated data and shows the decision boundaries for kNN with <span class="math inline">\(k=15\)</span> and <span class="math inline">\(k=1\)</span>.<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a>. Although the R code used to draw the displays is given below, focus mainly on the graphics produced, and what they tell us about kNN.</p>
 <p>First the data are read into R and graphed. The predictors <code>x1</code> and <code>x2</code>, while not standardized, have very similar standard deviations, so we will not standardize these data before applying kNN.</p>
-<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="classification.html#cb869-1"></a>u.knn &lt;-<span class="st"> &quot;https://www.finley-lab.com/files/data/knnExample.csv&quot;</span></span>
-<span id="cb869-2"><a href="classification.html#cb869-2"></a>knnExample &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.knn, <span class="dt">header=</span><span class="ot">TRUE</span>)</span>
-<span id="cb869-3"><a href="classification.html#cb869-3"></a><span class="kw">str</span>(knnExample)</span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="classification.html#cb871-1" aria-hidden="true"></a>u.knn &lt;-<span class="st"> &quot;https://www.finley-lab.com/files/data/knnExample.csv&quot;</span></span>
+<span id="cb871-2"><a href="classification.html#cb871-2" aria-hidden="true"></a>knnExample &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u.knn, <span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb871-3"><a href="classification.html#cb871-3" aria-hidden="true"></a><span class="kw">str</span>(knnExample)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    200 obs. of  3 variables:
 ##  $ x1   : num  2.5261 0.367 0.7682 0.6934 -0.0198 ...
 ##  $ x2   : num  0.3211 0.0315 0.7175 0.7772 0.8673 ...
 ##  $ class: int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="classification.html#cb871-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> knnExample, <span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb871-2"><a href="classification.html#cb871-2"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(class))) <span class="op">+</span></span>
-<span id="cb871-3"><a href="classification.html#cb871-3"></a><span class="st">   </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="classification.html#cb873-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> knnExample, <span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb873-2"><a href="classification.html#cb873-2" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(class))) <span class="op">+</span></span>
+<span id="cb873-3"><a href="classification.html#cb873-3" aria-hidden="true"></a><span class="st">   </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-279-1.svg" width="672" /></p>
 <p>Next a large set of test data is created using the <code>expand.grid</code> function, which creates a data frame with all possible combinations of the arguments. First a simple example to illustrate the function, then the actual creation of the training set. The test set covers the range of the <code>x1</code> and <code>x2</code> values in the training set.</p>
-<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="classification.html#cb872-1"></a><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="fl">3.4</span>,<span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="classification.html#cb874-1" aria-hidden="true"></a><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="fl">3.4</span>,<span class="dv">2</span>))</span></code></pre></div>
 <pre><code>##   x   y
 ## 1 1 5.0
 ## 2 2 5.0
@@ -899,28 +898,28 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ## 4 2 3.4
 ## 5 1 2.0
 ## 6 2 2.0</code></pre>
-<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="classification.html#cb874-1"></a><span class="kw">min</span>(knnExample<span class="op">$</span>x1)</span></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="classification.html#cb876-1" aria-hidden="true"></a><span class="kw">min</span>(knnExample<span class="op">$</span>x1)</span></code></pre></div>
 <pre><code>## [1] -2.521</code></pre>
-<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="classification.html#cb876-1"></a><span class="kw">max</span>(knnExample<span class="op">$</span>x1)</span></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="classification.html#cb878-1" aria-hidden="true"></a><span class="kw">max</span>(knnExample<span class="op">$</span>x1)</span></code></pre></div>
 <pre><code>## [1] 4.171</code></pre>
-<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="classification.html#cb878-1"></a><span class="kw">min</span>(knnExample<span class="op">$</span>x2)</span></code></pre></div>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="classification.html#cb880-1" aria-hidden="true"></a><span class="kw">min</span>(knnExample<span class="op">$</span>x2)</span></code></pre></div>
 <pre><code>## [1] -2</code></pre>
-<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="classification.html#cb880-1"></a><span class="kw">max</span>(knnExample<span class="op">$</span>x2)</span></code></pre></div>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="classification.html#cb882-1" aria-hidden="true"></a><span class="kw">max</span>(knnExample<span class="op">$</span>x2)</span></code></pre></div>
 <pre><code>## [1] 2.856</code></pre>
-<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="classification.html#cb882-1"></a>x.test &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x1 =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">4.2</span>, <span class="dt">by =</span> <span class="fl">0.1</span>), </span>
-<span id="cb882-2"><a href="classification.html#cb882-2"></a>              <span class="dt">x2 =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">2</span>, <span class="fl">2.9</span>, <span class="dt">by =</span> <span class="fl">0.1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="classification.html#cb884-1" aria-hidden="true"></a>x.test &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x1 =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="fl">2.6</span>, <span class="fl">4.2</span>, <span class="dt">by =</span> <span class="fl">0.1</span>), </span>
+<span id="cb884-2"><a href="classification.html#cb884-2" aria-hidden="true"></a>              <span class="dt">x2 =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">2</span>, <span class="fl">2.9</span>, <span class="dt">by =</span> <span class="fl">0.1</span>))</span></code></pre></div>
 <p>Next the kNN with <span class="math inline">\(k=15\)</span> is fit. Notice that the first argument gives the <span class="math inline">\(x\)</span> values in the training set, the next argument gives the <span class="math inline">\(x\)</span> values in the test set, the third argument gives the <span class="math inline">\(y\)</span> values (labels) from the training set. The fourth argument gives <span class="math inline">\(k\)</span>, and the fifth argument asks for the function to return the probabilities of membership (that is, the proportion of the nearest neighbors which were in the majority class) as well as the class assignments.</p>
-<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="classification.html#cb883-1"></a><span class="kw">library</span>(class)</span>
-<span id="cb883-2"><a href="classification.html#cb883-2"></a>Example_knn &lt;-<span class="st"> </span><span class="kw">knn</span>(knnExample[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], x.test, knnExample[,<span class="dv">3</span>], </span>
-<span id="cb883-3"><a href="classification.html#cb883-3"></a>           <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb883-4"><a href="classification.html#cb883-4"></a>prob &lt;-<span class="st"> </span><span class="kw">attr</span>(Example_knn, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb883-5"><a href="classification.html#cb883-5"></a><span class="kw">head</span>(prob)</span></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="classification.html#cb885-1" aria-hidden="true"></a><span class="kw">library</span>(class)</span>
+<span id="cb885-2"><a href="classification.html#cb885-2" aria-hidden="true"></a>Example_knn &lt;-<span class="st"> </span><span class="kw">knn</span>(knnExample[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], x.test, knnExample[,<span class="dv">3</span>], </span>
+<span id="cb885-3"><a href="classification.html#cb885-3" aria-hidden="true"></a>           <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb885-4"><a href="classification.html#cb885-4" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="kw">attr</span>(Example_knn, <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb885-5"><a href="classification.html#cb885-5" aria-hidden="true"></a><span class="kw">head</span>(prob)</span></code></pre></div>
 <pre><code>## [1] 0.6667 0.6667 0.6667 0.7333 0.7333 0.7333</code></pre>
 <p>Next the graphs are created. This is somewhat complex, since we want to plot the test data colored by the class they were assigned to by the kNN classifier as background, the training data (using a different symbol), and the decision boundary.</p>
-<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="classification.html#cb885-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb885-2"><a href="classification.html#cb885-2"></a>df1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">0</span>,  </span>
-<span id="cb885-3"><a href="classification.html#cb885-3"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb885-4"><a href="classification.html#cb885-4"></a><span class="kw">str</span>(df1)</span></code></pre></div>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="classification.html#cb887-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb887-2"><a href="classification.html#cb887-2" aria-hidden="true"></a>df1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">0</span>,  </span>
+<span id="cb887-3"><a href="classification.html#cb887-3" aria-hidden="true"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb887-4"><a href="classification.html#cb887-4" aria-hidden="true"></a><span class="kw">str</span>(df1)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    3450 obs. of  5 variables:
 ##  $ x1      : num  -2.6 -2.5 -2.4 -2.3 -2.2 -2.1 -2 -1.9 -1.8 -1.7 ...
 ##  $ x2      : num  -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 ...
@@ -933,31 +932,31 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ##   ..$ dimnames:List of 2
 ##   .. ..$ x1: chr [1:69] &quot;x1=-2.6&quot; &quot;x1=-2.5&quot; &quot;x1=-2.4&quot; &quot;x1=-2.3&quot; ...
 ##   .. ..$ x2: chr [1:50] &quot;x2=-2.0&quot; &quot;x2=-1.9&quot; &quot;x2=-1.8&quot; &quot;x2=-1.7&quot; ...</code></pre>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="classification.html#cb887-1"></a>df2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">1</span>,  </span>
-<span id="cb887-2"><a href="classification.html#cb887-2"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb887-3"><a href="classification.html#cb887-3"></a>bigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(df1, df2)</span>
-<span id="cb887-4"><a href="classification.html#cb887-4"></a></span>
-<span id="cb887-5"><a href="classification.html#cb887-5"></a><span class="kw">names</span>(knnExample)</span></code></pre></div>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="classification.html#cb889-1" aria-hidden="true"></a>df2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">1</span>,  </span>
+<span id="cb889-2"><a href="classification.html#cb889-2" aria-hidden="true"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb889-3"><a href="classification.html#cb889-3" aria-hidden="true"></a>bigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(df1, df2)</span>
+<span id="cb889-4"><a href="classification.html#cb889-4" aria-hidden="true"></a></span>
+<span id="cb889-5"><a href="classification.html#cb889-5" aria-hidden="true"></a><span class="kw">names</span>(knnExample)</span></code></pre></div>
 <pre><code>## [1] &quot;x1&quot;    &quot;x2&quot;    &quot;class&quot;</code></pre>
-<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="classification.html#cb889-1"></a><span class="kw">ggplot</span>(bigdf) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb889-2"><a href="classification.html#cb889-2"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y =</span>x2, <span class="dt">col=</span>class), </span>
-<span id="cb889-3"><a href="classification.html#cb889-3"></a>          <span class="dt">data =</span> <span class="kw">mutate</span>(x.test, <span class="dt">class =</span> Example_knn), </span>
-<span id="cb889-4"><a href="classification.html#cb889-4"></a>          <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb889-5"><a href="classification.html#cb889-5"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> <span class="kw">as.factor</span>(class)), </span>
-<span id="cb889-6"><a href="classification.html#cb889-6"></a>          <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> knnExample) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb889-7"><a href="classification.html#cb889-7"></a><span class="st">   </span><span class="kw">geom_contour</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">z =</span> prob_cls, </span>
-<span id="cb889-8"><a href="classification.html#cb889-8"></a>            <span class="dt">group =</span> <span class="kw">as.factor</span>(class), <span class="dt">color =</span> <span class="kw">as.factor</span>(class)), </span>
-<span id="cb889-9"><a href="classification.html#cb889-9"></a>        <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">data =</span> bigdf) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="classification.html#cb891-1" aria-hidden="true"></a><span class="kw">ggplot</span>(bigdf) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb891-2"><a href="classification.html#cb891-2" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x1, <span class="dt">y =</span>x2, <span class="dt">col=</span>class), </span>
+<span id="cb891-3"><a href="classification.html#cb891-3" aria-hidden="true"></a>          <span class="dt">data =</span> <span class="kw">mutate</span>(x.test, <span class="dt">class =</span> Example_knn), </span>
+<span id="cb891-4"><a href="classification.html#cb891-4" aria-hidden="true"></a>          <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb891-5"><a href="classification.html#cb891-5" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> <span class="kw">as.factor</span>(class)), </span>
+<span id="cb891-6"><a href="classification.html#cb891-6" aria-hidden="true"></a>          <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> knnExample) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb891-7"><a href="classification.html#cb891-7" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_contour</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">z =</span> prob_cls, </span>
+<span id="cb891-8"><a href="classification.html#cb891-8" aria-hidden="true"></a>            <span class="dt">group =</span> <span class="kw">as.factor</span>(class), <span class="dt">color =</span> <span class="kw">as.factor</span>(class)), </span>
+<span id="cb891-9"><a href="classification.html#cb891-9" aria-hidden="true"></a>        <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">data =</span> bigdf) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-282-1.svg" width="672" /></p>
 <p>Next we graph the decision boundary of kNN with <span class="math inline">\(k=1\)</span>.</p>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="classification.html#cb890-1"></a>Example_knn &lt;-<span class="st"> </span><span class="kw">knn</span>(knnExample[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], x.test, </span>
-<span id="cb890-2"><a href="classification.html#cb890-2"></a>           knnExample[,<span class="dv">3</span>], <span class="dt">k =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb890-3"><a href="classification.html#cb890-3"></a>prob &lt;-<span class="st"> </span><span class="kw">attr</span>(Example_knn, <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb890-4"><a href="classification.html#cb890-4"></a><span class="kw">head</span>(prob)</span></code></pre></div>
+<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="classification.html#cb892-1" aria-hidden="true"></a>Example_knn &lt;-<span class="st"> </span><span class="kw">knn</span>(knnExample[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)], x.test, </span>
+<span id="cb892-2"><a href="classification.html#cb892-2" aria-hidden="true"></a>           knnExample[,<span class="dv">3</span>], <span class="dt">k =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb892-3"><a href="classification.html#cb892-3" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="kw">attr</span>(Example_knn, <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb892-4"><a href="classification.html#cb892-4" aria-hidden="true"></a><span class="kw">head</span>(prob)</span></code></pre></div>
 <pre><code>## [1] 1 1 1 1 1 1</code></pre>
-<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="classification.html#cb892-1"></a>df1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">0</span>,  </span>
-<span id="cb892-2"><a href="classification.html#cb892-2"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb892-3"><a href="classification.html#cb892-3"></a><span class="kw">str</span>(df1)</span></code></pre></div>
+<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="classification.html#cb894-1" aria-hidden="true"></a>df1 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">0</span>,  </span>
+<span id="cb894-2"><a href="classification.html#cb894-2" aria-hidden="true"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb894-3"><a href="classification.html#cb894-3" aria-hidden="true"></a><span class="kw">str</span>(df1)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    3450 obs. of  5 variables:
 ##  $ x1      : num  -2.6 -2.5 -2.4 -2.3 -2.2 -2.1 -2 -1.9 -1.8 -1.7 ...
 ##  $ x2      : num  -2 -2 -2 -2 -2 -2 -2 -2 -2 -2 ...
@@ -970,45 +969,45 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ##   ..$ dimnames:List of 2
 ##   .. ..$ x1: chr [1:69] &quot;x1=-2.6&quot; &quot;x1=-2.5&quot; &quot;x1=-2.4&quot; &quot;x1=-2.3&quot; ...
 ##   .. ..$ x2: chr [1:50] &quot;x2=-2.0&quot; &quot;x2=-1.9&quot; &quot;x2=-1.8&quot; &quot;x2=-1.7&quot; ...</code></pre>
-<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="classification.html#cb894-1"></a>df2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">1</span>,  </span>
-<span id="cb894-2"><a href="classification.html#cb894-2"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb894-3"><a href="classification.html#cb894-3"></a>bigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(df1, df2)</span>
-<span id="cb894-4"><a href="classification.html#cb894-4"></a></span>
-<span id="cb894-5"><a href="classification.html#cb894-5"></a><span class="kw">ggplot</span>(bigdf) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb894-6"><a href="classification.html#cb894-6"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> class), </span>
-<span id="cb894-7"><a href="classification.html#cb894-7"></a>         <span class="dt">data =</span> <span class="kw">mutate</span>(x.test, <span class="dt">class =</span> Example_knn), <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
-<span id="cb894-8"><a href="classification.html#cb894-8"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> <span class="kw">as.factor</span>(class)), </span>
-<span id="cb894-9"><a href="classification.html#cb894-9"></a>         <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> knnExample) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb894-10"><a href="classification.html#cb894-10"></a><span class="st">  </span><span class="kw">geom_contour</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">z =</span> prob_cls, <span class="dt">group =</span> <span class="kw">as.factor</span>(class), </span>
-<span id="cb894-11"><a href="classification.html#cb894-11"></a>           <span class="dt">color =</span> <span class="kw">as.factor</span>(class)), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">data =</span> bigdf) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb894-12"><a href="classification.html#cb894-12"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="classification.html#cb896-1" aria-hidden="true"></a>df2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(x.test, <span class="dt">prob =</span> prob, <span class="dt">class =</span> <span class="dv">1</span>,  </span>
+<span id="cb896-2"><a href="classification.html#cb896-2" aria-hidden="true"></a>          <span class="dt">prob_cls =</span> <span class="kw">ifelse</span>(Example_knn <span class="op">==</span><span class="st"> </span>class, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb896-3"><a href="classification.html#cb896-3" aria-hidden="true"></a>bigdf &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(df1, df2)</span>
+<span id="cb896-4"><a href="classification.html#cb896-4" aria-hidden="true"></a></span>
+<span id="cb896-5"><a href="classification.html#cb896-5" aria-hidden="true"></a><span class="kw">ggplot</span>(bigdf) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb896-6"><a href="classification.html#cb896-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> class), </span>
+<span id="cb896-7"><a href="classification.html#cb896-7" aria-hidden="true"></a>         <span class="dt">data =</span> <span class="kw">mutate</span>(x.test, <span class="dt">class =</span> Example_knn), <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb896-8"><a href="classification.html#cb896-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">col =</span> <span class="kw">as.factor</span>(class)), </span>
+<span id="cb896-9"><a href="classification.html#cb896-9" aria-hidden="true"></a>         <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">1</span>, <span class="dt">data =</span> knnExample) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb896-10"><a href="classification.html#cb896-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_contour</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x1, <span class="dt">y =</span> x2, <span class="dt">z =</span> prob_cls, <span class="dt">group =</span> <span class="kw">as.factor</span>(class), </span>
+<span id="cb896-11"><a href="classification.html#cb896-11" aria-hidden="true"></a>           <span class="dt">color =</span> <span class="kw">as.factor</span>(class)), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">1</span>, <span class="dt">data =</span> bigdf) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb896-12"><a href="classification.html#cb896-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="bookdown_files/figure-html/unnamed-chunk-283-1.svg" width="672" /></p>
-<div id="knn-and-the-diabetes-data" class="section level3" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> kNN and the Diabetes Data</h3>
+<div id="knn-and-the-diabetes-data" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> kNN and the Diabetes Data<a href="classification.html#knn-and-the-diabetes-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Next kNN is applied to the diabetes data. We will use the same predictors, <code>glu</code> and <code>bmi</code> that were used in the logistic regression example. Since the scales of the predictor variables are substantially different, they are standardized first. The value <span class="math inline">\(k=15\)</span> is chosen for kNN.</p>
-<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="classification.html#cb895-1"></a>Pima.tr[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(Pima.tr[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb895-2"><a href="classification.html#cb895-2"></a>Pima.te[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(Pima.te[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb895-3"><a href="classification.html#cb895-3"></a>knn_Pima &lt;-<span class="st"> </span><span class="kw">knn</span>(Pima.tr[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">5</span>)], Pima.te[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">5</span>)], Pima.tr[,<span class="dv">8</span>], </span>
-<span id="cb895-4"><a href="classification.html#cb895-4"></a>        <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
-<span id="cb895-5"><a href="classification.html#cb895-5"></a><span class="kw">table</span>(knn_Pima, Pima.te[,<span class="dv">8</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="classification.html#cb897-1" aria-hidden="true"></a>Pima.tr[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(Pima.tr[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb897-2"><a href="classification.html#cb897-2" aria-hidden="true"></a>Pima.te[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">scale</span>(Pima.te[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb897-3"><a href="classification.html#cb897-3" aria-hidden="true"></a>knn_Pima &lt;-<span class="st"> </span><span class="kw">knn</span>(Pima.tr[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">5</span>)], Pima.te[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">5</span>)], Pima.tr[,<span class="dv">8</span>], </span>
+<span id="cb897-4"><a href="classification.html#cb897-4" aria-hidden="true"></a>        <span class="dt">k =</span> <span class="dv">15</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
+<span id="cb897-5"><a href="classification.html#cb897-5" aria-hidden="true"></a><span class="kw">table</span>(knn_Pima, Pima.te[,<span class="dv">8</span>])</span></code></pre></div>
 <pre><code>##         
 ## knn_Pima  No Yes
 ##      No  206  55
 ##      Yes  17  54</code></pre>
 <p>At least in terms of the confusion matrix, kNN with <span class="math inline">\(k=15\)</span> performed about as well as logistic regression for these data.</p>
 </div>
-<div id="classPP1" class="section level3" number="10.2.2">
-<h3><span class="header-section-number">10.2.2</span> Practice Problem</h3>
+<div id="classPP1" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Practice Problem<a href="classification.html#classPP1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Produce a figure that displays how the number of false positives produced from the kNN classifier for the diabetes data set changes for all integer values of <span class="math inline">\(k\)</span> from 1 to 40. Use this graph to justify whether or not <span class="math inline">\(k = 15\)</span> was a valid choice for the number of neighbors.</p>
 </div>
-<div id="knn-and-the-iris-data" class="section level3" number="10.2.3">
-<h3><span class="header-section-number">10.2.3</span> kNN and the iris Data</h3>
+<div id="knn-and-the-iris-data" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> kNN and the iris Data<a href="classification.html#knn-and-the-iris-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now kNN is used to classify the iris data. As before we use petal length and width as predictors. The scales of the two predictors are not particularly different, so we won’t standardize the predictors. Unsurprisingly kNN does well in classifying the test set for a wide variety of <span class="math inline">\(k\)</span> values.</p>
-<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="classification.html#cb897-1"></a><span class="kw">sd</span>(iris.train<span class="op">$</span>Petal.Width)</span></code></pre></div>
+<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="classification.html#cb899-1" aria-hidden="true"></a><span class="kw">sd</span>(iris.train<span class="op">$</span>Petal.Width)</span></code></pre></div>
 <pre><code>## [1] 0.7316</code></pre>
-<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="classification.html#cb899-1"></a><span class="kw">sd</span>(iris.train<span class="op">$</span>Petal.Length) </span></code></pre></div>
+<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="classification.html#cb901-1" aria-hidden="true"></a><span class="kw">sd</span>(iris.train<span class="op">$</span>Petal.Length) </span></code></pre></div>
 <pre><code>## [1] 1.705</code></pre>
-<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="classification.html#cb901-1"></a><span class="kw">head</span>(iris.train)</span></code></pre></div>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="classification.html#cb903-1" aria-hidden="true"></a><span class="kw">head</span>(iris.train)</span></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width
 ## 77           6.8         2.8          4.8         1.4
 ## 88           6.3         2.3          4.4         1.3
@@ -1023,25 +1022,25 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ## 96  versicolor
 ## 126  virginica
 ## 17      setosa</code></pre>
-<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="classification.html#cb903-1"></a>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], </span>
-<span id="cb903-2"><a href="classification.html#cb903-2"></a>        iris.train[,<span class="dv">5</span>], <span class="dt">k=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
-<span id="cb903-3"><a href="classification.html#cb903-3"></a><span class="kw">table</span>(knn_iris, iris.test[,<span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="classification.html#cb905-1" aria-hidden="true"></a>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], </span>
+<span id="cb905-2"><a href="classification.html#cb905-2" aria-hidden="true"></a>        iris.train[,<span class="dv">5</span>], <span class="dt">k=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
+<span id="cb905-3"><a href="classification.html#cb905-3" aria-hidden="true"></a><span class="kw">table</span>(knn_iris, iris.test[,<span class="dv">5</span>])</span></code></pre></div>
 <pre><code>##             
 ## knn_iris     setosa versicolor virginica
 ##   setosa         25          0         0
 ##   versicolor      0         22         1
 ##   virginica       0          0        27</code></pre>
-<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="classification.html#cb905-1"></a>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], </span>
-<span id="cb905-2"><a href="classification.html#cb905-2"></a>        iris.train[,<span class="dv">5</span>], <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
-<span id="cb905-3"><a href="classification.html#cb905-3"></a><span class="kw">table</span>(knn_iris, iris.test[,<span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="classification.html#cb907-1" aria-hidden="true"></a>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], </span>
+<span id="cb907-2"><a href="classification.html#cb907-2" aria-hidden="true"></a>        iris.train[,<span class="dv">5</span>], <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
+<span id="cb907-3"><a href="classification.html#cb907-3" aria-hidden="true"></a><span class="kw">table</span>(knn_iris, iris.test[,<span class="dv">5</span>])</span></code></pre></div>
 <pre><code>##             
 ## knn_iris     setosa versicolor virginica
 ##   setosa         25          0         0
 ##   versicolor      0         22         1
 ##   virginica       0          0        27</code></pre>
-<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="classification.html#cb907-1"></a>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], </span>
-<span id="cb907-2"><a href="classification.html#cb907-2"></a>        iris.train[,<span class="dv">5</span>], <span class="dt">k=</span><span class="dv">15</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
-<span id="cb907-3"><a href="classification.html#cb907-3"></a><span class="kw">table</span>(knn_iris, iris.test[,<span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb909-1"><a href="classification.html#cb909-1" aria-hidden="true"></a>knn_iris &lt;-<span class="st"> </span><span class="kw">knn</span>(iris.train[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], iris.test[,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)], </span>
+<span id="cb909-2"><a href="classification.html#cb909-2" aria-hidden="true"></a>        iris.train[,<span class="dv">5</span>], <span class="dt">k=</span><span class="dv">15</span>, <span class="dt">prob=</span><span class="ot">TRUE</span>)</span>
+<span id="cb909-3"><a href="classification.html#cb909-3" aria-hidden="true"></a><span class="kw">table</span>(knn_iris, iris.test[,<span class="dv">5</span>])</span></code></pre></div>
 <pre><code>##             
 ## knn_iris     setosa versicolor virginica
 ##   setosa         25          0         0
@@ -1049,13 +1048,13 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
 ##   virginica       0          0        27</code></pre>
 </div>
 </div>
-<div id="exClass" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Exercises</h2>
+<div id="exClass" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Exercises<a href="classification.html#exClass" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Exercise Classification</strong> Learning objectives: explore the logistic regression classification method; apply the kNN classification method; create confusion matrices to compare classification methods; plot classified data.</p>
 
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references hanging-indent">
 <div id="ref-hastieESL">
 <p>Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer. <a href="http://www-stat.stanford.edu/~tibs/ElemStatLearn/">http://www-stat.stanford.edu/~tibs/ElemStatLearn/</a>.</p>
@@ -1082,7 +1081,6 @@ x_2 = -\frac{\beta_0}{\beta_2} - \frac{\beta_1}{\beta_2} x_1.
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
 <script src="libs/gitbook/js/clipboard.min.js"></script>
 <script src="libs/gitbook/js/plugin-search.js"></script>
 <script src="libs/gitbook/js/plugin-sharing.js"></script>
@@ -1122,6 +1120,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown.pdf", "bookdown.epub", "bookdown.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "none"
 }

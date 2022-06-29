@@ -120,7 +120,8 @@
 \usepackage{array}
 \usepackage[bf,singlelinecheck=off]{caption}
 
-\setmainfont[UprightFeatures={SmallCapsFont=AlegreyaSC-Regular}]{Alegreya}
+% Commented this out because it causes stupid font problems.  
+%\setmainfont[UprightFeatures={SmallCapsFont=AlegreyaSC-Regular}]{Alegreya}
 
 \usepackage{framed,color}
 \definecolor{shadecolor}{RGB}{248,248,248}
@@ -221,6 +222,7 @@
 \frontmatter
 \usepackage{color}
 \usepackage{graphicx}
+\usepackage{fontspec}
 \graphicspath{{_bookdown_files/}}
 \usepackage{booktabs}
 \usepackage{longtable}
@@ -241,7 +243,7 @@
 
 \title{R Programming for Data Sciences}
 \author{Andrew O. Finley, Jeffrey W. Doser, Vince Melfi}
-\date{2021-06-25}
+\date{2022-06-29}
 
 \begin{document}
 \maketitle
@@ -568,7 +570,7 @@ Here is a step-by-step guide to installing R for Microsoft Windows.\footnote{New
 \item
   Click on \texttt{base}
 \item
-  Click on \texttt{Download\ R\ 4.1.0\ for\ Windows}
+  Click on \texttt{Download\ R\ 4.2.1\ for\ Windows}
 \item
   Install R as you would install any other Windows program
 \end{enumerate}
@@ -5443,11 +5445,11 @@ Filtering helps us to examine subsets of the data such as data from a particular
 
 \begin{verbatim}
 ## # A tibble: 3 x 6
-##   country     year      pop continent lifeExp gdpPercap
-##   <chr>      <int>    <dbl> <chr>       <dbl>     <dbl>
-## 1 China       2007   1.32e9 Asia         73.0     4959.
-## 2 India       2007   1.11e9 Asia         64.7     2452.
-## 3 United St~  2007   3.01e8 Americas     78.2    42952.
+##   country       year    pop continent lifeExp gdpPercap
+##   <chr>        <int>  <dbl> <chr>       <dbl>     <dbl>
+## 1 China         2007 1.32e9 Asia         73.0     4959.
+## 2 India         2007 1.11e9 Asia         64.7     2452.
+## 3 United Stat~  2007 3.01e8 Americas     78.2    42952.
 \end{verbatim}
 
 Notice the full results are not printed. For example, when we asked for the data for Brazil and Mexico, only the first ten rows were printed. This is an effect of using the \texttt{as\_tibble()} function. Of course if we wanted to analyze the results (as we will below) the full set of data would be available.
@@ -5628,23 +5630,23 @@ By default the \texttt{gapminder} data are arranged by country and then by year.
 
 \begin{verbatim}
 ## # A tibble: 15 x 6
-##    country     year     pop continent lifeExp gdpPercap
-##    <chr>      <int>   <dbl> <chr>       <dbl>     <dbl>
-##  1 Afghanist~  1952  8.43e6 Asia         28.8      779.
-##  2 Afghanist~  1957  9.24e6 Asia         30.3      821.
-##  3 Afghanist~  1962  1.03e7 Asia         32.0      853.
-##  4 Afghanist~  1967  1.15e7 Asia         34.0      836.
-##  5 Afghanist~  1972  1.31e7 Asia         36.1      740.
-##  6 Afghanist~  1977  1.49e7 Asia         38.4      786.
-##  7 Afghanist~  1982  1.29e7 Asia         39.9      978.
-##  8 Afghanist~  1987  1.39e7 Asia         40.8      852.
-##  9 Afghanist~  1992  1.63e7 Asia         41.7      649.
-## 10 Afghanist~  1997  2.22e7 Asia         41.8      635.
-## 11 Afghanist~  2002  2.53e7 Asia         42.1      727.
-## 12 Afghanist~  2007  3.19e7 Asia         43.8      975.
-## 13 Albania     1952  1.28e6 Europe       55.2     1601.
-## 14 Albania     1957  1.48e6 Europe       59.3     1942.
-## 15 Albania     1962  1.73e6 Europe       64.8     2313.
+##    country      year    pop continent lifeExp gdpPercap
+##    <chr>       <int>  <dbl> <chr>       <dbl>     <dbl>
+##  1 Afghanistan  1952 8.43e6 Asia         28.8      779.
+##  2 Afghanistan  1957 9.24e6 Asia         30.3      821.
+##  3 Afghanistan  1962 1.03e7 Asia         32.0      853.
+##  4 Afghanistan  1967 1.15e7 Asia         34.0      836.
+##  5 Afghanistan  1972 1.31e7 Asia         36.1      740.
+##  6 Afghanistan  1977 1.49e7 Asia         38.4      786.
+##  7 Afghanistan  1982 1.29e7 Asia         39.9      978.
+##  8 Afghanistan  1987 1.39e7 Asia         40.8      852.
+##  9 Afghanistan  1992 1.63e7 Asia         41.7      649.
+## 10 Afghanistan  1997 2.22e7 Asia         41.8      635.
+## 11 Afghanistan  2002 2.53e7 Asia         42.1      727.
+## 12 Afghanistan  2007 3.19e7 Asia         43.8      975.
+## 13 Albania      1952 1.28e6 Europe       55.2     1601.
+## 14 Albania      1957 1.48e6 Europe       59.3     1942.
+## 15 Albania      1962 1.73e6 Europe       64.8     2313.
 \end{verbatim}
 
 Possibly arranging the data by year and then country would be desired. The \texttt{arrange()} function makes this easy. We will again use pipes.
@@ -5658,18 +5660,18 @@ Possibly arranging the data by year and then country would be desired. The \text
 
 \begin{verbatim}
 ## # A tibble: 1,704 x 6
-##    country     year     pop continent lifeExp gdpPercap
-##    <chr>      <int>   <dbl> <chr>       <dbl>     <dbl>
-##  1 Afghanist~  1952  8.43e6 Asia         28.8      779.
-##  2 Albania     1952  1.28e6 Europe       55.2     1601.
-##  3 Algeria     1952  9.28e6 Africa       43.1     2449.
-##  4 Angola      1952  4.23e6 Africa       30.0     3521.
-##  5 Argentina   1952  1.79e7 Americas     62.5     5911.
-##  6 Australia   1952  8.69e6 Oceania      69.1    10040.
-##  7 Austria     1952  6.93e6 Europe       66.8     6137.
-##  8 Bahrain     1952  1.20e5 Asia         50.9     9867.
-##  9 Bangladesh  1952  4.69e7 Asia         37.5      684.
-## 10 Belgium     1952  8.73e6 Europe       68       8343.
+##    country      year    pop continent lifeExp gdpPercap
+##    <chr>       <int>  <dbl> <chr>       <dbl>     <dbl>
+##  1 Afghanistan  1952 8.43e6 Asia         28.8      779.
+##  2 Albania      1952 1.28e6 Europe       55.2     1601.
+##  3 Algeria      1952 9.28e6 Africa       43.1     2449.
+##  4 Angola       1952 4.23e6 Africa       30.0     3521.
+##  5 Argentina    1952 1.79e7 Americas     62.5     5911.
+##  6 Australia    1952 8.69e6 Oceania      69.1    10040.
+##  7 Austria      1952 6.93e6 Europe       66.8     6137.
+##  8 Bahrain      1952 1.20e5 Asia         50.9     9867.
+##  9 Bangladesh   1952 4.69e7 Asia         37.5      684.
+## 10 Belgium      1952 8.73e6 Europe       68       8343.
 ## # ... with 1,694 more rows
 \end{verbatim}
 
@@ -6647,6 +6649,14 @@ The ``double'' operators \texttt{\&\&} and \texttt{\textbar{}\textbar{}} just ex
 \end{Shaded}
 
 \begin{verbatim}
+## Warning in c(FALSE, TRUE, FALSE) || c(TRUE, FALSE,
+## FALSE): 'length(x) = 3 > 1' in coercion to 'logical(1)'
+
+## Warning in c(FALSE, TRUE, FALSE) || c(TRUE, FALSE,
+## FALSE): 'length(x) = 3 > 1' in coercion to 'logical(1)'
+\end{verbatim}
+
+\begin{verbatim}
 ## [1] TRUE
 \end{verbatim}
 
@@ -6665,6 +6675,11 @@ The ``double'' operators \texttt{\&\&} and \texttt{\textbar{}\textbar{}} just ex
 \KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{) }\OperatorTok{\&\&}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Warning in c(FALSE, TRUE, FALSE) && c(TRUE, TRUE,
+## FALSE): 'length(x) = 3 > 1' in coercion to 'logical(1)'
+\end{verbatim}
 
 \begin{verbatim}
 ## [1] FALSE
@@ -7191,7 +7206,7 @@ Here are the two functions in action, with \(n = 100000\).
 
 \begin{verbatim}
 ##    user  system elapsed 
-##  12.495   0.088  12.584
+##  13.320   0.011  13.333
 \end{verbatim}
 
 \begin{Shaded}
@@ -7217,7 +7232,7 @@ Of course another way to create a vector of integers from 1 to n is to use \text
 
 \begin{verbatim}
 ##    user  system elapsed 
-##   0.000   0.000   0.005
+##   0.001   0.000   0.006
 \end{verbatim}
 
 \begin{Shaded}
@@ -7330,7 +7345,7 @@ Here is a speed comparison, using a \(1000\times 10000\) matrix.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##   0.969   0.000   0.969
+##   0.885   0.000   0.885
 \end{verbatim}
 
 \begin{Shaded}
@@ -7341,7 +7356,7 @@ Here is a speed comparison, using a \(1000\times 10000\) matrix.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##   0.093   0.004   0.097
+##   0.081   0.012   0.093
 \end{verbatim}
 
 \begin{Shaded}
@@ -7352,7 +7367,7 @@ Here is a speed comparison, using a \(1000\times 10000\) matrix.
 
 \begin{verbatim}
 ##    user  system elapsed 
-##   0.239   0.020   0.259
+##    0.24    0.02    0.26
 \end{verbatim}
 
 \begin{Shaded}
@@ -7488,7 +7503,7 @@ The \texttt{...} in the definition of \texttt{my.read()} allows the user to spec
 ##     fill = TRUE, comment.char = "", ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## <bytecode: 0x562635e342a0>
+## <bytecode: 0x5577dbd2c990>
 ## <environment: namespace:utils>
 \end{verbatim}
 
@@ -7822,29 +7837,13 @@ Next we read the MU-bounds shapefile into R using \texttt{readOGR()}\footnote{Th
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(rgdal)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## rgdal: version: 1.5-23, (SVN revision 1121)
-## Geospatial Data Abstraction Library extensions to R successfully loaded
-## Loaded GDAL runtime: GDAL 2.2.3, released 2017/11/20
-## Path to GDAL shared files: /usr/share/gdal/2.2
-## GDAL binary built with GEOS: TRUE 
-## Loaded PROJ runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
-## Path to PROJ shared files: (autodetected)
-## Linking to sp version:1.4-5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{mu \textless{}{-}}\StringTok{ }\KeywordTok{readOGR}\NormalTok{(}\StringTok{"PEF"}\NormalTok{, }\StringTok{"MU{-}bounds"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/PEF", layer: "MU-bounds"
+## Source: "/home/jeffdoser/Dropbox/teaching/for875/textbook/PEF", layer: "MU-bounds"
 ## with 40 features
 ## It has 1 fields
 \end{verbatim}
@@ -7930,10 +7929,10 @@ In R, a spatial object's CRS is accessed via the \texttt{sp} package \texttt{pro
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "+proj=utm +zone=19 +datum=NAD83 +units=m +no_defs "
+## [1] "+proj=utm +zone=19 +datum=NAD83 +units=m +no_defs"
 \end{verbatim}
 
-The cryptic looking string returned by \texttt{proj4string()} is a set of directives understood by the \href{http://proj4.org/}{proj.4} C library, which is part of \texttt{sp}, and used to map geographic longitude and latitude coordinates into the projected Cartesian coordinates. This CRS tells us the \texttt{mu} object is in \href{https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system}{Universal Transverse Mercator (UTM)} zone 19 coordinate system.\footnote{If you start dealing with a lot of spatial data and reprojecting, \url{http://spatialreference.org} is an excellent resources for finding and specifying coordinate reference systems.}
+The cryptic looking string returned by \texttt{proj4string()} is a set of directives understood by the \href{http://proj4.org/}{proj.4} C library, which is part of \texttt{sp}, and used to map geographic longitude and latitude coordinates into the projected Cartesian coordinates. Note that if you see a warning message you can safely ignore it. This CRS tells us the \texttt{mu} object is in \href{https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system}{Universal Transverse Mercator (UTM)} zone 19 coordinate system.\footnote{If you start dealing with a lot of spatial data and reprojecting, \url{http://spatialreference.org} is an excellent resources for finding and specifying coordinate reference systems.}
 
 \hypertarget{ggmap}{%
 \section{\texorpdfstring{Illustration using \texttt{ggmap}}{Illustration using ggmap}}\label{ggmap}}
@@ -7948,7 +7947,7 @@ Let's begin by making a map of PEF management unit boundaries over top of a sate
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+## [1] "+proj=longlat +datum=WGS84 +no_defs"
 \end{verbatim}
 
 Unfortunately, we cannot just feed the \texttt{SpatialPolygonsDataFrame} \texttt{mu} into \texttt{ggplot} (perhaps some day soon this will possible). Rather, we need to first convert the \texttt{SpatialPolygonsDataFrame} into a specially formatted data frame using the \texttt{fortify} function that is part of the \texttt{ggplot2} package\footnote{\texttt{ggmap} depends on \texttt{ggplot2} so \texttt{ggplot2} will be automatically loaded when you call \texttt{library(ggmap)}.}. The \texttt{fortify} function will also need a unique identifier for each polygon specified using the \texttt{region} argument, which for \texttt{mu} is the \texttt{mu\_id}.
@@ -8181,7 +8180,7 @@ Let's add the roads and some more descriptive labels as a finishing touch. The r
 
 \begin{verbatim}
 ## OGR data source with driver: ESRI Shapefile 
-## Source: "/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/PEF", layer: "roads"
+## Source: "/home/jeffdoser/Dropbox/teaching/for875/textbook/PEF", layer: "roads"
 ## with 33 features
 ## It has 2 fields
 \end{verbatim}
@@ -8189,7 +8188,16 @@ Let's add the roads and some more descriptive labels as a finishing touch. The r
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{roads \textless{}{-}}\StringTok{ }\KeywordTok{spTransform}\NormalTok{(roads, }\KeywordTok{proj4string}\NormalTok{(mu))}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+## Warning in proj4string(mu): CRS object has comment, which is lost in output; in tests, see
+## https://cran.r-project.org/web/packages/sp/vignettes/CRS_warnings.html
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{roads.f \textless{}{-}}\StringTok{ }\KeywordTok{fortify}\NormalTok{(roads, }\DataTypeTok{region=}\StringTok{"id"}\NormalTok{)}
 \NormalTok{roads.f \textless{}{-}}\StringTok{ }\KeywordTok{left\_join}\NormalTok{(roads.f, roads}\OperatorTok{@}\NormalTok{data, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}id\textquotesingle{}}\NormalTok{ =}\StringTok{ \textquotesingle{}id\textquotesingle{}}\NormalTok{))}
 
@@ -8299,7 +8307,7 @@ Let's download SRTM surface elevation data for the PEF, check the resulting obje
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+## [1] "+proj=longlat +datum=WGS84 +no_defs"
 \end{verbatim}
 
 \begin{Shaded}
@@ -11640,15 +11648,15 @@ This is a good example of where C++ is much more efficient than R. As shown by t
 \end{Shaded}
 
 \begin{verbatim}
-## Unit: microseconds
-##     expr    min     lq   mean median     uq      max
-##   sum(x)  1.036  1.083  1.308  1.112  1.167    9.732
-##  sumC(x)  2.763  2.844 15.633  2.923  3.076 1190.220
-##  sumR(x) 29.587 29.770 69.447 29.849 30.575 3414.649
-##  neval cld
-##    100   a
-##    100   a
-##    100   a
+## Unit: nanoseconds
+##     expr   min    lq  mean median    uq     max neval
+##   sum(x)   964  1044  1372   1090  1134   18321   100
+##  sumC(x)  2413  2516 13984   2584  2690 1078109   100
+##  sumR(x) 26876 27252 60625  27379 27708 3137048   100
+##  cld
+##    a
+##    a
+##    a
 \end{verbatim}
 
 The \texttt{microbenchmark()} function runs each function it's passed 100 times and provides summary statistics for the multiple execution times. This is a very handy tool for testing various function implementations (as illustrated above).
@@ -11904,7 +11912,7 @@ Now lets look closer at the chinook database.
 \end{Shaded}
 
 \begin{verbatim}
-## src:  sqlite 3.35.5 [/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/chinook.db]
+## src:  sqlite 3.38.5 [/home/jeffdoser/Dropbox/teaching/for875/textbook/chinook.db]
 ## tbls: albums, artists, customers, employees, genres,
 ##   invoice_items, invoices, media_types,
 ##   playlist_track, playlists, sqlite_sequence,
@@ -11924,8 +11932,8 @@ Now that we know the structure of the database, we can perform some simple queri
 
 \begin{verbatim}
 ## # Source:   table<employees> [?? x 15]
-## # Database: sqlite 3.35.5
-## #   [/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/chinook.db]
+## # Database: sqlite 3.38.5
+## #   [/home/jeffdoser/Dropbox/teaching/for875/textbook/chinook.db]
 ##   EmployeeId LastName FirstName Title         ReportsTo
 ##        <int> <chr>    <chr>     <chr>             <int>
 ## 1          1 Adams    Andrew    General Mana~        NA
@@ -11956,19 +11964,19 @@ Now lets use familiar \texttt{dplyr} commands to perform queries on the database
 
 \begin{verbatim}
 ## # Source:     lazy query [?? x 4]
-## # Database:   sqlite 3.35.5
-## #   [/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/chinook.db]
+## # Database:   sqlite 3.38.5
+## #   [/home/jeffdoser/Dropbox/teaching/for875/textbook/chinook.db]
 ## # Ordered by: LastName
-##   LastName FirstName Phone          Email              
-##   <chr>    <chr>     <chr>          <chr>              
-## 1 Adams    Andrew    +1 (780) 428-~ andrew@chinookcorp~
-## 2 Callahan Laura     +1 (403) 467-~ laura@chinookcorp.~
-## 3 Edwards  Nancy     +1 (403) 262-~ nancy@chinookcorp.~
-## 4 Johnson  Steve     1 (780) 836-9~ steve@chinookcorp.~
-## 5 King     Robert    +1 (403) 456-~ robert@chinookcorp~
-## 6 Mitchell Michael   +1 (403) 246-~ michael@chinookcor~
-## 7 Park     Margaret  +1 (403) 263-~ margaret@chinookco~
-## 8 Peacock  Jane      +1 (403) 262-~ jane@chinookcorp.c~
+##   LastName FirstName Phone             Email           
+##   <chr>    <chr>     <chr>             <chr>           
+## 1 Adams    Andrew    +1 (780) 428-9482 andrew@chinookc~
+## 2 Callahan Laura     +1 (403) 467-3351 laura@chinookco~
+## 3 Edwards  Nancy     +1 (403) 262-3443 nancy@chinookco~
+## 4 Johnson  Steve     1 (780) 836-9987  steve@chinookco~
+## 5 King     Robert    +1 (403) 456-9986 robert@chinookc~
+## 6 Mitchell Michael   +1 (403) 246-9887 michael@chinook~
+## 7 Park     Margaret  +1 (403) 263-4423 margaret@chinoo~
+## 8 Peacock  Jane      +1 (403) 262-3443 jane@chinookcor~
 \end{verbatim}
 
 \begin{Shaded}
@@ -11982,8 +11990,8 @@ Now lets use familiar \texttt{dplyr} commands to perform queries on the database
 
 \begin{verbatim}
 ## # Source:     lazy query [?? x 3]
-## # Database:   sqlite 3.35.5
-## #   [/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/chinook.db]
+## # Database:   sqlite 3.38.5
+## #   [/home/jeffdoser/Dropbox/teaching/for875/textbook/chinook.db]
 ## # Ordered by: LastName
 ##   LastName FirstName Address         
 ##   <chr>    <chr>     <chr>           
@@ -12002,8 +12010,8 @@ Now lets use familiar \texttt{dplyr} commands to perform queries on the database
 
 \begin{verbatim}
 ## # Source:   lazy query [?? x 2]
-## # Database: sqlite 3.35.5
-## #   [/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/chinook.db]
+## # Database: sqlite 3.38.5
+## #   [/home/jeffdoser/Dropbox/teaching/for875/textbook/chinook.db]
 ##   ReportsTo numberAtLocation
 ##       <int>            <int>
 ## 1        NA                1
@@ -12026,8 +12034,8 @@ You can see by using \texttt{dplyr} you are able to use the same syntax to query
 
 \begin{verbatim}
 ## # Source:     lazy query [?? x 3]
-## # Database:   sqlite 3.35.5
-## #   [/home/jeffdoser/Dropbox/teaching/for875/ss21for875/textbook/chinook.db]
+## # Database:   sqlite 3.38.5
+## #   [/home/jeffdoser/Dropbox/teaching/for875/textbook/chinook.db]
 ## # Ordered by: LastName
 ##   LastName FirstName Address         
 ##   <chr>    <chr>     <chr>           
@@ -12204,16 +12212,16 @@ A second table in the \texttt{publicdata} project on Google BigQuery contains we
 ## # Database: BigQueryConnection
 ##    thunder mean_wind_speed
 ##    <lgl>             <dbl>
-##  1 FALSE              7   
-##  2 FALSE             14.5 
-##  3 FALSE             28.7 
-##  4 FALSE             15.5 
-##  5 FALSE              0   
-##  6 FALSE             15   
-##  7 FALSE             15   
-##  8 FALSE             21   
-##  9 FALSE              8.90
-## 10 TRUE              13
+##  1 FALSE              8   
+##  2 FALSE             17   
+##  3 FALSE              2.20
+##  4 FALSE             11.3 
+##  5 TRUE               7   
+##  6 FALSE             13   
+##  7 TRUE              19.7 
+##  8 TRUE               0.5 
+##  9 FALSE              4.30
+## 10 FALSE              5
 \end{verbatim}
 
 First we establish a connection to the weather table. We then use the \texttt{dbListFields()} function from the \texttt{DBI} package to display the fields in the table. We then view the first 10 records in the table. We see that there are 31 different variables on information for the weather on a given day from 1929 to 2010. Let's say we are interested in determining the total number of days where the \texttt{mean\_temp\ \textgreater{}\ 60} and \texttt{mean\_wind\_speed\ \textgreater{}\ 10}.
@@ -12261,15 +12269,15 @@ Upon first glance at this plot, a naive student might think ``Wow! Wind speeds h
 ## # Database: BigQueryConnection
 ##     year count
 ##    <int> <int>
-##  1  1932 10751
-##  2  1929  2037
-##  3  1930  7101
-##  4  1933 17708
-##  5  1938 51770
-##  6  1931  9726
-##  7  1934 20334
-##  8  1935 26829
-##  9  1939 65623
+##  1  1929  2037
+##  2  1930  7101
+##  3  1933 17708
+##  4  1938 51770
+##  5  1931  9726
+##  6  1934 20334
+##  7  1935 26829
+##  8  1939 65623
+##  9  1932 10751
 ## 10  1936 50514
 ## # ... with more rows
 \end{verbatim}
@@ -12556,7 +12564,7 @@ The \texttt{warbleR} package allows us to first query the database for the recor
 \end{Shaded}
 
 \begin{verbatim}
-## 149 recordings found!
+## 156 recording(s) found!
 \end{verbatim}
 
 \begin{Shaded}
@@ -12578,11 +12586,11 @@ The \texttt{warbleR} package allows us to first query the database for the recor
 ## [19] "file.name"         "Spectrogram_small"
 ## [21] "Spectrogram_med"   "Spectrogram_large"
 ## [23] "Spectrogram_full"  "Length"           
-## [25] "Uploaded"          "Other_species"    
-## [27] "Remarks"           "Bird_seen"        
-## [29] "Playback_used"     "Other_species1"   
-## [31] "Other_species2"    "Other_species3"   
-## [33] "Other_species4"    "Other_species5"   
+## [25] "Uploaded"          "Other_species1"   
+## [27] "Other_species2"    "Other_species3"   
+## [29] "Other_species4"    "Remarks"          
+## [31] "Bird_seen"         "Playback_used"    
+## [33] "Other_species"     "Other_species5"   
 ## [35] "Other_species6"    "Other_species7"   
 ## [37] "Other_species8"
 \end{verbatim}
@@ -12614,11 +12622,13 @@ The recordings are mostly in the United States, but you can see there are record
 ##                     adult, call, female, male 
 ##                                             1 
 ##                    adult, call, sex uncertain 
-##                                             4 
+##                                             5 
 ##                             adult, call, song 
 ##                                             1 
-##                    adult, sex uncertain, song 
+##                          adult, sex uncertain 
 ##                                             1 
+##                    adult, sex uncertain, song 
+##                                             2 
 ##          adult, sex uncertain, song, tansgers 
 ##                                             1 
 ##                                   adult, song 
@@ -12647,6 +12657,8 @@ The recordings are mostly in the United States, but you can see there are record
 ##                                             1 
 ##                             call, flock calls 
 ##                                            10 
+##     call, life stage uncertain, sex uncertain 
+##                                             1 
 ##                                    call, song 
 ##                                             5 
 ##                       call, song, wing sounds 
@@ -12656,7 +12668,7 @@ The recordings are mostly in the United States, but you can see there are record
 ##                                 Feeding calls 
 ##                                             1 
 ##                                   flight call 
-##                                             8 
+##                                            11 
 ##                                   Flight call 
 ##                                             1 
 ##                                   Flight Call 

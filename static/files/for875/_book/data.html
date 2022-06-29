@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Data | R Programming for Data Sciences</title>
   <meta name="description" content="Chapter 1 Data | R Programming for Data Sciences" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Data | R Programming for Data Sciences" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2021-06-25" />
+<meta name="date" content="2022-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="introduction-to-r-and-rstudio.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
 <script src="libs/accessible-code-block/empty-anchor.js"></script>
 <link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections/anchor-sections.js"></script>
 <script src="libs/kePrint/kePrint.js"></script>
 <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -529,14 +528,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Data</h1>
+<div id="data" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Data science is a field that intersects with statistics, mathematics, computer science, and a wide range of applied fields, such as marketing, biology, and physics. As such, it is hard to formally define data science, but obviously data are central to data science, and it is useful at the start to consider some types of data that are of interest.</p>
-<div id="baby-crawling-data" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Baby crawling data</h2>
+<div id="baby-crawling-data" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Baby crawling data<a href="data.html#baby-crawling-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When thinking about data, we might initially have in mind a modest-sized and uncomplicated data set consisting primarily of numbers. As an example of such a data set, a study was done to assess the possible relationship between the age at which babies first begin to crawl and the temperature at the time of first crawling. Participants in the study were volunteers.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> The data set from this study separates the babies by birth month, and reports the birth month, the average age (in weeks) when first crawling for that month, the standard deviation of the crawling ages for that month, the number of infants for that month, and the average temperature during the month when crawling commenced. The data are shown in Table <a href="data.html#tab:crawling">1.1</a> below.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data.html#cb1-1"></a>u &lt;-<span class="st"> &quot;https://www.finley-lab.com/files/data/BabyCrawling.tsv&quot;</span></span>
-<span id="cb1-2"><a href="data.html#cb1-2"></a>BabyCrawling &lt;-<span class="st"> </span><span class="kw">read.table</span>(u, <span class="dt">header=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data.html#cb1-1" aria-hidden="true"></a>u &lt;-<span class="st"> &quot;https://www.finley-lab.com/files/data/BabyCrawling.tsv&quot;</span></span>
+<span id="cb1-2"><a href="data.html#cb1-2" aria-hidden="true"></a>BabyCrawling &lt;-<span class="st"> </span><span class="kw">read.table</span>(u, <span class="dt">header=</span>T)</span></code></pre></div>
 <table>
 <caption><span id="tab:crawling">TABLE 1.1: </span>Data on age at crawling.</caption>
 <thead>
@@ -637,8 +636,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>This data set has many simple properties: it is relatively small, there are no missing observations, the variables are easily understood, etc.</p>
 </div>
-<div id="world-bank-data" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> World bank data</h2>
+<div id="world-bank-data" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> World bank data<a href="data.html#world-bank-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The World Bank provides data related to the development of countries. A data set was constructed from the World Bank repository. The data set contains data on countries throughout the world for the years 1960 through 2014 and contains, among others, variables representing average life expectancy, fertility rate, and population. Table <a href="data.html#tab:worldBank">1.2</a> contains the first five records and then 10 more randomly selected records for these variables in the data set.</p>
 <table>
 <caption><span id="tab:worldBank">TABLE 1.2: </span>A small portion of the World Bank data set</caption>
@@ -761,8 +760,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>Notice that many observations contain missing data for fertility rate and life expectancy. If all the variables were shown, we would see much more missing data. This data set is also substantially larger than the baby crawling age data, with 11880 rows and 15 columns of data in the full data set. Each column represents one of the variables. Each row represents one country during one year.</p>
 </div>
-<div id="email-data" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Email data</h2>
+<div id="email-data" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Email data<a href="data.html#email-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is estimated that in 2015, 90% of the total 205 billion emails sent were spam.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Spam filters use large amounts of data from emails to learn what distinguishes spam messages from non-spam (sometimes called “ham”) messages. Below we include one spam message followed by a ham message.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <pre><code>From safety33o@l11.newnamedns.com  Fri Aug 23 11:03:37 2002
 Return-Path: &lt;safety33o@l11.newnamedns.com&gt;
@@ -828,8 +827,8 @@ Euro Disney. Link[1] Discuss[2]
 [2] http://www.quicktopic.com/boing/H/rw7cDXT3W44C</code></pre>
 <p>To implement a spam filter we would have to get the data from these email messages (and thousands of others) into a software package, extract and separate potentially important features such as the <code>To:</code> line, the <code>Subject:</code> line, the message body, etc., and then compare spam and non-spam messages to find a method to classify new emails correctly. These steps are not simple in this example. In particular, we would need to become skilled at working with <em>text data</em>.</p>
 </div>
-<div id="handwritten-digit-recognition" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Handwritten digit recognition</h2>
+<div id="handwritten-digit-recognition" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Handwritten digit recognition<a href="data.html#handwritten-digit-recognition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Correct recognition of handwritten digits by a machine is commonly required in today’s world. For example, the postal service must scan and recognize zip codes on handwritten mail. Roughly speaking, a handwritten digit is scanned and converted to a digital image. To keep things simple we will assume the scanning creates a grayscale rather than a color image. When converting an image to a grayscale digital image, a grid of “pixels” is used to represent the handwritten image, where each pixel has a black intensity value. For concreteness we’ll assume that intensities are recorded on a scale from <span class="math inline">\(-1\)</span> (no black intensity at all) to <span class="math inline">\(1\)</span> (maximum black intensity). If the pixel grid is 16 by 16 then the resulting digitized image will contain 256 intensity values, one for each of the <span class="math inline">\(16\times 16 = 256\)</span> pixels.</p>
 <p>For example, here are the data corresponding to one handwritten digit, which happens to be the numeral “6”. Figure <a href="data.html#fig:digit">1.1</a> shows how that digit looks when digitized.</p>
 <pre><code>## -1.000 -1.000 -1.000 -1.000 -1.000 -1.000 -1.000 -0.631  0.862 -0.167 
@@ -858,7 +857,7 @@ Euro Disney. Link[1] Discuss[2]
 ##  1.000  1.000  1.000  1.000  1.000  0.219 -0.943 -1.000 -1.000 -1.000 
 ## -1.000 -1.000 -1.000 -1.000 -0.974 -0.429  0.304  0.823  1.000  0.482 
 ## -0.474 -0.991 -1.000 -1.000 -1.000 -1.000</code></pre>
-<div class="figure"><span id="fig:digit"></span>
+<div class="figure"><span style="display:block;" id="fig:digit"></span>
 <img src="bookdown_files/figure-html/digit-1.svg" alt="A digitized version of a handwritten 6." width="672" />
 <p class="caption">
 FIGURE 1.1: A digitized version of a handwritten 6.
@@ -866,21 +865,21 @@ FIGURE 1.1: A digitized version of a handwritten 6.
 </div>
 <p>Looking at the digitized images, it may seem simple to correctly identify a handwritten numeral. But remember, the machine only has access to the 256 pixel intensities, and must make a decision based on them.</p>
 <p>Figure <a href="data.html#fig:25digits">1.2</a> shows the digitized images of the first 25 numerals in the data set, and Figure <a href="data.html#fig:25Sevens">1.3</a> shows the digitized images of the first 25 numeral sevens in the data set. These give some idea of the variability in how digits are written.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
-<div class="figure"><span id="fig:25digits"></span>
+<div class="figure"><span style="display:block;" id="fig:25digits"></span>
 <img src="bookdown_files/figure-html/25digits-1.svg" alt="The first 25 handwritten numerals, digitized." width="672" />
 <p class="caption">
 FIGURE 1.2: The first 25 handwritten numerals, digitized.
 </p>
 </div>
-<div class="figure"><span id="fig:25Sevens"></span>
+<div class="figure"><span style="display:block;" id="fig:25Sevens"></span>
 <img src="bookdown_files/figure-html/25Sevens-1.svg" alt="The first 25 numeral sevens, digitized." width="672" />
 <p class="caption">
 FIGURE 1.3: The first 25 numeral sevens, digitized.
 </p>
 </div>
 </div>
-<div id="looking-forward" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Looking forward</h2>
+<div id="looking-forward" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Looking forward<a href="data.html#looking-forward" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The four examples above illustrate a small sample of the wide variety of data sets that may be encountered in data science. Each of these provides its own challenges. The baby crawling data present challenges that are more statistical in nature. For example, how might the study design (which isn’t described here) affect methods of analysis and conclusions drawn from the study? Similar challenges are also present within the other data sets, but these data sets also present more substantial challenges prior to (and during) the analysis stage, such as how to work with the missing data in the World Bank data set, or how to effectively and efficiently process the email data to extract features of interest.</p>
 <p>This book and associated material introduce tools to tackle some of the challenges in working with real data sets, within the context of the R statistical system. We will focus on important topics such as</p>
 <ol style="list-style-type: decimal">
@@ -891,8 +890,8 @@ FIGURE 1.3: The first 25 numeral sevens, digitized.
 <li>Programming and writing functions in R</li>
 </ol>
 </div>
-<div id="how-to-learn-the-most-important-section-in-this-book" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span> How to learn (the most important section in this book!)</h2>
+<div id="how-to-learn-the-most-important-section-in-this-book" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> How to learn (the most important section in this book!)<a href="data.html#how-to-learn-the-most-important-section-in-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are several ways to engage with the content of this book and associated materials.</p>
 <p>One way is not to engage at all. Leave the book closed on a shelf and do something else with your time. That may or may not be a good life strategy, depending on what else you do with your time, but you won’t learn much from the book!</p>
 <p>Another way to engage is to read through the book “passively”, reading all that’s written but not reading the book while at your computer, where you could enter the R commands from the book. With this strategy you’ll probably learn more than if you leave the book closed on a shelf, but there are better options.</p>
@@ -922,7 +921,6 @@ FIGURE 1.3: The first 25 numeral sevens, digitized.
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
 <script src="libs/gitbook/js/clipboard.min.js"></script>
 <script src="libs/gitbook/js/plugin-search.js"></script>
 <script src="libs/gitbook/js/plugin-sharing.js"></script>
@@ -962,6 +960,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown.pdf", "bookdown.epub", "bookdown.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "none"
 }

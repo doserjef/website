@@ -125,7 +125,7 @@ list.files("PEF")
 
 Next we read the MU-bounds shapefile into R using `readOGR()`^[The authors of the `rgdal` library decided to have some information about the version of GDAL and other software specifics be printed when the library is loaded. Don't let it distract you.] and explore the resulting `mu` object. Notice that when we read a shapefile into R, we do not include a file extension with the shapefile name because a shapefile is always composed of multiple files.
 
-```{r}
+```{r, warnings = FALSE, message = FALSE}
 library(rgdal)
 mu <- readOGR("PEF", "MU-bounds")
 ```
@@ -159,17 +159,17 @@ There are numerous map projections^[See partial list of map projections at https
 
 In R, a spatial object's CRS is accessed via the `sp` package `proj4string` function. The code below shows the current projection of `mu`.
 
-```{r}
+```{r, warning = FALSE}
 proj4string(mu)
 ```
 
-The cryptic looking string returned by `proj4string()` is a set of directives understood by the [proj.4](http://proj4.org/) C library, which is part of `sp`, and used to map geographic longitude and latitude coordinates into the projected Cartesian coordinates. This CRS tells us the `mu` object is in [Universal Transverse Mercator (UTM)](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) zone 19 coordinate system.^[If you start dealing with a lot of spatial data and reprojecting, http://spatialreference.org is an excellent resources for finding and specifying coordinate reference systems.]
+The cryptic looking string returned by `proj4string()` is a set of directives understood by the [proj.4](http://proj4.org/) C library, which is part of `sp`, and used to map geographic longitude and latitude coordinates into the projected Cartesian coordinates. Note that if you see a warning message you can safely ignore it. This CRS tells us the `mu` object is in [Universal Transverse Mercator (UTM)](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) zone 19 coordinate system.^[If you start dealing with a lot of spatial data and reprojecting, http://spatialreference.org is an excellent resources for finding and specifying coordinate reference systems.]
 
 ## Illustration using `ggmap` {#ggmap}
 
 Let's begin by making a map of PEF management unit boundaries over top of a satellite image using the `ggmap` package. Given an address, location, or bounding box, the `ggmap` package's `get_map` function will query Google Maps, OpenStreetMap, Stamen Maps, or Naver Map servers for a user-specified map type. The `get_map` function requires the location or bounding box coordinates be in a geographic coordinate system (i.e., latitude-longitude). This means we need to reproject `mu` from UTM zone 19 to latitude-longitude geographic coordinates, which is defined by the `'"proj=longlat +datum=WGS84"'` proj.4 string. As seen below, the first argument in `spTransform` function is the spatial object to reproject and the second argument is a CRS object created by passing a proj.4 string into the `CRS` function.
 
-```{r}
+```{r, warning = FALSE}
 mu <- spTransform(mu, CRS("+proj=longlat +datum=WGS84"))
 proj4string(mu)
 ```

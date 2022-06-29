@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Shiny: Interactive Web Apps in R | R Programming for Data Sciences</title>
   <meta name="description" content="Chapter 9 Shiny: Interactive Web Apps in R | R Programming for Data Sciences" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Shiny: Interactive Web Apps in R | R Programming for Data Sciences" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2021-06-25" />
+<meta name="date" content="2022-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="sp.html"/>
 <link rel="next" href="classification.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
-<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
 <script src="libs/accessible-code-block/empty-anchor.js"></script>
 <link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections/anchor-sections.js"></script>
 <script src="libs/kePrint/kePrint.js"></script>
 <link href="libs/lightable/lightable.css" rel="stylesheet" />
@@ -529,24 +528,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="shiny-interactive-web-apps-in-r" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Shiny: Interactive Web Apps in R</h1>
+<div id="shiny-interactive-web-apps-in-r" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Shiny: Interactive Web Apps in R<a href="shiny-interactive-web-apps-in-r.html#shiny-interactive-web-apps-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://shiny.rstudio.com/">Shiny</a> is a framework that turns R code and figures into interactive web applications. Let’s start out by looking at a built-in example Shiny app.</p>
-<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="shiny-interactive-web-apps-in-r.html#cb794-1"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb794-2"><a href="shiny-interactive-web-apps-in-r.html#cb794-2"></a><span class="kw">runExample</span>(<span class="st">&quot;01_hello&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="shiny-interactive-web-apps-in-r.html#cb796-1" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb796-2"><a href="shiny-interactive-web-apps-in-r.html#cb796-2" aria-hidden="true"></a><span class="kw">runExample</span>(<span class="st">&quot;01_hello&quot;</span>)</span></code></pre></div>
 <p>In the bottom panel of the resulting Shiny app (Figure <a href="shiny-interactive-web-apps-in-r.html#fig:hello">9.1</a>), we can see the R script that is essential to running any Shiny app: <code>app.R</code>. Take a minute to explore how the app works and how the script code is structured. The first part of the script (<code>ui &lt;-</code>) defines the app’s user interface (UI) using directives that partition the resulting web page and placement of input and output elements. The second part of the script defines a function called <code>server</code> with arguments <code>input</code> and <code>output</code>. This function provides the logic required to run the app (in this case, to draw the histogram of the Old Faithful Geyser Data). Third, <code>ui</code> and <code>server</code> are passed to a function called <code>shinyApp</code> which creates the application.<a href="#fn54" class="footnote-ref" id="fnref54"><sup>54</sup></a></p>
-<div class="figure"><span id="fig:hello"></span>
+<div class="figure"><span style="display:block;" id="fig:hello"></span>
 <img src="figures/hello_shiny.png" alt="Hello Shiny example app" width="100%" />
 <p class="caption">
 FIGURE 9.1: Hello Shiny example app
 </p>
 </div>
-<div id="running-a-simple-shiny-app" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Running a Simple Shiny App</h2>
+<div id="running-a-simple-shiny-app" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Running a Simple Shiny App<a href="shiny-interactive-web-apps-in-r.html#running-a-simple-shiny-app" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Shiny apps allow users to interact with a data set. Let’s say we have access to a dummy data set <code>name_list.csv</code>. Begin by taking a quick look at what this CSV file contains.</p>
-<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="shiny-interactive-web-apps-in-r.html#cb795-1"></a>namesDF &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>, </span>
-<span id="cb795-2"><a href="shiny-interactive-web-apps-in-r.html#cb795-2"></a>                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb795-3"><a href="shiny-interactive-web-apps-in-r.html#cb795-3"></a><span class="kw">str</span>(namesDF)</span></code></pre></div>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="shiny-interactive-web-apps-in-r.html#cb797-1" aria-hidden="true"></a>namesDF &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>, </span>
+<span id="cb797-2"><a href="shiny-interactive-web-apps-in-r.html#cb797-2" aria-hidden="true"></a>                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb797-3"><a href="shiny-interactive-web-apps-in-r.html#cb797-3" aria-hidden="true"></a><span class="kw">str</span>(namesDF)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    200 obs. of  4 variables:
 ##  $ First: chr  &quot;Sarah&quot; &quot;Boris&quot; &quot;Jessica&quot; &quot;Diane&quot; ...
 ##  $ Last : chr  &quot;Poole&quot; &quot;Dowd&quot; &quot;Wilkins&quot; &quot;Murray&quot; ...
@@ -559,174 +558,174 @@ FIGURE 9.1: Hello Shiny example app
 <li>Copy the code in “app.R version 1” into <code>app.R</code>.</li>
 <li>Run the Shiny app from RStudio. There are two ways to do this: 1) use the RStudio button in the top right of the script window or; 2) type the function <code>runApp('file location')</code> in the RStudio console, where <code>file location</code> is replaced with the relative path to the directory where <code>app.R</code> is saved.</li>
 </ol>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="shiny-interactive-web-apps-in-r.html#cb797-1"></a><span class="co"># app.R version 1</span></span>
-<span id="cb797-2"><a href="shiny-interactive-web-apps-in-r.html#cb797-2"></a></span>
-<span id="cb797-3"><a href="shiny-interactive-web-apps-in-r.html#cb797-3"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb797-4"><a href="shiny-interactive-web-apps-in-r.html#cb797-4"></a></span>
-<span id="cb797-5"><a href="shiny-interactive-web-apps-in-r.html#cb797-5"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
-<span id="cb797-6"><a href="shiny-interactive-web-apps-in-r.html#cb797-6"></a></span>
-<span id="cb797-7"><a href="shiny-interactive-web-apps-in-r.html#cb797-7"></a><span class="co"># Define UI</span></span>
-<span id="cb797-8"><a href="shiny-interactive-web-apps-in-r.html#cb797-8"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb797-9"><a href="shiny-interactive-web-apps-in-r.html#cb797-9"></a>  </span>
-<span id="cb797-10"><a href="shiny-interactive-web-apps-in-r.html#cb797-10"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Analysis&quot;</span>),</span>
-<span id="cb797-11"><a href="shiny-interactive-web-apps-in-r.html#cb797-11"></a>  </span>
-<span id="cb797-12"><a href="shiny-interactive-web-apps-in-r.html#cb797-12"></a>  <span class="kw">sidebarLayout</span>(</span>
-<span id="cb797-13"><a href="shiny-interactive-web-apps-in-r.html#cb797-13"></a>    </span>
-<span id="cb797-14"><a href="shiny-interactive-web-apps-in-r.html#cb797-14"></a>    <span class="kw">sidebarPanel</span>(<span class="st">&quot;our inputs will be here&quot;</span>),</span>
-<span id="cb797-15"><a href="shiny-interactive-web-apps-in-r.html#cb797-15"></a>    </span>
-<span id="cb797-16"><a href="shiny-interactive-web-apps-in-r.html#cb797-16"></a>    <span class="kw">mainPanel</span>(<span class="st">&quot;our output will appear here&quot;</span>)</span>
-<span id="cb797-17"><a href="shiny-interactive-web-apps-in-r.html#cb797-17"></a>  )</span>
-<span id="cb797-18"><a href="shiny-interactive-web-apps-in-r.html#cb797-18"></a>)</span>
-<span id="cb797-19"><a href="shiny-interactive-web-apps-in-r.html#cb797-19"></a></span>
-<span id="cb797-20"><a href="shiny-interactive-web-apps-in-r.html#cb797-20"></a><span class="co"># Define server logic</span></span>
-<span id="cb797-21"><a href="shiny-interactive-web-apps-in-r.html#cb797-21"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {}</span>
-<span id="cb797-22"><a href="shiny-interactive-web-apps-in-r.html#cb797-22"></a></span>
-<span id="cb797-23"><a href="shiny-interactive-web-apps-in-r.html#cb797-23"></a><span class="co"># Create Shiny app</span></span>
-<span id="cb797-24"><a href="shiny-interactive-web-apps-in-r.html#cb797-24"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="shiny-interactive-web-apps-in-r.html#cb799-1" aria-hidden="true"></a><span class="co"># app.R version 1</span></span>
+<span id="cb799-2"><a href="shiny-interactive-web-apps-in-r.html#cb799-2" aria-hidden="true"></a></span>
+<span id="cb799-3"><a href="shiny-interactive-web-apps-in-r.html#cb799-3" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb799-4"><a href="shiny-interactive-web-apps-in-r.html#cb799-4" aria-hidden="true"></a></span>
+<span id="cb799-5"><a href="shiny-interactive-web-apps-in-r.html#cb799-5" aria-hidden="true"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
+<span id="cb799-6"><a href="shiny-interactive-web-apps-in-r.html#cb799-6" aria-hidden="true"></a></span>
+<span id="cb799-7"><a href="shiny-interactive-web-apps-in-r.html#cb799-7" aria-hidden="true"></a><span class="co"># Define UI</span></span>
+<span id="cb799-8"><a href="shiny-interactive-web-apps-in-r.html#cb799-8" aria-hidden="true"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb799-9"><a href="shiny-interactive-web-apps-in-r.html#cb799-9" aria-hidden="true"></a>  </span>
+<span id="cb799-10"><a href="shiny-interactive-web-apps-in-r.html#cb799-10" aria-hidden="true"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Analysis&quot;</span>),</span>
+<span id="cb799-11"><a href="shiny-interactive-web-apps-in-r.html#cb799-11" aria-hidden="true"></a>  </span>
+<span id="cb799-12"><a href="shiny-interactive-web-apps-in-r.html#cb799-12" aria-hidden="true"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb799-13"><a href="shiny-interactive-web-apps-in-r.html#cb799-13" aria-hidden="true"></a>    </span>
+<span id="cb799-14"><a href="shiny-interactive-web-apps-in-r.html#cb799-14" aria-hidden="true"></a>    <span class="kw">sidebarPanel</span>(<span class="st">&quot;our inputs will be here&quot;</span>),</span>
+<span id="cb799-15"><a href="shiny-interactive-web-apps-in-r.html#cb799-15" aria-hidden="true"></a>    </span>
+<span id="cb799-16"><a href="shiny-interactive-web-apps-in-r.html#cb799-16" aria-hidden="true"></a>    <span class="kw">mainPanel</span>(<span class="st">&quot;our output will appear here&quot;</span>)</span>
+<span id="cb799-17"><a href="shiny-interactive-web-apps-in-r.html#cb799-17" aria-hidden="true"></a>  )</span>
+<span id="cb799-18"><a href="shiny-interactive-web-apps-in-r.html#cb799-18" aria-hidden="true"></a>)</span>
+<span id="cb799-19"><a href="shiny-interactive-web-apps-in-r.html#cb799-19" aria-hidden="true"></a></span>
+<span id="cb799-20"><a href="shiny-interactive-web-apps-in-r.html#cb799-20" aria-hidden="true"></a><span class="co"># Define server logic</span></span>
+<span id="cb799-21"><a href="shiny-interactive-web-apps-in-r.html#cb799-21" aria-hidden="true"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {}</span>
+<span id="cb799-22"><a href="shiny-interactive-web-apps-in-r.html#cb799-22" aria-hidden="true"></a></span>
+<span id="cb799-23"><a href="shiny-interactive-web-apps-in-r.html#cb799-23" aria-hidden="true"></a><span class="co"># Create Shiny app</span></span>
+<span id="cb799-24"><a href="shiny-interactive-web-apps-in-r.html#cb799-24" aria-hidden="true"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 <p>If everything compiles correctly, you should get a window that looks like Figure <a href="shiny-interactive-web-apps-in-r.html#fig:fig2">9.2</a>. There are a few things to notice. First, we read in the CSV file at the beginning of the <code>app.R</code> script so that these data can be accessed in subsquent development steps (although we don’t use it yet in this initial application). Second, our Shiny app is not interactive yet because there is no way for a user to input any data—the page is view-only. Third, the function <code>function(input,output) {}</code> in <code>app.R</code> does not include any code, reflecting that we are not yet using any user inputs or creating any outputs.</p>
-<div class="figure"><span id="fig:fig2"></span>
+<div class="figure"><span style="display:block;" id="fig:fig2"></span>
 <img src="../figures/appSimple.png" alt="Your first Shiny app" width="100%" />
 <p class="caption">
 FIGURE 9.2: Your first Shiny app
 </p>
 </div>
 </div>
-<div id="adding-user-input" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Adding User Input</h2>
+<div id="adding-user-input" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Adding User Input<a href="shiny-interactive-web-apps-in-r.html#adding-user-input" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Shiny package widgets are used to collect user provided inputs (visit the <a href="https://shiny.rstudio.com/gallery/widget-gallery.html">Shiny Widget Gallery</a> to get a sense of the different kinds of input dialogues). In the subsequent development we’ll use slider bars, dropdown menus, and check boxes. All widget functions, at minimum, include an <code>inputId</code> and <code>label</code> argument. The character string assigned to the <code>inputId</code> argument will be the variable name used to access the value(s) selected or provided by the user. This variable name is used in the application development and not seen by the user. The character string assigned to the <code>label</code> argument appears in the UI above the given input widget and serves to provide a user-friendly description of the desired input.</p>
 <p>Building on the “version 1” code, we add a dropdown menu to the script’s UI portion using the <code>selectInput</code> function to the “version 2” code below. Update <code>app.R</code> and rerun the application. What is our <code>inputId</code> for the dropdown menu? What is our <code>label</code>? Can you see where the <code>label</code> is displayed in the app when you rerun it?</p>
 <p>Look at the structure of the <code>choices</code> argument in <code>selectInput</code>. It’s a vector of options in the form <code>"name" = "value"</code> where the <code>name</code> is what the user sees, and the <code>value</code> is what is returned to the server logic function of the <code>app.R</code> file.</p>
-<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="shiny-interactive-web-apps-in-r.html#cb798-1"></a><span class="co"># app.R version 2</span></span>
-<span id="cb798-2"><a href="shiny-interactive-web-apps-in-r.html#cb798-2"></a></span>
-<span id="cb798-3"><a href="shiny-interactive-web-apps-in-r.html#cb798-3"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb798-4"><a href="shiny-interactive-web-apps-in-r.html#cb798-4"></a></span>
-<span id="cb798-5"><a href="shiny-interactive-web-apps-in-r.html#cb798-5"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
-<span id="cb798-6"><a href="shiny-interactive-web-apps-in-r.html#cb798-6"></a></span>
-<span id="cb798-7"><a href="shiny-interactive-web-apps-in-r.html#cb798-7"></a><span class="co"># Define UI</span></span>
-<span id="cb798-8"><a href="shiny-interactive-web-apps-in-r.html#cb798-8"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb798-9"><a href="shiny-interactive-web-apps-in-r.html#cb798-9"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Age Analysis&quot;</span>),</span>
-<span id="cb798-10"><a href="shiny-interactive-web-apps-in-r.html#cb798-10"></a>  <span class="kw">sidebarLayout</span>(</span>
-<span id="cb798-11"><a href="shiny-interactive-web-apps-in-r.html#cb798-11"></a>    <span class="kw">sidebarPanel</span>(</span>
-<span id="cb798-12"><a href="shiny-interactive-web-apps-in-r.html#cb798-12"></a>      <span class="co"># Dropdown selection for Male/Female</span></span>
-<span id="cb798-13"><a href="shiny-interactive-web-apps-in-r.html#cb798-13"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;sexInput&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Sex:&quot;</span>,</span>
-<span id="cb798-14"><a href="shiny-interactive-web-apps-in-r.html#cb798-14"></a>                  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;F&quot;</span>, </span>
-<span id="cb798-15"><a href="shiny-interactive-web-apps-in-r.html#cb798-15"></a>                              <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;M&quot;</span>, </span>
-<span id="cb798-16"><a href="shiny-interactive-web-apps-in-r.html#cb798-16"></a>                              <span class="st">&quot;Both&quot;</span> =<span class="st"> &quot;B&quot;</span>))</span>
-<span id="cb798-17"><a href="shiny-interactive-web-apps-in-r.html#cb798-17"></a>    ),</span>
-<span id="cb798-18"><a href="shiny-interactive-web-apps-in-r.html#cb798-18"></a>    <span class="kw">mainPanel</span>(<span class="st">&quot;our output will appear here&quot;</span>)</span>
-<span id="cb798-19"><a href="shiny-interactive-web-apps-in-r.html#cb798-19"></a>  )</span>
-<span id="cb798-20"><a href="shiny-interactive-web-apps-in-r.html#cb798-20"></a>)</span>
-<span id="cb798-21"><a href="shiny-interactive-web-apps-in-r.html#cb798-21"></a></span>
-<span id="cb798-22"><a href="shiny-interactive-web-apps-in-r.html#cb798-22"></a><span class="co"># Define server logic</span></span>
-<span id="cb798-23"><a href="shiny-interactive-web-apps-in-r.html#cb798-23"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {}</span>
-<span id="cb798-24"><a href="shiny-interactive-web-apps-in-r.html#cb798-24"></a></span>
-<span id="cb798-25"><a href="shiny-interactive-web-apps-in-r.html#cb798-25"></a><span class="co"># Create Shiny app</span></span>
-<span id="cb798-26"><a href="shiny-interactive-web-apps-in-r.html#cb798-26"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="shiny-interactive-web-apps-in-r.html#cb800-1" aria-hidden="true"></a><span class="co"># app.R version 2</span></span>
+<span id="cb800-2"><a href="shiny-interactive-web-apps-in-r.html#cb800-2" aria-hidden="true"></a></span>
+<span id="cb800-3"><a href="shiny-interactive-web-apps-in-r.html#cb800-3" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb800-4"><a href="shiny-interactive-web-apps-in-r.html#cb800-4" aria-hidden="true"></a></span>
+<span id="cb800-5"><a href="shiny-interactive-web-apps-in-r.html#cb800-5" aria-hidden="true"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
+<span id="cb800-6"><a href="shiny-interactive-web-apps-in-r.html#cb800-6" aria-hidden="true"></a></span>
+<span id="cb800-7"><a href="shiny-interactive-web-apps-in-r.html#cb800-7" aria-hidden="true"></a><span class="co"># Define UI</span></span>
+<span id="cb800-8"><a href="shiny-interactive-web-apps-in-r.html#cb800-8" aria-hidden="true"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb800-9"><a href="shiny-interactive-web-apps-in-r.html#cb800-9" aria-hidden="true"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Age Analysis&quot;</span>),</span>
+<span id="cb800-10"><a href="shiny-interactive-web-apps-in-r.html#cb800-10" aria-hidden="true"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb800-11"><a href="shiny-interactive-web-apps-in-r.html#cb800-11" aria-hidden="true"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb800-12"><a href="shiny-interactive-web-apps-in-r.html#cb800-12" aria-hidden="true"></a>      <span class="co"># Dropdown selection for Male/Female</span></span>
+<span id="cb800-13"><a href="shiny-interactive-web-apps-in-r.html#cb800-13" aria-hidden="true"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;sexInput&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Sex:&quot;</span>,</span>
+<span id="cb800-14"><a href="shiny-interactive-web-apps-in-r.html#cb800-14" aria-hidden="true"></a>                  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;F&quot;</span>, </span>
+<span id="cb800-15"><a href="shiny-interactive-web-apps-in-r.html#cb800-15" aria-hidden="true"></a>                              <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;M&quot;</span>, </span>
+<span id="cb800-16"><a href="shiny-interactive-web-apps-in-r.html#cb800-16" aria-hidden="true"></a>                              <span class="st">&quot;Both&quot;</span> =<span class="st"> &quot;B&quot;</span>))</span>
+<span id="cb800-17"><a href="shiny-interactive-web-apps-in-r.html#cb800-17" aria-hidden="true"></a>    ),</span>
+<span id="cb800-18"><a href="shiny-interactive-web-apps-in-r.html#cb800-18" aria-hidden="true"></a>    <span class="kw">mainPanel</span>(<span class="st">&quot;our output will appear here&quot;</span>)</span>
+<span id="cb800-19"><a href="shiny-interactive-web-apps-in-r.html#cb800-19" aria-hidden="true"></a>  )</span>
+<span id="cb800-20"><a href="shiny-interactive-web-apps-in-r.html#cb800-20" aria-hidden="true"></a>)</span>
+<span id="cb800-21"><a href="shiny-interactive-web-apps-in-r.html#cb800-21" aria-hidden="true"></a></span>
+<span id="cb800-22"><a href="shiny-interactive-web-apps-in-r.html#cb800-22" aria-hidden="true"></a><span class="co"># Define server logic</span></span>
+<span id="cb800-23"><a href="shiny-interactive-web-apps-in-r.html#cb800-23" aria-hidden="true"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {}</span>
+<span id="cb800-24"><a href="shiny-interactive-web-apps-in-r.html#cb800-24" aria-hidden="true"></a></span>
+<span id="cb800-25"><a href="shiny-interactive-web-apps-in-r.html#cb800-25" aria-hidden="true"></a><span class="co"># Create Shiny app</span></span>
+<span id="cb800-26"><a href="shiny-interactive-web-apps-in-r.html#cb800-26" aria-hidden="true"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 </div>
-<div id="adding-output" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Adding Output</h2>
+<div id="adding-output" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Adding Output<a href="shiny-interactive-web-apps-in-r.html#adding-output" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that we’ve included the user input dialog, let’s make the application truly interactive by changing the output depending on user input. This is accomplished by modifying the server logic portion of the script. Our goal is to plot an age distribution histogram in the main panel given the sex selected by the user.</p>
-<div id="interactive-server-logic" class="section level3" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> Interactive Server Logic</h3>
+<div id="interactive-server-logic" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Interactive Server Logic<a href="shiny-interactive-web-apps-in-r.html#interactive-server-logic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Server logic is defined by two arguments: <code>input</code> and <code>output</code>. These objects are both list-like, so they can contain multiple other objects. We already know from the user input part of the <code>app.R</code> script that we have an input component called <code>sexInput</code>, which can be accessed in the reactive portion of the server logic by calling <code>input$sexInput</code> (notice the use of the <code>$</code> to access the input value associated with <code>sexInput</code>). In “version 3” of the application, we use the information held in <code>input$sexInput</code> to subset <code>names.df</code> then create a histogram of <code>names.df$Age</code>. This histogram graphic is included as an element in the <code>output</code> object and ultimately made available in the UI portion of the script by referencing its name <code>histogram</code>.</p>
 <p>Reactive portions of our <code>app.R</code> script’s server logic are inside the server function. We create reactive outputs using Shiny’s functions like <code>renderPlot</code>.<a href="#fn55" class="footnote-ref" id="fnref55"><sup>55</sup></a> Obviously, <code>renderPlot</code> renders the contents of the function into a plot object; this is then stored in the <code>output</code> list wherever we assign it (in this case, <code>output$histogram</code>). Notice the contents of the <code>renderPlot</code> function are contained not only by regular parentheses, but also by curly brackets (just one more piece of syntax to keep track of).</p>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="shiny-interactive-web-apps-in-r.html#cb799-1"></a><span class="co"># app.R version 3</span></span>
-<span id="cb799-2"><a href="shiny-interactive-web-apps-in-r.html#cb799-2"></a></span>
-<span id="cb799-3"><a href="shiny-interactive-web-apps-in-r.html#cb799-3"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb799-4"><a href="shiny-interactive-web-apps-in-r.html#cb799-4"></a></span>
-<span id="cb799-5"><a href="shiny-interactive-web-apps-in-r.html#cb799-5"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
-<span id="cb799-6"><a href="shiny-interactive-web-apps-in-r.html#cb799-6"></a></span>
-<span id="cb799-7"><a href="shiny-interactive-web-apps-in-r.html#cb799-7"></a><span class="co"># Define UI</span></span>
-<span id="cb799-8"><a href="shiny-interactive-web-apps-in-r.html#cb799-8"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb799-9"><a href="shiny-interactive-web-apps-in-r.html#cb799-9"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Age Analysis&quot;</span>),</span>
-<span id="cb799-10"><a href="shiny-interactive-web-apps-in-r.html#cb799-10"></a>  <span class="kw">sidebarLayout</span>(</span>
-<span id="cb799-11"><a href="shiny-interactive-web-apps-in-r.html#cb799-11"></a>    <span class="kw">sidebarPanel</span>(</span>
-<span id="cb799-12"><a href="shiny-interactive-web-apps-in-r.html#cb799-12"></a>      <span class="co"># Dropdown selection for Male/Female</span></span>
-<span id="cb799-13"><a href="shiny-interactive-web-apps-in-r.html#cb799-13"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;sexInput&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Sex:&quot;</span>,</span>
-<span id="cb799-14"><a href="shiny-interactive-web-apps-in-r.html#cb799-14"></a>                  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;F&quot;</span>, </span>
-<span id="cb799-15"><a href="shiny-interactive-web-apps-in-r.html#cb799-15"></a>                              <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;M&quot;</span>, </span>
-<span id="cb799-16"><a href="shiny-interactive-web-apps-in-r.html#cb799-16"></a>                              <span class="st">&quot;Both&quot;</span> =<span class="st"> &quot;B&quot;</span>))</span>
-<span id="cb799-17"><a href="shiny-interactive-web-apps-in-r.html#cb799-17"></a>    ),</span>
-<span id="cb799-18"><a href="shiny-interactive-web-apps-in-r.html#cb799-18"></a>    <span class="kw">mainPanel</span>(<span class="st">&quot;our output will appear here&quot;</span>)</span>
-<span id="cb799-19"><a href="shiny-interactive-web-apps-in-r.html#cb799-19"></a>  )</span>
-<span id="cb799-20"><a href="shiny-interactive-web-apps-in-r.html#cb799-20"></a>)</span>
-<span id="cb799-21"><a href="shiny-interactive-web-apps-in-r.html#cb799-21"></a></span>
-<span id="cb799-22"><a href="shiny-interactive-web-apps-in-r.html#cb799-22"></a><span class="co"># Define server logic</span></span>
-<span id="cb799-23"><a href="shiny-interactive-web-apps-in-r.html#cb799-23"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
-<span id="cb799-24"><a href="shiny-interactive-web-apps-in-r.html#cb799-24"></a></span>
-<span id="cb799-25"><a href="shiny-interactive-web-apps-in-r.html#cb799-25"></a>  output<span class="op">$</span>histogram &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
-<span id="cb799-26"><a href="shiny-interactive-web-apps-in-r.html#cb799-26"></a>    </span>
-<span id="cb799-27"><a href="shiny-interactive-web-apps-in-r.html#cb799-27"></a>    <span class="cf">if</span>(input<span class="op">$</span>sexInput <span class="op">!=</span><span class="st"> &quot;B&quot;</span>){</span>
-<span id="cb799-28"><a href="shiny-interactive-web-apps-in-r.html#cb799-28"></a>      subset.names.df &lt;-<span class="st"> </span><span class="kw">subset</span>(names.df, Sex <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>sexInput)</span>
-<span id="cb799-29"><a href="shiny-interactive-web-apps-in-r.html#cb799-29"></a>    } <span class="cf">else</span> {</span>
-<span id="cb799-30"><a href="shiny-interactive-web-apps-in-r.html#cb799-30"></a>      subset.names.df &lt;-<span class="st"> </span>names.df</span>
-<span id="cb799-31"><a href="shiny-interactive-web-apps-in-r.html#cb799-31"></a>    }</span>
-<span id="cb799-32"><a href="shiny-interactive-web-apps-in-r.html#cb799-32"></a>    </span>
-<span id="cb799-33"><a href="shiny-interactive-web-apps-in-r.html#cb799-33"></a>    ages &lt;-<span class="st"> </span>subset.names.df<span class="op">$</span>Age</span>
-<span id="cb799-34"><a href="shiny-interactive-web-apps-in-r.html#cb799-34"></a>    </span>
-<span id="cb799-35"><a href="shiny-interactive-web-apps-in-r.html#cb799-35"></a>    <span class="co"># draw the histogram with the specified 20 bins</span></span>
-<span id="cb799-36"><a href="shiny-interactive-web-apps-in-r.html#cb799-36"></a>    <span class="kw">hist</span>(ages, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>, <span class="dt">border =</span> <span class="st">&#39;white&#39;</span>)</span>
-<span id="cb799-37"><a href="shiny-interactive-web-apps-in-r.html#cb799-37"></a>  })</span>
-<span id="cb799-38"><a href="shiny-interactive-web-apps-in-r.html#cb799-38"></a></span>
-<span id="cb799-39"><a href="shiny-interactive-web-apps-in-r.html#cb799-39"></a>}</span>
-<span id="cb799-40"><a href="shiny-interactive-web-apps-in-r.html#cb799-40"></a></span>
-<span id="cb799-41"><a href="shiny-interactive-web-apps-in-r.html#cb799-41"></a><span class="co"># Create Shiny app</span></span>
-<span id="cb799-42"><a href="shiny-interactive-web-apps-in-r.html#cb799-42"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="shiny-interactive-web-apps-in-r.html#cb801-1" aria-hidden="true"></a><span class="co"># app.R version 3</span></span>
+<span id="cb801-2"><a href="shiny-interactive-web-apps-in-r.html#cb801-2" aria-hidden="true"></a></span>
+<span id="cb801-3"><a href="shiny-interactive-web-apps-in-r.html#cb801-3" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb801-4"><a href="shiny-interactive-web-apps-in-r.html#cb801-4" aria-hidden="true"></a></span>
+<span id="cb801-5"><a href="shiny-interactive-web-apps-in-r.html#cb801-5" aria-hidden="true"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
+<span id="cb801-6"><a href="shiny-interactive-web-apps-in-r.html#cb801-6" aria-hidden="true"></a></span>
+<span id="cb801-7"><a href="shiny-interactive-web-apps-in-r.html#cb801-7" aria-hidden="true"></a><span class="co"># Define UI</span></span>
+<span id="cb801-8"><a href="shiny-interactive-web-apps-in-r.html#cb801-8" aria-hidden="true"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb801-9"><a href="shiny-interactive-web-apps-in-r.html#cb801-9" aria-hidden="true"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Age Analysis&quot;</span>),</span>
+<span id="cb801-10"><a href="shiny-interactive-web-apps-in-r.html#cb801-10" aria-hidden="true"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb801-11"><a href="shiny-interactive-web-apps-in-r.html#cb801-11" aria-hidden="true"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb801-12"><a href="shiny-interactive-web-apps-in-r.html#cb801-12" aria-hidden="true"></a>      <span class="co"># Dropdown selection for Male/Female</span></span>
+<span id="cb801-13"><a href="shiny-interactive-web-apps-in-r.html#cb801-13" aria-hidden="true"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;sexInput&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Sex:&quot;</span>,</span>
+<span id="cb801-14"><a href="shiny-interactive-web-apps-in-r.html#cb801-14" aria-hidden="true"></a>                  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;F&quot;</span>, </span>
+<span id="cb801-15"><a href="shiny-interactive-web-apps-in-r.html#cb801-15" aria-hidden="true"></a>                              <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;M&quot;</span>, </span>
+<span id="cb801-16"><a href="shiny-interactive-web-apps-in-r.html#cb801-16" aria-hidden="true"></a>                              <span class="st">&quot;Both&quot;</span> =<span class="st"> &quot;B&quot;</span>))</span>
+<span id="cb801-17"><a href="shiny-interactive-web-apps-in-r.html#cb801-17" aria-hidden="true"></a>    ),</span>
+<span id="cb801-18"><a href="shiny-interactive-web-apps-in-r.html#cb801-18" aria-hidden="true"></a>    <span class="kw">mainPanel</span>(<span class="st">&quot;our output will appear here&quot;</span>)</span>
+<span id="cb801-19"><a href="shiny-interactive-web-apps-in-r.html#cb801-19" aria-hidden="true"></a>  )</span>
+<span id="cb801-20"><a href="shiny-interactive-web-apps-in-r.html#cb801-20" aria-hidden="true"></a>)</span>
+<span id="cb801-21"><a href="shiny-interactive-web-apps-in-r.html#cb801-21" aria-hidden="true"></a></span>
+<span id="cb801-22"><a href="shiny-interactive-web-apps-in-r.html#cb801-22" aria-hidden="true"></a><span class="co"># Define server logic</span></span>
+<span id="cb801-23"><a href="shiny-interactive-web-apps-in-r.html#cb801-23" aria-hidden="true"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb801-24"><a href="shiny-interactive-web-apps-in-r.html#cb801-24" aria-hidden="true"></a></span>
+<span id="cb801-25"><a href="shiny-interactive-web-apps-in-r.html#cb801-25" aria-hidden="true"></a>  output<span class="op">$</span>histogram &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb801-26"><a href="shiny-interactive-web-apps-in-r.html#cb801-26" aria-hidden="true"></a>    </span>
+<span id="cb801-27"><a href="shiny-interactive-web-apps-in-r.html#cb801-27" aria-hidden="true"></a>    <span class="cf">if</span>(input<span class="op">$</span>sexInput <span class="op">!=</span><span class="st"> &quot;B&quot;</span>){</span>
+<span id="cb801-28"><a href="shiny-interactive-web-apps-in-r.html#cb801-28" aria-hidden="true"></a>      subset.names.df &lt;-<span class="st"> </span><span class="kw">subset</span>(names.df, Sex <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>sexInput)</span>
+<span id="cb801-29"><a href="shiny-interactive-web-apps-in-r.html#cb801-29" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb801-30"><a href="shiny-interactive-web-apps-in-r.html#cb801-30" aria-hidden="true"></a>      subset.names.df &lt;-<span class="st"> </span>names.df</span>
+<span id="cb801-31"><a href="shiny-interactive-web-apps-in-r.html#cb801-31" aria-hidden="true"></a>    }</span>
+<span id="cb801-32"><a href="shiny-interactive-web-apps-in-r.html#cb801-32" aria-hidden="true"></a>    </span>
+<span id="cb801-33"><a href="shiny-interactive-web-apps-in-r.html#cb801-33" aria-hidden="true"></a>    ages &lt;-<span class="st"> </span>subset.names.df<span class="op">$</span>Age</span>
+<span id="cb801-34"><a href="shiny-interactive-web-apps-in-r.html#cb801-34" aria-hidden="true"></a>    </span>
+<span id="cb801-35"><a href="shiny-interactive-web-apps-in-r.html#cb801-35" aria-hidden="true"></a>    <span class="co"># draw the histogram with the specified 20 bins</span></span>
+<span id="cb801-36"><a href="shiny-interactive-web-apps-in-r.html#cb801-36" aria-hidden="true"></a>    <span class="kw">hist</span>(ages, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>, <span class="dt">border =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb801-37"><a href="shiny-interactive-web-apps-in-r.html#cb801-37" aria-hidden="true"></a>  })</span>
+<span id="cb801-38"><a href="shiny-interactive-web-apps-in-r.html#cb801-38" aria-hidden="true"></a></span>
+<span id="cb801-39"><a href="shiny-interactive-web-apps-in-r.html#cb801-39" aria-hidden="true"></a>}</span>
+<span id="cb801-40"><a href="shiny-interactive-web-apps-in-r.html#cb801-40" aria-hidden="true"></a></span>
+<span id="cb801-41"><a href="shiny-interactive-web-apps-in-r.html#cb801-41" aria-hidden="true"></a><span class="co"># Create Shiny app</span></span>
+<span id="cb801-42"><a href="shiny-interactive-web-apps-in-r.html#cb801-42" aria-hidden="true"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 <p>Update your <code>app.R</code> server logic function to match the code above. Rerun the application. Note the appearance of the app doesn’t change because we have not updated the UI portion with the resulting histogram.</p>
 </div>
-<div id="interactive-user-interface" class="section level3" number="9.3.2">
-<h3><span class="header-section-number">9.3.2</span> Interactive User Interface</h3>
+<div id="interactive-user-interface" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Interactive User Interface<a href="shiny-interactive-web-apps-in-r.html#interactive-user-interface" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now we update the UI part of <code>app.R</code> to make the app interactive. In the “version 4” code below, the <code>plotOutput("histogram")</code> function in <code>ui</code> accesses the <code>histogram</code> component of the <code>output</code> list and plots it in the main panel. Copy the code below and rerun the application. You have now created your first Shiny app!</p>
-<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="shiny-interactive-web-apps-in-r.html#cb800-1"></a><span class="co"># app.R version 4</span></span>
-<span id="cb800-2"><a href="shiny-interactive-web-apps-in-r.html#cb800-2"></a></span>
-<span id="cb800-3"><a href="shiny-interactive-web-apps-in-r.html#cb800-3"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb800-4"><a href="shiny-interactive-web-apps-in-r.html#cb800-4"></a></span>
-<span id="cb800-5"><a href="shiny-interactive-web-apps-in-r.html#cb800-5"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
-<span id="cb800-6"><a href="shiny-interactive-web-apps-in-r.html#cb800-6"></a></span>
-<span id="cb800-7"><a href="shiny-interactive-web-apps-in-r.html#cb800-7"></a><span class="co"># Define UI</span></span>
-<span id="cb800-8"><a href="shiny-interactive-web-apps-in-r.html#cb800-8"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb800-9"><a href="shiny-interactive-web-apps-in-r.html#cb800-9"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Age Analysis&quot;</span>),</span>
-<span id="cb800-10"><a href="shiny-interactive-web-apps-in-r.html#cb800-10"></a>  <span class="kw">sidebarLayout</span>(</span>
-<span id="cb800-11"><a href="shiny-interactive-web-apps-in-r.html#cb800-11"></a>    <span class="kw">sidebarPanel</span>(</span>
-<span id="cb800-12"><a href="shiny-interactive-web-apps-in-r.html#cb800-12"></a>      <span class="co"># Dropdown selection for Male/Female</span></span>
-<span id="cb800-13"><a href="shiny-interactive-web-apps-in-r.html#cb800-13"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;sexInput&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Sex:&quot;</span>,</span>
-<span id="cb800-14"><a href="shiny-interactive-web-apps-in-r.html#cb800-14"></a>                  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;F&quot;</span>, </span>
-<span id="cb800-15"><a href="shiny-interactive-web-apps-in-r.html#cb800-15"></a>                              <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;M&quot;</span>, </span>
-<span id="cb800-16"><a href="shiny-interactive-web-apps-in-r.html#cb800-16"></a>                              <span class="st">&quot;Both&quot;</span> =<span class="st"> &quot;B&quot;</span>))</span>
-<span id="cb800-17"><a href="shiny-interactive-web-apps-in-r.html#cb800-17"></a>    ),</span>
-<span id="cb800-18"><a href="shiny-interactive-web-apps-in-r.html#cb800-18"></a>    <span class="kw">mainPanel</span>(<span class="kw">plotOutput</span>(<span class="st">&quot;histogram&quot;</span>))</span>
-<span id="cb800-19"><a href="shiny-interactive-web-apps-in-r.html#cb800-19"></a>  )</span>
-<span id="cb800-20"><a href="shiny-interactive-web-apps-in-r.html#cb800-20"></a>)</span>
-<span id="cb800-21"><a href="shiny-interactive-web-apps-in-r.html#cb800-21"></a></span>
-<span id="cb800-22"><a href="shiny-interactive-web-apps-in-r.html#cb800-22"></a><span class="co"># Define server logic</span></span>
-<span id="cb800-23"><a href="shiny-interactive-web-apps-in-r.html#cb800-23"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
-<span id="cb800-24"><a href="shiny-interactive-web-apps-in-r.html#cb800-24"></a></span>
-<span id="cb800-25"><a href="shiny-interactive-web-apps-in-r.html#cb800-25"></a>  output<span class="op">$</span>histogram &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
-<span id="cb800-26"><a href="shiny-interactive-web-apps-in-r.html#cb800-26"></a></span>
-<span id="cb800-27"><a href="shiny-interactive-web-apps-in-r.html#cb800-27"></a>    <span class="cf">if</span>(input<span class="op">$</span>sexInput <span class="op">!=</span><span class="st"> &quot;B&quot;</span>){</span>
-<span id="cb800-28"><a href="shiny-interactive-web-apps-in-r.html#cb800-28"></a>      subset.names.df &lt;-<span class="st"> </span><span class="kw">subset</span>(names.df, Sex <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>sexInput)</span>
-<span id="cb800-29"><a href="shiny-interactive-web-apps-in-r.html#cb800-29"></a>    } <span class="cf">else</span> {</span>
-<span id="cb800-30"><a href="shiny-interactive-web-apps-in-r.html#cb800-30"></a>      subset.names.df &lt;-<span class="st"> </span>names.df</span>
-<span id="cb800-31"><a href="shiny-interactive-web-apps-in-r.html#cb800-31"></a>    }</span>
-<span id="cb800-32"><a href="shiny-interactive-web-apps-in-r.html#cb800-32"></a>    </span>
-<span id="cb800-33"><a href="shiny-interactive-web-apps-in-r.html#cb800-33"></a>    ages &lt;-<span class="st"> </span>subset.names.df<span class="op">$</span>Age</span>
-<span id="cb800-34"><a href="shiny-interactive-web-apps-in-r.html#cb800-34"></a>    </span>
-<span id="cb800-35"><a href="shiny-interactive-web-apps-in-r.html#cb800-35"></a>    <span class="co"># draw the histogram with the specified 20 bins</span></span>
-<span id="cb800-36"><a href="shiny-interactive-web-apps-in-r.html#cb800-36"></a>    <span class="kw">hist</span>(ages, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>, <span class="dt">border =</span> <span class="st">&#39;white&#39;</span>)</span>
-<span id="cb800-37"><a href="shiny-interactive-web-apps-in-r.html#cb800-37"></a>  })</span>
-<span id="cb800-38"><a href="shiny-interactive-web-apps-in-r.html#cb800-38"></a></span>
-<span id="cb800-39"><a href="shiny-interactive-web-apps-in-r.html#cb800-39"></a>}</span>
-<span id="cb800-40"><a href="shiny-interactive-web-apps-in-r.html#cb800-40"></a></span>
-<span id="cb800-41"><a href="shiny-interactive-web-apps-in-r.html#cb800-41"></a><span class="co"># Create Shiny app</span></span>
-<span id="cb800-42"><a href="shiny-interactive-web-apps-in-r.html#cb800-42"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="shiny-interactive-web-apps-in-r.html#cb802-1" aria-hidden="true"></a><span class="co"># app.R version 4</span></span>
+<span id="cb802-2"><a href="shiny-interactive-web-apps-in-r.html#cb802-2" aria-hidden="true"></a></span>
+<span id="cb802-3"><a href="shiny-interactive-web-apps-in-r.html#cb802-3" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb802-4"><a href="shiny-interactive-web-apps-in-r.html#cb802-4" aria-hidden="true"></a></span>
+<span id="cb802-5"><a href="shiny-interactive-web-apps-in-r.html#cb802-5" aria-hidden="true"></a>names.df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://www.finley-lab.com/files/data/name_list.csv&quot;</span>)</span>
+<span id="cb802-6"><a href="shiny-interactive-web-apps-in-r.html#cb802-6" aria-hidden="true"></a></span>
+<span id="cb802-7"><a href="shiny-interactive-web-apps-in-r.html#cb802-7" aria-hidden="true"></a><span class="co"># Define UI</span></span>
+<span id="cb802-8"><a href="shiny-interactive-web-apps-in-r.html#cb802-8" aria-hidden="true"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb802-9"><a href="shiny-interactive-web-apps-in-r.html#cb802-9" aria-hidden="true"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Random Names Age Analysis&quot;</span>),</span>
+<span id="cb802-10"><a href="shiny-interactive-web-apps-in-r.html#cb802-10" aria-hidden="true"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb802-11"><a href="shiny-interactive-web-apps-in-r.html#cb802-11" aria-hidden="true"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb802-12"><a href="shiny-interactive-web-apps-in-r.html#cb802-12" aria-hidden="true"></a>      <span class="co"># Dropdown selection for Male/Female</span></span>
+<span id="cb802-13"><a href="shiny-interactive-web-apps-in-r.html#cb802-13" aria-hidden="true"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;sexInput&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Sex:&quot;</span>,</span>
+<span id="cb802-14"><a href="shiny-interactive-web-apps-in-r.html#cb802-14" aria-hidden="true"></a>                  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Female&quot;</span> =<span class="st"> &quot;F&quot;</span>, </span>
+<span id="cb802-15"><a href="shiny-interactive-web-apps-in-r.html#cb802-15" aria-hidden="true"></a>                              <span class="st">&quot;Male&quot;</span> =<span class="st"> &quot;M&quot;</span>, </span>
+<span id="cb802-16"><a href="shiny-interactive-web-apps-in-r.html#cb802-16" aria-hidden="true"></a>                              <span class="st">&quot;Both&quot;</span> =<span class="st"> &quot;B&quot;</span>))</span>
+<span id="cb802-17"><a href="shiny-interactive-web-apps-in-r.html#cb802-17" aria-hidden="true"></a>    ),</span>
+<span id="cb802-18"><a href="shiny-interactive-web-apps-in-r.html#cb802-18" aria-hidden="true"></a>    <span class="kw">mainPanel</span>(<span class="kw">plotOutput</span>(<span class="st">&quot;histogram&quot;</span>))</span>
+<span id="cb802-19"><a href="shiny-interactive-web-apps-in-r.html#cb802-19" aria-hidden="true"></a>  )</span>
+<span id="cb802-20"><a href="shiny-interactive-web-apps-in-r.html#cb802-20" aria-hidden="true"></a>)</span>
+<span id="cb802-21"><a href="shiny-interactive-web-apps-in-r.html#cb802-21" aria-hidden="true"></a></span>
+<span id="cb802-22"><a href="shiny-interactive-web-apps-in-r.html#cb802-22" aria-hidden="true"></a><span class="co"># Define server logic</span></span>
+<span id="cb802-23"><a href="shiny-interactive-web-apps-in-r.html#cb802-23" aria-hidden="true"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb802-24"><a href="shiny-interactive-web-apps-in-r.html#cb802-24" aria-hidden="true"></a></span>
+<span id="cb802-25"><a href="shiny-interactive-web-apps-in-r.html#cb802-25" aria-hidden="true"></a>  output<span class="op">$</span>histogram &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb802-26"><a href="shiny-interactive-web-apps-in-r.html#cb802-26" aria-hidden="true"></a></span>
+<span id="cb802-27"><a href="shiny-interactive-web-apps-in-r.html#cb802-27" aria-hidden="true"></a>    <span class="cf">if</span>(input<span class="op">$</span>sexInput <span class="op">!=</span><span class="st"> &quot;B&quot;</span>){</span>
+<span id="cb802-28"><a href="shiny-interactive-web-apps-in-r.html#cb802-28" aria-hidden="true"></a>      subset.names.df &lt;-<span class="st"> </span><span class="kw">subset</span>(names.df, Sex <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>sexInput)</span>
+<span id="cb802-29"><a href="shiny-interactive-web-apps-in-r.html#cb802-29" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb802-30"><a href="shiny-interactive-web-apps-in-r.html#cb802-30" aria-hidden="true"></a>      subset.names.df &lt;-<span class="st"> </span>names.df</span>
+<span id="cb802-31"><a href="shiny-interactive-web-apps-in-r.html#cb802-31" aria-hidden="true"></a>    }</span>
+<span id="cb802-32"><a href="shiny-interactive-web-apps-in-r.html#cb802-32" aria-hidden="true"></a>    </span>
+<span id="cb802-33"><a href="shiny-interactive-web-apps-in-r.html#cb802-33" aria-hidden="true"></a>    ages &lt;-<span class="st"> </span>subset.names.df<span class="op">$</span>Age</span>
+<span id="cb802-34"><a href="shiny-interactive-web-apps-in-r.html#cb802-34" aria-hidden="true"></a>    </span>
+<span id="cb802-35"><a href="shiny-interactive-web-apps-in-r.html#cb802-35" aria-hidden="true"></a>    <span class="co"># draw the histogram with the specified 20 bins</span></span>
+<span id="cb802-36"><a href="shiny-interactive-web-apps-in-r.html#cb802-36" aria-hidden="true"></a>    <span class="kw">hist</span>(ages, <span class="dt">col =</span> <span class="st">&#39;darkgray&#39;</span>, <span class="dt">border =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb802-37"><a href="shiny-interactive-web-apps-in-r.html#cb802-37" aria-hidden="true"></a>  })</span>
+<span id="cb802-38"><a href="shiny-interactive-web-apps-in-r.html#cb802-38" aria-hidden="true"></a></span>
+<span id="cb802-39"><a href="shiny-interactive-web-apps-in-r.html#cb802-39" aria-hidden="true"></a>}</span>
+<span id="cb802-40"><a href="shiny-interactive-web-apps-in-r.html#cb802-40" aria-hidden="true"></a></span>
+<span id="cb802-41"><a href="shiny-interactive-web-apps-in-r.html#cb802-41" aria-hidden="true"></a><span class="co"># Create Shiny app</span></span>
+<span id="cb802-42"><a href="shiny-interactive-web-apps-in-r.html#cb802-42" aria-hidden="true"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 </div>
 </div>
-<div id="more-advanced-shiny-app-michigan-campgrounds" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> More Advanced Shiny App: Michigan Campgrounds</h2>
+<div id="more-advanced-shiny-app-michigan-campgrounds" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> More Advanced Shiny App: Michigan Campgrounds<a href="shiny-interactive-web-apps-in-r.html#more-advanced-shiny-app-michigan-campgrounds" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Michigan Department of Natural Resources (DNR) has made substantial investments in open-sourcing its data via the <a href="http://gis-midnr.opendata.arcgis.com/datasets/">Michigan DNR’s open data</a> initiative. We’ll use some of these data to motivate our next Shiny application. Specifically we’ll work with the DNR State Park Campgrounds data available <a href="https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv">here</a> as a CSV file.</p>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="shiny-interactive-web-apps-in-r.html#cb801-1"></a>u &lt;-<span class="st"> &quot;https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv&quot;</span></span>
-<span id="cb801-2"><a href="shiny-interactive-web-apps-in-r.html#cb801-2"></a>sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb801-3"><a href="shiny-interactive-web-apps-in-r.html#cb801-3"></a><span class="kw">str</span>(sites)</span></code></pre></div>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="shiny-interactive-web-apps-in-r.html#cb803-1" aria-hidden="true"></a>u &lt;-<span class="st"> &quot;https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv&quot;</span></span>
+<span id="cb803-2"><a href="shiny-interactive-web-apps-in-r.html#cb803-2" aria-hidden="true"></a>sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(u, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb803-3"><a href="shiny-interactive-web-apps-in-r.html#cb803-3" aria-hidden="true"></a><span class="kw">str</span>(sites)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    151 obs. of  19 variables:
 ##  $ X          : num  -84.4 -84.4 -83.8 -83.8 -83.8 ...
 ##  $ Y          : num  42.9 42.9 42.5 42.5 42.5 ...
@@ -748,103 +747,103 @@ FIGURE 9.2: Your first Shiny app
 ##  $ Lat        : num  42.9 42.9 42.5 42.5 42.5 ...
 ##  $ Long       : num  -84.4 -84.4 -83.8 -83.8 -83.8 ...</code></pre>
 <p>We see that Michigan has 151 state park campgrounds, and our data frame contains 19 variables. Let’s create a Shiny app UI in which the user selects desired campground specifications, and the app displays the list of resulting campgrounds and their location on a map. The complete Shiny <code>app.R</code> is shown below. Create a new directory called <code>CampsitesMI</code>, and copy and paste the following code into a script file called <code>app.R</code>. Start out by running the application to see how it works. Examine the example code and how it relates to the application that you are running. The following sections detail each of the app’s components.</p>
-<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="shiny-interactive-web-apps-in-r.html#cb803-1"></a><span class="co"># app.R</span></span>
-<span id="cb803-2"><a href="shiny-interactive-web-apps-in-r.html#cb803-2"></a><span class="co"># CampsitesMI</span></span>
-<span id="cb803-3"><a href="shiny-interactive-web-apps-in-r.html#cb803-3"></a></span>
-<span id="cb803-4"><a href="shiny-interactive-web-apps-in-r.html#cb803-4"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb803-5"><a href="shiny-interactive-web-apps-in-r.html#cb803-5"></a><span class="kw">library</span>(maps)</span>
-<span id="cb803-6"><a href="shiny-interactive-web-apps-in-r.html#cb803-6"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb803-7"><a href="shiny-interactive-web-apps-in-r.html#cb803-7"></a></span>
-<span id="cb803-8"><a href="shiny-interactive-web-apps-in-r.html#cb803-8"></a>sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(</span>
-<span id="cb803-9"><a href="shiny-interactive-web-apps-in-r.html#cb803-9"></a> <span class="st">&quot;https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv&quot;</span>, </span>
-<span id="cb803-10"><a href="shiny-interactive-web-apps-in-r.html#cb803-10"></a>  <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb803-11"><a href="shiny-interactive-web-apps-in-r.html#cb803-11"></a></span>
-<span id="cb803-12"><a href="shiny-interactive-web-apps-in-r.html#cb803-12"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb803-13"><a href="shiny-interactive-web-apps-in-r.html#cb803-13"></a></span>
-<span id="cb803-14"><a href="shiny-interactive-web-apps-in-r.html#cb803-14"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Michigan Campsite Search&quot;</span>),</span>
-<span id="cb803-15"><a href="shiny-interactive-web-apps-in-r.html#cb803-15"></a></span>
-<span id="cb803-16"><a href="shiny-interactive-web-apps-in-r.html#cb803-16"></a>  <span class="kw">sidebarLayout</span>(</span>
-<span id="cb803-17"><a href="shiny-interactive-web-apps-in-r.html#cb803-17"></a>    <span class="kw">sidebarPanel</span>(</span>
-<span id="cb803-18"><a href="shiny-interactive-web-apps-in-r.html#cb803-18"></a>      <span class="kw">sliderInput</span>(<span class="st">&quot;rangeNum&quot;</span>,</span>
-<span id="cb803-19"><a href="shiny-interactive-web-apps-in-r.html#cb803-19"></a>                  <span class="dt">label =</span> <span class="st">&quot;Number of campsites:&quot;</span>,</span>
-<span id="cb803-20"><a href="shiny-interactive-web-apps-in-r.html#cb803-20"></a>                  <span class="dt">min =</span> <span class="dv">0</span>,</span>
-<span id="cb803-21"><a href="shiny-interactive-web-apps-in-r.html#cb803-21"></a>                  <span class="dt">max =</span> <span class="dv">420</span>,</span>
-<span id="cb803-22"><a href="shiny-interactive-web-apps-in-r.html#cb803-22"></a>                  <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">420</span>),</span>
-<span id="cb803-23"><a href="shiny-interactive-web-apps-in-r.html#cb803-23"></a>                  <span class="dt">step=</span><span class="dv">20</span></span>
-<span id="cb803-24"><a href="shiny-interactive-web-apps-in-r.html#cb803-24"></a>      ),</span>
-<span id="cb803-25"><a href="shiny-interactive-web-apps-in-r.html#cb803-25"></a></span>
-<span id="cb803-26"><a href="shiny-interactive-web-apps-in-r.html#cb803-26"></a>      <span class="kw">selectInput</span>(<span class="st">&quot;type&quot;</span>,</span>
-<span id="cb803-27"><a href="shiny-interactive-web-apps-in-r.html#cb803-27"></a>                  <span class="dt">label =</span> <span class="st">&quot;Type of campsites:&quot;</span>,</span>
-<span id="cb803-28"><a href="shiny-interactive-web-apps-in-r.html#cb803-28"></a>                  <span class="kw">levels</span>(sites<span class="op">$</span>Camp_type)</span>
-<span id="cb803-29"><a href="shiny-interactive-web-apps-in-r.html#cb803-29"></a>      ),</span>
-<span id="cb803-30"><a href="shiny-interactive-web-apps-in-r.html#cb803-30"></a></span>
-<span id="cb803-31"><a href="shiny-interactive-web-apps-in-r.html#cb803-31"></a>      <span class="kw">checkboxInput</span>(<span class="st">&quot;ada&quot;</span>,</span>
-<span id="cb803-32"><a href="shiny-interactive-web-apps-in-r.html#cb803-32"></a>                    <span class="dt">label =</span> <span class="st">&quot;ADA Sites Available:&quot;</span>,</span>
-<span id="cb803-33"><a href="shiny-interactive-web-apps-in-r.html#cb803-33"></a>                    <span class="ot">FALSE</span>)</span>
-<span id="cb803-34"><a href="shiny-interactive-web-apps-in-r.html#cb803-34"></a>    ),</span>
-<span id="cb803-35"><a href="shiny-interactive-web-apps-in-r.html#cb803-35"></a></span>
-<span id="cb803-36"><a href="shiny-interactive-web-apps-in-r.html#cb803-36"></a>    <span class="kw">mainPanel</span>(</span>
-<span id="cb803-37"><a href="shiny-interactive-web-apps-in-r.html#cb803-37"></a>      <span class="kw">plotOutput</span>(<span class="st">&quot;plot1&quot;</span>),</span>
-<span id="cb803-38"><a href="shiny-interactive-web-apps-in-r.html#cb803-38"></a>      <span class="kw">br</span>(),</span>
-<span id="cb803-39"><a href="shiny-interactive-web-apps-in-r.html#cb803-39"></a>      <span class="kw">htmlOutput</span>(<span class="st">&quot;text1&quot;</span>)</span>
-<span id="cb803-40"><a href="shiny-interactive-web-apps-in-r.html#cb803-40"></a>    )</span>
-<span id="cb803-41"><a href="shiny-interactive-web-apps-in-r.html#cb803-41"></a>  )</span>
-<span id="cb803-42"><a href="shiny-interactive-web-apps-in-r.html#cb803-42"></a>)</span>
-<span id="cb803-43"><a href="shiny-interactive-web-apps-in-r.html#cb803-43"></a></span>
-<span id="cb803-44"><a href="shiny-interactive-web-apps-in-r.html#cb803-44"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
-<span id="cb803-45"><a href="shiny-interactive-web-apps-in-r.html#cb803-45"></a></span>
-<span id="cb803-46"><a href="shiny-interactive-web-apps-in-r.html#cb803-46"></a>  output<span class="op">$</span>text1 &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
-<span id="cb803-47"><a href="shiny-interactive-web-apps-in-r.html#cb803-47"></a></span>
-<span id="cb803-48"><a href="shiny-interactive-web-apps-in-r.html#cb803-48"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
-<span id="cb803-49"><a href="shiny-interactive-web-apps-in-r.html#cb803-49"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
-<span id="cb803-50"><a href="shiny-interactive-web-apps-in-r.html#cb803-50"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
-<span id="cb803-51"><a href="shiny-interactive-web-apps-in-r.html#cb803-51"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
-<span id="cb803-52"><a href="shiny-interactive-web-apps-in-r.html#cb803-52"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
-<span id="cb803-53"><a href="shiny-interactive-web-apps-in-r.html#cb803-53"></a></span>
-<span id="cb803-54"><a href="shiny-interactive-web-apps-in-r.html#cb803-54"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
-<span id="cb803-55"><a href="shiny-interactive-web-apps-in-r.html#cb803-55"></a>      outStr &lt;-<span class="st"> &quot;&lt;ul&gt;&quot;</span></span>
-<span id="cb803-56"><a href="shiny-interactive-web-apps-in-r.html#cb803-56"></a>      <span class="cf">for</span>(site <span class="cf">in</span> sites1<span class="op">$</span>FACILITY){</span>
-<span id="cb803-57"><a href="shiny-interactive-web-apps-in-r.html#cb803-57"></a>        outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;li&gt;&quot;</span>,site,<span class="st">&quot;&lt;/li&gt;&quot;</span>)</span>
-<span id="cb803-58"><a href="shiny-interactive-web-apps-in-r.html#cb803-58"></a>      }</span>
-<span id="cb803-59"><a href="shiny-interactive-web-apps-in-r.html#cb803-59"></a>      outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;/ul&gt;&quot;</span>)</span>
-<span id="cb803-60"><a href="shiny-interactive-web-apps-in-r.html#cb803-60"></a>    } <span class="cf">else</span> {</span>
-<span id="cb803-61"><a href="shiny-interactive-web-apps-in-r.html#cb803-61"></a>      outStr &lt;-<span class="st"> &quot;&quot;</span></span>
-<span id="cb803-62"><a href="shiny-interactive-web-apps-in-r.html#cb803-62"></a>    }</span>
-<span id="cb803-63"><a href="shiny-interactive-web-apps-in-r.html#cb803-63"></a></span>
-<span id="cb803-64"><a href="shiny-interactive-web-apps-in-r.html#cb803-64"></a>    <span class="kw">paste</span>(<span class="st">&quot;&lt;p&gt;There are&quot;</span>,</span>
-<span id="cb803-65"><a href="shiny-interactive-web-apps-in-r.html#cb803-65"></a>          <span class="kw">nrow</span>(sites1),</span>
-<span id="cb803-66"><a href="shiny-interactive-web-apps-in-r.html#cb803-66"></a>          <span class="st">&quot;campgrounds that match your search:&lt;/p&gt;&quot;</span>,</span>
-<span id="cb803-67"><a href="shiny-interactive-web-apps-in-r.html#cb803-67"></a>          outStr)</span>
-<span id="cb803-68"><a href="shiny-interactive-web-apps-in-r.html#cb803-68"></a></span>
-<span id="cb803-69"><a href="shiny-interactive-web-apps-in-r.html#cb803-69"></a>  })</span>
-<span id="cb803-70"><a href="shiny-interactive-web-apps-in-r.html#cb803-70"></a></span>
-<span id="cb803-71"><a href="shiny-interactive-web-apps-in-r.html#cb803-71"></a>  output<span class="op">$</span>plot1 &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
-<span id="cb803-72"><a href="shiny-interactive-web-apps-in-r.html#cb803-72"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
-<span id="cb803-73"><a href="shiny-interactive-web-apps-in-r.html#cb803-73"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
-<span id="cb803-74"><a href="shiny-interactive-web-apps-in-r.html#cb803-74"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
-<span id="cb803-75"><a href="shiny-interactive-web-apps-in-r.html#cb803-75"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
-<span id="cb803-76"><a href="shiny-interactive-web-apps-in-r.html#cb803-76"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
-<span id="cb803-77"><a href="shiny-interactive-web-apps-in-r.html#cb803-77"></a></span>
-<span id="cb803-78"><a href="shiny-interactive-web-apps-in-r.html#cb803-78"></a>    miMap &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>, <span class="dt">region =</span> <span class="st">&quot;michigan&quot;</span>)</span>
-<span id="cb803-79"><a href="shiny-interactive-web-apps-in-r.html#cb803-79"></a>    plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb803-80"><a href="shiny-interactive-web-apps-in-r.html#cb803-80"></a><span class="st">      </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>miMap, <span class="kw">aes</span>(<span class="dt">x=</span>long,<span class="dt">y=</span>lat,<span class="dt">group=</span>group), </span>
-<span id="cb803-81"><a href="shiny-interactive-web-apps-in-r.html#cb803-81"></a>           <span class="dt">colour=</span><span class="st">&quot;black&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;gray&quot;</span>) <span class="op">+</span></span>
-<span id="cb803-82"><a href="shiny-interactive-web-apps-in-r.html#cb803-82"></a><span class="st">      </span><span class="kw">coord_fixed</span>(<span class="dt">ratio =</span> <span class="dv">1</span>)</span>
-<span id="cb803-83"><a href="shiny-interactive-web-apps-in-r.html#cb803-83"></a></span>
-<span id="cb803-84"><a href="shiny-interactive-web-apps-in-r.html#cb803-84"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
-<span id="cb803-85"><a href="shiny-interactive-web-apps-in-r.html#cb803-85"></a>      plt &lt;-<span class="st"> </span>plt <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> sites1,<span class="kw">aes</span>(<span class="dt">x=</span>Long,<span class="dt">y=</span>Lat), <span class="dt">colour=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb803-86"><a href="shiny-interactive-web-apps-in-r.html#cb803-86"></a>    }</span>
-<span id="cb803-87"><a href="shiny-interactive-web-apps-in-r.html#cb803-87"></a></span>
-<span id="cb803-88"><a href="shiny-interactive-web-apps-in-r.html#cb803-88"></a>    <span class="kw">plot</span>(plt)</span>
-<span id="cb803-89"><a href="shiny-interactive-web-apps-in-r.html#cb803-89"></a></span>
-<span id="cb803-90"><a href="shiny-interactive-web-apps-in-r.html#cb803-90"></a>  })</span>
-<span id="cb803-91"><a href="shiny-interactive-web-apps-in-r.html#cb803-91"></a></span>
-<span id="cb803-92"><a href="shiny-interactive-web-apps-in-r.html#cb803-92"></a>}</span>
-<span id="cb803-93"><a href="shiny-interactive-web-apps-in-r.html#cb803-93"></a></span>
-<span id="cb803-94"><a href="shiny-interactive-web-apps-in-r.html#cb803-94"></a><span class="co"># Create Shiny app ----</span></span>
-<span id="cb803-95"><a href="shiny-interactive-web-apps-in-r.html#cb803-95"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
-<div id="michigan-campgrounds-ui" class="section level3" number="9.4.1">
-<h3><span class="header-section-number">9.4.1</span> Michigan Campgrounds UI</h3>
+<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="shiny-interactive-web-apps-in-r.html#cb805-1" aria-hidden="true"></a><span class="co"># app.R</span></span>
+<span id="cb805-2"><a href="shiny-interactive-web-apps-in-r.html#cb805-2" aria-hidden="true"></a><span class="co"># CampsitesMI</span></span>
+<span id="cb805-3"><a href="shiny-interactive-web-apps-in-r.html#cb805-3" aria-hidden="true"></a></span>
+<span id="cb805-4"><a href="shiny-interactive-web-apps-in-r.html#cb805-4" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb805-5"><a href="shiny-interactive-web-apps-in-r.html#cb805-5" aria-hidden="true"></a><span class="kw">library</span>(maps)</span>
+<span id="cb805-6"><a href="shiny-interactive-web-apps-in-r.html#cb805-6" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb805-7"><a href="shiny-interactive-web-apps-in-r.html#cb805-7" aria-hidden="true"></a></span>
+<span id="cb805-8"><a href="shiny-interactive-web-apps-in-r.html#cb805-8" aria-hidden="true"></a>sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(</span>
+<span id="cb805-9"><a href="shiny-interactive-web-apps-in-r.html#cb805-9" aria-hidden="true"></a> <span class="st">&quot;https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv&quot;</span>, </span>
+<span id="cb805-10"><a href="shiny-interactive-web-apps-in-r.html#cb805-10" aria-hidden="true"></a>  <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb805-11"><a href="shiny-interactive-web-apps-in-r.html#cb805-11" aria-hidden="true"></a></span>
+<span id="cb805-12"><a href="shiny-interactive-web-apps-in-r.html#cb805-12" aria-hidden="true"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb805-13"><a href="shiny-interactive-web-apps-in-r.html#cb805-13" aria-hidden="true"></a></span>
+<span id="cb805-14"><a href="shiny-interactive-web-apps-in-r.html#cb805-14" aria-hidden="true"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Michigan Campsite Search&quot;</span>),</span>
+<span id="cb805-15"><a href="shiny-interactive-web-apps-in-r.html#cb805-15" aria-hidden="true"></a></span>
+<span id="cb805-16"><a href="shiny-interactive-web-apps-in-r.html#cb805-16" aria-hidden="true"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb805-17"><a href="shiny-interactive-web-apps-in-r.html#cb805-17" aria-hidden="true"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb805-18"><a href="shiny-interactive-web-apps-in-r.html#cb805-18" aria-hidden="true"></a>      <span class="kw">sliderInput</span>(<span class="st">&quot;rangeNum&quot;</span>,</span>
+<span id="cb805-19"><a href="shiny-interactive-web-apps-in-r.html#cb805-19" aria-hidden="true"></a>                  <span class="dt">label =</span> <span class="st">&quot;Number of campsites:&quot;</span>,</span>
+<span id="cb805-20"><a href="shiny-interactive-web-apps-in-r.html#cb805-20" aria-hidden="true"></a>                  <span class="dt">min =</span> <span class="dv">0</span>,</span>
+<span id="cb805-21"><a href="shiny-interactive-web-apps-in-r.html#cb805-21" aria-hidden="true"></a>                  <span class="dt">max =</span> <span class="dv">420</span>,</span>
+<span id="cb805-22"><a href="shiny-interactive-web-apps-in-r.html#cb805-22" aria-hidden="true"></a>                  <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">420</span>),</span>
+<span id="cb805-23"><a href="shiny-interactive-web-apps-in-r.html#cb805-23" aria-hidden="true"></a>                  <span class="dt">step=</span><span class="dv">20</span></span>
+<span id="cb805-24"><a href="shiny-interactive-web-apps-in-r.html#cb805-24" aria-hidden="true"></a>      ),</span>
+<span id="cb805-25"><a href="shiny-interactive-web-apps-in-r.html#cb805-25" aria-hidden="true"></a></span>
+<span id="cb805-26"><a href="shiny-interactive-web-apps-in-r.html#cb805-26" aria-hidden="true"></a>      <span class="kw">selectInput</span>(<span class="st">&quot;type&quot;</span>,</span>
+<span id="cb805-27"><a href="shiny-interactive-web-apps-in-r.html#cb805-27" aria-hidden="true"></a>                  <span class="dt">label =</span> <span class="st">&quot;Type of campsites:&quot;</span>,</span>
+<span id="cb805-28"><a href="shiny-interactive-web-apps-in-r.html#cb805-28" aria-hidden="true"></a>                  <span class="kw">levels</span>(sites<span class="op">$</span>Camp_type)</span>
+<span id="cb805-29"><a href="shiny-interactive-web-apps-in-r.html#cb805-29" aria-hidden="true"></a>      ),</span>
+<span id="cb805-30"><a href="shiny-interactive-web-apps-in-r.html#cb805-30" aria-hidden="true"></a></span>
+<span id="cb805-31"><a href="shiny-interactive-web-apps-in-r.html#cb805-31" aria-hidden="true"></a>      <span class="kw">checkboxInput</span>(<span class="st">&quot;ada&quot;</span>,</span>
+<span id="cb805-32"><a href="shiny-interactive-web-apps-in-r.html#cb805-32" aria-hidden="true"></a>                    <span class="dt">label =</span> <span class="st">&quot;ADA Sites Available:&quot;</span>,</span>
+<span id="cb805-33"><a href="shiny-interactive-web-apps-in-r.html#cb805-33" aria-hidden="true"></a>                    <span class="ot">FALSE</span>)</span>
+<span id="cb805-34"><a href="shiny-interactive-web-apps-in-r.html#cb805-34" aria-hidden="true"></a>    ),</span>
+<span id="cb805-35"><a href="shiny-interactive-web-apps-in-r.html#cb805-35" aria-hidden="true"></a></span>
+<span id="cb805-36"><a href="shiny-interactive-web-apps-in-r.html#cb805-36" aria-hidden="true"></a>    <span class="kw">mainPanel</span>(</span>
+<span id="cb805-37"><a href="shiny-interactive-web-apps-in-r.html#cb805-37" aria-hidden="true"></a>      <span class="kw">plotOutput</span>(<span class="st">&quot;plot1&quot;</span>),</span>
+<span id="cb805-38"><a href="shiny-interactive-web-apps-in-r.html#cb805-38" aria-hidden="true"></a>      <span class="kw">br</span>(),</span>
+<span id="cb805-39"><a href="shiny-interactive-web-apps-in-r.html#cb805-39" aria-hidden="true"></a>      <span class="kw">htmlOutput</span>(<span class="st">&quot;text1&quot;</span>)</span>
+<span id="cb805-40"><a href="shiny-interactive-web-apps-in-r.html#cb805-40" aria-hidden="true"></a>    )</span>
+<span id="cb805-41"><a href="shiny-interactive-web-apps-in-r.html#cb805-41" aria-hidden="true"></a>  )</span>
+<span id="cb805-42"><a href="shiny-interactive-web-apps-in-r.html#cb805-42" aria-hidden="true"></a>)</span>
+<span id="cb805-43"><a href="shiny-interactive-web-apps-in-r.html#cb805-43" aria-hidden="true"></a></span>
+<span id="cb805-44"><a href="shiny-interactive-web-apps-in-r.html#cb805-44" aria-hidden="true"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb805-45"><a href="shiny-interactive-web-apps-in-r.html#cb805-45" aria-hidden="true"></a></span>
+<span id="cb805-46"><a href="shiny-interactive-web-apps-in-r.html#cb805-46" aria-hidden="true"></a>  output<span class="op">$</span>text1 &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
+<span id="cb805-47"><a href="shiny-interactive-web-apps-in-r.html#cb805-47" aria-hidden="true"></a></span>
+<span id="cb805-48"><a href="shiny-interactive-web-apps-in-r.html#cb805-48" aria-hidden="true"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
+<span id="cb805-49"><a href="shiny-interactive-web-apps-in-r.html#cb805-49" aria-hidden="true"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
+<span id="cb805-50"><a href="shiny-interactive-web-apps-in-r.html#cb805-50" aria-hidden="true"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
+<span id="cb805-51"><a href="shiny-interactive-web-apps-in-r.html#cb805-51" aria-hidden="true"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
+<span id="cb805-52"><a href="shiny-interactive-web-apps-in-r.html#cb805-52" aria-hidden="true"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
+<span id="cb805-53"><a href="shiny-interactive-web-apps-in-r.html#cb805-53" aria-hidden="true"></a></span>
+<span id="cb805-54"><a href="shiny-interactive-web-apps-in-r.html#cb805-54" aria-hidden="true"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
+<span id="cb805-55"><a href="shiny-interactive-web-apps-in-r.html#cb805-55" aria-hidden="true"></a>      outStr &lt;-<span class="st"> &quot;&lt;ul&gt;&quot;</span></span>
+<span id="cb805-56"><a href="shiny-interactive-web-apps-in-r.html#cb805-56" aria-hidden="true"></a>      <span class="cf">for</span>(site <span class="cf">in</span> sites1<span class="op">$</span>FACILITY){</span>
+<span id="cb805-57"><a href="shiny-interactive-web-apps-in-r.html#cb805-57" aria-hidden="true"></a>        outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;li&gt;&quot;</span>,site,<span class="st">&quot;&lt;/li&gt;&quot;</span>)</span>
+<span id="cb805-58"><a href="shiny-interactive-web-apps-in-r.html#cb805-58" aria-hidden="true"></a>      }</span>
+<span id="cb805-59"><a href="shiny-interactive-web-apps-in-r.html#cb805-59" aria-hidden="true"></a>      outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;/ul&gt;&quot;</span>)</span>
+<span id="cb805-60"><a href="shiny-interactive-web-apps-in-r.html#cb805-60" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb805-61"><a href="shiny-interactive-web-apps-in-r.html#cb805-61" aria-hidden="true"></a>      outStr &lt;-<span class="st"> &quot;&quot;</span></span>
+<span id="cb805-62"><a href="shiny-interactive-web-apps-in-r.html#cb805-62" aria-hidden="true"></a>    }</span>
+<span id="cb805-63"><a href="shiny-interactive-web-apps-in-r.html#cb805-63" aria-hidden="true"></a></span>
+<span id="cb805-64"><a href="shiny-interactive-web-apps-in-r.html#cb805-64" aria-hidden="true"></a>    <span class="kw">paste</span>(<span class="st">&quot;&lt;p&gt;There are&quot;</span>,</span>
+<span id="cb805-65"><a href="shiny-interactive-web-apps-in-r.html#cb805-65" aria-hidden="true"></a>          <span class="kw">nrow</span>(sites1),</span>
+<span id="cb805-66"><a href="shiny-interactive-web-apps-in-r.html#cb805-66" aria-hidden="true"></a>          <span class="st">&quot;campgrounds that match your search:&lt;/p&gt;&quot;</span>,</span>
+<span id="cb805-67"><a href="shiny-interactive-web-apps-in-r.html#cb805-67" aria-hidden="true"></a>          outStr)</span>
+<span id="cb805-68"><a href="shiny-interactive-web-apps-in-r.html#cb805-68" aria-hidden="true"></a></span>
+<span id="cb805-69"><a href="shiny-interactive-web-apps-in-r.html#cb805-69" aria-hidden="true"></a>  })</span>
+<span id="cb805-70"><a href="shiny-interactive-web-apps-in-r.html#cb805-70" aria-hidden="true"></a></span>
+<span id="cb805-71"><a href="shiny-interactive-web-apps-in-r.html#cb805-71" aria-hidden="true"></a>  output<span class="op">$</span>plot1 &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({</span>
+<span id="cb805-72"><a href="shiny-interactive-web-apps-in-r.html#cb805-72" aria-hidden="true"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
+<span id="cb805-73"><a href="shiny-interactive-web-apps-in-r.html#cb805-73" aria-hidden="true"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
+<span id="cb805-74"><a href="shiny-interactive-web-apps-in-r.html#cb805-74" aria-hidden="true"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
+<span id="cb805-75"><a href="shiny-interactive-web-apps-in-r.html#cb805-75" aria-hidden="true"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
+<span id="cb805-76"><a href="shiny-interactive-web-apps-in-r.html#cb805-76" aria-hidden="true"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
+<span id="cb805-77"><a href="shiny-interactive-web-apps-in-r.html#cb805-77" aria-hidden="true"></a></span>
+<span id="cb805-78"><a href="shiny-interactive-web-apps-in-r.html#cb805-78" aria-hidden="true"></a>    miMap &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>, <span class="dt">region =</span> <span class="st">&quot;michigan&quot;</span>)</span>
+<span id="cb805-79"><a href="shiny-interactive-web-apps-in-r.html#cb805-79" aria-hidden="true"></a>    plt &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb805-80"><a href="shiny-interactive-web-apps-in-r.html#cb805-80" aria-hidden="true"></a><span class="st">      </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>miMap, <span class="kw">aes</span>(<span class="dt">x=</span>long,<span class="dt">y=</span>lat,<span class="dt">group=</span>group), </span>
+<span id="cb805-81"><a href="shiny-interactive-web-apps-in-r.html#cb805-81" aria-hidden="true"></a>           <span class="dt">colour=</span><span class="st">&quot;black&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;gray&quot;</span>) <span class="op">+</span></span>
+<span id="cb805-82"><a href="shiny-interactive-web-apps-in-r.html#cb805-82" aria-hidden="true"></a><span class="st">      </span><span class="kw">coord_fixed</span>(<span class="dt">ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb805-83"><a href="shiny-interactive-web-apps-in-r.html#cb805-83" aria-hidden="true"></a></span>
+<span id="cb805-84"><a href="shiny-interactive-web-apps-in-r.html#cb805-84" aria-hidden="true"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
+<span id="cb805-85"><a href="shiny-interactive-web-apps-in-r.html#cb805-85" aria-hidden="true"></a>      plt &lt;-<span class="st"> </span>plt <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> sites1,<span class="kw">aes</span>(<span class="dt">x=</span>Long,<span class="dt">y=</span>Lat), <span class="dt">colour=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb805-86"><a href="shiny-interactive-web-apps-in-r.html#cb805-86" aria-hidden="true"></a>    }</span>
+<span id="cb805-87"><a href="shiny-interactive-web-apps-in-r.html#cb805-87" aria-hidden="true"></a></span>
+<span id="cb805-88"><a href="shiny-interactive-web-apps-in-r.html#cb805-88" aria-hidden="true"></a>    <span class="kw">plot</span>(plt)</span>
+<span id="cb805-89"><a href="shiny-interactive-web-apps-in-r.html#cb805-89" aria-hidden="true"></a></span>
+<span id="cb805-90"><a href="shiny-interactive-web-apps-in-r.html#cb805-90" aria-hidden="true"></a>  })</span>
+<span id="cb805-91"><a href="shiny-interactive-web-apps-in-r.html#cb805-91" aria-hidden="true"></a></span>
+<span id="cb805-92"><a href="shiny-interactive-web-apps-in-r.html#cb805-92" aria-hidden="true"></a>}</span>
+<span id="cb805-93"><a href="shiny-interactive-web-apps-in-r.html#cb805-93" aria-hidden="true"></a></span>
+<span id="cb805-94"><a href="shiny-interactive-web-apps-in-r.html#cb805-94" aria-hidden="true"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb805-95"><a href="shiny-interactive-web-apps-in-r.html#cb805-95" aria-hidden="true"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+<div id="michigan-campgrounds-ui" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Michigan Campgrounds UI<a href="shiny-interactive-web-apps-in-r.html#michigan-campgrounds-ui" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, let’s look at the structure of the page. Similar to our first application, we again use a <code>fluidPage</code> layout with title panel and sidebar. The sidebar contains a sidebar panel and a main panel. Our sidebar panel has three user input widgets:</p>
 <ul>
 <li><code>sliderInput</code>: Allows user to specify a range of campsites desired in their campground. Since the maximum number of campsites in any Michigan state park campground is 411, 420 was chosen as the maximum.</li>
@@ -906,8 +905,8 @@ renderText
 </table>
 <p>Table <a href="shiny-interactive-web-apps-in-r.html#tab:els">9.1</a> provides a list of the various input and output elements. Take your time and track how the app defines then uses each input and output.</p>
 </div>
-<div id="michigan-campgrounds-server-logic" class="section level3" number="9.4.2">
-<h3><span class="header-section-number">9.4.2</span> Michigan Campgrounds Server Logic</h3>
+<div id="michigan-campgrounds-server-logic" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Michigan Campgrounds Server Logic<a href="shiny-interactive-web-apps-in-r.html#michigan-campgrounds-server-logic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In creating our <code>server</code> variable, we have two functions that fill in our output elements:</p>
 <ul>
 <li><code>renderText</code>: Creates a character string of HTML code to print the bulleted list of available sites.</li>
@@ -915,158 +914,158 @@ renderText
 </ul>
 <p>Note that both of these functions contain identical subsetting of the <code>sites</code> data frame into the smaller <code>sites1</code> data frame (see below). As you can see from the code, we use the three inputs from the application to subset the data: <code>rangeNum</code> from the slider widget, <code>type</code> from the dropdown menu, and <code>ada</code> from the checkbox.</p>
 <p>This repeated code can be avoided using Shiny’s reactive expressions. These expressions will update in value whenever the widget input values change. See <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson6/">here</a> for more information. The use of reactive expressions is beyond the scope of this chapter, but it is an important concept to be familiar with if you plan to regularly create Shiny applications.</p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="shiny-interactive-web-apps-in-r.html#cb804-1"></a>sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites, </span>
-<span id="cb804-2"><a href="shiny-interactive-web-apps-in-r.html#cb804-2"></a>                  TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st">  </span></span>
-<span id="cb804-3"><a href="shiny-interactive-web-apps-in-r.html#cb804-3"></a><span class="st">                  </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span><span class="st">  </span></span>
-<span id="cb804-4"><a href="shiny-interactive-web-apps-in-r.html#cb804-4"></a><span class="st">                  </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span><span class="st">   </span></span>
-<span id="cb804-5"><a href="shiny-interactive-web-apps-in-r.html#cb804-5"></a><span class="st">                  </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>}</span>
-<span id="cb804-6"><a href="shiny-interactive-web-apps-in-r.html#cb804-6"></a>                )</span></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="shiny-interactive-web-apps-in-r.html#cb806-1" aria-hidden="true"></a>sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites, </span>
+<span id="cb806-2"><a href="shiny-interactive-web-apps-in-r.html#cb806-2" aria-hidden="true"></a>                  TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st">  </span></span>
+<span id="cb806-3"><a href="shiny-interactive-web-apps-in-r.html#cb806-3" aria-hidden="true"></a><span class="st">                  </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span><span class="st">  </span></span>
+<span id="cb806-4"><a href="shiny-interactive-web-apps-in-r.html#cb806-4" aria-hidden="true"></a><span class="st">                  </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span><span class="st">   </span></span>
+<span id="cb806-5"><a href="shiny-interactive-web-apps-in-r.html#cb806-5" aria-hidden="true"></a><span class="st">                  </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>}</span>
+<span id="cb806-6"><a href="shiny-interactive-web-apps-in-r.html#cb806-6" aria-hidden="true"></a>                )</span></code></pre></div>
 </div>
 </div>
-<div id="adding-leaflet-to-shiny" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Adding Leaflet to Shiny</h2>
+<div id="adding-leaflet-to-shiny" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Adding Leaflet to Shiny<a href="shiny-interactive-web-apps-in-r.html#adding-leaflet-to-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://rstudio.github.io/leaflet">Leaflet</a> can be easily incorporated in Shiny apps (See Chapter <a href="sp.html#sp">8</a> of this text to learn more about spatial data). In the Michigan Campgrounds example code, we used <code>plotOutput</code> and <code>renderPlot</code> to put a plot widget in our Shiny app. Similarly, in this code, we will use <code>leafletOutput</code> and <code>renderLeaflet</code> to add Leaflet widgets to our app. Create a new directory called <code>CampsitesMI_Leaflet</code> and copy the following code into a new <code>app.R</code> script file.</p>
-<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="shiny-interactive-web-apps-in-r.html#cb805-1"></a><span class="co"># app.R</span></span>
-<span id="cb805-2"><a href="shiny-interactive-web-apps-in-r.html#cb805-2"></a><span class="co"># CampsitesMI - Leaflet</span></span>
-<span id="cb805-3"><a href="shiny-interactive-web-apps-in-r.html#cb805-3"></a></span>
-<span id="cb805-4"><a href="shiny-interactive-web-apps-in-r.html#cb805-4"></a><span class="kw">library</span>(shiny)</span>
-<span id="cb805-5"><a href="shiny-interactive-web-apps-in-r.html#cb805-5"></a><span class="kw">library</span>(leaflet)</span>
-<span id="cb805-6"><a href="shiny-interactive-web-apps-in-r.html#cb805-6"></a><span class="kw">library</span>(htmltools)</span>
-<span id="cb805-7"><a href="shiny-interactive-web-apps-in-r.html#cb805-7"></a></span>
-<span id="cb805-8"><a href="shiny-interactive-web-apps-in-r.html#cb805-8"></a>sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(</span>
-<span id="cb805-9"><a href="shiny-interactive-web-apps-in-r.html#cb805-9"></a> <span class="st">&quot;https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv&quot;</span>, </span>
-<span id="cb805-10"><a href="shiny-interactive-web-apps-in-r.html#cb805-10"></a>  <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb805-11"><a href="shiny-interactive-web-apps-in-r.html#cb805-11"></a></span>
-<span id="cb805-12"><a href="shiny-interactive-web-apps-in-r.html#cb805-12"></a><span class="co"># Define UI for application that draws a histogram</span></span>
-<span id="cb805-13"><a href="shiny-interactive-web-apps-in-r.html#cb805-13"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb805-14"><a href="shiny-interactive-web-apps-in-r.html#cb805-14"></a></span>
-<span id="cb805-15"><a href="shiny-interactive-web-apps-in-r.html#cb805-15"></a>  <span class="co"># Application title</span></span>
-<span id="cb805-16"><a href="shiny-interactive-web-apps-in-r.html#cb805-16"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Michigan Campsite Search&quot;</span>),</span>
-<span id="cb805-17"><a href="shiny-interactive-web-apps-in-r.html#cb805-17"></a></span>
-<span id="cb805-18"><a href="shiny-interactive-web-apps-in-r.html#cb805-18"></a>  <span class="co"># Sidebar</span></span>
-<span id="cb805-19"><a href="shiny-interactive-web-apps-in-r.html#cb805-19"></a>  <span class="kw">sidebarLayout</span>(</span>
-<span id="cb805-20"><a href="shiny-interactive-web-apps-in-r.html#cb805-20"></a>    <span class="kw">sidebarPanel</span>(</span>
-<span id="cb805-21"><a href="shiny-interactive-web-apps-in-r.html#cb805-21"></a>      <span class="co"># slider input for number of campsites</span></span>
-<span id="cb805-22"><a href="shiny-interactive-web-apps-in-r.html#cb805-22"></a>      <span class="kw">sliderInput</span>(<span class="st">&quot;rangeNum&quot;</span>,</span>
-<span id="cb805-23"><a href="shiny-interactive-web-apps-in-r.html#cb805-23"></a>                  <span class="dt">label =</span> <span class="st">&quot;Number of campsites:&quot;</span>,</span>
-<span id="cb805-24"><a href="shiny-interactive-web-apps-in-r.html#cb805-24"></a>                  <span class="dt">min =</span> <span class="dv">0</span>,</span>
-<span id="cb805-25"><a href="shiny-interactive-web-apps-in-r.html#cb805-25"></a>                  <span class="dt">max =</span> <span class="dv">420</span>,</span>
-<span id="cb805-26"><a href="shiny-interactive-web-apps-in-r.html#cb805-26"></a>                  <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">420</span>),</span>
-<span id="cb805-27"><a href="shiny-interactive-web-apps-in-r.html#cb805-27"></a>                  <span class="dt">step=</span><span class="dv">20</span></span>
-<span id="cb805-28"><a href="shiny-interactive-web-apps-in-r.html#cb805-28"></a>      ),</span>
-<span id="cb805-29"><a href="shiny-interactive-web-apps-in-r.html#cb805-29"></a></span>
-<span id="cb805-30"><a href="shiny-interactive-web-apps-in-r.html#cb805-30"></a>      <span class="kw">selectInput</span>(<span class="st">&quot;type&quot;</span>,</span>
-<span id="cb805-31"><a href="shiny-interactive-web-apps-in-r.html#cb805-31"></a>                  <span class="dt">label =</span> <span class="st">&quot;Type of campsites:&quot;</span>,</span>
-<span id="cb805-32"><a href="shiny-interactive-web-apps-in-r.html#cb805-32"></a>                  <span class="kw">levels</span>(sites<span class="op">$</span>Camp_type)</span>
-<span id="cb805-33"><a href="shiny-interactive-web-apps-in-r.html#cb805-33"></a>      ),</span>
-<span id="cb805-34"><a href="shiny-interactive-web-apps-in-r.html#cb805-34"></a></span>
-<span id="cb805-35"><a href="shiny-interactive-web-apps-in-r.html#cb805-35"></a>      <span class="kw">checkboxInput</span>(<span class="st">&quot;ada&quot;</span>,</span>
-<span id="cb805-36"><a href="shiny-interactive-web-apps-in-r.html#cb805-36"></a>                    <span class="dt">label =</span> <span class="st">&quot;ADA Sites Available:&quot;</span>,</span>
-<span id="cb805-37"><a href="shiny-interactive-web-apps-in-r.html#cb805-37"></a>                    <span class="ot">FALSE</span>)</span>
-<span id="cb805-38"><a href="shiny-interactive-web-apps-in-r.html#cb805-38"></a></span>
-<span id="cb805-39"><a href="shiny-interactive-web-apps-in-r.html#cb805-39"></a>    ),</span>
-<span id="cb805-40"><a href="shiny-interactive-web-apps-in-r.html#cb805-40"></a></span>
-<span id="cb805-41"><a href="shiny-interactive-web-apps-in-r.html#cb805-41"></a>    <span class="kw">mainPanel</span>(</span>
-<span id="cb805-42"><a href="shiny-interactive-web-apps-in-r.html#cb805-42"></a>      <span class="co"># Show the map of campgrounds</span></span>
-<span id="cb805-43"><a href="shiny-interactive-web-apps-in-r.html#cb805-43"></a>      <span class="kw">leafletOutput</span>(<span class="st">&quot;plot1&quot;</span>),</span>
-<span id="cb805-44"><a href="shiny-interactive-web-apps-in-r.html#cb805-44"></a>      <span class="kw">br</span>(),</span>
-<span id="cb805-45"><a href="shiny-interactive-web-apps-in-r.html#cb805-45"></a>      <span class="co"># Show the text list of campgrounds</span></span>
-<span id="cb805-46"><a href="shiny-interactive-web-apps-in-r.html#cb805-46"></a>      <span class="kw">htmlOutput</span>(<span class="st">&quot;text1&quot;</span>)</span>
-<span id="cb805-47"><a href="shiny-interactive-web-apps-in-r.html#cb805-47"></a>    )</span>
-<span id="cb805-48"><a href="shiny-interactive-web-apps-in-r.html#cb805-48"></a>  )</span>
-<span id="cb805-49"><a href="shiny-interactive-web-apps-in-r.html#cb805-49"></a>)</span>
-<span id="cb805-50"><a href="shiny-interactive-web-apps-in-r.html#cb805-50"></a></span>
-<span id="cb805-51"><a href="shiny-interactive-web-apps-in-r.html#cb805-51"></a></span>
-<span id="cb805-52"><a href="shiny-interactive-web-apps-in-r.html#cb805-52"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
-<span id="cb805-53"><a href="shiny-interactive-web-apps-in-r.html#cb805-53"></a>  sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Michigan_State_Park_Campgrounds.csv&quot;</span>)</span>
-<span id="cb805-54"><a href="shiny-interactive-web-apps-in-r.html#cb805-54"></a></span>
-<span id="cb805-55"><a href="shiny-interactive-web-apps-in-r.html#cb805-55"></a>  output<span class="op">$</span>text1 &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
-<span id="cb805-56"><a href="shiny-interactive-web-apps-in-r.html#cb805-56"></a>    <span class="co"># create a subset of campsites based on inputs</span></span>
-<span id="cb805-57"><a href="shiny-interactive-web-apps-in-r.html#cb805-57"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
-<span id="cb805-58"><a href="shiny-interactive-web-apps-in-r.html#cb805-58"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
-<span id="cb805-59"><a href="shiny-interactive-web-apps-in-r.html#cb805-59"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
-<span id="cb805-60"><a href="shiny-interactive-web-apps-in-r.html#cb805-60"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
-<span id="cb805-61"><a href="shiny-interactive-web-apps-in-r.html#cb805-61"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
-<span id="cb805-62"><a href="shiny-interactive-web-apps-in-r.html#cb805-62"></a>    <span class="co"># create an HTML-formatted character string to be output</span></span>
-<span id="cb805-63"><a href="shiny-interactive-web-apps-in-r.html#cb805-63"></a>    outStr &lt;-<span class="st"> &quot;&lt;ul&gt;&quot;</span></span>
-<span id="cb805-64"><a href="shiny-interactive-web-apps-in-r.html#cb805-64"></a>    <span class="cf">for</span>(site <span class="cf">in</span> sites1<span class="op">$</span>FACILITY){</span>
-<span id="cb805-65"><a href="shiny-interactive-web-apps-in-r.html#cb805-65"></a>      outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;li&gt;&quot;</span>,site,<span class="st">&quot;&lt;/li&gt;&quot;</span>)</span>
-<span id="cb805-66"><a href="shiny-interactive-web-apps-in-r.html#cb805-66"></a>    }</span>
-<span id="cb805-67"><a href="shiny-interactive-web-apps-in-r.html#cb805-67"></a>    outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;/ul&gt;&quot;</span>)</span>
-<span id="cb805-68"><a href="shiny-interactive-web-apps-in-r.html#cb805-68"></a></span>
-<span id="cb805-69"><a href="shiny-interactive-web-apps-in-r.html#cb805-69"></a>    <span class="co">#</span></span>
-<span id="cb805-70"><a href="shiny-interactive-web-apps-in-r.html#cb805-70"></a>    <span class="kw">paste</span>(<span class="st">&quot;&lt;p&gt;There are&quot;</span>,</span>
-<span id="cb805-71"><a href="shiny-interactive-web-apps-in-r.html#cb805-71"></a>          <span class="kw">nrow</span>(sites1),</span>
-<span id="cb805-72"><a href="shiny-interactive-web-apps-in-r.html#cb805-72"></a>          <span class="st">&quot;campgrounds that match your search:&lt;/p&gt;&quot;</span>,</span>
-<span id="cb805-73"><a href="shiny-interactive-web-apps-in-r.html#cb805-73"></a>          outStr)</span>
-<span id="cb805-74"><a href="shiny-interactive-web-apps-in-r.html#cb805-74"></a></span>
-<span id="cb805-75"><a href="shiny-interactive-web-apps-in-r.html#cb805-75"></a>  })</span>
-<span id="cb805-76"><a href="shiny-interactive-web-apps-in-r.html#cb805-76"></a></span>
-<span id="cb805-77"><a href="shiny-interactive-web-apps-in-r.html#cb805-77"></a>  output<span class="op">$</span>plot1 &lt;-<span class="st"> </span><span class="kw">renderLeaflet</span>({</span>
-<span id="cb805-78"><a href="shiny-interactive-web-apps-in-r.html#cb805-78"></a>    <span class="co"># create a subset of campsites based on inputs</span></span>
-<span id="cb805-79"><a href="shiny-interactive-web-apps-in-r.html#cb805-79"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
-<span id="cb805-80"><a href="shiny-interactive-web-apps-in-r.html#cb805-80"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
-<span id="cb805-81"><a href="shiny-interactive-web-apps-in-r.html#cb805-81"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
-<span id="cb805-82"><a href="shiny-interactive-web-apps-in-r.html#cb805-82"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
-<span id="cb805-83"><a href="shiny-interactive-web-apps-in-r.html#cb805-83"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
-<span id="cb805-84"><a href="shiny-interactive-web-apps-in-r.html#cb805-84"></a></span>
-<span id="cb805-85"><a href="shiny-interactive-web-apps-in-r.html#cb805-85"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
-<span id="cb805-86"><a href="shiny-interactive-web-apps-in-r.html#cb805-86"></a>      <span class="kw">leaflet</span>(sites1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>()  <span class="op">%&gt;%</span></span>
-<span id="cb805-87"><a href="shiny-interactive-web-apps-in-r.html#cb805-87"></a><span class="st">        </span><span class="kw">addCircleMarkers</span>(<span class="dt">lng =</span> <span class="op">~</span>Long, <span class="dt">lat =</span> <span class="op">~</span>Lat,</span>
-<span id="cb805-88"><a href="shiny-interactive-web-apps-in-r.html#cb805-88"></a>                         <span class="dt">radius =</span> <span class="dv">5</span>,</span>
-<span id="cb805-89"><a href="shiny-interactive-web-apps-in-r.html#cb805-89"></a>                         <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb805-90"><a href="shiny-interactive-web-apps-in-r.html#cb805-90"></a>                         <span class="dt">label =</span> <span class="kw">mapply</span>(<span class="cf">function</span>(x,y) {</span>
-<span id="cb805-91"><a href="shiny-interactive-web-apps-in-r.html#cb805-91"></a>                           <span class="kw">HTML</span>(<span class="kw">sprintf</span>(<span class="st">&#39;&lt;em&gt;%s&lt;/em&gt;&lt;br&gt;%s site(s)&#39;</span>,</span>
-<span id="cb805-92"><a href="shiny-interactive-web-apps-in-r.html#cb805-92"></a>                                        <span class="kw">htmlEscape</span>(x),</span>
-<span id="cb805-93"><a href="shiny-interactive-web-apps-in-r.html#cb805-93"></a>                                        <span class="kw">htmlEscape</span>(y)))},</span>
-<span id="cb805-94"><a href="shiny-interactive-web-apps-in-r.html#cb805-94"></a>                           sites1<span class="op">$</span>FACILITY,sites1<span class="op">$</span>TOTAL_SITE, <span class="dt">SIMPLIFY =</span> F)</span>
-<span id="cb805-95"><a href="shiny-interactive-web-apps-in-r.html#cb805-95"></a>        )</span>
-<span id="cb805-96"><a href="shiny-interactive-web-apps-in-r.html#cb805-96"></a>    } <span class="cf">else</span> {</span>
-<span id="cb805-97"><a href="shiny-interactive-web-apps-in-r.html#cb805-97"></a>      <span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span></span>
-<span id="cb805-98"><a href="shiny-interactive-web-apps-in-r.html#cb805-98"></a><span class="st">        </span><span class="kw">setView</span>( <span class="fl">-84.5555</span>, <span class="fl">42.7325</span>,   <span class="dt">zoom =</span> <span class="dv">7</span>)</span>
-<span id="cb805-99"><a href="shiny-interactive-web-apps-in-r.html#cb805-99"></a>    }</span>
-<span id="cb805-100"><a href="shiny-interactive-web-apps-in-r.html#cb805-100"></a></span>
-<span id="cb805-101"><a href="shiny-interactive-web-apps-in-r.html#cb805-101"></a>  })</span>
-<span id="cb805-102"><a href="shiny-interactive-web-apps-in-r.html#cb805-102"></a></span>
-<span id="cb805-103"><a href="shiny-interactive-web-apps-in-r.html#cb805-103"></a>}</span>
-<span id="cb805-104"><a href="shiny-interactive-web-apps-in-r.html#cb805-104"></a></span>
-<span id="cb805-105"><a href="shiny-interactive-web-apps-in-r.html#cb805-105"></a><span class="co"># Create Shiny app ----</span></span>
-<span id="cb805-106"><a href="shiny-interactive-web-apps-in-r.html#cb805-106"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="shiny-interactive-web-apps-in-r.html#cb807-1" aria-hidden="true"></a><span class="co"># app.R</span></span>
+<span id="cb807-2"><a href="shiny-interactive-web-apps-in-r.html#cb807-2" aria-hidden="true"></a><span class="co"># CampsitesMI - Leaflet</span></span>
+<span id="cb807-3"><a href="shiny-interactive-web-apps-in-r.html#cb807-3" aria-hidden="true"></a></span>
+<span id="cb807-4"><a href="shiny-interactive-web-apps-in-r.html#cb807-4" aria-hidden="true"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb807-5"><a href="shiny-interactive-web-apps-in-r.html#cb807-5" aria-hidden="true"></a><span class="kw">library</span>(leaflet)</span>
+<span id="cb807-6"><a href="shiny-interactive-web-apps-in-r.html#cb807-6" aria-hidden="true"></a><span class="kw">library</span>(htmltools)</span>
+<span id="cb807-7"><a href="shiny-interactive-web-apps-in-r.html#cb807-7" aria-hidden="true"></a></span>
+<span id="cb807-8"><a href="shiny-interactive-web-apps-in-r.html#cb807-8" aria-hidden="true"></a>sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(</span>
+<span id="cb807-9"><a href="shiny-interactive-web-apps-in-r.html#cb807-9" aria-hidden="true"></a> <span class="st">&quot;https://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv&quot;</span>, </span>
+<span id="cb807-10"><a href="shiny-interactive-web-apps-in-r.html#cb807-10" aria-hidden="true"></a>  <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb807-11"><a href="shiny-interactive-web-apps-in-r.html#cb807-11" aria-hidden="true"></a></span>
+<span id="cb807-12"><a href="shiny-interactive-web-apps-in-r.html#cb807-12" aria-hidden="true"></a><span class="co"># Define UI for application that draws a histogram</span></span>
+<span id="cb807-13"><a href="shiny-interactive-web-apps-in-r.html#cb807-13" aria-hidden="true"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb807-14"><a href="shiny-interactive-web-apps-in-r.html#cb807-14" aria-hidden="true"></a></span>
+<span id="cb807-15"><a href="shiny-interactive-web-apps-in-r.html#cb807-15" aria-hidden="true"></a>  <span class="co"># Application title</span></span>
+<span id="cb807-16"><a href="shiny-interactive-web-apps-in-r.html#cb807-16" aria-hidden="true"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Michigan Campsite Search&quot;</span>),</span>
+<span id="cb807-17"><a href="shiny-interactive-web-apps-in-r.html#cb807-17" aria-hidden="true"></a></span>
+<span id="cb807-18"><a href="shiny-interactive-web-apps-in-r.html#cb807-18" aria-hidden="true"></a>  <span class="co"># Sidebar</span></span>
+<span id="cb807-19"><a href="shiny-interactive-web-apps-in-r.html#cb807-19" aria-hidden="true"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb807-20"><a href="shiny-interactive-web-apps-in-r.html#cb807-20" aria-hidden="true"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb807-21"><a href="shiny-interactive-web-apps-in-r.html#cb807-21" aria-hidden="true"></a>      <span class="co"># slider input for number of campsites</span></span>
+<span id="cb807-22"><a href="shiny-interactive-web-apps-in-r.html#cb807-22" aria-hidden="true"></a>      <span class="kw">sliderInput</span>(<span class="st">&quot;rangeNum&quot;</span>,</span>
+<span id="cb807-23"><a href="shiny-interactive-web-apps-in-r.html#cb807-23" aria-hidden="true"></a>                  <span class="dt">label =</span> <span class="st">&quot;Number of campsites:&quot;</span>,</span>
+<span id="cb807-24"><a href="shiny-interactive-web-apps-in-r.html#cb807-24" aria-hidden="true"></a>                  <span class="dt">min =</span> <span class="dv">0</span>,</span>
+<span id="cb807-25"><a href="shiny-interactive-web-apps-in-r.html#cb807-25" aria-hidden="true"></a>                  <span class="dt">max =</span> <span class="dv">420</span>,</span>
+<span id="cb807-26"><a href="shiny-interactive-web-apps-in-r.html#cb807-26" aria-hidden="true"></a>                  <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">420</span>),</span>
+<span id="cb807-27"><a href="shiny-interactive-web-apps-in-r.html#cb807-27" aria-hidden="true"></a>                  <span class="dt">step=</span><span class="dv">20</span></span>
+<span id="cb807-28"><a href="shiny-interactive-web-apps-in-r.html#cb807-28" aria-hidden="true"></a>      ),</span>
+<span id="cb807-29"><a href="shiny-interactive-web-apps-in-r.html#cb807-29" aria-hidden="true"></a></span>
+<span id="cb807-30"><a href="shiny-interactive-web-apps-in-r.html#cb807-30" aria-hidden="true"></a>      <span class="kw">selectInput</span>(<span class="st">&quot;type&quot;</span>,</span>
+<span id="cb807-31"><a href="shiny-interactive-web-apps-in-r.html#cb807-31" aria-hidden="true"></a>                  <span class="dt">label =</span> <span class="st">&quot;Type of campsites:&quot;</span>,</span>
+<span id="cb807-32"><a href="shiny-interactive-web-apps-in-r.html#cb807-32" aria-hidden="true"></a>                  <span class="kw">levels</span>(sites<span class="op">$</span>Camp_type)</span>
+<span id="cb807-33"><a href="shiny-interactive-web-apps-in-r.html#cb807-33" aria-hidden="true"></a>      ),</span>
+<span id="cb807-34"><a href="shiny-interactive-web-apps-in-r.html#cb807-34" aria-hidden="true"></a></span>
+<span id="cb807-35"><a href="shiny-interactive-web-apps-in-r.html#cb807-35" aria-hidden="true"></a>      <span class="kw">checkboxInput</span>(<span class="st">&quot;ada&quot;</span>,</span>
+<span id="cb807-36"><a href="shiny-interactive-web-apps-in-r.html#cb807-36" aria-hidden="true"></a>                    <span class="dt">label =</span> <span class="st">&quot;ADA Sites Available:&quot;</span>,</span>
+<span id="cb807-37"><a href="shiny-interactive-web-apps-in-r.html#cb807-37" aria-hidden="true"></a>                    <span class="ot">FALSE</span>)</span>
+<span id="cb807-38"><a href="shiny-interactive-web-apps-in-r.html#cb807-38" aria-hidden="true"></a></span>
+<span id="cb807-39"><a href="shiny-interactive-web-apps-in-r.html#cb807-39" aria-hidden="true"></a>    ),</span>
+<span id="cb807-40"><a href="shiny-interactive-web-apps-in-r.html#cb807-40" aria-hidden="true"></a></span>
+<span id="cb807-41"><a href="shiny-interactive-web-apps-in-r.html#cb807-41" aria-hidden="true"></a>    <span class="kw">mainPanel</span>(</span>
+<span id="cb807-42"><a href="shiny-interactive-web-apps-in-r.html#cb807-42" aria-hidden="true"></a>      <span class="co"># Show the map of campgrounds</span></span>
+<span id="cb807-43"><a href="shiny-interactive-web-apps-in-r.html#cb807-43" aria-hidden="true"></a>      <span class="kw">leafletOutput</span>(<span class="st">&quot;plot1&quot;</span>),</span>
+<span id="cb807-44"><a href="shiny-interactive-web-apps-in-r.html#cb807-44" aria-hidden="true"></a>      <span class="kw">br</span>(),</span>
+<span id="cb807-45"><a href="shiny-interactive-web-apps-in-r.html#cb807-45" aria-hidden="true"></a>      <span class="co"># Show the text list of campgrounds</span></span>
+<span id="cb807-46"><a href="shiny-interactive-web-apps-in-r.html#cb807-46" aria-hidden="true"></a>      <span class="kw">htmlOutput</span>(<span class="st">&quot;text1&quot;</span>)</span>
+<span id="cb807-47"><a href="shiny-interactive-web-apps-in-r.html#cb807-47" aria-hidden="true"></a>    )</span>
+<span id="cb807-48"><a href="shiny-interactive-web-apps-in-r.html#cb807-48" aria-hidden="true"></a>  )</span>
+<span id="cb807-49"><a href="shiny-interactive-web-apps-in-r.html#cb807-49" aria-hidden="true"></a>)</span>
+<span id="cb807-50"><a href="shiny-interactive-web-apps-in-r.html#cb807-50" aria-hidden="true"></a></span>
+<span id="cb807-51"><a href="shiny-interactive-web-apps-in-r.html#cb807-51" aria-hidden="true"></a></span>
+<span id="cb807-52"><a href="shiny-interactive-web-apps-in-r.html#cb807-52" aria-hidden="true"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb807-53"><a href="shiny-interactive-web-apps-in-r.html#cb807-53" aria-hidden="true"></a>  sites &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Michigan_State_Park_Campgrounds.csv&quot;</span>)</span>
+<span id="cb807-54"><a href="shiny-interactive-web-apps-in-r.html#cb807-54" aria-hidden="true"></a></span>
+<span id="cb807-55"><a href="shiny-interactive-web-apps-in-r.html#cb807-55" aria-hidden="true"></a>  output<span class="op">$</span>text1 &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
+<span id="cb807-56"><a href="shiny-interactive-web-apps-in-r.html#cb807-56" aria-hidden="true"></a>    <span class="co"># create a subset of campsites based on inputs</span></span>
+<span id="cb807-57"><a href="shiny-interactive-web-apps-in-r.html#cb807-57" aria-hidden="true"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
+<span id="cb807-58"><a href="shiny-interactive-web-apps-in-r.html#cb807-58" aria-hidden="true"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
+<span id="cb807-59"><a href="shiny-interactive-web-apps-in-r.html#cb807-59" aria-hidden="true"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
+<span id="cb807-60"><a href="shiny-interactive-web-apps-in-r.html#cb807-60" aria-hidden="true"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
+<span id="cb807-61"><a href="shiny-interactive-web-apps-in-r.html#cb807-61" aria-hidden="true"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
+<span id="cb807-62"><a href="shiny-interactive-web-apps-in-r.html#cb807-62" aria-hidden="true"></a>    <span class="co"># create an HTML-formatted character string to be output</span></span>
+<span id="cb807-63"><a href="shiny-interactive-web-apps-in-r.html#cb807-63" aria-hidden="true"></a>    outStr &lt;-<span class="st"> &quot;&lt;ul&gt;&quot;</span></span>
+<span id="cb807-64"><a href="shiny-interactive-web-apps-in-r.html#cb807-64" aria-hidden="true"></a>    <span class="cf">for</span>(site <span class="cf">in</span> sites1<span class="op">$</span>FACILITY){</span>
+<span id="cb807-65"><a href="shiny-interactive-web-apps-in-r.html#cb807-65" aria-hidden="true"></a>      outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;li&gt;&quot;</span>,site,<span class="st">&quot;&lt;/li&gt;&quot;</span>)</span>
+<span id="cb807-66"><a href="shiny-interactive-web-apps-in-r.html#cb807-66" aria-hidden="true"></a>    }</span>
+<span id="cb807-67"><a href="shiny-interactive-web-apps-in-r.html#cb807-67" aria-hidden="true"></a>    outStr &lt;-<span class="st"> </span><span class="kw">paste0</span>(outStr,<span class="st">&quot;&lt;/ul&gt;&quot;</span>)</span>
+<span id="cb807-68"><a href="shiny-interactive-web-apps-in-r.html#cb807-68" aria-hidden="true"></a></span>
+<span id="cb807-69"><a href="shiny-interactive-web-apps-in-r.html#cb807-69" aria-hidden="true"></a>    <span class="co">#</span></span>
+<span id="cb807-70"><a href="shiny-interactive-web-apps-in-r.html#cb807-70" aria-hidden="true"></a>    <span class="kw">paste</span>(<span class="st">&quot;&lt;p&gt;There are&quot;</span>,</span>
+<span id="cb807-71"><a href="shiny-interactive-web-apps-in-r.html#cb807-71" aria-hidden="true"></a>          <span class="kw">nrow</span>(sites1),</span>
+<span id="cb807-72"><a href="shiny-interactive-web-apps-in-r.html#cb807-72" aria-hidden="true"></a>          <span class="st">&quot;campgrounds that match your search:&lt;/p&gt;&quot;</span>,</span>
+<span id="cb807-73"><a href="shiny-interactive-web-apps-in-r.html#cb807-73" aria-hidden="true"></a>          outStr)</span>
+<span id="cb807-74"><a href="shiny-interactive-web-apps-in-r.html#cb807-74" aria-hidden="true"></a></span>
+<span id="cb807-75"><a href="shiny-interactive-web-apps-in-r.html#cb807-75" aria-hidden="true"></a>  })</span>
+<span id="cb807-76"><a href="shiny-interactive-web-apps-in-r.html#cb807-76" aria-hidden="true"></a></span>
+<span id="cb807-77"><a href="shiny-interactive-web-apps-in-r.html#cb807-77" aria-hidden="true"></a>  output<span class="op">$</span>plot1 &lt;-<span class="st"> </span><span class="kw">renderLeaflet</span>({</span>
+<span id="cb807-78"><a href="shiny-interactive-web-apps-in-r.html#cb807-78" aria-hidden="true"></a>    <span class="co"># create a subset of campsites based on inputs</span></span>
+<span id="cb807-79"><a href="shiny-interactive-web-apps-in-r.html#cb807-79" aria-hidden="true"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites,</span>
+<span id="cb807-80"><a href="shiny-interactive-web-apps-in-r.html#cb807-80" aria-hidden="true"></a>                     TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span></span>
+<span id="cb807-81"><a href="shiny-interactive-web-apps-in-r.html#cb807-81" aria-hidden="true"></a><span class="st">                       </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span></span>
+<span id="cb807-82"><a href="shiny-interactive-web-apps-in-r.html#cb807-82" aria-hidden="true"></a><span class="st">                       </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span></span>
+<span id="cb807-83"><a href="shiny-interactive-web-apps-in-r.html#cb807-83" aria-hidden="true"></a><span class="st">                       </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
+<span id="cb807-84"><a href="shiny-interactive-web-apps-in-r.html#cb807-84" aria-hidden="true"></a></span>
+<span id="cb807-85"><a href="shiny-interactive-web-apps-in-r.html#cb807-85" aria-hidden="true"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
+<span id="cb807-86"><a href="shiny-interactive-web-apps-in-r.html#cb807-86" aria-hidden="true"></a>      <span class="kw">leaflet</span>(sites1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>()  <span class="op">%&gt;%</span></span>
+<span id="cb807-87"><a href="shiny-interactive-web-apps-in-r.html#cb807-87" aria-hidden="true"></a><span class="st">        </span><span class="kw">addCircleMarkers</span>(<span class="dt">lng =</span> <span class="op">~</span>Long, <span class="dt">lat =</span> <span class="op">~</span>Lat,</span>
+<span id="cb807-88"><a href="shiny-interactive-web-apps-in-r.html#cb807-88" aria-hidden="true"></a>                         <span class="dt">radius =</span> <span class="dv">5</span>,</span>
+<span id="cb807-89"><a href="shiny-interactive-web-apps-in-r.html#cb807-89" aria-hidden="true"></a>                         <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb807-90"><a href="shiny-interactive-web-apps-in-r.html#cb807-90" aria-hidden="true"></a>                         <span class="dt">label =</span> <span class="kw">mapply</span>(<span class="cf">function</span>(x,y) {</span>
+<span id="cb807-91"><a href="shiny-interactive-web-apps-in-r.html#cb807-91" aria-hidden="true"></a>                           <span class="kw">HTML</span>(<span class="kw">sprintf</span>(<span class="st">&#39;&lt;em&gt;%s&lt;/em&gt;&lt;br&gt;%s site(s)&#39;</span>,</span>
+<span id="cb807-92"><a href="shiny-interactive-web-apps-in-r.html#cb807-92" aria-hidden="true"></a>                                        <span class="kw">htmlEscape</span>(x),</span>
+<span id="cb807-93"><a href="shiny-interactive-web-apps-in-r.html#cb807-93" aria-hidden="true"></a>                                        <span class="kw">htmlEscape</span>(y)))},</span>
+<span id="cb807-94"><a href="shiny-interactive-web-apps-in-r.html#cb807-94" aria-hidden="true"></a>                           sites1<span class="op">$</span>FACILITY,sites1<span class="op">$</span>TOTAL_SITE, <span class="dt">SIMPLIFY =</span> F)</span>
+<span id="cb807-95"><a href="shiny-interactive-web-apps-in-r.html#cb807-95" aria-hidden="true"></a>        )</span>
+<span id="cb807-96"><a href="shiny-interactive-web-apps-in-r.html#cb807-96" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb807-97"><a href="shiny-interactive-web-apps-in-r.html#cb807-97" aria-hidden="true"></a>      <span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span></span>
+<span id="cb807-98"><a href="shiny-interactive-web-apps-in-r.html#cb807-98" aria-hidden="true"></a><span class="st">        </span><span class="kw">setView</span>( <span class="fl">-84.5555</span>, <span class="fl">42.7325</span>,   <span class="dt">zoom =</span> <span class="dv">7</span>)</span>
+<span id="cb807-99"><a href="shiny-interactive-web-apps-in-r.html#cb807-99" aria-hidden="true"></a>    }</span>
+<span id="cb807-100"><a href="shiny-interactive-web-apps-in-r.html#cb807-100" aria-hidden="true"></a></span>
+<span id="cb807-101"><a href="shiny-interactive-web-apps-in-r.html#cb807-101" aria-hidden="true"></a>  })</span>
+<span id="cb807-102"><a href="shiny-interactive-web-apps-in-r.html#cb807-102" aria-hidden="true"></a></span>
+<span id="cb807-103"><a href="shiny-interactive-web-apps-in-r.html#cb807-103" aria-hidden="true"></a>}</span>
+<span id="cb807-104"><a href="shiny-interactive-web-apps-in-r.html#cb807-104" aria-hidden="true"></a></span>
+<span id="cb807-105"><a href="shiny-interactive-web-apps-in-r.html#cb807-105" aria-hidden="true"></a><span class="co"># Create Shiny app ----</span></span>
+<span id="cb807-106"><a href="shiny-interactive-web-apps-in-r.html#cb807-106" aria-hidden="true"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 <p>Run the Shiny app in the <code>CampsitesMI_Leaflet</code> directory. What are the differences between the plot widget in this app and the plot widget in the previous app (using <code>ggplot2</code>)?</p>
 <p>The code inside <code>renderLeaflet</code> is displayed again below. As a reminder from our previous use of Leaflet, we can use the <code>magrittr</code> package’s pipe operator, <code>%&gt;%</code>, to add properties to our Leaflet plot.
 In the <code>addCircleMarkers</code> function, you can see that we used the <code>mapply</code> function to apply HTML code to each of the markers. The HTML code simply prints the site name and number of sites within each marker label. The <code>else</code> statement serves the purpsose that if our subset, <code>sites1</code>, is empty, we render a map centered on Lansing, MI.</p>
 <p>}</p>
-<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="shiny-interactive-web-apps-in-r.html#cb806-1"></a><span class="co"># renderLeaflet function from app.R</span></span>
-<span id="cb806-2"><a href="shiny-interactive-web-apps-in-r.html#cb806-2"></a></span>
-<span id="cb806-3"><a href="shiny-interactive-web-apps-in-r.html#cb806-3"></a>output<span class="op">$</span>plot1 &lt;-<span class="st"> </span><span class="kw">renderLeaflet</span>({</span>
-<span id="cb806-4"><a href="shiny-interactive-web-apps-in-r.html#cb806-4"></a>    <span class="co"># create a subset of campsites based on inputs</span></span>
-<span id="cb806-5"><a href="shiny-interactive-web-apps-in-r.html#cb806-5"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites, </span>
-<span id="cb806-6"><a href="shiny-interactive-web-apps-in-r.html#cb806-6"></a>                    TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb806-7"><a href="shiny-interactive-web-apps-in-r.html#cb806-7"></a><span class="st">                      </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb806-8"><a href="shiny-interactive-web-apps-in-r.html#cb806-8"></a><span class="st">                      </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb806-9"><a href="shiny-interactive-web-apps-in-r.html#cb806-9"></a><span class="st">                      </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
-<span id="cb806-10"><a href="shiny-interactive-web-apps-in-r.html#cb806-10"></a>    </span>
-<span id="cb806-11"><a href="shiny-interactive-web-apps-in-r.html#cb806-11"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
-<span id="cb806-12"><a href="shiny-interactive-web-apps-in-r.html#cb806-12"></a>      <span class="kw">leaflet</span>(sites1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>()  <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb806-13"><a href="shiny-interactive-web-apps-in-r.html#cb806-13"></a><span class="st">        </span><span class="kw">addCircleMarkers</span>(<span class="dt">lng =</span> <span class="op">~</span>Long, <span class="dt">lat =</span> <span class="op">~</span>Lat, </span>
-<span id="cb806-14"><a href="shiny-interactive-web-apps-in-r.html#cb806-14"></a>                         <span class="dt">radius =</span> <span class="dv">5</span>,</span>
-<span id="cb806-15"><a href="shiny-interactive-web-apps-in-r.html#cb806-15"></a>                         <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb806-16"><a href="shiny-interactive-web-apps-in-r.html#cb806-16"></a>                         <span class="dt">label =</span> <span class="kw">mapply</span>(<span class="cf">function</span>(x,y) {</span>
-<span id="cb806-17"><a href="shiny-interactive-web-apps-in-r.html#cb806-17"></a>                           <span class="kw">HTML</span>(<span class="kw">sprintf</span>(<span class="st">&#39;&lt;em&gt;%s&lt;/em&gt;&lt;br&gt;%s site(s)&#39;</span>, </span>
-<span id="cb806-18"><a href="shiny-interactive-web-apps-in-r.html#cb806-18"></a>                                        <span class="kw">htmlEscape</span>(x), </span>
-<span id="cb806-19"><a href="shiny-interactive-web-apps-in-r.html#cb806-19"></a>                                        <span class="kw">htmlEscape</span>(y)))}, </span>
-<span id="cb806-20"><a href="shiny-interactive-web-apps-in-r.html#cb806-20"></a>                           sites1<span class="op">$</span>FACILITY, sites1<span class="op">$</span>TOTAL_SITE</span>
-<span id="cb806-21"><a href="shiny-interactive-web-apps-in-r.html#cb806-21"></a>                           )</span>
-<span id="cb806-22"><a href="shiny-interactive-web-apps-in-r.html#cb806-22"></a>                         )</span>
-<span id="cb806-23"><a href="shiny-interactive-web-apps-in-r.html#cb806-23"></a>    } <span class="cf">else</span> {</span>
-<span id="cb806-24"><a href="shiny-interactive-web-apps-in-r.html#cb806-24"></a>        <span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span></span>
-<span id="cb806-25"><a href="shiny-interactive-web-apps-in-r.html#cb806-25"></a><span class="st">        </span><span class="kw">setView</span>( <span class="fl">-84.5555</span>, <span class="fl">42.7325</span>,   <span class="dt">zoom =</span> <span class="dv">7</span>)</span>
-<span id="cb806-26"><a href="shiny-interactive-web-apps-in-r.html#cb806-26"></a>    }</span>
-<span id="cb806-27"><a href="shiny-interactive-web-apps-in-r.html#cb806-27"></a>    </span>
-<span id="cb806-28"><a href="shiny-interactive-web-apps-in-r.html#cb806-28"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="shiny-interactive-web-apps-in-r.html#cb808-1" aria-hidden="true"></a><span class="co"># renderLeaflet function from app.R</span></span>
+<span id="cb808-2"><a href="shiny-interactive-web-apps-in-r.html#cb808-2" aria-hidden="true"></a></span>
+<span id="cb808-3"><a href="shiny-interactive-web-apps-in-r.html#cb808-3" aria-hidden="true"></a>output<span class="op">$</span>plot1 &lt;-<span class="st"> </span><span class="kw">renderLeaflet</span>({</span>
+<span id="cb808-4"><a href="shiny-interactive-web-apps-in-r.html#cb808-4" aria-hidden="true"></a>    <span class="co"># create a subset of campsites based on inputs</span></span>
+<span id="cb808-5"><a href="shiny-interactive-web-apps-in-r.html#cb808-5" aria-hidden="true"></a>    sites1 &lt;-<span class="st"> </span><span class="kw">subset</span>(sites, </span>
+<span id="cb808-6"><a href="shiny-interactive-web-apps-in-r.html#cb808-6" aria-hidden="true"></a>                    TOTAL_SITE <span class="op">&gt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">1</span>] <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb808-7"><a href="shiny-interactive-web-apps-in-r.html#cb808-7" aria-hidden="true"></a><span class="st">                      </span>TOTAL_SITE <span class="op">&lt;=</span><span class="st"> </span>input<span class="op">$</span>rangeNum[<span class="dv">2</span>] <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb808-8"><a href="shiny-interactive-web-apps-in-r.html#cb808-8" aria-hidden="true"></a><span class="st">                      </span>Camp_type <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>type <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb808-9"><a href="shiny-interactive-web-apps-in-r.html#cb808-9" aria-hidden="true"></a><span class="st">                      </span><span class="cf">if</span>(input<span class="op">$</span>ada){ ADA_SITES <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> } <span class="cf">else</span> {ADA_SITES <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>})</span>
+<span id="cb808-10"><a href="shiny-interactive-web-apps-in-r.html#cb808-10" aria-hidden="true"></a>    </span>
+<span id="cb808-11"><a href="shiny-interactive-web-apps-in-r.html#cb808-11" aria-hidden="true"></a>    <span class="cf">if</span>(<span class="kw">nrow</span>(sites1) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){</span>
+<span id="cb808-12"><a href="shiny-interactive-web-apps-in-r.html#cb808-12" aria-hidden="true"></a>      <span class="kw">leaflet</span>(sites1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>()  <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb808-13"><a href="shiny-interactive-web-apps-in-r.html#cb808-13" aria-hidden="true"></a><span class="st">        </span><span class="kw">addCircleMarkers</span>(<span class="dt">lng =</span> <span class="op">~</span>Long, <span class="dt">lat =</span> <span class="op">~</span>Lat, </span>
+<span id="cb808-14"><a href="shiny-interactive-web-apps-in-r.html#cb808-14" aria-hidden="true"></a>                         <span class="dt">radius =</span> <span class="dv">5</span>,</span>
+<span id="cb808-15"><a href="shiny-interactive-web-apps-in-r.html#cb808-15" aria-hidden="true"></a>                         <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb808-16"><a href="shiny-interactive-web-apps-in-r.html#cb808-16" aria-hidden="true"></a>                         <span class="dt">label =</span> <span class="kw">mapply</span>(<span class="cf">function</span>(x,y) {</span>
+<span id="cb808-17"><a href="shiny-interactive-web-apps-in-r.html#cb808-17" aria-hidden="true"></a>                           <span class="kw">HTML</span>(<span class="kw">sprintf</span>(<span class="st">&#39;&lt;em&gt;%s&lt;/em&gt;&lt;br&gt;%s site(s)&#39;</span>, </span>
+<span id="cb808-18"><a href="shiny-interactive-web-apps-in-r.html#cb808-18" aria-hidden="true"></a>                                        <span class="kw">htmlEscape</span>(x), </span>
+<span id="cb808-19"><a href="shiny-interactive-web-apps-in-r.html#cb808-19" aria-hidden="true"></a>                                        <span class="kw">htmlEscape</span>(y)))}, </span>
+<span id="cb808-20"><a href="shiny-interactive-web-apps-in-r.html#cb808-20" aria-hidden="true"></a>                           sites1<span class="op">$</span>FACILITY, sites1<span class="op">$</span>TOTAL_SITE</span>
+<span id="cb808-21"><a href="shiny-interactive-web-apps-in-r.html#cb808-21" aria-hidden="true"></a>                           )</span>
+<span id="cb808-22"><a href="shiny-interactive-web-apps-in-r.html#cb808-22" aria-hidden="true"></a>                         )</span>
+<span id="cb808-23"><a href="shiny-interactive-web-apps-in-r.html#cb808-23" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb808-24"><a href="shiny-interactive-web-apps-in-r.html#cb808-24" aria-hidden="true"></a>        <span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span></span>
+<span id="cb808-25"><a href="shiny-interactive-web-apps-in-r.html#cb808-25" aria-hidden="true"></a><span class="st">        </span><span class="kw">setView</span>( <span class="fl">-84.5555</span>, <span class="fl">42.7325</span>,   <span class="dt">zoom =</span> <span class="dv">7</span>)</span>
+<span id="cb808-26"><a href="shiny-interactive-web-apps-in-r.html#cb808-26" aria-hidden="true"></a>    }</span>
+<span id="cb808-27"><a href="shiny-interactive-web-apps-in-r.html#cb808-27" aria-hidden="true"></a>    </span>
+<span id="cb808-28"><a href="shiny-interactive-web-apps-in-r.html#cb808-28" aria-hidden="true"></a>  })</span></code></pre></div>
 </div>
-<div id="why-use-shiny" class="section level2" number="9.6">
-<h2><span class="header-section-number">9.6</span> Why use Shiny?</h2>
+<div id="why-use-shiny" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Why use Shiny?<a href="shiny-interactive-web-apps-in-r.html#why-use-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this chapter, we learned what a Shiny app is, what it’s components are, how to run the app, and how to incorporate Leaflet plots. We can also host these apps online on our own server or the <a href="https://www.shinyapps.io/">shinyapps.io</a> server, which can be accessed directly from RStudio. Hosting our apps on a server allows anyone with internet access to interact with our widgets.</p>
 <p>The shinyapps.io server allows free hosting of apps within the monthly limits of 5 applications and 25 active hours. Paid plans are also available. A user guide to deploying your application on shinyapps.io is available <a href="http://docs.rstudio.com/shinyapps.io/index.html">here</a>. Set up a free account and impress your friends by sending them links to your Shiny apps! In addition to hosting your applications, here are a few more things to discover with Shiny:</p>
 <ul>
@@ -1075,8 +1074,8 @@ In the <code>addCircleMarkers</code> function, you can see that we used the <cod
 <li><a href="https://shiny.rstudio.com/articles/single-file.html">Explore</a> the single-file Shiny app structure.</li>
 </ul>
 </div>
-<div id="shinyEx" class="section level2" number="9.7">
-<h2><span class="header-section-number">9.7</span> Exercises</h2>
+<div id="shinyEx" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> Exercises<a href="shiny-interactive-web-apps-in-r.html#shinyEx" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Exercise Shiny</strong> Learning objectives: practice updating <code>ggplot2</code> plot aesthetics; modify Shiny HTML output; add an interactive Shiny element.</p>
 
 </div>
@@ -1098,7 +1097,6 @@ In the <code>addCircleMarkers</code> function, you can see that we used the <cod
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
-<script src="libs/gitbook/js/lunr.js"></script>
 <script src="libs/gitbook/js/clipboard.min.js"></script>
 <script src="libs/gitbook/js/plugin-search.js"></script>
 <script src="libs/gitbook/js/plugin-sharing.js"></script>
@@ -1138,6 +1136,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown.pdf", "bookdown.epub", "bookdown.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "none"
 }
