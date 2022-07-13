@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Fits single-species, multi-species, and integrated non-spatial and spatial occupancy models using Markov Chain Monte Carlo (MCMC). Models are fit using Polya-Gamma data augmentation detailed in Polson, Scott, and Windle (2013) &lt;doi:10.1080/01621459.2013.829001&gt;. Spatial models are fit using either Gaussian processes or Nearest Neighbor Gaussian Processes (NNGP) for large spatial datasets. Details on NNGP models are given in Datta, Banerjee, Finley, and Gelfand (2016) &lt;doi:10.1080/01621459.2015.1044091&gt; and Finley, Datta, and Banerjee (2020) &lt;arXiv:2001.09111&gt;. Provides functionality for data integration of multiple single-species occupancy data sets using a joint likelihood framework. Details on data integration are given in Miller, Pacifici, Sanderlin, and Reich (2019) &lt;doi:10.1111/2041-210X.13110&gt;. Details on single-species and multi-species models are found in MacKenzie, Nichols, Lachman, Droege, Royle, and Langtimm (2002) &lt;doi:10.1890/0012-9658(2002)083[2248:ESORWD]2.0.CO;2&gt; and Dorazio and Royle &lt;doi:10.1198/016214505000000015&gt;, respectively. ">
 <title>Single-Species, Multi-Species, and Integrated Spatial Occupancy Models • spOccupancy</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -12,12 +13,11 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Single-Species, Multi-Species, and Integrated Spatial Occupancy Models">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Single-Species, Multi-Species, and Integrated Spatial Occupancy Models">
 <meta property="og:description" content="Fits single-species, multi-species, and integrated non-spatial and spatial occupancy models using Markov Chain Monte Carlo (MCMC). Models are fit using Polya-Gamma data augmentation detailed in Polson, Scott, and Windle (2013) &lt;doi:10.1080/01621459.2013.829001&gt;. Spatial models are fit using either Gaussian processes or Nearest Neighbor Gaussian Processes (NNGP) for large spatial datasets. Details on NNGP models are given in Datta, Banerjee, Finley, and Gelfand (2016) &lt;doi:10.1080/01621459.2015.1044091&gt; and Finley, Datta, and Banerjee (2020) &lt;arXiv:2001.09111&gt;. Provides functionality for data integration of multiple single-species occupancy data sets using a joint likelihood framework. Details on data integration are given in Miller, Pacifici, Sanderlin, and Reich (2019) &lt;doi:10.1111/2041-210X.13110&gt;. Details on single-species and multi-species models are found in MacKenzie, Nichols, Lachman, Droege, Royle, and Langtimm (2002) &lt;doi:10.1890/0012-9658(2002)083[2248:ESORWD]2.0.CO;2&gt; and Dorazio and Royle &lt;doi:10.1198/016214505000000015&gt;, respectively. ">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -25,92 +25,65 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">spOccupancy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
-      </span>
-    </div>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="index.html">spOccupancy</a>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="reference/index.html">Reference</a>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/dataFormatting.html">Formatting data for use in `spOccupancy`</a>
-    </li>
-    <li>
-      <a href="articles/factorModels.html">Joint species distribution models with imperfect detection in `spOccupancy`</a>
-    </li>
-    <li>
-      <a href="articles/mcmcFactorModels.pdf">MCMC samplers for joint species distribution models in `spOccupancy` (PDF)</a>
-    </li>
-    <li>
-      <a href="articles/mcmcSamplers.pdf">MCMC samplers for models fit in `spOccupancy` (PDF)</a>
-    </li>
-    <li>
-      <a href="articles/modelFitting.html">Fitting occupancy models with `spOccupancy`</a>
-    </li>
-    <li>
-      <a href="articles/randomEffects.html">Fitting occupancy models with random intercepts in `spOccupancy`</a>
-    </li>
-  </ul>
+<li class="nav-item">
+  <a class="nav-link" href="articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="news/index.html">Changelog</a>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/doserjef/spOccupancy/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
-
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="spoccupancy-">spOccupancy <a href="https://www.jeffdoser.com/files/spoccupancy-web/" class="external-link"><img src="reference/figures/logo.png" align="right" height="139" width="120"></a>
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="spoccupancy-">spOccupancy 
 <a class="anchor" aria-label="anchor" href="#spoccupancy-"></a>
-</h1></div>
+</h1>
+</div>
 
-<p>spOccupancy fits single-species, multi-species, and integrated spatial occupancy models using Markov Chain Monte Carlo (MCMC). Models are fit using Póly-Gamma data augmentation. Spatial models are fit using either Gaussian processes or Nearest Neighbor Gaussian Processes (NNGP) for large spatial datasets. The package provides functionality for data integration of multiple single-species occupancy data sets using a joint likelihood framework. For multi-species models, spOccupancy provides functions to account for residual species correlations in a joint species distribution model framework while accounting for imperfect detection. Below we provide a very brief introduction to some of the package’s functionality, and illustrate just one of the model fitting funcitons. For more information, see the resources referenced at the bottom of this page.</p>
+<p>spOccupancy fits single-species, multi-species, and integrated spatial occupancy models using Markov Chain Monte Carlo (MCMC). Models are fit using Póly-Gamma data augmentation. Spatial models are fit using either Gaussian processes or Nearest Neighbor Gaussian Processes (NNGP) for large spatial datasets. The package provides functionality for data integration of multiple single-species occupancy data sets using a joint likelihood framework. For multi-species models, spOccupancy provides functions to account for residual species correlations in a joint species distribution model framework while accounting for imperfect detection. As of v0.4.0, <code>spOccupancy</code> provides functions for multi-season (i.e., spatio-temporal) single-species occupancy models. Below we provide a very brief introduction to some of the package’s functionality, and illustrate just one of the model fitting funcitons. For more information, see the resources referenced at the bottom of this page.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the released version of <code>spOccupancy</code> from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"spOccupancy"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"spOccupancy"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="functionality">Functionality<a class="anchor" aria-label="anchor" href="#functionality"></a>
@@ -167,6 +140,14 @@
 <td>Multi-species spatial occupancy model with species correlations</td>
 </tr>
 <tr class="odd">
+<td><code><a href="reference/tPGOcc.html">tPGOcc()</a></code></td>
+<td>Single-species multi-season occupancy model</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/stPGOcc.html">stPGOcc()</a></code></td>
+<td>Single-species multi-season spatio-temporal occupancy model</td>
+</tr>
+<tr class="odd">
 <td><code><a href="reference/ppcOcc.html">ppcOcc()</a></code></td>
 <td>Posterior predictive check using Bayesian p-values</td>
 </tr>
@@ -197,11 +178,11 @@
 </h3>
 <p>To get started with <code>spOccupancy</code> we load the package and an example data set. We use data on twelve foliage-gleaning birds from the <a href="https://hubbardbrook.org/" class="external-link">Hubbard Brook Experimental Forest</a>, which is available in the <code>spOccupancy</code> package as the <code>hbef2015</code> object. Here we will only work with one bird species, the Black-throated Blue Warbler (BTBW), and so we subset the <code>hbef2015</code> object to only include this species.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">)</span>
-<span class="va">sp.names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="va">btbwHBEF</span> <span class="op">&lt;-</span> <span class="va">hbef2015</span>
-<span class="va">btbwHBEF</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">btbwHBEF</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sp.names</span> <span class="op">==</span> <span class="st">"BTBW"</span>, , <span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">)</span></span>
+<span><span class="va">sp.names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">btbwHBEF</span> <span class="op">&lt;-</span> <span class="va">hbef2015</span></span>
+<span><span class="va">btbwHBEF</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">btbwHBEF</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sp.names</span> <span class="op">==</span> <span class="st">"BTBW"</span>, , <span class="op">]</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="fit-a-spatial-occupancy-model-using-sppgocc">Fit a spatial occupancy model using <code>spPGOcc()</code>
@@ -209,103 +190,103 @@
 </h3>
 <p>Below we fit a single-species spatial occupancy model to the BTBW data using a Nearest Neighbor Gaussian Process. We use the default priors and initial values for the occurrence (<code>beta</code>) and regression (<code>alpha</code>) coefficients, the spatial variance (<code>sigma.sq</code>), the spatial range parameter (<code>phi</code>), the spatial random effects (<code>w</code>), and the latent occurrence values (<code>z</code>). We assume occurrence is a function of linear and quadratic elevation along with a spatial random intercept. We model detection as a function of linear and quadratic day of survey and linear time of day the survey occurred.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Specify model formulas</span>
-<span class="va">btbw.occ.formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
-<span class="va">btbw.det.formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Specify model formulas</span></span>
+<span><span class="va">btbw.occ.formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">btbw.det.formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>We run the model using an Adaptive MCMC sampler with a target acceptance rate of 0.43. We run 3 chains of the model each for 10,000 iterations split into 400 batches each of length 25. For each chain, we discard the first 6000 iterations as burn-in and use a thinning rate of 4 for a resulting 3000 samples from the joint posterior. We fit the model using 5 nearest neighbors and an exponential correlation function. We also specify the <code>k.fold</code> argument to perform 2-fold cross-validation after fitting the full model. Run <code><a href="reference/spPGOcc.html">?spPGOcc</a></code> for more detailed information on all function arguments.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Run the model</span>
-<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spPGOcc.html">spPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="va">btbw.occ.formula</span>,
-               det.formula <span class="op">=</span> <span class="va">btbw.det.formula</span>,
-               data <span class="op">=</span> <span class="va">btbwHBEF</span>, n.batch <span class="op">=</span> <span class="fl">400</span>, batch.length <span class="op">=</span> <span class="fl">25</span>,
-               accept.rate <span class="op">=</span> <span class="fl">0.43</span>, cov.model <span class="op">=</span> <span class="st">"exponential"</span>, 
-               NNGP <span class="op">=</span> <span class="cn">TRUE</span>, n.neighbors <span class="op">=</span> <span class="fl">5</span>, n.burn <span class="op">=</span> <span class="fl">2000</span>, 
-               n.thin <span class="op">=</span> <span class="fl">4</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, k.fold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Run the model</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spPGOcc.html">spPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="va">btbw.occ.formula</span>,</span>
+<span>               det.formula <span class="op">=</span> <span class="va">btbw.det.formula</span>,</span>
+<span>               data <span class="op">=</span> <span class="va">btbwHBEF</span>, n.batch <span class="op">=</span> <span class="fl">400</span>, batch.length <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>               accept.rate <span class="op">=</span> <span class="fl">0.43</span>, cov.model <span class="op">=</span> <span class="st">"exponential"</span>, </span>
+<span>               NNGP <span class="op">=</span> <span class="cn">TRUE</span>, n.neighbors <span class="op">=</span> <span class="fl">5</span>, n.burn <span class="op">=</span> <span class="fl">2000</span>, </span>
+<span>               n.thin <span class="op">=</span> <span class="fl">4</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, k.fold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>This will produce a large output object, and you can use <code>str(out)</code> to get an overview of what’s in there. Here we use the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function to print a concise but informative summary of the model fit.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; spPGOcc(occ.formula = btbw.occ.formula, det.formula = btbw.det.formula, </span>
-<span class="co">#&gt;     data = btbwHBEF, cov.model = "exponential", NNGP = TRUE, </span>
-<span class="co">#&gt;     n.neighbors = 5, n.batch = 400, batch.length = 25, accept.rate = 0.43, </span>
-<span class="co">#&gt;     verbose = FALSE, n.burn = 2000, n.thin = 4, n.chains = 3, </span>
-<span class="co">#&gt;     k.fold = 2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Samples per Chain: 10000</span>
-<span class="co">#&gt; Burn-in: 2000</span>
-<span class="co">#&gt; Thinning Rate: 4</span>
-<span class="co">#&gt; Number of Chains: 3</span>
-<span class="co">#&gt; Total Posterior Samples: 6000</span>
-<span class="co">#&gt; Run Time (min): 1.4477</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Occurrence (logit scale): </span>
-<span class="co">#&gt;                          Mean     SD    2.5%     50%   97.5%   Rhat  ESS</span>
-<span class="co">#&gt; (Intercept)            3.9871 0.5702  3.0346  3.9280  5.2375 1.0550  294</span>
-<span class="co">#&gt; scale(Elevation)      -0.5244 0.2233 -1.0009 -0.5155 -0.1102 1.0151 1436</span>
-<span class="co">#&gt; I(scale(Elevation)^2) -1.1613 0.2114 -1.6292 -1.1487 -0.7914 1.0593  399</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Detection (logit scale): </span>
-<span class="co">#&gt;                    Mean     SD    2.5%     50%  97.5%   Rhat  ESS</span>
-<span class="co">#&gt; (Intercept)      0.6629 0.1139  0.4432  0.6620 0.8905 1.0006 5243</span>
-<span class="co">#&gt; scale(day)       0.2902 0.0701  0.1535  0.2899 0.4333 1.0019 6000</span>
-<span class="co">#&gt; scale(tod)      -0.0297 0.0693 -0.1649 -0.0300 0.1074 1.0021 6000</span>
-<span class="co">#&gt; I(scale(day)^2) -0.0753 0.0852 -0.2445 -0.0761 0.0907 1.0004 5497</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Spatial Covariance: </span>
-<span class="co">#&gt;            Mean     SD   2.5%    50%  97.5%   Rhat ESS</span>
-<span class="co">#&gt; sigma.sq 1.1054 0.8433 0.2176 0.8835 3.2688 1.0867 116</span>
-<span class="co">#&gt; phi      0.0072 0.0074 0.0007 0.0038 0.0272 1.1358  56</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spPGOcc(occ.formula = btbw.occ.formula, det.formula = btbw.det.formula, </span></span>
+<span><span class="co">#&gt;     data = btbwHBEF, cov.model = "exponential", NNGP = TRUE, </span></span>
+<span><span class="co">#&gt;     n.neighbors = 5, n.batch = 400, batch.length = 25, accept.rate = 0.43, </span></span>
+<span><span class="co">#&gt;     verbose = FALSE, n.burn = 2000, n.thin = 4, n.chains = 3, </span></span>
+<span><span class="co">#&gt;     k.fold = 2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Samples per Chain: 10000</span></span>
+<span><span class="co">#&gt; Burn-in: 2000</span></span>
+<span><span class="co">#&gt; Thinning Rate: 4</span></span>
+<span><span class="co">#&gt; Number of Chains: 3</span></span>
+<span><span class="co">#&gt; Total Posterior Samples: 6000</span></span>
+<span><span class="co">#&gt; Run Time (min): 1.4284</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Occurrence (logit scale): </span></span>
+<span><span class="co">#&gt;                          Mean     SD    2.5%     50%   97.5%   Rhat  ESS</span></span>
+<span><span class="co">#&gt; (Intercept)            3.9306 0.5843  2.9649  3.8718  5.3272 1.0703  278</span></span>
+<span><span class="co">#&gt; scale(Elevation)      -0.5134 0.2112 -0.9457 -0.5051 -0.1178 1.0070 1110</span></span>
+<span><span class="co">#&gt; I(scale(Elevation)^2) -1.1388 0.2044 -1.6050 -1.1181 -0.7881 1.0705  466</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Detection (logit scale): </span></span>
+<span><span class="co">#&gt;                    Mean     SD    2.5%     50%  97.5%   Rhat  ESS</span></span>
+<span><span class="co">#&gt; (Intercept)      0.6663 0.1136  0.4486  0.6656 0.8900 0.9999 5769</span></span>
+<span><span class="co">#&gt; scale(day)       0.2933 0.0704  0.1531  0.2929 0.4308 1.0000 6000</span></span>
+<span><span class="co">#&gt; scale(tod)      -0.0290 0.0702 -0.1638 -0.0293 0.1070 1.0024 6000</span></span>
+<span><span class="co">#&gt; I(scale(day)^2) -0.0763 0.0863 -0.2447 -0.0768 0.0910 1.0011 6000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Spatial Covariance: </span></span>
+<span><span class="co">#&gt;            Mean     SD   2.5%    50%  97.5%   Rhat ESS</span></span>
+<span><span class="co">#&gt; sigma.sq 1.0481 0.9929 0.2094 0.7385 3.8056 1.2883  86</span></span>
+<span><span class="co">#&gt; phi      0.0085 0.0078 0.0005 0.0053 0.0274 1.1606  53</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="posterior-predictive-check">Posterior predictive check<a class="anchor" aria-label="anchor" href="#posterior-predictive-check"></a>
 </h3>
 <p>The function <code>ppcOcc</code> performs a posterior predictive check on the resulting list from the call to <code>spPGOcc</code>. For binary data, we need to perform Goodness of Fit assessments on some binned form of the data rather than the raw binary data. Below we perform a posterior predictive check on the data grouped by site with a Freeman-Tukey fit statistic, and then use the <code>summary</code> function to summarize the check with a Bayesian p-value.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ppc.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ppcOcc.html">ppcOcc</a></span><span class="op">(</span><span class="va">out</span>, fit.stat <span class="op">=</span> <span class="st">'freeman-tukey'</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ppc.out</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; ppcOcc(object = out, fit.stat = "freeman-tukey", group = 1)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Samples per Chain: 10000</span>
-<span class="co">#&gt; Burn-in: 2000</span>
-<span class="co">#&gt; Thinning Rate: 4</span>
-<span class="co">#&gt; Number of Chains: 3</span>
-<span class="co">#&gt; Total Posterior Samples: 6000</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Bayesian p-value:  0.4797 </span>
-<span class="co">#&gt; Fit statistic:  freeman-tukey</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ppc.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ppcOcc.html">ppcOcc</a></span><span class="op">(</span><span class="va">out</span>, fit.stat <span class="op">=</span> <span class="st">'freeman-tukey'</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ppc.out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; ppcOcc(object = out, fit.stat = "freeman-tukey", group = 1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Samples per Chain: 10000</span></span>
+<span><span class="co">#&gt; Burn-in: 2000</span></span>
+<span><span class="co">#&gt; Thinning Rate: 4</span></span>
+<span><span class="co">#&gt; Number of Chains: 3</span></span>
+<span><span class="co">#&gt; Total Posterior Samples: 6000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Bayesian p-value:  0.4873 </span></span>
+<span><span class="co">#&gt; Fit statistic:  freeman-tukey</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="model-selection-using-waic-and-k-fold-cross-validation">Model selection using WAIC and k-fold cross-validation<a class="anchor" aria-label="anchor" href="#model-selection-using-waic-and-k-fold-cross-validation"></a>
 </h3>
 <p>The <code>waicOcc</code> function computes the Widely Applicable Information Criterion (WAIC) for use in model selection and assessment (note that due to Monte Carlo error your results will differ slightly).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt;       elpd         pD       WAIC </span>
-<span class="co">#&gt; -681.65894   21.05316 1405.42422</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       elpd         pD       WAIC </span></span>
+<span><span class="co">#&gt; -682.35028   20.86682 1406.43420</span></span></code></pre></div>
 <p>Alternatively, we can perform k-fold cross-validation (CV) directly in our call to <code>spPGOcc</code> using the <code>k.fold</code> argument and compare models using a deviance scoring rule. We fit the model with <code>k.fold = 2</code> and so below we access the deviance scoring rule from the 2-fold cross-validation. If we have additional candidate models to compare this model with, then we might select for inference the one with the lowest value of this CV score.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">out</span><span class="op">$</span><span class="va">k.fold.deviance</span>
-<span class="co">#&gt; [1] 1497.037</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">k.fold.deviance</span></span>
+<span><span class="co">#&gt; [1] 1496.56</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
 </h3>
 <p>Prediction is possible using the <code>predict</code> function, a set of occurrence covariates at the new locations, and the spatial coordinates of the new locations. The object <code>hbefElev</code> contains elevation data across the entire Hubbard Brook Experimental Forest. Below we predict BTBW occurrence across the forest, which are stored in the <code>out.pred</code> object.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># First standardize elevation using mean and sd from fitted model</span>
-<span class="va">elev.pred</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">hbefElev</span><span class="op">$</span><span class="va">val</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">btbwHBEF</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">btbwHBEF</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="va">coords.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">hbefElev</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Easting'</span>, <span class="st">'Northing'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="va">X.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">elev.pred</span>, <span class="va">elev.pred</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
-<span class="va">out.pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># First standardize elevation using mean and sd from fitted model</span></span>
+<span><span class="va">elev.pred</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">hbefElev</span><span class="op">$</span><span class="va">val</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">btbwHBEF</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">btbwHBEF</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">coords.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">hbefElev</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Easting'</span>, <span class="st">'Northing'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">X.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">elev.pred</span>, <span class="va">elev.pred</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">out.pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p>The <code><a href="articles/modelFitting.html">vignette("modelFitting")</a></code> provides a more detailed description and tutorial of the core functions in <code>spOccupancy</code>. For full statistical details on the MCMC samplers for core functions in <code>spOccupancy</code>, see <code><a href="articles/mcmcSamplers.pdf">vignette("mcmcSamplers")</a></code>. In addition, see <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link">our recent paper</a> that describes the package in more detail (Doser et al. 2022a). For a detailed description and tutorial of joint species distribution models in <code>spOccupancy</code> that account for residual species correlations, see <code><a href="articles/factorModels.html">vignette("factorModels")</a></code>, as well as <code><a href="articles/mcmcFactorModels.pdf">vignette("mcmcFactorModels")</a></code> for full statistical details.</p>
+<p>The <code><a href="articles/modelFitting.html">vignette("modelFitting")</a></code> provides a more detailed description and tutorial of the core functions in <code>spOccupancy</code>. For full statistical details on the MCMC samplers for core functions in <code>spOccupancy</code>, see <code><a href="articles/mcmcSamplers.pdf">vignette("mcmcSamplers")</a></code>. In addition, see <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link">our recent paper</a> that describes the package in more detail (Doser et al. 2022a). For a detailed description and tutorial of joint species distribution models in <code>spOccupancy</code> that account for residual species correlations, see <code><a href="articles/factorModels.html">vignette("factorModels")</a></code>, as well as <code><a href="articles/mcmcFactorModels.pdf">vignette("mcmcFactorModels")</a></code> for full statistical details. For a description and tutoral of multi-season (spatio-temporal) occupancy models in <code>spOccupancy</code>, see <code><a href="articles/spaceTimeModels.pdf">vignette("spaceTimeModels")</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -314,10 +295,7 @@
 <p>Doser, J. W., Finley, A. O., and Banerjee, S. (2022b) Joint species distribution models with imperfect detection for high-dimensional spatial data. <a href="https://arxiv.org/abs/2204.02707" class="external-link">arXiv preprint arXiv:2204.02707</a>.</p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=spOccupancy" class="external-link">View on CRAN</a></li>
@@ -349,6 +327,7 @@
 <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a> <br><small class="roles"> Author, maintainer </small>  </li>
 <li>
 <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a> <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -361,25 +340,24 @@
 </ul>
 </div>
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
+    <footer><div class="pkgdown-footer-left">
   <p></p>
 <p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
-<div class="pkgdown">
+<div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
-
 
   
 
