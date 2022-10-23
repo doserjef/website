@@ -3,7 +3,7 @@ abstract: "Occupancy modeling is a common approach to assess spatial and tempora
 authors:
 - Jeffrey W. Doser
 - Andrew O. Finley
-- Marc K&eacute;ry
+- Marc Kéry 
 - Elise F. Zipkin
 date: "2022-03-25T00:00:00Z"
 doi: ""

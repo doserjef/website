@@ -10,7 +10,6 @@ date: "2021-02-20T00:00:00Z"
 doi: ""
 featured: false
 links:
-links:
 - name: arXiv
   url: https://arxiv.org/pdf/2008.12184.pdf
 publication: "In Ecological Applications: https://doi.org/10.1002/eap.2377"

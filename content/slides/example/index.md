@@ -5,14 +5,14 @@ date: "2019-02-05T00:00:00Z"
 slides:
   highlight_style: dracula
   theme: black
-summary: An introduction to using Academic's Slides feature.
+summary: An introduction to using Wowchemy's Slides feature.
 tags: []
 title: Slides
 ---
 
-# Welcome to Slides
+# Create slides in Markdown with Wowchemy
 
-[Academic](https://sourcethemes.com/academic/)
+[Wowchemy](https://wowchemy.com/) | [Documentation](https://wowchemy.com/docs/content/slides/)
 
 ---
 
@@ -35,7 +35,7 @@ title: Slides
 - Speaker notes: `S`
 - Fullscreen: `F`
 - Zoom: `Alt + Click`
-- [PDF Export](https://github.com/hakimel/reveal.js#pdf-export): `E`
+- [PDF Export](https://revealjs.com/pdf-export/)
 
 ---
 
@@ -44,6 +44,7 @@ title: Slides
 Inline code: `variable`
 
 Code block:
+
 ```python
 porridge = "blueberry"
 if porridge == "blueberry":
@@ -95,17 +96,19 @@ Add speaker notes to your presentation
 
 ```markdown
 {{%/* speaker_note */%}}
+
 - Only the speaker can read these notes
 - Press `S` key to view
-{{%/* /speaker_note */%}}
+  {{%/* /speaker_note */%}}
 ```
 
 Press the `S` key to view the speaker notes!
 
 {{< speaker_note >}}
+
 - Only the speaker can read these notes
 - Press `S` key to view
-{{< /speaker_note >}}
+  {{< /speaker_note >}}
 
 ---
 
@@ -126,14 +129,14 @@ Press the `S` key to view the speaker notes!
 
 ---
 
-{{< slide background-image="/img/boards.jpg" >}}
+{{< slide background-image="/media/boards.jpg" >}}
 
 ## Custom Slide
 
 Customize the slide style and background
 
 ```markdown
-{{</* slide background-image="/img/boards.jpg" */>}}
+{{</* slide background-image="/media/boards.jpg" */>}}
 {{</* slide background-color="#0000FF" */>}}
 {{</* slide class="my-style" */>}}
 ```
@@ -158,6 +161,6 @@ Create `assets/css/reveal_custom.css` with:
 
 # Questions?
 
-[Ask](https://discourse.gohugo.io)
+[Ask](https://discord.gg/z8wNYzb)
 
-[Documentation](https://sourcethemes.com/academic/docs/)
+[Documentation](https://wowchemy.com/docs/content/slides/)
