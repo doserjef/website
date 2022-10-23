@@ -35,7 +35,8 @@ design:
   view: list 
   columns: '1'
   background: 
-    image: img/headers/road.jpg
+    # image: img/headers/road.jpg
+    image: headers/road.jpg
     image_darken: 0.6	
     text_color_light: true
 
