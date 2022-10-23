@@ -22,7 +22,7 @@ content:
         position: right
         color: ''
         brightness: 0.7
-        media: img/headers/oceanBeach.jpg
+        media: oceanBeach.jpg
         fit: cover
     - title: ''
       content: ''
@@ -31,7 +31,7 @@ content:
         position: right
         color: ''
         brightness: 0.7
-        media: img/headers/waterfall.jpg
+        media: waterfall.jpg
         fit: cover
     - title: ''
       content: ''
@@ -40,6 +40,6 @@ content:
         position: right
         color: ''
         brightness: 0.7
-        media: img/headers/forest.jpg
+        media: forest.jpg
         fit: cover
 ---

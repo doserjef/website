@@ -47,7 +47,7 @@ feature:
 # # Background image. 
 design: 
   background: 
-    image: img/headers/blueWave.jpg
+    image: blueWave.jpg
     image_darken: 0.4	
     text_color_light: true
 ---

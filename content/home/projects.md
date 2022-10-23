@@ -46,7 +46,7 @@ content:
 design: 
   columns: '1'
   background: 
-    image: img/headers/birds.jpg
+    image: birds.jpg
     image_darken: 0.5
     text_color_light: true
 ---
