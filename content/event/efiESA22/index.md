@@ -11,7 +11,7 @@ links:
 location: Zoom 
 math: true
 publishDate: "2022-10-03T12:00:00Z"
-summary: Introcutory spOccupancy Webinar 
+summary: Introductory spOccupancy Webinar 
 tags: []
 title: "Spatial occupancy models with the spOccupancy R package"
 url_code: "https://github.com/eco4cast/Statistical-Methods-Seminar-Series/tree/main/doser-finley-spocc"
