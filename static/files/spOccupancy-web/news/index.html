@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.1" id="spoccupancy-051">spOccupancy 0.5.1<a class="anchor" aria-label="anchor" href="#spoccupancy-051"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.2" id="spoccupancy-052">spOccupancy 0.5.2<a class="anchor" aria-label="anchor" href="#spoccupancy-052"></a></h2>
+<p>spOccupancy v0.5.2 contains an important bug fix in the cross-validation functionality for single-season occupancy models with unbalanced sampling across replicates in the data set. Specifically, the reported cross-validation deviance metrics may be inaccurate when one or more sites had a detection history where a missing value came before a non-missing value. For example, if one or more sites had a detection history of <code>c(NA, 1, 0, 0, 1)</code>, this would lead to the problem occurring, but this would not occur if all missing values were at the end of the detection history (e.g., <code>c(1, 0, 0, 1, NA)</code>). The affected functions include the following: <code><a href="../reference/PGOcc.html">PGOcc()</a></code>, <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>, <code><a href="../reference/msPGOcc.html">msPGOcc()</a></code>, <code><a href="../reference/spMsPGOcc.html">spMsPGOcc()</a></code>, <code><a href="../reference/lfMsPGOcc.html">lfMsPGOcc()</a></code>, <code><a href="../reference/sfMsPGOcc.html">sfMsPGOcc()</a></code>, <code><a href="../reference/intPGOcc.html">intPGOcc()</a></code>, <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code>. We strongly encourage users who have performed cross-validation with these models and unbalanced sampling across replicates in the manner described to rerun their analyses using v0.5.2. We apologize for any troubles this has caused.</p>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.1" id="spoccupancy-051">spOccupancy 0.5.1<a class="anchor" aria-label="anchor" href="#spoccupancy-051"></a></h2><p class="text-muted">CRAN release: 2022-12-08</p>
 <ul><li>Fixed issues with unicode text in the manual for passing CRAN checks on Windows</li>
 <li>Fixed a bug in the k-fold cross-validation for models that include unstructured random intercepts on the occupancy portion of the model. This bug could have led to inacurrate cross-validation metrics when comparing a model with the unstructured random effect and without the unstructured random effect. We strongly encourage users who have performed cross-validation under such a scenario to rerun their analyses using v0.5.1.</li>
 </ul></div>
