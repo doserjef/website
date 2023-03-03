@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,8 @@
   <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
   Valid tags are <code>beta.comm.normal</code>, <code>alpha.comm.normal</code>, 
-  <code>tau.sq.beta.ig</code>, <code>tau.sq.alpha.ig</code>, <code>sigma.sq.psi</code>, 
+  <code>tau.sq.beta.ig</code>, <code>tau.sq.alpha.ig</code>, <code>tau.beta.half.t</code>, 
+  <code>tau.alpha.half.t</code>, <code>sigma.sq.psi</code>, 
   <code>sigma.sq.p</code>, <code>phi.unif</code>, 
   and <code>nu.unif</code>. Community-level occurrence (<code>beta.comm</code>) and detection 
   (<code>alpha.comm</code>) regression coefficients are assumed to follow a 
@@ -127,7 +128,7 @@
   which are each specified as vectors of length equal to the number of 
   coefficients to be estimated or of length one if priors are the same for 
   all coefficients. If not specified, prior means are set 
-  to 0 and prior variances set to 2.73. Community-level variance parameters 
+  to 0 and prior variances set to 2.73. By default, community-level variance parameters 
   for occupancy (<code>tau.sq.beta</code>) and detection (<code>tau.sq.alpha</code>) are 
   assumed to follow an inverse Gamma distribution. The hyperparameters of 
   the inverse gamma distribution are passed as a list of length two with 
@@ -135,7 +136,14 @@
   which are each specified as vectors of length equal to the number of 
   coefficients to be estimated or a single value if priors are the same for all 
   parameters. If not specified, prior shape and scale 
-  parameters are set to 0.1. The spatial factor model fits <code>n.factors</code> independent
+  parameters are set to 0.1. Alternatively, half-t priors can be specified for the 
+  community level occurrence/detection standard deviation parameters using the tags
+  <code>tau.beta.half.t</code> and <code>tau.alpha.half.t</code>. The hyperparameters of the half-t
+  distribution are passed as a list of length two with the first and second elements
+  corresponding to the degrees of freedom and scale parameters, which are each 
+  specified as vectors of length equal to the number of coefficients to be estimated
+  or a single value if priors are the same for all parameters.
+  The spatial factor model fits <code>n.factors</code> independent
   spatial processes. The spatial decay <code>phi</code> and smoothness <code>nu</code> parameters 
   for each latent factor are assumed to follow Uniform distributions. 
   The hyperparameters of the Uniform are passed as a list with two elements, 
@@ -627,98 +635,98 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0147</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Means (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.1523 0.3502 -0.8158 -0.1756 0.4961   NA  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov      0.1216 0.2379 -0.3274  0.1191 0.5913   NA  37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1861 0.2154 -0.2564 0.2121 0.5728   NA  51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.2890 0.3349 -0.3215 0.2899 1.0334   NA  44</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Variances (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.6904 0.6167 0.0910 0.4961 2.5130   NA  53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.3252 0.2653 0.0486 0.2405 0.9585   NA  43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2285 0.2775 0.0295 0.1524 1.1148   NA  63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.5386 0.5563 0.0864 0.3618 1.9312   NA  53</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Random Effect Variances (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Mean     SD   2.5%   50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.re 0.3375 0.2506 0.0598 0.279 0.8779   NA   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.re 0.2557 0.1952 0.0546 0.1994 0.7033   NA   3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Means (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.1793 0.2235 -0.2254  0.1803 0.6155   NA 117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   -0.0507 0.2180 -0.4393 -0.0601 0.3674   NA  74</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   -0.4195 0.3681 -1.1756 -0.4249 0.2937   NA  72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0998 0.2896 -0.4640  0.1267  0.5850   NA  73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   -0.0182 0.1882 -0.3696 -0.0208  0.3449   NA 123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   -0.6697 0.3392 -1.3762 -0.6615 -0.0055   NA  87</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Variances (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2861 0.2903 0.0392 0.2045 1.0458   NA  29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.2028 0.2147 0.0451 0.1488 0.6536   NA  33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   0.8019 0.6158 0.1991 0.6276 2.1319   NA  81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.4582 0.5089 0.0585 0.2893 1.9069   NA  74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.1876 0.2412 0.0346 0.1133 0.8815   NA  89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   0.7593 0.7619 0.1496 0.5476 2.5998   NA  58</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Random Effect Variances (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.re 2.096 1.2022 0.6559 1.8757 5.2873   NA   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.re 2.0784 0.5267 1.2747 1.9719 3.2205   NA  13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Species Level</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp1  0.4253 0.4888 -0.4703  0.3973 1.4326   NA  22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp2  0.2123 0.4544 -0.6760  0.1970 1.1356   NA  48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp3 -0.5968 0.4658 -1.5179 -0.5819 0.2410   NA  72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp4 -0.2130 0.4614 -1.0907 -0.2377 0.7488   NA  47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp5 -0.5340 0.5947 -1.7462 -0.5456 0.8021   NA  31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp6 -1.0068 0.5763 -2.0085 -0.9914 0.0239   NA  27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp7  0.3168 0.5142 -0.6578  0.3121 1.4500   NA  43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp8  0.1390 0.4506 -0.8036  0.1433 1.0419   NA  46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp1      0.7072 0.4107  0.0141  0.6842 1.5075   NA  41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp2     -0.0351 0.3447 -0.6749 -0.0296 0.6164   NA  69</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp3     -0.0200 0.3306 -0.6447 -0.0179 0.6105   NA  98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp4      0.4743 0.3443 -0.1522  0.4708 1.1460   NA  81</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp5     -0.2645 0.4080 -1.0931 -0.2727 0.4470   NA  52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp6      0.0358 0.3782 -0.6125  0.0535 0.8243   NA  54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp7      0.0876 0.3368 -0.6102  0.0878 0.7754   NA  79</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp8     -0.1126 0.3620 -0.8218 -0.1160 0.6356   NA  73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp1  0.2296 0.3267 -0.3851  0.2260 0.9126   NA  60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp2  0.0704 0.3298 -0.6744  0.0760 0.7331   NA  83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp3  0.1304 0.4065 -0.6950  0.1435 0.9390   NA  38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp4  0.2170 0.3739 -0.3737  0.2103 0.9736   NA  57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp5  0.4829 0.4030 -0.2320  0.4422 1.3167   NA  63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp6  0.2089 0.3309 -0.4124  0.1829 0.8654   NA  72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp7  0.1106 0.3474 -0.6797  0.1072 0.7766   NA  67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp8 -0.0920 0.4453 -1.0207 -0.0611 0.6579   NA  31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp1      0.5206 0.4033 -0.1324  0.5371 1.4021   NA  43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp2     -0.0809 0.3425 -0.8021 -0.0667 0.5087   NA  70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp3      0.7883 0.4590 -0.0158  0.7956 1.7771   NA  46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp4      1.0085 0.5571  0.0685  1.0096 2.1610   NA  34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp5     -0.0664 0.3654 -0.7345 -0.0801 0.7268   NA  76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp6     -0.2488 0.3981 -0.9777 -0.2934 0.4972   NA  47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp7      0.2486 0.4692 -0.6442  0.2248 1.1663   NA  31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov-sp8      0.0797 0.4480 -0.8671  0.0672 0.9995   NA  78</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp1 -0.2347 0.3065 -0.8533 -0.2035  0.2679   NA  50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp2  0.6445 0.3471  0.0302  0.6240  1.3466   NA  49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp3  0.1888 0.3464 -0.5146  0.1836  0.9331   NA  58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp4  0.0367 0.3142 -0.5252  0.0303  0.6584   NA  22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp5  0.0799 0.4027 -0.6922  0.0636  0.8175   NA  59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp6  0.2058 0.4637 -0.6110  0.1621  1.2726   NA  35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp7  0.1510 0.3143 -0.4687  0.1466  0.7832   NA  62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp8  0.4972 0.3200 -0.0681  0.5021  1.2077   NA  94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp1   -0.3344 0.2450 -0.8102 -0.3166  0.0972   NA  88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp2   -0.0556 0.2416 -0.5621 -0.0673  0.4080   NA 171</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp3   -0.2475 0.3030 -0.9135 -0.2245  0.2959   NA  93</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp4   -0.0416 0.2723 -0.4987 -0.0660  0.5233   NA 121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp5   -0.2608 0.3656 -1.0813 -0.2474  0.4398   NA  49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp6    0.1801 0.2945 -0.3204  0.1884  0.7742   NA 112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp7    0.2527 0.2353 -0.1729  0.2387  0.7242   NA  93</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp8    0.1026 0.2697 -0.4550  0.1030  0.5663   NA  48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp1   -0.5383 0.3176 -1.1211 -0.5264  0.1241   NA  88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp2   -0.4712 0.3218 -1.0816 -0.4805  0.1131   NA  85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp3    0.1049 0.3672 -0.6307  0.1040  0.7914   NA  83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp4    0.0695 0.3199 -0.5931  0.0767  0.6385   NA  98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp5   -0.6973 0.4228 -1.5677 -0.6770  0.0683   NA  69</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp6    0.3712 0.4589 -0.4021  0.3514  1.3896   NA  72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp7   -1.1292 0.3450 -1.7703 -1.0984 -0.4198   NA  68</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp8   -1.5365 0.4117 -2.4750 -1.4856 -0.8314   NA  45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp1 -0.1283 0.3205 -0.7294 -0.1425  0.4614   NA  63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp2  0.4815 0.4101 -0.3094  0.4791  1.2459   NA  56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp3 -0.2663 0.3555 -1.0170 -0.2530  0.3754   NA  40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp4 -0.1448 0.2978 -0.6683 -0.1491  0.4144   NA  54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp5  0.8432 0.3585  0.1948  0.8435  1.4884   NA  24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp6  0.0590 0.3138 -0.5857  0.0428  0.6642   NA  65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp7 -0.2384 0.3871 -1.0735 -0.2197  0.5233   NA  28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-sp8  0.2344 0.4009 -0.6557  0.2249  1.0639   NA  51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp1   -0.2508 0.2724 -0.8218 -0.2334  0.2655   NA  87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp2   -0.2046 0.2865 -0.6691 -0.1916  0.3389   NA  90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp3   -0.1475 0.2533 -0.6289 -0.1293  0.2808   NA  92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp4    0.2150 0.2168 -0.2319  0.2061  0.6345   NA 119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp5   -0.0358 0.2203 -0.5115 -0.0424  0.3631   NA 145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp6   -0.0004 0.2316 -0.5179  0.0224  0.4471   NA  54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp7    0.2291 0.2901 -0.3593  0.2110  0.7757   NA  59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1-sp8    0.1737 0.2828 -0.4580  0.1537  0.7854   NA  89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp1   -0.7852 0.3221 -1.4319 -0.7613 -0.1995   NA  92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp2   -1.2602 0.4266 -2.0733 -1.1997 -0.6196   NA  61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp3   -0.7506 0.3250 -1.3583 -0.7686 -0.0867   NA  75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp4    0.0378 0.3240 -0.5354  0.0141  0.7667   NA  68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp5   -0.3749 0.2918 -0.8968 -0.3868  0.2262   NA  94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp6    0.1854 0.3309 -0.5210  0.1707  0.8188   NA  97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp7   -1.7393 0.5046 -2.7241 -1.7173 -0.8751   NA  34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2-sp8   -0.6467 0.3868 -1.3988 -0.6240  0.0120   NA  55</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Spatial Covariance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Mean     SD   2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-1 12.2017 8.2353 3.6121  8.1010 27.5784   NA   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-2 17.3390 8.9383 4.0870 17.1856 29.4094   NA   8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-3 15.2618 6.4533 3.8818 15.7977 25.9232   NA  22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-4 18.3066 6.6294 8.0665 19.2083 29.1245   NA  12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-1 18.0319 6.5472 5.8690 17.8156 28.7581   NA  16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-2 13.6859 7.9527 3.2550 14.8023 26.9109   NA   8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-3 13.0809 6.5482 3.6851 12.2442 27.0203   NA  13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-4 11.9562 6.1459 4.1592 10.1284 25.7078   NA  13</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
