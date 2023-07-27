@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">waicOcc</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">waicOcc</span><span class="op">(</span><span class="va">object</span>, by.sp <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,7 +67,14 @@
   <code>spMsPGOcc</code>, <code>intPGOcc</code>, <code>spIntPGOcc</code>, <code>lfJSDM</code>, 
   <code>sfJSDM</code>, <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>, <code>tPGOcc</code>, <code>stPGOcc</code>, 
   <code>svcPGBinom</code>, <code>svcPGOcc</code>, <code>svcTPGBinom</code>, <code>svcTPGOcc</code>, or 
-  <code>intMsPGOcc</code>.</p></dd>
+  <code>intMsPGOcc</code>, <code>svcMsPGOcc</code>, <code>tMsPGOcc</code>, <code>stMsPGOcc</code>, 
+  <code>svcTMsPGOcc</code>.</p></dd>
+
+
+  <dt>by.sp</dt>
+<dd><p>a logical value indicating whether to return a separate WAIC
+               value for each species in a multi-species occupancy model or 
+	       a single value for all species.</p></dd>
 
 
 <dt>...</dt>
@@ -97,14 +104,12 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>When <code>object</code> is of class <code>PGOcc</code>, <code>spPGOcc</code>, <code>msPGOcc</code>,</p>
-<p></p>
-<p><code>spMsPGOcc</code>, <code>lfJSDM</code>, <code>sfJSDM</code>, <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>,</p>
-<p></p>
-<p><code>tPGOcc</code>, <code>stPGOcc</code>, <code>svcPGBinom</code>, or <code>svcPGOcc</code>, 
-  returns a vector with three elements corresponding to 
+<p>When <code>object</code> is of class <code>PGOcc</code>, <code>spPGOcc</code>, <code>msPGOcc</code>, <code>spMsPGOcc</code>, <code>lfJSDM</code>, <code>sfJSDM</code>, <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>, <code>tPGOcc</code>, <code>stPGOcc</code>, <code>svcPGBinom</code>, <code>svcPGOcc</code>, <code>svcTPGOcc</code>, <code>svcTPGBinom</code>, <code>svcMsPGOcc</code>, <code>tMsPGOcc</code>, <code>stMsPGOcc</code>, <code>svcTMsPGOcc</code></p>
+ 
+
+<p>returns a vector with three elements corresponding to 
   estimates of the expected log pointwise predictive density (elpd), the 
-  effective number of parameters (pD), and the WAIC. When <code>object</code> is 
+  effective number of parameters (pD), and the WAIC. When <code>by.sp = TRUE</code> for multi-species models, object is a data frame with each row corresponding to a different species. When <code>object</code> is 
   of class <code>intPGOcc</code> or <code>spIntPGOcc</code>, returns a data frame with 
   columns elpd, pD, and WAIC, with each row corresponding to the estimated 
   values for each data source in the integrated model.</p>
@@ -175,7 +180,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 1000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Source compiled with OpenMP support and model fit using 1 thread(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

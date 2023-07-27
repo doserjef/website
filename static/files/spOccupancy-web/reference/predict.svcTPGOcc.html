@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for svcTPGOcc</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, <span class="va">t.cols</span>, <span class="va">weights.0</span>, n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>        verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
-<span>        ignore.RE <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">'occupancy'</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>        ignore.RE <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">'occupancy'</span>, forecast <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,7 +76,7 @@
 
 
   <dt>t.cols</dt>
-<dd><p>an indexing vector used to denote which primary time periods are contained in the design matrix of covariates at the prediction locations (<code>X.0</code>). The values should denote the specific primary time periods used to fit the model. The values should indicate the columns in <code>data$y</code> used to fit the model for which prediction is desired. See example below.</p></dd>
+<dd><p>an indexing vector used to denote which primary time periods are contained in the design matrix of covariates at the prediction locations (<code>X.0</code>). The values should denote the specific primary time periods used to fit the model. The values should indicate the columns in <code>data$y</code> used to fit the model for which prediction is desired. See example below. Not required when <code>forecast = TRUE</code>.</p></dd>
  
 
   <dt>weights.0</dt>
@@ -112,6 +112,11 @@
 
   <dt>...</dt>
 <dd><p>currently no additional arguments</p></dd>
+
+
+  <dt>forecast</dt>
+<dd><p>a logical value indicating whether prediction is occurring at non-sampled primary time periods (e.g., forecasting).</p></dd>
+
 
 </dl></div>
     <div class="section level2">
@@ -270,7 +275,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Model description</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial NNGP Trend Occupancy Model with Polya-Gamma latent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial NNGP Multi-season Occupancy Model with Polya-Gamma latent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> variable fit with 75 sites and 10 years.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Samples per chain: 250 (10 batches of length 25)</span>
@@ -308,26 +313,26 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0095</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.1813 0.2602 -0.2511  0.1884  0.7219   NA  12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> trend        0.6070 0.2209  0.1673  0.6087  0.9836   NA  30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov.1   -0.6133 0.1962 -0.9661 -0.6109 -0.2655   NA  36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.7991 0.3761  0.0888  0.8177  1.3866   NA  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> trend        0.6101 0.3827 -0.2235  0.6204  1.2300   NA   9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov.1   -0.5080 0.1980 -0.8394 -0.5308 -0.0771   NA  25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.9379 0.1596 -1.2224 -0.9395 -0.6544   NA  43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1    0.6972 0.1165  0.4913  0.6981  0.9359   NA  98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   -0.5536 0.1040 -0.7495 -0.5462 -0.3283   NA 128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -1.1338 0.1524 -1.4425 -1.1332 -0.8509   NA  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1    0.8275 0.1214  0.5782  0.8295  1.0807   NA  47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2   -0.4623 0.1003 -0.6428 -0.4566 -0.2569   NA 128</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Mean     SD   2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq-(Intercept)  0.3054 0.1680 0.0947  0.2727  0.7054   NA  13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq-trend        0.3631 0.2046 0.0884  0.3149  0.9085   NA   7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-(Intercept)       9.5408 6.3335 3.1040  7.2447 24.5164   NA   8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-trend            16.4342 5.7488 8.7169 15.4294 26.8137   NA  25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq-(Intercept)  0.5876 0.3084 0.1528  0.5616  1.2891   NA   7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq-trend        0.5665 0.5132 0.1591  0.3271  1.9043   NA   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-(Intercept)      15.3733 7.9892 4.3202 14.6523 28.9483   NA   9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-trend            15.9472 8.8039 3.1561 18.7010 27.4173   NA   6</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Predict at new sites across all n.max.years</span></span></span>
 <span class="r-in"><span><span class="co"># Take a look at array of covariates for prediction</span></span></span>
@@ -362,10 +367,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Generating latent occupancy state</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">out.pred</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ z.0.samples  : num [1:200, 1:25, 1:10] 0 1 1 0 1 0 1 0 1 1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ w.0.samples  : num [1:200, 1:2, 1:25] -0.147 0.981 -0.312 -1.134 0.155 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ psi.0.samples: num [1:200, 1:25, 1:10] 0.62 0.738 0.653 0.271 0.863 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ run.time     : 'proc_time' Named num [1:5] 0.122 0.085 0.042 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ z.0.samples  : num [1:200, 1:25, 1:10] 1 1 0 0 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ w.0.samples  : num [1:200, 1:2, 1:25] 0.0274 -0.2407 0.0254 -0.3488 -0.5979 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ psi.0.samples: num [1:200, 1:25, 1:10] 0.734 0.816 0.624 0.478 0.504 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ run.time     : 'proc_time' Named num [1:5] 0.213 0.197 0.082 0 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "names")= chr [1:5] "user.self" "sys.self" "elapsed" "user.child" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ call         : language predict.svcTPGOcc(object = out, X.0 = X.0, coords.0 = coords.0, t.cols = t.cols,      type = "occupancy")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ object.class : chr "svcTPGOcc"</span>

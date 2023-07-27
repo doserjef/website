@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,13 +64,14 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>svcPGOcc</code>, <code>svcPGBinom</code>, 
-    <code>svcTPGOcc</code>, <code>svcTPGBinom</code>.</p></dd>
+    <code>svcTPGOcc</code>, <code>svcTPGBinom</code>, <code>svcMsPGOcc</code>, <code>svcTMsPGOcc</code>.</p></dd>
 
 
   <dt>pred.object</dt>
 <dd><p>a prediction object from a spatially-varying coefficient 
     model fit using spOccupancy. Should be of class <code>predict.svcPGOcc</code>, 
-    <code>predict.svcPGBinom</code>, <code>predict.svcTPGOcc</code>, or <code>predict.svcTPGBinom</code>. 
+    <code>predict.svcPGBinom</code>, <code>predict.svcTPGOcc</code>, <code>predict.svcTPGBinom</code>, 
+    <code>predict.svcMsPGOcc</code>, or <code>predict.svcTMsPGOcc</code>. 
     If specified, SVC samples are extracted at the prediction locations.</p></dd>
 
 
@@ -82,6 +83,15 @@
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Jeffrey W. Doser <a href="mailto:doserjef@msu.edu">doserjef@msu.edu</a>, <br></p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>For multi-species models, the value of the SVC will be returned at all 
+  spatial locations for each species even when <code>range.ind</code> is specified
+  in the data list when fitting the model. This may not be desirable for complete
+  summaries of the SVC for each species, so if specifying <code>range.ind</code> in 
+  the data list, you may want to subsequently process the SVC samples for each species
+  to be restricted to each species range.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -208,9 +218,9 @@
 <span class="r-in"><span><span class="va">svc.samples</span> <span class="op">&lt;-</span> <span class="fu">getSVCSamples</span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">svc.samples</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ (Intercept): 'mcmc' num [1:200, 1:64] 0.612 -1.485 1.695 2.008 0.631 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ (Intercept): 'mcmc' num [1:200, 1:64] -2.523 -0.643 1.445 0.604 1.13 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "mcpar")= num [1:3] 1 200 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ occ.cov    : 'mcmc' num [1:200, 1:64] 2.95 2 1.47 2.27 3.89 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ occ.cov    : 'mcmc' num [1:200, 1:64] 2.49 2.76 2.94 2.68 2.68 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "mcpar")= num [1:3] 1 200 1</span>
 </code></pre></div>
     </div>

@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,7 +169,6 @@
 <p>This is the same format we would use to specify a covariate that varies over both space and time, except the elements would of course then vary across both rows and columns.</p>
 <p>For the detection covariates in <code>det.covs</code>, we specify space-varying, time-varying, and spatio-temporally varying covariates in the same manner as just described for <code>occ.covs</code>. Additionally, we can have detection covariates that vary across space, time, and replicate. We refer to these as observation-level covariates. Observation-level covariates are specified as three-dimensional arrays, with the first dimension corresponding to sites, the second dimension corresponding to primary time periods, and the third dimension corresponding to replicates. Here, we have two observation-level covariates in <code>det.covs</code>: <code>day</code> (the specific day of the year the survey took place) and <code>tod</code> (the specific time of day the survey began, in minutes since midnight).</p>
 <p>In practice, our data set will likely be unbalanced, where we have different numbers of both primary and secondary time periods for each given site in our data set. For the detection-nondetection data <code>y</code>, <code>NA</code> values should be placed in the site/time/replicate where no survey was taken. <code>spOccupancy</code> does not impute missing values, but rather these missing values will be removed when fitting the model. For detection covariates in <code>det.covs</code>, there may also be missing values placed in site/time/replicate where there was no survey. If there is a mismatch between the NA values in <code>y</code> and <code>det.covs</code>, <code>spOccupancy</code> will present either an error or warning message to inform you of this mismatch. For sites that are not surveyed at all in a given primary time period, <code>spOccupancy</code> will automatically predict occurrence probability and latent occurrence during these time periods. As a result, no missing values are allowed in the <code>occ.covs</code> list. Thus, occurrence covariates (which vary by site and/or time) must be available for all sites and/or time periods of your data set. If they are not available for certain time periods at each site, some form of imputation (e.g., mean imputation) would need to be done <em>prior</em> to fitting the model in <code>spOccupancy</code>. <code>spOccupancy</code> will return an error if there are any missing values in <code>occ.covs</code>.</p>
-<p>When a data set is unbalanced (i.e., each site is not surveyed the same number of primary time periods</p>
 <p>Finally, <code>coords</code> is a two-dimensional matrix of coordinates, with rows corresponding to sites, and two columns that contain the horizontal (i.e., easting) and vertical (i.e., northing) dimensions for each site. Note that <code>spOccupancy</code> requires coordinates to be specified in a projected coordinate system (i.e., these should not be longitude/latitude values).</p>
 </div>
 <div class="section level2">
@@ -490,26 +489,26 @@ Burn-in: 2000
 Thinning Rate: 12
 Number of Chains: 3
 Total Posterior Samples: 750
-Run Time (min): 2.8954
+Run Time (min): 2.4807
 
 Occurrence (logit scale): 
                     Mean     SD    2.5%     50%   97.5%   Rhat ESS
-(Intercept)       1.8839 0.3830  1.1541  1.8960  2.6374 1.0649 102
-scale(years)      0.6552 0.4616 -0.2779  0.6693  1.6137 1.3796  31
-scale(elev)      -1.6143 0.1258 -1.8671 -1.6161 -1.3806 1.0034 512
-I(scale(elev)^2) -0.6938 0.1001 -0.9002 -0.6958 -0.5100 1.0012 509
+(Intercept)       1.9131 0.4175  1.0178  1.9255  2.7091 1.4914  59
+scale(years)      0.6198 0.4434 -0.2194  0.6271  1.5175 1.0814  42
+scale(elev)      -1.6226 0.1311 -1.8757 -1.6157 -1.3733 1.0200 480
+I(scale(elev)^2) -0.6882 0.1007 -0.8820 -0.6919 -0.4874 1.0008 617
 
 Occurrence Random Effect Variances (logit scale): 
               Mean     SD   2.5%    50%  97.5%   Rhat ESS
-site.effect 2.7931 0.4590 2.0492 2.7776 3.7654 0.9982 406
-years       1.9608 1.6713 0.5680 1.5126 6.2176 1.3813 123
+site.effect 2.8108 0.4611 2.0491 2.7844 3.8263 1.0115 352
+years       1.9140 1.4378 0.5828 1.5579 5.2088 1.0588 236
 
 Detection (logit scale): 
-                   Mean     SD    2.5%     50%  97.5%   Rhat ESS
-(Intercept)      0.2153 0.0423  0.1309  0.2163 0.2954 1.0014 750
-scale(day)      -0.0126 0.0272 -0.0675 -0.0118 0.0410 1.0097 857
-I(scale(day)^2) -0.0049 0.0281 -0.0621 -0.0050 0.0505 1.0027 750
-scale(tod)      -0.0277 0.0267 -0.0821 -0.0271 0.0244 1.0163 750</code></pre>
+                   Mean     SD    2.5%     50%  97.5%   Rhat  ESS
+(Intercept)      0.2172 0.0441  0.1351  0.2175 0.2999 1.0003 1024
+scale(day)      -0.0132 0.0274 -0.0691 -0.0152 0.0386 1.0027  750
+I(scale(day)^2) -0.0054 0.0284 -0.0654 -0.0050 0.0480 1.0006  750
+scale(tod)      -0.0280 0.0271 -0.0804 -0.0292 0.0260 1.0129  750</code></pre>
 <p>Taking a quick look, we see fairly adequate convergence of all parameters (i.e., most Rhats are all less than 1.1), although we may want to run the chains a bit longer to ensure convergence of the occurrence trend and year random effect. We see a positive trend in occurrence probability, which matches with the EDA plot we produced earlier. We also see that the variance of both the site-level effect and temporal random effect are decently large, indicating substantial variation in occurrence probabilities across sites and years (beyond that which is explained by the covariates and their fixed effects).</p>
 <p>Next we will fit the same model, but instead of using an unstructured temporal random effect, we will use an AR(1) temporal random effect. We do this by removing <code>(1 | years)</code> from the <code>occ.formula</code> and setting <code>ar1 = TRUE</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -562,15 +561,15 @@ Source compiled with OpenMP support and model fit using 1 thread(s).
 Sampling ... 
 Batch: 50 of 200, 25.00%
     Parameter   Acceptance  Tuning
-    rho     28.0        1.23368
+    rho     48.0        1.23368
 -------------------------------------------------
 Batch: 100 of 200, 50.00%
     Parameter   Acceptance  Tuning
-    rho     48.0        1.33643
+    rho     32.0        1.39097
 -------------------------------------------------
 Batch: 150 of 200, 75.00%
     Parameter   Acceptance  Tuning
-    rho     52.0        1.41907
+    rho     28.0        1.41907
 -------------------------------------------------
 Batch: 200 of 200, 100.00%
 ----------------------------------------
@@ -579,15 +578,15 @@ Batch: 200 of 200, 100.00%
 Sampling ... 
 Batch: 50 of 200, 25.00%
     Parameter   Acceptance  Tuning
-    rho     48.0        1.33643
+    rho     56.0        1.33643
 -------------------------------------------------
 Batch: 100 of 200, 50.00%
     Parameter   Acceptance  Tuning
-    rho     40.0        1.36343
+    rho     24.0        1.33643
 -------------------------------------------------
 Batch: 150 of 200, 75.00%
     Parameter   Acceptance  Tuning
-    rho     48.0        1.39097
+    rho     48.0        1.33643
 -------------------------------------------------
 Batch: 200 of 200, 100.00%
 ----------------------------------------
@@ -596,15 +595,15 @@ Batch: 200 of 200, 100.00%
 Sampling ... 
 Batch: 50 of 200, 25.00%
     Parameter   Acceptance  Tuning
-    rho     32.0        1.41907
+    rho     44.0        1.44773
 -------------------------------------------------
 Batch: 100 of 200, 50.00%
     Parameter   Acceptance  Tuning
-    rho     44.0        1.41907
+    rho     36.0        1.41907
 -------------------------------------------------
 Batch: 150 of 200, 75.00%
     Parameter   Acceptance  Tuning
-    rho     40.0        1.36343
+    rho     40.0        1.25860
 -------------------------------------------------
 Batch: 200 of 200, 100.00%</code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
@@ -622,41 +621,41 @@ Burn-in: 2000
 Thinning Rate: 12
 Number of Chains: 3
 Total Posterior Samples: 750
-Run Time (min): 2.2798
+Run Time (min): 5.1525
 
 Occurrence (logit scale): 
                     Mean     SD    2.5%     50%   97.5%   Rhat ESS
-(Intercept)       1.8623 0.4359  0.8924  1.8885  2.6378 1.1956  47
-scale(years)      0.6346 0.4674 -0.3978  0.6396  1.4919 1.1399  37
-scale(elev)      -1.6111 0.1255 -1.8623 -1.6092 -1.3803 1.0112 357
-I(scale(elev)^2) -0.6934 0.0980 -0.8782 -0.6946 -0.4970 1.0107 600
+(Intercept)       1.9633 0.4225  1.1000  1.9541  2.7792 1.0192  69
+scale(years)      0.6633 0.3968 -0.1125  0.6849  1.4239 1.1856  54
+scale(elev)      -1.6041 0.1269 -1.8489 -1.6025 -1.3739 1.0182 491
+I(scale(elev)^2) -0.6957 0.0996 -0.8910 -0.6917 -0.5030 1.0024 656
 
 Occurrence Random Effect Variances (logit scale): 
-              Mean     SD   2.5%    50%  97.5%  Rhat ESS
-site.effect 2.7612 0.4534 2.0347 2.7072 3.8189 1.016 325
+              Mean     SD   2.5%    50%  97.5%   Rhat ESS
+site.effect 2.7449 0.4367 1.9914 2.7174 3.7102 1.0094 332
 
 Detection (logit scale): 
                    Mean     SD    2.5%     50%  97.5%   Rhat ESS
-(Intercept)      0.2162 0.0417  0.1346  0.2145 0.2987 1.0196 750
-scale(day)      -0.0110 0.0262 -0.0635 -0.0110 0.0390 1.0127 750
-I(scale(day)^2) -0.0037 0.0276 -0.0574 -0.0036 0.0495 1.0373 750
-scale(tod)      -0.0274 0.0270 -0.0814 -0.0278 0.0271 1.0207 750
+(Intercept)      0.2187 0.0428  0.1340  0.2192 0.2995 1.0042 750
+scale(day)      -0.0122 0.0266 -0.0637 -0.0118 0.0414 1.0134 750
+I(scale(day)^2) -0.0050 0.0282 -0.0597 -0.0067 0.0492 1.0268 750
+scale(tod)      -0.0278 0.0282 -0.0829 -0.0276 0.0257 1.0181 750
 
 Occurrence AR(1) Temporal Covariance: 
              Mean     SD    2.5%    50%  97.5%   Rhat ESS
-sigma.sq.t 1.4096 0.9205  0.4724 1.1812 3.5833 1.0082 466
-rho        0.1512 0.2837 -0.4273 0.1566 0.6875 1.0450 148</code></pre>
+sigma.sq.t 1.3406 0.7571  0.4988 1.1472 3.3115 1.0096 638
+rho        0.1456 0.2722 -0.4208 0.1625 0.6388 1.0079 300</code></pre>
 <p>Note the messages from <code><a href="../reference/tPGOcc.html">tPGOcc()</a></code> in the <code>Preparing the data</code> section. We use the default priors and starting values for the AR(1) variance (<code>sigma.sq.t</code>) and correlation (<code>rho</code>) parameters, which take the form of a weakly-informative inverse-Gamma prior for <code>sigma.sq.t</code> and a uniform prior on <code>rho</code> with bounds of -1 and 1. Note that when <code>rho</code> falls between -1 and 1, the AR(1) component is considered <em>stationary</em>. When <code>rho</code> is allowed to range outside of these bounds, the model is more unstable and can result in unrealistic estimates, and so we do not recommend allow <code>rho</code> to vary outside of -1 and 1.</p>
 <p>We see pretty strong correspondence between the estimated values from the model with the unstructured temporal random effect and the model with the AR(1) temporal random effect. Looking at the AR(1) covariance parameters, we see the temporal variance (<code>sigma.sq.t</code>) is again fairly large, and the temporal correlation parameter (<code>rho</code>) is moderately positive, indicating there is residual positive correlation in the occurrence values from one year to the next. Again, note the positive trend in occurrence probability.</p>
 <p>We can use the WAIC <span class="citation">(Watanabe 2010)</span> to do a formal comparison of the two models that use different temporal random effects. We do this using the <code><a href="../reference/waicOcc.html">waicOcc()</a></code> function.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--4703.0940   219.0248  9844.2376 </code></pre>
+-4702.3786   219.1876  9843.1324 </code></pre>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.ar1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--4703.5139   218.0479  9843.1238 </code></pre>
+-4704.4205   216.2989  9841.4387 </code></pre>
 <p>Here we see the WAIC values are very similar, with the model using the AR(1) covariance structure slightly favored over the unstructured random effect (lower values of WAIC indicate better model fit). Given the minute gain in WAIC, in practice one might here use the more simple model for inference (i.e., the unstructured temporal random effect).</p>
 <p>Next, let’s perform a Goodness of Fit assessment by conducting a posterior predictive check on the two models. We do this using the <code><a href="../reference/ppcOcc.html">ppcOcc()</a></code> function. Because posterior predictive checks are not valid for binary responses <span class="citation">(McCullagh and Nelder 2019)</span>, we group the data across sites (<code>group = 1</code>) and use the Freeman-Tukey statistic as a fit statistic. The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function provides us with a Bayesian p-value for the entire data set, as well as for each time period to give an indication on how our model fits the data points across each time period.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
@@ -686,20 +685,20 @@ Total Posterior Samples: 750
 ----------------------------------------
     All time periods combined
 ----------------------------------------
-Bayesian p-value:  0.6553 
+Bayesian p-value:  0.6733 
 
 ----------------------------------------
     Individual time periods
 ----------------------------------------
-Time Period 1 Bayesian p-value: 0.424
-Time Period 2 Bayesian p-value: 0.4387
-Time Period 3 Bayesian p-value: 0.6507
-Time Period 4 Bayesian p-value: 0.5107
-Time Period 5 Bayesian p-value: 0.9053
-Time Period 6 Bayesian p-value: 0.876
-Time Period 7 Bayesian p-value: 0.5307
-Time Period 8 Bayesian p-value: 0.904
-Time Period 9 Bayesian p-value: 0.6573
+Time Period 1 Bayesian p-value: 0.4107
+Time Period 2 Bayesian p-value: 0.468
+Time Period 3 Bayesian p-value: 0.6373
+Time Period 4 Bayesian p-value: 0.544
+Time Period 5 Bayesian p-value: 0.9373
+Time Period 6 Bayesian p-value: 0.9107
+Time Period 7 Bayesian p-value: 0.5613
+Time Period 8 Bayesian p-value: 0.9173
+Time Period 9 Bayesian p-value: 0.6733
 Fit statistic:  freeman-tukey </code></pre>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># AR(1) temporal random effect</span></span>
@@ -728,20 +727,20 @@ Total Posterior Samples: 750
 ----------------------------------------
     All time periods combined
 ----------------------------------------
-Bayesian p-value:  0.6683 
+Bayesian p-value:  0.6644 
 
 ----------------------------------------
     Individual time periods
 ----------------------------------------
-Time Period 1 Bayesian p-value: 0.3707
-Time Period 2 Bayesian p-value: 0.4747
-Time Period 3 Bayesian p-value: 0.6893
-Time Period 4 Bayesian p-value: 0.5107
-Time Period 5 Bayesian p-value: 0.912
-Time Period 6 Bayesian p-value: 0.9107
-Time Period 7 Bayesian p-value: 0.544
-Time Period 8 Bayesian p-value: 0.9267
-Time Period 9 Bayesian p-value: 0.676
+Time Period 1 Bayesian p-value: 0.3947
+Time Period 2 Bayesian p-value: 0.456
+Time Period 3 Bayesian p-value: 0.6627
+Time Period 4 Bayesian p-value: 0.5227
+Time Period 5 Bayesian p-value: 0.8987
+Time Period 6 Bayesian p-value: 0.912
+Time Period 7 Bayesian p-value: 0.532
+Time Period 8 Bayesian p-value: 0.9187
+Time Period 9 Bayesian p-value: 0.6827
 Fit statistic:  freeman-tukey </code></pre>
 <p>We see very similar values for both models, with the overall Bayesian p-value close to 0.5, indicating adequate model fit across the whole data set. We do see that the Bayesian p-values for certain years are quite close to 1, potentially indicating our model generates replicated data with more variability than the actual data in this time periods, which we may wish to explore further in a full analysis.</p>
 <p>Finally, we will conclude this section by predicting REVI occurrence probability across the entire Hubbard Brook forest. The object <code>hbefEelev</code> (which comes as part of the <code>spOccupancy</code> package) contains elevation data at a 30x30m resolution from the National Elevation Data set across the entire HBEF. We load the data below.</p>
@@ -786,9 +785,9 @@ Fit statistic:  freeman-tukey </code></pre>
 <span><span class="co"># Check out the structure</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">out.pred</span><span class="op">)</span></span></code></pre></div>
 <pre><code>List of 5
- $ psi.0.samples: num [1:750, 1:46090, 1:2] 0.00153 0.0015 0.00248 0.00148 0.00105 ...
+ $ psi.0.samples: num [1:750, 1:46090, 1:2] 0.002626 0.003172 0.002431 0.001788 0.000823 ...
  $ z.0.samples  : int [1:750, 1:46090, 1:2] 0 0 0 0 0 0 0 0 0 0 ...
- $ run.time     : 'proc_time' Named num [1:5] 11 2.44 12.12 0 0
+ $ run.time     : 'proc_time' Named num [1:5] 14.2 2.88 15.79 0 0
   ..- attr(*, "names")= chr [1:5] "user.self" "sys.self" "elapsed" "user.child" ...
  $ call         : language predict.tPGOcc(object = out.ar1, X.0 = X.0, t.cols = t.cols, ignore.RE = TRUE,      type = "occupancy")
  $ object.class : chr "tPGOcc"
@@ -954,13 +953,13 @@ Adaptive Metropolis with target acceptance rate: 43.0
 Sampling ... 
 Batch: 200 of 600, 33.33%
     Parameter   Acceptance  Tuning
-    phi     52.0        0.28083
-    rho     44.0        1.13883
+    phi     36.0        0.30422
+    rho     32.0        1.09417
 -------------------------------------------------
 Batch: 400 of 600, 66.67%
     Parameter   Acceptance  Tuning
-    phi     44.0        0.31037
-    rho     40.0        1.13883
+    phi     36.0        0.29820
+    rho     32.0        1.03045
 -------------------------------------------------
 Batch: 600 of 600, 100.00%
 ----------------------------------------
@@ -969,13 +968,13 @@ Batch: 600 of 600, 100.00%
 Sampling ... 
 Batch: 200 of 600, 33.33%
     Parameter   Acceptance  Tuning
-    phi     32.0        0.29229
-    rho     60.0        1.16183
+    phi     32.0        0.29820
+    rho     68.0        1.23368
 -------------------------------------------------
 Batch: 400 of 600, 66.67%
     Parameter   Acceptance  Tuning
-    phi     32.0        0.29820
-    rho     36.0        1.07251
+    phi     28.0        0.30422
+    rho     36.0        1.18530
 -------------------------------------------------
 Batch: 600 of 600, 100.00%
 ----------------------------------------
@@ -984,13 +983,13 @@ Batch: 600 of 600, 100.00%
 Sampling ... 
 Batch: 200 of 600, 33.33%
     Parameter   Acceptance  Tuning
-    phi     52.0        0.28083
-    rho     48.0        1.11628
+    phi     36.0        0.32303
+    rho     44.0        1.13883
 -------------------------------------------------
 Batch: 400 of 600, 66.67%
     Parameter   Acceptance  Tuning
-    phi     56.0        0.29229
-    rho     48.0        1.07251
+    phi     48.0        0.30422
+    rho     36.0        1.07251
 -------------------------------------------------
 Batch: 600 of 600, 100.00%</code></pre>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
@@ -1008,40 +1007,40 @@ Burn-in: 10000
 Thinning Rate: 20
 Number of Chains: 3
 Total Posterior Samples: 750
-Run Time (min): 5.097
+Run Time (min): 8.3443
 
 Occurrence (logit scale): 
                     Mean     SD    2.5%     50%   97.5%   Rhat ESS
-(Intercept)       1.8882 0.4799  0.9770  1.8785  2.8797 1.1534  90
-scale(years)      0.6269 0.3507 -0.0793  0.6397  1.2565 1.0289 108
-scale(elev)      -1.5269 0.1978 -1.9052 -1.5349 -1.1302 1.0506 255
-I(scale(elev)^2) -0.7445 0.1449 -1.0488 -0.7392 -0.4811 1.0217 312
+(Intercept)       1.9614 0.5461  0.6494  2.0042  2.9375 1.2082  59
+scale(years)      0.6297 0.3992 -0.1610  0.6316  1.4164 1.0615  85
+scale(elev)      -1.5063 0.1992 -1.8995 -1.4920 -1.1288 1.0107 295
+I(scale(elev)^2) -0.7615 0.1551 -1.0770 -0.7497 -0.4953 1.0415 319
 
 Detection (logit scale): 
                    Mean     SD    2.5%     50%  97.5%   Rhat ESS
-(Intercept)      0.2201 0.0417  0.1383  0.2209 0.3040 1.0190 865
-scale(day)      -0.0078 0.0270 -0.0605 -0.0075 0.0421 1.0113 750
-I(scale(day)^2) -0.0029 0.0294 -0.0597 -0.0034 0.0548 1.0038 883
-scale(tod)      -0.0282 0.0276 -0.0816 -0.0271 0.0227 1.0543 750
+(Intercept)      0.2184 0.0425  0.1308  0.2189 0.3061 1.0232 750
+scale(day)      -0.0090 0.0270 -0.0606 -0.0089 0.0441 1.0040 657
+I(scale(day)^2) -0.0035 0.0289 -0.0628 -0.0031 0.0543 1.0395 750
+scale(tod)      -0.0281 0.0269 -0.0844 -0.0275 0.0211 1.0183 750
 
 Spatio-temporal Covariance: 
              Mean     SD    2.5%    50%  97.5%   Rhat ESS
-sigma.sq   2.6707 0.4934  1.8291 2.6256 3.7130 1.0070 509
-phi        0.0033 0.0007  0.0021 0.0033 0.0047 1.0016 421
-sigma.sq.t 1.2447 0.6787  0.5103 1.1235 2.7814 1.0138 450
-rho        0.0976 0.2201 -0.3350 0.1020 0.4916 1.0329 507</code></pre>
+sigma.sq   2.6846 0.5036  1.8587 2.6337 3.7830 1.0520 452
+phi        0.0033 0.0007  0.0020 0.0033 0.0048 1.1107 335
+sigma.sq.t 1.3203 0.8092  0.4840 1.0970 3.4814 1.0098 385
+rho        0.1108 0.2287 -0.3462 0.1142 0.5470 1.0324 255</code></pre>
 <p>As with <code><a href="../reference/tPGOcc.html">tPGOcc()</a></code>, we can do model assessment using <code><a href="../reference/ppcOcc.html">ppcOcc()</a></code> and prediction using <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>, which we do not show here for the sake of brevity. We will note the only exception for prediction is that the coordinates of the new sites must also be sent into the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function. See <code>?predict.stPGOcc()</code> for details.</p>
 <p>Below we compare the model with spatially-explicit random effects to that with non-spatial site-level random effects using WAIC.</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Non-spatial (unstructured) site-level random effects</span></span>
 <span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.ar1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--4703.5139   218.0479  9843.1238 </code></pre>
+-4704.4205   216.2989  9841.4387 </code></pre>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Spatial random effects</span></span>
 <span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.sp</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
--4717.1757   174.4715  9783.2944 </code></pre>
+-4717.5821   172.9719  9781.1080 </code></pre>
 <p>We see a substantial decrease in WAIC, suggesting that incorporation of the spatial structure into the site-level random effects improved model fit.</p>
 <p>In addition to WAIC, both <code><a href="../reference/tPGOcc.html">tPGOcc()</a></code> and <code><a href="../reference/stPGOcc.html">stPGOcc()</a></code> allow for performing k-fold cross-validation as an assessment of model predictive performance. Comparing predictive performance using out-of-sample data can provide us with better insight on which model out of a set of candidate models performs better for prediction, whereas WAIC (and other information criteria) provide us with an idea of which model fits the data the better, and thus may be more suitable if inference is the desired objective. We use the model deviance as our scoring rule for the cross-validation <span class="citation">(Hooten and Hobbs 2015)</span>.</p>
 <p>The arguments <code>k.fold</code>, <code>k.fold.threads</code>, <code>k.fold.seed</code>, and <code>k.fold.only</code> control whether or not we perform k-fold cross-validation in both <code><a href="../reference/tPGOcc.html">tPGOcc()</a></code> and <code><a href="../reference/stPGOcc.html">stPGOcc()</a></code>. <code>k.fold</code> specifies the number of k folds for cross-validation. If this is not specified, k-fold cross-validation is not performed. <code>k.fold.threads</code> specifies the number of threads we want to use to perform the cross-validation. <code>k.fold.seed</code> is a random seed that is used to split the data set into <code>k.fold</code> parts. Lastly, the <code>k.fold.only</code> is a logical value that indicates whether or not we only want to perform cross-validation (<code>k.fold.only = TRUE</code>) or we want to perform cross-validation after fitting the entire model (<code>k.fold.only = FALSE</code>). By default, <code>k.fold.only = FALSE</code>. Below we perform four-fold cross-validation for both the non-spatial model and the spatial model. We run the cross-validation across four threads, and only perform cross-validation since we have already fit the models with the whole data set. We use the default value of <code>k.fold.seed</code>, which is 100.</p>
@@ -1085,16 +1084,16 @@ rho        0.0976 0.2201 -0.3350 0.1020 0.4916 1.0329 507</code></pre>
 <span>                      k.fold.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">k.fold.sp</span><span class="op">)</span></span></code></pre></div>
 <pre><code>List of 2
- $ k.fold.deviance: num 9840
- $ run.time       : 'proc_time' Named num [1:5] 0.213 0.298 264.193 1009.24 751.741
+ $ k.fold.deviance: num 9835
+ $ run.time       : 'proc_time' Named num [1:5] 0.267 0.295 340.181 1096.165 738.134
   ..- attr(*, "names")= chr [1:5] "user.self" "sys.self" "elapsed" "user.child" ...
  - attr(*, "class")= chr "stPGOcc"</code></pre>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k.fold.non.sp</span><span class="op">$</span><span class="va">k.fold.deviance</span></span></code></pre></div>
-<pre><code>[1] Inf</code></pre>
+<pre><code>[1] 10171.67</code></pre>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k.fold.sp</span><span class="op">$</span><span class="va">k.fold.deviance</span></span></code></pre></div>
-<pre><code>[1] 9840.058</code></pre>
+<pre><code>[1] 9835.232</code></pre>
 <p>When <code>k.fold.only = TRUE</code>, the resulting object from the call to the model function will be a list with two elements: <code>k.fold.deviance</code> (the resulting model deviance value from the cross-validation) and <code>run.time</code> (the total run time). We see the spatial model outperforms the non-spatial model, which is in agreement with the results from WAIC.</p>
 </div>
 <div class="section level2">

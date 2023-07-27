@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
 </h1>
 </div>
 
-<p>spOccupancy fits single-species, multi-species, and integrated spatial occupancy models using Markov Chain Monte Carlo (MCMC). Models are fit using Póly-Gamma data augmentation. Spatial models are fit using either Gaussian processes or Nearest Neighbor Gaussian Processes (NNGP) for large spatial datasets. The package provides functionality for data integration of multiple single-species occupancy data sets using a joint likelihood framework. For multi-species models, spOccupancy provides functions to account for residual species correlations in a joint species distribution model framework while accounting for imperfect detection. As of v0.4.0, <code>spOccupancy</code> provides functions for multi-season (i.e., spatio-temporal) single-species occupancy models. Below we provide a very brief introduction to some of the package’s functionality, and illustrate just one of the model fitting funcitons. For more information, see the resources referenced at the bottom of this page.</p>
+<p>spOccupancy fits single-species, multi-species, and integrated spatial occupancy models using Markov Chain Monte Carlo (MCMC). Models are fit using Pólya-Gamma data augmentation. Spatial models are fit using either Gaussian processes or Nearest Neighbor Gaussian Processes (NNGP) for large spatial datasets. The package provides functionality for data integration of multiple single-species occupancy data sets using a joint likelihood framework. For multi-species models, spOccupancy provides functions to account for residual species correlations in a joint species distribution model framework while accounting for imperfect detection. As of v0.4.0, <code>spOccupancy</code> provides functions for multi-season (i.e., spatio-temporal) single-species occupancy models. Below we provide a very brief introduction to some of the package’s functionality, and illustrate just one of the model fitting funcitons. For more information, see the resources referenced at the bottom of this page.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -165,7 +165,23 @@
 </tr>
 <tr class="odd">
 <td><code><a href="reference/svcTPGOcc.html">svcTPGOcc()</a></code></td>
-<td>Single-sepcies spatially-varying coefficient multi-season occupancy model</td>
+<td>Single-species spatially-varying coefficient multi-season occupancy model</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/svcMsPGOcc.html">svcMsPGOcc()</a></code></td>
+<td>Multi-species spatially-varying coefficient occupancy model</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/tMsPGOcc.html">tMsPGOcc()</a></code></td>
+<td>Multi-species, multi-season occupancy model</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/stMsPGOcc.html">stMsPGOcc()</a></code></td>
+<td>Multi-species, multi-season spatial occupancy model</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/svcTMsPGOcc.html">svcTMsPGOcc()</a></code></td>
+<td>Multi-species, multi-season spatially-varying coefficient occupancy model</td>
 </tr>
 <tr class="even">
 <td><code><a href="reference/postHocLM.html">postHocLM()</a></code></td>
@@ -200,10 +216,14 @@
 <td>Simulate multi-species occupancy data</td>
 </tr>
 <tr class="even">
+<td><code><a href="reference/simTMsOcc.html">simTMsOcc()</a></code></td>
+<td>Simulate multi-species, multi-season occupancy data</td>
+</tr>
+<tr class="odd">
 <td><code><a href="reference/simIntOcc.html">simIntOcc()</a></code></td>
 <td>Simulate single-species occupancy data from multiple data sources</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code><a href="reference/simIntMsOcc.html">simIntMsOcc()</a></code></td>
 <td>Simulate multi-species occupancy data from multiple data sources</td>
 </tr>
@@ -258,25 +278,25 @@
 <span><span class="co">#&gt; Thinning Rate: 4</span></span>
 <span><span class="co">#&gt; Number of Chains: 3</span></span>
 <span><span class="co">#&gt; Total Posterior Samples: 6000</span></span>
-<span><span class="co">#&gt; Run Time (min): 1.4416</span></span>
+<span><span class="co">#&gt; Run Time (min): 1.4166</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Occurrence (logit scale): </span></span>
-<span><span class="co">#&gt;                          Mean     SD    2.5%     50%   97.5%   Rhat  ESS</span></span>
-<span><span class="co">#&gt; (Intercept)            3.9738 0.6010  3.0092  3.9023  5.3748 1.0144  164</span></span>
-<span><span class="co">#&gt; scale(Elevation)      -0.5209 0.2194 -0.9778 -0.5152 -0.0984 1.0003 1101</span></span>
-<span><span class="co">#&gt; I(scale(Elevation)^2) -1.1552 0.2118 -1.6305 -1.1370 -0.7892 1.0070  238</span></span>
+<span><span class="co">#&gt;                          Mean     SD    2.5%     50%   97.5%   Rhat ESS</span></span>
+<span><span class="co">#&gt; (Intercept)            4.0762 0.6183  3.0681  4.0071  5.4855 1.0019 261</span></span>
+<span><span class="co">#&gt; scale(Elevation)      -0.5203 0.2249 -0.9772 -0.5132 -0.0825 1.0039 984</span></span>
+<span><span class="co">#&gt; I(scale(Elevation)^2) -1.1806 0.2257 -1.6958 -1.1593 -0.7969 1.0033 244</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Detection (logit scale): </span></span>
 <span><span class="co">#&gt;                    Mean     SD    2.5%     50%  97.5%   Rhat  ESS</span></span>
-<span><span class="co">#&gt; (Intercept)      0.6642 0.1146  0.4413  0.6634 0.8821 1.0014 5474</span></span>
-<span><span class="co">#&gt; scale(day)       0.2939 0.0712  0.1524  0.2939 0.4335 0.9999 6000</span></span>
-<span><span class="co">#&gt; scale(tod)      -0.0301 0.0697 -0.1698 -0.0302 0.1063 1.0010 6435</span></span>
-<span><span class="co">#&gt; I(scale(day)^2) -0.0747 0.0862 -0.2410 -0.0755 0.1033 1.0027 6000</span></span>
+<span><span class="co">#&gt; (Intercept)      0.6647 0.1155  0.4398  0.6623 0.8955 1.0012 5605</span></span>
+<span><span class="co">#&gt; scale(day)       0.2899 0.0709  0.1507  0.2900 0.4273 1.0020 6000</span></span>
+<span><span class="co">#&gt; scale(tod)      -0.0319 0.0697 -0.1680 -0.0327 0.1055 0.9999 6000</span></span>
+<span><span class="co">#&gt; I(scale(day)^2) -0.0756 0.0867 -0.2476 -0.0752 0.0926 1.0000 6000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Spatial Covariance: </span></span>
 <span><span class="co">#&gt;            Mean     SD   2.5%    50%  97.5%   Rhat ESS</span></span>
-<span><span class="co">#&gt; sigma.sq 1.1194 1.0085 0.2165 0.7676 4.1197 1.0419  88</span></span>
-<span><span class="co">#&gt; phi      0.0072 0.0075 0.0007 0.0039 0.0270 1.1564  58</span></span></code></pre></div>
+<span><span class="co">#&gt; sigma.sq 1.2610 1.0218 0.2063 0.9694 4.0863 1.0130 101</span></span>
+<span><span class="co">#&gt; phi      0.0093 0.0085 0.0009 0.0056 0.0294 1.0763  45</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="posterior-predictive-check">Posterior predictive check<a class="anchor" aria-label="anchor" href="#posterior-predictive-check"></a>
@@ -295,7 +315,7 @@
 <span><span class="co">#&gt; Number of Chains: 3</span></span>
 <span><span class="co">#&gt; Total Posterior Samples: 6000</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Bayesian p-value:  0.4917 </span></span>
+<span><span class="co">#&gt; Bayesian p-value:  0.4828 </span></span>
 <span><span class="co">#&gt; Fit statistic:  freeman-tukey</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -305,11 +325,11 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       elpd         pD       WAIC </span></span>
-<span><span class="co">#&gt; -681.52155   21.21463 1405.47236</span></span></code></pre></div>
+<span><span class="co">#&gt; -679.88774   22.96844 1405.71235</span></span></code></pre></div>
 <p>Alternatively, we can perform k-fold cross-validation (CV) directly in our call to <code>spPGOcc</code> using the <code>k.fold</code> argument and compare models using a deviance scoring rule. We fit the model with <code>k.fold = 2</code> and so below we access the deviance scoring rule from the 2-fold cross-validation. If we have additional candidate models to compare this model with, then we might select for inference the one with the lowest value of this CV score.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">k.fold.deviance</span></span>
-<span><span class="co">#&gt; [1] 1412.951</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 1414.417</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
@@ -326,14 +346,13 @@
 <div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p>The <code><a href="articles/modelFitting.html">vignette("modelFitting")</a></code> provides a more detailed description and tutorial of the core functions in <code>spOccupancy</code>. For full statistical details on the MCMC samplers for core functions in <code>spOccupancy</code>, see <code><a href="articles/mcmcSamplers.pdf">vignette("mcmcSamplers")</a></code>. In addition, see <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link">our recent paper</a> that describes the package in more detail (Doser et al. 2022a). For a detailed description and tutorial of joint species distribution models in <code>spOccupancy</code> that account for residual species correlations, see <code><a href="articles/factorModels.html">vignette("factorModels")</a></code>, as well as <code><a href="articles/mcmcFactorModels.pdf">vignette("mcmcFactorModels")</a></code> for full statistical details. For a description and tutorial of multi-season (spatio-temporal) occupancy models in <code>spOccupancy</code>, see <code><a href="articles/spaceTimeModels.pdf">vignette("spaceTimeModels")</a></code>. For a tutorial on spatially-varying coefficient models in <code>spOccupancy</code>, see <code><a href="articles/svcUnivariateHTML.html">vignette("svcUnivariateHTML")</a></code> and take a look at <a href="https://arxiv.org/abs/2301.05645" class="external-link">our recent pre-print</a> that presents a series of guidelines and recommendations for using spatially-varying coefficients in species distribution models.</p>
+<p>The <code><a href="articles/modelFitting.html">vignette("modelFitting")</a></code> provides a more detailed description and tutorial of the core functions in <code>spOccupancy</code>. For full statistical details on the MCMC samplers for core functions in <code>spOccupancy</code>, see <code><a href="articles/mcmcSamplers.pdf">vignette("mcmcSamplers")</a></code>. In addition, see <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link">the introductory spOccupancy paper</a> that describes the package in more detail (Doser et al. 2022). For a detailed description and tutorial of joint species distribution models in <code>spOccupancy</code> that account for residual species correlations, see <code><a href="articles/factorModels.html">vignette("factorModels")</a></code>, <code><a href="articles/mcmcFactorModels.pdf">vignette("mcmcFactorModels")</a></code>, and our <a href="https://doi.org/10.1002/ecy.4137" class="external-link">open-access paper</a> (Doser et al. 2023). For a description and tutorial of multi-season (spatio-temporal) occupancy models in <code>spOccupancy</code>, see <code><a href="articles/spaceTimeModels.pdf">vignette("spaceTimeModels")</a></code>. For a tutorial on spatially-varying coefficient models in <code>spOccupancy</code>, see <code><a href="articles/svcModels.html">vignette("svcModels")</a></code> and <code>vignette(mcmcSVCModels)</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Doser, J. W., Finley, A. O., Kery, M., and Zipkin, E. F. (2022a). spOccupancy: An R package for single-species, multi-species, and integrated spatial occupancy models. Methods in Ecology and Evolution. <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link uri">https://doi.org/10.1111/2041-210X.13897</a>.</p>
-<p>Doser, J. W., Finley, A. O., and Banerjee, S. (2022b). Joint species distribution models with imperfect detection for high-dimensional spatial data. <a href="https://arxiv.org/abs/2204.02707" class="external-link">arXiv preprint arXiv:2204.02707</a>.</p>
-<p>Doser, J. W., Kery, M., Finley, A. O., Saunders, S. P., Weed, A. S., Zipkin, E. F. (2023). Guidelines for the use of spatially-varying coefficients in species distribution models. <a href="https://arxiv.org/abs/2301.05645" class="external-link">arXiv preprint arXiv:2301.05645</a>.</p>
+<p>Doser, J. W., Finley, A. O., Kery, M., and Zipkin, E. F. (2022a). spOccupancy: An R package for single-species, multi-species, and integrated spatial occupancy models. Methods in Ecology and Evolution. 13(8) 1670-1678. <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link uri">https://doi.org/10.1111/2041-210X.13897</a>.</p>
+<p>Doser, J. W., Finley, A. O., and Banerjee, S. (2023). Joint species distribution models with imperfect detection for high-dimensional spatial data. Ecology. <a href="https://doi.org/10.1002/ecy.4137" class="external-link uri">https://doi.org/10.1002/ecy.4137</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -375,9 +394,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=spOccupancy" class="external-link"><img src="https://www.r-pkg.org/badges/version/spOccupancy?color=green"></a></li>
-<li><a href="https://cran.r-project.org/package=spOccupancy" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/spOccupancy?color=blue"></a></li>
-<li><a href="https://app.codecov.io/gh/doserjef/spOccupancy" class="external-link"><img src="https://app.codecov.io/gh/doserjef/spOccupancy/branch/main/graph/badge.svg"></a></li>
+<li><a href="https://CRAN.R-project.org/package=spOccupancy" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/spOccupancy?color=blue"></a></li>
+<li><a href="https://CRAN.R-project.org/package=spOccupancy" class="external-link"><img src="https://www.r-pkg.org/badges/version/spOccupancy" alt="CRAN"></a></li>
+<li><a href="https://app.codecov.io/gh/doserjef/spOccupancy?branch=main" class="external-link"><img src="https://codecov.io/gh/doserjef/spOccupancy/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 

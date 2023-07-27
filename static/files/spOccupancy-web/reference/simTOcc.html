@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simTOcc</span><span class="op">(</span><span class="va">J.x</span>, <span class="va">J.y</span>, <span class="va">n.time</span>, <span class="va">n.rep</span>, <span class="va">n.rep.max</span>, <span class="va">beta</span>, <span class="va">alpha</span>, sp.only <span class="op">=</span> <span class="fl">0</span>, trend <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>        psi.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, p.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, sp <span class="op">=</span> <span class="cn">FALSE</span>, svc.cols <span class="op">=</span> <span class="fl">1</span>, <span class="va">cov.model</span>, </span>
 <span>        <span class="va">sigma.sq</span>, <span class="va">phi</span>, <span class="va">nu</span>, ar1 <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">rho</span>, <span class="va">sigma.sq.t</span>, x.positive <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>  mis.spec.type <span class="op">=</span> <span class="st">'none'</span>, scale.param <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>  mis.spec.type <span class="op">=</span> <span class="st">'none'</span>, scale.param <span class="op">=</span> <span class="fl">1</span>, <span class="va">avail</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -157,6 +157,10 @@
 <dd><p>a positive number between 0 and 1 that indicates the scale parameter for the occupancy portion of the model when <code>mis.spec.type = 'scale'</code>. When specified, <code>scale.param</code> corresponds to the scale parameter for the occupancy portion of the model, while the reciprocal of <code>scale.param</code> is used for the detection portion of the model.</p></dd>
 
 
+<dt>avail</dt>
+<dd><p>a site x primary time period x visit array indicating the availability probability of the species during each survey simulated at the given site/primary time period/visit combination. This can be used to assess impacts of non-constant availability across replicate surveys in simulation studies. Values should fall between 0 and 1. When not specified, availability is set to 1 for all surveys.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>currently no additional arguments</p></dd>
 
@@ -167,7 +171,7 @@
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Stoudt, S., P. de Valpine, and W. Fithian. (In review) Non-parametric identifiability in species distribution and abundance models: why it matters and how to diagnose a lack of fit using simulation.</p>
+    <p>Stoudt, S., P. de Valpine, and W. Fithian. Non-parametric identifiability in species distribution and abundance models: why it matters and how to diagnose a lack of fit using simulation. Journal of Statistical Theory and Practice 17, 39 (2023). https://doi.org/10.1007/s42519-023-00336-5.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -263,16 +267,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..- attr(*, "dimnames")=List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr [1:2] "Var1" "Var2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ psi       : num [1:100, 1:10] 0.882 0.987 0.101 0.417 0.18 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ z         : int [1:100, 1:10] 1 1 0 0 0 0 0 0 0 1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ p         : num [1:100, 1:10, 1:4] NA 0.275 0.138 NA NA ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y         : int [1:100, 1:10, 1:4] NA 0 0 NA NA 0 0 NA NA 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ w         : num [1:100, 1] 1.314 2.817 -0.276 -0.751 -1.416 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ X.p.re    : int [1:100, 1:10, 1:4, 1] 3 1 8 5 2 7 7 9 5 3 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ X.re      : int [1:100, 1:10, 1] 8 10 2 3 1 4 2 3 1 9 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ alpha.star: num [1:10] 0.185 0.265 0.428 -0.225 1.523 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ beta.star : num [1:10] 0.476 -1.45 1.338 0.749 1.629 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ eta       : num [1:10] -0.555 -0.413 -1.299 0.169 -1.479 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ psi       : num [1:100, 1:10] 0.534 0.8 0.994 0.98 0.714 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ z         : int [1:100, 1:10] 0 1 1 1 1 0 1 0 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ p         : num [1:100, 1:10, 1:4] NA 0.181 NA NA 0.648 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y         : int [1:100, 1:10, 1:4] NA 1 NA NA 1 NA NA NA NA 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ w         : num [1:100, 1] -0.851 -0.242 -0.032 0.315 -0.488 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ X.p.re    : int [1:100, 1:10, 1:4, 1] 8 3 10 10 3 7 4 5 8 9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ X.re      : int [1:100, 1:10, 1] 3 10 2 9 10 2 3 4 10 2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ alpha.star: num [1:10] 0.559 0.31 0.582 1.688 0.17 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ beta.star : num [1:10] -0.168 2.455 0.242 1.57 0.518 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ eta       : num [1:10, 1] 1.75 2.12 1.78 1.66 1.03 ...</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

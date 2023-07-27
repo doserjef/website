@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,8 @@
     <dl><dt>object</dt>
 <dd><p>an object of class <code>PGOcc</code>, <code>spPGOcc</code>, <code>msPGOcc</code>, 
 <code>spMsPGOcc</code>, <code>intPGOcc</code>, <code>spIntPGOcc</code>, <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>, 
-<code>tPGOcc</code>, <code>stPGOcc</code>, <code>svcPGOcc</code>.</p></dd>
+<code>tPGOcc</code>, <code>stPGOcc</code>, <code>svcPGOcc</code>, <code>svcMsPGOcc</code>, <code>tMsPGOcc</code>, 
+<code>stMsPGOcc</code>, <code>svcTMsPGOcc</code>.</p></dd>
 
 
 <dt>fit.stat</dt>
@@ -89,8 +90,7 @@ column (replicate).</p></dd>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Jeffrey W. Doser <a href="mailto:doserjef@msu.edu">doserjef@msu.edu</a>, <br>
-  Andrew O. Finley <a href="mailto:finleya@msu.edu">finleya@msu.edu</a></p>
+    <p>Jeffrey W. Doser <a href="mailto:doserjef@msu.edu">doserjef@msu.edu</a>, <br></p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -102,28 +102,34 @@ column (replicate).</p></dd>
 <dd><p>a numeric vector of posterior samples for the 
   fit statistic calculated on the observed data when <code>object</code> is 
   of class <code>PGOcc</code>, <code>spPGOcc</code>, or <code>svcPGOcc</code>. When <code>object</code> is of 
-  class <code>msPGOcc</code>, <code>spMsPGOcc</code>, <code>lfMsPGOcc</code>, or <code>sfMsPGOcc</code>, 
+  class <code>msPGOcc</code>, <code>spMsPGOcc</code>, <code>lfMsPGOcc</code>, 
+  <code>sfMsPGOcc</code>, or <code>svcMsPGOcc</code> 
   this is a numeric matrix with rows corresponding to posterior samples
   and columns corresponding to species. When <code>object</code> is of class
   <code>intPGOcc</code> or <code>spIntPGOcc</code>, this is a list, with each element 
   of the list being a vector of posterior samples for each data set. 
   When <code>object</code> is of class <code>tPGOcc</code> or <code>stPGOcc</code>, this is a
   numeric matrix with rows corresponding to posterior samples and columns 
-  corresponding to primary sampling periods.</p></dd>
+  corresponding to primary sampling periods. When <code>object</code> is of class <code>tMsPGOcc</code>, 
+  <code>stMsPGOcc</code>, or <code>svcTMsPGOcc</code>, this is a three-dimensional array with dimensions
+  corresponding to MCMC sample, species, and primary time period.</p></dd>
 
 
   <dt>fit.y.rep</dt>
 <dd><p>a numeric vector of posterior samples for the 
   fit statistic calculated on a replicate data set generated from the 
-  model when <code>object</code> is of class <code>PGOcc</code>, <code>spPGOcc</code>, or <code>svcPGOcc</code>. When <code>object</code> is of 
-  class <code>msPGOcc</code>, <code>spMsPGOcc</code>, <code>lfMsPGOcc</code>, or <code>sfMsPGOcc</code>, 
+  model when <code>object</code> is of class <code>PGOcc</code>, <code>spPGOcc</code>, or <code>svcPGOcc</code>. 
+  When <code>object</code> is of class <code>msPGOcc</code>, <code>spMsPGOcc</code>, 
+  <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>, or <code>svcMsPGOcc</code>
   this is a numeric matrix with rows corresponding to posterior samples
   and columns corresponding to species. When <code>object</code> is of class
   <code>intPGOcc</code> or <code>spIntPGOcc</code>, this is a list, with each element 
   of the list being a vector of posterior samples for each data set. 
   When <code>object</code> is of class <code>tPGOcc</code> or <code>stPGOcc</code>, this is a
   numeric matrix with rows corresponding to posterior samples and columns 
-  corresponding to primary sampling periods.</p></dd>
+  corresponding to primary sampling periods. When <code>object</code> is of class <code>tMsPGOcc</code>, 
+  <code>stMsPGOcc</code>, or <code>svcTMsPGOcc</code>, this is a three-dimensional array with dimensions
+  corresponding to MCMC sample, species, and primary time period.</p></dd>
 
 
   <dt>fit.y.group.quants</dt>
@@ -131,13 +137,15 @@ column (replicate).</p></dd>
   for the fit statistic using the observed data for each unique element
   the fit statistic is calculated for (i.e., sites when group = 1, 
   replicates when group = 2) when <code>object</code> is of class <code>PGOcc</code>, <code>spPGOcc</code>, or <code>svcPGOcc</code>. 
-  When <code>object</code> is of class <code>msPGOcc</code>, 
-  <code>spMsPGOcc</code>, <code>lfMsPGOcc</code>, or <code>sfMsPGOcc</code>, this is a three-dimensional
+  When <code>object</code> is of class <code>msPGOcc</code>, <code>spMsPGOcc</code>, 
+  <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>, <code>svcMsPGOcc</code>, this is a three-dimensional
   array with the additional dimension corresponding to species. When <code>object</code> is 
   of class <code>intPGOcc</code> or <code>spIntPGOcc</code>, this is a list, with each element 
   consisting of the posterior quantile matrix for each data set. When <code>object</code> 
   is of class <code>tPGOcc</code> or <code>stPGOcc</code>, this is a three-dimensional array 
-  with the additional dimension corresponding to primary sampling periods.</p></dd>
+  with the additional dimension corresponding to primary sampling periods. When <code>object</code>
+  is of class <code>tMsPGOcc</code>, <code>stMsPGOcc</code>, <code>svcTMsPGOcc</code>, this is a four-dimensional array
+  with dimensions corresponding to quantile, species, grouping element, and primary time period.</p></dd>
 
 
   <dt>fit.y.rep.group.quants</dt>
@@ -146,12 +154,15 @@ column (replicate).</p></dd>
   the fit statistic is calculated for (i.e., sites when group = 1, 
   replicates when group = 2) when <code>object</code> is of class <code>PGOcc</code>, <code>spPGOcc</code>, <code>svcPGOcc</code>. 
   When <code>object</code> is of class <code>msPGOcc</code>, 
-  <code>spMsPGOcc</code>, <code>lfMsPGOcc</code>, or <code>sfMsPGOcc</code>, this is a three-dimensional
+  <code>spMsPGOcc</code>, <code>lfMsPGOcc</code>, <code>sfMsPGOcc</code>, or <code>svcMsPGOcc</code>, 
+  this is a three-dimensional
   array with the additional dimension corresponding to species. When <code>object</code> is 
   of class <code>intPGOcc</code> or <code>spIntPGOcc</code>, this is a list, with each element 
   consisting of the posterior quantile matrix for each data set. When <code>object</code> 
   is of class <code>tPGOcc</code> or <code>stPGOcc</code>, this is a three-dimensional array 
-  with the additional dimension corresponding to primary sampling periods.</p></dd>
+  with the additional dimension corresponding to primary sampling periods. When <code>object</code>
+  is of class <code>tMsPGOcc</code>, <code>stMsPGOcc</code>, <code>svcTMsPGOcc</code>, this is a four-dimensional array
+  with dimensions corresponding to quantile, species, grouping element, and primary time period.</p></dd>
 
 
 </dl><p>The return object will include additional objects used for 
@@ -217,7 +228,6 @@ column (replicate).</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 1000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Source compiled with OpenMP support and model fit using 1 thread(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
