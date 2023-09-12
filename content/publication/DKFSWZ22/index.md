@@ -1,20 +1,23 @@
 ---
-Abstract: "Species distribution models (SDMs) are increasingly applied across macroscales using detection-nondetection data sources. However, assumptions of stationarity in species-environment relationships or population trends are frequently violated at broad spatial scales. Bayesian spatially-varying coefficient (SVC) models can readily account for nonstationarity, yet their use is relatively scarce, due, in part, to a gap in understanding both the data requirements needed to fit SVC SDMs, as well as the inferential benefits of applying a more complex modeling framework. Using simulations, we present guidelines and recommendations for fitting single-season and multi-season SVC SDMs. We display the inferential benefits of SVC SDMs using an empirical case study assessing spatially-varying trends of 51 forest birds in the eastern US from 2000-2019. We provide user-friendly software to fit SVC SDMs in the `spOccupancy` R package. While all datasets are unique, we recommend a minimum sample size of approximately 500 spatial locations when fitting single-season SVC SDMs, while for multi-season SVC SDMs, approximately 100 sites is adequate for even moderate amounts of temporal replication (e.g., 5 years). Within our case study, we found 88% (45 of 51) of species had strong support for spatially-varying occurrence trends. Further, SVC SDMs revealed spatial patterns in occurrence trends that were not evident in simpler models that assumed a constant trend or separate trends across ecoregions. We suggest five guidelines: (1) only fit single-season SVC SDMs with more than approximately 500 sites; (2) consider using informative priors on spatial parameters to improve spatial process estimates; (3) use data from multiple seasons if available; (4) use model selection to compare SVC SDMs with simpler alternatives; and (5) develop simulations to assess the reliability of inferences. These guidelines provide a comprehensive foundation for using SVC SDMs to evaluate the presence and impact of nonstationary environmental factors that drive species distributions at macroscales."
+Abstract: "Species distribution models (SDMs) are increasingly applied across macroscales using detection-nondetection data. Such models typically assume that a single set of regression coefficients can adequately describe species-environment relationships and/or population trends. However, such relationships often show nonlinear and/or spatially-varying patterns that arise from complex interactions with abiotic and biotic processes that operate at different scales. Spatially-varying coefficient (SVC) models can readily account for variability in the effects of environmental covariates. Yet, their use in ecology is relatively scarce due to gaps in understanding the inferential benefits that SVC models can provide compared to simpler frameworks. Here we demonstrate the inferential benefits of SVC SDMs, with a particular focus on how this approach can be used to generate and test ecological hypotheses regarding the drivers of spatial variability in population trends and species-environment relationships. We illustrate the inferential benefits of SVC SDMs with simulations and two case studies: one that assesses spatially-varying trends of 51 forest bird species in the eastern US over two decades and a second that evaluates spatial variability in the effects of five decades of land cover change on Grasshopper Sparrow (Ammodramus savannarum) occurrence across the continental US. We found strong support for SVC SDMs compared to simpler alternatives in both empirical case studies. Factors operating at fine spatial scales, accounted for by the SVCs, were the primary divers of spatial variability in forest bird occurrence trends. Additionally, SVCs revealed complex species-habitat relationships with grassland and cropland area for Grasshopper Sparrow, providing nuanced insights into how future land use change may shape its distribution. These applications display the utility of SVC SDMs to help reveal the environmental factors that drive species distributions across both local and broad scales. We conclude by discussing the potential applications of SVC SDMs in ecology and conservation."
 authors:
 - Jeffrey W. Doser
 - Marc Kéry 
-- Andrew O. Finley
 - Sarah P. Saunders
+- Andrew O. Finley
+- Brooke L. Bateman
+- Joanna Grand
+- Shannon Reault
 - Aaron S. Weed
 - Elise F. Zipkin
-date: "2023-01-18T00:00:00Z"
+date: "2023-08-23T00:00:00Z"
 doi: ""
 featured: false
 publication: ""
 publication_short: ""
 publication_types:
 - "3"
-publishDate: "2023-01-18T00:00:00Z"
+publishDate: "2023-08-23T00:00:00Z"
 slides: ''
 summary: ""
 title: "Guidelines for the use of spatially-varying coefficients in species distribution models"
