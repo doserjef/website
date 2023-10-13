@@ -33,7 +33,7 @@ for (i in 1:n.sims) {
   mu.RE <- list()
   p.RE <- list()
   phi <- runif(1, 3 / 1, 3 / 0.3)
-  sigma.sq <- runif(1, 0.2, 1.5) 
+  sigma.sq <- runif(1, 1, 1.5) 
   sp <- TRUE 
   cov.model <- 'exponential'
   family <- 'Poisson'
