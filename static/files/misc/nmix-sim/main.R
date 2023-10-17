@@ -1,12 +1,13 @@
-# main.R: script to run a VERY small simulation study to look at the performance
+# main.R: script to run a small simulation study to look at the performance
 #         of the "marginal" vs. "conditional" posterior predictive checks. 
 # Author: Jeffrey W. Doser
 rm(list = ls())
 library(spAbundance)
 
 # Simulation parameters ---------------------------------------------------
+set.seed(100)
 # Number of simulations
-n.sims <- 20
+n.sims <- 100
 # Object to hold Bayesian p-values from marginal fitted values
 marginal.bps <- rep(NA, n.sims)
 # Object to hold Bayesian p-values from conditional fitted values
@@ -33,7 +34,7 @@ for (i in 1:n.sims) {
   mu.RE <- list()
   p.RE <- list()
   phi <- runif(1, 3 / 1, 3 / 0.3)
-  sigma.sq <- runif(1, 1, 1.5) 
+  sigma.sq <- runif(1, 0.4, 1.5) 
   sp <- TRUE 
   cov.model <- 'exponential'
   family <- 'Poisson'
