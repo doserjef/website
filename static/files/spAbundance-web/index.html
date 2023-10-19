@@ -77,12 +77,15 @@
 </h1>
 </div>
 <p><a href="https://CRAN.R-project.org/package=spAbundance" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/spAbundance?color=blue"></a> <a href="https://CRAN.R-project.org/package=spAbundance" class="external-link"><img src="https://www.r-pkg.org/badges/version/spAbundance" alt="CRAN"></a> <a href="https://codecov.io/gh/doserjef/spAbundance?branch=main" class="external-link"><img src="https://codecov.io/gh/doserjef/spAbundance/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></p>
-<p><code>spAbundance</code> fits univariate (i.e., single-species) and multivariate (i.e., multi-species) spatial abundance models using Markov Chain Monte Carlo (MCMC). The package currently contains all functionality for it’s first release on CRAN, and is currently undergoing extensive testing prior to the release on CRAN. <code>spAbundance</code> uses analogous syntax to its “sister package” <a href="https://www.jeffdoser.com/files/spoccupancy-web/" class="external-link">spOccupancy</a> (Doser et al. 2022).</p>
+<p><code>spAbundance</code> fits univariate (i.e., single-species) and multivariate (i.e., multi-species) spatial N-mixture models, hierarchical distance sampling models, and generalized linear mixed models using Markov chain Monte Carlo (MCMC). Spatial models are fit using Nearest Neighbor Gaussian Processes (NNGPs) to facilitate model fitting to large spatial datasets. <code>spAbundance</code> uses analogous syntax to its “sister package” <a href="https://www.jeffdoser.com/files/spoccupancy-web/" class="external-link">spOccupancy</a> (Doser et al. 2022). Below we provide a very brief introduction to some of the package’s functionality, and illustrate just one of the model fitting functions. For more information, see the resources referenced at the bottom of this page and the “Articles” tab at the top of the page.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>spAbundance</code> is not yet on CRAN, with a planned initial submission date in Fall 2023. To download the development version of the package, you can use <code>devtools</code> as follows:</p>
+<p>You can install the released version of <code>spAbundance</code> from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"spAbundance"</span><span class="op">)</span></span></code></pre></div>
+<p>To download the development version of the package, you can use <code>devtools</code> as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"doserjef/spAbundance"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that because we implement the MCMC in C++, you will need a C++ compiler on your computer to install the package from GitHub. To compile C++ on Windows, you can install <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link"><code>RTools</code></a>. To compile C++ on a Mac, you can install <code>XCode</code> from the Mac app store.</p>
 </div>
@@ -101,72 +104,72 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td><code><a href="reference/DS.html">DS()</a></code></td>
+<td>Single-species hierarchical distance sampling (HDS) model</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/spDS.html">spDS()</a></code></td>
+<td>Single-species spatial HDS model</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/msDS.html">msDS()</a></code></td>
+<td>Multi-species HDS model</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/lfMsDS.html">lfMsDS()</a></code></td>
+<td>Multi-species HDS model with species correlations</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/sfMsDS.html">sfMsDS()</a></code></td>
+<td>Multi-species spatial HDS model with species correlations</td>
+</tr>
+<tr class="even">
 <td><code><a href="reference/NMix.html">NMix()</a></code></td>
 <td>Single-species N-mixture model</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code><a href="reference/spNMix.html">spNMix()</a></code></td>
 <td>Single-species spatial N-mixture model</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code><a href="reference/msNMix.html">msNMix()</a></code></td>
 <td>Multi-species N-mixture model</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code><a href="reference/lfMsNMix.html">lfMsNMix()</a></code></td>
 <td>Multi-species N-mixture model with species correlations</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code><a href="reference/sfMsNMix.html">sfMsNMix()</a></code></td>
 <td>Multi-species spatial N-mixture model with species correlations</td>
 </tr>
-<tr class="even">
-<td><code><a href="reference/DS.html">DS()</a></code></td>
-<td>Single-species distance sampling model</td>
-</tr>
-<tr class="odd">
-<td><code><a href="reference/spDS.html">spDS()</a></code></td>
-<td>Single-species spatial distance sampling model</td>
-</tr>
-<tr class="even">
-<td><code><a href="reference/msDS.html">msDS()</a></code></td>
-<td>Multi-species distance sampling model</td>
-</tr>
-<tr class="odd">
-<td><code><a href="reference/lfMsDS.html">lfMsDS()</a></code></td>
-<td>Multi-species distance sampling model with species correlations</td>
-</tr>
-<tr class="even">
-<td><code><a href="reference/sfMsDS.html">sfMsDS()</a></code></td>
-<td>Multi-species spatial distance sampling model with species correlations</td>
-</tr>
 <tr class="odd">
 <td><code><a href="reference/abund.html">abund()</a></code></td>
-<td>Single-species abundance GLM</td>
+<td>Univariate GLMM</td>
 </tr>
 <tr class="even">
 <td><code><a href="reference/spAbund.html">spAbund()</a></code></td>
-<td>Single-species spatial abundance GLM</td>
+<td>Univariate spatial GLMM</td>
 </tr>
 <tr class="odd">
 <td><code><a href="reference/svcAbund.html">svcAbund()</a></code></td>
-<td>Single-species spatially-varying coefficient abundance GLM</td>
+<td>Univariate spatially-varying coefficient GLMM</td>
 </tr>
 <tr class="even">
 <td><code><a href="reference/msAbund.html">msAbund()</a></code></td>
-<td>Multi-species abundance GLM</td>
+<td>Multivariate GLMM</td>
 </tr>
 <tr class="odd">
 <td><code><a href="reference/lfMsAbund.html">lfMsAbund()</a></code></td>
-<td>Multi-species abundance GLM with species correlations</td>
+<td>Multivariate GLMM with species correlations</td>
 </tr>
 <tr class="even">
 <td><code><a href="reference/sfMsAbund.html">sfMsAbund()</a></code></td>
-<td>Multi-species spatial abundance GLM with species correlations</td>
+<td>Multivariate spatial GLMM with species correlations</td>
 </tr>
 <tr class="odd">
 <td><code><a href="reference/svcMsAbund.html">svcMsAbund()</a></code></td>
-<td>Multi-species spatially-varying coefficient abundance GLM</td>
+<td>Multivariate spatially-varying coefficient GLMM with species correlations</td>
 </tr>
 <tr class="even">
 <td><code><a href="reference/ppcAbund.html">ppcAbund()</a></code></td>
@@ -177,22 +180,6 @@
 <td>Calculate Widely Applicable Information Criterion (WAIC)</td>
 </tr>
 <tr class="even">
-<td><code><a href="reference/simNMix.html">simNMix()</a></code></td>
-<td>Simulate single-species repeated count data</td>
-</tr>
-<tr class="odd">
-<td><code><a href="reference/simAbund.html">simAbund()</a></code></td>
-<td>Simulate single-species count data</td>
-</tr>
-<tr class="even">
-<td><code><a href="reference/simMsAbund.html">simMsAbund()</a></code></td>
-<td>Simulate multi-species count data</td>
-</tr>
-<tr class="odd">
-<td><code><a href="reference/simMsNMix.html">simMsNMix()</a></code></td>
-<td>Simulate multi-species repeated count data</td>
-</tr>
-<tr class="even">
 <td><code><a href="reference/simDS.html">simDS()</a></code></td>
 <td>Simulate single-species distance sampling data</td>
 </tr>
@@ -200,21 +187,160 @@
 <td><code><a href="reference/simMsDS.html">simMsDS()</a></code></td>
 <td>Simulate multi-species distance sampling data</td>
 </tr>
+<tr class="even">
+<td><code><a href="reference/simNMix.html">simNMix()</a></code></td>
+<td>Simulate single-species repeated count data</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/simMsNMix.html">simMsNMix()</a></code></td>
+<td>Simulate multi-species repeated count data</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/simAbund.html">simAbund()</a></code></td>
+<td>Simulate single-species count data</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/simMsAbund.html">simMsAbund()</a></code></td>
+<td>Simulate multi-species count data</td>
+</tr>
 </tbody>
 </table>
 <p>All model fitting functions allow for Poisson and negative binomial distributions for the abundance portion of the model. All GLM(M)s also allow for Gaussian and zero-inflated Gaussian models. Note the two functions for fitting spatailly-varying coefficient models are only available for Gaussian and zero-inflated Gaussian models.</p>
+</div>
+<div class="section level2">
+<h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
+</h2>
+<div class="section level3">
+<h3 id="load-package-and-data">Load package and data<a class="anchor" aria-label="anchor" href="#load-package-and-data"></a>
+</h3>
+<p>To get started with <code>spAbundance</code> we load the package and an example data set. We use data on 16 birds from the <a href="https://www.neonscience.org/field-sites/dsny" class="external-link">Disney Wilderness Preserve</a> in Central Florida, USA, which is available in the <code>spAbundance</code> package as the <code>neonDWP</code> object. Here we will only work with one bird species, the Mourning Dove (MODO), and so we subset the <code>neonDWP</code> object to only include this species.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spabundance-web" class="external-link">spAbundance</a></span><span class="op">)</span></span>
+<span><span class="co"># Set seed to get exact same results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">neonDWP</span><span class="op">)</span></span>
+<span><span class="va">sp.names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">neonDWP</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">dat.MODO</span> <span class="op">&lt;-</span> <span class="va">neonDWP</span></span>
+<span><span class="va">dat.MODO</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat.MODO</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">sp.names</span> <span class="op">==</span> <span class="st">"MODO"</span>, , <span class="op">]</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="fit-a-spatial-hierarchical-distance-sampling-model-using-spds">Fit a spatial hierarchical distance sampling model using <code>spDS()</code>
+<a class="anchor" aria-label="anchor" href="#fit-a-spatial-hierarchical-distance-sampling-model-using-spds"></a>
+</h3>
+<p>Below we fit a single-species spatially-explicit hierarchical distance sampling model to the MODO data using a Nearest Neighbor Gaussian Process. We use the default priors and initial values for the abundance (<code>beta</code>) and detection (<code>alpha</code>) coefficients, the spatial variance (<code>sigma.sq</code>), the spatial decay parameter (<code>phi</code>), the spatial random effects (<code>w</code>), and the latent abundance values (<code>N</code>). We also include an offset in <code>dat.MODO</code> to provide estimates of density on a per hectare basis. We model abundance as a function of local forest cover and grassland cover, along with a spatial random intercept. We model detection probability as a function of linear and quadratic day of survey and a linear effect of wind.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Specify model formulas</span></span>
+<span><span class="va">MODO.abund.formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">forest</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">grass</span><span class="op">)</span> </span>
+<span><span class="va">MODO.det.formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">wind</span><span class="op">)</span></span></code></pre></div>
+<p>We run the model using an Adaptive MCMC sampler with a target acceptance rate of 0.43. We run 3 chains of the model each for 20,000 iterations split into 800 batches each of length 25. For each chain, we discard the first 10,000 iterations as burn-in and use a thinning rate of 5 for a resulting 6,000 samples from the joint posterior. We fit the model using 15 nearest neighbors and an exponential correlation function. Run <code><a href="reference/spDS.html">?spDS</a></code> for more detailed information on all function arguments.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Run the model (Approx run time: 1.2 min)</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spDS.html">spDS</a></span><span class="op">(</span>abund.formula <span class="op">=</span> <span class="va">MODO.abund.formula</span>,</span>
+<span>            det.formula <span class="op">=</span> <span class="va">MODO.det.formula</span>,</span>
+<span>            data <span class="op">=</span> <span class="va">dat.MODO</span>, n.batch <span class="op">=</span> <span class="fl">800</span>, batch.length <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>            accept.rate <span class="op">=</span> <span class="fl">0.43</span>, cov.model <span class="op">=</span> <span class="st">"exponential"</span>,</span>
+<span>            transect <span class="op">=</span> <span class="st">'point'</span>, det.func <span class="op">=</span> <span class="st">'halfnormal'</span>,</span>
+<span>            NNGP <span class="op">=</span> <span class="cn">TRUE</span>, n.neighbors <span class="op">=</span> <span class="fl">15</span>, n.burn <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>            n.thin <span class="op">=</span> <span class="fl">5</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>This will produce a large output object, and you can use <code>str(out)</code> to get an overview of what’s in there. Here we use the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function to print a concise but informative summary of the model fit.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; spDS(abund.formula = MODO.abund.formula, det.formula = MODO.det.formula, </span></span>
+<span><span class="co">#&gt;     data = dat.MODO, cov.model = "exponential", NNGP = TRUE, </span></span>
+<span><span class="co">#&gt;     n.neighbors = 15, n.batch = 800, batch.length = 25, accept.rate = 0.43, </span></span>
+<span><span class="co">#&gt;     transect = "point", det.func = "halfnormal", verbose = FALSE, </span></span>
+<span><span class="co">#&gt;     n.burn = 10000, n.thin = 5, n.chains = 3)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Samples per Chain: 20000</span></span>
+<span><span class="co">#&gt; Burn-in: 10000</span></span>
+<span><span class="co">#&gt; Thinning Rate: 5</span></span>
+<span><span class="co">#&gt; Number of Chains: 3</span></span>
+<span><span class="co">#&gt; Total Posterior Samples: 6000</span></span>
+<span><span class="co">#&gt; Run Time (min): 3.9091</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Abundance (log scale): </span></span>
+<span><span class="co">#&gt;                  Mean     SD    2.5%     50%   97.5%   Rhat ESS</span></span>
+<span><span class="co">#&gt; (Intercept)   -1.7565 0.3078 -2.3898 -1.7507 -1.1726 1.0176  76</span></span>
+<span><span class="co">#&gt; scale(forest) -0.1111 0.1822 -0.4706 -0.1124  0.2704 1.0459 210</span></span>
+<span><span class="co">#&gt; scale(grass)   0.1925 0.1857 -0.1689  0.1946  0.5537 1.1173 236</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Detection (log scale): </span></span>
+<span><span class="co">#&gt;                    Mean     SD    2.5%     50%   97.5%   Rhat ESS</span></span>
+<span><span class="co">#&gt; (Intercept)     -2.5567 0.1140 -2.7680 -2.5600 -2.3285 1.0044 272</span></span>
+<span><span class="co">#&gt; scale(day)      -0.1717 0.0847 -0.3617 -0.1666 -0.0216 1.0246 311</span></span>
+<span><span class="co">#&gt; I(scale(day)^2)  0.0202 0.0867 -0.1436  0.0158  0.1991 1.0262 319</span></span>
+<span><span class="co">#&gt; scale(wind)     -0.1522 0.0816 -0.3276 -0.1487 -0.0046 1.0260 575</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Spatial Covariance: </span></span>
+<span><span class="co">#&gt;            Mean     SD   2.5%   50%  97.5%   Rhat ESS</span></span>
+<span><span class="co">#&gt; sigma.sq 0.4830 0.2527 0.1734 0.425 1.1549 1.0351 252</span></span>
+<span><span class="co">#&gt; phi      0.0014 0.0014 0.0003 0.001 0.0059 1.0445 188</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="posterior-predictive-check">Posterior predictive check<a class="anchor" aria-label="anchor" href="#posterior-predictive-check"></a>
+</h3>
+<p>The function <code>ppcAbund</code> performs a posterior predictive check on the resulting list from the call to <code>spDS</code>. We provide options to group, or bin, the data in different ways prior to performing the posterior predictive check, which can help reveal different types of inadequate model fit. Below we perform a posterior predictive check on the data grouped by site with a Freeman-Tukey fit statistic, and then use the <code>summary</code> function to summarize the check with a Bayesian p-value.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ppc.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ppcAbund.html">ppcAbund</a></span><span class="op">(</span><span class="va">out</span>, fit.stat <span class="op">=</span> <span class="st">'freeman-tukey'</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ppc.out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; ppcAbund(object = out, fit.stat = "freeman-tukey", group = 1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Samples per Chain: 20000</span></span>
+<span><span class="co">#&gt; Burn-in: 10000</span></span>
+<span><span class="co">#&gt; Thinning Rate: 5</span></span>
+<span><span class="co">#&gt; Number of Chains: 3</span></span>
+<span><span class="co">#&gt; Total Posterior Samples: 6000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Bayesian p-value:  0.5208 </span></span>
+<span><span class="co">#&gt; Fit statistic:  freeman-tukey</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="model-selection-using-waic">Model selection using WAIC<a class="anchor" aria-label="anchor" href="#model-selection-using-waic"></a>
+</h3>
+<p>The <code>waicAbund</code> function computes the Widely Applicable Information Criterion (WAIC) for use in model selection and assessment.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/waicAbund.html">waicAbund</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; N.max not specified. Setting upper index of integration of N to 10 plus</span></span>
+<span><span class="co">#&gt; the largest estimated abundance value at each site in object$N.samples</span></span>
+<span><span class="co">#&gt;       elpd         pD       WAIC </span></span>
+<span><span class="co">#&gt; -168.03803   13.45534  362.98673</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
+</h3>
+<p>Prediction is possible using the <code>predict</code> function, a set of covariates at the desired prediction locations, and the spatial coordinates of the locations. The object <code>neonPredData</code> contains percent forest cover and grassland cover across the Disney Wildnerness Preserve. Below we predict MODO density across the preserve, which is stored in the <code>out.pred</code> object.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># First standardize elevation using mean and sd from fitted model</span></span>
+<span><span class="va">forest.pred</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">neonPredData</span><span class="op">$</span><span class="va">forest</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">dat.MODO</span><span class="op">$</span><span class="va">covs</span><span class="op">$</span><span class="va">forest</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span>
+<span>               <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">dat.MODO</span><span class="op">$</span><span class="va">covs</span><span class="op">$</span><span class="va">forest</span><span class="op">)</span></span>
+<span><span class="va">grass.pred</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">neonPredData</span><span class="op">$</span><span class="va">grass</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">dat.MODO</span><span class="op">$</span><span class="va">covs</span><span class="op">$</span><span class="va">grass</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span>
+<span>               <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">dat.MODO</span><span class="op">$</span><span class="va">covs</span><span class="op">$</span><span class="va">grass</span><span class="op">)</span></span>
+<span><span class="va">X.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">forest.pred</span>, <span class="va">grass.pred</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X.0</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'(Intercept)'</span>, <span class="st">'forest'</span>, <span class="st">'grass'</span><span class="op">)</span></span>
+<span><span class="va">coords.0</span> <span class="op">&lt;-</span> <span class="va">neonPredData</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'easting'</span>, <span class="st">'northing'</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">out.pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
+</h2>
+<p>The <code><a href="articles/distanceSampling.html">vignette("distanceSampling")</a></code>, <code><a href="articles/nMixtureModels.html">vignette("nMixtureModels")</a></code>, and <code><a href="articles/glmm.html">vignette("glmm")</a></code> provide detailed descriptions and tutorials of all hierarchical distance sampling models, N-mixture models, and generalized linear mixed models in <code>spAbundance</code>, respectively. Given the similarity in syntax to fitting occupancy models in the <code>spOccupancy</code> package, much of the documentation on the <a href="https://www.jeffdoser.com/files/spoccupancy-web/" class="external-link"><code>spOccupancy</code> website</a> will also be helpful for fitting models in <code>spAbundance</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="citing-spabundance">Citing <code>spAbundance</code>
 <a class="anchor" aria-label="anchor" href="#citing-spabundance"></a>
 </h2>
 <p>Please cite <code>spAbundance</code> as:</p>
-<p>Doser, J. W. and Finley, A. O. (2023). spAbundance: Univariate and Multivariate Spatial Modeling of Species Abundance. R package version 0.1.0. <a href="https://github.com/doserjef/spAbundance" class="external-link uri">https://github.com/doserjef/spAbundance</a></p>
+<p>Doser, J. W., Finley, A. O., Kéry, M., and Zipkin, E. F. (2023). spAbundance: An R package for univariate and multivariate spatially-explicit abundance models. arXiv Preprint.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Doser, J. W., Finley, A. O., Kéry, M., and Zipkin, E. F. (2022a). spOccupancy: An R package for single-species, multi-species, and integrated spatial occupancy models. Methods in Ecology and Evolution. <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link uri">https://doi.org/10.1111/2041-210X.13897</a>.</p>
+<p>Doser, J. W., Finley, A. O., Kéry, M., and Zipkin, E. F. (2022). spOccupancy: An R package for single-species, multi-species, and integrated spatial occupancy models. Methods in Ecology and Evolution. <a href="https://doi.org/10.1111/2041-210X.13897" class="external-link uri">https://doi.org/10.1111/2041-210X.13897</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -245,7 +371,9 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a> <br><small class="roles"> Maintainer </small>  </li>
+<a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<li>
+<a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a> <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -257,7 +385,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+<p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

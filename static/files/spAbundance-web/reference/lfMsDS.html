@@ -86,10 +86,10 @@
   of species, second dimension equal to the number of sites, and third 
   dimension equal to the maximum number of replicates at a given site. 
   <code>covs</code> is a matrix or data frame containing the variables 
-  used in the the abundance and/or the detection portion of the model, with
+  used in the abundance and/or the detection portion of the model, with
   \(J\) rows for each column (variable). <code>dist.breaks</code> is a vector of 
   distances that denote the breakpoints of the distance bands. <code>dist.breaks</code> should
-  have length equal to the number of columns in <code>y</code> plus one. <code>offset</code> is an 
+  have length equal to the third dimension of <code>y</code> plus one. <code>offset</code> is an 
   offset that can be used to scale estimates from abundance per transect to density per 
   some desired unit of measure. This can be either a single value or a vector with an offset
   value for each site (e.g., if transects differ in length). <code>coords</code> is a matrix
@@ -151,7 +151,7 @@
 
 <dt>tuning</dt>
 <dd><p>a list with each tag corresponding to a parameter name, whose
-  whose value defines the initial variance of the adaptive sampler. 
+  value defines the initial variance of the adaptive sampler. 
   Valid tags are <code>beta</code>, <code>alpha</code>, <code>lambda</code> (the latent factor loadings), 
   <code>w</code> (the latent factors), <code>beta.star</code> (the abundance 
   random effect values), <code>alpha.star</code> (the detection random effect values), and 
@@ -309,14 +309,15 @@
 <dd><p>a three-dimensional array of posterior samples for
     the latent abundance values for each species. Note that these values
     always represent transect-level abundance, even when an offset is 
-    supplied.</p></dd>
+    supplied. Array dimensions correspond to MCMC sample, species, and site.</p></dd>
 
 
   <dt>mu.samples</dt>
 <dd><p>a three-dimensional array of posterior samples for
     the latent expected abundance values for each species. When an offset
     is supplied in the <code>data</code> object, these correspond to expected
-    abundance per unit area (i.e., density).</p></dd>
+    abundance per unit area (i.e., density). Array dimensions correspond to 
+    MCMC sample, species, and site.</p></dd>
 
 
   <dt>sigma.sq.mu.samples</dt>
@@ -415,7 +416,7 @@
 <span class="r-in"><span><span class="va">n.factors</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simMsDS.html">simMsDS</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.bins <span class="op">=</span> <span class="va">n.bins</span>, bin.width <span class="op">=</span> <span class="va">bin.width</span>,</span></span>
-<span class="r-in"><span>         n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, det.func <span class="op">=</span> <span class="va">det.func</span>, kappa <span class="op">=</span> <span class="va">kappa</span>, </span></span>
+<span class="r-in"><span>               n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, det.func <span class="op">=</span> <span class="va">det.func</span>, kappa <span class="op">=</span> <span class="va">kappa</span>, </span></span>
 <span class="r-in"><span>               mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, cov.model <span class="op">=</span> <span class="va">cov.model</span>,</span></span>
 <span class="r-in"><span>               sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, nu <span class="op">=</span> <span class="va">nu</span>, family <span class="op">=</span> <span class="va">family</span>, </span></span>
 <span class="r-in"><span>               offset <span class="op">=</span> <span class="va">offset</span>, transect <span class="op">=</span> <span class="va">transect</span>, factor.model <span class="op">=</span> <span class="va">factor.model</span>, </span></span>
@@ -430,24 +431,23 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">X.p</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">covs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'int.abund'</span>, <span class="st">'abund.cov.1'</span>, <span class="st">'abund.cov.2'</span>, <span class="st">'abund.cov.3'</span>, </span></span>
-<span class="r-in"><span>        <span class="st">'int.det'</span>, <span class="st">'det.cov.1'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    <span class="st">'int.det'</span>, <span class="st">'det.cov.1'</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, </span></span>
-<span class="r-in"><span>      covs <span class="op">=</span> <span class="va">covs</span>,</span></span>
-<span class="r-in"><span>       dist.breaks <span class="op">=</span> <span class="va">dist.breaks</span>, </span></span>
-<span class="r-in"><span>      coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
+<span class="r-in"><span>                  covs <span class="op">=</span> <span class="va">covs</span>,</span></span>
+<span class="r-in"><span>                  dist.breaks <span class="op">=</span> <span class="va">dist.breaks</span>, </span></span>
+<span class="r-in"><span>                  coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
 <span class="r-in"><span>                  offset <span class="op">=</span> <span class="va">offset</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Priors</span></span></span>
 <span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>                     var <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                   alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>                   kappa.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>                   tau.sq.beta.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   tau.sq.alpha.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> </span></span>
 <span class="r-in"><span><span class="co"># Starting values</span></span></span>
 <span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha.comm <span class="op">=</span> <span class="fl">0</span>, beta.comm <span class="op">=</span> <span class="fl">0</span>, beta <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>       alpha <span class="op">=</span> <span class="fl">0</span>, kappa <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                   alpha <span class="op">=</span> <span class="fl">0</span>, kappa <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tuning</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0.1</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, beta.star <span class="op">=</span> <span class="fl">0.3</span>, alpha.star <span class="op">=</span> <span class="fl">0.1</span>, </span></span>
 <span class="r-in"><span>               kappa <span class="op">=</span> <span class="fl">0.8</span>, lambda <span class="op">=</span> <span class="fl">1</span>, w <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span></span>
@@ -459,24 +459,24 @@
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">lfMsDS</span><span class="op">(</span>abund.formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov.1</span> <span class="op">+</span> <span class="va">abund.cov.2</span> <span class="op">+</span> <span class="va">abund.cov.3</span>,</span></span>
-<span class="r-in"><span>      det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>,</span></span>
-<span class="r-in"><span>      data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
-<span class="r-in"><span>      n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
-<span class="r-in"><span>      batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
-<span class="r-in"><span>      inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
-<span class="r-in"><span>      family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
-<span class="r-in"><span>      det.func <span class="op">=</span> <span class="st">'halfnormal'</span>, </span></span>
-<span class="r-in"><span>      transect <span class="op">=</span> <span class="va">transect</span>, </span></span>
-<span class="r-in"><span>      tuning <span class="op">=</span> <span class="va">tuning</span>,</span></span>
-<span class="r-in"><span>      n.factors <span class="op">=</span> <span class="va">n.factors</span>,</span></span>
-<span class="r-in"><span>      priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
-<span class="r-in"><span>      accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
-<span class="r-in"><span>      n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>      verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
-<span class="r-in"><span>      n.report <span class="op">=</span> <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>      n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
-<span class="r-in"><span>      n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
-<span class="r-in"><span>      n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>        det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>,</span></span>
+<span class="r-in"><span>        data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
+<span class="r-in"><span>        n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
+<span class="r-in"><span>        batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
+<span class="r-in"><span>        inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
+<span class="r-in"><span>        family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
+<span class="r-in"><span>        det.func <span class="op">=</span> <span class="st">'halfnormal'</span>, </span></span>
+<span class="r-in"><span>        transect <span class="op">=</span> <span class="va">transect</span>, </span></span>
+<span class="r-in"><span>        tuning <span class="op">=</span> <span class="va">tuning</span>,</span></span>
+<span class="r-in"><span>        n.factors <span class="op">=</span> <span class="va">n.factors</span>,</span></span>
+<span class="r-in"><span>        priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
+<span class="r-in"><span>        accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
+<span class="r-in"><span>        n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
+<span class="r-in"><span>        verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>        n.report <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>        n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
+<span class="r-in"><span>        n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
+<span class="r-in"><span>        n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -527,31 +527,34 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0123</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance Means (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.4783 0.3978 -1.2264 -0.5203 0.1655   NA  30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1  0.1288 0.2963 -0.3962  0.1220 0.7792   NA 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2  0.3519 0.3594 -0.1950  0.3024 1.2078   NA  12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 -0.1101 0.3757 -1.1460 -0.0889 0.5859   NA  51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.6701 0.3613 -1.2136 -0.7109 0.1036   NA   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1  0.2566 0.2648 -0.2142  0.2591 0.6807   NA 181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2  0.3706 0.3294 -0.1922  0.3848 1.0010   NA 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 -0.0752 0.3404 -0.6489 -0.0629 0.6510   NA 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance Variances (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.8559 1.3316 0.0564 0.4421 5.5714   NA  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1 0.5419 0.6272 0.0730 0.3450 2.6480   NA  41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2 0.6397 0.6907 0.0406 0.4108 2.1840   NA  26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 0.6035 0.8989 0.0981 0.3771 2.5187   NA  65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2857 0.4185 0.0302 0.1938 0.8073   NA  54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1 0.4026 0.4289 0.0530 0.2602 1.9691   NA  55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2 0.5502 0.9141 0.0428 0.2710 2.8077   NA  52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 0.5033 0.5880 0.0609 0.3612 1.8817   NA  53</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Detection Means (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.5636 0.4436 -1.2301 -0.6599 0.2094   NA   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   -0.2561 0.2911 -0.7656 -0.2663 0.3050   NA   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.6515 0.4056 -1.2345 -0.7566 0.0889   NA   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   -0.2839 0.2873 -0.8234 -0.3032 0.2277   NA  11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Detection Variances (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1768 0.2284 0.0378 0.1126 0.6537   NA 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.1991 0.1683 0.0272 0.1504 0.7079   NA  25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2077 0.2602 0.0365 0.1302 1.1004   NA  34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.2400 0.2236 0.0375 0.1586 0.8450   NA  47</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -559,7 +562,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

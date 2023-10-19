@@ -95,12 +95,13 @@
 <p>A list object of class <code>predict.NMix</code>. When <code>type = 'abundance'</code>, the list consists of:</p>
 <dl><dt>mu.0.samples</dt>
 <dd><p>a <code>coda</code> object of posterior predictive samples for the
-    expected abundance values.</p></dd>
+    expected abundance values. Note these will be per unit area if an offset
+    was used when fitting the model with <code><a href="NMix.html">NMix()</a></code></p></dd>
 
 
   <dt>N.0.samples</dt>
 <dd><p>a <code>coda</code> object of posterior predictive samples for the
-    latent abundance values.</p></dd>
+    latent abundance values. These will be in the same units as <code>mu.0.samples</code>.</p></dd>
 
 
 </dl><p>When <code>type = 'detection'</code>, the list consists of:</p>
@@ -153,7 +154,7 @@
 <span class="r-in"><span><span class="co"># Initial values</span></span></span>
 <span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p.det</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   beta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p.abund</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       kappa <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>                   kappa <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
 <span class="r-in"><span>                   N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">1</span>, <span class="va">max</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></span>
@@ -163,19 +164,19 @@
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="NMix.html">NMix</a></span><span class="op">(</span>abund.formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov</span>, </span></span>
-<span class="r-in"><span>             det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov</span>,</span></span>
-<span class="r-in"><span>             data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
-<span class="r-in"><span>             inits <span class="op">=</span> <span class="va">inits.list</span>,</span></span>
-<span class="r-in"><span>       n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
-<span class="r-in"><span>       batch.length <span class="op">=</span> <span class="va">batch.length</span>,</span></span>
-<span class="r-in"><span>       family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
-<span class="r-in"><span>             priors <span class="op">=</span> <span class="va">prior.list</span>,</span></span>
-<span class="r-in"><span>             n.omp.threads <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>             verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>             n.report <span class="op">=</span> <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>             n.burn <span class="op">=</span> <span class="va">n.burn</span>, </span></span>
-<span class="r-in"><span>             n.thin <span class="op">=</span> <span class="va">n.thin</span>, </span></span>
-<span class="r-in"><span>             n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span></span></span>
+<span class="r-in"><span>            det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov</span>,</span></span>
+<span class="r-in"><span>            data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
+<span class="r-in"><span>            inits <span class="op">=</span> <span class="va">inits.list</span>,</span></span>
+<span class="r-in"><span>            n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
+<span class="r-in"><span>            batch.length <span class="op">=</span> <span class="va">batch.length</span>,</span></span>
+<span class="r-in"><span>            family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
+<span class="r-in"><span>            priors <span class="op">=</span> <span class="va">prior.list</span>,</span></span>
+<span class="r-in"><span>            n.omp.threads <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>            verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>            n.report <span class="op">=</span> <span class="fl">1</span>, </span></span>
+<span class="r-in"><span>            n.burn <span class="op">=</span> <span class="va">n.burn</span>, </span></span>
+<span class="r-in"><span>            n.thin <span class="op">=</span> <span class="va">n.thin</span>, </span></span>
+<span class="r-in"><span>            n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -199,66 +200,66 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling ... </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 1 of 10, 10.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		8.0		0.98020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.98020</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.98020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	0.0		0.98020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	20.0		0.98020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	16.0		0.98020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	8.0		0.98020</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 2 of 10, 20.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		12.0		0.97045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.97045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	0.0		0.97045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	4.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	12.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	8.0		0.97045</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 3 of 10, 30.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.96079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.96079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	12.0		0.96079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	8.0		0.96079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.96079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.96079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	8.0		0.96079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	0.0		0.96079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 4 of 10, 40.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.95123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.95123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	8.0		0.95123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	8.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		12.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	4.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	4.0		0.95123</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 5 of 10, 50.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.94176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.94176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.94176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.94176</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	8.0		0.94176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	4.0		0.94176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	16.0		0.94176</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 6 of 10, 60.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.93239</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.93239</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		8.0		0.93239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	4.0		0.93239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	12.0		0.93239</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	12.0		0.93239</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	0.0		0.93239</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 7 of 10, 70.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		8.0		0.92312</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.92312</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	4.0		0.92312</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	4.0		0.92312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.92312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.92312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	12.0		0.92312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	12.0		0.92312</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 8 of 10, 80.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.91393</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.91393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	12.0		0.91393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	4.0		0.91393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	0.0		0.91393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	12.0		0.91393</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 9 of 10, 90.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.90484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.90484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	8.0		0.90484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	0.0		0.90484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.90484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		8.0		0.90484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[1]	12.0		0.90484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	alpha[2]	20.0		0.90484</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 10 of 10, 100.00%</span>
 <span class="r-in"><span></span></span>
@@ -276,17 +277,17 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 8e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0011</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.4149 0.0407 0.3258 0.4252 0.4505   NA  20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov   1.9474 0.0538 1.8452 1.9440 1.9891   NA  20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.4492 0.1836 0.3437 0.4481 0.4944   NA  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov   1.9840 0.1595 1.7105 2.0131 2.0413   NA  17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.335 0.1910 0.0734 0.3084 0.5857   NA   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov     1.240 0.1256 1.0804 1.2195 1.5032   NA   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1770 0.2357 -0.0986 0.0920 0.7924   NA   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov     1.1073 0.2053  0.8381 1.0911 1.5472   NA  16</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Predict at new locations ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X.0</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'intercept'</span>, <span class="st">'abund.cov'</span><span class="op">)</span></span></span>
@@ -304,7 +305,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

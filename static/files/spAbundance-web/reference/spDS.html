@@ -87,7 +87,7 @@
   with first dimension equal to the number of 
   sites (\(J\)) and second dimension equal to the number of 
   distance bins. <code>covs</code> is a matrix or data frame
-  containing the variables used in the the abundance and/or the detection
+  containing the variables used in the abundance and/or the detection
   portion of the model, with
   \(J\) rows for each column (variable). <code>dist.breaks</code> is a vector of 
   distances that denote the breakpoints of the distance bands. <code>dist.breaks</code> should
@@ -144,7 +144,7 @@
   Gamma distribution. The hyperparameters of the inverse-Gamma distribution
   are passed as a list of length two with first and second elements corresponding
   to the shape and scale parameters, respectively, which are each specified as
-  vectors of length equal to the number of random intercepts or of length one 
+  vectors of length equal to the number of random intercepts/slopes or of length one 
   if priors are the same for all random effect variances.</p></dd>
 
 
@@ -432,12 +432,12 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">X.p</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">covs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'int.abund'</span>, <span class="st">'abund.cov.1'</span>, <span class="st">'abund.cov.2'</span>, <span class="st">'abund.cov.3'</span>, </span></span>
-<span class="r-in"><span>        <span class="st">'int.det'</span>, <span class="st">'det.cov.1'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    <span class="st">'int.det'</span>, <span class="st">'det.cov.1'</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, </span></span>
 <span class="r-in"><span>                  covs <span class="op">=</span> <span class="va">covs</span>,</span></span>
 <span class="r-in"><span>                  dist.breaks <span class="op">=</span> <span class="va">dist.breaks</span>, </span></span>
-<span class="r-in"><span>      coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
+<span class="r-in"><span>                  coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
 <span class="r-in"><span>                  offset <span class="op">=</span> <span class="va">offset</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Priors</span></span></span>
@@ -466,8 +466,8 @@
 <span class="r-in"><span>            family <span class="op">=</span> <span class="st">'NB'</span>,</span></span>
 <span class="r-in"><span>            det.func <span class="op">=</span> <span class="st">'halfnormal'</span>, </span></span>
 <span class="r-in"><span>            transect <span class="op">=</span> <span class="st">'point'</span>, </span></span>
-<span class="r-in"><span>      cov.model <span class="op">=</span> <span class="st">'exponential'</span>, </span></span>
-<span class="r-in"><span>      NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>            cov.model <span class="op">=</span> <span class="st">'exponential'</span>, </span></span>
+<span class="r-in"><span>            NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>      n.neighbors <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>            tuning <span class="op">=</span> <span class="va">tuning</span>,</span></span>
 <span class="r-in"><span>            priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
@@ -535,7 +535,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 150</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0097</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
@@ -564,7 +564,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

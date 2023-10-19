@@ -88,10 +88,10 @@
   of species, second dimension equal to the number of sites, and third 
   dimension equal to the maximum number of replicates at a given site. 
   <code>covs</code> is a matrix or data frame containing the variables 
-  used in the the abundance and/or the detection portion of the model, with
+  used in the abundance and/or the detection portion of the model, with
   \(J\) rows for each column (variable). <code>dist.breaks</code> is a vector of 
   distances that denote the breakpoints of the distance bands. <code>dist.breaks</code> should
-  have length equal to the number of columns in <code>y</code> plus one. <code>offset</code> is an 
+  have length equal to the third dimension of <code>y</code> plus one. <code>offset</code> is an 
   offset that can be used to scale estimates from abundance per transect to density per 
   some desired unit of measure. This can be either a single value or a vector with an offset
   value for each site (e.g., if transects differ in length). <code>coords</code> is a matrix
@@ -144,7 +144,7 @@
   Gamma distribution. The hyperparameters of the inverse-Gamma distribution
   are passed as a list of length two with first and second elements corresponding
   to the shape and scale parameters, respectively, which are each specified as
-  vectors of length equal to the number of random intercepts or of length one 
+  vectors of length equal to the number of random effects or of length one 
   if priors are the same for all random effect variances. <code>kappa</code> is the 
   negative binomial dispersion parameter for each species and is assumed to 
   follow a uniform distribution. The hyperparameters of the uniform distribution
@@ -167,7 +167,7 @@
 
 
 <dt>tuning</dt>
-<dd><p>a list with each tag corresponding to a parameter name, whose
+<dd><p>a list with each tag corresponding to a parameter name, 
   whose value defines the initial variance of the adaptive sampler. 
   Valid tags are <code>beta</code>, <code>alpha</code>, <code>lambda</code> (the latent factor loadings), 
   <code>w</code> (the latent factors), <code>beta.star</code> (the abundance 
@@ -372,21 +372,23 @@ of neighbors using WAIC.</p></dd>
 
   <dt>w.samples</dt>
 <dd><p>a three-dimensional array of posterior samples for 
-    the latent effects for each spatial factor.</p></dd>
+    the latent effects for each spatial factor. Array dimensions correspond
+    to MCMC sample, spatial factor, then site.</p></dd>
 
 
   <dt>N.samples</dt>
 <dd><p>a three-dimensional array of posterior samples for
     the latent abundance values for each species. Note that these values
     always represent transect-level abundance, even when an offset is 
-    supplied.</p></dd>
+    supplied. Array dimensions correspond to MCMC sample, species, then site.</p></dd>
 
 
   <dt>mu.samples</dt>
 <dd><p>a three-dimensional array of posterior samples for
     the latent expected abundance values for each species. When an offset
     is supplied in the <code>data</code> object, these correspond to expected
-    abundance per unit area (i.e., density).</p></dd>
+    abundance per unit area (i.e., density). Array dimensions correspond to 
+    MCMC sample, species, then site.</p></dd>
 
 
   <dt>sigma.sq.mu.samples</dt>
@@ -487,12 +489,11 @@ of neighbors using WAIC.</p></dd>
 <span class="r-in"><span><span class="va">cov.model</span> <span class="op">&lt;-</span> <span class="st">'exponential'</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simMsDS.html">simMsDS</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.bins <span class="op">=</span> <span class="va">n.bins</span>, bin.width <span class="op">=</span> <span class="va">bin.width</span>,</span></span>
-<span class="r-in"><span>         n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, det.func <span class="op">=</span> <span class="va">det.func</span>, kappa <span class="op">=</span> <span class="va">kappa</span>, </span></span>
+<span class="r-in"><span>               n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, det.func <span class="op">=</span> <span class="va">det.func</span>, </span></span>
 <span class="r-in"><span>               mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, cov.model <span class="op">=</span> <span class="va">cov.model</span>,</span></span>
 <span class="r-in"><span>               sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, nu <span class="op">=</span> <span class="va">nu</span>, family <span class="op">=</span> <span class="va">family</span>, </span></span>
 <span class="r-in"><span>               offset <span class="op">=</span> <span class="va">offset</span>, transect <span class="op">=</span> <span class="va">transect</span>, factor.model <span class="op">=</span> <span class="va">factor.model</span>, </span></span>
 <span class="r-in"><span>               n.factors <span class="op">=</span> <span class="va">n.factors</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> overdispersion parameter (kappa) is ignored when family == 'Poisson'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> sigma.sq is specified but will be set to 1 for spatial latent factor model</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span></span>
@@ -503,25 +504,24 @@ of neighbors using WAIC.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">X.p</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">covs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'int.abund'</span>, <span class="st">'abund.cov.1'</span>, <span class="st">'abund.cov.2'</span>, <span class="st">'abund.cov.3'</span>, </span></span>
-<span class="r-in"><span>        <span class="st">'int.det'</span>, <span class="st">'det.cov.1'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    <span class="st">'int.det'</span>, <span class="st">'det.cov.1'</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, </span></span>
-<span class="r-in"><span>      covs <span class="op">=</span> <span class="va">covs</span>,</span></span>
-<span class="r-in"><span>       dist.breaks <span class="op">=</span> <span class="va">dist.breaks</span>, </span></span>
-<span class="r-in"><span>      coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
+<span class="r-in"><span>                  covs <span class="op">=</span> <span class="va">covs</span>,</span></span>
+<span class="r-in"><span>                  dist.breaks <span class="op">=</span> <span class="va">dist.breaks</span>, </span></span>
+<span class="r-in"><span>                  coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
 <span class="r-in"><span>                  offset <span class="op">=</span> <span class="va">offset</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Priors</span></span></span>
 <span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>                     var <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                   alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>                   kappa.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>       phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">3</span> <span class="op">/</span> <span class="fl">1</span>, <span class="fl">3</span> <span class="op">/</span> <span class="fl">.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">3</span> <span class="op">/</span> <span class="fl">1</span>, <span class="fl">3</span> <span class="op">/</span> <span class="fl">.1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   tau.sq.beta.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   tau.sq.alpha.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0.1</span>, b <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> </span></span>
 <span class="r-in"><span><span class="co"># Starting values</span></span></span>
 <span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha.comm <span class="op">=</span> <span class="fl">0</span>, beta.comm <span class="op">=</span> <span class="fl">0</span>, beta <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>       alpha <span class="op">=</span> <span class="fl">0</span>, kappa <span class="op">=</span> <span class="fl">1</span>, phi <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                   alpha <span class="op">=</span> <span class="fl">0</span>, kappa <span class="op">=</span> <span class="fl">1</span>, phi <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tuning</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0.1</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, beta.star <span class="op">=</span> <span class="fl">0.3</span>, alpha.star <span class="op">=</span> <span class="fl">0.1</span>, </span></span>
 <span class="r-in"><span>               kappa <span class="op">=</span> <span class="fl">0.8</span>, lambda <span class="op">=</span> <span class="fl">1</span>, w <span class="op">=</span> <span class="fl">1</span>, phi <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> </span></span>
@@ -533,27 +533,27 @@ of neighbors using WAIC.</p></dd>
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">sfMsDS</span><span class="op">(</span>abund.formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov.1</span> <span class="op">+</span> <span class="va">abund.cov.2</span> <span class="op">+</span> <span class="va">abund.cov.3</span>,</span></span>
-<span class="r-in"><span>      det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>,</span></span>
-<span class="r-in"><span>      data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
-<span class="r-in"><span>      n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
-<span class="r-in"><span>      batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
-<span class="r-in"><span>      inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
-<span class="r-in"><span>      family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
-<span class="r-in"><span>      det.func <span class="op">=</span> <span class="st">'halfnormal'</span>, </span></span>
-<span class="r-in"><span>      transect <span class="op">=</span> <span class="va">transect</span>, </span></span>
-<span class="r-in"><span>      tuning <span class="op">=</span> <span class="va">tuning</span>,</span></span>
-<span class="r-in"><span>      cov.model <span class="op">=</span> <span class="st">'exponential'</span>, </span></span>
-<span class="r-in"><span>      NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>      n.neighbors <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>      n.factors <span class="op">=</span> <span class="va">n.factors</span>,</span></span>
-<span class="r-in"><span>      priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
-<span class="r-in"><span>      accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
-<span class="r-in"><span>      n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>      verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
-<span class="r-in"><span>      n.report <span class="op">=</span> <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>      n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
-<span class="r-in"><span>      n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
-<span class="r-in"><span>      n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>              det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>,</span></span>
+<span class="r-in"><span>              data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
+<span class="r-in"><span>              n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
+<span class="r-in"><span>              batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
+<span class="r-in"><span>              inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
+<span class="r-in"><span>              family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
+<span class="r-in"><span>              det.func <span class="op">=</span> <span class="st">'halfnormal'</span>, </span></span>
+<span class="r-in"><span>              transect <span class="op">=</span> <span class="va">transect</span>, </span></span>
+<span class="r-in"><span>              tuning <span class="op">=</span> <span class="va">tuning</span>,</span></span>
+<span class="r-in"><span>              cov.model <span class="op">=</span> <span class="st">'exponential'</span>, </span></span>
+<span class="r-in"><span>              NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>              n.neighbors <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>              n.factors <span class="op">=</span> <span class="va">n.factors</span>,</span></span>
+<span class="r-in"><span>              priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
+<span class="r-in"><span>              accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
+<span class="r-in"><span>              n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
+<span class="r-in"><span>              verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>              n.report <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>              n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
+<span class="r-in"><span>              n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
+<span class="r-in"><span>              n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -614,41 +614,41 @@ of neighbors using WAIC.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0185</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance Means (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.4252 0.3423 -1.0869 -0.4014 0.1297   NA  17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1  0.0003 0.3005 -0.5992 -0.0088 0.5057   NA  72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2  0.3979 0.5193 -0.4444  0.3417 1.2757   NA 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 -0.1568 0.2682 -0.6542 -0.1494 0.4044   NA  72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.5069 0.3357 -1.2624 -0.5194 0.0935   NA  48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1  0.3225 0.3142 -0.3387  0.3024 1.0038   NA 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2  0.1524 0.3627 -0.4611  0.1752 0.8932   NA  97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3  0.1330 0.2070 -0.2629  0.1527 0.5515   NA 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance Variances (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.4685 0.7578 0.0493 0.3043 2.0015   NA  69</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1 0.4981 0.5904 0.0493 0.3112 2.2731   NA  54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2 1.1828 1.9858 0.0420 0.7023 4.2616   NA  74</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 0.3813 0.4346 0.0555 0.2511 1.2348   NA 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.5508 0.7917 0.0630 0.3125 3.1385   NA  23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1 0.5969 0.5766 0.1122 0.4392 2.3833   NA  39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2 0.8351 0.8799 0.0469 0.6047 3.3462   NA   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 0.2275 0.2512 0.0461 0.1525 0.8571   NA  22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Means (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.4060 0.4203 -1.1078 -0.4685 0.4268   NA   3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   -0.4396 0.2673 -0.8093 -0.4976 0.1242   NA   6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.5865 0.3530 -1.1001 -0.6778 0.1216   NA   4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   -0.4044 0.3124 -0.8524 -0.4782 0.3304   NA  36</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Variances (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2008 0.1871 0.0304 0.1445 0.6999   NA  48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.2393 0.4332 0.0518 0.1424 0.9797   NA 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2612 0.2914 0.0363 0.1764 1.0183   NA  27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1   0.3255 0.5751 0.0397 0.1737 2.0532   NA  43</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Spatial Covariance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Mean     SD   2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-1 12.9865 3.7424 6.0066 13.3262 20.1746   NA  13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-2  9.4226 3.9216 3.7532 10.1597 15.4342   NA   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi-3  8.4690 2.3901 4.9844  7.7098 13.2919   NA   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-1  4.2111 1.0927 3.0658  3.9839  6.8047   NA  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-2 12.3522 3.9712 5.7008 12.0353 21.3153   NA  12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi-3  6.9817 1.4671 4.0350  6.8446  9.9680   NA  15</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -656,7 +656,7 @@ of neighbors using WAIC.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

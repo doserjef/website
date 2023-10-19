@@ -36,6 +36,9 @@ social:
 - icon: twitter
   icon_pack: fab
   link: https://twitter.com/jeffdoser18
+- icon: cv 
+  icon_pack: ai 
+  link: https://www.jeffdoser.com/files/Doser_CV.pdf
   
 superuser: true
 user_groups:

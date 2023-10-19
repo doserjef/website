@@ -55,7 +55,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simMsDS</span><span class="op">(</span><span class="va">J.x</span>, <span class="va">J.y</span>, <span class="va">n.bins</span>, <span class="va">bin.width</span>, <span class="va">n.sp</span>, <span class="va">beta</span>, <span class="va">alpha</span>, </span>
-<span>  <span class="va">det.func</span>, transect <span class="op">=</span> <span class="st">'line'</span>, <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>        <span class="va">det.func</span>, transect <span class="op">=</span> <span class="st">'line'</span>, <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>        p.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, offset <span class="op">=</span> <span class="fl">1</span>, sp <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">cov.model</span>, </span>
 <span>        <span class="va">sigma.sq</span>, <span class="va">phi</span>, <span class="va">nu</span>, family <span class="op">=</span> <span class="st">'Poisson'</span>,</span>
 <span>        factor.model <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">n.factors</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -84,11 +84,11 @@
 
 
 <dt>beta</dt>
-<dd><p>a numeric matrix with <code>n.sp</code> rows containing the intercept and regression coefficient parameters for the abundance portion of the multi-species N-mixture model. Each row corresponds to the regression coefficients for a given species.</p></dd>
+<dd><p>a numeric matrix with <code>n.sp</code> rows containing the intercept and regression coefficient parameters for the abundance portion of the multi-species hierarchical distance sampling (HDS) model. Each row corresponds to the regression coefficients for a given species.</p></dd>
  
 
 <dt>alpha</dt>
-<dd><p>a numeric matrix with <code>n.sp</code> rows containing the intercept and regression coefficient parameters for the detection portion of the multi-species N-mixture model. Each row corresponds to the regression coefficients for a given species.</p></dd>
+<dd><p>a numeric matrix with <code>n.sp</code> rows containing the intercept and regression coefficient parameters for the detection portion of the multi-species HDS model. Each row corresponds to the regression coefficients for a given species.</p></dd>
 
 
 <dt>det.func</dt>
@@ -104,7 +104,7 @@
 
 
 <dt>kappa</dt>
-<dd><p>a numeric vector of length <code>n.sp</code> containing the dispersion parameter for the abundance portion of the N-mixture model for each species. Only relevant when <code>family = 'NB'</code>.</p></dd>
+<dd><p>a numeric vector of length <code>n.sp</code> containing the dispersion parameter for the abundance portion of the HDS model for each species. Only relevant when <code>family = 'NB'</code>.</p></dd>
 
 
 <dt>mu.RE</dt>
@@ -158,7 +158,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Jeffrey W. Doser <a href="mailto:doserjef@msu.edu">doserjef@msu.edu</a>, <br></p>
+    <p>Jeffrey W. Doser <a href="mailto:doserjef@msu.edu">doserjef@msu.edu</a> <br></p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -243,7 +243,7 @@
 <span class="r-in"><span><span class="va">factor.model</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">simMsDS</span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.bins <span class="op">=</span> <span class="va">n.bins</span>, bin.width <span class="op">=</span> <span class="va">bin.width</span>,</span></span>
-<span class="r-in"><span>         n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, det.func <span class="op">=</span> <span class="va">det.func</span>, kappa <span class="op">=</span> <span class="va">kappa</span>, </span></span>
+<span class="r-in"><span>               n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, det.func <span class="op">=</span> <span class="va">det.func</span>, kappa <span class="op">=</span> <span class="va">kappa</span>, </span></span>
 <span class="r-in"><span>               mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, cov.model <span class="op">=</span> <span class="va">cov.model</span>,</span></span>
 <span class="r-in"><span>               sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, nu <span class="op">=</span> <span class="va">nu</span>, family <span class="op">=</span> <span class="va">family</span>, </span></span>
 <span class="r-in"><span>               offset <span class="op">=</span> <span class="va">offset</span>, transect <span class="op">=</span> <span class="va">transect</span>, factor.model <span class="op">=</span> <span class="va">factor.model</span><span class="op">)</span></span></span>
@@ -254,7 +254,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

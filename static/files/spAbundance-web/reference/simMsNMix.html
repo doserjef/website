@@ -54,8 +54,8 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simMsNMix</span><span class="op">(</span><span class="va">J.x</span>, <span class="va">J.y</span>, <span class="va">n.rep</span>, <span class="va">n.sp</span>, <span class="va">beta</span>, <span class="va">alpha</span>, <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>          p.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, sp <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">cov.model</span>, </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simMsNMix</span><span class="op">(</span><span class="va">J.x</span>, <span class="va">J.y</span>, <span class="va">n.rep</span>, <span class="va">n.rep.max</span>, <span class="va">n.sp</span>, <span class="va">beta</span>, <span class="va">alpha</span>, <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>          p.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, offset <span class="op">=</span> <span class="fl">1</span>, sp <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">cov.model</span>, </span>
 <span>          <span class="va">sigma.sq</span>, <span class="va">phi</span>, <span class="va">nu</span>, family <span class="op">=</span> <span class="st">'Poisson'</span>,</span>
 <span>          factor.model <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">n.factors</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -72,6 +72,10 @@
 
 <dt>n.rep</dt>
 <dd><p>a numeric vector of length \(J = J.x \times J.y\) indicating the number of repeat visits at each of the \(J\) sites.</p></dd>
+
+
+<dt>n.rep.max</dt>
+<dd><p>a single numeric value indicating the maximum number of replicate surveys. This is an optional argument, with its default value set to <code>max(n.rep)</code>. This can be used to generate data sets with different types of missingness (e.g., simulate data across 20 days (replicate surveys) but sites are only sampled a maximum of ten times each).</p></dd>
 
 
 <dt>n.sp</dt>
@@ -96,6 +100,10 @@
 
 <dt>p.RE</dt>
 <dd><p>a list used to specify the non-spatial random effects included in the detection portion of the model. The list must have two tags: <code>levels</code> and <code>sigma.sq.p</code>. <code>levels</code> is a vector of length equal to the number of distinct random effects to include in the model and contains the number of levels there are in each effects. <code>sigma.sq.p</code> is a vector of length equal to the number of distinct random effects to include in the model and contains the variances for each random effect. If not specified, no random effects are included in the detection portion of the model. An optional third tag, <code>alpha.indx</code>, is a list that contains integers denoting the corresponding value of <code>alpha</code> that each random effect corresponds to. This allows specification of random intercepts as well as slopes. By default, all effects are assumed to be random intercepts.</p></dd>
+
+
+<dt>offset</dt>
+<dd><p>either a single numeric value or a vector of length <code>J</code> that contains the offset for each location in the data set.</p></dd>
 
 
 <dt>sp</dt>
@@ -199,8 +207,8 @@
 <span class="r-in"><span><span class="va">tau.sq.alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p.det</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">alpha.mean</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mu.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>               sigma.sq.mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">0.3</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>               beta.indx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>              sigma.sq.mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">0.3</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>              beta.indx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">10</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>             sigma.sq.p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.5</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>             alpha.indx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -231,7 +239,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -71,7 +71,7 @@
 
   <dt>N.max</dt>
 <dd><p>values indicating the upper limit on the latent abundance 
-  values when calculating WAIC for N-mixture models or distance sampling models. 
+  values when calculating WAIC for N-mixture models or hierarchical distance sampling models. 
   For single-species models, this can be a single value or a vector of 
   different values for each site. For multi-species models, this can be a 
   single value, a vector of values for each species, or a species by site matrix
@@ -94,11 +94,11 @@
 </dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>When fitting Gaussian-hurdle models, the WAIC is only calculated for the 
-  values that are past the hurdle. If fitting a first stage model with 
+    <p>When fitting zero-inflated Gaussian models, the WAIC is only calculated for the 
+  non-zero values. If fitting a first stage model with 
   <code>spOccupancy</code> to the binary portion of the 
-  hurdle model, you can use the <code><a href="https://www.jeffdoser.com/files/spoccupancy-web/reference/waicOcc.html" class="external-link">spOccupancy::waicOcc</a></code> function to 
-  calculate WAIC for the binary portion of the hurdle model.</p>
+  zero-inflated model, you can use the <code><a href="https://www.jeffdoser.com/files/spoccupancy-web/reference/waicOcc.html" class="external-link">spOccupancy::waicOcc</a></code> function to 
+  calculate WAIC for the binary component.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -142,33 +142,30 @@
 <span class="r-in"><span><span class="va">n.rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">3</span>, <span class="va">J</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.3</span>, <span class="op">-</span><span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p.abund</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mu.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>         sigma.sq.mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mu.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span>, sigma.sq.mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">kappa</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span></span>
 <span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span> </span></span>
 <span class="r-in"><span><span class="va">family</span> <span class="op">&lt;-</span> <span class="st">'NB'</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simAbund.html">simAbund</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>, </span></span>
-<span class="r-in"><span>          kappa <span class="op">=</span> <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, family <span class="op">=</span> <span class="st">'NB'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                kappa <span class="op">=</span> <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, family <span class="op">=</span> <span class="st">'NB'</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span></span>
 <span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X</span></span></span>
 <span class="r-in"><span><span class="va">X.re</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X.re</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">abund.covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>int <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span>, </span></span>
-<span class="r-in"><span>       abund.cov.1 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>, </span></span>
-<span class="r-in"><span>       abund.cov.2 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span>, </span></span>
-<span class="r-in"><span>       abund.cov.3 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">4</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>       abund.factor.1 <span class="op">=</span> <span class="va">X.re</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                   abund.cov.1 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span>                   abund.cov.2 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span>                   abund.cov.3 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">4</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>                   abund.factor.1 <span class="op">=</span> <span class="va">X.re</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, </span></span>
-<span class="r-in"><span>      covs <span class="op">=</span> <span class="va">abund.covs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, covs <span class="op">=</span> <span class="va">abund.covs</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Priors</span></span></span>
 <span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   kappa.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> </span></span>
 <span class="r-in"><span><span class="co"># Starting values</span></span></span>
-<span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>       kappa <span class="op">=</span> <span class="va">kappa</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="fl">0</span>, kappa <span class="op">=</span> <span class="va">kappa</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">5</span></span></span>
 <span class="r-in"><span><span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span></span></span>
@@ -176,19 +173,20 @@
 <span class="r-in"><span><span class="va">n.thin</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="abund.html">abund</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov.1</span> <span class="op">+</span> <span class="va">abund.cov.2</span> <span class="op">+</span> <span class="va">abund.cov.3</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">abund.factor.1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>       data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
-<span class="r-in"><span>       n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
-<span class="r-in"><span>       batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
-<span class="r-in"><span>       inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
-<span class="r-in"><span>       priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
-<span class="r-in"><span>       accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
-<span class="r-in"><span>       n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>       verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
-<span class="r-in"><span>       n.report <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>       n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
-<span class="r-in"><span>       n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
-<span class="r-in"><span>       n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="abund.html">abund</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov.1</span> <span class="op">+</span> <span class="va">abund.cov.2</span> <span class="op">+</span> <span class="va">abund.cov.3</span> <span class="op">+</span> </span></span>
+<span class="r-in"><span>                         <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">abund.factor.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
+<span class="r-in"><span>             n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
+<span class="r-in"><span>             batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
+<span class="r-in"><span>             inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
+<span class="r-in"><span>             priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
+<span class="r-in"><span>             accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
+<span class="r-in"><span>             n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
+<span class="r-in"><span>             verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>             n.report <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>             n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
+<span class="r-in"><span>             n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
+<span class="r-in"><span>             n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -216,38 +214,38 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling ... </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 1 of 5, 20.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.98020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.98020</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.98020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		0.0		0.98020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		4.0		0.98020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		4.0		0.98020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		0.0		0.98020</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 2 of 5, 40.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.97045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.97045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		4.0		0.97045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		4.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		0.0		0.97045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		0.0		0.97045</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 3 of 5, 60.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		4.0		0.96079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		12.0		0.96079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.96079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		4.0		0.96079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		4.0		0.96079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		0.0		0.96079</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 4 of 5, 80.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		8.0		0.95123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		8.0		0.95123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		0.0		0.95123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		0.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		0.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		0.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		16.0		0.95123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		4.0		0.95123</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 5 of 5, 100.00%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate WAIC</span></span></span>
 <span class="r-in"><span><span class="fu">waicAbund</span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       elpd         pD       WAIC </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  -964.9103  6241.7945 14413.4097 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -2363.451  66515.813 137758.529 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -255,7 +253,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>.</p>
+  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
