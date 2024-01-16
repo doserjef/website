@@ -14,7 +14,7 @@ authors:
 date: "2023-08-17T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Restoration Ecology (2023) https://onlinelibrary.wiley.com/doi/abs/10.1111/rec.13998"
+publication: "In: Restoration Ecology (2024) https://onlinelibrary.wiley.com/doi/abs/10.1111/rec.13998"
 publication_short: ""
 publication_types:
 - "2"
