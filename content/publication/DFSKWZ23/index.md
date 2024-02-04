@@ -7,20 +7,20 @@ authors:
 - Marc Kéry 
 - Aaron S. Weed
 - Elise F. Zipkin
-date: "2023-08-17T00:00:00Z"
+date: "2024-01-18T00:00:00Z"
 doi: ""
 featured: false
-publication: ""
+publication: "In: Journal of Agricultural, Biological, and Environmental Statistics (2024) https://doi.org/10.1007/s13253-023-00595-6"
 publication_short: ""
 publication_types:
-- "3"
-publishDate: "2023-08-17T00:00:00Z"
+- "2"
+publishDate: "2024-01-18T00:00:00Z"
 slides: ''
 summary: ""
 title: "Modeling complex species-environment relationships through spatially-varying coefficient occupancy models"
-url_code: 'https://github.com/doserjef/Doser_et_al_2023_In_Review'
-url_dataset: 'https://github.com/doserjef/Doser_et_al_2023_In_Review'
-url_pdf: 'https://arxiv.org/pdf/2308.02348.pdf'
+url_code: 'https://github.com/zipkinlab/Doser_et_al_2024_JABES'
+url_dataset: 'https://github.com/zipkinlab/Doser_et_al_2024_JABES'
+url_pdf: 'https://jeffdoser.com/files/pubs/doser2024JABES.pdf'
 url_poster: ''
 url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''

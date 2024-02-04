@@ -11,7 +11,7 @@ authors:
 date: "2023-08-16T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Proceedings of the Royla Society B (2023) https://royalsocietypublishing.org/doi/full/10.1098/rspb.2023.0467"
+publication: "In: Proceedings of the Royal Society B (2023) https://royalsocietypublishing.org/doi/full/10.1098/rspb.2023.0467"
 publication_short: ""
 publication_types:
 - "2"
