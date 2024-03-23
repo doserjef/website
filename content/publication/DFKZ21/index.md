@@ -23,7 +23,7 @@ url_poster: ''
 url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''
 url_source: 'https://github.com/doserjef/spOccupancy'
-url_video: ''
+url_video: 'https://www.youtube.com/watch?v=arYqlfs6lIQ'
 ---
 
 

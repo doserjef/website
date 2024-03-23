@@ -4,14 +4,14 @@ abstract: "Understanding variation in species occupancy is an important task for
 authors:
 - Jeffrey W. Doser
 - Sara Stoudt
-date: "2023-12-26T00:00:00Z"
+date: "2024-02-01T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Methods in Ecology and Evolution (2023) https://doi.org/10.1111/2041-210X.14275"
+publication: "In: Methods in Ecology and Evolution (2024) https://doi.org/10.1111/2041-210X.14275"
 publication_short: ""
 publication_types:
 - "2"
-publishDate: "2023-12-26T00:00:00Z"
+publishDate: "2024-02-01T00:00:00Z"
 slides: ''
 summary: ""
 title: "'Fractional replication' in single-visit multi-season occupancy models: Impacts of spatiotemporal autocorrelation on identifiability"
