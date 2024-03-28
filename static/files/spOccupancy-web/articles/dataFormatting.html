@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Formatting data for use in spOccupancy">
 <meta property="og:description" content="Learn how to format raw data to fit occupancy models in spOccupancy">
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,10 +72,12 @@
 
 
 
-<script src="dataFormatting_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Formatting data for use in spOccupancy</h1>
-                        <h4 data-toc-skip class="author">Jeffrey W. Doser</h4>
+                        <h4 data-toc-skip class="author">Jeffrey W.
+Doser</h4>
             
             <h4 data-toc-skip class="date">2022</h4>
       
@@ -88,8 +90,20 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette gives an example of how to take raw data and format it for use in <code>spOccupancy</code> model fitting functions. This is not an exhaustive example, as data can be recorded and stored in a variety of ways, which requires different approaches to wrangle the data into the necessary format for <code>spOccupancy</code>. However, I hope this vignette can help provide some guidance on how to take raw data and efficiently reformat it for use in <code>spOccupancy</code>. Here I will focus solely on data preparation. For full details on the basic <code>spOccupancy</code> functionality, please see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory vignette</a>.</p>
-<p>First we load <code>spOccupancy</code> as well as two <code>tidyverse</code> packages that we will use for manipulating our data sets into the necessary format for <code>spOccupancy</code> (<code>dplyr</code> and <code>lubridate</code>).</p>
+<p>This vignette gives an example of how to take raw data and format it
+for use in <code>spOccupancy</code> model fitting functions. This is not
+an exhaustive example, as data can be recorded and stored in a variety
+of ways, which requires different approaches to wrangle the data into
+the necessary format for <code>spOccupancy</code>. However, I hope this
+vignette can help provide some guidance on how to take raw data and
+efficiently reformat it for use in <code>spOccupancy</code>. Here I will
+focus solely on data preparation. For full details on the basic
+<code>spOccupancy</code> functionality, please see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+vignette</a>.</p>
+<p>First we load <code>spOccupancy</code> as well as two
+<code>tidyverse</code> packages that we will use for manipulating our
+data sets into the necessary format for <code>spOccupancy</code>
+(<code>dplyr</code> and <code>lubridate</code>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -98,8 +112,18 @@
 <div class="section level2">
 <h2 id="raw-data-hubbard-brook-experimental-forest">Raw Data: Hubbard Brook Experimental Forest<a class="anchor" aria-label="anchor" href="#raw-data-hubbard-brook-experimental-forest"></a>
 </h2>
-<p>As an exmaple data set, we will use data from point count surveys on breeding birds in the Hubbard Brook Experimental Forest (HBEF). Briefly, observers performed standard point count surveys at 374 sites throughout HBEF. Typically each site was revisited three times during a given year, providing the necessary replication for occupancy modeling. During each point count survey, the observer records each individual bird they see within a pre-specified detection radius and within the 10-minute duration of the survey. This results in a number of individual birds for each species observed during each point count survey.</p>
-<p>In the following code chunk, we read in the HBEF data set directly from the Hubbard Brook website. Note this will only work on your computer if you have an internet connection.</p>
+<p>As an exmaple data set, we will use data from point count surveys on
+breeding birds in the Hubbard Brook Experimental Forest (HBEF). Briefly,
+observers performed standard point count surveys at 374 sites throughout
+HBEF. Typically each site was revisited three times during a given year,
+providing the necessary replication for occupancy modeling. During each
+point count survey, the observer records each individual bird they see
+within a pre-specified detection radius and within the 10-minute
+duration of the survey. This results in a number of individual birds for
+each species observed during each point count survey.</p>
+<p>In the following code chunk, we read in the HBEF data set directly
+from the Hubbard Brook website. Note this will only work on your
+computer if you have an internet connection.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hb.dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-hbr.178.3&amp;entityid=eecb146279aa290af2292d75d3ba0f8b"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Take a look at the data set</span></span>
@@ -122,8 +146,18 @@
  $ New.Record      : int  NA NA NA NA NA NA NA NA NA NA ...
  $ Counter.sing    : int  NA NA NA NA NA NA NA NA NA NA ...
  $ Comments        : chr  "" "" "" "" ...</code></pre>
-<p>We see the data set comes with a variety of auxiliary information such as the minute the species was detected, and information on the weather at the time of the survey. See <a href="https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-hbr&amp;identifier=178" class="external-link">the Hubbard Brook website</a> for full metadata information on this data set.</p>
-<p>Looking closely at the data set, we see that each row corresponds to an individual bird that was detected during a point count survey at a specific site (<code>Plot</code>) on a given date (<code>Date</code>). For our example, we only want to work with data from a single year, so we will first extract the year of each observation from the <code>Date</code> column using functions from <code>lubridate</code> and <code>dplyr</code>.</p>
+<p>We see the data set comes with a variety of auxiliary information
+such as the minute the species was detected, and information on the
+weather at the time of the survey. See <a href="https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-hbr&amp;identifier=178" class="external-link">the
+Hubbard Brook website</a> for full metadata information on this data
+set.</p>
+<p>Looking closely at the data set, we see that each row corresponds to
+an individual bird that was detected during a point count survey at a
+specific site (<code>Plot</code>) on a given date (<code>Date</code>).
+For our example, we only want to work with data from a single year, so
+we will first extract the year of each observation from the
+<code>Date</code> column using functions from <code>lubridate</code> and
+<code>dplyr</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert string "Date" column to Date R object</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">hb.dat</span><span class="op">$</span><span class="va">Date</span><span class="op">)</span></span></code></pre></div>
@@ -155,7 +189,12 @@
  $ Counter.sing    : int  NA NA NA NA NA NA NA NA NA NA ...
  $ Comments        : chr  "" "" "" "" ...
  $ Year            : num  1999 1999 1999 1999 1999 ...</code></pre>
-<p>We will now use the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code> function to only select data from 2014. Additionally, I apply two further restrictions on the data set. I only grab observations that come from the first, second, or third replicate, and I also remove data from plot 277, as we don’t want to include this plot in our analysis as a result of data collection complications.</p>
+<p>We will now use the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code> function to only
+select data from 2014. Additionally, I apply two further restrictions on
+the data set. I only grab observations that come from the first, second,
+or third replicate, and I also remove data from plot 277, as we don’t
+want to include this plot in our analysis as a result of data collection
+complications.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hb.2014</span> <span class="op">&lt;-</span> <span class="va">hb.dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Year</span> <span class="op">==</span> <span class="fl">2014</span>,  <span class="co"># Only use data from 2014</span></span>
@@ -181,14 +220,36 @@
  $ Counter.sing    : int  1 0 0 1 1 0 1 0 0 0 ...
  $ Comments        : chr  "" "" "" "" ...
  $ Year            : num  2014 2014 2014 2014 2014 ...</code></pre>
-<p>After applying our filtering criteria, we see we have 27141 observations of individual birds.</p>
+<p>After applying our filtering criteria, we see we have 27141
+observations of individual birds.</p>
 </div>
 <div class="section level2">
 <h2 id="extract-detection-nondetection-data">Extract Detection-nondetection Data<a class="anchor" aria-label="anchor" href="#extract-detection-nondetection-data"></a>
 </h2>
-<p>Now that we have filtered the data to only contain the data we wish to use in our analysis, our next step is to extract the detection-nondetection data for use in <code>spOccupancy</code>. Let’s suppose we are interested first in fitting a multi-species occupancy model. All multi-species occupancy model fitting functions in <code>spOccupancy</code> require the detection-nondetection data to be in the format of a three-dimensional array, with dimensions corresponding to species, site, and replicate.</p>
-<p>The easiest way to think about a three-dimensional array is as a series of stacked matrices. For a single-species, we can imagine having a two-dimensional matrix, with the rows corresponding to sites, the columns corresponding to replicate surveys, and the individual elements of the matrix denoting whether or not the species was observed (1) or not observed (0) during the specific survey at the specific site. If we have <span class="math inline">\(N\)</span> species, we can generate a separate matrix for each species, giving us a total of <span class="math inline">\(N\)</span> matrices. If we imagine “stacking” these <span class="math inline">\(N\)</span> species-specific matrices on top of one another, this gives us a three-dimensional array. This is excatly what we do to format the detection-nondetection data for use in <code>spOccupancy</code>.</p>
-<p>First, we convert the raw data into a long format, where each row corresponds to the total number of individuals of a given species observed at a given site during a given point count survey. We do this using a series of <code>dplyr</code> functions.</p>
+<p>Now that we have filtered the data to only contain the data we wish
+to use in our analysis, our next step is to extract the
+detection-nondetection data for use in <code>spOccupancy</code>. Let’s
+suppose we are interested first in fitting a multi-species occupancy
+model. All multi-species occupancy model fitting functions in
+<code>spOccupancy</code> require the detection-nondetection data to be
+in the format of a three-dimensional array, with dimensions
+corresponding to species, site, and replicate.</p>
+<p>The easiest way to think about a three-dimensional array is as a
+series of stacked matrices. For a single-species, we can imagine having
+a two-dimensional matrix, with the rows corresponding to sites, the
+columns corresponding to replicate surveys, and the individual elements
+of the matrix denoting whether or not the species was observed (1) or
+not observed (0) during the specific survey at the specific site. If we
+have <span class="math inline">\(N\)</span> species, we can generate a
+separate matrix for each species, giving us a total of <span class="math inline">\(N\)</span> matrices. If we imagine “stacking”
+these <span class="math inline">\(N\)</span> species-specific matrices
+on top of one another, this gives us a three-dimensional array. This is
+excatly what we do to format the detection-nondetection data for use in
+<code>spOccupancy</code>.</p>
+<p>First, we convert the raw data into a long format, where each row
+corresponds to the total number of individuals of a given species
+observed at a given site during a given point count survey. We do this
+using a series of <code>dplyr</code> functions.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y.long</span> <span class="op">&lt;-</span> <span class="va">hb.2014</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Plot</span>, <span class="va">Date</span>, <span class="va">Replicate</span>, <span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -202,7 +263,12 @@ $ Date       [3m [38;5;246m&lt;date&gt; [39m [23m 2014-05-30, 2014-05-30
 $ Replicate  [3m [38;5;246m&lt;chr&gt; [39m [23m "1", "1", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2", …
 $ Species    [3m [38;5;246m&lt;chr&gt; [39m [23m "BLBW", "BRCR", "BTBW", "BTNW", "HETH", "OVEN", "REVI", "RTH…
 $ count      [3m [38;5;246m&lt;int&gt; [39m [23m 4, 2, 6, 2, 1, 5, 7, 1, 1, 3, 1, 4, 1, 1, 6, 4, 9, 1, 5, 4, …</code></pre>
-<p>Next, we need to convert our <code>y.long</code> object into our three-dimensional array that contains the site/replicate matrices for each of our <span class="math inline">\(N\)</span> species. First, I extract the codes for each individual species and plot (site) and set up the array (<code>y</code>) that will store our detection-nondetection data.</p>
+<p>Next, we need to convert our <code>y.long</code> object into our
+three-dimensional array that contains the site/replicate matrices for
+each of our <span class="math inline">\(N\)</span> species. First, I
+extract the codes for each individual species and plot (site) and set up
+the array (<code>y</code>) that will store our detection-nondetection
+data.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Species codes.</span></span>
 <span><span class="va">sp.codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">y.long</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
@@ -226,7 +292,24 @@ $ count      [3m [38;5;246m&lt;int&gt; [39m [23m 4, 2, 6, 2, 1, 5, 7, 1,
   ..$ : chr [1:81] "AMCR" "AMGO" "AMKE" "AMRE" ...
   ..$ : chr [1:373] "1" "2" "3" "4" ...
   ..$ : NULL</code></pre>
-<p>Looking at the output from <code>str(y)</code>, we see our detection-nondetection array will contain data for 81 species at 373 sites across a possible 3 replicates at each site. Next we need to fill the array with our data for each species. I do this below by using nested for loops. Specifically, I fill in the data for each site and each replicate one at a time. Here we need to be careful to distinguish between site/replicate combinations where a species was not observed and site/replicate combinations that were not sampled (e.g., a site was sampled only twice and not three times). In this specific case here, I make the assumption that if a site was sampled for a given replicate, the observer will have detected at least one bird. If not, I assume the site was not sampled. This is a valid approach for this data set, but a different approach may need to be taken depending on the specific study system you’re working with, and how the data were originally formatted. Further, for this data set, there are multiple dates listed for certain replicate surveys, and so for those cases where there are multiple dates listed for a specific replicate, I choose here to simply use the data that comes from the first date.</p>
+<p>Looking at the output from <code>str(y)</code>, we see our
+detection-nondetection array will contain data for 81 species at 373
+sites across a possible 3 replicates at each site. Next we need to fill
+the array with our data for each species. I do this below by using
+nested for loops. Specifically, I fill in the data for each site and
+each replicate one at a time. Here we need to be careful to distinguish
+between site/replicate combinations where a species was not observed and
+site/replicate combinations that were not sampled (e.g., a site was
+sampled only twice and not three times). In this specific case here, I
+make the assumption that if a site was sampled for a given replicate,
+the observer will have detected at least one bird. If not, I assume the
+site was not sampled. This is a valid approach for this data set, but a
+different approach may need to be taken depending on the specific study
+system you’re working with, and how the data were originally formatted.
+Further, for this data set, there are multiple dates listed for certain
+replicate surveys, and so for those cases where there are multiple dates
+listed for a specific replicate, I choose here to simply use the data
+that comes from the first date.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">J</span><span class="op">)</span> <span class="op">{</span> <span class="co"># Loop through sites.</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">K</span><span class="op">)</span> <span class="op">{</span> <span class="co"># Loop through replicates at each site.</span></span>
@@ -277,12 +360,22 @@ TEWA TUTI UNKN UNMA VEER WBNU WITU WIWA WIWR WOTH WTSP XXWA XXWO YBCU YBFL YBSA
    1    1   53    2   24   47    4    4  286    7   56    1    2    1   90  142 
 YSFL 
    1 </code></pre>
-<p>Not surprisingly, we see a wide range in the number of observations for the 81 species observed at HBEF in 2014.</p>
+<p>Not surprisingly, we see a wide range in the number of observations
+for the 81 species observed at HBEF in 2014.</p>
 </div>
 <div class="section level2">
 <h2 id="format-detection-covariates">Format detection covariates<a class="anchor" aria-label="anchor" href="#format-detection-covariates"></a>
 </h2>
-<p>Next, we will extract and format two observation-level covariates that we will use to account for variation in detection probability across the different sites and the different surveys at each site. Specifically, we wish to extract the day of each survey and the time of day each survey began. All <code>spOccupancy</code> model functions assumes that observation-level detection covariates wil be formatted as matrices with rows corresponding to sites and columns corresponding to replicates. I first use a set of <code>dplyr</code> functions to extract the unique date and time of day (tod) for each plot and replicate combination in the data set.</p>
+<p>Next, we will extract and format two observation-level covariates
+that we will use to account for variation in detection probability
+across the different sites and the different surveys at each site.
+Specifically, we wish to extract the day of each survey and the time of
+day each survey began. All <code>spOccupancy</code> model functions
+assumes that observation-level detection covariates wil be formatted as
+matrices with rows corresponding to sites and columns corresponding to
+replicates. I first use a set of <code>dplyr</code> functions to extract
+the unique date and time of day (tod) for each plot and replicate
+combination in the data set.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">day.time.2014</span> <span class="op">&lt;-</span> <span class="va">hb.2014</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Plot</span>, <span class="va">Replicate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -296,7 +389,14 @@ $ Plot       [3m [38;5;246m&lt;int&gt; [39m [23m 1, 1, 1, 1, 2, 2, 2, 2,
 $ Replicate  [3m [38;5;246m&lt;chr&gt; [39m [23m "1", "2", "2", "3", "1", "2", "2", "3", "1", "2", "2", "3", …
 $ Date       [3m [38;5;246m&lt;date&gt; [39m [23m 2014-05-30, 2014-06-11, 2014-06-17, 2014-06-25, 2014-05-30,…
 $ tod        [3m [38;5;246m&lt;chr&gt; [39m [23m "05:30", "09:36", "08:05", "05:30", "05:44", "09:21", "07:50…</code></pre>
-<p>There are two things to mention. First, the date is currently stored as a date, and instead we want to extract the Julian date (i.e., the day of the year, where January first is day 1). Second, the time of day is currently stored as a character, and we want to extract the time of day as the number of minutes since midnight. Below, we use a similar nested loop statement like we used for the detection-nondetection data to extract the day and time of each survey, and convert the day and time to the desired formats.</p>
+<p>There are two things to mention. First, the date is currently stored
+as a date, and instead we want to extract the Julian date (i.e., the day
+of the year, where January first is day 1). Second, the time of day is
+currently stored as a character, and we want to extract the time of day
+as the number of minutes since midnight. Below, we use a similar nested
+loop statement like we used for the detection-nondetection data to
+extract the day and time of each survey, and convert the day and time to
+the desired formats.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hb.day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="va">J</span>, ncol <span class="op">=</span> <span class="va">K</span><span class="op">)</span></span>
 <span><span class="va">hb.tod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="va">J</span>, ncol <span class="op">=</span> <span class="va">K</span><span class="op">)</span></span>
@@ -327,8 +427,16 @@ $ tod        [3m [38;5;246m&lt;chr&gt; [39m [23m "05:30", "09:36", "08:0
 <div class="section level2">
 <h2 id="format-occurrence-covariates">Format occurrence covariates<a class="anchor" aria-label="anchor" href="#format-occurrence-covariates"></a>
 </h2>
-<p>Formatting covariates for the occurrence portion of an occupancy model in <code>spOccupancy</code> is straightforward, as covariates can only vary by site. Thus, occurrence covariates simply need to be formatted as either a data frame or a matrix, where the rows represent the sites and the columns represent the different covariates that you wish to include in the occupancy model.</p>
-<p>Here we will use elevation as a site-level covariate on the occurrence portion of the occupancy model. I extract elevation at each of the 373 sites from the <code>hbef2015</code> data object that comes along with the <code>spOccupancy</code> package.</p>
+<p>Formatting covariates for the occurrence portion of an occupancy
+model in <code>spOccupancy</code> is straightforward, as covariates can
+only vary by site. Thus, occurrence covariates simply need to be
+formatted as either a data frame or a matrix, where the rows represent
+the sites and the columns represent the different covariates that you
+wish to include in the occupancy model.</p>
+<p>Here we will use elevation as a site-level covariate on the
+occurrence portion of the occupancy model. I extract elevation at each
+of the 373 sites from the <code>hbef2015</code> data object that comes
+along with the <code>spOccupancy</code> package.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elev</span> <span class="op">&lt;-</span> <span class="va">hbef2015</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span></span></code></pre></div>
@@ -337,7 +445,19 @@ $ tod        [3m [38;5;246m&lt;chr&gt; [39m [23m "05:30", "09:36", "08:0
 <div class="section level2">
 <h2 id="format-site-coordinates">Format site coordinates<a class="anchor" aria-label="anchor" href="#format-site-coordinates"></a>
 </h2>
-<p>For spatially-explicit models in <code>spOccupancy</code>, the model fitting functions additionally require the site coordinates. The coordinates should be formatted as a matrix with <span class="math inline">\(J\)</span> rows (where <span class="math inline">\(J\)</span> is the number of sites) and two columns, with the horizontal component (i.e., easting) in the first column, and the vertical component (i.e., northing) in the second column. Note that <code>spOccupancy</code> assumes coordinates are provided in a projected coordinate system. In other words, you should not provide latitude/longitude values to <code>spOccupancy</code>, and rather should convert these to some projected coordinate system. Below I extract the coordinates for the 373 sites in the Hubbard Brook data set from the <code>hbef2015</code> data object that comes along with the <code>spOccupancy</code> package. These coordinates are in UTM Zone 19N.</p>
+<p>For spatially-explicit models in <code>spOccupancy</code>, the model
+fitting functions additionally require the site coordinates. The
+coordinates should be formatted as a matrix with <span class="math inline">\(J\)</span> rows (where <span class="math inline">\(J\)</span> is the number of sites) and two
+columns, with the horizontal component (i.e., easting) in the first
+column, and the vertical component (i.e., northing) in the second
+column. Note that <code>spOccupancy</code> assumes coordinates are
+provided in a projected coordinate system. In other words, you should
+not provide latitude/longitude values to <code>spOccupancy</code>, and
+rather should convert these to some projected coordinate system. Below I
+extract the coordinates for the 373 sites in the Hubbard Brook data set
+from the <code>hbef2015</code> data object that comes along with the
+<code>spOccupancy</code> package. These coordinates are in UTM Zone
+19N.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="va">hbef2015</span><span class="op">$</span><span class="va">coords</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span></span></code></pre></div>
@@ -349,7 +469,26 @@ $ tod        [3m [38;5;246m&lt;chr&gt; [39m [23m "05:30", "09:36", "08:0
 <div class="section level2">
 <h2 id="package-data-into-list-object">Package data into list object<a class="anchor" aria-label="anchor" href="#package-data-into-list-object"></a>
 </h2>
-<p>We now have all the necessary components for fitting an occupancy model in <code>spOccupancy</code>. Our final step for preparing the data is to package all of the data into a list object in the specific format that <code>spOccupancy</code> requires. When we fit occupancy models in <code>spOccupancy</code> we need to send in a list into the <code>data</code> argument that contains the detection-nondetection data, occurrence covariates, detection covariates, and spatial coordinates (for spatially-explicit models). The list should consist of four objects with the following names: <code>y</code> (the detection-nondetection data), <code>det.covs</code> (the detection covariates), <code>occ.covs</code> (the occurrence covariates, and <code>coords</code> (the spatial coordinates). Note that <code>coords</code> is only necessary for spatially-explicit models, and <code>det.covs</code> and/or <code>occ.covs</code> can be left out if you are fitting models with no covariates on detection and/or occurrence, respectively. The detection-nondetection data are in the three-dimensional array as we previously specified. For our simple example here, we will fit a spatially-explicit multi-species occupancy model with ten species, and so below I subset our full detection-nondetection data to only include ten species</p>
+<p>We now have all the necessary components for fitting an occupancy
+model in <code>spOccupancy</code>. Our final step for preparing the data
+is to package all of the data into a list object in the specific format
+that <code>spOccupancy</code> requires. When we fit occupancy models in
+<code>spOccupancy</code> we need to send in a list into the
+<code>data</code> argument that contains the detection-nondetection
+data, occurrence covariates, detection covariates, and spatial
+coordinates (for spatially-explicit models). The list should consist of
+four objects with the following names: <code>y</code> (the
+detection-nondetection data), <code>det.covs</code> (the detection
+covariates), <code>occ.covs</code> (the occurrence covariates, and
+<code>coords</code> (the spatial coordinates). Note that
+<code>coords</code> is only necessary for spatially-explicit models, and
+<code>det.covs</code> and/or <code>occ.covs</code> can be left out if
+you are fitting models with no covariates on detection and/or
+occurrence, respectively. The detection-nondetection data are in the
+three-dimensional array as we previously specified. For our simple
+example here, we will fit a spatially-explicit multi-species occupancy
+model with ten species, and so below I subset our full
+detection-nondetection data to only include ten species</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Detection-nondetection data ---------</span></span>
 <span><span class="co"># Species of interest</span></span>
@@ -362,7 +501,17 @@ $ tod        [3m [38;5;246m&lt;chr&gt; [39m [23m "05:30", "09:36", "08:0
   ..$ : chr [1:10] "BAWW" "BLJA" "BTBW" "BTNW" ...
   ..$ : chr [1:373] "1" "2" "3" "4" ...
   ..$ : NULL</code></pre>
-<p>For the detection covariates, we need to create a list that contains all of the detection covariates we wish to include in the model. The individual detection covariates can be either site level covariates or observation level covariates. Site-level covariates are specified as a vector of length <span class="math inline">\(J\)</span> (the number of sites), while observation-level covariates are specified as a matrix or data frame with the number of rows equal to <span class="math inline">\(J\)</span> and number of columns equal to the maximum number of replicates at a given site. Here, we have two observation level covariates (<code>hb.day</code> and <code>hb.tod</code>), which are formatted correctly as matrices. We put them together in a list in the following code chunk.</p>
+<p>For the detection covariates, we need to create a list that contains
+all of the detection covariates we wish to include in the model. The
+individual detection covariates can be either site level covariates or
+observation level covariates. Site-level covariates are specified as a
+vector of length <span class="math inline">\(J\)</span> (the number of
+sites), while observation-level covariates are specified as a matrix or
+data frame with the number of rows equal to <span class="math inline">\(J\)</span> and number of columns equal to the
+maximum number of replicates at a given site. Here, we have two
+observation level covariates (<code>hb.day</code> and
+<code>hb.tod</code>), which are formatted correctly as matrices. We put
+them together in a list in the following code chunk.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Detection covariates ----------------</span></span>
 <span><span class="va">det.covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>day <span class="op">=</span> <span class="va">hb.day</span>, </span>
@@ -371,21 +520,32 @@ $ tod        [3m [38;5;246m&lt;chr&gt; [39m [23m "05:30", "09:36", "08:0
 <pre><code>List of 2
  $ day: num [1:373, 1:3] 150 150 150 150 150 150 150 150 150 150 ...
  $ tod: num [1:373, 1:3] 330 344 366 388 406 420 438 454 477 491 ...</code></pre>
-<p>The occurrence covariates are stored as a matrix or data frame, with rows corresponding to sites and columns corresponding to the different covariates we wish to include in the model. Here, we have a single covariate (<code>elev</code>) and so we convert it to a data frame in the following code chunk.</p>
+<p>The occurrence covariates are stored as a matrix or data frame, with
+rows corresponding to sites and columns corresponding to the different
+covariates we wish to include in the model. Here, we have a single
+covariate (<code>elev</code>) and so we convert it to a data frame in
+the following code chunk.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Occurrence covariates ---------------</span></span>
 <span><span class="va">occ.covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">occ.covs</span><span class="op">)</span></span></code></pre></div>
 <pre><code>'data.frame':   373 obs. of  1 variable:
  $ elev: num  475 494 546 587 588 ...</code></pre>
-<p>We already have the coordinates correctly specified as a <span class="math inline">\(J \times 2\)</span> matrix in the <code>coords</code> object, so we are now ready to package all the objects together into a single list.</p>
+<p>We already have the coordinates correctly specified as a <span class="math inline">\(J \times 2\)</span> matrix in the
+<code>coords</code> object, so we are now ready to package all the
+objects together into a single list.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Package all data into list object</span></span>
 <span><span class="va">data.msom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y.msom</span>, </span>
 <span>                  occ.covs <span class="op">=</span> <span class="va">occ.covs</span>, </span>
 <span>                  det.covs <span class="op">=</span> <span class="va">det.covs</span>, </span>
 <span>                  coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span></span></code></pre></div>
-<p>Notice how we explicitly specify the name of each object (<code>y</code>, <code>occ.covs</code>, <code>det.covs</code>, and <code>coords</code>). The data are now ready to go, and below I fit a spatially-explicit multi-species occupancy model to verify that (see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory vignette</a> for more details on model-fitting functions).</p>
+<p>Notice how we explicitly specify the name of each object
+(<code>y</code>, <code>occ.covs</code>, <code>det.covs</code>, and
+<code>coords</code>). The data are now ready to go, and below I fit a
+spatially-explicit multi-species occupancy model to verify that (see the
+<a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+vignette</a> for more details on model-fitting functions).</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out.msom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spMsPGOcc.html">spMsPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, </span>
 <span>                      det.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span>, </span>
@@ -407,37 +567,43 @@ Burn-in: 25
 Thinning Rate: 1
 Number of Chains: 1
 Total Posterior Samples: 225
-Run Time (min): 0.6737
+Run Time (min): 0.1289
 
 ----------------------------------------
     Community Level
 ----------------------------------------
 Occurrence Means (logit scale): 
                     Mean     SD    2.5%     50%   97.5% Rhat ESS
-(Intercept)       0.2775 1.0086 -1.6610  0.2208  2.3278   NA 182
-scale(elev)      -1.1610 0.3851 -1.8946 -1.1692 -0.3640   NA  18
-I(scale(elev)^2) -0.4852 0.2829 -0.9818 -0.4733  0.0946   NA 148
+(Intercept)       0.0970 1.0553 -2.2212  0.0975  2.0290   NA 171
+scale(elev)      -1.0396 0.3214 -1.5938 -1.0576 -0.3014   NA  29
+I(scale(elev)^2) -0.5060 0.2743 -1.0016 -0.5017  0.0231   NA 102
 
 Occurrence Variances (logit scale): 
                     Mean     SD   2.5%     50%   97.5% Rhat ESS
-(Intercept)      15.7370 8.7490 6.0681 13.2060 36.7849   NA  59
-scale(elev)       0.9063 0.6005 0.1541  0.7485  2.4545   NA  28
-I(scale(elev)^2)  0.7450 0.5029 0.1726  0.6358  2.2931   NA  47
+(Intercept)      19.6211 9.5768 8.0161 17.7549 45.7409   NA 177
+scale(elev)       0.7611 0.7439 0.1351  0.5417  2.7462   NA  16
+I(scale(elev)^2)  0.6159 0.4785 0.1702  0.4924  1.5727   NA 111
 
 Detection Means (logit scale): 
                    Mean     SD    2.5%     50%  97.5% Rhat ESS
-(Intercept)     -0.2666 0.6262 -1.5579 -0.1706 0.8377   NA 225
-scale(day)      -0.0254 0.1112 -0.2713 -0.0093 0.1897   NA 158
-I(scale(day)^2) -0.0898 0.1178 -0.3760 -0.0855 0.0831   NA 124
-scale(tod)      -0.1549 0.0956 -0.3220 -0.1623 0.0367   NA  35
+(Intercept)     -0.2500 0.5354 -1.2963 -0.2291 0.7418   NA 161
+scale(day)      -0.0221 0.1035 -0.2206 -0.0260 0.1705   NA  89
+I(scale(day)^2) -0.0779 0.1175 -0.4007 -0.0752 0.1127   NA  76
+scale(tod)      -0.1475 0.1005 -0.3477 -0.1463 0.0423   NA  89
 
 Detection Variances (logit scale): 
-                  Mean     SD   2.5%    50%   97.5% Rhat ESS
-(Intercept)     4.0410 4.1537 1.3073 3.3878 10.2207   NA 157
-scale(day)      0.0828 0.0627 0.0201 0.0640  0.2223   NA  59
-I(scale(day)^2) 0.0984 0.0866 0.0213 0.0731  0.4013   NA  51
-scale(tod)      0.0659 0.0459 0.0197 0.0560  0.1582   NA 162</code></pre>
-<p>Finally, to fit a single-species occupancy model, we only need to make one change to the detection-nondetection data. Because we only have a single-species, we no longer need to specify <code>y</code> as a three-dimensional array, and instead it is simply a matrix with rows corresponding to sites and columns corresponding to replicates. Below I reformat the data for fitting a spatially-explicit occupancy model with a single-species.</p>
+                  Mean     SD   2.5%    50%  97.5% Rhat ESS
+(Intercept)     3.6624 2.2126 1.3730 3.0568 9.5411   NA 144
+scale(day)      0.0719 0.0488 0.0200 0.0564 0.1805   NA 178
+I(scale(day)^2) 0.0894 0.1432 0.0219 0.0589 0.2180   NA  66
+scale(tod)      0.0727 0.0455 0.0211 0.0609 0.2002   NA 114</code></pre>
+<p>Finally, to fit a single-species occupancy model, we only need to
+make one change to the detection-nondetection data. Because we only have
+a single-species, we no longer need to specify <code>y</code> as a
+three-dimensional array, and instead it is simply a matrix with rows
+corresponding to sites and columns corresponding to replicates. Below I
+reformat the data for fitting a spatially-explicit occupancy model with
+a single-species.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">curr.bird</span> <span class="op">&lt;-</span> <span class="st">'EAWP'</span></span>
 <span><span class="va">y.ssom</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">sp.codes</span> <span class="op">==</span> <span class="va">curr.bird</span><span class="op">)</span>, , <span class="op">]</span></span>
@@ -471,25 +637,25 @@ Burn-in: 25
 Thinning Rate: 1
 Number of Chains: 1
 Total Posterior Samples: 225
-Run Time (min): 0.0576
+Run Time (min): 0.0118
 
 Occurrence (logit scale): 
                     Mean     SD    2.5%     50%   97.5% Rhat ESS
-(Intercept)      -2.8428 0.3484 -3.4739 -2.8646 -2.1219   NA  34
-scale(elev)      -1.2300 0.3219 -1.7770 -1.2480 -0.6488   NA  21
-I(scale(elev)^2) -0.1638 0.2223 -0.5796 -0.1816  0.3378   NA  26
+(Intercept)      -3.4190 0.4964 -4.3013 -3.4111 -2.5065   NA  16
+scale(elev)      -1.2072 0.3424 -1.8861 -1.1833 -0.5016   NA  28
+I(scale(elev)^2) -0.0973 0.2333 -0.5870 -0.1051  0.3082   NA  29
 
 Detection (logit scale): 
                    Mean     SD    2.5%     50%  97.5% Rhat ESS
-(Intercept)     -0.0038 0.4673 -0.9694 -0.0080 0.8483   NA  50
-scale(day)       0.2716 0.2412 -0.1868  0.2709 0.7743   NA 258
-I(scale(day)^2) -0.1921 0.2892 -0.7658 -0.1772 0.3675   NA 225
-scale(tod)       0.1248 0.2537 -0.3223  0.1094 0.6938   NA 167
+(Intercept)      0.0472 0.4106 -0.7912  0.0426 0.7307   NA  97
+scale(day)       0.2832 0.2778 -0.1982  0.2552 0.7832   NA 155
+I(scale(day)^2) -0.2019 0.2882 -0.6859 -0.1955 0.3597   NA 274
+scale(tod)       0.1186 0.2664 -0.3760  0.1027 0.6011   NA 185
 
 Spatial Covariance: 
            Mean     SD   2.5%    50%  97.5% Rhat ESS
-sigma.sq 0.5321 0.2319 0.2424 0.5074 1.0886   NA   4
-phi      0.0188 0.0060 0.0098 0.0174 0.0298   NA  11</code></pre>
+sigma.sq 2.5555 1.5014 0.6107 2.2134 6.2245   NA   4
+phi      0.0115 0.0070 0.0036 0.0076 0.0261   NA   5</code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

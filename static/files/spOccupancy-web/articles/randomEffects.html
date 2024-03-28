@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fitting occupancy models with random intercepts in spOccupancy">
 <meta property="og:description" content="Learn how to include random effects in spOccupancy">
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,10 +72,12 @@
 
 
 
-<script src="randomEffects_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Fitting occupancy models with random intercepts in spOccupancy</h1>
-                        <h4 data-toc-skip class="author">Jeffrey W. Doser</h4>
+                        <h4 data-toc-skip class="author">Jeffrey W.
+Doser</h4>
             
             <h4 data-toc-skip class="date">2022</h4>
       
@@ -88,16 +90,62 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette details how to include random intercepts when fitting single-species or multi-species occupancy models in <code>spOccupancy</code>. For an introduction to the basic <code>spOccupancy</code> functionality, see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory vignette</a>. <code>spOccupancy</code> supports random intercepts in the occurrence and detection portions of all single-species and multi-species occupancy models, with the exception that we have yet to implement random intercepts in any integrated occupancy models. Adding random intercepts to integrated models and random slopes to all models is part of future planned development. Here I show how to simulate data for a spatially explicit single-species occupancy model with random intercepts in occurrence and detection using <code><a href="../reference/simOcc.html">simOcc()</a></code>, and subsequently show how to include random intercepts using <code>lme4</code> syntax <span class="citation">(Bates et al. 2015)</span> with <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>. Random intercepts are included in all other single-species and multi-species models in an analogous manner.</p>
+<p>This vignette details how to include random intercepts when fitting
+single-species or multi-species occupancy models in
+<code>spOccupancy</code>. For an introduction to the basic
+<code>spOccupancy</code> functionality, see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+vignette</a>. <code>spOccupancy</code> supports random intercepts in the
+occurrence and detection portions of all single-species and
+multi-species occupancy models, with the exception that we have yet to
+implement random intercepts in any integrated occupancy models. Adding
+random intercepts to integrated models and random slopes to all models
+is part of future planned development. Here I show how to simulate data
+for a spatially explicit single-species occupancy model with random
+intercepts in occurrence and detection using <code><a href="../reference/simOcc.html">simOcc()</a></code>, and
+subsequently show how to include random intercepts using
+<code>lme4</code> syntax <span class="citation">(Bates et al.
+2015)</span> with <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>. Random intercepts are included
+in all other single-species and multi-species models in an analogous
+manner.</p>
 </div>
 <div class="section level2">
 <h2 id="simulating-data-with-simocc">Simulating data with <code>simOcc()</code><a class="anchor" aria-label="anchor" href="#simulating-data-with-simocc"></a>
 </h2>
-<p>The function <code><a href="../reference/simOcc.html">simOcc()</a></code> simulates single-species detection-nondetection data. <code><a href="../reference/simOcc.html">simOcc()</a></code> has the following arguments.</p>
+<p>The function <code><a href="../reference/simOcc.html">simOcc()</a></code> simulates single-species
+detection-nondetection data. <code><a href="../reference/simOcc.html">simOcc()</a></code> has the following
+arguments.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/simOcc.html">simOcc</a></span><span class="op">(</span><span class="va">J.x</span>, <span class="va">J.y</span>, <span class="va">n.rep</span>, <span class="va">beta</span>, <span class="va">alpha</span>, psi.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, p.RE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>       sp <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">cov.model</span>, <span class="va">sigma.sq</span>, <span class="va">phi</span>, <span class="va">nu</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
-<p><code>J.x</code> and <code>J.y</code> indicate the number of spatial locations to simulate data along a horizontal and vertical axis, respectively, such that <code>J.x * J.y</code> is the total number of sites (i.e., <code>J</code>). <code>n.rep</code> is a numeric vector of length <code>J</code> that indicates the number of replicates at each of the J sites. <code>beta</code> and <code>alpha</code> are numeric vectors containing the intercept and any regression coefficient parameters for the occurrence and detection portions of the occupancy model, respectively. <code>psi.RE</code> and <code>p.RE</code> are lists that are used to specify random intercepts on occurrence and detection, respectively. These are only specified when we want to simulate data with random intercepts. Each list should be comprised of two tags: <code>levels</code>, a vector that specifies the number of levels for each random effect included in the model, and <code>sigma.sq.psi</code> or <code>sigma.sq.p</code>, which specify the variances of the random effects for each random effect included in the model. <code>sp</code> is a logical value indicating whether to simulate data with a spatial Gaussian process. <code>cov.model</code> specifies the covariance function used to model the spatial dependence structure, with supported values of <code>exponential</code>, <code>matern</code>, <code>spherical</code>, and <code>gaussian</code>. Finally, <code>sigma.sq</code> is the spatial variance parameter, <code>phi</code> is the spatial range parameter, and <code>nu</code> is the spatial smoothness parameter (only applicable when <code>cov.model = 'matern'</code>). Below we simulate data across 225 sites with 1-4 replicates at a given site, a single covariate effect on occurrence, a single covariate effect on detection, spatial autocorrelation following a spherical correlation function, and a random intercept on occurrence and detection.</p>
+<p><code>J.x</code> and <code>J.y</code> indicate the number of spatial
+locations to simulate data along a horizontal and vertical axis,
+respectively, such that <code>J.x * J.y</code> is the total number of
+sites (i.e., <code>J</code>). <code>n.rep</code> is a numeric vector of
+length <code>J</code> that indicates the number of replicates at each of
+the J sites. <code>beta</code> and <code>alpha</code> are numeric
+vectors containing the intercept and any regression coefficient
+parameters for the occurrence and detection portions of the occupancy
+model, respectively. <code>psi.RE</code> and <code>p.RE</code> are lists
+that are used to specify random intercepts on occurrence and detection,
+respectively. These are only specified when we want to simulate data
+with random intercepts. Each list should be comprised of two tags:
+<code>levels</code>, a vector that specifies the number of levels for
+each random effect included in the model, and <code>sigma.sq.psi</code>
+or <code>sigma.sq.p</code>, which specify the variances of the random
+effects for each random effect included in the model. <code>sp</code> is
+a logical value indicating whether to simulate data with a spatial
+Gaussian process. <code>cov.model</code> specifies the covariance
+function used to model the spatial dependence structure, with supported
+values of <code>exponential</code>, <code>matern</code>,
+<code>spherical</code>, and <code>gaussian</code>. Finally,
+<code>sigma.sq</code> is the spatial variance parameter,
+<code>phi</code> is the spatial range parameter, and <code>nu</code> is
+the spatial smoothness parameter (only applicable when
+<code>cov.model = 'matern'</code>). Below we simulate data across 225
+sites with 1-4 replicates at a given site, a single covariate effect on
+occurrence, a single covariate effect on detection, spatial
+autocorrelation following a spherical correlation function, and a random
+intercept on occurrence and detection.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
@@ -126,30 +174,53 @@
 <span>              alpha <span class="op">=</span> <span class="va">alpha</span>, psi.RE <span class="op">=</span> <span class="va">psi.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, </span>
 <span>              sp <span class="op">=</span> <span class="cn">TRUE</span>, sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span>, </span>
 <span>              cov.model <span class="op">=</span> <span class="st">'spherical'</span><span class="op">)</span></span></code></pre></div>
-<p>For the occurrence random effect, we assumed there were 20 levels and a variance of 0.75. For example, we could suppose these levels corresponded to different administrative units across the 225 sites we simulated, and we want to account for potential correlation between sites within each of the units. For the detection random effect, we assumed there were 25 levels and a variance of 1.1. For example, we could suppose there were 25 different observers that collected the data, and we wanted to account for variation in observer skill (and thus detection probability) across the different observers.</p>
-<p>Next, let’s explore the simulated data a bit before we move on (plotting code adapted from <span class="citation">Hooten and Hefley (2019)</span>).</p>
+<p>For the occurrence random effect, we assumed there were 20 levels and
+a variance of 0.75. For example, we could suppose these levels
+corresponded to different administrative units across the 225 sites we
+simulated, and we want to account for potential correlation between
+sites within each of the units. For the detection random effect, we
+assumed there were 25 levels and a variance of 1.1. For example, we
+could suppose there were 25 different observers that collected the data,
+and we wanted to account for variation in observer skill (and thus
+detection probability) across the different observers.</p>
+<p>Next, let’s explore the simulated data a bit before we move on
+(plotting code adapted from <span class="citation">Hooten and Hefley
+(2019)</span>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></code></pre></div>
 <pre><code>List of 15
- $ X         : num [1:400, 1:2] 1 1 1 1 1 1 1 1 1 1 ...
- $ X.p       : num [1:400, 1:4, 1:2] 1 1 1 1 1 1 1 1 1 1 ...
- $ coords    : num [1:400, 1:2] 0 0.0526 0.1053 0.1579 0.2105 ...
+ $ X          : num [1:400, 1:2] 1 1 1 1 1 1 1 1 1 1 ...
+ $ X.p        : num [1:400, 1:4, 1:2] 1 1 1 1 1 1 1 1 1 1 ...
+ $ coords     : num [1:400, 1:2] 0 0.0526 0.1053 0.1579 0.2105 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:400] "1" "2" "3" "4" ...
+  .. ..$ : NULL
+ $ coords.full: num [1:400, 1:2] 0 0.0526 0.1053 0.1579 0.2105 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : NULL
   .. ..$ : chr [1:2] "Var1" "Var2"
- $ w         : num [1:400, 1] 1.005 -0.229 1.826 2.416 1.952 ...
- $ w.factor  : logi NA
- $ psi       : num [1:400, 1] 0.573 0.474 0.867 0.938 0.947 ...
- $ z         : int [1:400] 0 0 1 1 1 1 0 0 0 0 ...
- $ p         : num [1:400, 1:4] 0.897 0.412 0.605 NA 0.442 ...
- $ y         : int [1:400, 1:4] 0 0 1 NA 1 0 0 0 0 0 ...
- $ X.p.re    : int [1:400, 1:4, 1] 21 8 24 NA 22 10 1 6 11 3 ...
- $ X.re      : int [1:400, 1] 18 12 3 1 12 7 2 2 1 15 ...
- $ X.w       : num [1:400, 1] 1 1 1 1 1 1 1 1 1 1 ...
- $ alpha.star: num [1:25] 0.7089 -0.0759 -0.8506 0.476 1.5554 ...
- $ beta.star : num [1:20] 0.881 0.385 0.476 0.343 -1.609 ...
- $ lambda    : logi NA</code></pre>
-<p>The simulated data object consists of the following objects: <code>X</code> (the occurrence design matrix), <code>X.p</code> (the detection design matrix), <code>coords</code> (the spatial coordinates of each site), <code>w</code> (the latent spatial process, <code>psi</code> (occurrence probability), <code>z</code> (the latent occupancy status), <code>y</code> (the detection-nondetection data, <code>X.p.re</code> (the detection random effect levels for each site), <code>X.re</code> (the occurrence random effect levels for each site), <code>alpha.star</code> (the detection random effects for each level of the random effect), <code>beta.star</code> (the occurrence random effects for each level of the random effect).</p>
+ $ w          : num [1:400, 1] 1.005 -0.229 1.826 2.416 1.952 ...
+ $ w.grid     : num [1:400, 1] 1.005 -0.229 1.826 2.416 1.952 ...
+ $ psi        : num [1:400, 1] 0.573 0.474 0.867 0.938 0.947 ...
+ $ z          : int [1:400] 0 0 1 1 1 1 0 0 0 0 ...
+ $ p          : num [1:400, 1:4] 0.897 0.412 0.605 NA 0.442 ...
+ $ y          : int [1:400, 1:4] 0 0 1 NA 1 0 0 0 0 0 ...
+ $ X.p.re     : int [1:400, 1:4, 1] 21 8 24 NA 22 10 1 6 11 3 ...
+ $ X.re       : int [1:400, 1] 18 12 3 1 12 7 2 2 1 15 ...
+ $ X.w        : num [1:400, 1] 1 1 1 1 1 1 1 1 1 1 ...
+ $ alpha.star : num [1:25] 0.7089 -0.0759 -0.8506 0.476 1.5554 ...
+ $ beta.star  : num [1:20] 0.881 0.385 0.476 0.343 -1.609 ...</code></pre>
+<p>The simulated data object consists of the following objects:
+<code>X</code> (the occurrence design matrix), <code>X.p</code> (the
+detection design matrix), <code>coords</code> (the spatial coordinates
+of each site), <code>w</code> (the latent spatial process,
+<code>psi</code> (occurrence probability), <code>z</code> (the latent
+occupancy status), <code>y</code> (the detection-nondetection data,
+<code>X.p.re</code> (the detection random effect levels for each site),
+<code>X.re</code> (the occurrence random effect levels for each site),
+<code>alpha.star</code> (the detection random effects for each level of
+the random effect), <code>beta.star</code> (the occurrence random
+effects for each level of the random effect).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Detection-nondetection data</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span>
@@ -171,7 +242,14 @@
 <span>     bty <span class="op">=</span> <span class="st">'n'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">coords</span>, pch<span class="op">=</span><span class="fl">15</span>, cex <span class="op">=</span> <span class="fl">2.1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">(</span><span class="va">psi</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">psi</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">psi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="randomEffects_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>We see there is clear variation in occurrence probability across the simulated spatial region. The final step before we can fit the model is to package up the data in a list for use in <code>spOccupancy</code> model fitting functions. This requires creating a list that consists of the detection-nondetection data (<code>y</code>), occurrence covariates (<code>occ.covs</code>), detection covariates (<code>det.covs</code>), and coordinates (<code>coords</code>). See the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory vignette</a> for more details.</p>
+<p>We see there is clear variation in occurrence probability across the
+simulated spatial region. The final step before we can fit the model is
+to package up the data in a list for use in <code>spOccupancy</code>
+model fitting functions. This requires creating a list that consists of
+the detection-nondetection data (<code>y</code>), occurrence covariates
+(<code>occ.covs</code>), detection covariates (<code>det.covs</code>),
+and coordinates (<code>coords</code>). See the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+vignette</a> for more details.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Package all data into a list</span></span>
 <span><span class="co"># Occurrence covariates consists of the fixed effects and random effect</span></span>
@@ -198,8 +276,8 @@
   ..$ det.factor.1: int [1:400, 1:4] 21 8 24 NA 22 10 1 6 11 3 ...
  $ coords  : num [1:400, 1:2] 0 0.0526 0.1053 0.1579 0.2105 ...
   ..- attr(*, "dimnames")=List of 2
-  .. ..$ : NULL
-  .. ..$ : chr [1:2] "Var1" "Var2"</code></pre>
+  .. ..$ : chr [1:400] "1" "2" "3" "4" ...
+  .. ..$ : NULL</code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Take a look at the occurrence covariates</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">occ.covs</span><span class="op">)</span></span></code></pre></div>
@@ -210,12 +288,25 @@
 [4,]  0.37215428            1
 [5,] -1.66296763           12
 [6,]  0.07117392            7</code></pre>
-<p>One important thing to note about including random effects in <code>spOccupancy</code> is that we must supply the random effects in as numeric values. Notice in the <code>occ.factor.1</code> column in <code>occ.covs</code>, the random effect levels are specified as a numeric value, which indicates the specific level of the random effect at that given site. <code>spOccupancy</code> will return an informative error if we supply random effects as factors or character vectors and will tell us to convert them to numeric in order to fit the model.</p>
+<p>One important thing to note about including random effects in
+<code>spOccupancy</code> is that we must supply the random effects in as
+numeric values. Notice in the <code>occ.factor.1</code> column in
+<code>occ.covs</code>, the random effect levels are specified as a
+numeric value, which indicates the specific level of the random effect
+at that given site. <code>spOccupancy</code> will return an informative
+error if we supply random effects as factors or character vectors and
+will tell us to convert them to numeric in order to fit the model.</p>
 </div>
 <div class="section level2">
 <h2 id="fit-the-model-using-sppgocc">Fit the model using <code>spPGOcc()</code><a class="anchor" aria-label="anchor" href="#fit-the-model-using-sppgocc"></a>
 </h2>
-<p>We now fit the model using <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>. Random effects are included in the model formulas using standard <code>lme4</code> notation. Below we run a spatially-explicit occupancy model for 400 batches each of length 25 (10000 total MCMC iterations). We use the default tuning and prior values that <code>spOccupancy</code> provides. We use a Nearest Neighbor Gaussian Process with 10 neighbors and the spherical spatial correlation function.</p>
+<p>We now fit the model using <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>. Random effects are
+included in the model formulas using standard <code>lme4</code>
+notation. Below we run a spatially-explicit occupancy model for 400
+batches each of length 25 (10000 total MCMC iterations). We use the
+default tuning and prior values that <code>spOccupancy</code> provides.
+We use a Nearest Neighbor Gaussian Process with 10 neighbors and the
+spherical spatial correlation function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">inits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0</span>, beta <span class="op">=</span> <span class="fl">0</span>, sigma.sq.psi <span class="op">=</span> <span class="fl">0.5</span>, </span>
 <span>              sigma.sq.p <span class="op">=</span> <span class="fl">0.5</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">y</span>, <span class="fl">1</span>, <span class="va">max</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
@@ -308,7 +399,7 @@ Burn-in: 5000
 Thinning Rate: 5
 Number of Chains: 1
 Total Posterior Samples: 1000
-Run Time (min): 1.508
+Run Time (min): 0.3685
 
 Occurrence (logit scale): 
                Mean     SD    2.5%     50%   97.5% Rhat ESS
@@ -332,7 +423,11 @@ Spatial Covariance:
            Mean     SD   2.5%    50%  97.5% Rhat ESS
 sigma.sq 1.1458 0.9362 0.3963 0.9641 3.2988   NA  48
 phi      3.2926 0.8347 2.1985 3.1036 5.2938   NA  41</code></pre>
-<p>The summary of the model output shows our model recovers the values we used to simulate the data. Let’s also fit a model that doesn’t include the occurrence and detection random effects, and compare their performance using the WAIC <span class="citation">(Watanabe 2010)</span>.</p>
+<p>The summary of the model output shows our model recovers the values
+we used to simulate the data. Let’s also fit a model that doesn’t
+include the occurrence and detection random effects, and compare their
+performance using the WAIC <span class="citation">(Watanabe
+2010)</span>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out.no.re</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spPGOcc.html">spPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov.1</span>, </span>
 <span>                     det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>, </span>
@@ -411,7 +506,10 @@ Batch: 400 of 400, 100.00%</code></pre>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.no.re</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      elpd         pD       WAIC 
 -575.40374   38.13593 1227.07933 </code></pre>
-<p>We see the WAIC is substantially smaller for the model that includes the occurrence and detection random effects. Finally, let’s look at the predicted occurrence values from the full model to see how they compare to the values we used to simulate the data.</p>
+<p>We see the WAIC is substantially smaller for the model that includes
+the occurrence and detection random effects. Finally, let’s look at the
+predicted occurrence values from the full model to see how they compare
+to the values we used to simulate the data.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">coords</span>, type <span class="op">=</span> <span class="st">"n"</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>, asp <span class="op">=</span> <span class="cn">TRUE</span>, main <span class="op">=</span> <span class="st">"Simulated Occurrence"</span>, </span>
@@ -423,8 +521,46 @@ Batch: 400 of 400, 100.00%</code></pre>
 <span>     bty <span class="op">=</span> <span class="st">'n'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">coords</span>, pch<span class="op">=</span><span class="fl">15</span>, cex <span class="op">=</span> <span class="fl">2.1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="op">(</span><span class="va">psi.means</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">psi.means</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">psi.means</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="randomEffects_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
-<p>We see the model does a fairly decent job of identifying the spatial structure in occurrence across the simulated region, with our mean predicted occurrence being more smooth than the single simulated occurrence data set, as we would expect. Just like with models with only fixed effects, we can predict new values of occurrence or detection probability given a set of covariate values and spatial coordinates using the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function. However, prediction becomes a bit more complicated when we have non-structured random effects in the model, as we could imagine predicting at observed levels of the random effect, or predicting at new levels of the random effect. <code>spOccupancy</code> allows for prediction at both observed levels and new levels of random effects, and also allows for prediction to take into account the random effects, or simply ignore the random effects when making predictions and just generate predictions using the fixed effects. All <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions for <code>spOccupancy</code> objects contain the argument <code>ignore.RE</code>, which is a logical value that takes value <code>TRUE</code> or <code>FALSE</code>. When <code>ignore.RE = FALSE</code> (the default), both sampled levels and non-sampled levels of random effects are supported for prediction. For sampled levels, the posterior distribution for the random intercept corresponding to that level of the random effect will be used in the prediction, which will likely result in a more accurate estimate of occurrence/detection probability for that site. For non-sampled levels, random values are drawn from a normal distribution using the posterior samples of the random effect variance, which results in fully propagated uncertainty in predictions with models that incorporate random effects. Alternatively, if <code>ignore.RE = TRUE</code>, the random effects will not be used for prediction and predictions will simply be generated using the fixed effects in the model.</p>
-<p>Suppose we wish to predict occurrence at a new site, which has spatial coordinates <code>(0.32, 0.55)</code>, a value of <code>0.34</code> for our occurrence covariate (<code>occ.cov.1</code>) and a random effect level of 5 (which is a level that is sampled in our original data set). Below we predict occurrence at this new site, using the random effect in the prediction by setting <code>ignore.RE = FALSE</code> (which we could just not specify since it is the default). Note that when predicting using random effects, the column name of the random effect must match the name of the random effect used when fitting the model.</p>
+<p>We see the model does a fairly decent job of identifying the spatial
+structure in occurrence across the simulated region, with our mean
+predicted occurrence being more smooth than the single simulated
+occurrence data set, as we would expect. Just like with models with only
+fixed effects, we can predict new values of occurrence or detection
+probability given a set of covariate values and spatial coordinates
+using the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function. However, prediction becomes a
+bit more complicated when we have non-structured random effects in the
+model, as we could imagine predicting at observed levels of the random
+effect, or predicting at new levels of the random effect.
+<code>spOccupancy</code> allows for prediction at both observed levels
+and new levels of random effects, and also allows for prediction to take
+into account the random effects, or simply ignore the random effects
+when making predictions and just generate predictions using the fixed
+effects. All <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> functions for
+<code>spOccupancy</code> objects contain the argument
+<code>ignore.RE</code>, which is a logical value that takes value
+<code>TRUE</code> or <code>FALSE</code>. When
+<code>ignore.RE = FALSE</code> (the default), both sampled levels and
+non-sampled levels of random effects are supported for prediction. For
+sampled levels, the posterior distribution for the random intercept
+corresponding to that level of the random effect will be used in the
+prediction, which will likely result in a more accurate estimate of
+occurrence/detection probability for that site. For non-sampled levels,
+random values are drawn from a normal distribution using the posterior
+samples of the random effect variance, which results in fully propagated
+uncertainty in predictions with models that incorporate random effects.
+Alternatively, if <code>ignore.RE = TRUE</code>, the random effects will
+not be used for prediction and predictions will simply be generated
+using the fixed effects in the model.</p>
+<p>Suppose we wish to predict occurrence at a new site, which has
+spatial coordinates <code>(0.32, 0.55)</code>, a value of
+<code>0.34</code> for our occurrence covariate (<code>occ.cov.1</code>)
+and a random effect level of 5 (which is a level that is sampled in our
+original data set). Below we predict occurrence at this new site, using
+the random effect in the prediction by setting
+<code>ignore.RE = FALSE</code> (which we could just not specify since it
+is the default). Note that when predicting using random effects, the
+column name of the random effect must match the name of the random
+effect used when fitting the model.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create the design matrix for the new site</span></span>
 <span><span class="va">X.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.34</span>, <span class="fl">5</span><span class="op">)</span></span>
@@ -442,7 +578,7 @@ Batch: 400 of 400, 100.00%</code></pre>
   ..- attr(*, "mcpar")= num [1:3] 1 1000 1
  $ psi.0.samples: 'mcmc' num [1:1000, 1] 0.786 0.789 0.937 0.893 0.79 ...
   ..- attr(*, "mcpar")= num [1:3] 1 1000 1
- $ run.time     : 'proc_time' Named num [1:5] 0.034 0.005 0.013 0 0
+ $ run.time     : 'proc_time' Named num [1:5] 0.003 0.007 0.003 0 0
   ..- attr(*, "names")= chr [1:5] "user.self" "sys.self" "elapsed" "user.child" ...
  $ call         : language predict.spPGOcc(object = out.full, X.0 = X.0, coords.0 = coords.0, verbose = FALSE,      ignore.RE = FALSE)
  $ object.class : chr "spPGOcc"
@@ -466,7 +602,9 @@ Sample size per chain = 1000
 
   2.5%    25%    50%    75%  97.5% 
 0.2227 0.4685 0.6167 0.7538 0.9432 </code></pre>
-<p>Alternatively, we can just predict occurrence probability at the new site using the fixed effects only by setting <code>ignore.RE = TRUE</code>.</p>
+<p>Alternatively, we can just predict occurrence probability at the new
+site using the fixed effects only by setting
+<code>ignore.RE = TRUE</code>.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Remove random effect from design matrix</span></span>
 <span><span class="va">X.0</span> <span class="op">&lt;-</span> <span class="va">X.0</span><span class="op">[</span>, <span class="op">-</span><span class="fl">3</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span> </span>
@@ -489,20 +627,31 @@ Sample size per chain = 1000
 
   2.5%    25%    50%    75%  97.5% 
 0.5073 0.7169 0.8119 0.8929 0.9790 </code></pre>
-<p>Here we see a relatively small discrepancy between the predicted occurrence probability when we use the random effect and when we don’t use the random effect. Predicting with random effects will allow you to fully propagate uncertainty in our predictions, but may not be desired if predicting at new locations where the level of the random effect is unknown or not sampled in the data.</p>
+<p>Here we see a relatively small discrepancy between the predicted
+occurrence probability when we use the random effect and when we don’t
+use the random effect. Predicting with random effects will allow you to
+fully propagate uncertainty in our predictions, but may not be desired
+if predicting at new locations where the level of the random effect is
+unknown or not sampled in the data.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references hanging-indent">
-<div id="ref-bates2015">
-<p>Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. “Fitting Linear Mixed-Effects Models Using lme4.” <em>Journal of Statistical Software</em> 67 (1): 1–48. <a href="https://doi.org/10.18637/jss.v067.i01" class="external-link">https://doi.org/10.18637/jss.v067.i01</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-bates2015" class="csl-entry">
+Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015.
+<span>“Fitting Linear Mixed-Effects Models Using <span class="nocase">lme4</span>.”</span> <em>Journal of Statistical
+Software</em> 67 (1): 1–48. <a href="https://doi.org/10.18637/jss.v067.i01" class="external-link">https://doi.org/10.18637/jss.v067.i01</a>.
 </div>
-<div id="ref-hooten2019bringing">
-<p>Hooten, Mevin B, and Trevor J Hefley. 2019. <em>Bringing Bayesian Models to Life</em>. CRC Press.</p>
+<div id="ref-hooten2019bringing" class="csl-entry">
+Hooten, Mevin B, and Trevor J Hefley. 2019. <em>Bringing Bayesian Models
+to Life</em>. CRC Press.
 </div>
-<div id="ref-watanabe2010">
-<p>Watanabe, Sumio. 2010. “Asymptotic Equivalence of Bayes Cross Validation and Widely Applicable Information Criterion in Singular Learning Theory.” <em>Journal of Machine Learning Research</em> 11 (12).</p>
+<div id="ref-watanabe2010" class="csl-entry">
+Watanabe, Sumio. 2010. <span>“Asymptotic Equivalence of Bayes Cross
+Validation and Widely Applicable Information Criterion in Singular
+Learning Theory.”</span> <em>Journal of Machine Learning Research</em>
+11 (12).
 </div>
 </div>
 </div>

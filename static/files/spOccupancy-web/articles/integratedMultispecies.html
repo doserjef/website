@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Integrated multi-species occupancy models in spOccupancy">
 <meta property="og:description" content="Learn how to fit multi-species occupancy models with multiple data sources">
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,10 +72,12 @@
 
 
 
-<script src="integratedMultispecies_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Integrated multi-species occupancy models in spOccupancy</h1>
-                        <h4 data-toc-skip class="author">Jeffrey W. Doser</h4>
+                        <h4 data-toc-skip class="author">Jeffrey W.
+Doser</h4>
             
             <h4 data-toc-skip class="date">February 20, 2023</h4>
       
@@ -88,16 +90,66 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette presents new functionality in v0.6.0 to fit an integrated multi-species occupancy model (i.e., a multi-species occupancy model with multiple data sources) with the <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> function. This is a single-season version of the “integrated community occupancy model” developed by <span class="citation">Doser et al. (2022)</span>. Often, multiple detection-nondetection data sources are available to study the occurrence and distribution of multiple species of interest. Such data can arise from citizen science checklists, point count surveys, camera traps, and autonomous acoustic recording units. A model that combines multiple multi-species data sources together in a single modeling framework has the potential to provide improved ecological inference as a result of increased sample sizes, increased spatial extent, and/or increased ability to account for sampling biases in individual data sources <span class="citation">(Miller et al. 2019)</span>. Integrated multi-species occupancy models seek to combine multiple sources of multi-species detection-nondetection data in a single hierarchical modeling framework to provide improved inference on multiple species occurrence patterns. The data sources may more not be replicated, allowing for use of so-called “single-visit” data within the integrated modeilng approach. Further, data sources can be used in the modeling framework even if they do not all sample the entire species community. For a more thorough description of integrated multi-species occupancy models, see <span class="citation">Doser et al. (2022)</span>.</p>
-<p>Functionality for integrated multi-species occupancy models in <code>spOccupancy</code> is under active development, and the full suite of <code>spOccupancy</code> tools (e.g., cross-validation, posterior predictive checks) are not currently available for the <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> function, and currently only a single-season, non-spatial model is available. In this vignette, we will present a brief overview of how to fit integrated multi-species occupancy models using the current functionality in <code>spOccupancy</code>. We will update this vignette as we add in new functionality to fit spatial models, as well as perform cross-validation and do posterior predictive checks.</p>
+<p>This vignette presents new functionality in v0.6.0 to fit an
+integrated multi-species occupancy model (i.e., a multi-species
+occupancy model with multiple data sources) with the
+<code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> function. This is a single-season version of
+the “integrated community occupancy model” developed by <span class="citation">Doser et al. (2022)</span>. Often, multiple
+detection-nondetection data sources are available to study the
+occurrence and distribution of multiple species of interest. Such data
+can arise from citizen science checklists, point count surveys, camera
+traps, and autonomous acoustic recording units. A model that combines
+multiple multi-species data sources together in a single modeling
+framework has the potential to provide improved ecological inference as
+a result of increased sample sizes, increased spatial extent, and/or
+increased ability to account for sampling biases in individual data
+sources <span class="citation">(Miller et al. 2019)</span>. Integrated
+multi-species occupancy models seek to combine multiple sources of
+multi-species detection-nondetection data in a single hierarchical
+modeling framework to provide improved inference on multiple species
+occurrence patterns. The data sources may more not be replicated,
+allowing for use of so-called “single-visit” data within the integrated
+modeilng approach. Further, data sources can be used in the modeling
+framework even if they do not all sample the entire species community.
+For a more thorough description of integrated multi-species occupancy
+models, see <span class="citation">Doser et al. (2022)</span>.</p>
+<p>Functionality for integrated multi-species occupancy models in
+<code>spOccupancy</code> is under active development, and the full suite
+of <code>spOccupancy</code> tools (e.g., cross-validation, posterior
+predictive checks) are not currently available for the
+<code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> function, and currently only a single-season,
+non-spatial model is available. In this vignette, we will present a
+brief overview of how to fit integrated multi-species occupancy models
+using the current functionality in <code>spOccupancy</code>. We will
+update this vignette as we add in new functionality to fit spatial
+models, as well as perform cross-validation and do posterior predictive
+checks.</p>
 <p>First we load <code>spOccupancy</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="example-data-sets-foliage-gleaning-birds-at-hubbard-brook-and-bartlett-forests">Example data sets: Foliage-gleaning birds at Hubbard Brook and Bartlett Forests<a class="anchor" aria-label="anchor" href="#example-data-sets-foliage-gleaning-birds-at-hubbard-brook-and-bartlett-forests"></a>
+<h3 id="example-data-sets-foliage-gleaning-birds-at-hubbard-brook-and-bartlett-forests">Example data sets: Foliage-gleaning birds at Hubbard Brook and
+Bartlett Forests<a class="anchor" aria-label="anchor" href="#example-data-sets-foliage-gleaning-birds-at-hubbard-brook-and-bartlett-forests"></a>
 </h3>
-<p>As an exmaple data set, we will use data from point count surveys on twelve foliage-gleaning bird species in the Hubbard Brook Experimental Forest (HBEF) and the National Ecological Observatory Network (NEON) at Bartlett Forest. These are two forest patches in the White Mountain National Forest in New Hampshire, USA (see Figure 1 in <span class="citation">Doser et al. (2022)</span>]. Both data sources are provided as part of the <code>spOccupancy</code> package in the objects <code>hbef2015</code> and <code>neon2015</code>.</p>
-<p>In the Hubbard Brook data set, observers performed standard point count surveys at 373 sites over three replicates, each of 10 minutes in length and with a detection radius of 100m. In the data set provided here, we converted these data to detection-nondetection data. Some sites were not visited for all three replicates. The NEON data are collected at 80 point count sites in Bartlett Forest using a removal protocol with three time periods, resulting in replicated detection-nondetection data that can be used in an occupancy modeling framework (after reducing counts to binary detection indicators). In this case, the two data sources do not overlap spatially, but rather provide information on two areas within a larger forested region of interest (i.e., White Mountain National Forest).</p>
+<p>As an exmaple data set, we will use data from point count surveys on
+twelve foliage-gleaning bird species in the Hubbard Brook Experimental
+Forest (HBEF) and the National Ecological Observatory Network (NEON) at
+Bartlett Forest. These are two forest patches in the White Mountain
+National Forest in New Hampshire, USA (see Figure 1 in <span class="citation">Doser et al. (2022)</span>]. Both data sources are
+provided as part of the <code>spOccupancy</code> package in the objects
+<code>hbef2015</code> and <code>neon2015</code>.</p>
+<p>In the Hubbard Brook data set, observers performed standard point
+count surveys at 373 sites over three replicates, each of 10 minutes in
+length and with a detection radius of 100m. In the data set provided
+here, we converted these data to detection-nondetection data. Some sites
+were not visited for all three replicates. The NEON data are collected
+at 80 point count sites in Bartlett Forest using a removal protocol with
+three time periods, resulting in replicated detection-nondetection data
+that can be used in an occupancy modeling framework (after reducing
+counts to binary detection indicators). In this case, the two data
+sources do not overlap spatially, but rather provide information on two
+areas within a larger forested region of interest (i.e., White Mountain
+National Forest).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">neon2015</span><span class="op">)</span></span>
@@ -135,8 +187,25 @@
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:80] "1" "2" "3" "4" ...
   .. ..$ : chr [1:2] "X" "Y"</code></pre>
-<p>The objects <code>hbef2015</code> and <code>neon2015</code> contain data formatted for fitting a multi-species occupancy model in <code>spOccupancy</code>. Briefly, the object <code>y</code> is a three-dimensional array of the detection-nondetection data, with dimensions corresponding to species, site, and replicate. <code>occ.covs</code> is a matrix or data frame with rows corresponding to sites and columns corresponding to the possible covariates for modeling occupancy probability. <code>det.covs</code> is a list where each element of the list consists of the possible covariates for modeling detection probability, where site-level covariates are specified as a one-dimensional vector while observation-level covariates are specified as a two-dimensional matrix with rows corresponding to sites and columns corresponding to replicates. Lastly, the <code>coords</code> object consists of the spatial coordinates for each site. These are only necessary for spatially-explicit models in <code>spOccupancy</code> (note there is no current implementation of spatially-explicit integrated multi-species occupancy models).</p>
-<p>Next, let’s take a look at the total observations for each species in each data source.</p>
+<p>The objects <code>hbef2015</code> and <code>neon2015</code> contain
+data formatted for fitting a multi-species occupancy model in
+<code>spOccupancy</code>. Briefly, the object <code>y</code> is a
+three-dimensional array of the detection-nondetection data, with
+dimensions corresponding to species, site, and replicate.
+<code>occ.covs</code> is a matrix or data frame with rows corresponding
+to sites and columns corresponding to the possible covariates for
+modeling occupancy probability. <code>det.covs</code> is a list where
+each element of the list consists of the possible covariates for
+modeling detection probability, where site-level covariates are
+specified as a one-dimensional vector while observation-level covariates
+are specified as a two-dimensional matrix with rows corresponding to
+sites and columns corresponding to replicates. Lastly, the
+<code>coords</code> object consists of the spatial coordinates for each
+site. These are only necessary for spatially-explicit models in
+<code>spOccupancy</code> (note there is no current implementation of
+spatially-explicit integrated multi-species occupancy models).</p>
+<p>Next, let’s take a look at the total observations for each species in
+each data source.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Species four-letter codes</span></span>
 <span><span class="va">sp.names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -149,7 +218,11 @@
 <span><span class="op">(</span><span class="va">sp.sums.neon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">neon2015</span><span class="op">$</span><span class="va">y</span>, <span class="fl">1</span>, <span class="va">sum</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>AMRE BAWW BHVI BLBW BLPW BTBW BTNW CAWA MAWA NAWA OVEN REVI 
    8   15   12   23    0   22   45    2    3    0   62   60 </code></pre>
-<p>We see that BLPW and NAWA do not have any observations in the NEON data. Additionally, AMRE is only detected a total of 12 times between the two data sources. Here we will remove BLPW and NAWA from the NEON data set and will remove AMRE from both data sources, and thus will model a total of 11 species across the two data sources.</p>
+<p>We see that BLPW and NAWA do not have any observations in the NEON
+data. Additionally, AMRE is only detected a total of 12 times between
+the two data sources. Here we will remove BLPW and NAWA from the NEON
+data set and will remove AMRE from both data sources, and thus will
+model a total of 11 species across the two data sources.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">neon.obs.sp.indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">sp.sums.neon</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">sp.names</span> <span class="op">!=</span> <span class="st">'AMRE'</span><span class="op">)</span></span>
 <span><span class="va">hbef.obs.sp.indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">sp.sums.hbef</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">sp.names</span> <span class="op">!=</span> <span class="st">'AMRE'</span><span class="op">)</span></span>
@@ -192,44 +265,124 @@
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:80] "1" "2" "3" "4" ...
   .. ..$ : chr [1:2] "X" "Y"</code></pre>
-<p>Notice that now the two data sources have a different number of species.</p>
+<p>Notice that now the two data sources have a different number of
+species.</p>
 </div>
 <div class="section level3">
 <h3 id="basic-model-description">Basic model description<a class="anchor" aria-label="anchor" href="#basic-model-description"></a>
 </h3>
-<p>An integrated multi-species occupancy model takes the same form as a multi-species occupancy model, with separate sub-models to describe the ecological process (occupancy) from the observation process. The only difference is that now there are multiple observation sub-models for each data source included in the model. The ecological sub-model of an integrated multi-species occupancy model is identical to that of a regular multi-species occupancy model. Let <span class="math inline">\(z_{i, j}\)</span> be the true presence (1) or absence (0) of a species <span class="math inline">\(i\)</span> at site <span class="math inline">\(j\)</span>, with <span class="math inline">\(j = 1, \dots, J\)</span> and <span class="math inline">\(i = 1, \dots, N\)</span>. We model the latent occurrence of each species according to</p>
+<p>An integrated multi-species occupancy model takes the same form as a
+multi-species occupancy model, with separate sub-models to describe the
+ecological process (occupancy) from the observation process. The only
+difference is that now there are multiple observation sub-models for
+each data source included in the model. The ecological sub-model of an
+integrated multi-species occupancy model is identical to that of a
+regular multi-species occupancy model. Let <span class="math inline">\(z_{i, j}\)</span> be the true presence (1) or
+absence (0) of a species <span class="math inline">\(i\)</span> at site
+<span class="math inline">\(j\)</span>, with <span class="math inline">\(j = 1, \dots, J\)</span> and <span class="math inline">\(i = 1, \dots, N\)</span>. We model the latent
+occurrence of each species according to</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
 &amp;z_{i, j} \sim \text{Bernoulli}(\psi_{i, j}), \\
-&amp;\text{logit}(\psi_{i, j}) = \boldsymbol{x}^{\top}_{j}\boldsymbol{\beta}_i,
+&amp;\text{logit}(\psi_{i, j}) =
+\boldsymbol{x}^{\top}_{j}\boldsymbol{\beta}_i,
 \end{split}
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(\psi_{i, j}\)</span> is the probability of occurrence of species <span class="math inline">\(i\)</span> at site <span class="math inline">\(j\)</span>, which is a function of site-specific covariates <span class="math inline">\(\boldsymbol{X}\)</span> and a vector of species-specific regression coefficients (<span class="math inline">\(\boldsymbol{\beta}_i\)</span>). The regression coefficients in multi-species occupancy models are envisioned as random effects arising from a common community level distribution. Specifically, we have,</p>
+<p>where <span class="math inline">\(\psi_{i, j}\)</span> is the
+probability of occurrence of species <span class="math inline">\(i\)</span> at site <span class="math inline">\(j\)</span>, which is a function of site-specific
+covariates <span class="math inline">\(\boldsymbol{X}\)</span> and a
+vector of species-specific regression coefficients (<span class="math inline">\(\boldsymbol{\beta}_i\)</span>). The regression
+coefficients in multi-species occupancy models are envisioned as random
+effects arising from a common community level distribution.
+Specifically, we have,</p>
 <p><span class="math display">\[\begin{equation}
-\boldsymbol{\beta}_i \sim \text{Normal}(\boldsymbol{\mu}_{\beta}, \boldsymbol{T}_{\beta}),
+\boldsymbol{\beta}_i \sim \text{Normal}(\boldsymbol{\mu}_{\beta},
+\boldsymbol{T}_{\beta}),
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(\boldsymbol{\mu}_{\beta}\)</span> is a vector of community level mean effects for each occurrence covariate effect (including the intercept) and <span class="math inline">\(\boldsymbol{T}_{\beta}\)</span> is a diagonal matrix with diagonal elements <span class="math inline">\(\boldsymbol{\tau}^2_{\beta}\)</span> that represent the variability of each occurrence covariate effect among species in the community.</p>
-<p>We do not directly observe <span class="math inline">\(z_{i, j}\)</span>, but rather we observe an imperfect representation of the latent occurrence process. In integrated models, we have <span class="math inline">\(r = 1, \dots, R\)</span> distinct sources of data that are all imperfect representations of a single, shared occurrence process. Let <span class="math inline">\(y_{r, i, a, k}\)</span> be the observed detection (1) or nondetection (0) of species <span class="math inline">\(i\)</span> in data set <span class="math inline">\(r\)</span> at site <span class="math inline">\(a\)</span> during replicate <span class="math inline">\(k\)</span>. Note that a data source may have data for all <span class="math inline">\(i = 1, \dots, N\)</span> species in the community, or only a subset of the species (of course, each species modeled must have data from at least one data source). Because different data sources have different variables influencing the observation process, we envision a separate detection model for each data source that is defined conditional on a single, shared ecological process described above. More specifically, for data source <span class="math inline">\(r\)</span> we have</p>
+<p>where <span class="math inline">\(\boldsymbol{\mu}_{\beta}\)</span>
+is a vector of community level mean effects for each occurrence
+covariate effect (including the intercept) and <span class="math inline">\(\boldsymbol{T}_{\beta}\)</span> is a diagonal
+matrix with diagonal elements <span class="math inline">\(\boldsymbol{\tau}^2_{\beta}\)</span> that
+represent the variability of each occurrence covariate effect among
+species in the community.</p>
+<p>We do not directly observe <span class="math inline">\(z_{i,
+j}\)</span>, but rather we observe an imperfect representation of the
+latent occurrence process. In integrated models, we have <span class="math inline">\(r = 1, \dots, R\)</span> distinct sources of data
+that are all imperfect representations of a single, shared occurrence
+process. Let <span class="math inline">\(y_{r, i, a, k}\)</span> be the
+observed detection (1) or nondetection (0) of species <span class="math inline">\(i\)</span> in data set <span class="math inline">\(r\)</span> at site <span class="math inline">\(a\)</span> during replicate <span class="math inline">\(k\)</span>. Note that a data source may have data
+for all <span class="math inline">\(i = 1, \dots, N\)</span> species in
+the community, or only a subset of the species (of course, each species
+modeled must have data from at least one data source). Because different
+data sources have different variables influencing the observation
+process, we envision a separate detection model for each data source
+that is defined conditional on a single, shared ecological process
+described above. More specifically, for data source <span class="math inline">\(r\)</span> we have</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
-&amp;y_{r, i, a, k} \sim \text{Bernoulli}(p_{r, i, a,  k}z_{i, j[a]}), \\
-&amp;\text{logit}(p_{r, i, a, k}) = \textbf{v}^{\top}_{r, i, a, k}\boldsymbol{\alpha}_{r, i},
+&amp;y_{r, i, a, k} \sim \text{Bernoulli}(p_{r, i, a,  k}z_{i, j[a]}),
+\\
+&amp;\text{logit}(p_{r, i, a, k}) = \textbf{v}^{\top}_{r, i, a,
+k}\boldsymbol{\alpha}_{r, i},
 \end{split}
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(p_{r,i, a, k}\)</span> is the probability of detecting species <span class="math inline">\(i\)</span> at site <span class="math inline">\(a\)</span> during replicate <span class="math inline">\(k\)</span> (given it is present at site <span class="math inline">\(a\)</span>) for data source <span class="math inline">\(r\)</span>, which is a function of site, replicate, and data source specific covariates <span class="math inline">\(\textbf{V}_r\)</span>, and a vector of regression coefficients specific to each data source and species (<span class="math inline">\(\boldsymbol{\alpha}_{r, i}\)</span>). <span class="math inline">\(z_{i, j[a]}\)</span> is the true latent occurrence status of species <span class="math inline">\(i\)</span> at point count location <span class="math inline">\(j\)</span> that corresponds to the <span class="math inline">\(a\)</span>th data set location in data set <span class="math inline">\(r\)</span>. Note that species-specific coefficients are modeled as random effects arising from a common distribution with community-level mean and variance parameters, as we saw previously with the occurrence coefficients.</p>
-<p>We assign normal priors for the occurrence and data-set specific detection regression coefficients, and inverse-Gamma priors for the community-level variance parameters to complete the Bayesian specification of the model. Pólya-Gamma data augmentation is implemented in an analogous manner to that of other <code>spOccupancy</code> functions to yield an efficient implementation of multi-species integrated occupancy models.</p>
+<p>where <span class="math inline">\(p_{r,i, a, k}\)</span> is the
+probability of detecting species <span class="math inline">\(i\)</span>
+at site <span class="math inline">\(a\)</span> during replicate <span class="math inline">\(k\)</span> (given it is present at site <span class="math inline">\(a\)</span>) for data source <span class="math inline">\(r\)</span>, which is a function of site,
+replicate, and data source specific covariates <span class="math inline">\(\textbf{V}_r\)</span>, and a vector of regression
+coefficients specific to each data source and species (<span class="math inline">\(\boldsymbol{\alpha}_{r, i}\)</span>). <span class="math inline">\(z_{i, j[a]}\)</span> is the true latent occurrence
+status of species <span class="math inline">\(i\)</span> at point count
+location <span class="math inline">\(j\)</span> that corresponds to the
+<span class="math inline">\(a\)</span>th data set location in data set
+<span class="math inline">\(r\)</span>. Note that species-specific
+coefficients are modeled as random effects arising from a common
+distribution with community-level mean and variance parameters, as we
+saw previously with the occurrence coefficients.</p>
+<p>We assign normal priors for the occurrence and data-set specific
+detection regression coefficients, and inverse-Gamma priors for the
+community-level variance parameters to complete the Bayesian
+specification of the model. Pólya-Gamma data augmentation is implemented
+in an analogous manner to that of other <code>spOccupancy</code>
+functions to yield an efficient implementation of multi-species
+integrated occupancy models.</p>
 </div>
 <div class="section level3">
-<h3 id="fitting-integrated-multi-species-occupancy-models-with-intmspgocc">Fitting integrated multi-species occupancy models with <code>intMsPGOcc()</code><a class="anchor" aria-label="anchor" href="#fitting-integrated-multi-species-occupancy-models-with-intmspgocc"></a>
+<h3 id="fitting-integrated-multi-species-occupancy-models-with-intmspgocc">Fitting integrated multi-species occupancy models with
+<code>intMsPGOcc()</code><a class="anchor" aria-label="anchor" href="#fitting-integrated-multi-species-occupancy-models-with-intmspgocc"></a>
 </h3>
-<p>The function <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> fits multi-species integrated occupancy models in <code>spOccupancy</code>. The function follows the standard <code>spOccupancy</code> syntax, and more details on this syntax are available in the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory vignette</a>.</p>
+<p>The function <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> fits multi-species integrated
+occupancy models in <code>spOccupancy</code>. The function follows the
+standard <code>spOccupancy</code> syntax, and more details on this
+syntax are available in the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+vignette</a>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/intMsPGOcc.html">intMsPGOcc</a></span><span class="op">(</span><span class="va">occ.formula</span>, <span class="va">det.formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>, <span class="va">n.samples</span>,</span>
 <span>           n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
 <span>           n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.samples</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>           <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold.seed</span>, k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
-<p>The <code>data</code> argument contains the list of data elements necessary for fitting an integrated multi-species occupancy model. <code>data</code> should be a list comprised of the following objects: <code>y</code> (list of detection-nondetection data matrices for each data source), <code>occ.covs</code> (data frame or matrix of covariates for occurrence model), <code>det.covs</code> (a list of lists where each element of the list corresponds to the detection-nondetection data for the given data source), <code>sites</code> (a list where each element consists of the site indices for the given data source), and <code>species</code> (a list where each element consists of the species indices for the given data source).</p>
-<p>The <code>hbef2015</code> and <code>neon2015</code> data sources are currently formatted for use in standard multi-species occupancy models. Perhaps the trickiest part of data integration is ensuring each location in each data source lines up with the correct geographical location where you want to determine the true presence/absence of each species of interest. In <code>spOccupancy</code>, most of this bookkeeping is done under the hood, but we will need to combine the two data sources together into a single list in which we are consistent about how the data sources are sorted. To accomplish this, we recommend first creating the occurrence covariates matrix for all data sources. Because our two data sources do not overlap spatially, this is relatively simple and here we can just use <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>.</p>
+<p>The <code>data</code> argument contains the list of data elements
+necessary for fitting an integrated multi-species occupancy model.
+<code>data</code> should be a list comprised of the following objects:
+<code>y</code> (list of detection-nondetection data matrices for each
+data source), <code>occ.covs</code> (data frame or matrix of covariates
+for occurrence model), <code>det.covs</code> (a list of lists where each
+element of the list corresponds to the detection-nondetection data for
+the given data source), <code>sites</code> (a list where each element
+consists of the site indices for the given data source), and
+<code>species</code> (a list where each element consists of the species
+indices for the given data source).</p>
+<p>The <code>hbef2015</code> and <code>neon2015</code> data sources are
+currently formatted for use in standard multi-species occupancy models.
+Perhaps the trickiest part of data integration is ensuring each location
+in each data source lines up with the correct geographical location
+where you want to determine the true presence/absence of each species of
+interest. In <code>spOccupancy</code>, most of this bookkeeping is done
+under the hood, but we will need to combine the two data sources
+together into a single list in which we are consistent about how the
+data sources are sorted. To accomplish this, we recommend first creating
+the occurrence covariates matrix for all data sources. Because our two
+data sources do not overlap spatially, this is relatively simple and
+here we can just use <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">occ.covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">$</span><span class="va">occ.covs</span>, <span class="va">neon2015</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">occ.covs</span><span class="op">)</span></span></code></pre></div>
@@ -237,7 +390,18 @@
  - attr(*, "dimnames")=List of 2
   ..$ : NULL
   ..$ : chr "Elevation"</code></pre>
-<p>Notice the order in which we placed these covariates: all covariate values for HBEF come first, followed by all covariates for NEON. We need to ensure that we use this identical ordering for all objects in the <code>data</code> list. Next, we create the site indices stored in <code>sites</code>. <code>sites</code> should be a list with two elements (one for each data source), where each element consists of a vector that indicates the rows in <code>occ.covs</code> that correspond with the specific row of the detection-nondetection data for that data source. When the data sources stem from distinct points (like in our current case), this is again relatively straightforward as the indices simply correspond to how we ordered the points in <code>occ.covs</code>.</p>
+<p>Notice the order in which we placed these covariates: all covariate
+values for HBEF come first, followed by all covariates for NEON. We need
+to ensure that we use this identical ordering for all objects in the
+<code>data</code> list. Next, we create the site indices stored in
+<code>sites</code>. <code>sites</code> should be a list with two
+elements (one for each data source), where each element consists of a
+vector that indicates the rows in <code>occ.covs</code> that correspond
+with the specific row of the detection-nondetection data for that data
+source. When the data sources stem from distinct points (like in our
+current case), this is again relatively straightforward as the indices
+simply correspond to how we ordered the points in
+<code>occ.covs</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sites.indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hbef <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">)</span>,</span>
 <span>                  neon <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">neon2015</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">hbef2015</span><span class="op">$</span><span class="va">occ.covs</span><span class="op">)</span><span class="op">)</span></span>
@@ -245,7 +409,12 @@
 <pre><code>List of 2
  $ hbef: int [1:373] 1 2 3 4 5 6 7 8 9 10 ...
  $ neon: int [1:80] 374 375 376 377 378 379 380 381 382 383 ...</code></pre>
-<p>Next we create the combined detection-nondetection data <code>y</code>. For integrated multi-species models in <code>spOccupancy</code>, <code>y</code> is a list of three-dimensional arrays, with each array having dimensions corresponding to species, site, and replicate. Again, we must ensure that we place the data sources in the correct order.</p>
+<p>Next we create the combined detection-nondetection data
+<code>y</code>. For integrated multi-species models in
+<code>spOccupancy</code>, <code>y</code> is a list of three-dimensional
+arrays, with each array having dimensions corresponding to species,
+site, and replicate. Again, we must ensure that we place the data
+sources in the correct order.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y.full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hbef <span class="op">=</span> <span class="va">hbef2015</span><span class="op">$</span><span class="va">y</span>,</span>
 <span>               neon <span class="op">=</span> <span class="va">neon2015</span><span class="op">$</span><span class="va">y</span><span class="op">)</span></span>
@@ -261,7 +430,16 @@
   .. ..$ : chr [1:9] "BAWW" "BHVI" "BLBW" "BTBW" ...
   .. ..$ : NULL
   .. ..$ : NULL</code></pre>
-<p>The last thing we need to specify in <code>data</code> for an integrated multi-species occupancy model is the <code>species</code> list, which is a list of vectors where each vector is a set of codes that indicates the specific species in the corresponding data source. In other words, each element of the <code>species</code> list should consist of some code to indicate the species that each row of the corresponding array in the <code>y</code> data list corresponds to. This is necessary to link data sources that may not sample exactly the same species, as is our case here where the NEON data only sample 9 of the 11 species we are modeling.</p>
+<p>The last thing we need to specify in <code>data</code> for an
+integrated multi-species occupancy model is the <code>species</code>
+list, which is a list of vectors where each vector is a set of codes
+that indicates the specific species in the corresponding data source. In
+other words, each element of the <code>species</code> list should
+consist of some code to indicate the species that each row of the
+corresponding array in the <code>y</code> data list corresponds to. This
+is necessary to link data sources that may not sample exactly the same
+species, as is our case here where the NEON data only sample 9 of the 11
+species we are modeling.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp.indx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hbef <span class="op">=</span> <span class="va">sp.names</span><span class="op">[</span><span class="va">hbef.obs.sp.indx</span><span class="op">]</span>, </span>
 <span>                neon <span class="op">=</span> <span class="va">sp.names</span><span class="op">[</span><span class="va">neon.obs.sp.indx</span><span class="op">]</span><span class="op">)</span></span>
@@ -272,7 +450,9 @@
 
 $neon
 [1] "BAWW" "BHVI" "BLBW" "BTBW" "BTNW" "CAWA" "MAWA" "OVEN" "REVI"</code></pre>
-<p>Lastly, we put the detection covariates for each data set in a single list, and then combine all the elements together in one data list that we will eventually supply to <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code>.</p>
+<p>Lastly, we put the detection covariates for each data set in a single
+list, and then combine all the elements together in one data list that
+we will eventually supply to <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">det.covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hbef <span class="op">=</span> <span class="va">hbef2015</span><span class="op">$</span><span class="va">det.covs</span>,</span>
 <span>                 neon <span class="op">=</span> <span class="va">neon2015</span><span class="op">$</span><span class="va">det.covs</span><span class="op">)</span></span>
@@ -311,9 +491,25 @@ $neon
  $ species :List of 2
   ..$ hbef: chr [1:11] "BAWW" "BHVI" "BLBW" "BLPW" ...
   ..$ neon: chr [1:9] "BAWW" "BHVI" "BLBW" "BTBW" ...</code></pre>
-<p>We will now go ahead and run the integrated multi-species occupancy model. We will first fit a model with a linear and quadratic effect of elevation on occurrence, and effects of day (linear and quadratic) of the year and time of day (linear) on the detection process for each data source. Note that there is no requirement to have the same covariates on the detection models for each individual data source. The function <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> also allows the user to specify the priors and initial values, which follow the same format as other <code>spOccupancy</code> functions (see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory vignette</a> for details), but here we will just use the default values, which we see below are printed to the screen. The last thing we need to do is specify the formulas for occurrence and detection (note we need a separate formula for each data source for the detection models in <code>det.formula</code>, which are supplied as a list). We also specify all the criteria of the MCMC sampler, where here we run three chains of the model for 20,000 iterations with a burn-in period of 12,000 and a thinning rate of 8, resulting in a total of 3000 posterior samples.</p>
+<p>We will now go ahead and run the integrated multi-species occupancy
+model. We will first fit a model with a linear and quadratic effect of
+elevation on occurrence, and effects of day (linear and quadratic) of
+the year and time of day (linear) on the detection process for each data
+source. Note that there is no requirement to have the same covariates on
+the detection models for each individual data source. The function
+<code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> also allows the user to specify the priors and
+initial values, which follow the same format as other
+<code>spOccupancy</code> functions (see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+vignette</a> for details), but here we will just use the default values,
+which we see below are printed to the screen. The last thing we need to
+do is specify the formulas for occurrence and detection (note we need a
+separate formula for each data source for the detection models in
+<code>det.formula</code>, which are supplied as a list). We also specify
+all the criteria of the MCMC sampler, where here we run three chains of
+the model for 20,000 iterations with a burn-in period of 12,000 and a
+thinning rate of 8, resulting in a total of 3000 posterior samples.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Approx. run time: 5.5 minutes</span></span>
+<code class="sourceCode R"><span><span class="co"># Approx. run time: 3 minutes</span></span>
 <span><span class="va">out.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/intMsPGOcc.html">intMsPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>                    det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hbef <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span>,</span>
 <span>                                       neon <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -421,56 +617,56 @@ Burn-in: 12000
 Thinning Rate: 8
 Number of Chains: 3
 Total Posterior Samples: 3000
-Run Time (min): 8.455
+Run Time (min): 2.9239
 
 ----------------------------------------
     Community Level
 ----------------------------------------
 Occurrence Means (logit scale): 
                          Mean     SD    2.5%     50%  97.5%   Rhat  ESS
-(Intercept)            0.4669 0.8962 -1.3149  0.4527 2.2252 1.0019 2159
-scale(Elevation)       0.1512 0.4908 -0.8409  0.1474 1.1169 1.0094  820
-I(scale(Elevation)^2) -0.0166 0.2818 -0.5689 -0.0189 0.5666 1.0078 1132
+(Intercept)            0.4250 0.8894 -1.2971  0.4199 2.2252 1.0112 1700
+scale(Elevation)       0.1581 0.4490 -0.7297  0.1567 1.0722 1.0046 1789
+I(scale(Elevation)^2) -0.0189 0.2786 -0.5499 -0.0248 0.5614 1.0010 1494
 
 Occurrence Variances (logit scale): 
-                         Mean     SD   2.5%     50%   97.5%   Rhat ESS
-(Intercept)           12.8002 8.4599 4.4448 10.5906 33.4562 1.0831 194
-scale(Elevation)       2.5577 1.9165 0.7673  2.0855  7.2622 1.0079 578
-I(scale(Elevation)^2)  0.7166 0.5300 0.2060  0.5836  2.0181 1.0439 703
+                         Mean     SD   2.5%     50%   97.5%   Rhat  ESS
+(Intercept)           12.1092 7.8331 4.4598 10.1770 31.8805 1.0311  367
+scale(Elevation)       2.3228 1.5024 0.7037  1.9661  5.9842 1.0085 1156
+I(scale(Elevation)^2)  0.7154 0.5116 0.2127  0.5783  2.0209 1.0120  847
 
 -----------------------------
     Data source 1
 -----------------------------
 Detection Means (logit scale): 
                    Mean     SD    2.5%     50%  97.5%   Rhat  ESS
-(Intercept)     -0.6214 0.4389 -1.4700 -0.6208 0.2819 1.0016 2043
-scale(day)       0.0601 0.0898 -0.1165  0.0592 0.2413 1.0030 3000
-I(scale(day)^2) -0.0149 0.0864 -0.1846 -0.0142 0.1562 1.0021 3000
-scale(tod)      -0.0422 0.0781 -0.2070 -0.0404 0.1016 1.0021 3000
+(Intercept)     -0.6019 0.4281 -1.4704 -0.5945 0.2470 1.0010 3000
+scale(day)       0.0610 0.0900 -0.1176  0.0600 0.2396 1.0052 3000
+I(scale(day)^2) -0.0161 0.0877 -0.1836 -0.0154 0.1571 1.0005 3000
+scale(tod)      -0.0415 0.0781 -0.1975 -0.0386 0.1076 1.0010 3000
 
 Detection Variances (logit scale): 
                   Mean     SD   2.5%    50%  97.5%   Rhat  ESS
-(Intercept)     2.2070 1.3096 0.8180 1.9034 5.5305 1.0115 1919
-scale(day)      0.0692 0.0429 0.0239 0.0583 0.1754 1.0021 3000
-I(scale(day)^2) 0.0572 0.0391 0.0171 0.0468 0.1606 1.0077 3194
-scale(tod)      0.0508 0.0325 0.0166 0.0427 0.1266 1.0068 3000
+(Intercept)     2.1203 1.2034 0.7641 1.8087 5.2895 1.0036 2360
+scale(day)      0.0685 0.0413 0.0240 0.0579 0.1761 1.0115 3000
+I(scale(day)^2) 0.0575 0.0406 0.0181 0.0474 0.1563 1.0053 3000
+scale(tod)      0.0505 0.0343 0.0163 0.0413 0.1356 1.0220 2857
 
 -----------------------------
     Data source 2
 -----------------------------
 Detection Means (logit scale): 
                    Mean     SD    2.5%     50%   97.5%   Rhat  ESS
-(Intercept)     -1.4171 0.3051 -2.0181 -1.4183 -0.8185 1.0239 1207
-scale(day)       0.0462 0.2032 -0.3654  0.0497  0.4309 1.0019 2771
-I(scale(day)^2) -0.0609 0.1588 -0.3875 -0.0567  0.2397 1.0014 2768
-scale(tod)       0.0094 0.1440 -0.2914  0.0099  0.2803 1.0037 2474
+(Intercept)     -1.3792 0.3031 -1.9730 -1.3771 -0.7432 1.0017 1242
+scale(day)       0.0485 0.2035 -0.3936  0.0517  0.4541 1.0016 2675
+I(scale(day)^2) -0.0596 0.1614 -0.3797 -0.0610  0.2617 1.0041 2679
+scale(tod)       0.0165 0.1391 -0.2593  0.0185  0.2945 1.0048 3000
 
 Detection Variances (logit scale): 
                   Mean     SD   2.5%    50%  97.5%   Rhat  ESS
-(Intercept)     0.6035 0.4836 0.1452 0.4732 1.9034 1.0051 2790
-scale(day)      0.2399 0.2461 0.0380 0.1643 0.8865 1.0025 2540
-I(scale(day)^2) 0.1385 0.1210 0.0290 0.1017 0.4722 0.9999 2519
-scale(tod)      0.0993 0.0895 0.0235 0.0755 0.3165 1.0054 2638
+(Intercept)     0.6024 0.5084 0.1282 0.4562 1.8945 1.0030 2438
+scale(day)      0.2440 0.2500 0.0395 0.1675 0.8841 1.0044 2551
+I(scale(day)^2) 0.1459 0.1525 0.0287 0.1030 0.5139 1.0037 2600
+scale(tod)      0.0995 0.0885 0.0238 0.0742 0.3388 1.0164 3016
 
 
 ----------------------------------------
@@ -478,134 +674,137 @@ scale(tod)      0.0993 0.0895 0.0235 0.0755 0.3165 1.0054 2638
 ----------------------------------------
 Occurrence (logit scale): 
                               Mean     SD    2.5%     50%   97.5%   Rhat  ESS
-(Intercept)-BAWW            1.6700 1.6856 -0.5063  1.2806  5.8628 1.2170   56
-(Intercept)-BHVI            3.3069 2.9127 -0.0625  2.5856 11.4881 1.1804   36
-(Intercept)-BLBW            2.6258 0.6438  1.7163  2.5076  4.3076 1.0154  413
-(Intercept)-BLPW           -5.1155 0.6616 -6.5368 -5.0654 -3.9653 1.0230  852
-(Intercept)-BTBW            3.6746 0.4917  2.8694  3.6256  4.7597 1.0064 1160
-(Intercept)-BTNW            2.1880 0.2975  1.6718  2.1636  2.8425 1.0009 2205
-(Intercept)-CAWA           -2.2596 0.5007 -3.1769 -2.2831 -1.2405 1.0081  529
-(Intercept)-MAWA           -1.9943 0.2651 -2.5233 -1.9943 -1.4799 1.0024 2514
-(Intercept)-NAWA           -2.7535 0.5378 -3.7604 -2.7843 -1.5907 1.0301  622
-(Intercept)-OVEN            2.5851 0.3251  2.0463  2.5580  3.3105 1.0112 1173
-(Intercept)-REVI            3.5636 0.5175  2.7027  3.5163  4.7115 1.0012  504
-scale(Elevation)-BAWW      -0.3373 1.0493 -3.2667 -0.1673  1.6943 1.0914   60
-scale(Elevation)-BHVI       0.2786 1.0947 -2.0188  0.2491  2.5767 1.0218  199
-scale(Elevation)-BLBW      -0.2494 0.2338 -0.7718 -0.2234  0.1181 1.0203  845
-scale(Elevation)-BLPW       2.2944 0.6676  1.3177  2.1770  3.8195 1.0234  593
-scale(Elevation)-BTBW      -0.1403 0.1606 -0.4633 -0.1357  0.1621 1.0122 2716
-scale(Elevation)-BTNW       0.6639 0.2754  0.2274  0.6320  1.3155 1.0031 1203
-scale(Elevation)-CAWA       1.1410 0.4572  0.4324  1.0745  2.2359 1.0091  338
-scale(Elevation)-MAWA       1.1799 0.2457  0.7470  1.1634  1.7069 1.0085 1504
-scale(Elevation)-NAWA       1.0355 0.4033  0.3621  1.0033  1.9310 1.0029 1345
-scale(Elevation)-OVEN      -1.7627 0.3651 -2.5938 -1.7222 -1.1956 1.0170  798
-scale(Elevation)-REVI      -2.1957 0.7204 -3.8552 -2.1192 -1.0245 1.0064  318
-I(scale(Elevation)^2)-BAWW -0.7560 0.5016 -1.8446 -0.7253  0.3047 1.1276  145
-I(scale(Elevation)^2)-BHVI  0.4691 0.7466 -0.8118  0.4205  2.2222 1.0132  263
-I(scale(Elevation)^2)-BLBW -0.6242 0.2237 -1.1192 -0.6025 -0.2389 1.0084  839
-I(scale(Elevation)^2)-BLPW  1.0046 0.3952  0.1974  1.0290  1.7206 1.0199 1245
-I(scale(Elevation)^2)-BTBW -1.1231 0.1863 -1.5124 -1.1104 -0.7800 1.0058 1472
-I(scale(Elevation)^2)-BTNW  0.0154 0.1951 -0.3273  0.0014  0.4422 1.0058 1904
-I(scale(Elevation)^2)-CAWA  0.2948 0.3517 -0.3050  0.2668  1.1309 1.0320  464
-I(scale(Elevation)^2)-MAWA  0.6846 0.2079  0.2952  0.6704  1.1242 1.0050 1850
-I(scale(Elevation)^2)-NAWA  0.3766 0.2939 -0.1909  0.3688  0.9508 1.0061 1417
-I(scale(Elevation)^2)-OVEN -0.4206 0.2230 -0.8276 -0.4301  0.0534 1.0026 1531
-I(scale(Elevation)^2)-REVI -0.0627 0.3502 -0.6935 -0.0745  0.6736 1.0059  464
+(Intercept)-BAWW            1.1988 1.5309 -0.6088  0.7192  5.1996 1.1247   67
+(Intercept)-BHVI            2.9251 2.4270 -0.1303  2.3344  8.9583 1.7024   35
+(Intercept)-BLBW            2.5732 0.6180  1.6854  2.4656  4.1286 1.0166  530
+(Intercept)-BLPW           -5.0370 0.6278 -6.3493 -5.0015 -3.8924 1.0055  930
+(Intercept)-BTBW            3.6727 0.4822  2.8651  3.6235  4.7321 1.0162 1240
+(Intercept)-BTNW            2.1894 0.3059  1.6735  2.1605  2.8602 1.0020 2040
+(Intercept)-CAWA           -2.3058 0.4757 -3.1522 -2.3350 -1.2657 1.0280  496
+(Intercept)-MAWA           -1.9971 0.2633 -2.5237 -1.9895 -1.4882 1.0009 2716
+(Intercept)-NAWA           -2.7928 0.5234 -3.8109 -2.8120 -1.7556 1.0019  705
+(Intercept)-OVEN            2.5768 0.3073  2.0316  2.5540  3.2370 0.9996 2205
+(Intercept)-REVI            3.5437 0.5116  2.6758  3.4933  4.6646 1.0019  472
+scale(Elevation)-BAWW      -0.1730 0.5909 -1.5648 -0.0972  0.7321 1.1514  141
+scale(Elevation)-BHVI       0.2507 0.9579 -1.6886  0.2489  2.3567 1.0221  206
+scale(Elevation)-BLBW      -0.2465 0.2451 -0.7377 -0.2175  0.1189 1.0236  536
+scale(Elevation)-BLPW       2.2139 0.6078  1.2709  2.1377  3.6573 0.9996  582
+scale(Elevation)-BTBW      -0.1442 0.1588 -0.4794 -0.1409  0.1539 1.0020 2191
+scale(Elevation)-BTNW       0.6496 0.2674  0.2117  0.6285  1.2447 1.0009 1641
+scale(Elevation)-CAWA       1.0965 0.4752  0.4084  1.0164  2.2491 1.0217  236
+scale(Elevation)-MAWA       1.1845 0.2360  0.7745  1.1693  1.6919 1.0026 2013
+scale(Elevation)-NAWA       1.0202 0.3965  0.3465  0.9897  1.8688 1.0011 1380
+scale(Elevation)-OVEN      -1.7620 0.3434 -2.5742 -1.7114 -1.2170 1.0049  942
+scale(Elevation)-REVI      -2.1784 0.7255 -3.8453 -2.0875 -1.0567 1.0126  292
+I(scale(Elevation)^2)-BAWW -0.7774 0.4385 -1.8010 -0.7213 -0.0871 1.0590  200
+I(scale(Elevation)^2)-BHVI  0.4661 0.7257 -0.8097  0.3970  2.0993 1.0424  289
+I(scale(Elevation)^2)-BLBW -0.6044 0.2064 -1.0525 -0.5915 -0.2246 1.0076 1275
+I(scale(Elevation)^2)-BLPW  1.0183 0.3870  0.1976  1.0216  1.7291 1.0037  964
+I(scale(Elevation)^2)-BTBW -1.1203 0.1827 -1.4973 -1.1081 -0.7877 1.0131 1778
+I(scale(Elevation)^2)-BTNW  0.0104 0.1998 -0.3471 -0.0050  0.4334 1.0017 2192
+I(scale(Elevation)^2)-CAWA  0.2715 0.3718 -0.3044  0.2234  1.1928 1.0286  287
+I(scale(Elevation)^2)-MAWA  0.6836 0.2094  0.2905  0.6745  1.1157 1.0031 1811
+I(scale(Elevation)^2)-NAWA  0.3856 0.2791 -0.1649  0.3874  0.9449 1.0010 1572
+I(scale(Elevation)^2)-OVEN -0.4161 0.2191 -0.8168 -0.4282  0.0523 1.0137 1609
+I(scale(Elevation)^2)-REVI -0.0625 0.3544 -0.6845 -0.0797  0.6820 1.0138  401
 
 -----------------------------
     Data source 1
 -----------------------------
 Detection (logit scale): 
                         Mean     SD    2.5%     50%   97.5%   Rhat  ESS
-(Intercept)-BAWW     -2.6212 0.4257 -3.3380 -2.6640 -1.7200 1.2671  111
-(Intercept)-BHVI     -2.6951 0.2433 -3.1335 -2.7140 -2.1469 1.0038  151
-(Intercept)-BLBW     -0.0440 0.1299 -0.2908 -0.0412  0.2109 1.0102 1332
-(Intercept)-BLPW     -0.4635 0.2767 -1.0050 -0.4640  0.0724 1.0095 2981
-(Intercept)-BTBW      0.6345 0.1115  0.4217  0.6336  0.8612 1.0020 3000
-(Intercept)-BTNW      0.5772 0.1130  0.3555  0.5756  0.8092 1.0021 2539
-(Intercept)-CAWA     -1.8297 0.5830 -2.8971 -1.8408 -0.7266 1.0395  276
-(Intercept)-MAWA     -0.8576 0.2388 -1.3172 -0.8588 -0.3880 1.0140 1678
-(Intercept)-NAWA     -1.5061 0.4925 -2.5112 -1.4999 -0.5910 1.0321  560
-(Intercept)-OVEN      0.7935 0.1174  0.5696  0.7932  1.0184 1.0055 3028
-(Intercept)-REVI      0.5444 0.1065  0.3387  0.5443  0.7532 1.0033 2243
-scale(day)-BAWW       0.2099 0.1385 -0.0587  0.2087  0.4806 1.0065 2811
-scale(day)-BHVI       0.2064 0.1209 -0.0210  0.2044  0.4499 1.0027 3000
-scale(day)-BLBW      -0.2233 0.0682 -0.3541 -0.2231 -0.0886 1.0002 3000
-scale(day)-BLPW       0.0685 0.1592 -0.2525  0.0695  0.3720 1.0027 2570
-scale(day)-BTBW       0.2698 0.0683  0.1344  0.2701  0.4021 1.0030 3000
-scale(day)-BTNW       0.1510 0.0669  0.0215  0.1509  0.2858 1.0053 3000
-scale(day)-CAWA      -0.0094 0.1761 -0.3520 -0.0077  0.3295 1.0066 3000
-scale(day)-MAWA       0.1185 0.1250 -0.1172  0.1154  0.3705 0.9996 3537
-scale(day)-NAWA       0.0147 0.1737 -0.3278  0.0128  0.3494 1.0005 3000
-scale(day)-OVEN      -0.0733 0.0728 -0.2171 -0.0734  0.0708 1.0015 3000
-scale(day)-REVI      -0.0713 0.0690 -0.2071 -0.0709  0.0660 1.0059 3201
-I(scale(day)^2)-BAWW -0.0323 0.1498 -0.3286 -0.0329  0.2627 1.0087 2838
-I(scale(day)^2)-BHVI  0.0514 0.1297 -0.2025  0.0530  0.2997 1.0009 3000
-I(scale(day)^2)-BLBW -0.1723 0.0797 -0.3255 -0.1735 -0.0144 1.0029 3000
-I(scale(day)^2)-BLPW  0.2059 0.1921 -0.1509  0.2002  0.6255 1.0057 3000
-I(scale(day)^2)-BTBW -0.0623 0.0782 -0.2154 -0.0627  0.0950 1.0046 3000
-I(scale(day)^2)-BTNW -0.0604 0.0779 -0.2132 -0.0605  0.0933 1.0014 3000
-I(scale(day)^2)-CAWA -0.0359 0.1861 -0.3987 -0.0390  0.3545 1.0004 3000
-I(scale(day)^2)-MAWA  0.0188 0.1388 -0.2517  0.0193  0.2877 1.0091 3000
-I(scale(day)^2)-NAWA -0.1288 0.1813 -0.4929 -0.1278  0.2192 1.0009 3000
-I(scale(day)^2)-OVEN  0.0122 0.0855 -0.1493  0.0124  0.1788 1.0022 3000
-I(scale(day)^2)-REVI  0.0395 0.0776 -0.1123  0.0397  0.1953 1.0072 3000
-scale(tod)-BAWW      -0.1808 0.1369 -0.4607 -0.1787  0.0763 1.0069 3000
-scale(tod)-BHVI      -0.0482 0.1110 -0.2638 -0.0495  0.1694 1.0017 3000
-scale(tod)-BLBW       0.0573 0.0668 -0.0699  0.0553  0.1931 1.0039 2555
-scale(tod)-BLPW       0.1089 0.1463 -0.1674  0.1059  0.3986 1.0065 3000
-scale(tod)-BTBW      -0.0359 0.0673 -0.1706 -0.0369  0.0955 1.0002 3000
-scale(tod)-BTNW       0.0365 0.0635 -0.0841  0.0370  0.1582 1.0018 3000
-scale(tod)-CAWA      -0.2154 0.1619 -0.5590 -0.2114  0.0867 0.9996 3000
-scale(tod)-MAWA       0.0226 0.1153 -0.2001  0.0231  0.2506 1.0044 3000
-scale(tod)-NAWA      -0.0723 0.1600 -0.4028 -0.0700  0.2559 1.0048 3000
-scale(tod)-OVEN      -0.0461 0.0743 -0.1947 -0.0455  0.0968 1.0005 3000
-scale(tod)-REVI      -0.0797 0.0642 -0.2051 -0.0800  0.0532 1.0005 3000
+(Intercept)-BAWW     -2.5022 0.4386 -3.2806 -2.5218 -1.6380 1.0398  110
+(Intercept)-BHVI     -2.6860 0.2529 -3.1442 -2.7007 -2.1490 1.1518  182
+(Intercept)-BLBW     -0.0399 0.1244 -0.2854 -0.0421  0.2096 1.0006 1223
+(Intercept)-BLPW     -0.4520 0.2618 -0.9694 -0.4458  0.0385 1.0008 3000
+(Intercept)-BTBW      0.6306 0.1074  0.4204  0.6292  0.8420 1.0103 3000
+(Intercept)-BTNW      0.5787 0.1118  0.3615  0.5771  0.8050 1.0048 2622
+(Intercept)-CAWA     -1.7370 0.5638 -2.8646 -1.7198 -0.7355 1.0224  292
+(Intercept)-MAWA     -0.8431 0.2388 -1.3081 -0.8467 -0.3704 1.0029 2064
+(Intercept)-NAWA     -1.4722 0.4742 -2.4247 -1.4711 -0.5801 1.0005  687
+(Intercept)-OVEN      0.7896 0.1205  0.5574  0.7882  1.0196 1.0017 3000
+(Intercept)-REVI      0.5471 0.1073  0.3407  0.5455  0.7578 1.0007 3000
+scale(day)-BAWW       0.2138 0.1398 -0.0567  0.2105  0.4997 0.9997 2652
+scale(day)-BHVI       0.2011 0.1181 -0.0276  0.1985  0.4355 1.0011 2771
+scale(day)-BLBW      -0.2232 0.0678 -0.3554 -0.2240 -0.0897 1.0015 3185
+scale(day)-BLPW       0.0660 0.1605 -0.2472  0.0672  0.3704 1.0035 3000
+scale(day)-BTBW       0.2690 0.0672  0.1359  0.2707  0.4007 1.0013 3000
+scale(day)-BTNW       0.1511 0.0658  0.0230  0.1514  0.2785 1.0025 3000
+scale(day)-CAWA      -0.0081 0.1763 -0.3502 -0.0061  0.3353 1.0055 3000
+scale(day)-MAWA       0.1129 0.1234 -0.1291  0.1126  0.3607 0.9998 3000
+scale(day)-NAWA       0.0216 0.1768 -0.3301  0.0231  0.3548 1.0004 3000
+scale(day)-OVEN      -0.0756 0.0735 -0.2211 -0.0775  0.0710 1.0020 3000
+scale(day)-REVI      -0.0688 0.0673 -0.2035 -0.0681  0.0585 1.0000 3018
+I(scale(day)^2)-BAWW -0.0318 0.1498 -0.3303 -0.0294  0.2555 1.0029 2834
+I(scale(day)^2)-BHVI  0.0589 0.1266 -0.1929  0.0591  0.3088 1.0031 3000
+I(scale(day)^2)-BLBW -0.1703 0.0785 -0.3306 -0.1701 -0.0159 1.0006 3000
+I(scale(day)^2)-BLPW  0.2031 0.1851 -0.1340  0.1932  0.5969 1.0016 3000
+I(scale(day)^2)-BTBW -0.0602 0.0790 -0.2161 -0.0604  0.0939 1.0008 3000
+I(scale(day)^2)-BTNW -0.0607 0.0782 -0.2152 -0.0589  0.0898 1.0005 3000
+I(scale(day)^2)-CAWA -0.0370 0.1805 -0.3859 -0.0345  0.3167 1.0017 3000
+I(scale(day)^2)-MAWA  0.0117 0.1364 -0.2529  0.0106  0.2781 1.0032 3000
+I(scale(day)^2)-NAWA -0.1329 0.1872 -0.5185 -0.1258  0.2175 1.0003 2725
+I(scale(day)^2)-OVEN  0.0142 0.0876 -0.1595  0.0149  0.1816 1.0001 3000
+I(scale(day)^2)-REVI  0.0367 0.0773 -0.1121  0.0356  0.1863 1.0015 3000
+scale(tod)-BAWW      -0.1786 0.1369 -0.4578 -0.1749  0.0761 1.0024 3000
+scale(tod)-BHVI      -0.0512 0.1137 -0.2722 -0.0510  0.1713 1.0015 3000
+scale(tod)-BLBW       0.0580 0.0656 -0.0663  0.0585  0.1843 1.0032 3000
+scale(tod)-BLPW       0.1070 0.1481 -0.1849  0.1033  0.4074 0.9999 3000
+scale(tod)-BTBW      -0.0348 0.0665 -0.1651 -0.0337  0.0987 0.9999 3000
+scale(tod)-BTNW       0.0355 0.0631 -0.0900  0.0377  0.1557 1.0032 3000
+scale(tod)-CAWA      -0.2139 0.1627 -0.5494 -0.2067  0.0930 1.0030 3000
+scale(tod)-MAWA       0.0203 0.1125 -0.2088  0.0206  0.2316 1.0006 3000
+scale(tod)-NAWA      -0.0694 0.1590 -0.3840 -0.0686  0.2340 1.0007 3000
+scale(tod)-OVEN      -0.0460 0.0735 -0.1900 -0.0453  0.0932 1.0025 3000
+scale(tod)-REVI      -0.0786 0.0650 -0.2082 -0.0781  0.0501 1.0044 2784
 
 -----------------------------
     Data source 2
 -----------------------------
 Detection (logit scale): 
                         Mean     SD    2.5%     50%   97.5%   Rhat  ESS
-(Intercept)-BAWW     -1.5641 0.7135 -2.7018 -1.6510 -0.0688 1.2212  117
-(Intercept)-BHVI     -2.1734 0.3760 -2.9180 -2.1684 -1.4087 1.0080  278
-(Intercept)-BLBW     -2.0963 0.3224 -2.7735 -2.0846 -1.4971 1.0013 2494
-(Intercept)-BTBW     -1.7899 0.2757 -2.3437 -1.7827 -1.2630 1.0024 3000
-(Intercept)-BTNW     -1.0067 0.2445 -1.4822 -1.0113 -0.5166 1.0001 3000
-(Intercept)-CAWA     -1.3541 0.6563 -2.6707 -1.3551 -0.0645 1.0027 2125
-(Intercept)-MAWA     -1.3881 0.5658 -2.4678 -1.3813 -0.2236 1.0061 3377
-(Intercept)-OVEN     -0.7609 0.2032 -1.1574 -0.7646 -0.3642 1.0001 3000
-(Intercept)-REVI     -0.8593 0.2056 -1.2656 -0.8576 -0.4521 1.0030 2948
-scale(day)-BAWW      -0.2955 0.3398 -1.0439 -0.2726  0.3144 1.0088 1649
-scale(day)-BHVI       0.1869 0.2910 -0.3758  0.1745  0.7867 1.0017 2560
-scale(day)-BLBW       0.5763 0.2723  0.0926  0.5566  1.1596 1.0022 2612
-scale(day)-BTBW      -0.1400 0.2419 -0.6247 -0.1395  0.3250 1.0014 2963
-scale(day)-BTNW       0.0803 0.1764 -0.2643  0.0820  0.4311 1.0006 2408
-scale(day)-CAWA       0.1894 0.4262 -0.6027  0.1768  1.1219 1.0002 3000
-scale(day)-MAWA      -0.3160 0.4563 -1.3062 -0.2854  0.4769 1.0003 2670
-scale(day)-OVEN       0.1437 0.1712 -0.1829  0.1467  0.4845 1.0004 3000
-scale(day)-REVI      -0.0279 0.1588 -0.3446 -0.0219  0.2724 1.0003 2798
-I(scale(day)^2)-BAWW -0.0369 0.2514 -0.4865 -0.0513  0.5168 1.0295  932
-I(scale(day)^2)-BHVI -0.4401 0.3101 -1.1585 -0.4092  0.0851 1.0105 2202
-I(scale(day)^2)-BLBW  0.0247 0.2166 -0.4128  0.0299  0.4409 1.0043 3803
-I(scale(day)^2)-BTBW -0.2148 0.2091 -0.6614 -0.2047  0.1743 1.0037 3000
-I(scale(day)^2)-BTNW  0.1864 0.1641 -0.1305  0.1821  0.5199 1.0008 3000
-I(scale(day)^2)-CAWA  0.0258 0.3305 -0.5929  0.0154  0.7230 1.0025 2894
-I(scale(day)^2)-MAWA  0.0206 0.2713 -0.5144  0.0196  0.5708 1.0008 3000
-I(scale(day)^2)-OVEN -0.0939 0.1648 -0.4279 -0.0870  0.2162 1.0011 3000
-I(scale(day)^2)-REVI  0.0101 0.1515 -0.2922  0.0128  0.3010 1.0017 2581
-scale(tod)-BAWW      -0.1181 0.2523 -0.6369 -0.1102  0.3497 1.0064 2819
-scale(tod)-BHVI      -0.1421 0.2195 -0.5920 -0.1305  0.2532 1.0044 2340
-scale(tod)-BLBW      -0.0114 0.1870 -0.3735 -0.0129  0.3622 1.0040 2998
-scale(tod)-BTBW       0.1264 0.1998 -0.2499  0.1240  0.5260 1.0064 3000
-scale(tod)-BTNW       0.0595 0.1662 -0.2596  0.0594  0.3970 1.0012 3000
-scale(tod)-CAWA      -0.0136 0.2934 -0.6306 -0.0091  0.5481 1.0001 3000
-scale(tod)-MAWA       0.0652 0.3053 -0.5425  0.0592  0.7172 1.0027 3000
-scale(tod)-OVEN       0.0852 0.1442 -0.1868  0.0840  0.3710 1.0012 3000
-scale(tod)-REVI       0.0662 0.1447 -0.2163  0.0657  0.3395 1.0005 3000</code></pre>
-<p>From the summary output, we can see that most of the model parameters have converged. We can compare this model to a simpler model that assumes only a linear effect of elevation, and then compare the two models using WAIC with the <code><a href="../reference/waicOcc.html">waicOcc()</a></code> function.</p>
+(Intercept)-BAWW     -1.3422 0.7565 -2.6152 -1.4268  0.3398 1.0405  108
+(Intercept)-BHVI     -2.1563 0.3995 -2.9256 -2.1575 -1.3695 1.0824  388
+(Intercept)-BLBW     -2.0784 0.3248 -2.7448 -2.0587 -1.4949 1.0030 2416
+(Intercept)-BTBW     -1.7732 0.2859 -2.3380 -1.7654 -1.2359 1.0000 2839
+(Intercept)-BTNW     -1.0066 0.2474 -1.4946 -1.0097 -0.5154 1.0012 3445
+(Intercept)-CAWA     -1.3018 0.6855 -2.6172 -1.3062  0.0931 1.0064 1425
+(Intercept)-MAWA     -1.3798 0.5662 -2.4973 -1.3848 -0.2319 1.0014 3000
+(Intercept)-OVEN     -0.7468 0.2026 -1.1468 -0.7449 -0.3612 1.0007 2834
+(Intercept)-REVI     -0.8568 0.2032 -1.2533 -0.8549 -0.4725 0.9997 3000
+scale(day)-BAWW      -0.2881 0.3448 -1.0203 -0.2640  0.3384 1.0066 2676
+scale(day)-BHVI       0.1894 0.3037 -0.3647  0.1714  0.8397 1.0020 2511
+scale(day)-BLBW       0.5813 0.2838  0.0889  0.5571  1.1955 1.0019 2711
+scale(day)-BTBW      -0.1391 0.2434 -0.6376 -0.1369  0.3291 1.0009 2533
+scale(day)-BTNW       0.0763 0.1744 -0.2687  0.0763  0.4203 1.0016 3000
+scale(day)-CAWA       0.1999 0.4387 -0.6459  0.1899  1.1210 1.0020 2847
+scale(day)-MAWA      -0.3311 0.4560 -1.3440 -0.2963  0.4561 1.0010 2568
+scale(day)-OVEN       0.1403 0.1747 -0.1946  0.1356  0.4859 1.0008 3000
+scale(day)-REVI      -0.0334 0.1595 -0.3506 -0.0337  0.2810 1.0026 3000
+I(scale(day)^2)-BAWW -0.0217 0.2623 -0.5043 -0.0354  0.5468 1.0122 1241
+I(scale(day)^2)-BHVI -0.4430 0.3248 -1.1467 -0.4100  0.0884 1.0081 1961
+I(scale(day)^2)-BLBW  0.0178 0.2208 -0.4245  0.0233  0.4400 1.0030 3000
+I(scale(day)^2)-BTBW -0.2233 0.2098 -0.6723 -0.2056  0.1621 1.0009 3000
+I(scale(day)^2)-BTNW  0.1826 0.1648 -0.1305  0.1785  0.5172 1.0036 3553
+I(scale(day)^2)-CAWA  0.0126 0.3392 -0.6201 -0.0021  0.7203 1.0047 2777
+I(scale(day)^2)-MAWA  0.0129 0.2751 -0.5043  0.0050  0.5714 1.0034 3000
+I(scale(day)^2)-OVEN -0.1028 0.1593 -0.4218 -0.0975  0.2051 1.0022 3000
+I(scale(day)^2)-REVI  0.0075 0.1478 -0.2905  0.0082  0.2944 1.0005 3422
+scale(tod)-BAWW      -0.1095 0.2622 -0.6350 -0.1060  0.3984 1.0022 2714
+scale(tod)-BHVI      -0.1328 0.2293 -0.6057 -0.1283  0.2954 1.0012 2809
+scale(tod)-BLBW      -0.0017 0.1906 -0.3788 -0.0004  0.3605 1.0033 3203
+scale(tod)-BTBW       0.1257 0.1991 -0.2570  0.1265  0.5349 1.0018 3000
+scale(tod)-BTNW       0.0632 0.1666 -0.2647  0.0645  0.3971 1.0010 3000
+scale(tod)-CAWA      -0.0107 0.2896 -0.5933 -0.0025  0.5442 1.0040 3000
+scale(tod)-MAWA       0.0706 0.3102 -0.5367  0.0662  0.7071 1.0098 3000
+scale(tod)-OVEN       0.0840 0.1502 -0.2052  0.0834  0.3792 1.0014 3044
+scale(tod)-REVI       0.0678 0.1452 -0.2253  0.0668  0.3459 0.9999 2404</code></pre>
+<p>From the summary output, we can see that most of the model parameters
+have converged. We can compare this model to a simpler model that
+assumes only a linear effect of elevation, and then compare the two
+models using WAIC with the <code><a href="../reference/waicOcc.html">waicOcc()</a></code> function.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Approx. run time: 5.5 minutes</span></span>
+<code class="sourceCode R"><span><span class="co"># Approx. run time: 3 minutes</span></span>
 <span><span class="va">out.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/intMsPGOcc.html">intMsPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">Elevation</span><span class="op">)</span>,</span>
 <span>                    det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>hbef <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span>,</span>
 <span>                       neon <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">day</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">tod</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -702,59 +901,83 @@ Sampled: 20000 of 20000, 100.00%</code></pre>
 <code class="sourceCode R"><span><span class="co"># Model selection using WAIC</span></span>
 <span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>       elpd          pD        WAIC 
--5120.86252    84.60809 10410.94123 </code></pre>
+-5121.01590    84.07401 10410.17981 </code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.2</span><span class="op">)</span></span></code></pre></div>
-<pre><code>      elpd         pD       WAIC 
--5153.8926    78.7532 10465.2915 </code></pre>
-<p>We see the model with both a linear and quadratic effect of elevation is preferred. We can also do prediction using the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function to generate species distribution maps across a region of interest (or generate estimates of community-level metrics), which follows exactly the format used for single data-source multi-species occupancy models.</p>
-<p>As of <code>v0.7.0</code>, we can also calculate WAIC individually for each species using the <code>by.sp</code> argument</p>
+<pre><code>       elpd          pD        WAIC 
+-5154.02429    78.28919 10464.62696 </code></pre>
+<p>We see the model with both a linear and quadratic effect of elevation
+is preferred. We can also do prediction using the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>
+function to generate species distribution maps across a region of
+interest (or generate estimates of community-level metrics), which
+follows exactly the format used for single data-source multi-species
+occupancy models.</p>
+<p>As of <code>v0.7.0</code>, we can also calculate WAIC individually
+for each species using the <code>by.sp</code> argument</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.1</span>, by.sp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>        elpd       pD      WAIC
-1  -228.4953 9.054605  475.0998
-2  -290.3288 6.519948  593.6975
-3  -767.1563 9.842579 1553.9978
-4  -139.3608 4.992896  288.7075
-5  -764.0241 9.359029 1546.7663
-6  -842.9293 9.120359 1704.0993
-7  -125.6628 7.595562  266.5167
-8  -289.2963 6.687321  591.9673
-9  -106.6829 5.202496  223.7707
-10 -751.3159 7.583553 1517.7989
-11 -815.6100 8.649747 1648.5195</code></pre>
+1  -228.4167 8.998136  474.8296
+2  -290.3455 6.682839  594.0567
+3  -767.1750 9.762715 1553.8755
+4  -139.4260 4.896930  288.6459
+5  -764.0191 9.254624 1546.5475
+6  -842.9051 9.198185 1704.2065
+7  -125.6505 7.631983  266.5650
+8  -289.2931 6.661293  591.9088
+9  -106.6762 5.372210  224.0968
+10 -751.3157 7.632899 1517.8972
+11 -815.5886 8.661218 1648.4997</code></pre>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/waicOcc.html">waicOcc</a></span><span class="op">(</span><span class="va">out.2</span>, by.sp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>        elpd        pD      WAIC
-1  -230.4410  8.444234  477.7704
-2  -290.7486  6.177394  593.8519
-3  -771.4304 10.783319 1564.4274
-4  -141.0661  5.120823  292.3739
-5  -778.8890  7.972345 1573.7226
-6  -842.9124  8.312117 1702.4491
-7  -126.5126  5.587553  264.2003
-8  -296.3344  5.955685  604.5801
-9  -107.5437  4.684388  224.4562
-10 -752.5008  7.468169 1519.9379
-11 -815.5137  8.247173 1647.5217</code></pre>
+1  -230.7406  8.463095  478.4074
+2  -290.6858  5.910009  593.1917
+3  -771.3186 11.275470 1565.1882
+4  -141.0589  5.132568  292.3829
+5  -778.8126  8.088996 1573.8033
+6  -842.8739  8.141197 1702.0302
+7  -126.4658  5.650348  264.2323
+8  -296.3188  6.015551  604.6688
+9  -107.5462  4.680241  224.4530
+10 -752.5325  7.548766 1520.1626
+11 -815.5069  8.188468 1647.3908</code></pre>
 </div>
 <div class="section level3">
 <h3 id="active-development">Active development<a class="anchor" aria-label="anchor" href="#active-development"></a>
 </h3>
-<p>The functionality for integrated multi-species occupancy models in <code>spOccupancy</code> is in active development, and currently some functionality that is common to all other <code>spOccupancy</code> model fitting functions is not available for <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> (i.e., posterior predictive checks, cross-validation, random effects on detection probability). I am actively working on incorporating these extensions into the model. Additionally, there will of course be spatially-explicit versions of these models available at some point in the future as well, with options to accommodate species correlations using the factor modeling approach detailed in <span class="citation">Doser, Finley, and Banerjee (2023)</span>.</p>
+<p>The functionality for integrated multi-species occupancy models in
+<code>spOccupancy</code> is in active development, and currently some
+functionality that is common to all other <code>spOccupancy</code> model
+fitting functions is not available for <code><a href="../reference/intMsPGOcc.html">intMsPGOcc()</a></code> (i.e.,
+posterior predictive checks, cross-validation, random effects on
+detection probability). I am actively working on incorporating these
+extensions into the model. Additionally, there will of course be
+spatially-explicit versions of these models available at some point in
+the future as well, with options to accommodate species correlations
+using the factor modeling approach detailed in <span class="citation">Doser, Finley, and Banerjee (2023)</span>.</p>
 </div>
 <div class="section level3">
 <h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
-<div id="refs" class="references hanging-indent">
-<div id="ref-doser2023joint">
-<p>Doser, Jeffrey W, Andrew O Finley, and Sudipto Banerjee. 2023. “Joint Species Distribution Models with Imperfect Detection for High-Dimensional Spatial Data.” <em>Ecology</em> 104 (9): e4137.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-doser2023joint" class="csl-entry">
+Doser, Jeffrey W, Andrew O Finley, and Sudipto Banerjee. 2023.
+<span>“Joint Species Distribution Models with Imperfect Detection for
+High-Dimensional Spatial Data.”</span> <em>Ecology</em> 104 (9): e4137.
 </div>
-<div id="ref-doser2022integrated">
-<p>Doser, Jeffrey W, Wendy Leuenberger, T Scott Sillett, Michael T Hallworth, and Elise F Zipkin. 2022. “Integrated Community Occupancy Models: A Framework to Assess Occurrence and Biodiversity Dynamics Using Multiple Data Sources.” <em>Methods in Ecology and Evolution</em>.</p>
+<div id="ref-doser2022integrated" class="csl-entry">
+Doser, Jeffrey W, Wendy Leuenberger, T Scott Sillett, Michael T
+Hallworth, and Elise F Zipkin. 2022. <span>“Integrated Community
+Occupancy Models: A Framework to Assess Occurrence and Biodiversity
+Dynamics Using Multiple Data Sources.”</span> <em>Methods in Ecology and
+Evolution</em>.
 </div>
-<div id="ref-miller2019recent">
-<p>Miller, David AW, Krishna Pacifici, Jamie S Sanderlin, and Brian J Reich. 2019. “The Recent Past and Promising Future for Data Integration Methods to Estimate Species’ Distributions.” <em>Methods in Ecology and Evolution</em> 10 (1): 22–37.</p>
+<div id="ref-miller2019recent" class="csl-entry">
+Miller, David AW, Krishna Pacifici, Jamie S Sanderlin, and Brian J
+Reich. 2019. <span>“The Recent Past and Promising Future for Data
+Integration Methods to Estimate Species’ Distributions.”</span>
+<em>Methods in Ecology and Evolution</em> 10 (1): 22–37.
 </div>
 </div>
 </div>

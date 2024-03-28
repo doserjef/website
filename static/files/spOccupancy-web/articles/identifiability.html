@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Exploring model identifiability with a stress-testing framework">
 <meta property="og:description" content="Learn how to investigate identifiability in spOccupancy">
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,10 +72,12 @@
 
 
 
-<script src="identifiability_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Exploring model identifiability with a stress-testing framework</h1>
-                        <h4 data-toc-skip class="author">Sara Stoudt</h4>
+                        <h4 data-toc-skip class="author">Sara
+Stoudt</h4>
             
             <h4 data-toc-skip class="date">October 26, 2023</h4>
       
@@ -88,13 +90,35 @@
 <div class="section level3">
 <h3 id="overview-of-identifiability-and-stress-testing-framework">Overview of identifiability and stress-testing framework<a class="anchor" aria-label="anchor" href="#overview-of-identifiability-and-stress-testing-framework"></a>
 </h3>
-<p>We rarely believe that our model is a perfect representation of a natural phenomenon; nature is complicated after all. Because of this, we need to make sure that our model is robust to mis-specification. Namely, we want to make sure that our ability to uniquely identify parameters of interest does not just come from a convenient choice of model structure. Formally, this is a question of identifiability. To explore whether our scenario has weak or strong identifiability we can go through the following steps:</p>
+<p>We rarely believe that our model is a perfect representation of a
+natural phenomenon; nature is complicated after all. Because of this, we
+need to make sure that our model is robust to mis-specification. Namely,
+we want to make sure that our ability to uniquely identify parameters of
+interest does not just come from a convenient choice of model structure.
+Formally, this is a question of identifiability. To explore whether our
+scenario has weak or strong identifiability we can go through the
+following steps:</p>
 <ol style="list-style-type: decimal">
-<li>Simulate data from a data-generating process that does not match the model fitting process.</li>
-<li>Fit mis-specified models, allowing for more flexibility (within the mis-specified model family) using a spline basis of covariates in the model fit.</li>
-<li>Explore performance across a variety of sample sizes looking for a break down in estimation.</li>
+<li>Simulate data from a data-generating process that does not match the
+model fitting process.</li>
+<li>Fit mis-specified models, allowing for more flexibility (within the
+mis-specified model family) using a spline basis of covariates in the
+model fit.</li>
+<li>Explore performance across a variety of sample sizes looking for a
+break down in estimation.</li>
 </ol>
-<p>For more information on this stress-testing framework, along with a more thorough discussion on the different types of identifiability in statistical models, see <span class="citation">Stoudt, de Valpine, and Fithian (2023)</span>. This type of framework is particularly relevant for assessing identifiability in occupancy models with limited data, such as when trying to separately estimate occupancy and detection in so-called “single-visit” models, where there is only one visit to each site in the data set <span class="citation">(Lele, Moreno, and Bayne 2012)</span>. Here we provide a simple example of a stress testing framework in which we compare identifiability of occurrence probability in single-visit occupancy models compared to double-visit occupancy models (where each site is visited two times).</p>
+<p>For more information on this stress-testing framework, along with a
+more thorough discussion on the different types of identifiability in
+statistical models, see <span class="citation">Stoudt, de Valpine, and
+Fithian (2023)</span>. This type of framework is particularly relevant
+for assessing identifiability in occupancy models with limited data,
+such as when trying to separately estimate occupancy and detection in
+so-called “single-visit” models, where there is only one visit to each
+site in the data set <span class="citation">(Lele, Moreno, and Bayne
+2012)</span>. Here we provide a simple example of a stress testing
+framework in which we compare identifiability of occurrence probability
+in single-visit occupancy models compared to double-visit occupancy
+models (where each site is visited two times).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span> <span class="co"># For creating spline basis of covariates</span></span></code></pre></div>
@@ -102,13 +126,30 @@
 <div class="section level3">
 <h3 id="simulate-data">Simulate data<a class="anchor" aria-label="anchor" href="#simulate-data"></a>
 </h3>
-<p>To diagnose a weak form of identifiability, we need to see how a model performs on data from a data-generating process that does not match the model. We will want to generate these data under a variety of sample sizes including sizes larger than we expect to see in practice.</p>
-<p>An updated version of the <code>simTOcc</code> function introduced in <a href="https://www.jeffdoser.com/files/spoccupancy-web/news/index.html" class="external-link">v0.6.0</a> allows us to simulate data from two different classes of data-generating processes:</p>
+<p>To diagnose a weak form of identifiability, we need to see how a
+model performs on data from a data-generating process that does not
+match the model. We will want to generate these data under a variety of
+sample sizes including sizes larger than we expect to see in
+practice.</p>
+<p>An updated version of the <code>simTOcc</code> function introduced in
+<a href="https://www.jeffdoser.com/files/spoccupancy-web/news/index.html" class="external-link">v0.6.0</a>
+allows us to simulate data from two different classes of data-generating
+processes:</p>
 <ul>
-<li>a scaled logistic where occurrence and detection probabilities still are related to covariates via a logit link but the occurrence probabilities level off at a value less than one, and</li>
-<li>a linear specification where occurrence and detection probabilities are linearly related to covariates (while the values respect the probability range within the range of covariate values observed).</li>
+<li>a scaled logistic where occurrence and detection probabilities still
+are related to covariates via a logit link but the occurrence
+probabilities level off at a value less than one, and</li>
+<li>a linear specification where occurrence and detection probabilities
+are linearly related to covariates (while the values respect the
+probability range within the range of covariate values observed).</li>
 </ul>
-<p>In this vignette, we will show the most extreme mis-specification (scaled logistic with <code>mis.spec.type = 'scale'</code> where the <code>scale.param</code> argument represents the scaling parameter for the occurrence probabilities) in the largest data case. Here the choice of 0.8 means that the maximum occurrence probability is 0.8 rather than 1. See <span class="citation">Stoudt, de Valpine, and Fithian (2023)</span> for more details on this form of mis-specification.</p>
+<p>In this vignette, we will show the most extreme mis-specification
+(scaled logistic with <code>mis.spec.type = 'scale'</code> where the
+<code>scale.param</code> argument represents the scaling parameter for
+the occurrence probabilities) in the largest data case. Here the choice
+of 0.8 means that the maximum occurrence probability is 0.8 rather than
+1. See <span class="citation">Stoudt, de Valpine, and Fithian
+(2023)</span> for more details on this form of mis-specification.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Number of simulated data sets for each scenario</span></span>
 <span><span class="va">n.sims</span> <span class="op">&lt;-</span> <span class="fl">25</span></span>
@@ -195,12 +236,29 @@
 <span>    trend <span class="op">=</span> <span class="va">trend</span>, scale.param <span class="op">=</span> <span class="fl">0.5</span>, mis.spec.type <span class="op">=</span> <span class="st">"scale"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Now we have 25 small, medium, and large datasets for both single and double visit cases. The typical <code>spOccupancy</code> model fit will be mis-specified for data that come from this data-generating process.</p>
+<p>Now we have 25 small, medium, and large datasets for both single and
+double visit cases. The typical <code>spOccupancy</code> model fit will
+be mis-specified for data that come from this data-generating
+process.</p>
 </div>
 <div class="section level3">
 <h3 id="create-basis-splines-for-a-flexible-model-fit">Create basis splines for a flexible model fit<a class="anchor" aria-label="anchor" href="#create-basis-splines-for-a-flexible-model-fit"></a>
 </h3>
-<p>Let’s fit a flexible model to one of the large data scenarios. This will show that even with an extreme <em>amount</em> of data, a lack of strong identifiability cannot be overcome without <em>richer</em> data (a double visit at each site). First we need to create a spline basis from the covariates provided by <code>simTOcc</code>, and then we need to reformat the data so that it is appropriate for the required inputs of the <code>PGOcc</code> function. The spline basis helps the model be more flexible. We want to approximate a nonparametric relationship between the response and the covariate to give the mis-specified model more freedom to recover the truth as compared to the specific parametric model. If a flexible model with enough data can recover the truth, that provides evidence that the model is fit for purpose even when formally mis-specified. We can trust its estimates are not chosen by fiat (determined by an arbitrary choice of model) but rather reflect some property of the underlying ecology.</p>
+<p>Let’s fit a flexible model to one of the large data scenarios. This
+will show that even with an extreme <em>amount</em> of data, a lack of
+strong identifiability cannot be overcome without <em>richer</em> data
+(a double visit at each site). First we need to create a spline basis
+from the covariates provided by <code>simTOcc</code>, and then we need
+to reformat the data so that it is appropriate for the required inputs
+of the <code>PGOcc</code> function. The spline basis helps the model be
+more flexible. We want to approximate a nonparametric relationship
+between the response and the covariate to give the mis-specified model
+more freedom to recover the truth as compared to the specific parametric
+model. If a flexible model with enough data can recover the truth, that
+provides evidence that the model is fit for purpose even when formally
+mis-specified. We can trust its estimates are not chosen by fiat
+(determined by an arbitrary choice of model) but rather reflect some
+property of the underlying ecology.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Work with large, single-visit data for now.</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sv_dat_large</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -261,7 +319,10 @@
   ..$ p8 : num [1:20000] 0.46134 0.15022 0.48224 0.00316 0.47024 ...
   ..$ p9 : num [1:20000] 0.30266 0.00163 0.15954 0 0.1279 ...
   ..$ p10: num [1:20000] 0.04948 0 0.01084 0 0.00654 ...</code></pre>
-<p>We’re now set to run models using the <code><a href="../reference/PGOcc.html">PGOcc()</a></code> function in <code>spOccupancy</code>. We set up the necessary arguments for the function below, and then run the model for the first simulated data set.</p>
+<p>We’re now set to run models using the <code><a href="../reference/PGOcc.html">PGOcc()</a></code> function
+in <code>spOccupancy</code>. We set up the necessary arguments for the
+function below, and then run the model for the first simulated data
+set.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">occ.formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"~"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"z"</span>, <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">numKnots</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">""</span>, collapse <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">det.formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"~"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"p"</span>, <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">numKnots</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">""</span>, collapse <span class="op">=</span> <span class="st">"+"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -300,7 +361,8 @@
 <span><span class="va">occur_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">out_sv</span><span class="op">$</span><span class="va">beta.samples</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></span>
 <span><span class="co"># Detection coefficient estimates</span></span>
 <span><span class="va">detect_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">out_sv</span><span class="op">$</span><span class="va">alpha.samples</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></span></code></pre></div>
-<p>Below we do the same thing, but now for the double visit scenario.</p>
+<p>Below we do the same thing, but now for the double visit
+scenario.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Work with large, double-visit data</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dv_dat_large</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -374,7 +436,16 @@
 <div class="section level3">
 <h3 id="examine-results">Examine results<a class="anchor" aria-label="anchor" href="#examine-results"></a>
 </h3>
-<p>Now, because we know the truth, we can display the true values against the predicted values. We expect the single visit case to <em>not</em> estimate the true values because the data-generating process does not match the assumed modeling framework and this scenario is only weakly (parametrically) identifiable <span class="citation">(Stoudt, de Valpine, and Fithian 2023)</span>. However, we expect the double visit case to estimate something close to the truth even though it is still mis-specified. This case is more strongly identifiable and hence should be robust to mis-specification. In the plots shown below, the black line is the true relationship and the red lines are our estimates.</p>
+<p>Now, because we know the truth, we can display the true values
+against the predicted values. We expect the single visit case to
+<em>not</em> estimate the true values because the data-generating
+process does not match the assumed modeling framework and this scenario
+is only weakly (parametrically) identifiable <span class="citation">(Stoudt, de Valpine, and Fithian 2023)</span>. However,
+we expect the double visit case to estimate something close to the truth
+even though it is still mis-specified. This case is more strongly
+identifiable and hence should be robust to mis-specification. In the
+plots shown below, the black line is the true relationship and the red
+lines are our estimates.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sv_dat_large</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">zData</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span></span>
@@ -460,7 +531,11 @@
 <span>  side <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  line <span class="op">=</span> <span class="fl">2.5</span>, cex <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="identifiability_files/figure-html/unnamed-chunk-11-1.png" width="768"> Note that we underestimate occurrence and overestimate detection. The product of the two is identifiable, but teasing them apart requires two visits. We can see this by generating the same two figures for the double-visit simulation.</p>
+<p><img src="identifiability_files/figure-html/unnamed-chunk-11-1.png" width="768">
+Note that we underestimate occurrence and overestimate detection. The
+product of the two is identifiable, but teasing them apart requires two
+visits. We can see this by generating the same two figures for the
+double-visit simulation.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Occurrence probability, double-visit</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dv_dat_large</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -549,12 +624,32 @@
 <span>  line <span class="op">=</span> <span class="fl">2.5</span>, cex <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="identifiability_files/figure-html/unnamed-chunk-13-1.png" width="768"></p>
-<p>Even though this model is formally mis-specified, we can see that the richer data (the extra visit) allows us to still estimate occurrence and detection probabilities well. This model is robust to this form of of model mis-specification. You may be wondering why the estimated curves in the double-visit simulation deviate a bit from the true curve at the extreme values of the covariate. This is related to how the covariates were simulated. In particular, the simulation functions in <code>spOccupancy</code> generate covariates as standard normal random variables, which means values on the extremes will be very rare. In these portions of the curve, the spline models are only informed by a small number of data points, and hence any sort of sampling variability that can arise in a single simulated data set can result in some deviations from the true curve. When performing multiple simulations, we should see that any given simulation may show some slight variation at the boundaries of the covariate space, but that on average across simulations occupancy/detection probability are estimated close to the true values. If we simulate the covariates in a different manner, e.g., using a uniform distribution, this pattern disappears. We leave that to you to explore on your own time if it is of interest.</p>
+<p>Even though this model is formally mis-specified, we can see that the
+richer data (the extra visit) allows us to still estimate occurrence and
+detection probabilities well. This model is robust to this form of of
+model mis-specification. You may be wondering why the estimated curves
+in the double-visit simulation deviate a bit from the true curve at the
+extreme values of the covariate. This is related to how the covariates
+were simulated. In particular, the simulation functions in
+<code>spOccupancy</code> generate covariates as standard normal random
+variables, which means values on the extremes will be very rare. In
+these portions of the curve, the spline models are only informed by a
+small number of data points, and hence any sort of sampling variability
+that can arise in a single simulated data set can result in some
+deviations from the true curve. When performing multiple simulations, we
+should see that any given simulation may show some slight variation at
+the boundaries of the covariate space, but that on average across
+simulations occupancy/detection probability are estimated close to the
+true values. If we simulate the covariates in a different manner, e.g.,
+using a uniform distribution, this pattern disappears. We leave that to
+you to explore on your own time if it is of interest.</p>
 </div>
 <div class="section level3">
 <h3 id="multiple-scenarios">Multiple scenarios<a class="anchor" aria-label="anchor" href="#multiple-scenarios"></a>
 </h3>
-<p>To ensure that this is not a fluke, we can look across multiple scenarios. This will take a bit of time to run for larger datasets, so we’ll just show the code and results.</p>
+<p>To ensure that this is not a fluke, we can look across multiple
+scenarios. This will take a bit of time to run for larger datasets, so
+we’ll just show the code and results.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">occur_est</span> <span class="op">&lt;-</span> <span class="va">detect_est</span> <span class="op">&lt;-</span> <span class="va">X.sp_SV</span> <span class="op">&lt;-</span> <span class="va">X.p.sp_SV</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">sv_dat_large</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Prep data and run the models --------------------------------------------</span></span>
@@ -764,7 +859,12 @@
 <span>  line <span class="op">=</span> <span class="fl">2.5</span>, cex <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="identifiability_files/figure-html/unnamed-chunk-20-1.png" width="768"></p>
-<p>We can see that in the single visit case estimates of maximum occurrence and detection probabilities cover almost the whole range between 0 and 1. On average, occurrence probability is underestimated (i.e., majority of red lines fall below the black line), while detection probability is overestimated (i.e., majority of red lines fall above the black line).</p>
+<p>We can see that in the single visit case estimates of maximum
+occurrence and detection probabilities cover almost the whole range
+between 0 and 1. On average, occurrence probability is underestimated
+(i.e., majority of red lines fall below the black line), while detection
+probability is overestimated (i.e., majority of red lines fall above the
+black line).</p>
 <p>Next we look at results from the double visit scenario.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">occur_estDV</span> <span class="op">&lt;-</span> <span class="va">detect_estDV</span> <span class="op">&lt;-</span> <span class="va">X.sp</span> <span class="op">&lt;-</span> <span class="va">X.p.sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dv_dat_large</span><span class="op">)</span><span class="op">)</span></span>
@@ -975,12 +1075,22 @@
 <span>  line <span class="op">=</span> <span class="fl">2.5</span>, cex <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="identifiability_files/figure-html/unnamed-chunk-27-1.png" width="768"></p>
-<p>In contrast, with double visit data, there is a much narrower range, and the shape of the fit matches the truth much more clearly. As we mentioned in the single-visit case, we see “edge effects” as a result of simulating covariates with a standard normal distribution. We expect that as we increase the sample size further to an even more extreme scale, we would have enough instances of uncommon values of covariates at the tails to estimate this part of the curve more robustly.</p>
+<p>In contrast, with double visit data, there is a much narrower range,
+and the shape of the fit matches the truth much more clearly. As we
+mentioned in the single-visit case, we see “edge effects” as a result of
+simulating covariates with a standard normal distribution. We expect
+that as we increase the sample size further to an even more extreme
+scale, we would have enough instances of uncommon values of covariates
+at the tails to estimate this part of the curve more robustly.</p>
 </div>
 <div class="section level3">
 <h3 id="streamlining-this-workflow">Streamlining this workflow<a class="anchor" aria-label="anchor" href="#streamlining-this-workflow"></a>
 </h3>
-<p>This seems like a lot of pre-processing code. Is there an easier way to investigate weak identifiability? Here are some helper functions for pre-processing the data for input into a <code>spOcc</code> model fitting procedure and for plotting the results. The plot functions can be further adapted for different number of knots.</p>
+<p>This seems like a lot of pre-processing code. Is there an easier way
+to investigate weak identifiability? Here are some helper functions for
+pre-processing the data for input into a <code>spOcc</code> model
+fitting procedure and for plotting the results. The plot functions can
+be further adapted for different number of knots.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.jeffdoser.com/files/misc/id-vignette/helper-fns.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -1019,7 +1129,10 @@
 <span></span>
 <span><span class="va">occur_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">out_sv</span><span class="op">$</span><span class="va">beta.samples</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span> <span class="co">## occurrence coeffs</span></span>
 <span><span class="va">detect_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">out_sv</span><span class="op">$</span><span class="va">alpha.samples</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span> <span class="co">## detection coeffs</span></span></code></pre></div>
-<p>Below we load in the results from the double visit simulations, which you can download yourself if you don’t want to run the full code (which can take a couple of hours). Note the single-visit results can also be downloaded by chaing the dv/DV to sv/SV in the file names below.</p>
+<p>Below we load in the results from the double visit simulations, which
+you can download yourself if you don’t want to run the full code (which
+can take a couple of hours). Note the single-visit results can also be
+downloaded by chaing the dv/DV to sv/SV in the file names below.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.jeffdoser.com/files/misc/id-vignette/dv_dat_largeScaleEx.RData"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.jeffdoser.com/files/misc/id-vignette/occurDV_largeScaleEx.RData"</span><span class="op">)</span><span class="op">)</span></span>
@@ -1037,12 +1150,17 @@
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references hanging-indent">
-<div id="ref-LeleEtAl12">
-<p>Lele, S. R., M. Moreno, and E. Bayne. 2012. “Dealing with Detection Error in Site Occupancy Surveys: What Can We Do with a Single Survey?” <em>Journal of Plant Ecology</em> 5 (1): 22–31. <a href="https://doi.org/10.1093/jpe/rtr042" class="external-link">https://doi.org/10.1093/jpe/rtr042</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-LeleEtAl12" class="csl-entry">
+Lele, S. R., M. Moreno, and E. Bayne. 2012. <span>“Dealing with
+Detection Error in Site Occupancy Surveys: What Can We Do with a Single
+Survey?”</span> <em>Journal of Plant Ecology</em> 5 (1): 22–31. <a href="https://doi.org/10.1093/jpe/rtr042" class="external-link">https://doi.org/10.1093/jpe/rtr042</a>.
 </div>
-<div id="ref-stoudt2023">
-<p>Stoudt, Sara, Perry de Valpine, and William Fithian. 2023. “Non-parametric identifiability in species distribution and abundance models: why it matters and how to diagnose a lack of it using simulation.” <em>Journal of Statistical Theory and Practice</em> 17 (39). <a href="https://link.springer.com/article/10.1007/s42519-023-00336-5" class="external-link">https://link.springer.com/article/10.1007/s42519-023-00336-5</a>.</p>
+<div id="ref-stoudt2023" class="csl-entry">
+Stoudt, Sara, Perry de Valpine, and William Fithian. 2023. <span>“<span class="nocase">Non-parametric identifiability in species distribution
+and abundance models: why it matters and how to diagnose a lack of it
+using simulation</span>.”</span> <em>Journal of Statistical Theory and
+Practice</em> 17 (39). <a href="https://link.springer.com/article/10.1007/s42519-023-00336-5" class="external-link">https://link.springer.com/article/10.1007/s42519-023-00336-5</a>.
 </div>
 </div>
 </div>
