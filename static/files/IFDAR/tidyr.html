@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Tidying data with tidyr | Introduction to Forestry Data Analysis with R</title>
+  <meta name="description" content="Chapter 8 Tidying data with tidyr | Introduction to Forestry Data Analysis with R." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Tidying data with tidyr | Introduction to Forestry Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/cover.jpg" />
+  <meta property="og:description" content="Chapter 8 Tidying data with tidyr | Introduction to Forestry Data Analysis with R." />
+  <meta name="github-repo" content="finleya/FD20" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Tidying data with tidyr | Introduction to Forestry Data Analysis with R" />
+  
+  <meta name="twitter:description" content="Chapter 8 Tidying data with tidyr | Introduction to Forestry Data Analysis with R." />
+  <meta name="twitter:image" content="/images/cover.jpg" />
+
+<meta name="author" content="Andrew O. Finley and Jeffrey W. Doser" />
+
+
+<meta name="date" content="2024-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dplyr.html"/>
+<link rel="next" href="ggplot2.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/kePrint/kePrint.js"></script>
+<link href="libs/lightable/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<script src="libs/leaflet-providers/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-easybutton/easy-button.css" rel="stylesheet" />
+<script src="libs/leaflet-easybutton/easy-button.js"></script>
+<script src="libs/leaflet-easybutton/EasyButton-binding.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/bootstrap.min.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Forestry Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="authors.html"><a href="authors.html"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1</b> Overview and motivating data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html#aim"><i class="fa fa-check"></i><b>1.1</b> Aim and scope</a></li>
+<li class="chapter" data-level="1.2" data-path="overview.html"><a href="overview.html#datasets"><i class="fa fa-check"></i><b>1.2</b> Motivating forestry datasets</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="overview.html"><a href="overview.html#fef"><i class="fa fa-check"></i><b>1.2.1</b> Fernow Experimental Forest biomass dataset</a></li>
+<li class="chapter" data-level="1.2.2" data-path="overview.html"><a href="overview.html#elk"><i class="fa fa-check"></i><b>1.2.2</b> Elk County timber cruise dataset</a></li>
+<li class="chapter" data-level="1.2.3" data-path="overview.html"><a href="overview.html#face"><i class="fa fa-check"></i><b>1.2.3</b> Free-Air Carbon Dioxide Enrichment experiment dataset</a></li>
+<li class="chapter" data-level="1.2.4" data-path="overview.html"><a href="overview.html#pef"><i class="fa fa-check"></i><b>1.2.4</b> Penobscot Experimental Forest inventory and LiDAR dataset</a></li>
+<li class="chapter" data-level="1.2.5" data-path="overview.html"><a href="overview.html#hf"><i class="fa fa-check"></i><b>1.2.5</b> Harvard Forest tree census</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="overview.html"><a href="overview.html#howToLearn"><i class="fa fa-check"></i><b>1.3</b> How to learn: The most important section in this book!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introToR.html"><a href="introToR.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introToR.html"><a href="introToR.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Installing R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introToR.html"><a href="introToR.html#RDescriptive"><i class="fa fa-check"></i><b>2.1.1</b> First session</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introToR.html"><a href="introToR.html#workingDirectory"><i class="fa fa-check"></i><b>2.2</b> Workspace and working directory</a></li>
+<li class="chapter" data-level="2.3" data-path="introToR.html"><a href="introToR.html#packages"><i class="fa fa-check"></i><b>2.3</b> Packages</a></li>
+<li class="chapter" data-level="2.4" data-path="introToR.html"><a href="introToR.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting help</a></li>
+<li class="chapter" data-level="2.5" data-path="introToR.html"><a href="introToR.html#summaryIntroR"><i class="fa fa-check"></i><b>2.5</b> Summary</a></li>
+<li class="chapter" data-level="2.6" data-path="introToR.html"><a href="introToR.html#exercisesIntroR"><i class="fa fa-check"></i><b>2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>3</b> Scripts and reproducible workflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scripts.html"><a href="scripts.html#scripts-1"><i class="fa fa-check"></i><b>3.1</b> Scripts</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts.html"><a href="scripts.html#best-practices-for-naming-and-formatting"><i class="fa fa-check"></i><b>3.2</b> Best practices for naming and formatting</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts.html"><a href="scripts.html#fileNaming"><i class="fa fa-check"></i><b>3.2.1</b> Script file naming</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts.html"><a href="scripts.html#syntacticNames"><i class="fa fa-check"></i><b>3.2.2</b> Variable naming</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts.html"><a href="scripts.html#code-formatting"><i class="fa fa-check"></i><b>3.2.3</b> Code formatting</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scripts.html"><a href="scripts.html#customize-your-coding-environment"><i class="fa fa-check"></i><b>3.2.4</b> Customize your coding environment</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts.html"><a href="scripts.html#pathsReadWrite"><i class="fa fa-check"></i><b>3.3</b> File paths and external data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="scripts.html"><a href="scripts.html#paths"><i class="fa fa-check"></i><b>3.3.1</b> Relative and absolute paths</a></li>
+<li class="chapter" data-level="3.3.2" data-path="scripts.html"><a href="scripts.html#readWrite"><i class="fa fa-check"></i><b>3.3.2</b> External data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="scripts.html"><a href="scripts.html#illustration"><i class="fa fa-check"></i><b>3.3.3</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="scripts.html"><a href="scripts.html#projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects and keeping organized</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="scripts.html"><a href="scripts.html#directories"><i class="fa fa-check"></i><b>3.4.1</b> Directory structure</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="scripts.html"><a href="scripts.html#summaryScripts"><i class="fa fa-check"></i><b>3.5</b> Summary</a></li>
+<li class="chapter" data-level="3.6" data-path="scripts.html"><a href="scripts.html#exercisesWorkflow"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data structures</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#typesOfVariables"><i class="fa fa-check"></i><b>4.1</b> Types of variables</a></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.2</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="structures.html"><a href="structures.html#dataTypes"><i class="fa fa-check"></i><b>4.2.1</b> Types, conversion, and coercion</a></li>
+<li class="chapter" data-level="4.2.2" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.2.2</b> Patterned data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="structures.html"><a href="structures.html#basicSubsetting"><i class="fa fa-check"></i><b>4.2.3</b> Indexing, accessing, and recycling elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#specialDataTypes"><i class="fa fa-check"></i><b>4.4</b> Missing data, infinity, and other special data types</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.4.1</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.5</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#dataFrameSubsetting"><i class="fa fa-check"></i><b>4.5.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.5.2" data-path="structures.html"><a href="structures.html#adding-columns"><i class="fa fa-check"></i><b>4.5.2</b> Adding columns</a></li>
+<li class="chapter" data-level="4.5.3" data-path="structures.html"><a href="structures.html#removing-columns"><i class="fa fa-check"></i><b>4.5.3</b> Removing columns</a></li>
+<li class="chapter" data-level="4.5.4" data-path="structures.html"><a href="structures.html#transformVariables"><i class="fa fa-check"></i><b>4.5.4</b> Transforming columns</a></li>
+<li class="chapter" data-level="4.5.5" data-path="structures.html"><a href="structures.html#rearranging-columns"><i class="fa fa-check"></i><b>4.5.5</b> Rearranging columns</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.6</b> Lists</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-elements"><i class="fa fa-check"></i><b>4.6.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.6.2" data-path="structures.html"><a href="structures.html#adding-and-removing-elements"><i class="fa fa-check"></i><b>4.6.2</b> Adding and removing elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#logicalOperators"><i class="fa fa-check"></i><b>4.7</b> Comparison and logical operators</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#inOperator"><i class="fa fa-check"></i><b>4.7.1</b> The <code>%in%</code> operator</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with logical vectors</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="structures.html"><a href="structures.html#modifySubsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying and creating objects via subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="structures.html"><a href="structures.html#subsetting-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Subsetting data frames</a></li>
+<li class="chapter" data-level="4.8.3" data-path="structures.html"><a href="structures.html#which"><i class="fa fa-check"></i><b>4.8.3</b> Subsetting with <code>which()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#summaryStructures"><i class="fa fa-check"></i><b>4.9</b> Summary</a></li>
+<li class="chapter" data-level="4.10" data-path="structures.html"><a href="structures.html#exercisesData"><i class="fa fa-check"></i><b>4.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions and programming</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#r-functions"><i class="fa fa-check"></i><b>5.1</b> R functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#programming-conditional-statements"><i class="fa fa-check"></i><b>5.2</b> Programming: conditional statements</a></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#more-on-functions"><i class="fa fa-check"></i><b>5.3</b> More on functions</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="functions.html"><a href="functions.html#functions-with-multiple-returns"><i class="fa fa-check"></i><b>5.3.1</b> Functions with multiple returns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="functions.html"><a href="functions.html#creating-functions"><i class="fa fa-check"></i><b>5.3.2</b> Creating functions</a></li>
+<li class="chapter" data-level="5.3.3" data-path="functions.html"><a href="functions.html#callingFunctions"><i class="fa fa-check"></i><b>5.3.3</b> Calling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#loops"><i class="fa fa-check"></i><b>5.4</b> Loops</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="functions.html"><a href="functions.html#a-while-loop"><i class="fa fa-check"></i><b>5.4.1</b> A while loop</a></li>
+<li class="chapter" data-level="5.4.2" data-path="functions.html"><a href="functions.html#forLoops"><i class="fa fa-check"></i><b>5.4.2</b> A for loop</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#apply"><i class="fa fa-check"></i><b>5.5</b> The <code>apply()</code> function</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="functions.html"><a href="functions.html#using-user-defined-functions-with-apply"><i class="fa fa-check"></i><b>5.5.1</b> Using user-defined functions with <code>apply()</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="functions.html"><a href="functions.html#applyRelatives"><i class="fa fa-check"></i><b>5.5.2</b> Relatives of <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#summaryFunctions"><i class="fa fa-check"></i><b>5.6</b> Summary</a></li>
+<li class="chapter" data-level="5.7" data-path="functions.html"><a href="functions.html#exercisesFunctions"><i class="fa fa-check"></i><b>5.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>6</b> Data summary and analysis using the <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tidyverse.html"><a href="tidyverse.html#minnesota"><i class="fa fa-check"></i><b>6.1</b> Minnesota tree growth dataset</a></li>
+<li class="chapter" data-level="6.2" data-path="tidyverse.html"><a href="tidyverse.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> Improving data frames with <code>tibbles</code></a></li>
+<li class="chapter" data-level="6.3" data-path="tidyverse.html"><a href="tidyverse.html#readr"><i class="fa fa-check"></i><b>6.3</b> Reading and writing files with <code>readr</code></a></li>
+<li class="chapter" data-level="6.4" data-path="tidyverse.html"><a href="tidyverse.html#summaryTidyverse"><i class="fa fa-check"></i><b>6.4</b> Summary</a></li>
+<li class="chapter" data-level="6.5" data-path="tidyverse.html"><a href="tidyverse.html#exercisesTidyverse"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>7</b> Manipulating and summarizing data with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>7.1</b> Filtering rows</a></li>
+<li class="chapter" data-level="7.2" data-path="dplyr.html"><a href="dplyr.html#slice"><i class="fa fa-check"></i><b>7.2</b> Slicing rows</a></li>
+<li class="chapter" data-level="7.3" data-path="dplyr.html"><a href="dplyr.html#arranging-rows-by-values"><i class="fa fa-check"></i><b>7.3</b> Arranging rows by values</a></li>
+<li class="chapter" data-level="7.4" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>7.4</b> Selecting columns</a></li>
+<li class="chapter" data-level="7.5" data-path="dplyr.html"><a href="dplyr.html#renaming-columns"><i class="fa fa-check"></i><b>7.5</b> Renaming columns</a></li>
+<li class="chapter" data-level="7.6" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>7.6</b> Creating new columns</a></li>
+<li class="chapter" data-level="7.7" data-path="dplyr.html"><a href="dplyr.html#relocate"><i class="fa fa-check"></i><b>7.7</b> Change column order</a></li>
+<li class="chapter" data-level="7.8" data-path="dplyr.html"><a href="dplyr.html#summarize"><i class="fa fa-check"></i><b>7.8</b> Summarizing</a></li>
+<li class="chapter" data-level="7.9" data-path="dplyr.html"><a href="dplyr.html#groups"><i class="fa fa-check"></i><b>7.9</b> Grouped data</a></li>
+<li class="chapter" data-level="7.10" data-path="dplyr.html"><a href="dplyr.html#counts"><i class="fa fa-check"></i><b>7.10</b> Counting</a></li>
+<li class="chapter" data-level="7.11" data-path="dplyr.html"><a href="dplyr.html#across"><i class="fa fa-check"></i><b>7.11</b> Applying a function across columns</a></li>
+<li class="chapter" data-level="7.12" data-path="dplyr.html"><a href="dplyr.html#pipes"><i class="fa fa-check"></i><b>7.12</b> Piping</a></li>
+<li class="chapter" data-level="7.13" data-path="dplyr.html"><a href="dplyr.html#dplyrworkflow"><i class="fa fa-check"></i><b>7.13</b> Building <code>dplyr</code> workflows</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="dplyr.html"><a href="dplyr.html#dplyrCaution"><i class="fa fa-check"></i><b>7.13.1</b> A cautionary and encouraging note</a></li>
+</ul></li>
+<li class="chapter" data-level="7.14" data-path="dplyr.html"><a href="dplyr.html#twoTables"><i class="fa fa-check"></i><b>7.14</b> Combining multiple tibbles</a>
+<ul>
+<li class="chapter" data-level="7.14.1" data-path="dplyr.html"><a href="dplyr.html#mutatingJoins"><i class="fa fa-check"></i><b>7.14.1</b> Mutating joins</a></li>
+<li class="chapter" data-level="7.14.2" data-path="dplyr.html"><a href="dplyr.html#filteringJoins"><i class="fa fa-check"></i><b>7.14.2</b> Filtering joins</a></li>
+<li class="chapter" data-level="7.14.3" data-path="dplyr.html"><a href="dplyr.html#allometricJoins"><i class="fa fa-check"></i><b>7.14.3</b> Applying allometric equations using joins</a></li>
+<li class="chapter" data-level="7.14.4" data-path="dplyr.html"><a href="dplyr.html#setOperations"><i class="fa fa-check"></i><b>7.14.4</b> Set operations</a></li>
+<li class="chapter" data-level="7.14.5" data-path="dplyr.html"><a href="dplyr.html#binds"><i class="fa fa-check"></i><b>7.14.5</b> Row and column binds</a></li>
+</ul></li>
+<li class="chapter" data-level="7.15" data-path="dplyr.html"><a href="dplyr.html#summaryDplyr"><i class="fa fa-check"></i><b>7.15</b> Summary</a></li>
+<li class="chapter" data-level="7.16" data-path="dplyr.html"><a href="dplyr.html#exercisesDplyr"><i class="fa fa-check"></i><b>7.16</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>8</b> Tidying data with <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tidyr.html"><a href="tidyr.html#tidyrReshape"><i class="fa fa-check"></i><b>8.1</b> Wide and long formats</a></li>
+<li class="chapter" data-level="8.2" data-path="tidyr.html"><a href="tidyr.html#tidyrSeparate"><i class="fa fa-check"></i><b>8.2</b> Separating and uniting columns</a></li>
+<li class="chapter" data-level="8.3" data-path="tidyr.html"><a href="tidyr.html#standStockTabs"><i class="fa fa-check"></i><b>8.3</b> Application: Stand and stock tables</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyr.html"><a href="tidyr.html#summaryTidr"><i class="fa fa-check"></i><b>8.4</b> Summary</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyr.html"><a href="tidyr.html#exercisesTidyr"><i class="fa fa-check"></i><b>8.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>9</b> Creating graphics with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ggplot2.html"><a href="ggplot2.html#ggplotComponents"><i class="fa fa-check"></i><b>9.1</b> Grammar components</a></li>
+<li class="chapter" data-level="9.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotInitialLook"><i class="fa fa-check"></i><b>9.2</b> An initial look</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ggplot2.html"><a href="ggplot2.html#geometries-mapping-and-aesthetics"><i class="fa fa-check"></i><b>9.2.1</b> Geometries, mapping, and aesthetics</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotScales"><i class="fa fa-check"></i><b>9.2.2</b> Scales</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ggplot2.html"><a href="ggplot2.html#ggplotGuidesThemes"><i class="fa fa-check"></i><b>9.2.3</b> Guides and Themes</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotFacets"><i class="fa fa-check"></i><b>9.2.4</b> Facets</a></li>
+<li class="chapter" data-level="9.2.5" data-path="ggplot2.html"><a href="ggplot2.html#building-graphics-incrementally"><i class="fa fa-check"></i><b>9.2.5</b> Building graphics incrementally</a></li>
+<li class="chapter" data-level="9.2.6" data-path="ggplot2.html"><a href="ggplot2.html#ggplotPatchwork"><i class="fa fa-check"></i><b>9.2.6</b> Arranging graphics</a></li>
+<li class="chapter" data-level="9.2.7" data-path="ggplot2.html"><a href="ggplot2.html#saving-graphics"><i class="fa fa-check"></i><b>9.2.7</b> Saving graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ggplot2.html"><a href="ggplot2.html#exploring-different-graphics"><i class="fa fa-check"></i><b>9.3</b> Exploring different graphics</a></li>
+<li class="chapter" data-level="9.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotBarCharts"><i class="fa fa-check"></i><b>9.4</b> Visualizing distributions</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ggplot2.html"><a href="ggplot2.html#elkCountyBarCharts"><i class="fa fa-check"></i><b>9.4.1</b> Elk County timber cruise bar charts</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ggplot2.html"><a href="ggplot2.html#summaryGgplot2"><i class="fa fa-check"></i><b>9.5</b> Summary</a></li>
+<li class="chapter" data-level="9.6" data-path="ggplot2.html"><a href="ggplot2.html#exercisesGgplot2"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="notation.html"><a href="notation.html"><i class="fa fa-check"></i><b>10</b> Preliminary definitions and concepts</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="notation.html"><a href="notation.html#popSamps"><i class="fa fa-check"></i><b>10.1</b> Estimating population parameters</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="notation.html"><a href="notation.html#ToolsTypesOfVariables"><i class="fa fa-check"></i><b>10.1.1</b> Types of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="notation.html"><a href="notation.html#tools"><i class="fa fa-check"></i><b>10.2</b> Tools of the trade: Review of notation</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="notation.html"><a href="notation.html#operators"><i class="fa fa-check"></i><b>10.2.1</b> Mathematical operators, subscripts, and nested data</a></li>
+<li class="chapter" data-level="10.2.2" data-path="notation.html"><a href="notation.html#padma"><i class="fa fa-check"></i><b>10.2.2</b> Order of operations</a></li>
+<li class="chapter" data-level="10.2.3" data-path="notation.html"><a href="notation.html#toolsR"><i class="fa fa-check"></i><b>10.2.3</b> Tools of the trade using R</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="notation.html"><a href="notation.html#summaryNotation"><i class="fa fa-check"></i><b>10.3</b> Summary and outlook</a></li>
+<li class="chapter" data-level="10.4" data-path="notation.html"><a href="notation.html#exercisesNotation"><i class="fa fa-check"></i><b>10.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statBasics.html"><a href="statBasics.html"><i class="fa fa-check"></i><b>11</b> Basic statistical concepts</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statBasics.html"><a href="statBasics.html#popStats"><i class="fa fa-check"></i><b>11.1</b> Characterizing a population</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statBasics.html"><a href="statBasics.html#centralTendency"><i class="fa fa-check"></i><b>11.1.1</b> Measures of central tendency</a></li>
+<li class="chapter" data-level="11.1.2" data-path="statBasics.html"><a href="statBasics.html#dispersion"><i class="fa fa-check"></i><b>11.1.2</b> Measures of dispersion</a></li>
+<li class="chapter" data-level="11.1.3" data-path="statBasics.html"><a href="statBasics.html#popTotProp"><i class="fa fa-check"></i><b>11.1.3</b> Totals and proportions</a></li>
+<li class="chapter" data-level="11.1.4" data-path="statBasics.html"><a href="statBasics.html#popTabGraph"><i class="fa fa-check"></i><b>11.1.4</b> Tabular and graphical representations of data distributions</a></li>
+<li class="chapter" data-level="11.1.5" data-path="statBasics.html"><a href="statBasics.html#popIllustration"><i class="fa fa-check"></i><b>11.1.5</b> Illustrative analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="statBasics.html"><a href="statBasics.html#introSampling"><i class="fa fa-check"></i><b>11.2</b> Introduction to sampling methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="statBasics.html"><a href="statBasics.html#characteristics-of-samples"><i class="fa fa-check"></i><b>11.2.1</b> Characteristics of samples</a></li>
+<li class="chapter" data-level="11.2.2" data-path="statBasics.html"><a href="statBasics.html#probSamples"><i class="fa fa-check"></i><b>11.2.2</b> Probability samples</a></li>
+<li class="chapter" data-level="11.2.3" data-path="statBasics.html"><a href="statBasics.html#estimators"><i class="fa fa-check"></i><b>11.2.3</b> Sampling distribution and properties of estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="statBasics.html"><a href="statBasics.html#SRS"><i class="fa fa-check"></i><b>11.3</b> Simple Random Sampling</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-without-replacement"><i class="fa fa-check"></i><b>11.3.1</b> Simple Random Sampling without replacement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-with-replacement"><i class="fa fa-check"></i><b>11.3.2</b> Simple Random Sampling with replacement</a></li>
+<li class="chapter" data-level="11.3.3" data-path="statBasics.html"><a href="statBasics.html#SRSTotals"><i class="fa fa-check"></i><b>11.3.3</b> Estimating totals and proportions</a></li>
+<li class="chapter" data-level="11.3.4" data-path="statBasics.html"><a href="statBasics.html#ci"><i class="fa fa-check"></i><b>11.3.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.3.5" data-path="statBasics.html"><a href="statBasics.html#srsIllustration"><i class="fa fa-check"></i><b>11.3.5</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="11.3.6" data-path="statBasics.html"><a href="statBasics.html#sampleSize"><i class="fa fa-check"></i><b>11.3.6</b> Sample size</a></li>
+<li class="chapter" data-level="11.3.7" data-path="statBasics.html"><a href="statBasics.html#ADSRS"><i class="fa fa-check"></i><b>11.3.7</b> Advantages and disadvantages of SRS</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="statBasics.html"><a href="statBasics.html#statBasicsSummary"><i class="fa fa-check"></i><b>11.4</b> Summary and outlook</a></li>
+<li class="chapter" data-level="11.5" data-path="statBasics.html"><a href="statBasics.html#exercisesStats"><i class="fa fa-check"></i><b>11.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="forestStat.html"><a href="forestStat.html"><i class="fa fa-check"></i><b>12</b> Estimating forest parameters</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="forestStat.html"><a href="forestStat.html#samplingUnits"><i class="fa fa-check"></i><b>12.1</b> Sampling units for forestry applications</a></li>
+<li class="chapter" data-level="12.2" data-path="forestStat.html"><a href="forestStat.html#arealSamplingFrame"><i class="fa fa-check"></i><b>12.2</b> Areal sampling frame</a></li>
+<li class="chapter" data-level="12.3" data-path="forestStat.html"><a href="forestStat.html#plotSampling"><i class="fa fa-check"></i><b>12.3</b> Plot sampling</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="forestStat.html"><a href="forestStat.html#plotSamplingExpFa"><i class="fa fa-check"></i><b>12.3.1</b> Expansion factors and estimates</a></li>
+<li class="chapter" data-level="12.3.2" data-path="forestStat.html"><a href="forestStat.html#sample-based-estimates"><i class="fa fa-check"></i><b>12.3.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.3.3" data-path="forestStat.html"><a href="forestStat.html#arealFPC"><i class="fa fa-check"></i><b>12.3.3</b> Finite population correction</a></li>
+<li class="chapter" data-level="12.3.4" data-path="forestStat.html"><a href="forestStat.html#slopOver"><i class="fa fa-check"></i><b>12.3.4</b> Boundary effects</a></li>
+<li class="chapter" data-level="12.3.5" data-path="forestStat.html"><a href="forestStat.html#slopePlots"><i class="fa fa-check"></i><b>12.3.5</b> Slope corrections</a></li>
+<li class="chapter" data-level="12.3.6" data-path="forestStat.html"><a href="forestStat.html#sizeVariance"><i class="fa fa-check"></i><b>12.3.6</b> Effect of plot size on variance</a></li>
+<li class="chapter" data-level="12.3.7" data-path="forestStat.html"><a href="forestStat.html#plotSamplingIllustration"><i class="fa fa-check"></i><b>12.3.7</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="forestStat.html"><a href="forestStat.html#pointSampling"><i class="fa fa-check"></i><b>12.4</b> Point sampling</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="forestStat.html"><a href="forestStat.html#pointSamplingExpFa"><i class="fa fa-check"></i><b>12.4.1</b> Expansion factors and per unit area estimates</a></li>
+<li class="chapter" data-level="12.4.2" data-path="forestStat.html"><a href="forestStat.html#pointSamplingEstimation"><i class="fa fa-check"></i><b>12.4.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.4.3" data-path="forestStat.html"><a href="forestStat.html#selectingBAF"><i class="fa fa-check"></i><b>12.4.3</b> Selecting a basal area factor and computing limiting distances</a></li>
+<li class="chapter" data-level="12.4.4" data-path="forestStat.html"><a href="forestStat.html#pointSamplingField"><i class="fa fa-check"></i><b>12.4.4</b> Boundary overlap and slope corrections</a></li>
+<li class="chapter" data-level="12.4.5" data-path="forestStat.html"><a href="forestStat.html#pointSamplingIllustration"><i class="fa fa-check"></i><b>12.4.5</b> Illustration</a></li>
+<li class="chapter" data-level="12.4.6" data-path="forestStat.html"><a href="forestStat.html#tallyByHeight"><i class="fa fa-check"></i><b>12.4.6</b> Per unit area estimates without measuring DBH</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="forestStat.html"><a href="forestStat.html#forestSamplingWorkflow"><i class="fa fa-check"></i><b>12.5</b> Workflows for forest inventory data</a></li>
+<li class="chapter" data-level="12.6" data-path="forestStat.html"><a href="forestStat.html#standStockTabsEsts"><i class="fa fa-check"></i><b>12.6</b> Stand and stock table estimates</a></li>
+<li class="chapter" data-level="12.7" data-path="forestStat.html"><a href="forestStat.html#exercisesForestStats"><i class="fa fa-check"></i><b>12.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="samplingDesigns.html"><a href="samplingDesigns.html"><i class="fa fa-check"></i><b>13</b> Sampling designs, implementation, and analysis</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYS"><i class="fa fa-check"></i><b>13.1</b> Systematic sampling</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimatorsSYS"><i class="fa fa-check"></i><b>13.1.1</b> Estimation Using SYS</a></li>
+<li class="chapter" data-level="13.1.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYSIllustration"><i class="fa fa-check"></i><b>13.1.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.1.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADSYS"><i class="fa fa-check"></i><b>13.1.3</b> Advantages and disadvantages of SYS</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#Strat"><i class="fa fa-check"></i><b>13.2</b> Stratified sampling</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#StratEstimation"><i class="fa fa-check"></i><b>13.2.1</b> Estimation using stratified sampling</a></li>
+<li class="chapter" data-level="13.2.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#allocation-of-sample-plots"><i class="fa fa-check"></i><b>13.2.2</b> Allocation of sample plots</a></li>
+<li class="chapter" data-level="13.2.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#strataSampleSize"><i class="fa fa-check"></i><b>13.2.3</b> Sample size determination</a></li>
+<li class="chapter" data-level="13.2.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#stratIllustration"><i class="fa fa-check"></i><b>13.2.4</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.2.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-stratifed-sampling"><i class="fa fa-check"></i><b>13.2.5</b> Advantages and disadvantages of stratifed sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#cluster"><i class="fa fa-check"></i><b>13.3</b> Cluster sampling</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterEstimation"><i class="fa fa-check"></i><b>13.3.1</b> Estimation using cluster sampling</a></li>
+<li class="chapter" data-level="13.3.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterIllustration"><i class="fa fa-check"></i><b>13.3.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.3.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-cluster-sampling"><i class="fa fa-check"></i><b>13.3.3</b> Advantages and disadvantages of cluster sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#multistage"><i class="fa fa-check"></i><b>13.4</b> Multistage sampling</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimationMultistage"><i class="fa fa-check"></i><b>13.4.1</b> Estimation using multistage sampling</a></li>
+<li class="chapter" data-level="13.4.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimation-with-unequal-sized-primaries-and-varying-amounts-of-secondaries"><i class="fa fa-check"></i><b>13.4.2</b> Estimation with unequal sized primaries and varying amounts of secondaries</a></li>
+<li class="chapter" data-level="13.4.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADMultistage"><i class="fa fa-check"></i><b>13.4.3</b> Advantages and disadvantages of multistage sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#samplingWithCovs"><i class="fa fa-check"></i><b>13.5</b> Sampling with covariates</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#regression"><i class="fa fa-check"></i><b>13.5.1</b> Linear regression</a></li>
+<li class="chapter" data-level="13.5.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#RegressionSampling"><i class="fa fa-check"></i><b>13.5.2</b> Regression Sampling</a></li>
+<li class="chapter" data-level="13.5.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#doubleSampling"><i class="fa fa-check"></i><b>13.5.3</b> Double sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="samplingDesigns.html"><a href="samplingDesigns.html#summarySampling"><i class="fa fa-check"></i><b>13.6</b> Summary and outlook</a></li>
+<li class="chapter" data-level="13.7" data-path="samplingDesigns.html"><a href="samplingDesigns.html#exercisesSampling"><i class="fa fa-check"></i><b>13.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reports.html"><a href="reports.html"><i class="fa fa-check"></i><b>14</b> Reports</a></li>
+<li class="chapter" data-level="15" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>15</b> Case Studies</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Forestry Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. We want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+
+<div id="tidyr" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Tidying data with <code>tidyr</code><a href="tidyr.html#tidyr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Formats used to organize data are typically chosen to simplify recording, storage, analysis, or presentation. As we’ll see, a format ideal for one purpose might not be ideal for other purposes. For example, a format useful for recording values in the field might not lend itself well to subsequent analysis or succinct data summaries.</p>
+<p>The package <code>tidyr</code> provides functions to simplify moving between dataset formats and other common data wrangling and analysis tasks. Let’s align our definitions for dataset components with those used in <code>tidyr</code>. In <code>tidyr</code>, a <em>dataset</em> is a collection of values, i.e., numbers, character strings and other data types we covered. Every value is indexed by a variable and an observation. A variable contains all values that measure the same underlying characteristic (e.g., DBH, height, volume, or species) across observations. An observation (e.g., tree or plot) contains all values measured across variables.</p>
+<p>Following <span class="citation">Wickham, Çetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023">2023</a>)</span>, <em>tidy</em> data is a way to map a dataset’s meaning to its structure. A dataset is messy or tidy depending on how rows and columns are matched with observations, variables, and values. Tidy data meet the following conditions.</p>
+<ol style="list-style-type: decimal">
+<li>Every column is a variable.</li>
+<li>Every row is an observation.</li>
+<li>Every row/column element is a single value.</li>
+</ol>
+<p>Data are <em>messy</em> if they do not meet one or more of the tidy data conditions. Tidy data simplify many data summary and analysis tasks because they provide a standard way for structuring a dataset.</p>
+<p>Consider the left dataset in Figure <a href="tidyr.html#fig:pivotFig">8.1</a> called <code>dbh_wide</code>. Rows of <code>dbh_wide</code> correspond to three trees, columns are measurement years, and values are DBH measurements. As the dataset name suggests, these data are in <em>wide format</em>. This dataset is also messy because more than one column holds DBH measurements and column names themselves are values for a year variable. As we’ll explore further in Section <a href="tidyr.html#tidyrReshape">8.1</a>, <code>tidyr'</code>s <code>pivot_longer()</code> function changes wide format to <em>long format</em>—a process illustrated by moving from <code>trees_wide</code> to <code>trees_long</code> in Figure <a href="tidyr.html#fig:pivotFig">8.1</a>. The <code>trees_long</code> dataset is tidy, as each column holds only one variable (i.e., <code>id</code>, <code>year</code>, and <code>dbh</code>) and each row corresponds to a single <code>id</code>, <code>year</code>, and <code>dbh</code> observation.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pivotFig"></span>
+<img src="figures/tidyr_pivot.png" alt="Changing longitudinal DBH measurements on three trees from wide to long format." width="100%" />
+<p class="caption">
+FIGURE 8.1: Changing longitudinal DBH measurements on three trees from wide to long format.
+</p>
+</div>
+<p>Most datasets we encounter are messy. Importantly, messy data are not bad or wrong, in fact a messy table is often a very effective way to summarize data as we’ll see in Section <a href="tidyr.html#standStockTabs">8.3</a>. However, from a data analysis standpoint, tidy data often simplify analysis and conversion to other formats. Receiving data in a messy format typically means you’ll spend some time wrangling it into either a tidy format or another messy format to meet your needs. Subsequent sections cover some <code>tidyr</code> functions used to clean up messy data. Specifically, we’ll cover how to remedy the following messy data features.</p>
+<ul>
+<li>Column headers are values, not variable names.</li>
+<li>Multiple variables are stored in one column.</li>
+<li>Variables are stored in both rows and columns.</li>
+</ul>
+<p>The subsequent sections illustrate several <code>tidyr</code> functions using the messy FACE dataset introduced in Section <a href="overview.html#face">1.2.3</a>. As a refresher, the Aspen FACE Experiment was designed to assess the effects of increasing tropospheric ozone and carbon dioxide concentrations on the structure and functioning of northern forest ecosystems. The code below loads packages we’ll use in our tidying efforts and reads the FACE data into the <code>face</code> tibble.</p>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="tidyr.html#cb689-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb689-2"><a href="tidyr.html#cb689-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb689-3"><a href="tidyr.html#cb689-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb689-4"><a href="tidyr.html#cb689-4" tabindex="-1"></a>face <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;datasets/FACE/FACE_aspen_core_growth.csv&quot;</span>)</span></code></pre></div>
+<p>Run <code>face %&gt;% glimpse()</code> to see column names and types. Also notice non-syntactic column names in the “FACE_aspen_core_growth.csv” file are placed within backticks in the <code>face</code> tibble.<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a></p>
+<p>In the next few sections, the messy FACE dataset is used to introduce some <code>tidyr</code> functions. We focus on a subset of the FACE dataset that includes each tree’s identifiers and height measurements for 2001 through 2005. The code below uses <code>dplyr</code> functions to select the desired columns, rename the <code>`ID #`</code> column name to <code>ID</code>.<a href="#fn58" class="footnote-ref" id="fnref58"><sup>58</sup></a> In addition to unique tree <code>ID</code> and height measurements, we retain the experiment design variables replication (<code>Rep</code>), treatment (<code>Treat</code>), and tree clone identifier (<code>Clone</code>). Notice the use of the <code>contains()</code> helper function within <code>select()</code>.</p>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="tidyr.html#cb690-1" tabindex="-1"></a>face <span class="ot">&lt;-</span> face <span class="sc">%&gt;%</span></span>
+<span id="cb690-2"><a href="tidyr.html#cb690-2" tabindex="-1"></a>  <span class="fu">select</span>(Rep, Treat, Clone, <span class="at">ID =</span> <span class="st">`</span><span class="at">ID #</span><span class="st">`</span>,</span>
+<span id="cb690-3"><a href="tidyr.html#cb690-3" tabindex="-1"></a>        <span class="fu">contains</span>(<span class="fu">as.character</span>(<span class="dv">2001</span><span class="sc">:</span><span class="dv">2005</span>)) <span class="sc">&amp;</span> <span class="fu">contains</span>(<span class="st">&quot;Height&quot;</span>))</span>
+<span id="cb690-4"><a href="tidyr.html#cb690-4" tabindex="-1"></a>face</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 1,991 × 9
+#&gt;      Rep Treat Clone    ID `2001_Height` `2002_Height`
+#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt;  1     1     1     8    45            NA            NA
+#&gt;  2     1     1   216    44           547           622
+#&gt;  3     1     1     8    43           273           275
+#&gt;  4     1     1   216    42           526           619
+#&gt;  5     1     1   216    54           328           341
+#&gt;  6     1     1   271    55           543           590
+#&gt;  7     1     1   271    56           450           502
+#&gt;  8     1     1     8    57           217           227
+#&gt;  9     1     1   259    58           158           155
+#&gt; 10     1     1   271    59           230           241
+#&gt; # ℹ 1,981 more rows
+#&gt; # ℹ 3 more variables: `2003_Height` &lt;dbl&gt;,
+#&gt; #   `2004_Height` &lt;dbl&gt;, `2005_Height` &lt;dbl&gt;</code></pre>
+<div id="tidyrReshape" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Wide and long formats<a href="tidyr.html#tidyrReshape" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recall the FACE dataset is longitudinal, meaning measurements were taken repeatedly across time (in this case years). Notice in the <code>face</code> tibble, height measurements are stored in successive columns, i.e., <code>`2001_Height`</code><span class="math inline">\(\ldots\)</span><code>`2005_Height`</code>. Like <code>trees_wide</code> in Figure <a href="tidyr.html#fig:pivotFig">8.1</a>, <code>face</code> is stored in wide format.</p>
+<p>To tidy these messy data, our first task is to change <code>face</code> to a long format. We could imagine doing this in a spreadsheet software by copying and pasting, but this would be extremely tedious and would almost surely lead to errors. The <code>tidyr</code> package has two functions <code>pivot_longer()</code> and <code>pivot_wider()</code> to move between wide and long formats.</p>
+<p>The call to <code>pivot_longer()</code> below moves <code>face</code> from wide to long format. In the <code>pivot_longer()</code> function, we specify the implicit <code>data = face</code><a href="#fn59" class="footnote-ref" id="fnref59"><sup>59</sup></a>, columns to pivot into longer format (<code>cols = contains("Height")</code>), name to give the column created from the wide column names (<code>names_to = "Year_Type"</code>), and name we want to give to the column containing the measurements <code>values_to = 'Height_cm'</code>.</p>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="tidyr.html#cb692-1" tabindex="-1"></a>face_long <span class="ot">&lt;-</span> face <span class="sc">%&gt;%</span> </span>
+<span id="cb692-2"><a href="tidyr.html#cb692-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">&quot;Height&quot;</span>),</span>
+<span id="cb692-3"><a href="tidyr.html#cb692-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;Year_Type&quot;</span>,</span>
+<span id="cb692-4"><a href="tidyr.html#cb692-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;Height_cm&quot;</span>)</span>
+<span id="cb692-5"><a href="tidyr.html#cb692-5" tabindex="-1"></a></span>
+<span id="cb692-6"><a href="tidyr.html#cb692-6" tabindex="-1"></a>face_long</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 9,955 × 6
+#&gt;      Rep Treat Clone    ID Year_Type   Height_cm
+#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+#&gt;  1     1     1     8    45 2001_Height        NA
+#&gt;  2     1     1     8    45 2002_Height        NA
+#&gt;  3     1     1     8    45 2003_Height        NA
+#&gt;  4     1     1     8    45 2004_Height        NA
+#&gt;  5     1     1     8    45 2005_Height        NA
+#&gt;  6     1     1   216    44 2001_Height       547
+#&gt;  7     1     1   216    44 2002_Height       622
+#&gt;  8     1     1   216    44 2003_Height       715
+#&gt;  9     1     1   216    44 2004_Height       716
+#&gt; 10     1     1   216    44 2005_Height       817
+#&gt; # ℹ 9,945 more rows</code></pre>
+<p>Let’s compare the dimensions of the wide format <code>face</code> with <code>face_long</code>.</p>
+<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="tidyr.html#cb694-1" tabindex="-1"></a><span class="fu">dim</span>(face)</span></code></pre></div>
+<pre><code>#&gt; [1] 1991    9</code></pre>
+<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="tidyr.html#cb696-1" tabindex="-1"></a><span class="fu">dim</span>(face_long)</span></code></pre></div>
+<pre><code>#&gt; [1] 9955    6</code></pre>
+<p>There are more columns in the wide format <code>face</code> and more rows in the long format <code>face_long</code>, hence the reason these formats are referred to as wide and long.</p>
+<p><code>pivot_wider()</code> is used to widen a dataset in long format. For example, the code below moves <code>face_long</code> back to its original wide format.</p>
+<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="tidyr.html#cb698-1" tabindex="-1"></a>face_wide <span class="ot">&lt;-</span> face_long <span class="sc">%&gt;%</span> </span>
+<span id="cb698-2"><a href="tidyr.html#cb698-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;Year_Type&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;Height_cm&quot;</span>)</span>
+<span id="cb698-3"><a href="tidyr.html#cb698-3" tabindex="-1"></a></span>
+<span id="cb698-4"><a href="tidyr.html#cb698-4" tabindex="-1"></a><span class="co"># Check if face_wide and face are the same.</span></span>
+<span id="cb698-5"><a href="tidyr.html#cb698-5" tabindex="-1"></a><span class="fu">all.equal</span>(face_wide, face)</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<p>In <code>pivot_wider()</code> above, we specify the implicit <code>data = face_long</code>, column from which to get wide column names (<code>names_from = "Year_Type"</code>), and column from which to get values (<code>values_from = "Height_cm"</code>). As expected, and shown using <code>all.equal(face_wide, face)</code>, the call to <code>pivot_wider()</code> returns a tibble that’s the same as <code>face</code>.</p>
+</div>
+<div id="tidyrSeparate" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Separating and uniting columns<a href="tidyr.html#tidyrSeparate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s take another look at the <code>Year_Type</code> column in the <code>face_long</code> dataset.</p>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="tidyr.html#cb700-1" tabindex="-1"></a>face_long <span class="sc">%&gt;%</span> </span>
+<span id="cb700-2"><a href="tidyr.html#cb700-2" tabindex="-1"></a>  <span class="fu">select</span>(Year_Type)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 9,955 × 1
+#&gt;    Year_Type  
+#&gt;    &lt;chr&gt;      
+#&gt;  1 2001_Height
+#&gt;  2 2002_Height
+#&gt;  3 2003_Height
+#&gt;  4 2004_Height
+#&gt;  5 2005_Height
+#&gt;  6 2001_Height
+#&gt;  7 2002_Height
+#&gt;  8 2003_Height
+#&gt;  9 2004_Height
+#&gt; 10 2005_Height
+#&gt; # ℹ 9,945 more rows</code></pre>
+<p>The <code>Year_Type</code> column contains two variables separated by an underscore—the measurement year and measurement type. To set <code>face</code> on the tidy data path, we need to separate <code>Year_Type</code> into its components. Below, we use the <code>tidyr</code> <code>separate_wider_delim()</code> function to separate the <code>Year_Type</code> column into <code>Year</code> and <code>Type</code>. We want to retain the <code>Year</code> component, whereas the <code>Type</code> component is simply the value <code>'Height"</code> replicated for each row and can be discarded.</p>
+<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="tidyr.html#cb702-1" tabindex="-1"></a>face_long <span class="ot">&lt;-</span> face_long <span class="sc">%&gt;%</span></span>
+<span id="cb702-2"><a href="tidyr.html#cb702-2" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> <span class="st">&quot;Year_Type&quot;</span>,</span>
+<span id="cb702-3"><a href="tidyr.html#cb702-3" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb702-4"><a href="tidyr.html#cb702-4" tabindex="-1"></a>                       <span class="at">names =</span> <span class="fu">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="cn">NA</span>))</span>
+<span id="cb702-5"><a href="tidyr.html#cb702-5" tabindex="-1"></a>face_long</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 9,955 × 6
+#&gt;      Rep Treat Clone    ID Year  Height_cm
+#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+#&gt;  1     1     1     8    45 2001         NA
+#&gt;  2     1     1     8    45 2002         NA
+#&gt;  3     1     1     8    45 2003         NA
+#&gt;  4     1     1     8    45 2004         NA
+#&gt;  5     1     1     8    45 2005         NA
+#&gt;  6     1     1   216    44 2001        547
+#&gt;  7     1     1   216    44 2002        622
+#&gt;  8     1     1   216    44 2003        715
+#&gt;  9     1     1   216    44 2004        716
+#&gt; 10     1     1   216    44 2005        817
+#&gt; # ℹ 9,945 more rows</code></pre>
+<p>The call to <code>separate_wider_delim()</code> above specifies the implicit <code>data = face_long</code>, column to separate (<code>cols = "Year_Type"</code>), delimiter that separates the columns (<code>delim = "_"</code>), and names for the resulting columns (<code>names = c("Year", NA)</code>). The <code>NA</code> in the vector passed to the <code>names</code> argument means remove the column that corresponds to the <code>Type</code> component of the <code>Year_Type</code> column. At this point <code>face_long</code> is now tidy data!</p>
+<p>Consult the manual page via <code>?tidyr::separate_wider_delim</code> to learn more about this and related functions for separating delimited columns.</p>
+<p>There are occasions when you might want to combine multiple columns into one. We can do this using <code>unite()</code>. For example, the code below unites the <code>Rep</code>, <code>Treat</code>, and <code>Clone</code> columns into a single column called <code>Design</code>, with each of the values separated by an underscore. See <code>?tidyr::unite</code> for more details.</p>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="tidyr.html#cb704-1" tabindex="-1"></a>face_long <span class="sc">%&gt;%</span> </span>
+<span id="cb704-2"><a href="tidyr.html#cb704-2" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">&quot;Design&quot;</span>, Rep, Treat, Clone, <span class="at">sep =</span> <span class="st">&#39;_&#39;</span>)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 9,955 × 4
+#&gt;    Design     ID Year  Height_cm
+#&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+#&gt;  1 1_1_8      45 2001         NA
+#&gt;  2 1_1_8      45 2002         NA
+#&gt;  3 1_1_8      45 2003         NA
+#&gt;  4 1_1_8      45 2004         NA
+#&gt;  5 1_1_8      45 2005         NA
+#&gt;  6 1_1_216    44 2001        547
+#&gt;  7 1_1_216    44 2002        622
+#&gt;  8 1_1_216    44 2003        715
+#&gt;  9 1_1_216    44 2004        716
+#&gt; 10 1_1_216    44 2005        817
+#&gt; # ℹ 9,945 more rows</code></pre>
+</div>
+<div id="standStockTabs" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Application: Stand and stock tables<a href="tidyr.html#standStockTabs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data collected for forest research, inventory, and monitoring efforts are typically summarized using a variety of tables. For example, <em>stand</em> and <em>stock</em> tables are key data summary products that support a variety of forest management decisions, e.g., silvicultural prescription, economic valuation, and structural diversity assessment. Recalling terminology introduced in Section <a href="structures.html#typesOfVariables">4.1</a>, the stand table summarizes a <em>quantitative discrete</em> variable (e.g., stem count) grouped by one or more <em>categorical</em> (i.e., qualitative) variable (e.g., size class or species). Similarly, the stock table summarizes a <em>quantitative continuous</em> variable (e.g., volume, weight, or basal area) grouped by one or more <em>categorical</em> variable.</p>
+<p>In forestry applications, stand tables often summarize the average number of trees per unit area (e.g., acre or hectare) within an area of interest (e.g., stand, management unit, or forest) by DBH class and species. Similarly, stock tables often summarize the average wood volume or weight per unit area within an area of interest by DBH class and species. DBH classes are DBH intervals with widths chosen to communicate situation specific information.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:stand1Ests">TABLE 8.1: </span>Estimates for number of trees and wood volume per acre by species and DBH used to illustrate building stand and stock tables.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Species
+</th>
+<th style="text-align:center;">
+DBH (in)
+</th>
+<th style="text-align:center;">
+Trees/ac
+</th>
+<th style="text-align:center;">
+Volume (ft<span class="math inline">\(^3\)</span>/ac)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Abies balsamea
+</td>
+<td style="text-align:center;">
+11.3
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+142.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Betula papyrifera
+</td>
+<td style="text-align:center;">
+14.8
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+269.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Betula papyrifera
+</td>
+<td style="text-align:center;">
+15.4
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+293.7
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Pinus strobus
+</td>
+<td style="text-align:center;">
+9.8
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+116.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Pinus strobus
+</td>
+<td style="text-align:center;">
+10.7
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+143.6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Pinus strobus
+</td>
+<td style="text-align:center;">
+13.1
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+231.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>We motivate building stand and stock tables using forest stand estimates provided in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>. In this table, each row provides an estimated number of trees and volume on a per acre basis for a given species and DBH. For example, the first row in Table <a href="tidyr.html#tab:stand1Ests">8.1</a> says a typical (or average) acre has 8 11.3 inch DBH <em>Abies balsamea</em> stems with a combined volume of 142.8 ft<span class="math inline">\(^3\)</span>. We’ll introduce the inventory data from which these estimates were derived later in Chapter <a href="#tab:forestStat"><strong>??</strong></a>. For now, however, these estimates are used to build the stand and stock tables given in Tables <a href="tidyr.html#tab:stand1Stand">8.2</a> and <a href="tidyr.html#tab:stand1Stock">8.3</a>, respectively.</p>
+<p>Before getting started, notice stand and stock tables are not <em>tidy</em> according to the definition given at the opening of this chapter—they are wide and messy, and that’s okay. As we’ll see below, it’s best to start with long and tidy data, then change its format to the desired wide and messy stand or stock table.</p>
+<p>Let’s begin with the stand table shown in Table <a href="tidyr.html#tab:stand1Stand">8.2</a>. Stand table rows correspond to the distinct species in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>, columns are four inch DBH classes, and values are the number of trees for the given row and column.</p>
+<p>In Table <a href="tidyr.html#tab:stand1Stand">8.2</a>, notice the parentheses and square bracket notation used to define DBH class intervals (i.e., column names). A <em>closed interval</em>, denoted by square brackets, means the endpoints are included in the interval. For example, <span class="math inline">\([6, 10]\)</span> is a closed interval with 6 and 10 inch endpoints. Referencing Table <a href="tidyr.html#tab:stand1Ests">8.1</a>, there is one <em>Pinus strobus</em> with a DBH that falls within the <span class="math inline">\([6, 10]\)</span> inch DBH class interval, hence the corresponding 8 trees/ac value in Table <a href="tidyr.html#tab:stand1Stand">8.2</a>. A closed interval can also be written using <span class="math inline">\(\le\)</span> notation, e.g., <span class="math inline">\([6, 10]=\{6 \le x \le 10\}\)</span> where <span class="math inline">\(x\)</span> is DBH. An <em>open interval</em>, denoted by parentheses, means the endpoints are not included in the interval. Following from open and closed notation, a <em>half-open</em> interval includes only one of its endpoints, and is denoted by one parentheses and one square bracket. The stand table has two half-open intervals <span class="math inline">\((10, 14]\)</span> and <span class="math inline">\((14, 18]\)</span> (these can be written as <span class="math inline">\(\{10 &lt; x \le 14\}\)</span> and <span class="math inline">\(\{14 &lt; x \le 18\}\)</span>). Table <a href="tidyr.html#tab:stand1Ests">8.1</a> shows one <em>Abies balsamea</em> and two <em>Pinus strobus</em> in the <span class="math inline">\((10, 14]\)</span> DBH class, and two <em>Betula papyrifera</em> in the <span class="math inline">\((14, 18]\)</span> DBH class. Stand table values are the sum of trees for the given species and DBH class, hence there are 16 <em>Pinus strobus</em> in the <span class="math inline">\((10, 14]\)</span> DBH class and 16 <em>Betula papyrifera</em> in the <span class="math inline">\((14, 18]\)</span> DBH class.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:stand1Stand">TABLE 8.2: </span>Stand table for estimates given in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>. Values are number of trees per acre.
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+DBH classes (in)
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+Species
+</th>
+<th style="text-align:center;">
+[6,10]
+</th>
+<th style="text-align:center;">
+(10,14]
+</th>
+<th style="text-align:center;">
+(14,18]
+</th>
+<th style="text-align:center;">
+Totals
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Abies balsamea
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Betula papyrifera
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Pinus strobus
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Totals
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+24
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+48
+</td>
+</tr>
+</tbody>
+</table>
+<p>The stock table is given in Table <a href="tidyr.html#tab:stand1Stock">8.3</a>. This stock table is built the same way as the stand table, with the exception that its values are the sum of volume for each given species and DBH class. For example, the stand table’s 8 <em>Pinus strobus</em> trees per acre in the <span class="math inline">\([6, 8]\)</span> inch DBH class, correspond to 116.3 ft<span class="math inline">\(^3\)</span> of volume per acre, and the 16 <em>Betula papyrifera</em> trees per acre in the <span class="math inline">\((14, 18]\)</span> inch DBH class, correspond to 563.3 ft<span class="math inline">\(^3\)</span> of volume per acre (i.e., <span class="math inline">\(269.6+293.7\)</span> in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>).</p>
+<p>As we’ve seen, estimate values in Table <a href="tidyr.html#tab:stand1Ests">8.1</a> comprise the non-zero values in the resulting stand and stock tables. The zero values in a stand or stock table are just as important as the non-zero values because they denote the absence of a given species and DBH class combination and hence contribute to management decisions and forest valuation. These <em>explicit</em> zeros in the stand and stock tables are <em>implicit</em> zeros in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>.</p>
+<p>Lastly, it’s useful to add row and column totals to the stand and stock table margins. For Tables <a href="tidyr.html#tab:stand1Stand">8.2</a> and <a href="tidyr.html#tab:stand1Stock">8.3</a> the row totals are number of trees and volume per acre for each species, respectively. Similarly, column totals are the number of trees and volume per acre for each DBH class.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:stand1Stock">TABLE 8.3: </span>Stock table for estimates given in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>. Values are volume ft<span class="math inline">\(^3\)</span> per acre.
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+DBH classes (in)
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+Species
+</th>
+<th style="text-align:center;">
+[6,10]
+</th>
+<th style="text-align:center;">
+(10,14]
+</th>
+<th style="text-align:center;">
+(14,18]
+</th>
+<th style="text-align:center;">
+Totals
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Abies balsamea
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+142.8
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+142.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Betula papyrifera
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+563.3
+</td>
+<td style="text-align:center;">
+563.3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Pinus strobus
+</td>
+<td style="text-align:center;">
+116.3
+</td>
+<td style="text-align:center;">
+375.5
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+<td style="text-align:center;">
+491.8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Totals
+</td>
+<td style="text-align:center;">
+116.3
+</td>
+<td style="text-align:center;">
+518.3
+</td>
+<td style="text-align:center;">
+563.3
+</td>
+<td style="text-align:center;">
+1197.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>Drawing on the preceding sections in this and previous <code>tidyverse</code> chapters, we show how a piped series of functions can efficiently deliver stand, stock, and similar tables with a fraction of the pain incurred using hand calculations or traditional spreadsheets.</p>
+<p>Here are a few considerations for building stand and stock tables from forest inventory data:</p>
+<ol style="list-style-type: decimal">
+<li>Apply the appropriate <em>estimator</em> to generate the desired values for the stand or stock table. These topics will be covered in Chapters <a href="statBasics.html#statBasics">11</a>, <a href="forestStat.html#forestStat">12</a>, and <a href="samplingDesigns.html#samplingDesigns">13</a>.</li>
+<li>Identify the quantitative discrete and continuous variables of interest as well as the categorical variables you’ll use to define the table’s rows and columns.
+<ul>
+<li>Often, we need to convert a continuous variable into a categorical variable to represent the table’s rows or columns. For example, if DBH was collected as a continuous variable (which is often the case), then it’ll need to be <em>discretized</em>, i.e., converted to a categorical variable, for use in a <code>dplyr</code> grouped summarize. The way in which you discretize your continuous variable depends on what information you want to communicate with the resulting table. For stand and stock tables, it’s common to see continuous DBH measurements discretized to 2 or 4 inch DBH classes (or equivalent widths in centimeters). The <code>ggplot2</code> package <code>cut_width()</code>, <code>cut_number()</code>, and <code>cut_interval()</code> functions provide convenient ways to discretize continuous variables.<br />
+</li>
+</ul></li>
+<li>Reshape your data to long format using <code>tidyr</code> functions, if needed, so they can be easily piped into a series of <code>dplyr</code> functions used to form the desired stand or stock table.
+<ul>
+<li>In practice you’ll encounter a variety of different data collection, recording, and storage protocols that yield all sorts of different data organization formats that inevitably need wrangling into a format suitable to <code>dplyr</code>.</li>
+</ul></li>
+</ol>
+<p>Our focus is on the second two considerations listed above. We’ll work on the first consideration in subsequent chapters. For now, however, we begin with the table of estimates provided in Table <a href="tidyr.html#tab:stand1Ests">8.1</a> and develop code to reproduce Tables <a href="tidyr.html#tab:stand1Stand">8.2</a> and <a href="tidyr.html#tab:stand1Stock">8.3</a>.</p>
+<p>We begin by reading tree estimates from Table <a href="tidyr.html#tab:stand1Ests">8.1</a> into the <code>ests</code> tibble.</p>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="tidyr.html#cb706-1" tabindex="-1"></a>ests <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;datasets/stand_stock_estimates.csv&quot;</span>)</span></code></pre></div>
+<p>Next, in the code below, we use <code>cut_width()</code> to discretize <code>DBH_in</code> and add this new discretized column, called <code>DBH_4in</code>, back to <code>ests</code> via <code>mutate()</code>.<a href="#fn60" class="footnote-ref" id="fnref60"><sup>60</sup></a> Also in the <code>mutate()</code> call, the <code>.after</code> argument positions the new <code>DBH_4in</code> column to the right of <code>DBH_in</code> to facilitate visual comparison. <code>cut_width()</code> (and related functions <code>cut_number()</code> and <code>cut_interval()</code>), provide a lot of control over how intervals are formed and how values on their endpoints are handled.</p>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="tidyr.html#cb707-1" tabindex="-1"></a>ests <span class="ot">&lt;-</span> ests <span class="sc">%&gt;%</span></span>
+<span id="cb707-2"><a href="tidyr.html#cb707-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DBH_4in =</span> <span class="fu">cut_width</span>(DBH_in, <span class="at">width =</span> <span class="dv">4</span>), <span class="at">.after =</span> DBH_in)</span>
+<span id="cb707-3"><a href="tidyr.html#cb707-3" tabindex="-1"></a>ests</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 6 × 5
+#&gt;   Species          DBH_in DBH_4in trees_ac vol_cu_ft_ac
+#&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+#&gt; 1 Abies balsamea     11.3 (10,14]        8         143.
+#&gt; 2 Betula papyrife…   14.8 (14,18]        8         270.
+#&gt; 3 Betula papyrife…   15.4 (14,18]        8         294.
+#&gt; 4 Pinus strobus       9.8 [6,10]         8         116.
+#&gt; 5 Pinus strobus      10.7 (10,14]        8         144.
+#&gt; 6 Pinus strobus      13.1 (10,14]        8         232.</code></pre>
+<p>Take a look at the new <code>DBH_4in</code> column in the <code>ests</code> tibble above. Notice its a factor data type and its values use parentheses and square bracket notation to define interval endpoints—the same notation used for column labels in the desired stand and stock tables. Also, confirm that values in <code>DBH_in</code> map to the correct <code>DBH_4in</code> interval.</p>
+<p>Next, recall, explicit zeros in stand and stock tables are implicit zeros in Table <a href="tidyr.html#tab:stand1Ests">8.1</a>. Let’s add these implicit zero to <code>ests</code> (i.e., make the implicit explicit by adding the species and DBH class combinations with zero trees and volume). This is done using <code>tidyr::complete()</code>. This function adds all missing value combinations for a discrete variable set. The first argument in <code>complete()</code> is the data, followed by column names used to form the combinations, then the <code>fill</code> argument is given a list of column names and their associated desired explicit values. Our call to <code>complete()</code> below adds missing combinations of <code>Species</code> and <code>DBH_4in</code> and sets explicit values of <code>trees_ac</code> and <code>vol_cu_ft_ac</code> to zero. Notice, by not specifying an explicit value for <code>DBH_in</code> in the <code>fill</code> argument’s list, the <code>NA</code> default value is used.<a href="#fn61" class="footnote-ref" id="fnref61"><sup>61</sup></a></p>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="tidyr.html#cb709-1" tabindex="-1"></a>ests <span class="ot">&lt;-</span> ests <span class="sc">%&gt;%</span></span>
+<span id="cb709-2"><a href="tidyr.html#cb709-2" tabindex="-1"></a>  <span class="fu">complete</span>(Species, DBH_4in, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">trees_ac =</span> <span class="dv">0</span>, <span class="at">vol_cu_ft_ac =</span> <span class="dv">0</span>))</span>
+<span id="cb709-3"><a href="tidyr.html#cb709-3" tabindex="-1"></a>ests</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 11 × 5
+#&gt;    Species         DBH_4in DBH_in trees_ac vol_cu_ft_ac
+#&gt;    &lt;chr&gt;           &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
+#&gt;  1 Abies balsamea  [6,10]    NA          0           0 
+#&gt;  2 Abies balsamea  (10,14]   11.3        8         143.
+#&gt;  3 Abies balsamea  (14,18]   NA          0           0 
+#&gt;  4 Betula papyrif… [6,10]    NA          0           0 
+#&gt;  5 Betula papyrif… (10,14]   NA          0           0 
+#&gt;  6 Betula papyrif… (14,18]   14.8        8         270.
+#&gt;  7 Betula papyrif… (14,18]   15.4        8         294.
+#&gt;  8 Pinus strobus   [6,10]     9.8        8         116.
+#&gt;  9 Pinus strobus   (10,14]   10.7        8         144.
+#&gt; 10 Pinus strobus   (10,14]   13.1        8         232.
+#&gt; 11 Pinus strobus   (14,18]   NA          0           0</code></pre>
+<p>Next, sum values in <code>trees_ac</code> and <code>vol_cu_ft_ac</code> columns that have the same species and DBH class.<a href="#fn62" class="footnote-ref" id="fnref62"><sup>62</sup></a> We add the <code>.groups = "drop"</code> argument as species grouping in the resulting tibble is not needed.</p>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="tidyr.html#cb711-1" tabindex="-1"></a>ests <span class="ot">&lt;-</span> ests <span class="sc">%&gt;%</span> </span>
+<span id="cb711-2"><a href="tidyr.html#cb711-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Species, DBH_4in) <span class="sc">%&gt;%</span></span>
+<span id="cb711-3"><a href="tidyr.html#cb711-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sum_trees_ac =</span> <span class="fu">sum</span>(trees_ac),</span>
+<span id="cb711-4"><a href="tidyr.html#cb711-4" tabindex="-1"></a>            <span class="at">sum_vol_cu_ft_ac =</span> <span class="fu">sum</span>(vol_cu_ft_ac),</span>
+<span id="cb711-5"><a href="tidyr.html#cb711-5" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb711-6"><a href="tidyr.html#cb711-6" tabindex="-1"></a>ests</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 9 × 4
+#&gt;   Species         DBH_4in sum_trees_ac sum_vol_cu_ft_ac
+#&gt;   &lt;chr&gt;           &lt;fct&gt;          &lt;dbl&gt;            &lt;dbl&gt;
+#&gt; 1 Abies balsamea  [6,10]             0               0 
+#&gt; 2 Abies balsamea  (10,14]            8             143.
+#&gt; 3 Abies balsamea  (14,18]            0               0 
+#&gt; 4 Betula papyrif… [6,10]             0               0 
+#&gt; 5 Betula papyrif… (10,14]            0               0 
+#&gt; 6 Betula papyrif… (14,18]           16             563.
+#&gt; 7 Pinus strobus   [6,10]             8             116.
+#&gt; 8 Pinus strobus   (10,14]           16             376.
+#&gt; 9 Pinus strobus   (14,18]            0               0</code></pre>
+<p>Okay, now we’re in business! The only thing left to do is reshape <code>ests</code> using <code>tidyr</code>’s <code>pivot_wider()</code> function to put <code>Species</code> along the rows and <code>DBH_4in</code> across the columns and decide which variable to set as the resulting table’s value. This is done in the code below to make the stand table.</p>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="tidyr.html#cb713-1" tabindex="-1"></a>stand <span class="ot">&lt;-</span> ests <span class="sc">%&gt;%</span> </span>
+<span id="cb713-2"><a href="tidyr.html#cb713-2" tabindex="-1"></a>  <span class="fu">select</span>(Species, DBH_4in, sum_trees_ac) <span class="sc">%&gt;%</span></span>
+<span id="cb713-3"><a href="tidyr.html#cb713-3" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> DBH_4in, <span class="at">values_from =</span> sum_trees_ac)</span>
+<span id="cb713-4"><a href="tidyr.html#cb713-4" tabindex="-1"></a></span>
+<span id="cb713-5"><a href="tidyr.html#cb713-5" tabindex="-1"></a>stand</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 3 × 4
+#&gt;   Species           `[6,10]` `(10,14]` `(14,18]`
+#&gt;   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+#&gt; 1 Abies balsamea           0         8         0
+#&gt; 2 Betula papyrifera        0         0        16
+#&gt; 3 Pinus strobus            8        16         0</code></pre>
+<p>Notice in the code above, we <code>select()</code> only those columns used in the call to <code>pivot_wider()</code>.<a href="#fn63" class="footnote-ref" id="fnref63"><sup>63</sup></a></p>
+<p>The final touch is to add row and column totals—the code for which is provided below with minimal explanation. As you’ll see, adding these totals is a bit convoluted; however, each code component has been covered previously, so see if you can work through it and understand the steps.</p>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="tidyr.html#cb715-1" tabindex="-1"></a><span class="co"># Sum across rows.</span></span>
+<span id="cb715-2"><a href="tidyr.html#cb715-2" tabindex="-1"></a>stand <span class="ot">&lt;-</span> stand <span class="sc">%&gt;%</span></span>
+<span id="cb715-3"><a href="tidyr.html#cb715-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Totals =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric))))</span>
+<span id="cb715-4"><a href="tidyr.html#cb715-4" tabindex="-1"></a></span>
+<span id="cb715-5"><a href="tidyr.html#cb715-5" tabindex="-1"></a><span class="co"># Sum down columns.  </span></span>
+<span id="cb715-6"><a href="tidyr.html#cb715-6" tabindex="-1"></a><span class="co"># This is a little tricky. Notice the . places the output from </span></span>
+<span id="cb715-7"><a href="tidyr.html#cb715-7" tabindex="-1"></a><span class="co"># summarize() after stands in the bind_rows(stands, .), i.e., it </span></span>
+<span id="cb715-8"><a href="tidyr.html#cb715-8" tabindex="-1"></a><span class="co"># binds the row of totals to the bottom of the stand tibble. </span></span>
+<span id="cb715-9"><a href="tidyr.html#cb715-9" tabindex="-1"></a>stand <span class="ot">&lt;-</span> stand <span class="sc">%&gt;%</span>  </span>
+<span id="cb715-10"><a href="tidyr.html#cb715-10" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Species =</span> <span class="st">&quot;Totals&quot;</span>, <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sum)) <span class="sc">%&gt;%</span></span>
+<span id="cb715-11"><a href="tidyr.html#cb715-11" tabindex="-1"></a>  <span class="fu">bind_rows</span>(stand, .)</span>
+<span id="cb715-12"><a href="tidyr.html#cb715-12" tabindex="-1"></a>         </span>
+<span id="cb715-13"><a href="tidyr.html#cb715-13" tabindex="-1"></a>stand</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 4 × 5
+#&gt;   Species           `[6,10]` `(10,14]` `(14,18]` Totals
+#&gt;   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1 Abies balsamea           0         8         0      8
+#&gt; 2 Betula papyrifera        0         0        16     16
+#&gt; 3 Pinus strobus            8        16         0     24
+#&gt; 4 Totals                   8        24        16     48</code></pre>
+<p>The <code>stand</code> tibble above is the stand Table <a href="tidyr.html#tab:stand1Stock">8.3</a>. Creating the stock table follows the exact same steps up to the call to <code>pivot_wider()</code>.</p>
+<p>We took care to introduce the idea of implicit zeros in the forest inventory estimates and how <code>complete()</code> is used to make those implicit zeros explicit. In Chapter <a href="forestStat.html#forestStat">12</a>, making implicit zeros explicit via the <code>complete()</code> function will again be important for implementing methods that generate estimates from forest inventory data.</p>
+<p>When building stand and stock tables, specifying the optional <code>values_fill</code> argument in <code>pivot_wider()</code> allows you to skip the prior call to <code>complete()</code>. Like <code>complete()</code> and its <code>fill</code> argument, <code>pivot_wider()</code>’s <code>values_fill</code> argument allows you to specify the explicit value for missing stand and stock table row and column combinations.</p>
+<p>The code below rebuilds the stand table in a single workflow starting with a fresh copy of <code>ests</code> and taking advantage of <code>pivot_wider()</code>’s <code>values_fill</code> argument, which removes the need for <code>complete()</code> (we comment out the call to <code>complete()</code> and add <code>values_fill = 0</code> to <code>pivot_wider()</code>.</p>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="tidyr.html#cb717-1" tabindex="-1"></a>ests <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;datasets/stand_stock_estimates.csv&quot;</span>)</span>
+<span id="cb717-2"><a href="tidyr.html#cb717-2" tabindex="-1"></a></span>
+<span id="cb717-3"><a href="tidyr.html#cb717-3" tabindex="-1"></a>stand <span class="ot">&lt;-</span> ests <span class="sc">%&gt;%</span> </span>
+<span id="cb717-4"><a href="tidyr.html#cb717-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DBH_4in =</span> <span class="fu">cut_width</span>(DBH_in, <span class="at">width =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb717-5"><a href="tidyr.html#cb717-5" tabindex="-1"></a>  <span class="co"># complete(Species, DBH_4in, fill = list(trees_ac = 0)) %&gt;%</span></span>
+<span id="cb717-6"><a href="tidyr.html#cb717-6" tabindex="-1"></a>  <span class="fu">group_by</span>(Species, DBH_4in) <span class="sc">%&gt;%</span></span>
+<span id="cb717-7"><a href="tidyr.html#cb717-7" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sum_trees_ac =</span> <span class="fu">sum</span>(trees_ac), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb717-8"><a href="tidyr.html#cb717-8" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> DBH_4in, <span class="at">values_from =</span> sum_trees_ac,</span>
+<span id="cb717-9"><a href="tidyr.html#cb717-9" tabindex="-1"></a>              <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="co"># Added values_fill argument.</span></span>
+<span id="cb717-10"><a href="tidyr.html#cb717-10" tabindex="-1"></a></span>
+<span id="cb717-11"><a href="tidyr.html#cb717-11" tabindex="-1"></a><span class="co"># Add row and column totals.</span></span>
+<span id="cb717-12"><a href="tidyr.html#cb717-12" tabindex="-1"></a>stand <span class="ot">&lt;-</span> stand <span class="sc">%&gt;%</span></span>
+<span id="cb717-13"><a href="tidyr.html#cb717-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Totals =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric))))</span>
+<span id="cb717-14"><a href="tidyr.html#cb717-14" tabindex="-1"></a></span>
+<span id="cb717-15"><a href="tidyr.html#cb717-15" tabindex="-1"></a><span class="co"># Sum down columns.  </span></span>
+<span id="cb717-16"><a href="tidyr.html#cb717-16" tabindex="-1"></a>stand <span class="ot">&lt;-</span> stand <span class="sc">%&gt;%</span>  </span>
+<span id="cb717-17"><a href="tidyr.html#cb717-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Species =</span> <span class="st">&quot;Totals&quot;</span>, <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), sum)) <span class="sc">%&gt;%</span></span>
+<span id="cb717-18"><a href="tidyr.html#cb717-18" tabindex="-1"></a>  <span class="fu">bind_rows</span>(stand, .)</span>
+<span id="cb717-19"><a href="tidyr.html#cb717-19" tabindex="-1"></a></span>
+<span id="cb717-20"><a href="tidyr.html#cb717-20" tabindex="-1"></a>stand</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 4 × 5
+#&gt;   Species           `(10,14]` `(14,18]` `[6,10]` Totals
+#&gt;   &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1 Abies balsamea            8         0        0      8
+#&gt; 2 Betula papyrifera         0        16        0     16
+#&gt; 3 Pinus strobus            16         0        8     24
+#&gt; 4 Totals                   24        16        8     48</code></pre>
+<p>On your own, modify the code above to rebuild the stock table using <code>vol_cu_ft_ac</code> estimates. Your resulting stock table should match values in Table <a href="#stand1Stock"><strong>??</strong></a>.</p>
+</div>
+<div id="summaryTidr" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Summary<a href="tidyr.html#summaryTidr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This chapter covered key functions in the <code>tidyr</code> package.<a href="#fn64" class="footnote-ref" id="fnref64"><sup>64</sup></a> These functions simplify moving between dataset formats and other common data wrangling and analysis tasks. The chapter opens with a definition of tidy data. Tidy data simplify analysis and conversion to other formats. Messy data are not wrong or bad and, as illustrated using the stand and stock tables in Section <a href="tidyr.html#standStockTabs">8.3</a>, are often effective formats for conveying information.</p>
+<p>Section <a href="tidyr.html#tidyrReshape">8.1</a> introduced and illustrated <code>pivot_longer()</code> and <code>pivot_wider()</code> functions for moving between long and wide formats. Section <a href="tidyr.html#tidyrSeparate">8.2</a> covered the <code>separate_wider_delim()</code> and <code>unite()</code> functions used to split and combine character columns. Over these two sections, a piped workflow comprising <code>dplyr</code> and <code>tidyr</code> functions was developed to make the wide and messy FACE dataset tidy.</p>
+<p>Forest stand and stock tables are fundamental to making informed forest management decisions. Generating such tables is a routine task and hence having an efficient and flexible software workflow to create these tables is important. Such a workflow was introduced in Section <a href="tidyr.html#standStockTabs">8.3</a>. An important workflow component was to make explicit the implicit zeros in the forest estimates via the <code>tidyr</code> <code>complete()</code> function <em>or</em> by specifying <code>values_fill = 0</code> in <code>pivot_wider()</code>. The stand and stock table workflow will be extended in Chapter <a href="forestStat.html#forestStat">12</a> with steps to generate estimates from forest inventory data.</p>
+</div>
+<div id="exercisesTidyr" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Exercises<a href="tidyr.html#exercisesTidyr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The exercises use the Elk County timber cruise dataset introduced in Section <a href="overview.html#elk">1.2.2</a>. These data were collected on a 271 acre forested property in Elk County, Pennsylvania, USA, to inform the owner’s forest management plan.</p>
+<p>In these exercises you’ll develop stand and stock tables using per acre estimates for acceptable growing stock (AGS) sawtimber number of trees, basal area, and number of logs by species. Here, AGS is defined as a desirable species that contains at least one USFS Grade 3 log, now or in the future, and likely to live another 15 years.<a href="#fn65" class="footnote-ref" id="fnref65"><sup>65</sup></a> For each sawtimber tree, the forester recorded the number of 16 foot logs (minimum 1/2 log) to the nearest 1/2 log to a minimum top diameter of 10 inches or to a point where the tree no longer meets USFS Grade 3 specifications due to forks, crook, excessive sweep, defect, etc. Tree diameter was measured at 4.5 feet above the ground (DBH) on the uphill side of the tree. All trees 1.0 inch DBH and larger were recorded by two inch diameter classes as follows with DBH range and recorded class given in Table <a href="tidyr.html#tab:elkDBHClass">8.4</a>.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:elkDBHClass">TABLE 8.4: </span>DBH (in) range and associated class recorded in the Elk County cruise.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+DBH range
+</th>
+<th style="text-align:center;">
+DBH class
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1.0 – 2.9
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.0 – 4.9
+</td>
+<td style="text-align:center;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5.0 – 6.9
+</td>
+<td style="text-align:center;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+7.0 – 8.9
+</td>
+<td style="text-align:center;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+9.0 – 10.9
+</td>
+<td style="text-align:center;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+11.0 – 12.9
+</td>
+<td style="text-align:center;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+etc.
+</td>
+<td style="text-align:center;">
+etc.
+</td>
+</tr>
+</tbody>
+</table>
+<p>Estimates used to build the subsequent tables are provided in “datasets/elk_spp_dbh_estimates.csv”. Columns in this file are as follows.</p>
+<ol style="list-style-type: decimal">
+<li><code>Species</code> tree species common name.</li>
+<li><code>DBH_2in</code> two inch DBH class (see Table <a href="tidyr.html#tab:elkDBHClass">8.4</a> for class range and endpoints).</li>
+<li><code>Trees_ac</code> estimated number of trees per acre.</li>
+<li><code>BA_ac</code> estimated square feet of basal area per acre.</li>
+<li><code>Logs_ac</code> estimated number of 16 foot logs per acre.</li>
+</ol>
+<p>This data file is set up similar to Table <a href="tidyr.html#tab:stand1Ests">8.1</a>. Methods to generate these estimates from tree measurement data will be covered in Chapter <a href="forestStat.html#forestStat">12</a>.</p>
+<p>For most exercises, we provide the desired output and it’s your job to write the <code>tidyverse</code> code to reproduce the output. Use piped <code>tidyverse</code> workflows to answer all questions.</p>
+<div class="exercise">
+<p><span id="exr:tidyr1" class="exercise"><strong>Exercise 8.1  </strong></span>Create a tibble called <code>elk_ags</code> that holds the estimates described above and provided in “datasets/elk_spp_dbh_estimates.csv”. Once complete, your <code>elk_ags</code> tibble should match the output below. Use <code>elk_ags</code> for all subsequent questions.</p>
+</div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="tidyr.html#cb719-1" tabindex="-1"></a>elk_ags</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 43 × 5
+#&gt;    Species      DBH_2in Trees_ac BA_ac Logs_ac
+#&gt;    &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1 Beech             12   1.33   1.04    1.33 
+#&gt;  2 Beech             14   0.585  0.625   0.682
+#&gt;  3 Beech             16   0.448  0.625   0.746
+#&gt;  4 Beech             20   0.0955 0.208   0.143
+#&gt;  5 Black Birch       12   1.06   0.833   1.06 
+#&gt;  6 Black Birch       14   0.974  1.04    1.07 
+#&gt;  7 Black Birch       16   0.895  1.25    1.42 
+#&gt;  8 Black Birch       18   0.118  0.208   0.236
+#&gt;  9 Black Birch       20   0.0955 0.208   0.191
+#&gt; 10 Black Cherry      12   0.796  0.625   0.796
+#&gt; # ℹ 33 more rows</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr2" class="exercise"><strong>Exercise 8.2  </strong></span>What are the distinct species? Your output might be formatted differently depending on the approach you choose to list the distinct species.</p>
+</div>
+<pre><code>#&gt; # A tibble: 9 × 1
+#&gt;   Species         
+#&gt;   &lt;chr&gt;           
+#&gt; 1 Beech           
+#&gt; 2 Black Birch     
+#&gt; 3 Black Cherry    
+#&gt; 4 Cucumber Tree   
+#&gt; 5 Northern Red Oak
+#&gt; 6 Red Maple       
+#&gt; 7 Sugar Maple     
+#&gt; 8 Yellow Birch    
+#&gt; 9 Yellow Poplar</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr3" class="exercise"><strong>Exercise 8.3  </strong></span>By species, what is the estimate for: 1) trees per acre; 2) basal area per acre; 3) logs per acre. Call your summarized variables <code>sum_trees_ac</code>, <code>sum_ba_ac</code>, and <code>sum_logs_ac</code>. Hint, this will involve a grouped <code>summarize()</code> that sums estimates by species.</p>
+</div>
+<pre><code>#&gt; # A tibble: 9 × 4
+#&gt;   Species          sum_trees_ac sum_ba_ac sum_logs_ac
+#&gt;   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+#&gt; 1 Beech                  2.45       2.5         2.90 
+#&gt; 2 Black Birch            3.14       3.54        3.98 
+#&gt; 3 Black Cherry           4.52       6.25        7.63 
+#&gt; 4 Cucumber Tree          0.821      1.46        2.09 
+#&gt; 5 Northern Red Oak       0.864      2.08        1.82 
+#&gt; 6 Red Maple             26.6       35.2        39.8  
+#&gt; 7 Sugar Maple            2.54       3.12        3.43 
+#&gt; 8 Yellow Birch           1.44       1.67        1.73 
+#&gt; 9 Yellow Poplar          0.0565     0.208       0.170</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr4" class="exercise"><strong>Exercise 8.4  </strong></span>By the 2 inch DBH class (i.e., using <code>DBH_2in</code>), what is the estimated: 1) trees per acre; 2) basal area per acre; 3) logs per acre. Call your summarized variables <code>sum_trees_ac</code>, <code>sum_ba_ac</code>, and <code>sum_logs_ac</code>. Hint, this will involve a grouped <code>summarize()</code> that sums estimates by DBH class.</p>
+</div>
+<pre><code>#&gt; # A tibble: 10 × 4
+#&gt;    DBH_2in sum_trees_ac sum_ba_ac sum_logs_ac
+#&gt;      &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+#&gt;  1      12       8.22       6.46       7.96  
+#&gt;  2      14      16.4       17.5       20.8   
+#&gt;  3      16       8.36      11.7       14.2   
+#&gt;  4      18       4.72       8.33      10.3   
+#&gt;  5      20       2.58       5.62       4.97  
+#&gt;  6      22       1.58       4.17       3.75  
+#&gt;  7      24       0.464      1.46       1.16  
+#&gt;  8      26       0.0565     0.208      0.170 
+#&gt;  9      28       0.0974     0.417      0.244 
+#&gt; 10      30       0.0424     0.208      0.0849</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr5" class="exercise"><strong>Exercise 8.5  </strong></span>In preparation for building stand and stock tables, add a new column to <code>elk_ags</code> that explicitly defines each 2 inch DBH class’s range and endpoints defined in Table <a href="tidyr.html#tab:elkDBHClass">8.4</a>. Call your new column <code>DBH_2in_range</code> and place it to the right of <code>DBH_2in</code>. Hint, use the <code>ggplot2</code> package <code>cut_width()</code> function on <code>DBH_2in</code>. You’ll likely need to consult the <code>cut_width()</code> manual page to define its <code>boundary</code> and <code>closed</code> arguments appropriately.</p>
+</div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="tidyr.html#cb724-1" tabindex="-1"></a>elk_ags</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 43 × 6
+#&gt;    Species DBH_2in DBH_2in_range Trees_ac BA_ac Logs_ac
+#&gt;    &lt;chr&gt;     &lt;dbl&gt; &lt;fct&gt;            &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1 Beech        12 [11,13)         1.33   1.04    1.33 
+#&gt;  2 Beech        14 [13,15)         0.585  0.625   0.682
+#&gt;  3 Beech        16 [15,17)         0.448  0.625   0.746
+#&gt;  4 Beech        20 [19,21)         0.0955 0.208   0.143
+#&gt;  5 Black …      12 [11,13)         1.06   0.833   1.06 
+#&gt;  6 Black …      14 [13,15)         0.974  1.04    1.07 
+#&gt;  7 Black …      16 [15,17)         0.895  1.25    1.42 
+#&gt;  8 Black …      18 [17,19)         0.118  0.208   0.236
+#&gt;  9 Black …      20 [19,21)         0.0955 0.208   0.191
+#&gt; 10 Black …      12 [11,13)         0.796  0.625   0.796
+#&gt; # ℹ 33 more rows</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr6" class="exercise"><strong>Exercise 8.6  </strong></span>Build a stand table with species along rows, DBH classes along columns (using <code>DBH_2in_range</code> created in Exercise <a href="tidyr.html#exr:tidyr5">8.5</a>), and trees per acre as values. Round the stand table’s values to two digits.</p>
+<p>In general, rounding should always be done after all calculations are complete. An efficient way to round all numeric columns in your completed tibble is to pipe it into <code>mutate(across(where(is.numeric), function(x) round(x, digits = 3)))</code>. This call to <code>mutate()</code> applies an <em>anonymous function</em>—a function without a name—defined as <code>function(x) round(x, digits = 3)</code> to each numeric column. Here, the anonymous function is the <code>base::round()</code> function with our desired number of digits set to 3. If you’re happy with <code>round()</code>’s default <code>digits = 0</code>, then there’s no need for the anonymous function and the call to <code>mutate()</code> is simply <code>mutate(across(where(is.numeric), round))</code>. Anonymous functions are only needed when you want to define your own function or specify non-default argument values in existing functions.</p>
+<p>The stock table’s first several columns are printed below and the entire table can be found in “datasets/tidyr_exr/tidyr_elk_ags_stand_table.tsv”. Notice your row and column totals should equal the <code>sum_trees_ac</code> values found in Exercises <a href="tidyr.html#exr:tidyr3">8.3</a> and <a href="tidyr.html#exr:tidyr4">8.4</a>, respectively.</p>
+</div>
+<pre><code>#&gt; # A tibble: 10 × 12
+#&gt;    Species      `[11,13)` `[13,15)` `[15,17)` `[19,21)`
+#&gt;    &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1 Beech             1.33      0.58      0.45      0.1 
+#&gt;  2 Black Birch       1.06      0.97      0.9       0.1 
+#&gt;  3 Black Cherry      0.8       1.17      1.19      0.38
+#&gt;  4 Cucumber Tr…      0         0.19      0.15      0.1 
+#&gt;  5 Northern Re…      0         0.19      0         0   
+#&gt;  6 Red Maple         4.51     10.9       5.07      1.91
+#&gt;  7 Sugar Maple       0.53      1.17      0.45      0   
+#&gt;  8 Yellow Birch      0         1.17      0.15      0   
+#&gt;  9 Yellow Popl…      0         0         0         0   
+#&gt; 10 Totals            8.22     16.4       8.36      2.58
+#&gt; # ℹ 7 more variables: `[17,19)` &lt;dbl&gt;,
+#&gt; #   `[21,23)` &lt;dbl&gt;, `[23,25)` &lt;dbl&gt;, `[27,29)` &lt;dbl&gt;,
+#&gt; #   `[29,31]` &lt;dbl&gt;, `[25,27)` &lt;dbl&gt;, Totals &lt;dbl&gt;</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr7" class="exercise"><strong>Exercise 8.7  </strong></span>Build a stock table with species along rows, DBH classes along columns (using <code>DBH_2in_range</code> created in Exercise <a href="tidyr.html#exr:tidyr5">8.5</a>), and basal area per acre as values. Round the stock table’s values to three digits (see Exercise <a href="tidyr.html#exr:tidyr6">8.6</a> for guidance round column values). Hint, it should take minimal changes to your Exercise <a href="tidyr.html#exr:tidyr6">8.6</a> stand table workflow to produce the desired stock table.</p>
+<p>The first several stock table columns are printed below and the entire table can be found in “datasets/tidyr_exr/tidyr_elk_ags_ba_stock_table.tsv”. Notice your row and column totals should equal the <code>sum_ba_ac</code> values found in Exercises <a href="tidyr.html#exr:tidyr3">8.3</a> and <a href="tidyr.html#exr:tidyr4">8.4</a>, respectively.</p>
+</div>
+<pre><code>#&gt; # A tibble: 11 × 12
+#&gt;    Species      `[11,13)` `[13,15)` `[15,17)` `[19,21)`
+#&gt;    &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1 Beech             1.33      0.58      0.45      0.1 
+#&gt;  2 Black Birch       1.06      0.97      0.9       0.1 
+#&gt;  3 Black Cherry      0.8       1.17      1.19      0.38
+#&gt;  4 Cucumber Tr…      0         0.19      0.15      0.1 
+#&gt;  5 Northern Re…      0         0.19      0         0   
+#&gt;  6 Red Maple         4.51     10.9       5.07      1.91
+#&gt;  7 Sugar Maple       0.53      1.17      0.45      0   
+#&gt;  8 Yellow Birch      0         1.17      0.15      0   
+#&gt;  9 Yellow Popl…      0         0         0         0   
+#&gt; 10 Totals            8.22     16.4       8.36      2.58
+#&gt; 11 Totals            6.46     17.5      11.7       5.62
+#&gt; # ℹ 7 more variables: `[17,19)` &lt;dbl&gt;,
+#&gt; #   `[21,23)` &lt;dbl&gt;, `[23,25)` &lt;dbl&gt;, `[27,29)` &lt;dbl&gt;,
+#&gt; #   `[29,31]` &lt;dbl&gt;, `[25,27)` &lt;dbl&gt;, Totals &lt;dbl&gt;</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr8" class="exercise"><strong>Exercise 8.8  </strong></span>Build a stock table with species along rows, DBH classes along columns (using <code>DBH_2in_range</code> created in Exercise <a href="tidyr.html#exr:tidyr5">8.5</a>), and logs per acre as values. Round the stock table’s values to three digits (see Exercise <a href="tidyr.html#exr:tidyr6">8.6</a> for guidance round column values).</p>
+<p>The first several stock table columns are printed below and the entire table can be found in “datasets/tidyr_exr/tidyr_elk_ags_logs_stock_table.tsv”. Notice your row and column totals should equal the <code>sum_logs_ac</code> values found in Exercises <a href="tidyr.html#exr:tidyr3">8.3</a> and <a href="tidyr.html#exr:tidyr4">8.4</a>, respectively.</p>
+</div>
+<pre><code>#&gt; # A tibble: 11 × 12
+#&gt;    Species      `[11,13)` `[13,15)` `[15,17)` `[19,21)`
+#&gt;    &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+#&gt;  1 Beech             1.33      0.58      0.45      0.1 
+#&gt;  2 Black Birch       1.06      0.97      0.9       0.1 
+#&gt;  3 Black Cherry      0.8       1.17      1.19      0.38
+#&gt;  4 Cucumber Tr…      0         0.19      0.15      0.1 
+#&gt;  5 Northern Re…      0         0.19      0         0   
+#&gt;  6 Red Maple         4.51     10.9       5.07      1.91
+#&gt;  7 Sugar Maple       0.53      1.17      0.45      0   
+#&gt;  8 Yellow Birch      0         1.17      0.15      0   
+#&gt;  9 Yellow Popl…      0         0         0         0   
+#&gt; 10 Totals            8.22     16.4       8.36      2.58
+#&gt; 11 Totals            7.96     20.8      14.2       4.97
+#&gt; # ℹ 7 more variables: `[17,19)` &lt;dbl&gt;,
+#&gt; #   `[21,23)` &lt;dbl&gt;, `[23,25)` &lt;dbl&gt;, `[27,29)` &lt;dbl&gt;,
+#&gt; #   `[29,31]` &lt;dbl&gt;, `[25,27)` &lt;dbl&gt;, Totals &lt;dbl&gt;</code></pre>
+<div class="exercise">
+<p><span id="exr:tidyr9" class="exercise"><strong>Exercise 8.9  </strong></span>Take your wide messy stock table from Exercise <a href="tidyr.html#exr:tidyr8">8.8</a>, remove the total row and column, then reformat it to be long and tidy. The piped workflow will likely include a call to <code>filter()</code> or <code>slice()</code>, <code>select()</code>, and <code>pivot_longer()</code>. Set the <code>pivot_longer()</code> functions <code>names_to = "DBH_2in_range"</code> and <code>values_to = "Logs_ac</code>. Note, the resutling tibble will be like <code>elk_ags</code> but with <code>Logs_ac</code> summed within species and DBH class, and with explicit zero rows added for missing species and DBH class combinations. Given there are 9 species and 10 DBH classes, the resulting tibble should have 90 rows.</p>
+</div>
+<pre><code>#&gt; # A tibble: 90 × 3
+#&gt;    Species DBH_2in_range sum_logs_ac
+#&gt;    &lt;chr&gt;   &lt;chr&gt;               &lt;dbl&gt;
+#&gt;  1 Beech   [11,13)              1.33
+#&gt;  2 Beech   [13,15)              0.58
+#&gt;  3 Beech   [15,17)              0.45
+#&gt;  4 Beech   [19,21)              0.1 
+#&gt;  5 Beech   [17,19)              0   
+#&gt;  6 Beech   [21,23)              0   
+#&gt;  7 Beech   [23,25)              0   
+#&gt;  8 Beech   [27,29)              0   
+#&gt;  9 Beech   [29,31]              0   
+#&gt; 10 Beech   [25,27)              0   
+#&gt; # ℹ 80 more rows</code></pre>
+<p>As you’ll see in the next chapter, this long and tidy format is used for most calls to <code>ggplot2</code> functions to make informative and beautiful graphics.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-hanks1976" class="csl-entry">
+Hanks, Leland F. 1976. <span>“Hardwood Tree Grades for Factory Lumber.”</span> <em>Res. Pap. NE-333 Upper Darby, PA: U.S. Department of Agriculture, Forest Service, Northeastern Forest Experiment Station. 81 p.</em> <a href="https://www.fs.usda.gov/research/treesearch/3946">https://www.fs.usda.gov/research/treesearch/3946</a>.
+</div>
+<div id="ref-wickham2023" class="csl-entry">
+Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 2nd ed. O’Reilly Media, Inc.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="57">
+<li id="fn57"><p>See Section <a href="scripts.html#syntacticNames">3.2.2</a> for syntactic name rules.<a href="tidyr.html#fnref57" class="footnote-back">↩︎</a></p></li>
+<li id="fn58"><p>As noted briefly in Section <a href="tidyverse.html#readr">6.3</a>, <code>readr</code> read functions make non-syntactic column names syntactic by surrounding them by backticks. While this nice feature preserves the external file’s column names, it can be cumbersome to include backticks when referencing columns in subsequent workflows.<a href="tidyr.html#fnref58" class="footnote-back">↩︎</a></p></li>
+<li id="fn59"><p>To facilitate piping, <code>data</code> is the first argument in <code>tidyr</code> functions.<a href="tidyr.html#fnref59" class="footnote-back">↩︎</a></p></li>
+<li id="fn60"><p>Run <code>cut_width(DBH_in, width = 4)</code> in the console, try different <code>width</code> argument values, and consult its manual page via <code>?ggplot2::cut_width</code> to better understand the function’s use and behavior.<a href="tidyr.html#fnref60" class="footnote-back">↩︎</a></p></li>
+<li id="fn61"><p>The <code>NA</code> value for <code>DBH_in</code> is okay, because this variable is not needed to build subsequent stand and stock tables.<a href="tidyr.html#fnref61" class="footnote-back">↩︎</a></p></li>
+<li id="fn62"><p>This step could be done before the call to <code>complete()</code> and yield the same result.<a href="tidyr.html#fnref62" class="footnote-back">↩︎</a></p></li>
+<li id="fn63"><p>Try removing the call to <code>select()</code> before <code>pivot_wider()</code> and see what happens.<a href="tidyr.html#fnref63" class="footnote-back">↩︎</a></p></li>
+<li id="fn64"><p>As with other programming topics introduced here, we provide only a partial tour and refer you to package manual pages and vignettes for more complete coverage, e.g., run <code>browseVignettes(package="tidyr")</code> on the console to see all <code>tidyr</code> vignettes.<a href="tidyr.html#fnref64" class="footnote-back">↩︎</a></p></li>
+<li id="fn65"><p>See <span class="citation">Hanks (<a href="#ref-hanks1976">1976</a>)</span> for USFS log grade specifications.<a href="tidyr.html#fnref65" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dplyr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

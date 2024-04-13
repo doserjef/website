@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Data structures | Introduction to Forestry Data Analysis with R</title>
+  <meta name="description" content="Chapter 4 Data structures | Introduction to Forestry Data Analysis with R." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Data structures | Introduction to Forestry Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/cover.jpg" />
+  <meta property="og:description" content="Chapter 4 Data structures | Introduction to Forestry Data Analysis with R." />
+  <meta name="github-repo" content="finleya/FD20" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Data structures | Introduction to Forestry Data Analysis with R" />
+  
+  <meta name="twitter:description" content="Chapter 4 Data structures | Introduction to Forestry Data Analysis with R." />
+  <meta name="twitter:image" content="/images/cover.jpg" />
+
+<meta name="author" content="Andrew O. Finley and Jeffrey W. Doser" />
+
+
+<meta name="date" content="2024-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="scripts.html"/>
+<link rel="next" href="functions.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/kePrint/kePrint.js"></script>
+<link href="libs/lightable/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<script src="libs/leaflet-providers/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-easybutton/easy-button.css" rel="stylesheet" />
+<script src="libs/leaflet-easybutton/easy-button.js"></script>
+<script src="libs/leaflet-easybutton/EasyButton-binding.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/bootstrap.min.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Forestry Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="authors.html"><a href="authors.html"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1</b> Overview and motivating data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html#aim"><i class="fa fa-check"></i><b>1.1</b> Aim and scope</a></li>
+<li class="chapter" data-level="1.2" data-path="overview.html"><a href="overview.html#datasets"><i class="fa fa-check"></i><b>1.2</b> Motivating forestry datasets</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="overview.html"><a href="overview.html#fef"><i class="fa fa-check"></i><b>1.2.1</b> Fernow Experimental Forest biomass dataset</a></li>
+<li class="chapter" data-level="1.2.2" data-path="overview.html"><a href="overview.html#elk"><i class="fa fa-check"></i><b>1.2.2</b> Elk County timber cruise dataset</a></li>
+<li class="chapter" data-level="1.2.3" data-path="overview.html"><a href="overview.html#face"><i class="fa fa-check"></i><b>1.2.3</b> Free-Air Carbon Dioxide Enrichment experiment dataset</a></li>
+<li class="chapter" data-level="1.2.4" data-path="overview.html"><a href="overview.html#pef"><i class="fa fa-check"></i><b>1.2.4</b> Penobscot Experimental Forest inventory and LiDAR dataset</a></li>
+<li class="chapter" data-level="1.2.5" data-path="overview.html"><a href="overview.html#hf"><i class="fa fa-check"></i><b>1.2.5</b> Harvard Forest tree census</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="overview.html"><a href="overview.html#howToLearn"><i class="fa fa-check"></i><b>1.3</b> How to learn: The most important section in this book!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introToR.html"><a href="introToR.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introToR.html"><a href="introToR.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Installing R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introToR.html"><a href="introToR.html#RDescriptive"><i class="fa fa-check"></i><b>2.1.1</b> First session</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introToR.html"><a href="introToR.html#workingDirectory"><i class="fa fa-check"></i><b>2.2</b> Workspace and working directory</a></li>
+<li class="chapter" data-level="2.3" data-path="introToR.html"><a href="introToR.html#packages"><i class="fa fa-check"></i><b>2.3</b> Packages</a></li>
+<li class="chapter" data-level="2.4" data-path="introToR.html"><a href="introToR.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting help</a></li>
+<li class="chapter" data-level="2.5" data-path="introToR.html"><a href="introToR.html#summaryIntroR"><i class="fa fa-check"></i><b>2.5</b> Summary</a></li>
+<li class="chapter" data-level="2.6" data-path="introToR.html"><a href="introToR.html#exercisesIntroR"><i class="fa fa-check"></i><b>2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>3</b> Scripts and reproducible workflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scripts.html"><a href="scripts.html#scripts-1"><i class="fa fa-check"></i><b>3.1</b> Scripts</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts.html"><a href="scripts.html#best-practices-for-naming-and-formatting"><i class="fa fa-check"></i><b>3.2</b> Best practices for naming and formatting</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts.html"><a href="scripts.html#fileNaming"><i class="fa fa-check"></i><b>3.2.1</b> Script file naming</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts.html"><a href="scripts.html#syntacticNames"><i class="fa fa-check"></i><b>3.2.2</b> Variable naming</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts.html"><a href="scripts.html#code-formatting"><i class="fa fa-check"></i><b>3.2.3</b> Code formatting</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scripts.html"><a href="scripts.html#customize-your-coding-environment"><i class="fa fa-check"></i><b>3.2.4</b> Customize your coding environment</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts.html"><a href="scripts.html#pathsReadWrite"><i class="fa fa-check"></i><b>3.3</b> File paths and external data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="scripts.html"><a href="scripts.html#paths"><i class="fa fa-check"></i><b>3.3.1</b> Relative and absolute paths</a></li>
+<li class="chapter" data-level="3.3.2" data-path="scripts.html"><a href="scripts.html#readWrite"><i class="fa fa-check"></i><b>3.3.2</b> External data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="scripts.html"><a href="scripts.html#illustration"><i class="fa fa-check"></i><b>3.3.3</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="scripts.html"><a href="scripts.html#projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects and keeping organized</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="scripts.html"><a href="scripts.html#directories"><i class="fa fa-check"></i><b>3.4.1</b> Directory structure</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="scripts.html"><a href="scripts.html#summaryScripts"><i class="fa fa-check"></i><b>3.5</b> Summary</a></li>
+<li class="chapter" data-level="3.6" data-path="scripts.html"><a href="scripts.html#exercisesWorkflow"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data structures</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#typesOfVariables"><i class="fa fa-check"></i><b>4.1</b> Types of variables</a></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.2</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="structures.html"><a href="structures.html#dataTypes"><i class="fa fa-check"></i><b>4.2.1</b> Types, conversion, and coercion</a></li>
+<li class="chapter" data-level="4.2.2" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.2.2</b> Patterned data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="structures.html"><a href="structures.html#basicSubsetting"><i class="fa fa-check"></i><b>4.2.3</b> Indexing, accessing, and recycling elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#specialDataTypes"><i class="fa fa-check"></i><b>4.4</b> Missing data, infinity, and other special data types</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.4.1</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.5</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#dataFrameSubsetting"><i class="fa fa-check"></i><b>4.5.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.5.2" data-path="structures.html"><a href="structures.html#adding-columns"><i class="fa fa-check"></i><b>4.5.2</b> Adding columns</a></li>
+<li class="chapter" data-level="4.5.3" data-path="structures.html"><a href="structures.html#removing-columns"><i class="fa fa-check"></i><b>4.5.3</b> Removing columns</a></li>
+<li class="chapter" data-level="4.5.4" data-path="structures.html"><a href="structures.html#transformVariables"><i class="fa fa-check"></i><b>4.5.4</b> Transforming columns</a></li>
+<li class="chapter" data-level="4.5.5" data-path="structures.html"><a href="structures.html#rearranging-columns"><i class="fa fa-check"></i><b>4.5.5</b> Rearranging columns</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.6</b> Lists</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-elements"><i class="fa fa-check"></i><b>4.6.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.6.2" data-path="structures.html"><a href="structures.html#adding-and-removing-elements"><i class="fa fa-check"></i><b>4.6.2</b> Adding and removing elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#logicalOperators"><i class="fa fa-check"></i><b>4.7</b> Comparison and logical operators</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#inOperator"><i class="fa fa-check"></i><b>4.7.1</b> The <code>%in%</code> operator</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with logical vectors</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="structures.html"><a href="structures.html#modifySubsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying and creating objects via subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="structures.html"><a href="structures.html#subsetting-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Subsetting data frames</a></li>
+<li class="chapter" data-level="4.8.3" data-path="structures.html"><a href="structures.html#which"><i class="fa fa-check"></i><b>4.8.3</b> Subsetting with <code>which()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#summaryStructures"><i class="fa fa-check"></i><b>4.9</b> Summary</a></li>
+<li class="chapter" data-level="4.10" data-path="structures.html"><a href="structures.html#exercisesData"><i class="fa fa-check"></i><b>4.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions and programming</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#r-functions"><i class="fa fa-check"></i><b>5.1</b> R functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#programming-conditional-statements"><i class="fa fa-check"></i><b>5.2</b> Programming: conditional statements</a></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#more-on-functions"><i class="fa fa-check"></i><b>5.3</b> More on functions</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="functions.html"><a href="functions.html#functions-with-multiple-returns"><i class="fa fa-check"></i><b>5.3.1</b> Functions with multiple returns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="functions.html"><a href="functions.html#creating-functions"><i class="fa fa-check"></i><b>5.3.2</b> Creating functions</a></li>
+<li class="chapter" data-level="5.3.3" data-path="functions.html"><a href="functions.html#callingFunctions"><i class="fa fa-check"></i><b>5.3.3</b> Calling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#loops"><i class="fa fa-check"></i><b>5.4</b> Loops</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="functions.html"><a href="functions.html#a-while-loop"><i class="fa fa-check"></i><b>5.4.1</b> A while loop</a></li>
+<li class="chapter" data-level="5.4.2" data-path="functions.html"><a href="functions.html#forLoops"><i class="fa fa-check"></i><b>5.4.2</b> A for loop</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#apply"><i class="fa fa-check"></i><b>5.5</b> The <code>apply()</code> function</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="functions.html"><a href="functions.html#using-user-defined-functions-with-apply"><i class="fa fa-check"></i><b>5.5.1</b> Using user-defined functions with <code>apply()</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="functions.html"><a href="functions.html#applyRelatives"><i class="fa fa-check"></i><b>5.5.2</b> Relatives of <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#summaryFunctions"><i class="fa fa-check"></i><b>5.6</b> Summary</a></li>
+<li class="chapter" data-level="5.7" data-path="functions.html"><a href="functions.html#exercisesFunctions"><i class="fa fa-check"></i><b>5.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>6</b> Data summary and analysis using the <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tidyverse.html"><a href="tidyverse.html#minnesota"><i class="fa fa-check"></i><b>6.1</b> Minnesota tree growth dataset</a></li>
+<li class="chapter" data-level="6.2" data-path="tidyverse.html"><a href="tidyverse.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> Improving data frames with <code>tibbles</code></a></li>
+<li class="chapter" data-level="6.3" data-path="tidyverse.html"><a href="tidyverse.html#readr"><i class="fa fa-check"></i><b>6.3</b> Reading and writing files with <code>readr</code></a></li>
+<li class="chapter" data-level="6.4" data-path="tidyverse.html"><a href="tidyverse.html#summaryTidyverse"><i class="fa fa-check"></i><b>6.4</b> Summary</a></li>
+<li class="chapter" data-level="6.5" data-path="tidyverse.html"><a href="tidyverse.html#exercisesTidyverse"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>7</b> Manipulating and summarizing data with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>7.1</b> Filtering rows</a></li>
+<li class="chapter" data-level="7.2" data-path="dplyr.html"><a href="dplyr.html#slice"><i class="fa fa-check"></i><b>7.2</b> Slicing rows</a></li>
+<li class="chapter" data-level="7.3" data-path="dplyr.html"><a href="dplyr.html#arranging-rows-by-values"><i class="fa fa-check"></i><b>7.3</b> Arranging rows by values</a></li>
+<li class="chapter" data-level="7.4" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>7.4</b> Selecting columns</a></li>
+<li class="chapter" data-level="7.5" data-path="dplyr.html"><a href="dplyr.html#renaming-columns"><i class="fa fa-check"></i><b>7.5</b> Renaming columns</a></li>
+<li class="chapter" data-level="7.6" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>7.6</b> Creating new columns</a></li>
+<li class="chapter" data-level="7.7" data-path="dplyr.html"><a href="dplyr.html#relocate"><i class="fa fa-check"></i><b>7.7</b> Change column order</a></li>
+<li class="chapter" data-level="7.8" data-path="dplyr.html"><a href="dplyr.html#summarize"><i class="fa fa-check"></i><b>7.8</b> Summarizing</a></li>
+<li class="chapter" data-level="7.9" data-path="dplyr.html"><a href="dplyr.html#groups"><i class="fa fa-check"></i><b>7.9</b> Grouped data</a></li>
+<li class="chapter" data-level="7.10" data-path="dplyr.html"><a href="dplyr.html#counts"><i class="fa fa-check"></i><b>7.10</b> Counting</a></li>
+<li class="chapter" data-level="7.11" data-path="dplyr.html"><a href="dplyr.html#across"><i class="fa fa-check"></i><b>7.11</b> Applying a function across columns</a></li>
+<li class="chapter" data-level="7.12" data-path="dplyr.html"><a href="dplyr.html#pipes"><i class="fa fa-check"></i><b>7.12</b> Piping</a></li>
+<li class="chapter" data-level="7.13" data-path="dplyr.html"><a href="dplyr.html#dplyrworkflow"><i class="fa fa-check"></i><b>7.13</b> Building <code>dplyr</code> workflows</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="dplyr.html"><a href="dplyr.html#dplyrCaution"><i class="fa fa-check"></i><b>7.13.1</b> A cautionary and encouraging note</a></li>
+</ul></li>
+<li class="chapter" data-level="7.14" data-path="dplyr.html"><a href="dplyr.html#twoTables"><i class="fa fa-check"></i><b>7.14</b> Combining multiple tibbles</a>
+<ul>
+<li class="chapter" data-level="7.14.1" data-path="dplyr.html"><a href="dplyr.html#mutatingJoins"><i class="fa fa-check"></i><b>7.14.1</b> Mutating joins</a></li>
+<li class="chapter" data-level="7.14.2" data-path="dplyr.html"><a href="dplyr.html#filteringJoins"><i class="fa fa-check"></i><b>7.14.2</b> Filtering joins</a></li>
+<li class="chapter" data-level="7.14.3" data-path="dplyr.html"><a href="dplyr.html#allometricJoins"><i class="fa fa-check"></i><b>7.14.3</b> Applying allometric equations using joins</a></li>
+<li class="chapter" data-level="7.14.4" data-path="dplyr.html"><a href="dplyr.html#setOperations"><i class="fa fa-check"></i><b>7.14.4</b> Set operations</a></li>
+<li class="chapter" data-level="7.14.5" data-path="dplyr.html"><a href="dplyr.html#binds"><i class="fa fa-check"></i><b>7.14.5</b> Row and column binds</a></li>
+</ul></li>
+<li class="chapter" data-level="7.15" data-path="dplyr.html"><a href="dplyr.html#summaryDplyr"><i class="fa fa-check"></i><b>7.15</b> Summary</a></li>
+<li class="chapter" data-level="7.16" data-path="dplyr.html"><a href="dplyr.html#exercisesDplyr"><i class="fa fa-check"></i><b>7.16</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>8</b> Tidying data with <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tidyr.html"><a href="tidyr.html#tidyrReshape"><i class="fa fa-check"></i><b>8.1</b> Wide and long formats</a></li>
+<li class="chapter" data-level="8.2" data-path="tidyr.html"><a href="tidyr.html#tidyrSeparate"><i class="fa fa-check"></i><b>8.2</b> Separating and uniting columns</a></li>
+<li class="chapter" data-level="8.3" data-path="tidyr.html"><a href="tidyr.html#standStockTabs"><i class="fa fa-check"></i><b>8.3</b> Application: Stand and stock tables</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyr.html"><a href="tidyr.html#summaryTidr"><i class="fa fa-check"></i><b>8.4</b> Summary</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyr.html"><a href="tidyr.html#exercisesTidyr"><i class="fa fa-check"></i><b>8.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>9</b> Creating graphics with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ggplot2.html"><a href="ggplot2.html#ggplotComponents"><i class="fa fa-check"></i><b>9.1</b> Grammar components</a></li>
+<li class="chapter" data-level="9.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotInitialLook"><i class="fa fa-check"></i><b>9.2</b> An initial look</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ggplot2.html"><a href="ggplot2.html#geometries-mapping-and-aesthetics"><i class="fa fa-check"></i><b>9.2.1</b> Geometries, mapping, and aesthetics</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotScales"><i class="fa fa-check"></i><b>9.2.2</b> Scales</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ggplot2.html"><a href="ggplot2.html#ggplotGuidesThemes"><i class="fa fa-check"></i><b>9.2.3</b> Guides and Themes</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotFacets"><i class="fa fa-check"></i><b>9.2.4</b> Facets</a></li>
+<li class="chapter" data-level="9.2.5" data-path="ggplot2.html"><a href="ggplot2.html#building-graphics-incrementally"><i class="fa fa-check"></i><b>9.2.5</b> Building graphics incrementally</a></li>
+<li class="chapter" data-level="9.2.6" data-path="ggplot2.html"><a href="ggplot2.html#ggplotPatchwork"><i class="fa fa-check"></i><b>9.2.6</b> Arranging graphics</a></li>
+<li class="chapter" data-level="9.2.7" data-path="ggplot2.html"><a href="ggplot2.html#saving-graphics"><i class="fa fa-check"></i><b>9.2.7</b> Saving graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ggplot2.html"><a href="ggplot2.html#exploring-different-graphics"><i class="fa fa-check"></i><b>9.3</b> Exploring different graphics</a></li>
+<li class="chapter" data-level="9.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotBarCharts"><i class="fa fa-check"></i><b>9.4</b> Visualizing distributions</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ggplot2.html"><a href="ggplot2.html#elkCountyBarCharts"><i class="fa fa-check"></i><b>9.4.1</b> Elk County timber cruise bar charts</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ggplot2.html"><a href="ggplot2.html#summaryGgplot2"><i class="fa fa-check"></i><b>9.5</b> Summary</a></li>
+<li class="chapter" data-level="9.6" data-path="ggplot2.html"><a href="ggplot2.html#exercisesGgplot2"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="notation.html"><a href="notation.html"><i class="fa fa-check"></i><b>10</b> Preliminary definitions and concepts</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="notation.html"><a href="notation.html#popSamps"><i class="fa fa-check"></i><b>10.1</b> Estimating population parameters</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="notation.html"><a href="notation.html#ToolsTypesOfVariables"><i class="fa fa-check"></i><b>10.1.1</b> Types of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="notation.html"><a href="notation.html#tools"><i class="fa fa-check"></i><b>10.2</b> Tools of the trade: Review of notation</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="notation.html"><a href="notation.html#operators"><i class="fa fa-check"></i><b>10.2.1</b> Mathematical operators, subscripts, and nested data</a></li>
+<li class="chapter" data-level="10.2.2" data-path="notation.html"><a href="notation.html#padma"><i class="fa fa-check"></i><b>10.2.2</b> Order of operations</a></li>
+<li class="chapter" data-level="10.2.3" data-path="notation.html"><a href="notation.html#toolsR"><i class="fa fa-check"></i><b>10.2.3</b> Tools of the trade using R</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="notation.html"><a href="notation.html#summaryNotation"><i class="fa fa-check"></i><b>10.3</b> Summary and outlook</a></li>
+<li class="chapter" data-level="10.4" data-path="notation.html"><a href="notation.html#exercisesNotation"><i class="fa fa-check"></i><b>10.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statBasics.html"><a href="statBasics.html"><i class="fa fa-check"></i><b>11</b> Basic statistical concepts</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statBasics.html"><a href="statBasics.html#popStats"><i class="fa fa-check"></i><b>11.1</b> Characterizing a population</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statBasics.html"><a href="statBasics.html#centralTendency"><i class="fa fa-check"></i><b>11.1.1</b> Measures of central tendency</a></li>
+<li class="chapter" data-level="11.1.2" data-path="statBasics.html"><a href="statBasics.html#dispersion"><i class="fa fa-check"></i><b>11.1.2</b> Measures of dispersion</a></li>
+<li class="chapter" data-level="11.1.3" data-path="statBasics.html"><a href="statBasics.html#popTotProp"><i class="fa fa-check"></i><b>11.1.3</b> Totals and proportions</a></li>
+<li class="chapter" data-level="11.1.4" data-path="statBasics.html"><a href="statBasics.html#popTabGraph"><i class="fa fa-check"></i><b>11.1.4</b> Tabular and graphical representations of data distributions</a></li>
+<li class="chapter" data-level="11.1.5" data-path="statBasics.html"><a href="statBasics.html#popIllustration"><i class="fa fa-check"></i><b>11.1.5</b> Illustrative analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="statBasics.html"><a href="statBasics.html#introSampling"><i class="fa fa-check"></i><b>11.2</b> Introduction to sampling methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="statBasics.html"><a href="statBasics.html#characteristics-of-samples"><i class="fa fa-check"></i><b>11.2.1</b> Characteristics of samples</a></li>
+<li class="chapter" data-level="11.2.2" data-path="statBasics.html"><a href="statBasics.html#probSamples"><i class="fa fa-check"></i><b>11.2.2</b> Probability samples</a></li>
+<li class="chapter" data-level="11.2.3" data-path="statBasics.html"><a href="statBasics.html#estimators"><i class="fa fa-check"></i><b>11.2.3</b> Sampling distribution and properties of estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="statBasics.html"><a href="statBasics.html#SRS"><i class="fa fa-check"></i><b>11.3</b> Simple Random Sampling</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-without-replacement"><i class="fa fa-check"></i><b>11.3.1</b> Simple Random Sampling without replacement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-with-replacement"><i class="fa fa-check"></i><b>11.3.2</b> Simple Random Sampling with replacement</a></li>
+<li class="chapter" data-level="11.3.3" data-path="statBasics.html"><a href="statBasics.html#SRSTotals"><i class="fa fa-check"></i><b>11.3.3</b> Estimating totals and proportions</a></li>
+<li class="chapter" data-level="11.3.4" data-path="statBasics.html"><a href="statBasics.html#ci"><i class="fa fa-check"></i><b>11.3.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.3.5" data-path="statBasics.html"><a href="statBasics.html#srsIllustration"><i class="fa fa-check"></i><b>11.3.5</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="11.3.6" data-path="statBasics.html"><a href="statBasics.html#sampleSize"><i class="fa fa-check"></i><b>11.3.6</b> Sample size</a></li>
+<li class="chapter" data-level="11.3.7" data-path="statBasics.html"><a href="statBasics.html#ADSRS"><i class="fa fa-check"></i><b>11.3.7</b> Advantages and disadvantages of SRS</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="statBasics.html"><a href="statBasics.html#statBasicsSummary"><i class="fa fa-check"></i><b>11.4</b> Summary and outlook</a></li>
+<li class="chapter" data-level="11.5" data-path="statBasics.html"><a href="statBasics.html#exercisesStats"><i class="fa fa-check"></i><b>11.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="forestStat.html"><a href="forestStat.html"><i class="fa fa-check"></i><b>12</b> Estimating forest parameters</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="forestStat.html"><a href="forestStat.html#samplingUnits"><i class="fa fa-check"></i><b>12.1</b> Sampling units for forestry applications</a></li>
+<li class="chapter" data-level="12.2" data-path="forestStat.html"><a href="forestStat.html#arealSamplingFrame"><i class="fa fa-check"></i><b>12.2</b> Areal sampling frame</a></li>
+<li class="chapter" data-level="12.3" data-path="forestStat.html"><a href="forestStat.html#plotSampling"><i class="fa fa-check"></i><b>12.3</b> Plot sampling</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="forestStat.html"><a href="forestStat.html#plotSamplingExpFa"><i class="fa fa-check"></i><b>12.3.1</b> Expansion factors and estimates</a></li>
+<li class="chapter" data-level="12.3.2" data-path="forestStat.html"><a href="forestStat.html#sample-based-estimates"><i class="fa fa-check"></i><b>12.3.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.3.3" data-path="forestStat.html"><a href="forestStat.html#arealFPC"><i class="fa fa-check"></i><b>12.3.3</b> Finite population correction</a></li>
+<li class="chapter" data-level="12.3.4" data-path="forestStat.html"><a href="forestStat.html#slopOver"><i class="fa fa-check"></i><b>12.3.4</b> Boundary effects</a></li>
+<li class="chapter" data-level="12.3.5" data-path="forestStat.html"><a href="forestStat.html#slopePlots"><i class="fa fa-check"></i><b>12.3.5</b> Slope corrections</a></li>
+<li class="chapter" data-level="12.3.6" data-path="forestStat.html"><a href="forestStat.html#sizeVariance"><i class="fa fa-check"></i><b>12.3.6</b> Effect of plot size on variance</a></li>
+<li class="chapter" data-level="12.3.7" data-path="forestStat.html"><a href="forestStat.html#plotSamplingIllustration"><i class="fa fa-check"></i><b>12.3.7</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="forestStat.html"><a href="forestStat.html#pointSampling"><i class="fa fa-check"></i><b>12.4</b> Point sampling</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="forestStat.html"><a href="forestStat.html#pointSamplingExpFa"><i class="fa fa-check"></i><b>12.4.1</b> Expansion factors and per unit area estimates</a></li>
+<li class="chapter" data-level="12.4.2" data-path="forestStat.html"><a href="forestStat.html#pointSamplingEstimation"><i class="fa fa-check"></i><b>12.4.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.4.3" data-path="forestStat.html"><a href="forestStat.html#selectingBAF"><i class="fa fa-check"></i><b>12.4.3</b> Selecting a basal area factor and computing limiting distances</a></li>
+<li class="chapter" data-level="12.4.4" data-path="forestStat.html"><a href="forestStat.html#pointSamplingField"><i class="fa fa-check"></i><b>12.4.4</b> Boundary overlap and slope corrections</a></li>
+<li class="chapter" data-level="12.4.5" data-path="forestStat.html"><a href="forestStat.html#pointSamplingIllustration"><i class="fa fa-check"></i><b>12.4.5</b> Illustration</a></li>
+<li class="chapter" data-level="12.4.6" data-path="forestStat.html"><a href="forestStat.html#tallyByHeight"><i class="fa fa-check"></i><b>12.4.6</b> Per unit area estimates without measuring DBH</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="forestStat.html"><a href="forestStat.html#forestSamplingWorkflow"><i class="fa fa-check"></i><b>12.5</b> Workflows for forest inventory data</a></li>
+<li class="chapter" data-level="12.6" data-path="forestStat.html"><a href="forestStat.html#standStockTabsEsts"><i class="fa fa-check"></i><b>12.6</b> Stand and stock table estimates</a></li>
+<li class="chapter" data-level="12.7" data-path="forestStat.html"><a href="forestStat.html#exercisesForestStats"><i class="fa fa-check"></i><b>12.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="samplingDesigns.html"><a href="samplingDesigns.html"><i class="fa fa-check"></i><b>13</b> Sampling designs, implementation, and analysis</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYS"><i class="fa fa-check"></i><b>13.1</b> Systematic sampling</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimatorsSYS"><i class="fa fa-check"></i><b>13.1.1</b> Estimation Using SYS</a></li>
+<li class="chapter" data-level="13.1.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYSIllustration"><i class="fa fa-check"></i><b>13.1.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.1.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADSYS"><i class="fa fa-check"></i><b>13.1.3</b> Advantages and disadvantages of SYS</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#Strat"><i class="fa fa-check"></i><b>13.2</b> Stratified sampling</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#StratEstimation"><i class="fa fa-check"></i><b>13.2.1</b> Estimation using stratified sampling</a></li>
+<li class="chapter" data-level="13.2.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#allocation-of-sample-plots"><i class="fa fa-check"></i><b>13.2.2</b> Allocation of sample plots</a></li>
+<li class="chapter" data-level="13.2.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#strataSampleSize"><i class="fa fa-check"></i><b>13.2.3</b> Sample size determination</a></li>
+<li class="chapter" data-level="13.2.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#stratIllustration"><i class="fa fa-check"></i><b>13.2.4</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.2.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-stratifed-sampling"><i class="fa fa-check"></i><b>13.2.5</b> Advantages and disadvantages of stratifed sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#cluster"><i class="fa fa-check"></i><b>13.3</b> Cluster sampling</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterEstimation"><i class="fa fa-check"></i><b>13.3.1</b> Estimation using cluster sampling</a></li>
+<li class="chapter" data-level="13.3.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterIllustration"><i class="fa fa-check"></i><b>13.3.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.3.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-cluster-sampling"><i class="fa fa-check"></i><b>13.3.3</b> Advantages and disadvantages of cluster sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#multistage"><i class="fa fa-check"></i><b>13.4</b> Multistage sampling</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimationMultistage"><i class="fa fa-check"></i><b>13.4.1</b> Estimation using multistage sampling</a></li>
+<li class="chapter" data-level="13.4.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimation-with-unequal-sized-primaries-and-varying-amounts-of-secondaries"><i class="fa fa-check"></i><b>13.4.2</b> Estimation with unequal sized primaries and varying amounts of secondaries</a></li>
+<li class="chapter" data-level="13.4.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADMultistage"><i class="fa fa-check"></i><b>13.4.3</b> Advantages and disadvantages of multistage sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#samplingWithCovs"><i class="fa fa-check"></i><b>13.5</b> Sampling with covariates</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#regression"><i class="fa fa-check"></i><b>13.5.1</b> Linear regression</a></li>
+<li class="chapter" data-level="13.5.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#RegressionSampling"><i class="fa fa-check"></i><b>13.5.2</b> Regression Sampling</a></li>
+<li class="chapter" data-level="13.5.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#doubleSampling"><i class="fa fa-check"></i><b>13.5.3</b> Double sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="samplingDesigns.html"><a href="samplingDesigns.html#summarySampling"><i class="fa fa-check"></i><b>13.6</b> Summary and outlook</a></li>
+<li class="chapter" data-level="13.7" data-path="samplingDesigns.html"><a href="samplingDesigns.html#exercisesSampling"><i class="fa fa-check"></i><b>13.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reports.html"><a href="reports.html"><i class="fa fa-check"></i><b>14</b> Reports</a></li>
+<li class="chapter" data-level="15" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>15</b> Case Studies</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Forestry Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. We want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+
+<div id="structures" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Data structures<a href="structures.html#structures" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A data structure is a format for organizing and storing data. The structure is designed so data can be accessed and worked with in specific ways. Programming languages have methods (or functions) designed to operate on different kinds of data structures.</p>
+<p>In this chapter we focus on data structures that serve as the essential building blocks for data analysis in R. To help initial understanding, the data in this chapter are relatively modest in size and complexity. The ideas and methods, however, generalize to larger and more complex datasets.</p>
+<p>The base data structures in R are vectors, matrices, arrays, data frames, and lists. The first three (vectors, matrices, and arrays) require all elements to be of the same type (i.e., numeric, character, or logical); hence, these structures are referred to as <em>homogeneous</em>. Data frames and lists allow elements to be of different types, e.g., some elements of a data frame may be numeric while other elements may be character. Perhaps not surprisingly, these structures are called <em>heterogeneous</em>. These base structures can also be organized by their dimensionality, i.e., 1-dimensional, 2-dimensional, or N-dimensional, as shown in Table <a href="structures.html#tab:dataStructures">4.1</a>.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:dataStructures">TABLE 4.1: </span>Dimension and type content of base data structures in R.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Dimension
+</th>
+<th style="text-align:center;">
+Homogeneous
+</th>
+<th style="text-align:center;">
+Heterogeneous
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+Atomic vector
+</td>
+<td style="text-align:center;">
+List
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+Matrix
+</td>
+<td style="text-align:center;">
+Data frame
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+N
+</td>
+<td style="text-align:center;">
+Array
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>R has no scalar types, i.e., individual values; rather scalars are represented using a vector of length one.</p>
+<p>Generically, we talk about data structures as objects. An efficient way to understand what comprises a given object is to use the <code>str()</code> function. <code>str()</code> is short for structure and prints a compact, human-readable description of any R data structure. For example, in the code below, we show that a scalar is actually a vector of length one.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="structures.html#cb55-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb55-2"><a href="structures.html#cb55-2" tabindex="-1"></a><span class="fu">str</span>(a)</span></code></pre></div>
+<pre><code>#&gt;  num 1</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="structures.html#cb57-1" tabindex="-1"></a><span class="fu">is.atomic</span>(a)</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="structures.html#cb59-1" tabindex="-1"></a><span class="fu">length</span>(a)</span></code></pre></div>
+<pre><code>#&gt; [1] 1</code></pre>
+<p>Here we assigned <code>a</code> the scalar value 1. <code>str(a)</code> prints <code>num 1</code>, which says <code>a</code> is numeric of length one. Then we used <code>is.atomic()</code> and <code>length()</code> to convince ourselves that <code>a</code> is in fact an atomic vector of length one. There are a set of similar logical tests for the other base data structures, e.g., <code>is.matrix()</code>, <code>is.array()</code>, <code>is.data.frame()</code>, and <code>is.list()</code>. These will all come in handy as we encounter different objects.</p>
+<div id="typesOfVariables" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Types of variables<a href="structures.html#typesOfVariables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before we dive into the different data structures in R, it will be useful to define the different types of variables we may encounter in forestry and environmental data sets. Figure <a href="structures.html#fig:variables">4.1</a> displays the fundamental data types we will work with in this book, as well as the R data type we will use to represent each variable type in R. We define a <em>variable</em> as any sort of characteristic that might vary across individual units (e.g., live trees) within a population of interest (e.g., all live trees in a forest).<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> Following Figure <a href="structures.html#fig:variables">4.1</a>, a variable is initially classified as either <em>quantitative</em> or <em>qualitative</em>.</p>
+<p>A quantitative variable has values that give a notion of magnitude, that is, the values are a numerical measure. This numerical measure is either <em>continuous</em> or <em>discrete</em>. A quantitative continuous variable can take an infinite (not countable) number of possible values, i.e., an infinitely fine increment from one value to the next. Said differently, a continuous variable has an arbitrary number of decimal places for a given value. Examples could include height, weight, and volume. In comparison, a quantitative discrete variable can take a finite (countable) number of possible values when moving from one value to the next. The values are often (but not always) integers. Examples include age in whole years, number of trees, and number of fire events.</p>
+<p>A qualitative variable (also referred to as a categorical variable) has values that represent different categories. Qualitative variables are either <em>nominal</em> or <em>ordinal</em>. A qualitative nominal variable takes values where no ordering is possible or implied in the categories. For example, the variable species is nominal because there is no inherent or natural order in the species names. Similarly, sex coded as male or female is nominal because there is no apparent ordering. In contrast, the categories of a qualitative ordinal variable have some natural ordering. For example, the variable tree canopy position can take values suppressed, intermediate, co-dominant, or dominant, where these categories themselves imply an ordering. Further examples are disturbance severity code with categories low, medium, and high, or perhaps forest or ecosystem succession stages. Again, in these examples, there is a natural order to the categories.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:variables"></span>
+<img src="FD20_files/figure-html/variables-1.png" alt="Variable types with corresponding R data types added below the dotted line." width="672" />
+<p class="caption">
+FIGURE 4.1: Variable types with corresponding R data types added below the dotted line.
+</p>
+</div>
+</div>
+<div id="vector" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Vectors<a href="structures.html#vector" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Think of a vector as a structure to represent one variable in a dataset.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> For example, a vector might hold the measured heights, in meters, of seven trees, while another vector might hold the tree species name. The <code>c()</code> function is useful for creating (small) vectors and for modifying existing vectors. Think of <code>c</code> as standing for “combine.” Consider the following use of <code>c()</code> to create the <code>dbh</code> and <code>spp</code> vectors.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="structures.html#cb61-1" tabindex="-1"></a>dbh <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">18</span>, <span class="dv">13</span>, <span class="dv">16</span>, <span class="dv">10</span>, <span class="dv">14</span>)</span>
+<span id="cb61-2"><a href="structures.html#cb61-2" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1] 20 18 13 16 10 14</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="structures.html#cb63-1" tabindex="-1"></a>spp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Acer rubrum&quot;</span>, <span class="st">&quot;Acer rubrum&quot;</span>, <span class="st">&quot;Betula lenta&quot;</span>, </span>
+<span id="cb63-2"><a href="structures.html#cb63-2" tabindex="-1"></a>         <span class="st">&quot;Betula lenta&quot;</span>, <span class="st">&quot;Prunus serotina&quot;</span>, <span class="st">&quot;Prunus serotina&quot;</span>)</span>
+<span id="cb63-3"><a href="structures.html#cb63-3" tabindex="-1"></a>spp</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Acer rubrum&quot;     &quot;Acer rubrum&quot;    
+#&gt; [3] &quot;Betula lenta&quot;    &quot;Betula lenta&quot;   
+#&gt; [5] &quot;Prunus serotina&quot; &quot;Prunus serotina&quot;</code></pre>
+<p>We see that elements of a vector are separated by commas when using the <code>c()</code> function to create a vector. Also, note character strings are placed inside quotation marks.<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a></p>
+<p><code>c()</code> can also be used to add to an existing vector. For example, suppose we want to add a 13 in DBH red maple to the dataset. We can modify our existing vectors as follows.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="structures.html#cb65-1" tabindex="-1"></a>dbh <span class="ot">&lt;-</span> <span class="fu">c</span>(dbh, <span class="dv">13</span>)</span>
+<span id="cb65-2"><a href="structures.html#cb65-2" tabindex="-1"></a>spp <span class="ot">&lt;-</span> <span class="fu">c</span>(spp, <span class="st">&quot;Acer rubrum&quot;</span>)</span>
+<span id="cb65-3"><a href="structures.html#cb65-3" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1] 20 18 13 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="structures.html#cb67-1" tabindex="-1"></a>spp</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Acer rubrum&quot;     &quot;Acer rubrum&quot;    
+#&gt; [3] &quot;Betula lenta&quot;    &quot;Betula lenta&quot;   
+#&gt; [5] &quot;Prunus serotina&quot; &quot;Prunus serotina&quot;
+#&gt; [7] &quot;Acer rubrum&quot;</code></pre>
+<div id="dataTypes" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Types, conversion, and coercion<a href="structures.html#dataTypes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It’s important to distinguish between different data types. For example, it makes sense to calculate the mean of DBH measurements stored in <code>dbh</code>, but it doesn’t make sense to compute the mean of species stored in <code>spp</code>. Vectors can be of six different types: character, double, integer, logical, complex, and raw. We’ll not encounter the complex and raw types in everyday data analysis, so we focus on the first four data types.</p>
+<ol style="list-style-type: decimal">
+<li><p><code>character</code>: consists of one or more letters. Our <code>spp</code> is a character vector.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="structures.html#cb69-1" tabindex="-1"></a><span class="fu">typeof</span>(spp)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;character&quot;</code></pre>
+<p>We’ll often use the phrase “character string” or simply “string” when talking about character types. A string is just an element comprising more than one character. For example, <code>"Acer rubrum"</code> is a character string.<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a></p></li>
+<li><p><code>double</code>: a numeric that can be an integer or non-integer value (e.g., 10, 4.2). Given the values in <code>dbh</code> are all integers, it might be surprising to see the output of <code>typeof(dbh)</code> below is <code>double</code>. By default, R creates a double type vector when numeric values are given via <code>c()</code>.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="structures.html#cb71-1" tabindex="-1"></a><span class="fu">typeof</span>(dbh)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;double&quot;</code></pre></li>
+<li><p><code>integer</code>: a numeric that can only be an integer. We can create an integer vector by placing the letter <code>L</code> next to each of the numbers when forming the vector. For example, an integer vector of DBH values is created as follows.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="structures.html#cb73-1" tabindex="-1"></a>dbh_int <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span><span class="dt">L</span>, <span class="dv">18</span><span class="dt">L</span>, <span class="dv">13</span><span class="dt">L</span>, <span class="dv">16</span><span class="dt">L</span>, <span class="dv">10</span><span class="dt">L</span>, <span class="dv">14</span><span class="dt">L</span>, <span class="dv">13</span><span class="dt">L</span>)</span>
+<span id="cb73-2"><a href="structures.html#cb73-2" tabindex="-1"></a><span class="fu">typeof</span>(dbh_int)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;integer&quot;</code></pre></li>
+<li><p><code>logical</code>: represents true or false values using <code>TRUE</code> or <code>FALSE</code>, respectively. To illustrate logical vectors, imagine the field technician who measured the trees in <code>dbh</code> and <code>spp</code> also indicated if each tree was acceptable growing stock (<code>ags</code>) and their determination was coded as <code>TRUE</code> if the tree was acceptable and <code>FALSE</code> if the tree was not acceptable.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="structures.html#cb75-1" tabindex="-1"></a>ags <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb75-2"><a href="structures.html#cb75-2" tabindex="-1"></a>ags</span></code></pre></div>
+<pre><code>#&gt; [1]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="structures.html#cb77-1" tabindex="-1"></a><span class="fu">typeof</span>(ags)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;logical&quot;</code></pre></li>
+</ol>
+<p>When it makes sense, it’s possible to convert vectors to different types. Consider the following examples.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="structures.html#cb79-1" tabindex="-1"></a>dbh_int <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(dbh)</span>
+<span id="cb79-2"><a href="structures.html#cb79-2" tabindex="-1"></a>dbh_int</span></code></pre></div>
+<pre><code>#&gt; [1] 20 18 13 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="structures.html#cb81-1" tabindex="-1"></a><span class="fu">typeof</span>(dbh_int)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="structures.html#cb83-1" tabindex="-1"></a>dbh_char <span class="ot">&lt;-</span> <span class="fu">as.character</span>(dbh)</span>
+<span id="cb83-2"><a href="structures.html#cb83-2" tabindex="-1"></a>dbh_char</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;20&quot; &quot;18&quot; &quot;13&quot; &quot;16&quot; &quot;10&quot; &quot;14&quot; &quot;13&quot;</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="structures.html#cb85-1" tabindex="-1"></a>ags_double <span class="ot">&lt;-</span> <span class="fu">as.double</span>(ags)</span>
+<span id="cb85-2"><a href="structures.html#cb85-2" tabindex="-1"></a>ags_double</span></code></pre></div>
+<pre><code>#&gt; [1] 1 1 0 1 0 0 1</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="structures.html#cb87-1" tabindex="-1"></a>spp_oops <span class="ot">&lt;-</span> <span class="fu">as.double</span>(spp)</span></code></pre></div>
+<pre><code>#&gt; Warning: NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="structures.html#cb89-1" tabindex="-1"></a>spp_oops</span></code></pre></div>
+<pre><code>#&gt; [1] NA NA NA NA NA NA NA</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="structures.html#cb91-1" tabindex="-1"></a><span class="fu">sum</span>(ags)</span></code></pre></div>
+<pre><code>#&gt; [1] 4</code></pre>
+<p>The integer version of <code>dbh</code> doesn’t look any different, but it’s stored differently, which can be important both for computational efficiency and for interfacing with other software and programming languages. Converting <code>dbh</code> to character goes as expected—the quoted character representation of the numbers replaces the numbers themselves. Converting the logical vector <code>ags</code> to double is pretty straightforward too—<code>FALSE</code> is converted to 0 and <code>TRUE</code> is converted to 1. Now think about converting the character vector <code>spp</code> to a numeric double vector. It’s not at all clear how to represent <code>"Acer rubrum"</code> as a number. In fact, in this case, R creates a double vector with each element set to <code>NA</code>, which is the representation of missing data, and throws a <code>warning</code> exception.<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a> Finally consider the code <code>sum(ags)</code>. <code>ags</code> is a logical vector, but when R sees that we’re asking to sum this logical vector, it automatically converts it to a numeric vector and then adds the 0’s and 1’s representing <code>FALSE</code> and <code>TRUE</code>, respectively (see more on this topic in the next section).</p>
+<p>Similar to <code>typeof()</code>, there are functions that test whether a vector is of a particular type, a couple of which we’ve already seen. Notice, the test result is returned as a logical value.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="structures.html#cb93-1" tabindex="-1"></a><span class="fu">is.double</span>(dbh)</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="structures.html#cb95-1" tabindex="-1"></a><span class="fu">is.character</span>(dbh)</span></code></pre></div>
+<pre><code>#&gt; [1] FALSE</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="structures.html#cb97-1" tabindex="-1"></a><span class="fu">is.integer</span>(dbh_int)</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="structures.html#cb99-1" tabindex="-1"></a><span class="fu">is.logical</span>(ags)</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div id="coercion" class="section level4 hasAnchor" number="4.2.1.1">
+<h4><span class="header-section-number">4.2.1.1</span> Coercion<a href="structures.html#coercion" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An important concept in any programming language is the conversion of data types from one type to another. We’ve shown how to manually convert objects to different types using the <code>as.*</code> functions, where <code>*</code> represents the desired type. Automatic data type conversion also occurs, a process referred to as <em>coercion</em>. Consider the following examples.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="structures.html#cb101-1" tabindex="-1"></a>xx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb101-2"><a href="structures.html#cb101-2" tabindex="-1"></a>xx</span></code></pre></div>
+<pre><code>#&gt; [1] 1 2 3 1</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="structures.html#cb103-1" tabindex="-1"></a>yy <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;aspen&quot;</span>)</span>
+<span id="cb103-2"><a href="structures.html#cb103-2" tabindex="-1"></a>yy</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;1&quot;     &quot;2&quot;     &quot;3&quot;     &quot;aspen&quot;</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="structures.html#cb105-1" tabindex="-1"></a>zz <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="st">&quot;aspen&quot;</span>)</span>
+<span id="cb105-2"><a href="structures.html#cb105-2" tabindex="-1"></a>zz</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;TRUE&quot;  &quot;FALSE&quot; &quot;aspen&quot;</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="structures.html#cb107-1" tabindex="-1"></a>dbh<span class="sc">+</span>ags</span></code></pre></div>
+<pre><code>#&gt; [1] 21 19 13 17 10 14 14</code></pre>
+<p>As noted previously, vectors can only contain elements of one type. If more than one type is included in a <code>c()</code> function, R silently <em>coerces</em> the vector to be of one type. The examples above illustrate R’s coercion rules. If any element is a character, then the whole vector is character type. If there’s a mix of numeric (either integer or double) and logical elements, then the whole vector is numeric. Note what happened when we added the numeric vector <code>dbh</code> to the logical vector <code>ags</code>. The logical vector was silently coerced to be numeric, so that <code>FALSE</code> became 0 and <code>TRUE</code> became 1, and then the two numeric vectors were added elementwise.</p>
+</div>
+</div>
+<div id="patterned-data" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Patterned data<a href="structures.html#patterned-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It’s often convenient to generate patterned data for use in subsetting tasks, designing experiments, and identifying measurement units for some inventory designs. For example, we might need all the integers from 1 through 20, or a sequence of 100 values equally spaced between 0 and 1. The R functions <code>seq()</code> and <code>rep()</code> as well as the “colon operator” <code>:</code> are handy for generating such patterned data.</p>
+<p>As we’ve seen now a few times, the colon operator generates a sequence of values with increments of 1.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="structures.html#cb109-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code></pre></div>
+<pre><code>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="structures.html#cb111-1" tabindex="-1"></a><span class="sc">-</span><span class="dv">5</span><span class="sc">:</span><span class="dv">3</span></span></code></pre></div>
+<pre><code>#&gt; [1] -5 -4 -3 -2 -1  0  1  2  3</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="structures.html#cb113-1" tabindex="-1"></a><span class="dv">10</span><span class="sc">:</span><span class="dv">4</span></span></code></pre></div>
+<pre><code>#&gt; [1] 10  9  8  7  6  5  4</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="structures.html#cb115-1" tabindex="-1"></a>pi<span class="sc">:</span><span class="dv">7</span></span></code></pre></div>
+<pre><code>#&gt; [1] 3.1416 4.1416 5.1416 6.1416</code></pre>
+<p><code>seq()</code> generates either a sequence of pre-specified length or a sequence with pre-specified increments.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="structures.html#cb117-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">11</span>)</span></code></pre></div>
+<pre><code>#&gt;  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="structures.html#cb119-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">5</span>, <span class="at">by =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>#&gt;  [1] 1.0000 1.3333 1.6667 2.0000 2.3333 2.6667 3.0000
+#&gt;  [8] 3.3333 3.6667 4.0000 4.3333 4.6667 5.0000</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="structures.html#cb121-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">3</span>, <span class="at">to =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">length =</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>#&gt;  [1]  3.00000  2.55556  2.11111  1.66667  1.22222
+#&gt;  [6]  0.77778  0.33333 -0.11111 -0.55556 -1.00000</code></pre>
+<p><code>rep()</code> replicates the values in a given vector.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="structures.html#cb123-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="at">length =</span> <span class="dv">5</span>) <span class="co"># Recycle the vector to match length.</span></span></code></pre></div>
+<pre><code>#&gt; [1] 1 2 4 1 2</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="structures.html#cb125-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="at">times =</span> <span class="dv">3</span>) <span class="co"># Repeat the vector the number of times.</span></span></code></pre></div>
+<pre><code>#&gt; [1] 1 2 4 1 2 4 1 2 4</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="structures.html#cb127-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="at">times =</span> <span class="dv">3</span>) <span class="co"># Same as above.</span></span></code></pre></div>
+<pre><code>#&gt; [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="structures.html#cb129-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="at">each =</span> <span class="dv">3</span>) <span class="co"># Repeat each element &quot;each&quot; times.</span></span></code></pre></div>
+<pre><code>#&gt; [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;c&quot; &quot;c&quot; &quot;c&quot;</code></pre>
+</div>
+<div id="basicSubsetting" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Indexing, accessing, and recycling elements<a href="structures.html#basicSubsetting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To access, and possibly change, a vector element’s value use the element’s index (i.e., position along the vector) in square brackets. For example, <code>dbh[4]</code> refers to the fourth element in the <code>dbh</code> vector, which has a value of 16. R starts the numbering of elements at 1, e.g., the first element in the <code>dbh</code> vector is <code>dbh[1]</code>.</p>
+<p>As a bit of an aside, when a vector is printed in the console window, R puts the index of the first value on a line in square brackets before the line of output. So the mysterious <code>[1]</code> before all output we’ve seen thus far in the book just means the index of the first value on the line is 1. If it’s a long vector with more than one line of output, each new line is preceded by the index for the first value printed on the line. For example, if the output has 40 values, and 15 values appear on each line, then the first line will have <code>[1]</code> at the left, the second line will have <code>[16]</code> to the left, and the third line will have <code>[31]</code> to the left.</p>
+<p>Here are a few indexing and replacement examples using the <code>dbh</code> vector.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="structures.html#cb131-1" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1] 20 18 13 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="structures.html#cb133-1" tabindex="-1"></a>dbh[<span class="dv">5</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] 10</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="structures.html#cb135-1" tabindex="-1"></a>dbh[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] 20 18 13</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="structures.html#cb137-1" tabindex="-1"></a>dbh[<span class="fu">length</span>(dbh)]</span></code></pre></div>
+<pre><code>#&gt; [1] 13</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="structures.html#cb139-1" tabindex="-1"></a>dbh[]</span></code></pre></div>
+<pre><code>#&gt; [1] 20 18 13 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="structures.html#cb141-1" tabindex="-1"></a>dbh[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">202</span> <span class="co"># Replace the third value with 202.</span></span>
+<span id="cb141-2"><a href="structures.html#cb141-2" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1]  20  18 202  16  10  14  13</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="structures.html#cb143-1" tabindex="-1"></a>dbh[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">8</span>, <span class="dv">2</span>) <span class="co"># Replace the first three values.</span></span>
+<span id="cb143-2"><a href="structures.html#cb143-2" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<p>Notice in the code above, including nothing in the square brackets, i.e., <code>dbh[]</code>, results in the whole vector being returned. We can also replace vector values by accessing the elements where the new values will be assigned. For example, the value at <code>dbh[3]</code> is replaced with 202, then the vector’s first three values <code>dbh[1:3]</code> are replaced with 16, 8, and 2, respectively.</p>
+<p>On your own, investigate the three replacement operations on the vector <code>x</code> in the code below.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="structures.html#cb145-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> <span class="dv">4</span>) <span class="co"># Create a vector of four zeros. </span></span>
+<span id="cb145-2"><a href="structures.html#cb145-2" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb145-3"><a href="structures.html#cb145-3" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb145-4"><a href="structures.html#cb145-4" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>)</span></code></pre></div>
+<p>Warnings thrown by two of the replacement operations above highlight a behavior called recycling. If R encounters two vectors of different lengths in an operation, it replicates (recycles) the smaller vector until its length equals the longer vector’s length before performing the operation. This recycling happens in a replacement operation. If the number of elements to replace is different than the number of values supplied, then any necessary vector recycling occurs followed by truncation to match vector lengths and a warning is thrown. Importantly, a warning is only thrown if truncation is necessary to match vector lengths. Therefore, if the number of elements to replace is a multiple of the number of elements supplied, then any necessary recycling occurs to match vector lengths but no warning is thrown. So, for the first replacement operation above, <code>c(1, 2)</code> is recycled to <code>c(1, 2, 1, 2)</code> then the last <code>2</code> is truncated to make a vector of length three to replace <code>x</code> elements <code>1:3</code> and a warning is thrown. The next replacement operation is similar to the first, but no warning is thrown because no truncation is necessary. For the last replacement operation, no recycling is necessary, only truncation of the value <code>6</code> to make the replacement vector length equal 1. We’ll see recycling again when working with comparison and mathematical operators in Section <a href="structures.html#logicalOperators">4.7</a> and <a href="notation.html#toolsR">10.2.3</a>, respectively.</p>
+<p>Negative indexes in the square brackets remove corresponding elements. A zero as an index returns nothing (more precisely, it returns a length zero vector of the appropriate type).</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="structures.html#cb146-1" tabindex="-1"></a>dbh[<span class="sc">-</span><span class="dv">3</span>] <span class="co"># Print all values in dbh except element 3.</span></span></code></pre></div>
+<pre><code>#&gt; [1] 16  8 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="structures.html#cb148-1" tabindex="-1"></a>dbh[<span class="sc">-</span><span class="fu">length</span>(dbh)] <span class="co"># Print all values in dbh except the last element.</span></span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="structures.html#cb150-1" tabindex="-1"></a>fewer.dbh <span class="ot">&lt;-</span> dbh[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span> ,<span class="dv">5</span>)] <span class="co"># Remove elements 1, 3, and 5.</span></span>
+<span id="cb150-2"><a href="structures.html#cb150-2" tabindex="-1"></a>fewer.dbh</span></code></pre></div>
+<pre><code>#&gt; [1]  8 16 14 13</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="structures.html#cb152-1" tabindex="-1"></a>dbh[<span class="dv">0</span>]</span></code></pre></div>
+<pre><code>#&gt; numeric(0)</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="structures.html#cb154-1" tabindex="-1"></a>dbh[<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>)]</span></code></pre></div>
+<pre><code>#&gt; [1]  8 16</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="structures.html#cb156-1" tabindex="-1"></a>dbh[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>)]</span></code></pre></div>
+<pre><code>#&gt; Error in dbh[c(-1, 2)]: only 0&#39;s may be mixed with negative subscripts</code></pre>
+<p>Notice mixing zero and other non-zero indexes is allowed, but mixing negative and positive indexes is not allowed.</p>
+<p>What about the case where we don’t know the positions of the elements we want to print or modify? For example, say we want the DBH of all acceptable growing stock trees in the <code>ags</code> vector. This is covered in Section <a href="structures.html#subsetting">4.8</a>, where we learn how to subset using logical values and conditional statements.</p>
+</div>
+</div>
+<div id="factors" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Factors<a href="structures.html#factors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <code>factor</code> data type represents categorical, or qualitative variables (Figure <a href="structures.html#fig:variables">4.1</a>). When represented using a <code>factor</code>, the different categories (or values) a categorical variable can take are called <code>levels</code>. For example, if the <code>spp</code> character vector, created at the beginning of Section <a href="structures.html#vector">4.2</a>, was a <code>factor</code> then species names would be the <code>levels</code>.</p>
+<p>In many analyses, representing a categorical variable using a character vector (or perhaps an integer vector) is sufficient. However, for some analyses, representing the categorical variable using a <code>factor</code> has advantages. Consider two categorical variables, one representing tree crown class with levels <code>S</code>, <code>I</code>, <code>C</code>, and <code>D</code> (i.e., <strong>S</strong>uppressed, <strong>I</strong>ntermediate, <strong>C</strong>odominate, <strong>D</strong>ominant) and another representing sawlog quality grade of the first log with levels <code>Grade 1</code>, <code>Grade 2</code>, and <code>Grade 3</code>. For the first variable, suppose that in a small dataset, all trees are either dominant or codominant crown class. If we represented the crown class variable using a character vector, there would be no way to know the suppressed and intermediate categories exist, because they happen to not be present in the dataset. For the log grade variable the character vector representation does not explicitly indicate the natural ordering of the levels, i.e., <code>Grade 1</code> is better than <code>Grade 2</code> and <code>Grade 2</code> is better than <code>Grade 3</code>.</p>
+<p>The <code>factor</code> data type maintains all possible <code>levels</code> a categorical variable can take (even if they’re not represented in any given vector of observations). For categorical ordinal variables, the <code>factor</code> allows level ordering so, e.g., the additional information about log grade ordering can be considered in an analysis.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="structures.html#cb158-1" tabindex="-1"></a><span class="co"># The nominal crown class variable.</span></span>
+<span id="cb158-2"><a href="structures.html#cb158-2" tabindex="-1"></a>crown_class <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;D&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb158-3"><a href="structures.html#cb158-3" tabindex="-1"></a>crown_class <span class="co"># Character.</span></span></code></pre></div>
+<pre><code>#&gt; [1] &quot;D&quot; &quot;D&quot; &quot;C&quot; &quot;D&quot; &quot;D&quot; &quot;C&quot; &quot;C&quot;</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="structures.html#cb160-1" tabindex="-1"></a>crown_class <span class="ot">&lt;-</span> <span class="fu">factor</span>(crown_class, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>))</span>
+<span id="cb160-2"><a href="structures.html#cb160-2" tabindex="-1"></a>crown_class <span class="co"># Factor data type.</span></span></code></pre></div>
+<pre><code>#&gt; [1] D D C D D C C
+#&gt; Levels: S I C D</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="structures.html#cb162-1" tabindex="-1"></a><span class="co"># The ordinal log grade variable.</span></span>
+<span id="cb162-2"><a href="structures.html#cb162-2" tabindex="-1"></a>grade <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Grade 1&quot;</span>, <span class="st">&quot;Grade 1&quot;</span>, <span class="st">&quot;Grade 3&quot;</span>, <span class="st">&quot;Grade 2&quot;</span>, </span>
+<span id="cb162-3"><a href="structures.html#cb162-3" tabindex="-1"></a>           <span class="st">&quot;Grade 3&quot;</span>, <span class="st">&quot;Grade 3&quot;</span>, <span class="st">&quot;Grade 2&quot;</span>)</span>
+<span id="cb162-4"><a href="structures.html#cb162-4" tabindex="-1"></a>grade <span class="ot">&lt;-</span> <span class="fu">factor</span>(grade, </span>
+<span id="cb162-5"><a href="structures.html#cb162-5" tabindex="-1"></a>                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Grade 3&quot;</span>, <span class="st">&quot;Grade 2&quot;</span>, <span class="st">&quot;Grade 1&quot;</span>), </span>
+<span id="cb162-6"><a href="structures.html#cb162-6" tabindex="-1"></a>                <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb162-7"><a href="structures.html#cb162-7" tabindex="-1"></a>grade</span></code></pre></div>
+<pre><code>#&gt; [1] Grade 1 Grade 1 Grade 3 Grade 2 Grade 3 Grade 3
+#&gt; [7] Grade 2
+#&gt; Levels: Grade 3 &lt; Grade 2 &lt; Grade 1</code></pre>
+<p>In the <code>factor</code> version of crown class, levels are explicitly listed so it’s clear the two included levels are not all possible levels. In the <code>factor</code> version of log grade, the ordering is explicit and preserved for use in subsequent analysis.</p>
+</div>
+<div id="specialDataTypes" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Missing data, infinity, and other special data types<a href="structures.html#specialDataTypes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Most real-world datasets have variables where some observations are missing. In longitudinal studies of tree growth (i.e., where trees are measured over time) it’s common that trees die or cannot be located for subsequent remeasurement. Statistical software should be able to represent missing data and analyze datasets in which some data are missing.</p>
+<p>As we’ve already seen several times, <code>NA</code> is the missing data value in R. Because missing values may occur in numeric, character, and other data types, and because R requires vectors containing only elements of one type, there are different types of <code>NA</code> values. Usually R determines the appropriate type of <code>NA</code> value automatically. It’s worth noting that <code>NA</code> is NOT the same as the character string <code>"NA"</code> as illustrated below with the aid of the <code>is.na()</code> function.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="structures.html#cb164-1" tabindex="-1"></a>missing_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Quercus rubra&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;Acer saccharum&quot;</span>)</span>
+<span id="cb164-2"><a href="structures.html#cb164-2" tabindex="-1"></a></span>
+<span id="cb164-3"><a href="structures.html#cb164-3" tabindex="-1"></a><span class="fu">is.na</span>(missing_species)</span></code></pre></div>
+<pre><code>#&gt; [1] FALSE  TRUE FALSE</code></pre>
+<p>Now add a quoted <code>NA</code> to the end of <code>missing_species</code> and test again using <code>is.na()</code>. The <code>is.na()</code> result shows the quoted <code>NA</code> is not a missing value but rather a character string.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="structures.html#cb166-1" tabindex="-1"></a>missing_species <span class="ot">&lt;-</span> <span class="fu">c</span>(missing_species, <span class="st">&quot;NA&quot;</span>)</span>
+<span id="cb166-2"><a href="structures.html#cb166-2" tabindex="-1"></a>missing_species</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Quercus rubra&quot;  NA               &quot;Acer saccharum&quot;
+#&gt; [4] &quot;NA&quot;</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="structures.html#cb168-1" tabindex="-1"></a><span class="fu">is.na</span>(missing_species)</span></code></pre></div>
+<pre><code>#&gt; [1] FALSE  TRUE FALSE FALSE</code></pre>
+<p>How should missing data be treated in computations, such as finding a vector’s sum or mean? One possibility is to return an <code>NA</code> if missing values are encountered in the computation. Another is to remove any missing values prior to performing the computation.</p>
+<p>The example below shows the <code>mean()</code> function’s default behavior is to return <code>NA</code> if any missing values are present in the input. If you wish to remove missing values prior to computing the mean, then set the <code>mean()</code> function’s <code>na.rm</code> argument to <code>TRUE</code>. While the <code>na.rm</code> argument is available in many mathematical functions, different functions have different default behaviors so be sure to consult their manual pages for details.</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="structures.html#cb170-1" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span> ,<span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>#&gt; [1] NA</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="structures.html#cb172-1" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span> ,<span class="cn">NA</span>, <span class="dv">5</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] 2.75</code></pre>
+<div id="infinity-and-nan" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Infinity and NaN<a href="structures.html#infinity-and-nan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What happens if code requests division by zero, or results in a number that’s too large to be represented? Knowing how R handles these situations comes in handy when your code produces an unexpected result. Here are some examples.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="structures.html#cb174-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb174-2"><a href="structures.html#cb174-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>#&gt; [1] 0 1 2 3 4</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="structures.html#cb176-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>x</span></code></pre></div>
+<pre><code>#&gt; [1]     Inf 1.00000 0.50000 0.33333 0.25000</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="structures.html#cb178-1" tabindex="-1"></a>x<span class="sc">/</span>x</span></code></pre></div>
+<pre><code>#&gt; [1] NaN   1   1   1   1</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="structures.html#cb180-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">1000</span>, <span class="dv">10000</span>)</span>
+<span id="cb180-2"><a href="structures.html#cb180-2" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span>y</span></code></pre></div>
+<pre><code>#&gt; [1]  1.0240e+03 1.0715e+301         Inf</code></pre>
+<p><code>Inf</code> and <code>-Inf</code> represent infinity and negative infinity (and numbers that are too large in magnitude to be represented as <code>double</code>). <code>NaN</code> occurs when the result of a calculation is undefined, such as dividing zero by zero. R, like most programming languages, follows the ANSI/IEEE 754 Floating-Point Standard that prescribes behavior of mathematical operations involving <code>Inf</code>, <code>-Inf</code>, and <code>NaN</code> <span class="citation">(<a href="#ref-IEEE754">IEEE 2008</a>)</span>.</p>
+</div>
+</div>
+<div id="dataFrames" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Data frames<a href="structures.html#dataFrames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data are commonly rectangular in form, with variables as columns and measurement units as rows. In R, such data are held in a data frame where columns (or variables) are equal length vectors of possibly different data types. A data frame constructed from a set of vectors is illustrated in Figure <a href="structures.html#fig:vec-data-frame">4.2</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:vec-data-frame"></span>
+<img src="figures/vectors-data-frames.png" alt="Relationship between vectors and data frames in R." width="100%" />
+<p class="caption">
+FIGURE 4.2: Relationship between vectors and data frames in R.
+</p>
+</div>
+<p>Let’s continue using the species, DBH, and acceptable growing stock vectors defined at the beginning of Section <a href="structures.html#vector">4.2</a>. The code below follows Figure <a href="structures.html#fig:vec-data-frame">4.2</a> to form a data frame using the three vectors, with columns <code>spp</code>, <code>dbh</code>, and <code>ags</code> and rows comprising measurements on each tree. <a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a></p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="structures.html#cb182-1" tabindex="-1"></a>trees <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Species =</span> spp, <span class="at">DBH =</span> dbh, <span class="at">AGS =</span> ags)</span>
+<span id="cb182-2"><a href="structures.html#cb182-2" tabindex="-1"></a>trees</span></code></pre></div>
+<pre><code>#&gt;           Species DBH   AGS
+#&gt; 1     Acer rubrum  16  TRUE
+#&gt; 2     Acer rubrum   8  TRUE
+#&gt; 3    Betula lenta   2 FALSE
+#&gt; 4    Betula lenta  16  TRUE
+#&gt; 5 Prunus serotina  10 FALSE
+#&gt; 6 Prunus serotina  14 FALSE
+#&gt; 7     Acer rubrum  13  TRUE</code></pre>
+<p>The column names and associated vectors are passed as arguments to <code>data.frame()</code>. Notice that while defining the <code>data.frame()</code> function arguments, we chose to set the column names to something different than the vector names.</p>
+<p>Column names can be extracted and changed using either <code>names()</code> or <code>colnames()</code> functions. Both functions return a vector that can be modified as we saw in Section <a href="structures.html#basicSubsetting">4.2.3</a>. Below we change the column names to <code>species, dbh, acceptable_stock</code> and then change them back to <code>Species, DBH, AGS</code>.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="structures.html#cb184-1" tabindex="-1"></a><span class="fu">colnames</span>(trees)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Species&quot; &quot;DBH&quot;     &quot;AGS&quot;</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="structures.html#cb186-1" tabindex="-1"></a><span class="fu">is.vector</span>(<span class="fu">colnames</span>(trees))</span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="structures.html#cb188-1" tabindex="-1"></a><span class="fu">colnames</span>(trees) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;species&quot;</span>, <span class="st">&quot;dbh&quot;</span>, <span class="st">&quot;acceptable_stock&quot;</span>)</span>
+<span id="cb188-2"><a href="structures.html#cb188-2" tabindex="-1"></a><span class="fu">colnames</span>(trees)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;species&quot;          &quot;dbh&quot;             
+#&gt; [3] &quot;acceptable_stock&quot;</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="structures.html#cb190-1" tabindex="-1"></a><span class="fu">colnames</span>(trees) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;DBH&quot;</span>, <span class="st">&quot;AGS&quot;</span>)</span></code></pre></div>
+<p>Rows can also have names, although if row names are desired it’s potentially more useful to include a separate column in the data frame that contains those names. The default row names are sequential numbers (as characters) from <code>"1"</code> to the number of rows in the data frame. Like column names, row names can be extracted and changed if desired.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="structures.html#cb191-1" tabindex="-1"></a><span class="fu">rownames</span>(trees)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot;</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="structures.html#cb193-1" tabindex="-1"></a><span class="fu">rownames</span>(trees) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;Tree&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(trees))</span>
+<span id="cb193-2"><a href="structures.html#cb193-2" tabindex="-1"></a><span class="fu">rownames</span>(trees)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Tree 1&quot; &quot;Tree 2&quot; &quot;Tree 3&quot; &quot;Tree 4&quot; &quot;Tree 5&quot;
+#&gt; [6] &quot;Tree 6&quot; &quot;Tree 7&quot;</code></pre>
+<p>Finally, let’s take a look at the data frame’s dimensions. <code>dim()</code> returns a vector that holds the number of rows and number of columns, respectively. Also, try the functions <code>nrow()</code> and <code>ncol()</code> on the data frame and see what happens (this should help explain the <code>paste()</code> function used to name rows in the code above).</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="structures.html#cb195-1" tabindex="-1"></a><span class="fu">dim</span>(trees)</span></code></pre></div>
+<pre><code>#&gt; [1] 7 3</code></pre>
+<p>Next we’ll look at a slightly larger dataset comprising loblolly pine growth measurements. The code below loads the dataset using <code>read.csv()</code>, introduced in Section <a href="scripts.html#readWrite">3.3.2</a>, and assigns the resulting data frame to <code>loblolly</code>. For fun, we use <code>class()</code> to prove <code>loblolly</code> is in fact a data frame.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="structures.html#cb197-1" tabindex="-1"></a>loblolly <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datasets/loblolly_trees.csv&quot;</span>)</span>
+<span id="cb197-2"><a href="structures.html#cb197-2" tabindex="-1"></a><span class="fu">class</span>(loblolly)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="structures.html#cb199-1" tabindex="-1"></a><span class="fu">head</span>(loblolly)</span></code></pre></div>
+<pre><code>#&gt;   height age seed
+#&gt; 1   4.51   3  301
+#&gt; 2  10.89   5  301
+#&gt; 3  28.72  10  301
+#&gt; 4  41.74  15  301
+#&gt; 5  52.70  20  301
+#&gt; 6  60.92  25  301</code></pre>
+<p>Each row in the loblolly dataset is a tree and columns record height (ft), age (years), and seed source code (seed). How many trees are in this dataset?</p>
+<div id="dataFrameSubsetting" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Accessing elements<a href="structures.html#dataFrameSubsetting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To access a specific element (or elements) in a data fame we need to specify both the row and column indexes. As illustrated below, inside the square brackets, the desired row indexes are specified first, followed by a comma, then the desired column indexes.</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="structures.html#cb201-1" tabindex="-1"></a>loblolly[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co"># Row 1 and column 2.</span></span></code></pre></div>
+<pre><code>#&gt; [1] 3</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="structures.html#cb203-1" tabindex="-1"></a>loblolly[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">2</span>] <span class="co"># Rows 1 through 3 and column 2.</span></span></code></pre></div>
+<pre><code>#&gt; [1]  3  5 10</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="structures.html#cb205-1" tabindex="-1"></a>loblolly[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># Rows 1 through 3 and columns 2 through 3.</span></span></code></pre></div>
+<pre><code>#&gt;   age seed
+#&gt; 1   3  301
+#&gt; 2   5  301
+#&gt; 3  10  301</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="structures.html#cb207-1" tabindex="-1"></a>loblolly[, <span class="dv">1</span>] <span class="co"># All rows and column 1.</span></span></code></pre></div>
+<pre><code>#&gt;  [1]  4.51 10.89 28.72 41.74 52.70 60.92  4.55 10.92
+#&gt;  [9] 29.07 42.83 53.88 63.39  4.79 11.37 30.21 44.40
+#&gt; [17] 55.82 64.10  3.91  9.48 25.66 39.07 50.78 59.07
+#&gt; [25]  4.81 11.20 28.66 41.66 53.31 63.05  3.88  9.40
+#&gt; [33] 25.99 39.55 51.46 59.64  4.32 10.43 27.16 40.85
+#&gt; [41] 51.33 60.07  4.57 10.57 27.90 41.13 52.43 60.69
+#&gt; [49]  3.77  9.03 25.45 38.98 49.76 60.28  4.33 10.79
+#&gt; [57] 28.97 42.44 53.17 61.62  4.38 10.48 27.93 40.20
+#&gt; [65] 50.06 58.49  4.12  9.92 26.54 37.82 48.43 56.81
+#&gt; [73]  3.93  9.34 26.08 37.79 48.31 56.43  3.46  9.05
+#&gt; [81] 25.85 39.15 49.12 59.49</code></pre>
+<p>Note that <code>loblolly[, 1]</code> returns ALL elements in the first column. This agrees with the behavior for vectors, where leaving an index out of the square brackets returns all values. In this case we’re asking for all rows, and the first column. Similarly, if we specify <code>loblolly[1, ]</code> all column values for row 1 will be returned.</p>
+<p>We can also access the columns (or rows) using their names.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="structures.html#cb209-1" tabindex="-1"></a>loblolly[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">&quot;height&quot;</span>]</span></code></pre></div>
+<pre><code>#&gt; [1]  4.51 10.89 28.72 41.74</code></pre>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="structures.html#cb211-1" tabindex="-1"></a>loblolly[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="fu">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;seed&quot;</span>)]</span></code></pre></div>
+<pre><code>#&gt;   age seed
+#&gt; 1   3  301
+#&gt; 2   5  301
+#&gt; 3  10  301
+#&gt; 4  15  301</code></pre>
+<p>There is another way to access specific columns, using the <code>$</code> notation.</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="structures.html#cb213-1" tabindex="-1"></a>loblolly<span class="sc">$</span>height</span></code></pre></div>
+<pre><code>#&gt;  [1]  4.51 10.89 28.72 41.74 52.70 60.92  4.55 10.92
+#&gt;  [9] 29.07 42.83 53.88 63.39  4.79 11.37 30.21 44.40
+#&gt; [17] 55.82 64.10  3.91  9.48 25.66 39.07 50.78 59.07
+#&gt; [25]  4.81 11.20 28.66 41.66 53.31 63.05  3.88  9.40
+#&gt; [33] 25.99 39.55 51.46 59.64  4.32 10.43 27.16 40.85
+#&gt; [41] 51.33 60.07  4.57 10.57 27.90 41.13 52.43 60.69
+#&gt; [49]  3.77  9.03 25.45 38.98 49.76 60.28  4.33 10.79
+#&gt; [57] 28.97 42.44 53.17 61.62  4.38 10.48 27.93 40.20
+#&gt; [65] 50.06 58.49  4.12  9.92 26.54 37.82 48.43 56.81
+#&gt; [73]  3.93  9.34 26.08 37.79 48.31 56.43  3.46  9.05
+#&gt; [81] 25.85 39.15 49.12 59.49</code></pre>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="structures.html#cb215-1" tabindex="-1"></a>loblolly<span class="sc">$</span>age</span></code></pre></div>
+<pre><code>#&gt;  [1]  3  5 10 15 20 25  3  5 10 15 20 25  3  5 10 15 20
+#&gt; [18] 25  3  5 10 15 20 25  3  5 10 15 20 25  3  5 10 15
+#&gt; [35] 20 25  3  5 10 15 20 25  3  5 10 15 20 25  3  5 10
+#&gt; [52] 15 20 25  3  5 10 15 20 25  3  5 10 15 20 25  3  5
+#&gt; [69] 10 15 20 25  3  5 10 15 20 25  3  5 10 15 20 25</code></pre>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="structures.html#cb217-1" tabindex="-1"></a>height</span></code></pre></div>
+<pre><code>#&gt; Error in eval(expr, envir, enclos): object &#39;height&#39; not found</code></pre>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="structures.html#cb219-1" tabindex="-1"></a>age</span></code></pre></div>
+<pre><code>#&gt; Error in eval(expr, envir, enclos): object &#39;age&#39; not found</code></pre>
+<p>Notice that typing the variable name, such as <code>height</code> or <code>age</code>, without the name of the data frame (and a dollar sign) as a prefix, does not work. The variables <code>height</code> and <code>age</code> are columns in the <code>loblolly</code> data frame, not objects in the R environment and hence must be selected accordingly.</p>
+<p>When your data frame subset includes a single column (e.g., <code>loblolly[, 1]</code> or <code>loblolly[, "height"]</code>) the resulting object is no longer a data frame. Rather, R <em>simplifies</em> the object to a vector. This might not seem like a big deal; however, it can be very frustrating and potentially break your code when you expect an object to behave like a data frame and it doesn’t because it’s now a vector. If you don’t like this behavior you can add the optional argument <code>drop = FALSE</code> after the column indexes, e.g., <code>loblolly[, "height", drop = FALSE]</code>, which stops the simplification, or see Section <a href="tidyverse.html#tibbles">6.2</a> for a data frame extension that doesn’t use this simplifying.</p>
+</div>
+<div id="adding-columns" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Adding columns<a href="structures.html#adding-columns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Say we want to add two new columns to <code>loblolly</code> that measures height in meters and centimeters (recall the current <code>height</code> column is in feet). The <code>$</code> notation makes this task straightforward.</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="structures.html#cb221-1" tabindex="-1"></a>loblolly<span class="sc">$</span>height_m <span class="ot">&lt;-</span> <span class="fl">0.3048</span> <span class="sc">*</span> loblolly<span class="sc">$</span>height</span>
+<span id="cb221-2"><a href="structures.html#cb221-2" tabindex="-1"></a>loblolly<span class="sc">$</span>height_cm <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> loblolly<span class="sc">$</span>height_m</span></code></pre></div>
+</div>
+<div id="removing-columns" class="section level3 hasAnchor" number="4.5.3">
+<h3><span class="header-section-number">4.5.3</span> Removing columns<a href="structures.html#removing-columns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we realize the columns added to <code>loblolly</code> were not as useful as we had hoped and so we want to remove them. Here are three ways to remove the <code>height_m</code> and <code>height_cm</code> columns.</p>
+<ol style="list-style-type: decimal">
+<li><p>Subset the data frame by selecting the columns of interest and reassign to <code>loblolly</code>.</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="structures.html#cb222-1" tabindex="-1"></a>loblolly <span class="ot">&lt;-</span> loblolly[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div></li>
+<li><p>Subset the data frame by telling R which columns <em>not</em> to select and reassign to <code>loblolly</code>.</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="structures.html#cb223-1" tabindex="-1"></a>loblolly <span class="ot">&lt;-</span> loblolly[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)]</span></code></pre></div></li>
+<li><p>Assign the columns we seek to remove to <code>NULL</code>.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="structures.html#cb224-1" tabindex="-1"></a>loblolly[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb224-2"><a href="structures.html#cb224-2" tabindex="-1"></a><span class="co"># Or.</span></span>
+<span id="cb224-3"><a href="structures.html#cb224-3" tabindex="-1"></a>loblolly[, <span class="fu">c</span>(<span class="st">&quot;height_m&quot;</span>, <span class="st">&quot;height_cm&quot;</span>)] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb224-4"><a href="structures.html#cb224-4" tabindex="-1"></a><span class="co"># Or.</span></span>
+<span id="cb224-5"><a href="structures.html#cb224-5" tabindex="-1"></a>loblolly<span class="sc">$</span>height_m <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb224-6"><a href="structures.html#cb224-6" tabindex="-1"></a>loblolly<span class="sc">$</span>height_cm <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div></li>
+</ol>
+</div>
+<div id="transformVariables" class="section level3 hasAnchor" number="4.5.4">
+<h3><span class="header-section-number">4.5.4</span> Transforming columns<a href="structures.html#transformVariables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can also easily transform existing columns in a data frame. Suppose we wish to transform the <code>age</code> column in <code>loblolly</code> to represent the number of years since a base age of 10.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="structures.html#cb225-1" tabindex="-1"></a>loblolly<span class="sc">$</span>age <span class="ot">&lt;-</span> loblolly<span class="sc">$</span>age <span class="sc">-</span> <span class="dv">10</span> <span class="co"># Redefine age.</span></span>
+<span id="cb225-2"><a href="structures.html#cb225-2" tabindex="-1"></a><span class="fu">head</span>(loblolly<span class="sc">$</span>age)</span></code></pre></div>
+<pre><code>#&gt; [1] -7 -5  0  5 10 15</code></pre>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="structures.html#cb227-1" tabindex="-1"></a><span class="co"># Change age back to the number of years old.</span></span>
+<span id="cb227-2"><a href="structures.html#cb227-2" tabindex="-1"></a>loblolly<span class="sc">$</span>age <span class="ot">&lt;-</span> loblolly<span class="sc">$</span>age <span class="sc">+</span> <span class="dv">10</span></span></code></pre></div>
+</div>
+<div id="rearranging-columns" class="section level3 hasAnchor" number="4.5.5">
+<h3><span class="header-section-number">4.5.5</span> Rearranging columns<a href="structures.html#rearranging-columns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While rearranging columns is usually not all that important for actual data analysis purposes, we often want to rearrange the columns in a dataset for visualization purposes. Say we want to move the <code>seed</code> and <code>age</code> columns before the <code>height</code> column. This can be done with a column subset operation using either the column names or indexes.</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="structures.html#cb228-1" tabindex="-1"></a>loblolly <span class="ot">&lt;-</span> loblolly[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)]</span>
+<span id="cb228-2"><a href="structures.html#cb228-2" tabindex="-1"></a><span class="co"># Or.</span></span>
+<span id="cb228-3"><a href="structures.html#cb228-3" tabindex="-1"></a>loblolly <span class="ot">&lt;-</span> loblolly[, <span class="fu">c</span>(<span class="st">&quot;seed&quot;</span>, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;height&quot;</span>)]</span>
+<span id="cb228-4"><a href="structures.html#cb228-4" tabindex="-1"></a></span>
+<span id="cb228-5"><a href="structures.html#cb228-5" tabindex="-1"></a><span class="fu">names</span>(loblolly)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;seed&quot;   &quot;age&quot;    &quot;height&quot;</code></pre>
+</div>
+</div>
+<div id="lists" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Lists<a href="structures.html#lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The third data structure we’ll work with is a list. Technically a list is a vector, but one in which elements can be of different types. For example a list may have one element that’s a vector, one that’s a data frame, and another that’s a function. To appreciate a list’s usefulness, consider designing a function that fits a simple linear regression model (you don’t need to know about regression analysis to follow this example). Evaluating a regression model’s performance typically involves looking at several different outputs, some of which are listed below.</p>
+<ul>
+<li>The slope and intercept coefficients (a numeric vector with two elements).</li>
+<li>The residuals (a numeric vector with <span class="math inline">\(n\)</span> elements, where <span class="math inline">\(n\)</span> is the number of data points).</li>
+<li>Fitted values for the data (a numeric vector with <span class="math inline">\(n\)</span> elements).</li>
+<li>The names of the dependent and independent variables (a character vector with two elements).</li>
+</ul>
+<p>In fact <code>lm()</code> fits a regression model and returns a list of these and other useful outputs (see Section <a href="#RegressionRatio"><strong>??</strong></a> for details). The code below fits a regression model to the <code>height</code> and <code>age</code> variables in the <code>loblolly</code> data frame.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="structures.html#cb230-1" tabindex="-1"></a>ht_age_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> age, <span class="at">data =</span> loblolly)</span>
+<span id="cb230-2"><a href="structures.html#cb230-2" tabindex="-1"></a><span class="fu">mode</span>(ht_age_mod)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;list&quot;</code></pre>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="structures.html#cb232-1" tabindex="-1"></a><span class="fu">names</span>(ht_age_mod)</span></code></pre></div>
+<pre><code>#&gt;  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;      
+#&gt;  [4] &quot;rank&quot;          &quot;fitted.values&quot; &quot;assign&quot;       
+#&gt;  [7] &quot;qr&quot;            &quot;df.residual&quot;   &quot;xlevels&quot;      
+#&gt; [10] &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</code></pre>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="structures.html#cb234-1" tabindex="-1"></a>ht_age_mod<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>#&gt; (Intercept)         age 
+#&gt;     -1.3124      2.5905</code></pre>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="structures.html#cb236-1" tabindex="-1"></a><span class="fu">length</span>(ht_age_mod<span class="sc">$</span>residuals)</span></code></pre></div>
+<pre><code>#&gt; [1] 84</code></pre>
+<p>The list returned by <code>lm()</code> above is assigned to <code>ht_age_mod</code>. <code>mode()</code> returns the type or storage mode of an object and is used above just to prove that <code>lm()</code> returns a list.<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a> The code also illustrates that named elements of a list can be accessed using the dollar sign notation, similar to data frames.<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> Notice the <code>coefficients</code> list element is a length 2 vector of regression coefficients, while the <code>residuals</code> element is a length 84 vector of residuals.</p>
+<p>Similar to <code>data.frame()</code>, you can create a list using <code>list()</code> as illustrated below using some data structures introduced earlier in the chapter. The first list element, named <code>first</code>, holds the <code>dbh</code> vector we created in Section <a href="structures.html#vector">4.2</a>. The second list element, named <code>second</code>, holds the <code>trees</code> data frame. The third list element, named <code>third</code>, holds a list with elements named <code>a</code> and <code>b</code> that hold a vector of values 1 through 10, and a copy of the <code>trees</code> data frame, respectively.</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="structures.html#cb238-1" tabindex="-1"></a>example_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">first =</span> dbh, <span class="at">second =</span> trees,</span>
+<span id="cb238-2"><a href="structures.html#cb238-2" tabindex="-1"></a>                     <span class="at">third =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">b =</span> trees))</span>
+<span id="cb238-3"><a href="structures.html#cb238-3" tabindex="-1"></a>example_list</span></code></pre></div>
+<pre><code>#&gt; $first
+#&gt; [1] 16  8  2 16 10 14 13
+#&gt; 
+#&gt; $second
+#&gt;                Species DBH   AGS
+#&gt; Tree 1     Acer rubrum  16  TRUE
+#&gt; Tree 2     Acer rubrum   8  TRUE
+#&gt; Tree 3    Betula lenta   2 FALSE
+#&gt; Tree 4    Betula lenta  16  TRUE
+#&gt; Tree 5 Prunus serotina  10 FALSE
+#&gt; Tree 6 Prunus serotina  14 FALSE
+#&gt; Tree 7     Acer rubrum  13  TRUE
+#&gt; 
+#&gt; $third
+#&gt; $third$a
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+#&gt; 
+#&gt; $third$b
+#&gt;                Species DBH   AGS
+#&gt; Tree 1     Acer rubrum  16  TRUE
+#&gt; Tree 2     Acer rubrum   8  TRUE
+#&gt; Tree 3    Betula lenta   2 FALSE
+#&gt; Tree 4    Betula lenta  16  TRUE
+#&gt; Tree 5 Prunus serotina  10 FALSE
+#&gt; Tree 6 Prunus serotina  14 FALSE
+#&gt; Tree 7     Acer rubrum  13  TRUE</code></pre>
+<div id="accessing-elements" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Accessing elements<a href="structures.html#accessing-elements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ve already seen that list elements can be accessed using the dollar sign notation. In addition, square bracket notation can be used. However, there is a subtle wrinkle—using either single or double square brackets. Let’s try accessing the first element in our example list using the dollar sign <code>$</code>, double square bracket <code>[[]]</code>, then single square bracket <code>[]</code>.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="structures.html#cb240-1" tabindex="-1"></a>example_list<span class="sc">$</span>first</span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="structures.html#cb242-1" tabindex="-1"></a><span class="fu">mode</span>(example_list<span class="sc">$</span>first)</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="structures.html#cb244-1" tabindex="-1"></a>example_list[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="structures.html#cb246-1" tabindex="-1"></a><span class="fu">mode</span>(example_list[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="structures.html#cb248-1" tabindex="-1"></a>example_list[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>#&gt; $first
+#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="structures.html#cb250-1" tabindex="-1"></a><span class="fu">mode</span>(example_list[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;list&quot;</code></pre>
+<p>Notice the dollar sign and double bracket return a numeric vector, while the single bracket returns a list. Also notice the difference in results below.</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="structures.html#cb252-1" tabindex="-1"></a>example_list[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span></code></pre></div>
+<pre><code>#&gt; $first
+#&gt; [1] 16  8  2 16 10 14 13
+#&gt; 
+#&gt; $second
+#&gt;                Species DBH   AGS
+#&gt; Tree 1     Acer rubrum  16  TRUE
+#&gt; Tree 2     Acer rubrum   8  TRUE
+#&gt; Tree 3    Betula lenta   2 FALSE
+#&gt; Tree 4    Betula lenta  16  TRUE
+#&gt; Tree 5 Prunus serotina  10 FALSE
+#&gt; Tree 6 Prunus serotina  14 FALSE
+#&gt; Tree 7     Acer rubrum  13  TRUE</code></pre>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="structures.html#cb254-1" tabindex="-1"></a>example_list[[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]]</span></code></pre></div>
+<pre><code>#&gt; [1] 8</code></pre>
+<p>The single bracket form returns the first and second elements of the list, while the double bracket form returns the second element in the first element of the list. Generally, don’t put a vector of indexes or names in a double bracket, as you’ll likely get unexpected results. See, for example, the results below.<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a></p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="structures.html#cb256-1" tabindex="-1"></a>example_list[[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)]]</span></code></pre></div>
+<pre><code>#&gt; Error in example_list[[c(1, 2, 3)]]: recursive indexing failed at level 2</code></pre>
+<p>To recap, the single bracket <code>[]</code> returns a list of object(s) held at the given indexes or names placed in the bracket, whereas the double brackets <code>[[]]</code> returns the object itself held at the index or name placed in the innermost bracket. Put differently, a single bracket is used to access a range of list elements and returns a list, a double bracket should be used to access a single list element and returns the object held in the given element.</p>
+</div>
+<div id="adding-and-removing-elements" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Adding and removing elements<a href="structures.html#adding-and-removing-elements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As you’ve now already seen, there are often several ways to accomplish the same task using R. Here are three options for adding the <code>loblolly</code> data frame to <code>example_list</code>. Run any one of the options. Again, use <code>str()</code> for an informative look at the list’s structure.</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="structures.html#cb258-1" tabindex="-1"></a>example_list<span class="sc">$</span>loblolly <span class="ot">&lt;-</span> loblolly</span>
+<span id="cb258-2"><a href="structures.html#cb258-2" tabindex="-1"></a><span class="co"># Or.</span></span>
+<span id="cb258-3"><a href="structures.html#cb258-3" tabindex="-1"></a>example_list[[<span class="st">&quot;loblolly&quot;</span>]] <span class="ot">&lt;-</span> loblolly</span>
+<span id="cb258-4"><a href="structures.html#cb258-4" tabindex="-1"></a><span class="co"># Or, recalling a list is a vector, you can use the c() function.</span></span>
+<span id="cb258-5"><a href="structures.html#cb258-5" tabindex="-1"></a>example_list <span class="ot">&lt;-</span> <span class="fu">c</span>(example_list, <span class="fu">list</span>(<span class="at">loblolly =</span> loblolly)) </span></code></pre></div>
+<p>You can remove list elements by name or index. Again, run any one of the options below.</p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="structures.html#cb259-1" tabindex="-1"></a>example_list<span class="sc">$</span>loblolly <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb259-2"><a href="structures.html#cb259-2" tabindex="-1"></a><span class="co"># Or. </span></span>
+<span id="cb259-3"><a href="structures.html#cb259-3" tabindex="-1"></a>example_list[[<span class="st">&quot;loblolly&quot;</span>]] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb259-4"><a href="structures.html#cb259-4" tabindex="-1"></a><span class="co"># Or. </span></span>
+<span id="cb259-5"><a href="structures.html#cb259-5" tabindex="-1"></a>example_list <span class="ot">&lt;-</span> example_list[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] </span>
+<span id="cb259-6"><a href="structures.html#cb259-6" tabindex="-1"></a><span class="co"># Or.</span></span>
+<span id="cb259-7"><a href="structures.html#cb259-7" tabindex="-1"></a>example_list <span class="ot">&lt;-</span> example_list[<span class="sc">-</span><span class="dv">4</span>] </span></code></pre></div>
+</div>
+</div>
+<div id="logicalOperators" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Comparison and logical operators<a href="structures.html#logicalOperators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>Comparison operators</em> are binary operators that test a comparative condition between operands and return a logical value to indicate the test result. You might, or might not, recall from your grade school years an <em>operand</em> is what operators are applied to, and an operator is <em>binary</em> if it has two operands. For example, the <em>greater than</em> binary operator in <span class="math inline">\(1 &gt; 2\)</span> tests if the left operand 1 is greater than the right operand 2, the result of which is false.</p>
+<p>Let’s walk through the comparison operators available in R. We’ll present the operator and its definition, followed by an example using the <code>dbh</code> and <code>spp</code> vectors created in Section <a href="structures.html#vector">4.2</a>. First, let’s recall the values held in these vectors.</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="structures.html#cb260-1" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="structures.html#cb262-1" tabindex="-1"></a>spp</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Acer rubrum&quot;     &quot;Acer rubrum&quot;    
+#&gt; [3] &quot;Betula lenta&quot;    &quot;Betula lenta&quot;   
+#&gt; [5] &quot;Prunus serotina&quot; &quot;Prunus serotina&quot;
+#&gt; [7] &quot;Acer rubrum&quot;</code></pre>
+<ol style="list-style-type: decimal">
+<li><p><code>==</code> the equality operator: The “double equals sign” tests if operands are equal. Below we perform a logical test to determine which <code>spp</code> vector elements equal <code>Acer rubrum</code>.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="structures.html#cb264-1" tabindex="-1"></a>spp <span class="sc">==</span> <span class="st">&quot;Acer rubrum&quot;</span></span></code></pre></div>
+<pre><code>#&gt; [1]  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<p>Not surprisingly, the first two and last elements return <code>TRUE</code> and the other four elements return <code>FALSE</code>. Notice we’re using the <code>==</code> sign, not the <code>=</code> sign. Mixing up the comparison operator <code>==</code> and assignment operator <code>=</code> is a common error.</p></li>
+<li><p><code>!=</code> the inequality operator: Tests if operands are not equal, and is thus the inverse of <code>==</code>. We see this by testing which elements in <code>spp</code> do not equal <code>Acer rubrum</code>.</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="structures.html#cb266-1" tabindex="-1"></a>spp <span class="sc">!=</span> <span class="st">&quot;Acer rubrum&quot;</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE</code></pre></li>
+<li><p><code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code> less than, less than or equal to, greater than, and greater than or equal to operators, respectively: Using the <code>dbh</code> vector, determine which elements are greater than 16 and then greater than or equal to 16.</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="structures.html#cb268-1" tabindex="-1"></a>dbh <span class="sc">&gt;</span> <span class="dv">16</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="structures.html#cb270-1" tabindex="-1"></a>dbh <span class="sc">&gt;=</span> <span class="dv">16</span></span></code></pre></div>
+<pre><code>#&gt; [1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE</code></pre></li>
+</ol>
+<p>While not immediately apparent from the examples above, recycling is occurring before comparison operations. Recall from Section <a href="structures.html#basicSubsetting">4.2.3</a>, the shorter vector is recycled (repeated) then, if needed, truncated to match the length of the longer vector. If truncation occurs then a warning is thrown. In all cases above, the right operand vector of length 1 is recycled to match the left operand vector length before the comparison operator is applied. For example, the length 1 vector <code>"Acer rubrum"</code> is recycled to match the length 7 <code>spp</code> vector then the equality operator is applied elementwise between the two, now equal length, vectors.<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a></p>
+<p>Suppose we want to know which <code>dbh</code> vector elements are greater than 14 <em>and</em> less than 20. Answering this question requires use of two comparison operators, i.e., <span class="math inline">\(&lt;\)</span> and <span class="math inline">\(&gt;\)</span>. In such cases, logical operators are used to combine multiple comparison operations into a single logical statement. We consider the following <em>logical operators</em> “and”, “or”, “xor”, and “negation.”
+Importantly, in order of operation, comparison operators precede logical operators. The <code>Syntax</code> manual page (i.e., run <code>?Syntax</code> on the console) lists R operators’ order of operation, where you’ll notice the comparison operators are listed before the logical operators in the precedence groups under the Details Section.</p>
+<p>Let’s walk through each of the logical operators.</p>
+<ol style="list-style-type: decimal">
+<li><p><code>&amp;</code> the “and” operator: A comparison using the <code>&amp;</code> operator returns <code>TRUE</code> when both operands are <code>TRUE</code> and <code>FALSE</code> otherwise. The <code>&amp;</code> operator works elementwise on the logical vector operands. Consider the following example.</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="structures.html#cb272-1" tabindex="-1"></a>dbh <span class="sc">&lt;</span> <span class="dv">16</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="structures.html#cb274-1" tabindex="-1"></a>dbh <span class="sc">&gt;</span> <span class="dv">10</span></span></code></pre></div>
+<pre><code>#&gt; [1]  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE</code></pre>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="structures.html#cb276-1" tabindex="-1"></a>dbh <span class="sc">&lt;</span> <span class="dv">16</span> <span class="sc">&amp;</span> dbh <span class="sc">&gt;</span> <span class="dv">10</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</code></pre>
+<p>First we show the results of <code>dbh &lt; 16</code> and <code>dbh &gt; 10</code> separately. When combining the comparison operations using the <code>&amp;</code> operator, R first performs <code>dbh &lt; 16</code> and <code>dbh &gt; 10</code>, then applies <code>&amp;</code> elementwise on the operands. The elementwise <code>&amp;</code> returns <code>TRUE</code> when the element in the <code>dbh &lt; 16</code> vector is <code>TRUE</code> and the element in the <code>dbh &gt; 10</code> vector is <code>TRUE</code>, which in this case is DBH 14 and 13. The key point to remember is that <code>&amp;</code> returns <code>TRUE</code> only if both operands are <code>TRUE</code>.</p></li>
+<li><p><code>|</code> the “or” operator: A comparison using the <code>|</code> operator returns <code>TRUE</code> if at least one operand is <code>TRUE</code> and <code>FALSE</code> otherwise. Like the <code>&amp;</code> operator, the <code>|</code> operator works elementwise on the operands. Let’s use the same example as before, but now we’ll look for trees with a DBH less than 16 or a DBH greater than 10.</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="structures.html#cb278-1" tabindex="-1"></a>    dbh <span class="sc">&lt;</span> <span class="dv">16</span> <span class="sc">|</span> dbh <span class="sc">&gt;</span> <span class="dv">10</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<p>Not surprisingly, this operation returns <code>TRUE</code> for all elements, because all elements in <code>dbh</code> are either less than 16 or greater than 10.</p></li>
+<li><p><code>xor</code> the “exclusive or” operator: A comparison using the <code>xor</code> operator returns <code>TRUE</code> if only one of the operands is <code>TRUE</code> and <code>FALSE</code> otherwise.</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="structures.html#cb280-1" tabindex="-1"></a><span class="fu">xor</span>(dbh <span class="sc">&lt;</span> <span class="dv">16</span>, dbh <span class="sc">&gt;</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>#&gt; [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE</code></pre>
+<p>Above, the first five elements are <code>TRUE</code> because only one operand is <code>TRUE</code>, and the last two elements are <code>FALSE</code> because both operands are <code>TRUE</code>.</p>
+<p>While we can imagine cases where this operator would be handy, we’ve never found the occasion to use it in our own code.</p></li>
+<li><p><code>!</code> the “negation” or “not” operator: The exclamation point <code>!</code> (called “bang” in programmer’s slang) reverses a logical value, i.e. <code>!TRUE</code> is <code>FALSE</code> and <code>!FALSE</code> is <code>TRUE</code>. The code below returns <code>TRUE</code> for DBH values not greater than 14 (while not required, the parentheses emphasize the order of operation). Also notice <code>!</code> is a <em>unary operator</em>, i.e., it acts on a single operand to its right.</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="structures.html#cb282-1" tabindex="-1"></a><span class="sc">!</span>(dbh <span class="sc">&gt;</span> <span class="dv">14</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre></li>
+</ol>
+<p>There is a “&amp;&amp;” and “||” variant of “&amp;” and “|”, respectively. These “double” operators examine only the first element of operand vectors in a comparison rather than comparing element by element. There are a few cases where <code>&amp;&amp;</code> and <code>||</code> are useful when writing conditional statements in functions (see, e.g., Chapter <a href="functions.html#functions">5</a>); however, we’ll generally not make use of them in this book.</p>
+<div id="inOperator" class="section level3 hasAnchor" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> The <code>%in%</code> operator<a href="structures.html#inOperator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we want to identify the <code>dbh</code> vector elements equal to 13, 10, or 14. We can do this using the equality operator <code>==</code> and the <code>|</code> operator as follows.</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="structures.html#cb284-1" tabindex="-1"></a>dbh</span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="structures.html#cb286-1" tabindex="-1"></a>dbh <span class="sc">==</span> <span class="dv">13</span> <span class="sc">|</span> dbh <span class="sc">==</span> <span class="dv">10</span> <span class="sc">|</span> dbh <span class="sc">==</span> <span class="dv">14</span></span></code></pre></div>
+<pre><code>#&gt; [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
+<p>However, this is a little clunky, involves a lot of typing, and generally makes code hard to read. Lucky for us, R has the “in” operator, <code>%in%</code>, to accomplish this task in a more intuitive and easy-to-read manner.</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="structures.html#cb288-1" tabindex="-1"></a>dbh <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">13</span>, <span class="dv">10</span>, <span class="dv">14</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
+<p>In the spirit of coding techniques to promote efficient and readable code, we’ll use the <code>%in%</code> operator throughout the book.</p>
+<p>Comparison and logical operators are invaluable to identify subsets of data that meet specified conditions. The next section explores how conditional and logical operators facilitate subsetting vectors, data frames, and lists.</p>
+</div>
+</div>
+<div id="subsetting" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Subsetting with logical vectors<a href="structures.html#subsetting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider the <code>loblolly</code> data frame. How can we access only those trees with heights more than 50 m? How can we access the age of those trees taller than 50 m? How can we compute the mean height of all trees from seed source 301? The dataset is small enough that it would not be too onerous to extract the values by hand. However, for larger or more complex datasets, this task would be very difficult or impossible in a reasonable amount of time.</p>
+<p>R has a powerful method for solving these sorts of problems based on a variant of the subsetting methods that we’ve learned. When given a logical vector in square brackets, R returns the values corresponding to <code>TRUE</code>.</p>
+<p>To begin, focus on the <code>dbh</code> and <code>spp</code> vectors created in Section <a href="structures.html#vector">4.2</a>. As we saw in Section <a href="structures.html#logicalOperators">4.7</a>, <code>dbh &gt; 15</code> returns <code>TRUE</code> for each value of <code>dbh</code> greater than 15, and <code>FALSE</code> for each value of <code>dbh</code> less than or equal to 15. Similarly, <code>spp == "Betula lenta"</code> returns <code>TRUE</code> or <code>FALSE</code> depending on whether the <code>spp</code> element equals <code>"Betula lenta"</code>.</p>
+<p>Consider the next three lines of code used to illustrate subsetting with logical vectors.</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="structures.html#cb290-1" tabindex="-1"></a>spp[dbh <span class="sc">&gt;</span> <span class="dv">15</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Acer rubrum&quot;  &quot;Betula lenta&quot;</code></pre>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="structures.html#cb292-1" tabindex="-1"></a>dbh[dbh <span class="sc">&gt;</span> <span class="dv">15</span>]</span></code></pre></div>
+<pre><code>#&gt; [1] 16 16</code></pre>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="structures.html#cb294-1" tabindex="-1"></a>dbh[spp <span class="sc">==</span> <span class="st">&quot;Betula lenta&quot;</span>]</span></code></pre></div>
+<pre><code>#&gt; [1]  2 16</code></pre>
+<p>The first line uses the logical vector from <code>dbh &gt; 15</code> to return those elements of <code>spp</code> where <code>dbh &gt; 15</code> is <code>TRUE</code>. Similarly, the second line uses the same logical vector to return all DBH values greater than 15. The third line uses the logical vector from <code>spp == "Betula lenta"</code> to return the DBH of all <em>Betula lenta</em>.</p>
+<p>Subsetting with logical vectors is an important tool for data analysis, but it can be challenging at first. When presented with an expression like <code>spp[dbh &gt; 15]</code>, it helps to read it “from the inside, out.” In other words, first evaluate <code>dbh &gt; 15</code> <em>inside</em> the square brackets and understand that it returns a logical vector. Then recognize the subset operation, i.e., using square brackets, returns those elements of <code>spp</code> that correspond to the <code>TRUE</code> values in the logical vector. We’ll get more practice with this in this Chapter’s exercises.</p>
+<div id="modifySubsetting" class="section level3 hasAnchor" number="4.8.1">
+<h3><span class="header-section-number">4.8.1</span> Modifying and creating objects via subsetting<a href="structures.html#modifySubsetting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Subsetting on the left side of an assignment is a common way to modify an existing object. Consider the following examples that demonstrate modifying values of an existing object and assigning a subset to a new object.</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="structures.html#cb296-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="co"># Make a vector with values 1 through 10.</span></span>
+<span id="cb296-2"><a href="structures.html#cb296-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="structures.html#cb298-1" tabindex="-1"></a>x[x <span class="sc">&lt;</span> <span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># Set all values less than 5 to 0.</span></span>
+<span id="cb298-2"><a href="structures.html#cb298-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>#&gt;  [1]  0  0  0  0  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="structures.html#cb300-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">9</span> <span class="co"># Make another vector.</span></span>
+<span id="cb300-2"><a href="structures.html#cb300-2" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>#&gt;  [1] -3 -2 -1  0  1  2  3  4  5  6  7  8  9</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="structures.html#cb302-1" tabindex="-1"></a>y[y <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span> <span class="co"># Set all values less than 0 to NA.</span></span>
+<span id="cb302-2"><a href="structures.html#cb302-2" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>#&gt;  [1] NA NA NA  0  1  2  3  4  5  6  7  8  9</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="structures.html#cb304-1" tabindex="-1"></a><span class="co"># Make a vector z that contains only positive values of y.</span></span>
+<span id="cb304-2"><a href="structures.html#cb304-2" tabindex="-1"></a>z <span class="ot">&lt;-</span> y[y <span class="sc">&gt;</span> <span class="dv">0</span>] </span>
+<span id="cb304-3"><a href="structures.html#cb304-3" tabindex="-1"></a>z</span></code></pre></div>
+<pre><code>#&gt;  [1] NA NA NA  1  2  3  4  5  6  7  8  9</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="structures.html#cb306-1" tabindex="-1"></a>z <span class="ot">&lt;-</span> z[<span class="sc">!</span><span class="fu">is.na</span>(z)] <span class="co"># Keep only non-NA values.</span></span>
+<span id="cb306-2"><a href="structures.html#cb306-2" tabindex="-1"></a>z</span></code></pre></div>
+<pre><code>#&gt; [1] 1 2 3 4 5 6 7 8 9</code></pre>
+<p>Notice above, our goal was for <code>z</code> to contain only positive values of <code>y</code> (i.e., we specified <code>y &gt; 0</code>). However, our resulting <code>z</code> contained <code>y</code>’s positive and <code>NA</code> values. This is because <code>NA</code> tested in a comparison is <code>NA</code> (e.g., <code>NA &gt; 0</code> is <code>NA</code>) and <code>NA</code> used in square brackets returns an <code>NA</code>. As a result, it took an additional logical subset to arrive at the desired <code>z</code>, i.e., <code>z[!is.na(z)]</code>. These two steps could be combined into a single statement, i.e., <code>z &lt;- y[!is.na(z) &amp; y &gt; 0]</code>. Special care is needed when using comparison, conditional, and mathematical operators on data with <code>NA</code> values.</p>
+</div>
+<div id="subsetting-data-frames" class="section level3 hasAnchor" number="4.8.2">
+<h3><span class="header-section-number">4.8.2</span> Subsetting data frames<a href="structures.html#subsetting-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Subsetting a data frame’s rows and columns using logical vectors follows in a straightforward way from Section <a href="structures.html#dataFrameSubsetting">4.5.1</a>. Let’s again consider the <code>loblolly</code> data frame.</p>
+<p>In the code below, because the <code>$</code> is referencing a single column, we’re really just subsetting a vector, i.e., <code>age</code>. The subset is the age of trees from seed source 301.</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="structures.html#cb308-1" tabindex="-1"></a>loblolly<span class="sc">$</span>age[loblolly<span class="sc">$</span>seed <span class="sc">==</span> <span class="dv">301</span>]</span></code></pre></div>
+<pre><code>#&gt; [1]  3  5 10 15 20 25</code></pre>
+<p>Next, consider two examples that subset the data frame using square brackets.</p>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="structures.html#cb310-1" tabindex="-1"></a>loblolly[loblolly<span class="sc">$</span>seed <span class="sc">==</span> <span class="dv">301</span>, ]</span></code></pre></div>
+<pre><code>#&gt;   seed age height
+#&gt; 1  301   3   4.51
+#&gt; 2  301   5  10.89
+#&gt; 3  301  10  28.72
+#&gt; 4  301  15  41.74
+#&gt; 5  301  20  52.70
+#&gt; 6  301  25  60.92</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="structures.html#cb312-1" tabindex="-1"></a>loblolly[loblolly<span class="sc">$</span>age <span class="sc">&gt;</span> <span class="dv">20</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>#&gt;    age height
+#&gt; 6   25  60.92
+#&gt; 12  25  63.39
+#&gt; 18  25  64.10
+#&gt; 24  25  59.07
+#&gt; 30  25  63.05
+#&gt; 36  25  59.64
+#&gt; 42  25  60.07
+#&gt; 48  25  60.69
+#&gt; 54  25  60.28
+#&gt; 60  25  61.62
+#&gt; 66  25  58.49
+#&gt; 72  25  56.81
+#&gt; 78  25  56.43
+#&gt; 84  25  59.49</code></pre>
+<p>Here, notice desired rows are selected using a logical vector to the left of the comma within the square brackets. The first example selects rows (trees) with seed source equal to 301 and all columns. The second line selects trees with <code>age</code> greater than 20 and columns 2 and 3.</p>
+<p>Next let’s use the <code>&amp;</code> logical operator to find all trees with age greater than 20 and from seed source 301.</p>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="structures.html#cb314-1" tabindex="-1"></a>loblolly[loblolly<span class="sc">$</span>age <span class="sc">&gt;</span> <span class="dv">20</span> <span class="sc">&amp;</span> loblolly<span class="sc">$</span>seed <span class="sc">==</span> <span class="dv">301</span>, ]</span></code></pre></div>
+<pre><code>#&gt;   seed age height
+#&gt; 6  301  25  60.92</code></pre>
+<p>Often the logical test is based on a dataset dependent value. For example, say we want the tallest tree’s age and seed source.</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="structures.html#cb316-1" tabindex="-1"></a>loblolly[loblolly<span class="sc">$</span>height <span class="sc">==</span> <span class="fu">max</span>(loblolly<span class="sc">$</span>height), ]</span></code></pre></div>
+<pre><code>#&gt;    seed age height
+#&gt; 18  305  25   64.1</code></pre>
+<p>Next consider the much larger and more complex Free-Air Carbon Dioxide Enrichment (FACE) experiment dataset introduced in Section <a href="overview.html#face">1.2.3</a>. Recall, each row in the FACE dataset is a tree in the experiment and columns record the trees’ clone type, treatment, and variable measurements over time. We first read in the FACE data from an external file. <code>dim()</code> tells us <code>face</code> has 1991 trees (rows) and 45 columns.<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a></p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="structures.html#cb318-1" tabindex="-1"></a>face <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datasets/FACE_aspen_core_growth.csv&quot;</span>)</span>
+<span id="cb318-2"><a href="structures.html#cb318-2" tabindex="-1"></a><span class="fu">dim</span>(face)</span></code></pre></div>
+<pre><code>#&gt; [1] 1991   45</code></pre>
+<p>Let’s take a subset of <code>face</code> that includes only aspen Clone 8L trees (which incidentally, was shown by <span class="citation">M. E. Kubiske et al. (<a href="#ref-Kubiske07">2007</a>)</span> to perform better in elevated O3 than other aspen clones in the FACE experiment). Consulting the metadata referenced in Section <a href="overview.html#face">1.2.3</a>, aspen Clone 8L are identified by <code>Clone</code> column value <code>8L</code>. We call the resulting subset <code>face_8L</code> in the code below.</p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="structures.html#cb320-1" tabindex="-1"></a>face_8L <span class="ot">&lt;-</span> face[face<span class="sc">$</span>Clone <span class="sc">==</span> <span class="st">&quot;8L&quot;</span>, ]</span>
+<span id="cb320-2"><a href="structures.html#cb320-2" tabindex="-1"></a><span class="fu">dim</span>(face_8L)</span></code></pre></div>
+<pre><code>#&gt; [1] 331  45</code></pre>
+<p>Using <code>dim</code> we see there are 331 Clone 8L trees.</p>
+<p>Next, let’s create a data frame that only contains data for Clone 8L and no missing height measurements in 2007 (the height values are in column <code>X2007_Height</code>). Recall, we saw <code>!is.na()</code> in Section <a href="structures.html#modifySubsetting">4.8.1</a> to identify all non-<code>NA</code> values as <code>TRUE</code> and <code>FALSE</code> otherwise.</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="structures.html#cb322-1" tabindex="-1"></a>face_8L_all2007 <span class="ot">&lt;-</span> face_8L[<span class="sc">!</span><span class="fu">is.na</span>(face_8L<span class="sc">$</span>X2007_Height), ]</span>
+<span id="cb322-2"><a href="structures.html#cb322-2" tabindex="-1"></a><span class="fu">dim</span>(face_8L_all2007)</span></code></pre></div>
+<pre><code>#&gt; [1] 222  45</code></pre>
+<p>From <code>dim</code> we see there are 222 Clone 8L trees with non-missing height measurements in 2007.</p>
+<p>Return attention to the original <code>face_8L</code> data frame. How can we extract only those trees with no missing data across all columns (i.e., not just <code>X2007_Height</code>)? Consider the following simple example.</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="structures.html#cb324-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">V1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="cn">NA</span>),</span>
+<span id="cb324-2"><a href="structures.html#cb324-2" tabindex="-1"></a>                 <span class="at">V2 =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="cn">NA</span>),</span>
+<span id="cb324-3"><a href="structures.html#cb324-3" tabindex="-1"></a>                 <span class="at">V3 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>))</span>
+<span id="cb324-4"><a href="structures.html#cb324-4" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>#&gt;   V1 V2 V3
+#&gt; 1  1 NA  1
+#&gt; 2  2  1  2
+#&gt; 3  3  4  3
+#&gt; 4  4  5  5
+#&gt; 5 NA NA  7</code></pre>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="structures.html#cb326-1" tabindex="-1"></a><span class="fu">is.na</span>(df)</span></code></pre></div>
+<pre><code>#&gt;         V1    V2    V3
+#&gt; [1,] FALSE  TRUE FALSE
+#&gt; [2,] FALSE FALSE FALSE
+#&gt; [3,] FALSE FALSE FALSE
+#&gt; [4,] FALSE FALSE FALSE
+#&gt; [5,]  TRUE  TRUE FALSE</code></pre>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="structures.html#cb328-1" tabindex="-1"></a><span class="fu">rowSums</span>(<span class="fu">is.na</span>(df))</span></code></pre></div>
+<pre><code>#&gt; [1] 1 0 0 0 2</code></pre>
+<p>First notice that <code>is.na()</code> will test each element of a data frame for the presence of <code>NA</code>. Also recall that if R is asked to sum a logical vector, it will first coerce the logical vector to numeric and then compute the sum, which effectively counts the number of <code>TRUE</code> elements in the logical vector. <code>rowSums()</code> computes the sum of each row. So <code>rowSums(is.na(df))</code> returns a vector with element values equal to the number of <code>NA</code>s in the corresponding data frame row, hence zero elements correspond to rows in <code>df</code> with no <code>NA</code>s. The code below uses this notation to implement a simple method to identify trees with no missing data.</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="structures.html#cb330-1" tabindex="-1"></a><span class="fu">dim</span>(face_8L)</span></code></pre></div>
+<pre><code>#&gt; [1] 331  45</code></pre>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="structures.html#cb332-1" tabindex="-1"></a>face_8L_complete <span class="ot">&lt;-</span> face_8L[<span class="fu">rowSums</span>(<span class="fu">is.na</span>(face_8L)) <span class="sc">==</span> <span class="dv">0</span>, ]</span>
+<span id="cb332-2"><a href="structures.html#cb332-2" tabindex="-1"></a><span class="fu">dim</span>(face_8L_complete)</span></code></pre></div>
+<pre><code>#&gt; [1] 186  45</code></pre>
+<p>Out of the 331 trees in the original data frame, only 186 have no missing data (a statistician’s nightmare)!</p>
+</div>
+<div id="which" class="section level3 hasAnchor" number="4.8.3">
+<h3><span class="header-section-number">4.8.3</span> Subsetting with <code>which()</code><a href="structures.html#which" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ve seen how to subset vectors and data frames by placing logical vectors within square brackets. An alternative approach to logical subsetting is to use <code>which()</code>. <code>which()</code> accepts as input a logical vector and returns the indexes of the vector that are <code>TRUE</code>. Consider the following examples</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="structures.html#cb334-1" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)) <span class="co"># Which elements have a TRUE value?</span></span></code></pre></div>
+<pre><code>#&gt; [1] 1 3</code></pre>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="structures.html#cb336-1" tabindex="-1"></a>dbh <span class="co"># Recall the dbh vector values.</span></span></code></pre></div>
+<pre><code>#&gt; [1] 16  8  2 16 10 14 13</code></pre>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="structures.html#cb338-1" tabindex="-1"></a><span class="fu">which</span>(dbh <span class="sc">&gt;</span> <span class="dv">15</span>) <span class="co"># Which elements have values greater than 15?</span></span></code></pre></div>
+<pre><code>#&gt; [1] 1 4</code></pre>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="structures.html#cb340-1" tabindex="-1"></a>spp <span class="co"># Recall the spp vector values.</span></span></code></pre></div>
+<pre><code>#&gt; [1] &quot;Acer rubrum&quot;     &quot;Acer rubrum&quot;    
+#&gt; [3] &quot;Betula lenta&quot;    &quot;Betula lenta&quot;   
+#&gt; [5] &quot;Prunus serotina&quot; &quot;Prunus serotina&quot;
+#&gt; [7] &quot;Acer rubrum&quot;</code></pre>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="structures.html#cb342-1" tabindex="-1"></a><span class="fu">which</span>(spp <span class="sc">==</span> <span class="st">&#39;Betula lenta&#39;</span>) <span class="co"># Which element equals Betula lenta?</span></span></code></pre></div>
+<pre><code>#&gt; [1] 3 4</code></pre>
+<p>The first example returns a vector with values 1 and 3, which are the indexes of those elements with <code>TRUE</code> values. In the second example, the result is a vector with values 1 and 4, which correspond to the <code>dbh</code> vector indexes with element values greater than 15. Similarly, the third example returns a vector with values 3 and 4, which are the <code>spp</code> vector indexes with element values equal to <code>Betula lenta</code>. As an alternative to logical subsetting, we can use the results from <code>which()</code> to subset a vector or data frame of interest.</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="structures.html#cb344-1" tabindex="-1"></a>dbh[<span class="fu">which</span>(spp <span class="sc">==</span> <span class="st">&quot;Betula lenta&quot;</span>)] <span class="co"># Which (index) subsetting.</span></span></code></pre></div>
+<pre><code>#&gt; [1]  2 16</code></pre>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="structures.html#cb346-1" tabindex="-1"></a>dbh[spp <span class="sc">==</span> <span class="st">&quot;Betula lenta&quot;</span>] <span class="co"># Logical subsetting.</span></span></code></pre></div>
+<pre><code>#&gt; [1]  2 16</code></pre>
+<p>Logical subsetting requires a bit less typing, so we generally prefer it over using <code>which()</code>. However, if you find <code>which()</code> more intuitive, we encourage you to use it.</p>
+<p>Two extensions of <code>which()</code> are <code>which.max()</code> and <code>which.min()</code> that return the index of the element with the maximum and minimum value in a numeric vector, respectively. For example, below we use <code>which.max()</code> to determine the index of the maximum value in the <code>dbh</code> vector.</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="structures.html#cb348-1" tabindex="-1"></a><span class="fu">which.max</span>(dbh)</span></code></pre></div>
+<pre><code>#&gt; [1] 1</code></pre>
+<p>Notice, 16 is the maximum value in <code>dbh</code> (i.e., <code>max(dbh)</code>). Despite there being two values of 16 in <code>dbh</code>, <code>which.max()</code> returns the index for the first element with value equal to 16. You might have expected the function to return the indexes of all elements with values equal to 16; however, that’s not the case. The moral of the story is to always read a function’s manual page to understand its behavior (see <code>?which.max</code> and <code>?which.min</code>).</p>
+</div>
+</div>
+<div id="summaryStructures" class="section level2 hasAnchor" number="4.9">
+<h2><span class="header-section-number">4.9</span> Summary<a href="structures.html#summaryStructures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Vectors, matrices, arrays, data frames, and lists are data structures used to organize, store, and access data in R.<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a> Homogeneous vectors, matrices, and arrays require all elements to be of the same data type. Heterogeneous data frames and lists allow elements to be of different types, e.g., some elements of a data frame may be numeric while other elements may be character. These data structures (or objects) are data analysis building blocks.</p>
+<p>We introduced four data types: character, double, integer, and logical. We learned functions to convert between data types, as well as ways that R automatically converts between data types (called coercion). We covered the all important topic of indexing vectors using square bracket notation <code>[]</code>. This is an essential skill for data analysis in R and we’ll make use of it throughout the book. We then briefly discussed working with factors, which comes into play when working with categorical variables (e.g., species classification, stand treatment).</p>
+<p>We extended the concept of vectors to two dimensions in our discussion of data frames used to store rectangular data. We saw how the square bracket notation extends to accommodate data frame rows and columns, and also introduced <code>$</code> to access specific data frame columns. Next we saw that lists are used to store elements of potentially different objects. We dedicated a good amount of text to subsetting lists, which can be done using single brackets <code>[]</code> (which returns a list consisting of the specified elements) and double brackets <code>[[]]</code> (which returns the actual objects at the specified elements of the list).</p>
+<p>Comparison and logical operators were introduced and used to form logical vectors that, in turn, were used to subset vectors and data frames. The ability to select elements that meet specific criteria is useful through all steps in data analysis and reporting.</p>
+<p>With this foundational understanding of data structures and subsetting, we next take a more in depth look at the methods we can use to manipulate such data structures (i.e., functions) as well as other foundational programming concepts.</p>
+</div>
+<div id="exercisesData" class="section level2 hasAnchor" number="4.10">
+<h2><span class="header-section-number">4.10</span> Exercises<a href="structures.html#exercisesData" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Exercises <a href="structures.html#exr:data1">4.1</a> through <a href="structures.html#exr:data9">4.9</a>, we’ll work with the small dataset shown in Table <a href="structures.html#tab:dataExTable">4.2</a> that contains the heights and ages of six trees measured in three forest stands.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:dataExTable">TABLE 4.2: </span>Practice dataset of tree height (m) and age (yr).
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Height
+</th>
+<th style="text-align:center;">
+Stand
+</th>
+<th style="text-align:center;">
+Age
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">20.23</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">1</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">20</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">30.41</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">1</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">50</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">10.32</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">2</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">15</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">5.38</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">2</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">11</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">20.43</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">3</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">17</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: blue !important;">NA</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">3</span>
+</td>
+<td style="text-align:center;width: 8em; ">
+<span style="     color: black !important;">37</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="exercise">
+<p><span id="exr:data1" class="exercise"><strong>Exercise 4.1  </strong></span>Using data in Table <a href="structures.html#tab:dataExTable">4.2</a>, create three numeric vectors called <code>height</code>, <code>stand</code>, and <code>age</code> corresponding to table columns <code>Height</code>, <code>Stand</code>, and <code>Age</code>, respectively. Then compute the mean value for all three variables. Omit missing values from the mean calculations using the appropriate <code>mean()</code> function arguments.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data2" class="exercise"><strong>Exercise 4.2  </strong></span>Following from Section <a href="structures.html#basicSubsetting">4.2.3</a>, use the square brackets <code>[]</code> to change the values in the first three elements of the <code>age</code> vector to 18, 60, and 10, respectively. After making the change, print the vector, then change the elements back to their original values given in Table <a href="structures.html#tab:dataExTable">4.2</a>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data3" class="exercise"><strong>Exercise 4.3  </strong></span>Use the square brackets <code>[]</code> to perform the following subsets on the <code>height</code> vector.</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li>Print the value of element 1.</li>
+<li>Print the values of elements 1, 3, and 6.</li>
+<li>Use the vector <code>c(1,3,6)</code> to print values at elements 2, 4, and 5. Hint, use the <code>-</code> operator.</li>
+<li>Print the last value in the vector without using the index value 6. Hint, use the <code>length()</code> function.</li>
+</ol>
+<div class="exercise">
+<p><span id="exr:data4" class="exercise"><strong>Exercise 4.4  </strong></span>Create a data frame called <code>tree_data</code> containing the <code>height</code>, <code>stand</code>, and <code>age</code> vectors and set their corresponding columns names to <code>Height</code>, <code>Stand</code>, and <code>Age</code>, respectively (to underscore that R is case sensitive, we changed from lowercase vector names to uppercase column names). Display the structure of the data frame using the <code>str()</code> function. Use this data frame in Exercises <a href="structures.html#exr:data5">4.5</a> through <a href="structures.html#exr:data9">4.9</a>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data5" class="exercise"><strong>Exercise 4.5  </strong></span>Following from Section <a href="structures.html#dataFrameSubsetting">4.5.1</a>, use the square brackets <code>[]</code> to perform the following subsets.</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li>Print all values in row 1.</li>
+<li>Print all values in rows 1, 3, and 6.</li>
+<li>Use the vector <code>c(1,3,6)</code> to print values in rows 2, 4, and 5. Hint, use the <code>-</code> operator.</li>
+<li>Print all values in the last row without using the index value 6. Hint, use the <code>length()</code> function.</li>
+<li>Print all rows in column 1.</li>
+<li>Print all rows in columns 1 and 3 using the column names, i.e., <code>Height</code> and <code>Age</code>.</li>
+<li>Print the values in rows 5 and 6 and columns <code>Height</code> and <code>Age</code>.</li>
+</ol>
+<div class="exercise">
+<p><span id="exr:data6" class="exercise"><strong>Exercise 4.6  </strong></span>Use logical subsetting to print the height of trees in stand 1.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data7" class="exercise"><strong>Exercise 4.7  </strong></span>Use logical subsetting to print the height and age of trees in stands 1 and 3.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data8" class="exercise"><strong>Exercise 4.8  </strong></span>Use logical subsetting to print all rows with trees older than 30 but younger than 50 years.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data9" class="exercise"><strong>Exercise 4.9  </strong></span>Use logical subsetting to print all rows corresponding to trees with age greater than or equal to 20 and at least 10 meters tall. Careful here, the <code>NA</code> in the <code>Height</code> column will need to be dealt with appropriately, e.g., you might use the negation operator <code>!</code> in combination with <code>is.na()</code> in your conditional statement as illustrated in Section <a href="structures.html#modifySubsetting">4.8.1</a>.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:data10" class="exercise"><strong>Exercise 4.10  </strong></span><em>Hardcoding</em> is when you fix data or variable values in code in such a way that they cannot be altered without modifying the code. <em>Hardcoding</em> is a bad programming technique that reduces code readability and reuse. Consider the following vector containing a few plant codes used by the US Forest Service. Notice, also, the vector contains two missing values denoted with <code>NA</code>.</p>
+</div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="structures.html#cb350-1" tabindex="-1"></a>spp_codes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ABIES&quot;</span>, <span class="st">&quot;ABBA&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;ABCO&quot;</span>, <span class="st">&quot;ABFR&quot;</span>, <span class="cn">NA</span>)</span></code></pre></div>
+<p>Say we want to remove these <code>NA</code> values. A hardcoding approach would explicitly use the indexes for the <code>NA</code> as illustrated in the code below.</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="structures.html#cb351-1" tabindex="-1"></a>spp_codes[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>)]</span></code></pre></div>
+<pre><code>#&gt; [1] &quot;ABIES&quot; &quot;ABBA&quot;  &quot;ABCO&quot;  &quot;ABFR&quot;</code></pre>
+<p>However, let’s say this data cleaning step will need to be performed on other species code vectors of a potentially different length. Develop a non-hardcoding approach to remove <code>NA</code> values from vectors of any lengths. Apply your approach to the <code>spp_codes</code> vector.</p>
+<div class="exercise">
+<p><span id="exr:data11" class="exercise"><strong>Exercise 4.11  </strong></span>Collecting field data is often a messy process that can result in data entry errors. Consider the following vector representing the number of trees tallied in ten experimental forest plots.</p>
+</div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="structures.html#cb353-1" tabindex="-1"></a>n_trees <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">138</span>, <span class="dv">289</span>, <span class="dv">239</span>, <span class="dv">12</span>, <span class="dv">103</span>, <span class="dv">310</span>, <span class="sc">-</span><span class="dv">200</span>, <span class="dv">218</span>, <span class="dv">178</span>)</span></code></pre></div>
+<p>Your background knowledge about the forest tells you that any element less than 50 is likely a data entry error and should not be used in subsequent analyses. Also assume this is an ongoing data collection effort and hence you want to avoid hardcoding. Write some code that sets all values less than 50 to <code>NA</code> then takes the mean of the resulting vector. The mean should be computed without the <code>NA</code> values (see the <code>mean()</code> function manual page for guidance).</p>
+<div class="exercise">
+<p><span id="exr:data12" class="exercise"><strong>Exercise 4.12  </strong></span>Read in the FEF (<code>datasets/FEF_trees.csv</code>) file and assign the resulting data frame to <code>fef_trees</code>. You might need to adjust the file path, depending on where your working directory is set relative to the <code>FEF_trees.csv</code> file. Use <code>fef.trees</code> to answer the following questions.</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Confirm <code>fef_trees</code> has 88 rows and 18 columns. Create a subset of <code>fef_trees</code> called <code>fef_trees_sub</code> that includes all rows but only columns 1 through 6 (i.e., columns <code>watershed</code>, <code>year</code>, <code>plot</code>, <code>species</code>, <code>dbh_in</code>, and <code>height_ft</code>).</p></li>
+<li><p>Recall each row in <code>fef_trees</code> corresponds to a tree measurement. Print the <code>fef_trees_sub</code> row that holds the tallest tree (i.e., maximum <code>height_ft</code> value). <code>max()</code> should come in handy in your logical statement.</p></li>
+<li><p>Add new columns <code>dbh_cm</code> and <code>height_m</code> to <code>fef_trees_sub</code>. As the name suggests, these new columns should hold DBH in centimeters and height in meters.</p></li>
+<li><p>Remove <code>dbh_in</code> and <code>height_ft</code> from <code>fef_trees_sub</code>.</p></li>
+<li><p>Compute the mean DBH in cm for all <em>Acer rubrum</em> in watershed 3.</p></li>
+</ol>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-IEEE754" class="csl-entry">
+IEEE. 2008. <span>“IEEE Standard for Floating-Point Arithmetic.”</span> <em>IEEE Std 754-2008</em>, 1–70. <a href="https://doi.org/10.1109/IEEESTD.2008.4610935">https://doi.org/10.1109/IEEESTD.2008.4610935</a>.
+</div>
+<div id="ref-Kubiske07" class="csl-entry">
+Kubiske, M. E., V. S. Quinn, P. E. Marquardt, and D. F. Karnosky. 2007. <span>“Effects of Elevated Atmospheric CO2 and/or O3 on Intra- and Interspecific Competitive Ability of Aspen.”</span> <em>Plant Biology</em> 9 (2): 342–55. https://doi.org/<a href="https://doi.org/10.1055/s-2006-924760">https://doi.org/10.1055/s-2006-924760</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="19">
+<li id="fn19"><p>We will define the terms <em>unit</em> and <em>population</em> more formally in Chapter <a href="notation.html#notation">10</a>.<a href="structures.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Technically the objects described in this section are “atomic” vectors (all elements of the same type). This distinction is important because lists, described in Section <a href="structures.html#lists">4.6</a>, are vectors that can have elements of different types. Unless specified otherwise, when we say vector, we’re talking about an atomic vector.<a href="structures.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>Character strings can also be delimited using single quotations <code>'</code> rather than double quotations <code>"</code>. The double quotation <code>"</code> is preferred for consistency with other languages where there is a difference between the two (e.g., C, C++).<a href="structures.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>Use <code>nchar()</code> to get the number of characters in a string, e.g., <code>nchar("Acer rubrum")</code>.<a href="structures.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>In programming, <em>exception</em> is short for <em>exceptional event</em>. An exception occurs when the normal flow of a program is disrupted, typically by a syntax error or when the result might be unexpected, e.g., <code>as.double(spp)</code>. The phrase <em>throw an exception</em> implies our code might eventually <em>catch the exception</em> and deal with it appropriately, but that’s a topic for later.<a href="structures.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>While data frames can be created using the <code>data.frame()</code> function, recall also, objects returned by functions used to read external are also data frames, see Section <a href="scripts.html#readWrite">3.3.2</a>.<a href="structures.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>One could also consult <code>lm()</code>’s manual page which describes the returned list.<a href="structures.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>A data frame is actually a specialized list consisting of equal length vectors (columns) and unique row names, you can prove this to yourself by running <code>is.list(loblolly)</code> and <code>is.data.frame(loblolly)</code>.<a href="structures.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Try this example using only single brackets<span class="math inline">\(\ldots\)</span>, it will return a list holding elements <code>first</code>, <code>second</code>, and <code>third</code>.<a href="structures.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>Test your understanding of this very important concept using a few simple examples. For instance, by hand, write out the result of <code>spp == c("Acer rubrum", "Betula lenta")</code> and <code>c(16, 10, 1) &gt;= dbh</code> then run the code to check your result.<a href="structures.html#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p>If you’re following along at your console, run <code>str(face)</code> for an extensive description of the data frame.<a href="structures.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p>While we didn’t spend time describing matrices and arrays, you’ll find they’re variations and extensions on the other data structures covered here.<a href="structures.html#fnref30" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="scripts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

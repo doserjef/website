@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Preliminary definitions and concepts | Introduction to Forestry Data Analysis with R</title>
+  <meta name="description" content="Chapter 10 Preliminary definitions and concepts | Introduction to Forestry Data Analysis with R." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Preliminary definitions and concepts | Introduction to Forestry Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/cover.jpg" />
+  <meta property="og:description" content="Chapter 10 Preliminary definitions and concepts | Introduction to Forestry Data Analysis with R." />
+  <meta name="github-repo" content="finleya/FD20" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Preliminary definitions and concepts | Introduction to Forestry Data Analysis with R" />
+  
+  <meta name="twitter:description" content="Chapter 10 Preliminary definitions and concepts | Introduction to Forestry Data Analysis with R." />
+  <meta name="twitter:image" content="/images/cover.jpg" />
+
+<meta name="author" content="Andrew O. Finley and Jeffrey W. Doser" />
+
+
+<meta name="date" content="2024-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ggplot2.html"/>
+<link rel="next" href="statBasics.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/kePrint/kePrint.js"></script>
+<link href="libs/lightable/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<script src="libs/leaflet-providers/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-easybutton/easy-button.css" rel="stylesheet" />
+<script src="libs/leaflet-easybutton/easy-button.js"></script>
+<script src="libs/leaflet-easybutton/EasyButton-binding.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/bootstrap.min.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Forestry Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="authors.html"><a href="authors.html"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1</b> Overview and motivating data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html#aim"><i class="fa fa-check"></i><b>1.1</b> Aim and scope</a></li>
+<li class="chapter" data-level="1.2" data-path="overview.html"><a href="overview.html#datasets"><i class="fa fa-check"></i><b>1.2</b> Motivating forestry datasets</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="overview.html"><a href="overview.html#fef"><i class="fa fa-check"></i><b>1.2.1</b> Fernow Experimental Forest biomass dataset</a></li>
+<li class="chapter" data-level="1.2.2" data-path="overview.html"><a href="overview.html#elk"><i class="fa fa-check"></i><b>1.2.2</b> Elk County timber cruise dataset</a></li>
+<li class="chapter" data-level="1.2.3" data-path="overview.html"><a href="overview.html#face"><i class="fa fa-check"></i><b>1.2.3</b> Free-Air Carbon Dioxide Enrichment experiment dataset</a></li>
+<li class="chapter" data-level="1.2.4" data-path="overview.html"><a href="overview.html#pef"><i class="fa fa-check"></i><b>1.2.4</b> Penobscot Experimental Forest inventory and LiDAR dataset</a></li>
+<li class="chapter" data-level="1.2.5" data-path="overview.html"><a href="overview.html#hf"><i class="fa fa-check"></i><b>1.2.5</b> Harvard Forest tree census</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="overview.html"><a href="overview.html#howToLearn"><i class="fa fa-check"></i><b>1.3</b> How to learn: The most important section in this book!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introToR.html"><a href="introToR.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introToR.html"><a href="introToR.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Installing R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introToR.html"><a href="introToR.html#RDescriptive"><i class="fa fa-check"></i><b>2.1.1</b> First session</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introToR.html"><a href="introToR.html#workingDirectory"><i class="fa fa-check"></i><b>2.2</b> Workspace and working directory</a></li>
+<li class="chapter" data-level="2.3" data-path="introToR.html"><a href="introToR.html#packages"><i class="fa fa-check"></i><b>2.3</b> Packages</a></li>
+<li class="chapter" data-level="2.4" data-path="introToR.html"><a href="introToR.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting help</a></li>
+<li class="chapter" data-level="2.5" data-path="introToR.html"><a href="introToR.html#summaryIntroR"><i class="fa fa-check"></i><b>2.5</b> Summary</a></li>
+<li class="chapter" data-level="2.6" data-path="introToR.html"><a href="introToR.html#exercisesIntroR"><i class="fa fa-check"></i><b>2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>3</b> Scripts and reproducible workflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scripts.html"><a href="scripts.html#scripts-1"><i class="fa fa-check"></i><b>3.1</b> Scripts</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts.html"><a href="scripts.html#best-practices-for-naming-and-formatting"><i class="fa fa-check"></i><b>3.2</b> Best practices for naming and formatting</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts.html"><a href="scripts.html#fileNaming"><i class="fa fa-check"></i><b>3.2.1</b> Script file naming</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts.html"><a href="scripts.html#syntacticNames"><i class="fa fa-check"></i><b>3.2.2</b> Variable naming</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts.html"><a href="scripts.html#code-formatting"><i class="fa fa-check"></i><b>3.2.3</b> Code formatting</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scripts.html"><a href="scripts.html#customize-your-coding-environment"><i class="fa fa-check"></i><b>3.2.4</b> Customize your coding environment</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts.html"><a href="scripts.html#pathsReadWrite"><i class="fa fa-check"></i><b>3.3</b> File paths and external data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="scripts.html"><a href="scripts.html#paths"><i class="fa fa-check"></i><b>3.3.1</b> Relative and absolute paths</a></li>
+<li class="chapter" data-level="3.3.2" data-path="scripts.html"><a href="scripts.html#readWrite"><i class="fa fa-check"></i><b>3.3.2</b> External data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="scripts.html"><a href="scripts.html#illustration"><i class="fa fa-check"></i><b>3.3.3</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="scripts.html"><a href="scripts.html#projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects and keeping organized</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="scripts.html"><a href="scripts.html#directories"><i class="fa fa-check"></i><b>3.4.1</b> Directory structure</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="scripts.html"><a href="scripts.html#summaryScripts"><i class="fa fa-check"></i><b>3.5</b> Summary</a></li>
+<li class="chapter" data-level="3.6" data-path="scripts.html"><a href="scripts.html#exercisesWorkflow"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data structures</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#typesOfVariables"><i class="fa fa-check"></i><b>4.1</b> Types of variables</a></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.2</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="structures.html"><a href="structures.html#dataTypes"><i class="fa fa-check"></i><b>4.2.1</b> Types, conversion, and coercion</a></li>
+<li class="chapter" data-level="4.2.2" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.2.2</b> Patterned data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="structures.html"><a href="structures.html#basicSubsetting"><i class="fa fa-check"></i><b>4.2.3</b> Indexing, accessing, and recycling elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#specialDataTypes"><i class="fa fa-check"></i><b>4.4</b> Missing data, infinity, and other special data types</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.4.1</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.5</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#dataFrameSubsetting"><i class="fa fa-check"></i><b>4.5.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.5.2" data-path="structures.html"><a href="structures.html#adding-columns"><i class="fa fa-check"></i><b>4.5.2</b> Adding columns</a></li>
+<li class="chapter" data-level="4.5.3" data-path="structures.html"><a href="structures.html#removing-columns"><i class="fa fa-check"></i><b>4.5.3</b> Removing columns</a></li>
+<li class="chapter" data-level="4.5.4" data-path="structures.html"><a href="structures.html#transformVariables"><i class="fa fa-check"></i><b>4.5.4</b> Transforming columns</a></li>
+<li class="chapter" data-level="4.5.5" data-path="structures.html"><a href="structures.html#rearranging-columns"><i class="fa fa-check"></i><b>4.5.5</b> Rearranging columns</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.6</b> Lists</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-elements"><i class="fa fa-check"></i><b>4.6.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.6.2" data-path="structures.html"><a href="structures.html#adding-and-removing-elements"><i class="fa fa-check"></i><b>4.6.2</b> Adding and removing elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#logicalOperators"><i class="fa fa-check"></i><b>4.7</b> Comparison and logical operators</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#inOperator"><i class="fa fa-check"></i><b>4.7.1</b> The <code>%in%</code> operator</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with logical vectors</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="structures.html"><a href="structures.html#modifySubsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying and creating objects via subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="structures.html"><a href="structures.html#subsetting-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Subsetting data frames</a></li>
+<li class="chapter" data-level="4.8.3" data-path="structures.html"><a href="structures.html#which"><i class="fa fa-check"></i><b>4.8.3</b> Subsetting with <code>which()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#summaryStructures"><i class="fa fa-check"></i><b>4.9</b> Summary</a></li>
+<li class="chapter" data-level="4.10" data-path="structures.html"><a href="structures.html#exercisesData"><i class="fa fa-check"></i><b>4.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions and programming</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#r-functions"><i class="fa fa-check"></i><b>5.1</b> R functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#programming-conditional-statements"><i class="fa fa-check"></i><b>5.2</b> Programming: conditional statements</a></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#more-on-functions"><i class="fa fa-check"></i><b>5.3</b> More on functions</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="functions.html"><a href="functions.html#functions-with-multiple-returns"><i class="fa fa-check"></i><b>5.3.1</b> Functions with multiple returns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="functions.html"><a href="functions.html#creating-functions"><i class="fa fa-check"></i><b>5.3.2</b> Creating functions</a></li>
+<li class="chapter" data-level="5.3.3" data-path="functions.html"><a href="functions.html#callingFunctions"><i class="fa fa-check"></i><b>5.3.3</b> Calling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#loops"><i class="fa fa-check"></i><b>5.4</b> Loops</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="functions.html"><a href="functions.html#a-while-loop"><i class="fa fa-check"></i><b>5.4.1</b> A while loop</a></li>
+<li class="chapter" data-level="5.4.2" data-path="functions.html"><a href="functions.html#forLoops"><i class="fa fa-check"></i><b>5.4.2</b> A for loop</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#apply"><i class="fa fa-check"></i><b>5.5</b> The <code>apply()</code> function</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="functions.html"><a href="functions.html#using-user-defined-functions-with-apply"><i class="fa fa-check"></i><b>5.5.1</b> Using user-defined functions with <code>apply()</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="functions.html"><a href="functions.html#applyRelatives"><i class="fa fa-check"></i><b>5.5.2</b> Relatives of <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#summaryFunctions"><i class="fa fa-check"></i><b>5.6</b> Summary</a></li>
+<li class="chapter" data-level="5.7" data-path="functions.html"><a href="functions.html#exercisesFunctions"><i class="fa fa-check"></i><b>5.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>6</b> Data summary and analysis using the <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tidyverse.html"><a href="tidyverse.html#minnesota"><i class="fa fa-check"></i><b>6.1</b> Minnesota tree growth dataset</a></li>
+<li class="chapter" data-level="6.2" data-path="tidyverse.html"><a href="tidyverse.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> Improving data frames with <code>tibbles</code></a></li>
+<li class="chapter" data-level="6.3" data-path="tidyverse.html"><a href="tidyverse.html#readr"><i class="fa fa-check"></i><b>6.3</b> Reading and writing files with <code>readr</code></a></li>
+<li class="chapter" data-level="6.4" data-path="tidyverse.html"><a href="tidyverse.html#summaryTidyverse"><i class="fa fa-check"></i><b>6.4</b> Summary</a></li>
+<li class="chapter" data-level="6.5" data-path="tidyverse.html"><a href="tidyverse.html#exercisesTidyverse"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>7</b> Manipulating and summarizing data with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>7.1</b> Filtering rows</a></li>
+<li class="chapter" data-level="7.2" data-path="dplyr.html"><a href="dplyr.html#slice"><i class="fa fa-check"></i><b>7.2</b> Slicing rows</a></li>
+<li class="chapter" data-level="7.3" data-path="dplyr.html"><a href="dplyr.html#arranging-rows-by-values"><i class="fa fa-check"></i><b>7.3</b> Arranging rows by values</a></li>
+<li class="chapter" data-level="7.4" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>7.4</b> Selecting columns</a></li>
+<li class="chapter" data-level="7.5" data-path="dplyr.html"><a href="dplyr.html#renaming-columns"><i class="fa fa-check"></i><b>7.5</b> Renaming columns</a></li>
+<li class="chapter" data-level="7.6" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>7.6</b> Creating new columns</a></li>
+<li class="chapter" data-level="7.7" data-path="dplyr.html"><a href="dplyr.html#relocate"><i class="fa fa-check"></i><b>7.7</b> Change column order</a></li>
+<li class="chapter" data-level="7.8" data-path="dplyr.html"><a href="dplyr.html#summarize"><i class="fa fa-check"></i><b>7.8</b> Summarizing</a></li>
+<li class="chapter" data-level="7.9" data-path="dplyr.html"><a href="dplyr.html#groups"><i class="fa fa-check"></i><b>7.9</b> Grouped data</a></li>
+<li class="chapter" data-level="7.10" data-path="dplyr.html"><a href="dplyr.html#counts"><i class="fa fa-check"></i><b>7.10</b> Counting</a></li>
+<li class="chapter" data-level="7.11" data-path="dplyr.html"><a href="dplyr.html#across"><i class="fa fa-check"></i><b>7.11</b> Applying a function across columns</a></li>
+<li class="chapter" data-level="7.12" data-path="dplyr.html"><a href="dplyr.html#pipes"><i class="fa fa-check"></i><b>7.12</b> Piping</a></li>
+<li class="chapter" data-level="7.13" data-path="dplyr.html"><a href="dplyr.html#dplyrworkflow"><i class="fa fa-check"></i><b>7.13</b> Building <code>dplyr</code> workflows</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="dplyr.html"><a href="dplyr.html#dplyrCaution"><i class="fa fa-check"></i><b>7.13.1</b> A cautionary and encouraging note</a></li>
+</ul></li>
+<li class="chapter" data-level="7.14" data-path="dplyr.html"><a href="dplyr.html#twoTables"><i class="fa fa-check"></i><b>7.14</b> Combining multiple tibbles</a>
+<ul>
+<li class="chapter" data-level="7.14.1" data-path="dplyr.html"><a href="dplyr.html#mutatingJoins"><i class="fa fa-check"></i><b>7.14.1</b> Mutating joins</a></li>
+<li class="chapter" data-level="7.14.2" data-path="dplyr.html"><a href="dplyr.html#filteringJoins"><i class="fa fa-check"></i><b>7.14.2</b> Filtering joins</a></li>
+<li class="chapter" data-level="7.14.3" data-path="dplyr.html"><a href="dplyr.html#allometricJoins"><i class="fa fa-check"></i><b>7.14.3</b> Applying allometric equations using joins</a></li>
+<li class="chapter" data-level="7.14.4" data-path="dplyr.html"><a href="dplyr.html#setOperations"><i class="fa fa-check"></i><b>7.14.4</b> Set operations</a></li>
+<li class="chapter" data-level="7.14.5" data-path="dplyr.html"><a href="dplyr.html#binds"><i class="fa fa-check"></i><b>7.14.5</b> Row and column binds</a></li>
+</ul></li>
+<li class="chapter" data-level="7.15" data-path="dplyr.html"><a href="dplyr.html#summaryDplyr"><i class="fa fa-check"></i><b>7.15</b> Summary</a></li>
+<li class="chapter" data-level="7.16" data-path="dplyr.html"><a href="dplyr.html#exercisesDplyr"><i class="fa fa-check"></i><b>7.16</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>8</b> Tidying data with <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tidyr.html"><a href="tidyr.html#tidyrReshape"><i class="fa fa-check"></i><b>8.1</b> Wide and long formats</a></li>
+<li class="chapter" data-level="8.2" data-path="tidyr.html"><a href="tidyr.html#tidyrSeparate"><i class="fa fa-check"></i><b>8.2</b> Separating and uniting columns</a></li>
+<li class="chapter" data-level="8.3" data-path="tidyr.html"><a href="tidyr.html#standStockTabs"><i class="fa fa-check"></i><b>8.3</b> Application: Stand and stock tables</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyr.html"><a href="tidyr.html#summaryTidr"><i class="fa fa-check"></i><b>8.4</b> Summary</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyr.html"><a href="tidyr.html#exercisesTidyr"><i class="fa fa-check"></i><b>8.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>9</b> Creating graphics with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ggplot2.html"><a href="ggplot2.html#ggplotComponents"><i class="fa fa-check"></i><b>9.1</b> Grammar components</a></li>
+<li class="chapter" data-level="9.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotInitialLook"><i class="fa fa-check"></i><b>9.2</b> An initial look</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ggplot2.html"><a href="ggplot2.html#geometries-mapping-and-aesthetics"><i class="fa fa-check"></i><b>9.2.1</b> Geometries, mapping, and aesthetics</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotScales"><i class="fa fa-check"></i><b>9.2.2</b> Scales</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ggplot2.html"><a href="ggplot2.html#ggplotGuidesThemes"><i class="fa fa-check"></i><b>9.2.3</b> Guides and Themes</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotFacets"><i class="fa fa-check"></i><b>9.2.4</b> Facets</a></li>
+<li class="chapter" data-level="9.2.5" data-path="ggplot2.html"><a href="ggplot2.html#building-graphics-incrementally"><i class="fa fa-check"></i><b>9.2.5</b> Building graphics incrementally</a></li>
+<li class="chapter" data-level="9.2.6" data-path="ggplot2.html"><a href="ggplot2.html#ggplotPatchwork"><i class="fa fa-check"></i><b>9.2.6</b> Arranging graphics</a></li>
+<li class="chapter" data-level="9.2.7" data-path="ggplot2.html"><a href="ggplot2.html#saving-graphics"><i class="fa fa-check"></i><b>9.2.7</b> Saving graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ggplot2.html"><a href="ggplot2.html#exploring-different-graphics"><i class="fa fa-check"></i><b>9.3</b> Exploring different graphics</a></li>
+<li class="chapter" data-level="9.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotBarCharts"><i class="fa fa-check"></i><b>9.4</b> Visualizing distributions</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ggplot2.html"><a href="ggplot2.html#elkCountyBarCharts"><i class="fa fa-check"></i><b>9.4.1</b> Elk County timber cruise bar charts</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ggplot2.html"><a href="ggplot2.html#summaryGgplot2"><i class="fa fa-check"></i><b>9.5</b> Summary</a></li>
+<li class="chapter" data-level="9.6" data-path="ggplot2.html"><a href="ggplot2.html#exercisesGgplot2"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="notation.html"><a href="notation.html"><i class="fa fa-check"></i><b>10</b> Preliminary definitions and concepts</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="notation.html"><a href="notation.html#popSamps"><i class="fa fa-check"></i><b>10.1</b> Estimating population parameters</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="notation.html"><a href="notation.html#ToolsTypesOfVariables"><i class="fa fa-check"></i><b>10.1.1</b> Types of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="notation.html"><a href="notation.html#tools"><i class="fa fa-check"></i><b>10.2</b> Tools of the trade: Review of notation</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="notation.html"><a href="notation.html#operators"><i class="fa fa-check"></i><b>10.2.1</b> Mathematical operators, subscripts, and nested data</a></li>
+<li class="chapter" data-level="10.2.2" data-path="notation.html"><a href="notation.html#padma"><i class="fa fa-check"></i><b>10.2.2</b> Order of operations</a></li>
+<li class="chapter" data-level="10.2.3" data-path="notation.html"><a href="notation.html#toolsR"><i class="fa fa-check"></i><b>10.2.3</b> Tools of the trade using R</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="notation.html"><a href="notation.html#summaryNotation"><i class="fa fa-check"></i><b>10.3</b> Summary and outlook</a></li>
+<li class="chapter" data-level="10.4" data-path="notation.html"><a href="notation.html#exercisesNotation"><i class="fa fa-check"></i><b>10.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statBasics.html"><a href="statBasics.html"><i class="fa fa-check"></i><b>11</b> Basic statistical concepts</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statBasics.html"><a href="statBasics.html#popStats"><i class="fa fa-check"></i><b>11.1</b> Characterizing a population</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statBasics.html"><a href="statBasics.html#centralTendency"><i class="fa fa-check"></i><b>11.1.1</b> Measures of central tendency</a></li>
+<li class="chapter" data-level="11.1.2" data-path="statBasics.html"><a href="statBasics.html#dispersion"><i class="fa fa-check"></i><b>11.1.2</b> Measures of dispersion</a></li>
+<li class="chapter" data-level="11.1.3" data-path="statBasics.html"><a href="statBasics.html#popTotProp"><i class="fa fa-check"></i><b>11.1.3</b> Totals and proportions</a></li>
+<li class="chapter" data-level="11.1.4" data-path="statBasics.html"><a href="statBasics.html#popTabGraph"><i class="fa fa-check"></i><b>11.1.4</b> Tabular and graphical representations of data distributions</a></li>
+<li class="chapter" data-level="11.1.5" data-path="statBasics.html"><a href="statBasics.html#popIllustration"><i class="fa fa-check"></i><b>11.1.5</b> Illustrative analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="statBasics.html"><a href="statBasics.html#introSampling"><i class="fa fa-check"></i><b>11.2</b> Introduction to sampling methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="statBasics.html"><a href="statBasics.html#characteristics-of-samples"><i class="fa fa-check"></i><b>11.2.1</b> Characteristics of samples</a></li>
+<li class="chapter" data-level="11.2.2" data-path="statBasics.html"><a href="statBasics.html#probSamples"><i class="fa fa-check"></i><b>11.2.2</b> Probability samples</a></li>
+<li class="chapter" data-level="11.2.3" data-path="statBasics.html"><a href="statBasics.html#estimators"><i class="fa fa-check"></i><b>11.2.3</b> Sampling distribution and properties of estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="statBasics.html"><a href="statBasics.html#SRS"><i class="fa fa-check"></i><b>11.3</b> Simple Random Sampling</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-without-replacement"><i class="fa fa-check"></i><b>11.3.1</b> Simple Random Sampling without replacement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-with-replacement"><i class="fa fa-check"></i><b>11.3.2</b> Simple Random Sampling with replacement</a></li>
+<li class="chapter" data-level="11.3.3" data-path="statBasics.html"><a href="statBasics.html#SRSTotals"><i class="fa fa-check"></i><b>11.3.3</b> Estimating totals and proportions</a></li>
+<li class="chapter" data-level="11.3.4" data-path="statBasics.html"><a href="statBasics.html#ci"><i class="fa fa-check"></i><b>11.3.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.3.5" data-path="statBasics.html"><a href="statBasics.html#srsIllustration"><i class="fa fa-check"></i><b>11.3.5</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="11.3.6" data-path="statBasics.html"><a href="statBasics.html#sampleSize"><i class="fa fa-check"></i><b>11.3.6</b> Sample size</a></li>
+<li class="chapter" data-level="11.3.7" data-path="statBasics.html"><a href="statBasics.html#ADSRS"><i class="fa fa-check"></i><b>11.3.7</b> Advantages and disadvantages of SRS</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="statBasics.html"><a href="statBasics.html#statBasicsSummary"><i class="fa fa-check"></i><b>11.4</b> Summary and outlook</a></li>
+<li class="chapter" data-level="11.5" data-path="statBasics.html"><a href="statBasics.html#exercisesStats"><i class="fa fa-check"></i><b>11.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="forestStat.html"><a href="forestStat.html"><i class="fa fa-check"></i><b>12</b> Estimating forest parameters</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="forestStat.html"><a href="forestStat.html#samplingUnits"><i class="fa fa-check"></i><b>12.1</b> Sampling units for forestry applications</a></li>
+<li class="chapter" data-level="12.2" data-path="forestStat.html"><a href="forestStat.html#arealSamplingFrame"><i class="fa fa-check"></i><b>12.2</b> Areal sampling frame</a></li>
+<li class="chapter" data-level="12.3" data-path="forestStat.html"><a href="forestStat.html#plotSampling"><i class="fa fa-check"></i><b>12.3</b> Plot sampling</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="forestStat.html"><a href="forestStat.html#plotSamplingExpFa"><i class="fa fa-check"></i><b>12.3.1</b> Expansion factors and estimates</a></li>
+<li class="chapter" data-level="12.3.2" data-path="forestStat.html"><a href="forestStat.html#sample-based-estimates"><i class="fa fa-check"></i><b>12.3.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.3.3" data-path="forestStat.html"><a href="forestStat.html#arealFPC"><i class="fa fa-check"></i><b>12.3.3</b> Finite population correction</a></li>
+<li class="chapter" data-level="12.3.4" data-path="forestStat.html"><a href="forestStat.html#slopOver"><i class="fa fa-check"></i><b>12.3.4</b> Boundary effects</a></li>
+<li class="chapter" data-level="12.3.5" data-path="forestStat.html"><a href="forestStat.html#slopePlots"><i class="fa fa-check"></i><b>12.3.5</b> Slope corrections</a></li>
+<li class="chapter" data-level="12.3.6" data-path="forestStat.html"><a href="forestStat.html#sizeVariance"><i class="fa fa-check"></i><b>12.3.6</b> Effect of plot size on variance</a></li>
+<li class="chapter" data-level="12.3.7" data-path="forestStat.html"><a href="forestStat.html#plotSamplingIllustration"><i class="fa fa-check"></i><b>12.3.7</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="forestStat.html"><a href="forestStat.html#pointSampling"><i class="fa fa-check"></i><b>12.4</b> Point sampling</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="forestStat.html"><a href="forestStat.html#pointSamplingExpFa"><i class="fa fa-check"></i><b>12.4.1</b> Expansion factors and per unit area estimates</a></li>
+<li class="chapter" data-level="12.4.2" data-path="forestStat.html"><a href="forestStat.html#pointSamplingEstimation"><i class="fa fa-check"></i><b>12.4.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.4.3" data-path="forestStat.html"><a href="forestStat.html#selectingBAF"><i class="fa fa-check"></i><b>12.4.3</b> Selecting a basal area factor and computing limiting distances</a></li>
+<li class="chapter" data-level="12.4.4" data-path="forestStat.html"><a href="forestStat.html#pointSamplingField"><i class="fa fa-check"></i><b>12.4.4</b> Boundary overlap and slope corrections</a></li>
+<li class="chapter" data-level="12.4.5" data-path="forestStat.html"><a href="forestStat.html#pointSamplingIllustration"><i class="fa fa-check"></i><b>12.4.5</b> Illustration</a></li>
+<li class="chapter" data-level="12.4.6" data-path="forestStat.html"><a href="forestStat.html#tallyByHeight"><i class="fa fa-check"></i><b>12.4.6</b> Per unit area estimates without measuring DBH</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="forestStat.html"><a href="forestStat.html#forestSamplingWorkflow"><i class="fa fa-check"></i><b>12.5</b> Workflows for forest inventory data</a></li>
+<li class="chapter" data-level="12.6" data-path="forestStat.html"><a href="forestStat.html#standStockTabsEsts"><i class="fa fa-check"></i><b>12.6</b> Stand and stock table estimates</a></li>
+<li class="chapter" data-level="12.7" data-path="forestStat.html"><a href="forestStat.html#exercisesForestStats"><i class="fa fa-check"></i><b>12.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="samplingDesigns.html"><a href="samplingDesigns.html"><i class="fa fa-check"></i><b>13</b> Sampling designs, implementation, and analysis</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYS"><i class="fa fa-check"></i><b>13.1</b> Systematic sampling</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimatorsSYS"><i class="fa fa-check"></i><b>13.1.1</b> Estimation Using SYS</a></li>
+<li class="chapter" data-level="13.1.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYSIllustration"><i class="fa fa-check"></i><b>13.1.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.1.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADSYS"><i class="fa fa-check"></i><b>13.1.3</b> Advantages and disadvantages of SYS</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#Strat"><i class="fa fa-check"></i><b>13.2</b> Stratified sampling</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#StratEstimation"><i class="fa fa-check"></i><b>13.2.1</b> Estimation using stratified sampling</a></li>
+<li class="chapter" data-level="13.2.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#allocation-of-sample-plots"><i class="fa fa-check"></i><b>13.2.2</b> Allocation of sample plots</a></li>
+<li class="chapter" data-level="13.2.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#strataSampleSize"><i class="fa fa-check"></i><b>13.2.3</b> Sample size determination</a></li>
+<li class="chapter" data-level="13.2.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#stratIllustration"><i class="fa fa-check"></i><b>13.2.4</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.2.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-stratifed-sampling"><i class="fa fa-check"></i><b>13.2.5</b> Advantages and disadvantages of stratifed sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#cluster"><i class="fa fa-check"></i><b>13.3</b> Cluster sampling</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterEstimation"><i class="fa fa-check"></i><b>13.3.1</b> Estimation using cluster sampling</a></li>
+<li class="chapter" data-level="13.3.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterIllustration"><i class="fa fa-check"></i><b>13.3.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.3.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-cluster-sampling"><i class="fa fa-check"></i><b>13.3.3</b> Advantages and disadvantages of cluster sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#multistage"><i class="fa fa-check"></i><b>13.4</b> Multistage sampling</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimationMultistage"><i class="fa fa-check"></i><b>13.4.1</b> Estimation using multistage sampling</a></li>
+<li class="chapter" data-level="13.4.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimation-with-unequal-sized-primaries-and-varying-amounts-of-secondaries"><i class="fa fa-check"></i><b>13.4.2</b> Estimation with unequal sized primaries and varying amounts of secondaries</a></li>
+<li class="chapter" data-level="13.4.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADMultistage"><i class="fa fa-check"></i><b>13.4.3</b> Advantages and disadvantages of multistage sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#samplingWithCovs"><i class="fa fa-check"></i><b>13.5</b> Sampling with covariates</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#regression"><i class="fa fa-check"></i><b>13.5.1</b> Linear regression</a></li>
+<li class="chapter" data-level="13.5.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#RegressionSampling"><i class="fa fa-check"></i><b>13.5.2</b> Regression Sampling</a></li>
+<li class="chapter" data-level="13.5.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#doubleSampling"><i class="fa fa-check"></i><b>13.5.3</b> Double sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="samplingDesigns.html"><a href="samplingDesigns.html#summarySampling"><i class="fa fa-check"></i><b>13.6</b> Summary and outlook</a></li>
+<li class="chapter" data-level="13.7" data-path="samplingDesigns.html"><a href="samplingDesigns.html#exercisesSampling"><i class="fa fa-check"></i><b>13.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reports.html"><a href="reports.html"><i class="fa fa-check"></i><b>14</b> Reports</a></li>
+<li class="chapter" data-level="15" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>15</b> Case Studies</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Forestry Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. We want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+
+<div id="notation" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Preliminary definitions and concepts<a href="notation.html#notation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Translating mathematical expressions, found in publications and reference material, into code is a fundamental data analyst skill. This chapter defines terminology and mathematical notation used throughout the remainder of the book to introduce statistical concepts and how they can be translated into efficient analysis workflows.</p>
+<div id="popSamps" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Estimating population parameters<a href="notation.html#popSamps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A central aim of data analysis, as covered in this book, is to infer (meaning to deduce or learn about) population characteristics of interest from a sample taken from the population. The <em>population</em> is an aggregate of units that belong to some defined group. The <em>units</em> are individuals or objects that collectively comprise the population. In some cases we’re able to <em>observe</em> (meaning measure) all units in the population. Observing all population units is a <em>census</em> and means we can describe the population characteristic of interest in its entirety and without error (assuming no measurement error). Recall, the Harvard Forest dataset described in Section <a href="overview.html#hf">1.2.5</a> is a census of the population with units defined as all woody vegetation with a DBH of 1 cm and larger. In most practical cases, however, it’s too time consuming and/or expensive to observe all units in the population. In such cases, we settle for observing a <em>sample</em>, which means a subset, of population units. If selected appropriately, this sample might ultimately provide a useful <em>estimate</em> of the population characteristic of interest.</p>
+<p>We use the word <em>parameter</em> to mean a summary measure of a population characteristic, for example, a parameter could be an average, total, or proportion. Similarly, we use the word <em>statistic</em> to mean a summary measure of a sample characteristic and, like a parameter, a statistic could be an average, total, or proportion. Statistics are used to infer something about the population parameter of interest.</p>
+<p>A characteristic that might vary from unit to unit is called a <em>variable</em>. Our observations, or measurements, of a variable in a sample of population units serve to inform statistics which service as estimates for the population parameter of interest. So, the typical data analysis progression is:</p>
+<ol style="list-style-type: decimal">
+<li>define the population, population units, and population parameters of interest, then</li>
+<li>measure one or more variables on a sample of population units, compute one or more statistics that serve as estimates of the population parameters. Typically, these statistics provide our best estimate of the parameter and quantify how certain we are in the estimate.</li>
+</ol>
+<p>Here’s an example to illustrate this new vocabulary. Say you want to know the total merchantable timber volume on a 50-acre property, where you define “merchantable timber volume” as volume from live trees 10.0 inches DBH or larger with at least one 16 foot sawlog. The <em>population</em> comprises all trees that meet your definition of merchantable timber volume on the 50-acre property. The population <em>parameter</em> of interest is total merchantable timber volume. The population <em>units</em> are individual trees that meet your merchantable timber volume definition. The <em>variable</em> measured on each unit (i.e., tree) is its volume (although in practice we typically measure DBH and height then compute volume using an allometric equation like those briefly discussed in Section <a href="overview.html#fef">1.2.1</a> and discussed in detail in Chapter <a href="#allometric"><strong>??</strong></a>). Alternatively, and more typical in practice, we might define the population units as some fixed-area field plot. For example, we might divide the 50-acre property into 250 1/5-th acre non-overlapping plots. In this case the <em>variable</em> is the cumulative volume of all trees that meet the population definition for merchantable timber on each 1/5-th acre plot. Regardless of whether our population unit is an individual tree or group of trees on a plot, we’ll likely not be able to <em>census</em> the property due to time or effort constraints, but rather we’ll select a <em>sample</em> of population units for which we’ll measure volume. Then, given the sample measurements, we compute a <em>statistic</em> that serves as our <em>estimate</em> for total merchantable timber volume on the property.</p>
+<div id="ToolsTypesOfVariables" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> Types of variables<a href="notation.html#ToolsTypesOfVariables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It’s useful to connect the R data types introduced in Section <a href="structures.html#dataTypes">4.2.1</a> with those of variables we encounter in subsequent chapters. Following Figure <a href="notation.html#fig:toolsVariables">10.1</a>, a variable is initially classified as either <em>quantitative</em> or <em>qualitative</em>.</p>
+<p>A quantitative variable has values that give a notion of magnitude; that is, the values are a numerical measure. This numerical measure is either <em>continuous</em> or <em>discrete</em>. A quantitative continuous variable can take an infinite (not countable) number of possible values, i.e., an infinitely fine increment from one value to the next. Said differently, a continuous variable has an arbitrary number of decimal places for a given value. Examples could include height, weight, and volume. In comparison, a quantitative discrete variable can take a finite (countable) number of possible values when moving from one value to the next. The values are often (but not always) integers. Examples include age in whole years, number of trees, and number of fire events.</p>
+<p>A qualitative variable (also referred to as a categorical variable) has values that represent different categories. Qualitative variables are either <em>nominal</em> or <em>ordinal</em>. A qualitative nominal variable takes values for which no ordering is possible or implied in the categories. For example, the variable species is nominal because there is no inherent or natural order in the species names. Similarly, sex coded as male or female is nominal because there is no apparent ordering. In contrast, the categories of a qualitative ordinal variable have some natural ordering. For example, the variable tree canopy position can take values suppressed, intermediate, co-dominant, or dominant, where these categories themselves imply an ordering. Further examples are disturbance severity code with categories low, medium, and high, or perhaps forest or ecosystem succession stages. Again, in these examples, there is a natural order to the categories.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:toolsVariables"></span>
+<img src="FD20_files/figure-html/toolsVariables-1.png" alt="Variable types with corresponding R data types added below the dotted line." width="672" />
+<p class="caption">
+FIGURE 10.1: Variable types with corresponding R data types added below the dotted line.
+</p>
+</div>
+</div>
+</div>
+<div id="tools" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Tools of the trade: Review of notation<a href="notation.html#tools" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Frank Freese was a prolific forest biometrician who worked for the USFS Southern Experiment Station in Asheville, North Carolina, and Forest Products Lab in Madison, Wisconsin. He wrote several primers on applied statistics for practicing foresters. Despite being somewhat dated, Frank’s works are clearly written, fun to read, and offer lots of worked examples that make them enduring resources for those interested in an efficient and accessible introduction to classical statistics and sampling methods. In one of his works entitled <em>Elementary Forest Sampling</em> <span class="citation">(<a href="#ref-freese1962">Freese 1962</a>)</span>, he includes a section called “Tools of the Trade: Subscripts, Summations, and Brackets” that provides a refresher (or perhaps first time look) at more frequently used mathematical expressions in applied statistics and sampling. Following Frank’s lead, we offer a similar section that covers common mathematical notation and its translation to R code.</p>
+<p>Throughout the remainder of this book, Greek letters, e.g., <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\eta\)</span><a href="#fn95" class="footnote-ref" id="fnref95"><sup>95</sup></a>, represent population parameters, and Roman letters, e.g., <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span>, represent variables. For example, we might say <span class="math inline">\(x=5\)</span>, which is a scalar (i.e., single value) or <span class="math inline">\(y=(1,4,5)\)</span> which is a <em>vector</em> of three values. A vector is a collection of one or more values organized such that the values can be referenced using an index—analogous to the R vector data object introduced in Section <a href="structures.html#vector">4.2</a>. A <em>sample statistic</em>, which is any quantity computed from values in a sample used to estimate population parameters, will be represented using a Roman letter.</p>
+<div id="operators" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Mathematical operators, subscripts, and nested data<a href="notation.html#operators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You already know many mathematical operators, addition <code>+</code>, subtraction <code>-</code>, multiplication <code>*</code>, division <code>\</code>, exponentiation <code>^</code>, and assignment <code>=</code>. Like the comparison and logical operators introduced in Section <a href="structures.html#logicalOperators">4.7</a>, mathematical operators are applied to operands. For example, in the addition of 1+2 there are two operands: the left operand is 1 and the right operand is 2. An operator is <em>binary</em> if it has two operands and <em>unary</em> if it has a single operand. Although you might not have thought about this concept in these terms, the familiar <code>-</code> operator has a unary and a binary form. The unary negation <code>-</code> form reverses the sign of the operand on its right, and the binary form subtracts the right operand from the left operand.
+Subscripts appear as one or more letters to the lower right side of a variable.<a href="#fn96" class="footnote-ref" id="fnref96"><sup>96</sup></a> For example, <span class="math inline">\(x_{i}\)</span> is an example of a variable <span class="math inline">\(x\)</span> with subscript <span class="math inline">\(i\)</span>. The subscript letter is a placeholder for an integer value used to index elements in a vector. Say <span class="math inline">\(x=(4,1,5,2,8)\)</span>, that is, the variable <span class="math inline">\(x\)</span> is a vector of length 5 with values 4, 1, 5, 2, and 8. An <span class="math inline">\(i = 1\)</span> means to reference or retrieve the vector value at position or index 1, so <span class="math inline">\(x_i\)</span> equals 4. Similarly, for example, when <span class="math inline">\(i = 2\)</span> then <span class="math inline">\(x_i\)</span> equals 1, when <span class="math inline">\(i = 3\)</span> then <span class="math inline">\(x_i\)</span> equals 5, and so on.</p>
+<p>A repeating theme we’ll see later when computing sample statistics is summation of various quantities. Following from the previous example, the sum of the vector <span class="math inline">\(x\)</span> could be written as
+<span class="math display">\[\begin{equation*}
+(x_1 + x_2 + x_3 + x_4 + x_5).
+\end{equation*}\]</span>
+A more compact way to write this summation is
+<span class="math display">\[\begin{equation*}
+(x_1 + x_2 + \ldots + x_5),
+\end{equation*}\]</span>
+where the <span class="math inline">\(\ldots\)</span>, which is an ellipsis, means do the same thing for <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>. An even more compact way to express this summation is
+<span class="math display">\[\begin{equation*}
+\sum^5_{i=1}x_i,
+\end{equation*}\]</span>
+where <span class="math inline">\(\sum\)</span> is a symbol that means add a <span class="math inline">\(+\)</span> between the values of <span class="math inline">\(x_i\)</span> each time <span class="math inline">\(i\)</span> changes. The <span class="math inline">\(i=1\)</span> below the summation symbol says subscript <span class="math inline">\(i\)</span> starts at value 1 and increases by 1 until it equals the number above the summation symbol, which in this case is 5. In some books, you will see the number on top of the summation symbol is omitted, which should be taken to mean increment the subscript to the number of elements in the vector being summed.</p>
+<p>Very often we use more than one subscript to reference values of a variable. For example, from Section <a href="overview.html#fef">1.2.1</a>, recall the FEF dataset comprises 88 trees sampled on 17 plots across two watersheds. More specifically, 44 trees were measured across 8 plots in watershed 1, and 44 trees were measured across 9 plots in watershed 2. We’ll see later that it’s helpful to use a separate subscript to index each level in these kinds of nested datasets.</p>
+<p>For now let’s just focus on the data in one of the two watersheds. Let <span class="math inline">\(x\)</span> represent stem biomass and use subscripts <span class="math inline">\(i\)</span> for tree and <span class="math inline">\(j\)</span> for plot. Using this notation, we can uniquely identify any tree biomass using the subscript <span class="math inline">\(x_{i,j}\)</span>. Translating this notation into words, we might say <span class="math inline">\(x_{i,j}\)</span> is the biomass of the <span class="math inline">\(i\)</span>-th tree in the <span class="math inline">\(j\)</span>-th plot. Now, using these subscripts, say we want the total biomass of all trees across all plots, which can be written
+<span class="math display" id="eq:ijSum">\[\begin{equation*}
+\sum^{m}_{j=1}\sum^{n_j}_{i=1}x_{i,j},
+\tag{10.1}
+\end{equation*}\]</span>
+where <span class="math inline">\(m\)</span> is the number of plots and <span class="math inline">\(n_j\)</span> is the number of trees in plot <span class="math inline">\(j\)</span> (notice the subscript on <span class="math inline">\(n\)</span> is necessary because there might be a different number of trees on each plot and the the <span class="math inline">\(j\)</span> says that <span class="math inline">\(n_j\)</span> is plot specific). The expanded equivalent of this summation is
+<span class="math display" id="eq:ijSumE">\[\begin{align*}
+x_{1,1}&amp;+x_{2,1}+\ldots +x_{n_1,1}\nonumber\\
++&amp;x_{1,2}+x_{2,2}+\ldots +x_{n_2,2}\nonumber\\
+&amp;\quad\quad\quad\quad\quad\vdots\nonumber\\
++&amp;x_{1,j}+x_{2,j}+\ldots +x_{n_j,j}\nonumber\\
+&amp;\quad\quad\quad\quad\quad\vdots\nonumber\\
++&amp;x_{1,m}+x_{2,m}+\ldots +x_{n_m,m},
+\tag{10.2}
+\end{align*}\]</span>
+where the <span class="math inline">\(\vdots\)</span> indicates that each omitted row in the expression looks the same as the first two except that they increment the <span class="math inline">\(j\)</span> index until it reaches <span class="math inline">\(m\)</span>.</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:exSumDat">TABLE 10.1: </span>Data used for summation examples.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Plot (<span class="math inline">\(j\)</span>)
+</th>
+<th style="text-align:center;">
+Tree (<span class="math inline">\(i\)</span>)
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(x\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(y\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 6em; ">
+1
+</td>
+<td style="text-align:center;width: 6em; ">
+1
+</td>
+<td style="text-align:center;width: 6em; ">
+1.2
+</td>
+<td style="text-align:center;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 6em; ">
+1
+</td>
+<td style="text-align:center;width: 6em; ">
+2
+</td>
+<td style="text-align:center;width: 6em; ">
+2.4
+</td>
+<td style="text-align:center;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 6em; ">
+2
+</td>
+<td style="text-align:center;width: 6em; ">
+1
+</td>
+<td style="text-align:center;width: 6em; ">
+0.4
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 6em; ">
+2
+</td>
+<td style="text-align:center;width: 6em; ">
+2
+</td>
+<td style="text-align:center;width: 6em; ">
+6.3
+</td>
+<td style="text-align:center;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 6em; ">
+2
+</td>
+<td style="text-align:center;width: 6em; ">
+3
+</td>
+<td style="text-align:center;width: 6em; ">
+2.2
+</td>
+<td style="text-align:center;">
+5
+</td>
+</tr>
+</tbody>
+</table>
+<p>Consider the example data given in Table <a href="notation.html#tab:exSumDat">10.1</a>. Using the same notation as the FEF biomass summation example above, these example data comprise <span class="math inline">\(m=2\)</span> plots (indexed using <span class="math inline">\(j\)</span>) with multiple trees measured in each plot (indexed using <span class="math inline">\(i\)</span>). For plot <span class="math inline">\(j=1\)</span> there are <span class="math inline">\(n_j=2\)</span> trees measured and for plot <span class="math inline">\(j=2\)</span> there are <span class="math inline">\(n_j=3\)</span> trees measured. The columns <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> represent two variables measured on each tree.</p>
+<p>Using the indexing described above, the sum of the <span class="math inline">\(x\)</span> values in Table <a href="notation.html#tab:exSumDat">10.1</a> is written as
+<span class="math display">\[\begin{align*}
+\sum^{m}_{j=1}\sum^{n_j}_{i=1}x_{i,j}&amp;=x_{1,1}+x_{2,1}+x_{1,2}+x_{2,2}+x_{3,2}\\
+&amp;=1.2+2.4+0.4+6.3+2.2\\
+&amp;=12.5.
+\end{align*}\]</span></p>
+<p>This subscript notation extends in a straightforward way to accommodate any number of different data levels combined with any mathematical operator (we focus on the summation operator here because it’s used most frequently in the methods considered in this book). As an example of extending this notation, consider the watershed level of the FEF data and index watershed using the subscript <span class="math inline">\(k\)</span> and use <span class="math inline">\(h\)</span> to represent the number of watersheds. Tree biomass measurements <span class="math inline">\(x\)</span> can now be indexed as the <span class="math inline">\(i\)</span>-th tree, within the <span class="math inline">\(j\)</span>-th plot, within the <span class="math inline">\(k\)</span>-th watershed. The total biomass is now expressed as
+<span class="math display" id="eq:ijkSum">\[\begin{equation}
+\sum^{h}_{k=1}\sum^{m_k}_{j=1}\sum^{n_j}_{i=1}x_{i,j,k}.
+\tag{10.3}
+\end{equation}\]</span>
+Note, in the summation above we added the <span class="math inline">\(k\)</span> subscript to <span class="math inline">\(m\)</span> to acknowledge that there might be a different number of plots within each watershed.</p>
+<p>A common characteristic of datasets we encounter is observations are <em>nested</em> in one or more levels. The FEF data are a perfect example, tree measurements (observations) are nested in plots, plots are nested in watersheds, and the watersheds are nested in the entire FEF. The Elk County inventory data in Section <a href="overview.html#elk">1.2.2</a>, have tree measurements (observations) nested in plots, which are nested in the forested property. The PEF data in Section <a href="overview.html#pef">1.2.4</a>, have tree measurements (observations) nested in year, nested in inventory plot, nested in management unit, and the management units are nested in the entire PEF. The FACE data in Section <a href="overview.html#face">1.2.3</a> have a complex nesting structure, with aspen tree diameter measurements (observations) nested in clone, nested in year, nested in experimental replicate, nested in treatment. As illustrated in <a href="notation.html#eq:ijkSum">(10.3)</a>, subscripts provide a useful notation to describe how observations are nested at different levels and the order in which different mathematical operators apply to the observations. This notion of nesting becomes very important in the programming and analysis chapters, where we apply different estimators and seek data summaries at various data levels.</p>
+<p>As demonstrated in subsequent chapters, the <code>dplyr</code> <code>group_by()</code> and <code>summarize()</code> workflows, along with other tidyverse functions, are perfectly suited to efficiently analyzing the kind of nested data encounter in practice.</p>
+</div>
+<div id="padma" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Order of operations<a href="notation.html#padma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Perhaps at one time you learned the acronym <span style="color: MidnightBlue;">PEMDAS</span> for <span style="color: MidnightBlue;">P</span>arenthesis, <span style="color: MidnightBlue;">E</span>xponents, <span style="color: MidnightBlue;">M</span>ultiplication, <span style="color: MidnightBlue;">D</span>ivision, <span style="color: MidnightBlue;">A</span>ddition, and <span style="color: MidnightBlue;">S</span>ubtraction, along with its handy mnemonic <span style="color: MidnightBlue;">P</span>lease <span style="color: MidnightBlue;">E</span>xcuse <span style="color: MidnightBlue;">M</span>y <span style="color: MidnightBlue;">D</span>ear <span style="color: MidnightBlue;">A</span>unt <span style="color: MidnightBlue;">S</span>ally. Given two or more operations in a single expression, the order of the letters in PEMDAS tells us what to calculate first, second, third, and so on, until the calculation is complete. Confusing the order of operations is a common coding error when implementing the estimators considered in subsequent chapters; it’s time well invested reviewing and practicing these foundational rules.</p>
+<p>Consider the summation of <span class="math inline">\(n\)</span> values of a variable <span class="math inline">\(x\)</span> squared, expressed as
+<span class="math display" id="eq:sumx2">\[\begin{equation}
+\sum^n_{i=1}x_i^2.
+\tag{10.4}
+\end{equation}\]</span>
+The two operations in <a href="notation.html#eq:sumx2">(10.4)</a> are raising each <span class="math inline">\(x_i\)</span> to the exponent of 2 (i.e., squared) and summing the <span class="math inline">\(n\)</span> resulting values of <span class="math inline">\(x_i^2\)</span>. Here our handy acronym P<span style="color: #1815AF;">E</span>MDA<span style="color: #1815AF;">S</span> reminds us to apply exponents before summation, so we first square each <span class="math inline">\(x_i\)</span> then sum the resulting <span class="math inline">\(n\)</span> values. Using the <span class="math inline">\(n\)</span>=5 <span class="math inline">\(x\)</span> measurements in Table <a href="notation.html#tab:exSumDat">10.1</a>, this expression equals <span class="math inline">\(1.2^2 + 2.4^2 + 0.4^2 + 6.3^2 + 2.2^2 = 51.89\)</span>.</p>
+<p>Now let’s add some parentheses to <a href="notation.html#eq:sumx2">(10.4)</a> and see how the order of operations change,
+<span class="math display" id="eq:pSumx2">\[\begin{equation}
+\left(\sum^n_{i=1}x_i\right)^2.
+\tag{10.5}
+\end{equation}\]</span>
+Looking at <a href="notation.html#eq:pSumx2">(10.5)</a> and considering PEMDAS, the order of operations is to first sum the <span class="math inline">\(n\)</span> <span class="math inline">\(x\)</span> values because they are within the parenthesis then square the <em>scalar</em> result. A scalar is a mathematical term that means a single real number, which is what you’re left with after the summation in <a href="notation.html#eq:pSumx2">(10.5)</a>. Using the <span class="math inline">\(n = 5\)</span> <span class="math inline">\(x\)</span> measurements in Table <a href="notation.html#tab:exSumDat">10.1</a>, this expression equals <span class="math inline">\((1.2 + 2.4 + 0.4 + 6.3 + 2.2)^2 = 12.5^2 = 156.25\)</span>.</p>
+<p>Following the data structure in Table <a href="notation.html#tab:exSumDat">10.1</a>, consider the expression
+<span class="math display" id="eq:sumpPSumx2">\[\begin{equation}
+\sum^m_{j=1}\left(\sum^{n_j}_{i=1}x_{ij}\right)^2,
+\tag{10.6}
+\end{equation}\]</span>
+where, recall, <span class="math inline">\(j\)</span> indexes the <span class="math inline">\(m\)</span> plots and <span class="math inline">\(i\)</span> indexes the <span class="math inline">\(n_j\)</span> trees on each plot. There are a few steps to evaluate <a href="notation.html#eq:sumpPSumx2">(10.6)</a>. First, for each value of <span class="math inline">\(j\)</span>, sum over the <span class="math inline">\(n_j\)</span> values of <span class="math inline">\(x_{i,j}\)</span> then square the resulting scalar. Second, sum the <span class="math inline">\(m\)</span> resulting scalars. Here’s the expanded form
+<span class="math display" id="eq:sumpPSumx2E">\[\begin{align}
+\sum^m_{j=1}\left(\sum^{n_j}_{i=1}x_{ij}\right)^2= &amp;\left(x_{1,1}+x_{2,1}+\ldots+x_{n_1,1}\right)^2\nonumber\\
+                                               &amp;+\left(x_{1,2}+x_{2,2}+\ldots+x_{n_2,2}\right)^2\nonumber\\
+                                               &amp;\quad\quad\quad\quad\quad\vdots\nonumber\\
+                                               &amp;+\left(x_{1,m}+x_{2,m}+\ldots+x_{n_m,m}\right)^2.
+\tag{10.7}
+\end{align}\]</span>
+Using data in Table <a href="notation.html#tab:exSumDat">10.1</a>, expression <a href="notation.html#eq:sumpPSumx2E">(10.7)</a> equals 92.17.</p>
+<p>You might also encounter two or more variables with subscripts involved in an expression. For example
+<span class="math display" id="eq:sumxy">\[\begin{equation}
+\sum^n_{i=1}x_iy_i = x_1y_1 + x_2y_2 + \ldots + x_ny_n,
+\tag{10.8}
+\end{equation}\]</span>
+which, following PEMDAS, we recognize multiplication of <span class="math inline">\(x_i\)</span> and <span class="math inline">\(y_i\)</span> should come before the summation. Using measurements for all <span class="math inline">\(n = 5\)</span> trees in Table <a href="notation.html#tab:exSumDat">10.1</a>, expression <a href="notation.html#eq:sumxy">(10.8)</a> equals 62.8.</p>
+<p>Here’s another expression with two variables
+<span class="math display" id="eq:sumxPSumy">\[\begin{equation}
+\left(\sum^n_{i=1}x_i\right)\left(\sum^n_{i=1}y_i\right) = (x_1 + x_2 + \ldots + x_n)(y_1 + y_2 + \ldots + y_n),
+\tag{10.9}
+\end{equation}\]</span>
+where, because of the parentheses, summation of the <span class="math inline">\(n\)</span> <span class="math inline">\(x\)</span> values and summation of the <span class="math inline">\(n\)</span> <span class="math inline">\(y\)</span> values come before the multiplication of the components involving <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Using data in Table <a href="notation.html#tab:exSumDat">10.1</a>, expression <a href="notation.html#eq:sumxPSumy">(10.9)</a> equals 250.</p>
+</div>
+<div id="toolsR" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Tools of the trade using R<a href="notation.html#toolsR" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As noted at the beginning of Section <a href="notation.html#tools">10.2</a>, a vector is a collection of one or more organized values so that they can be referenced using an index. Given we’re talking about mathematical operations here, it is implied the vector elements are numeric. We saw in Section <a href="introToR.html#RDescriptive">2.1.1</a>, a vector is created using the <code>c()</code> function. We use this function again to make a vector <code>x</code> using the <span class="math inline">\(x\)</span> values in Table <a href="notation.html#tab:exSumDat">10.1</a>.</p>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="notation.html#cb831-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.4</span>, <span class="fl">0.4</span>, <span class="fl">6.3</span>, <span class="fl">2.2</span>)</span></code></pre></div>
+<p>Recall from Section <a href="structures.html#vector">4.2</a>, we access vector elements using their position or index in square brackets starting with 1 for the first element and ending with <code>length(x)</code> (equivalent to 5) for the last element. For example, <code>x[1]</code> is 1.2, <code>x[2]</code> is 2.4, and <code>x[5]</code> is 2.2. Notice these indexes follow the mathematical subscript notation introduced above and are equivalent to <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, and <span class="math inline">\(x_5\)</span>.</p>
+<p>R applies unary operators to all elements in a vector. In the code below, we see how the unary negation operator changes the sign of all elements.</p>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="notation.html#cb832-1" tabindex="-1"></a><span class="sc">-</span>x</span></code></pre></div>
+<pre><code>#&gt; [1] -1.2 -2.4 -0.4 -6.3 -2.2</code></pre>
+<p>Note the code above only changes the sign of the printed values, not actually the values in <code>x</code>. If you want to actually change the values in <code>x</code> you need to assign the negated vector back to <code>x</code>.</p>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="notation.html#cb834-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span>x</span>
+<span id="cb834-2"><a href="notation.html#cb834-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>#&gt; [1] -1.2 -2.4 -0.4 -6.3 -2.2</code></pre>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="notation.html#cb836-1" tabindex="-1"></a><span class="co"># Then change it back to the original values.</span></span>
+<span id="cb836-2"><a href="notation.html#cb836-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span>x</span>
+<span id="cb836-3"><a href="notation.html#cb836-3" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>#&gt; [1] 1.2 2.4 0.4 6.3 2.2</code></pre>
+<p>A binary operator between two vectors of the same length will take the left and right operands from each element along the vectors (i.e., called an elementwise operation). This is illustrated in the elementwise multiplication of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> variables from Table <a href="notation.html#tab:exSumDat">10.1</a>.</p>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="notation.html#cb838-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">5</span>)</span>
+<span id="cb838-2"><a href="notation.html#cb838-2" tabindex="-1"></a>x<span class="sc">*</span>y</span></code></pre></div>
+<pre><code>#&gt; [1]  3.6  9.6  0.8 37.8 11.0</code></pre>
+<p>Here’s a very important concept that we initially touched upon in Sections <a href="structures.html#basicSubsetting">4.2.3</a> and <a href="structures.html#logicalOperators">4.7</a>. For elementwise operations that involve two or more vectors, the vectors must be the same length. If R encounters two vectors of different lengths in a binary operation, it replicates (recycles) the smaller vector until it’s the same length as the longest vector, then it does the operation. For example, say we scale the vector <code>x</code> by 5, i.e., <code>5*x</code>. Recall, R stores single values as a vector of length 1, so the 5 is replicated <code>length(x)</code> times before the elementwise multiplication. Consider another example where the vector <code>z</code> (defined in the code below) is shorter than <code>x</code>. Given <code>x</code> is the longer vector with length 5, <code>z</code> is recycled until it matches the length of <code>x</code>, so <code>z</code> will be <code>1,2,1,2,1</code>. Also, because the length of <code>x</code> is not a multiple of the original length of <code>z</code>, the recycled <code>z</code> is truncated and R kindly prints a warning, but still returns the result, as illustrated below.</p>
+<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="notation.html#cb840-1" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb840-2"><a href="notation.html#cb840-2" tabindex="-1"></a>x<span class="sc">+</span>z</span></code></pre></div>
+<pre><code>#&gt; Warning in x + z: longer object length is not a
+#&gt; multiple of shorter object length</code></pre>
+<pre><code>#&gt; [1] 2.2 4.4 1.4 8.3 3.2</code></pre>
+<p>R follows the PEMDAS order of operations. Take a moment and study R’s precedence of operators manual page accessed via <code>?Syntax</code>. The manual page lists operators in precedence groups from highest (applied first) to lowest (applied last). Notice the PEMDAS ordering is reflected in the manual page’s precedence ordering and where these mathematical operators occur relative to other R operators and syntax.</p>
+<p>The next lines of code implement <a href="notation.html#eq:sumx2">(10.4)</a> and <a href="notation.html#eq:pSumx2">(10.5)</a>, respectively. Notice the <code>sum()</code> function is equivalent to the <span class="math inline">\(\sum\)</span> operator and exponentiation is done relative to the parentheses.</p>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="notation.html#cb843-1" tabindex="-1"></a><span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>#&gt; [1] 51.89</code></pre>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="notation.html#cb845-1" tabindex="-1"></a><span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>#&gt; [1] 156.25</code></pre>
+<p>Using values from Table <a href="notation.html#tab:exSumDat">10.1</a>, we implement <a href="notation.html#eq:sumxy">(10.8)</a> and <a href="notation.html#eq:sumxPSumy">(10.9)</a> below.</p>
+<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="notation.html#cb847-1" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">*</span> y)</span></code></pre></div>
+<pre><code>#&gt; [1] 62.8</code></pre>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="notation.html#cb849-1" tabindex="-1"></a><span class="fu">sum</span>(x) <span class="sc">*</span> <span class="fu">sum</span>(y)</span></code></pre></div>
+<pre><code>#&gt; [1] 250</code></pre>
+<p>Above, and in and subsequent chapters, we often illustrate ideas using single vectors that represent measurements on a variable. However, in practice, these vectors are typically a column in a data frame. So let’s extend these order of operation examples above to variables in a data frame. We begin by moving the data in Table <a href="notation.html#tab:exSumDat">10.1</a> to a data frame via the <code>tibble()</code> function, which was introduced in Section <a href="tidyverse.html#tibbles">6.2</a>.</p>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="notation.html#cb851-1" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">plot_index =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), </span>
+<span id="cb851-2"><a href="notation.html#cb851-2" tabindex="-1"></a>                <span class="at">tree_index =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), </span>
+<span id="cb851-3"><a href="notation.html#cb851-3" tabindex="-1"></a>                <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.4</span>, <span class="fl">0.4</span>, <span class="fl">6.3</span>, <span class="fl">2.2</span>), </span>
+<span id="cb851-4"><a href="notation.html#cb851-4" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">5</span>))</span></code></pre></div>
+<p>Now let’s repeat the last few order of operations examples above using <code>dplyr</code> functions covered in Chapter <a href="dplyr.html#dplyr">7</a>.<a href="#fn97" class="footnote-ref" id="fnref97"><sup>97</sup></a> The code below computes <a href="notation.html#eq:sumx2">(10.4)</a>, <a href="notation.html#eq:pSumx2">(10.5)</a>, <a href="notation.html#eq:sumxy">(10.8)</a> and <a href="notation.html#eq:sumxPSumy">(10.9)</a> all in one call to <code>summarize()</code>.</p>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="notation.html#cb852-1" tabindex="-1"></a>plots <span class="sc">%&gt;%</span> </span>
+<span id="cb852-2"><a href="notation.html#cb852-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">`</span><span class="at">sum(x^2)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb852-3"><a href="notation.html#cb852-3" tabindex="-1"></a>            <span class="st">`</span><span class="at">sum(x)^2</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span>, </span>
+<span id="cb852-4"><a href="notation.html#cb852-4" tabindex="-1"></a>            <span class="st">`</span><span class="at">sum(x*y)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x <span class="sc">*</span> y), </span>
+<span id="cb852-5"><a href="notation.html#cb852-5" tabindex="-1"></a>            <span class="st">`</span><span class="at">sum(x)*sum(y)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x) <span class="sc">*</span> <span class="fu">sum</span>(y))</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 1 × 4
+#&gt;   `sum(x^2)` `sum(x)^2` `sum(x*y)` `sum(x)*sum(y)`
+#&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;
+#&gt; 1       51.9       156.       62.8             250</code></pre>
+<p>Going back to subscripts and nested data. We’ll often want to apply the same equation to subsets of data that are indexed by one or more qualitative variables used to indicate group membership. For example, let’s use the <code>plot_index</code> column in the <code>plots</code> data frame to apply equations to trees within each plot. This is simply done by using<code>plot_index</code> as a grouping variable as illustrated below.</p>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="notation.html#cb854-1" tabindex="-1"></a>plots <span class="sc">%&gt;%</span> </span>
+<span id="cb854-2"><a href="notation.html#cb854-2" tabindex="-1"></a>  <span class="fu">group_by</span>(plot_index) <span class="sc">%&gt;%</span></span>
+<span id="cb854-3"><a href="notation.html#cb854-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">`</span><span class="at">sum(x^2)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb854-4"><a href="notation.html#cb854-4" tabindex="-1"></a>            <span class="st">`</span><span class="at">sum(x)^2</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span>, </span>
+<span id="cb854-5"><a href="notation.html#cb854-5" tabindex="-1"></a>            <span class="st">`</span><span class="at">sum(x*y)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x <span class="sc">*</span> y), </span>
+<span id="cb854-6"><a href="notation.html#cb854-6" tabindex="-1"></a>            <span class="st">`</span><span class="at">sum(x)*sum(y)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(x) <span class="sc">*</span> <span class="fu">sum</span>(y))</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 2 × 5
+#&gt;   plot_index `sum(x^2)` `sum(x)^2` `sum(x*y)`
+#&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1          1        7.2       13.0       13.2
+#&gt; 2          2       44.7       79.2       49.6
+#&gt; # ℹ 1 more variable: `sum(x)*sum(y)` &lt;dbl&gt;</code></pre>
+<p>Let’s go back and look at <a href="notation.html#eq:sumpPSumx2">(10.6)</a> and its expanded form in <a href="notation.html#eq:sumpPSumx2E">(10.7)</a>. Recall <span class="math inline">\(j\)</span> indexes plot and <span class="math inline">\(i\)</span> indexes tree within plot, <span class="math inline">\(m\)</span> is the number of plots, and <span class="math inline">\(n_j\)</span> is the number of trees within each plot. So, for data in Table <a href="notation.html#tab:exSumDat">10.1</a>, <span class="math inline">\(m\)</span>=2 and for <span class="math inline">\(j\)</span>=1 <span class="math inline">\(n_j\)</span>=2 and for <span class="math inline">\(j\)</span>=2 <span class="math inline">\(n_j\)</span>=3. The double summation can be completed using the following, where <code>within_plots</code> is the squared sum of <code>x</code> for each plot, then <code>across_plots</code> is the sum of the <code>within_plots</code> values.</p>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="notation.html#cb856-1" tabindex="-1"></a>plots <span class="sc">%&gt;%</span> </span>
+<span id="cb856-2"><a href="notation.html#cb856-2" tabindex="-1"></a>  <span class="fu">group_by</span>(plot_index) <span class="sc">%&gt;%</span></span>
+<span id="cb856-3"><a href="notation.html#cb856-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">within_plots =</span> <span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb856-4"><a href="notation.html#cb856-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">across_plots =</span> <span class="fu">sum</span>(within_plots))</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 1 × 1
+#&gt;   across_plots
+#&gt;          &lt;dbl&gt;
+#&gt; 1         92.2</code></pre>
+<p>As always, it can be instructive to run the code above incrementally and compare the output of each call to <code>summarize()</code> to the right hand side of <a href="notation.html#eq:sumpPSumx2E">(10.7)</a>.</p>
+</div>
+</div>
+<div id="summaryNotation" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Summary and outlook<a href="notation.html#summaryNotation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter, we covered essential data analysis vocabulary and statistical notation used throughout the remainder of the book. We began our discussion by defining concepts related to populations, samples, parameters, and variables. We describe the typical data analysis progression of defining the population, population units, and population parameters of interest and subsequently measuring one or more variables on a sample of population units which are used to estimate the population parameters of interest. We’ll see more concrete examples of this workflow beginning in Chapter <a href="statBasics.html#statBasics">11</a> and in much more detail in Chapter <a href="samplingDesigns.html#samplingDesigns">13</a>.</p>
+<p>Subsequently, we extended our discussion to quantitative and qualitative variables. Quantitative variables are numeric and defined as discrete (finite increment between values, e.g., an integer) or continuous (infinite increment between values, e.g., a number with decimals). Qualitative variables represent different categories and can be nominal (no order) or ordinal (ordered).</p>
+<p>We then shifted our discussion to notation used throughout the remainder of the book. We use Greek letters (e.g., <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>) to represent population parameters and Roman letters (e.g., <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>) to represent variables. We reviewed mathematical operators and discussed subscripts and their role in summations and nested data. We stressed the need to understand how subscripts reference variable values in a nested dataset, as nested data are extremely common in both forestry and environmental sciences. We finished by discussing the ever-important order of operations. While it might seem conceptually straightforward, we’ve spent precious hours (even days) searching code to find the problem was a simple error that could have been avoided by paying closer attention to the acronym PEMDAS.</p>
+<p>With <em>tools of the trade</em> in hand, you are ready for Chapter <a href="statBasics.html#statBasics">11</a>, which develops the statistical foundations to use sample information to make inferences about populations.</p>
+</div>
+<div id="exercisesNotation" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Exercises<a href="notation.html#exercisesNotation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With the exception of Exercise <a href="notation.html#exr:pemdasEx10">10.10</a>, all exercises should be completed <em>by hand</em>, i.e., not using R. Use the information in Table <a href="notation.html#tab:exSumDat">10.1</a> to complete Exercises <a href="notation.html#exr:pemdasEx1">10.1</a> through <a href="notation.html#exr:pemdasEx9">10.9</a>.</p>
+<div class="exercise">
+<p><span id="exr:pemdasEx1" class="exercise"><strong>Exercise 10.1  </strong></span>How many tree measurements of variable <span class="math inline">\(x\)</span> are there for Plot 1 and Plot 2?</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx2" class="exercise"><strong>Exercise 10.2  </strong></span>Evaluate the expression <span class="math inline">\(\sum^{2}_{i=1}x_{ij}\)</span>, where <span class="math inline">\(j=1\)</span>, i.e. sum the <span class="math inline">\(x\)</span> variable values for Plot 1.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx3" class="exercise"><strong>Exercise 10.3  </strong></span>Evaluate the expression <span class="math inline">\(\sum^2_{j=1}\sum^{n_j}_{i=1}x_{ij}\)</span>, where <span class="math inline">\(n_j\)</span> is the total number of trees in each plot.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx4" class="exercise"><strong>Exercise 10.4  </strong></span>Evaluate the expression <span class="math inline">\(\sum^2_{j=1}\sum^{n_j}_{i=1}x_{ij}^2\)</span>, where <span class="math inline">\(n_j\)</span> is the total number of trees in each plot.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx5" class="exercise"><strong>Exercise 10.5  </strong></span>Evaluate the expression <span class="math inline">\(\sum^2_{j=1}(\sum^{n_j}_{i=1}x_{ij})^2\)</span>, where <span class="math inline">\(n_j\)</span> is the total number of trees in each plot.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx6" class="exercise"><strong>Exercise 10.6  </strong></span>Evaluate the expression <span class="math inline">\(\sum^2_{j=1}\sum^{n_j}_{i=1}x_{ij}y_{ij}\)</span>, where <span class="math inline">\(n_j\)</span> is the total number of trees in each plot.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx7" class="exercise"><strong>Exercise 10.7  </strong></span>Evaluate the expression <span class="math inline">\(\sum^2_{j=1}\sum^{n_j}_{i=1}x_{ij}^2y_{ij}\)</span>, where <span class="math inline">\(n_j\)</span> is the total number of trees in each plot.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx8" class="exercise"><strong>Exercise 10.8  </strong></span>Is <span class="math inline">\(\sum^n_{i=1}x_i^2\)</span> equal to <span class="math inline">\(\left(\sum^n_{i=1}x_i\right)^2\)</span>?</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx9" class="exercise"><strong>Exercise 10.9  </strong></span>Is <span class="math inline">\(\sum^n_{i=1}x_iy_i\)</span> equal to <span class="math inline">\(\left(\sum^n_{i=1}x_i\right)\left(\sum^n_{i=1}y_i\right)\)</span>?</p>
+</div>
+<div class="exercise">
+<p><span id="exr:pemdasEx10" class="exercise"><strong>Exercise 10.10  </strong></span>Evaluate this expression first by hand (with the aid of a calculator) then using R.
+<span class="math display">\[
+\frac{\left(\exp(14) + 10\right) \times \sqrt{5}}{\ln(4) - 5 \times 10^2},
+\]</span>
+where <span class="math inline">\(\exp\)</span> is the exponential function and <span class="math inline">\(\ln\)</span> is the natural log <span class="math inline">\(i.e., \log_e\)</span>.</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-freese1962" class="csl-entry">
+Freese, F. 1962. <em>Elementary Forest Sampling</em>. Agriculture Handbook. U.S. Department of Agriculture, Forest Service.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="95">
+<li id="fn95"><p>These are the letters mu, sigma, alpha, beta, and eta, respectively.<a href="notation.html#fnref95" class="footnote-back">↩︎</a></p></li>
+<li id="fn96"><p>Later on in Chapters <a href="samplingDesigns.html#samplingDesigns">13</a> and <a href="samplingDesigns.html#regression">13.5.1</a> we’ll also use subscripts to index vectors of parameters or statistics.<a href="notation.html#fnref96" class="footnote-back">↩︎</a></p></li>
+<li id="fn97"><p>In this example we’re using non-syntactic names in the <code>summarize()</code> and protecting them with the backticks (see Section (syntacticNames) for naming rules). Using non-syntactic names should be avoided, but it’s useful in this example to match the mathematical expression with its resulting value.<a href="notation.html#fnref97" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="statBasics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

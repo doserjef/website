@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Scripts and reproducible workflow | Introduction to Forestry Data Analysis with R</title>
+  <meta name="description" content="Chapter 3 Scripts and reproducible workflow | Introduction to Forestry Data Analysis with R." />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Scripts and reproducible workflow | Introduction to Forestry Data Analysis with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/cover.jpg" />
+  <meta property="og:description" content="Chapter 3 Scripts and reproducible workflow | Introduction to Forestry Data Analysis with R." />
+  <meta name="github-repo" content="finleya/FD20" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Scripts and reproducible workflow | Introduction to Forestry Data Analysis with R" />
+  
+  <meta name="twitter:description" content="Chapter 3 Scripts and reproducible workflow | Introduction to Forestry Data Analysis with R." />
+  <meta name="twitter:image" content="/images/cover.jpg" />
+
+<meta name="author" content="Andrew O. Finley and Jeffrey W. Doser" />
+
+
+<meta name="date" content="2024-04-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introToR.html"/>
+<link rel="next" href="structures.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/kePrint/kePrint.js"></script>
+<link href="libs/lightable/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<script src="libs/leaflet-providers/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin/leaflet-providers-plugin.js"></script>
+<link href="libs/leaflet-easybutton/easy-button.css" rel="stylesheet" />
+<script src="libs/leaflet-easybutton/easy-button.js"></script>
+<script src="libs/leaflet-easybutton/EasyButton-binding.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap/bootstrap.min.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Forestry Data Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#citation"><i class="fa fa-check"></i>Citation</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="authors.html"><a href="authors.html"><i class="fa fa-check"></i>Authors</a></li>
+<li class="chapter" data-level="1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1</b> Overview and motivating data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html#aim"><i class="fa fa-check"></i><b>1.1</b> Aim and scope</a></li>
+<li class="chapter" data-level="1.2" data-path="overview.html"><a href="overview.html#datasets"><i class="fa fa-check"></i><b>1.2</b> Motivating forestry datasets</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="overview.html"><a href="overview.html#fef"><i class="fa fa-check"></i><b>1.2.1</b> Fernow Experimental Forest biomass dataset</a></li>
+<li class="chapter" data-level="1.2.2" data-path="overview.html"><a href="overview.html#elk"><i class="fa fa-check"></i><b>1.2.2</b> Elk County timber cruise dataset</a></li>
+<li class="chapter" data-level="1.2.3" data-path="overview.html"><a href="overview.html#face"><i class="fa fa-check"></i><b>1.2.3</b> Free-Air Carbon Dioxide Enrichment experiment dataset</a></li>
+<li class="chapter" data-level="1.2.4" data-path="overview.html"><a href="overview.html#pef"><i class="fa fa-check"></i><b>1.2.4</b> Penobscot Experimental Forest inventory and LiDAR dataset</a></li>
+<li class="chapter" data-level="1.2.5" data-path="overview.html"><a href="overview.html#hf"><i class="fa fa-check"></i><b>1.2.5</b> Harvard Forest tree census</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="overview.html"><a href="overview.html#howToLearn"><i class="fa fa-check"></i><b>1.3</b> How to learn: The most important section in this book!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introToR.html"><a href="introToR.html"><i class="fa fa-check"></i><b>2</b> Introduction to R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introToR.html"><a href="introToR.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Installing R and RStudio</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="introToR.html"><a href="introToR.html#RDescriptive"><i class="fa fa-check"></i><b>2.1.1</b> First session</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introToR.html"><a href="introToR.html#workingDirectory"><i class="fa fa-check"></i><b>2.2</b> Workspace and working directory</a></li>
+<li class="chapter" data-level="2.3" data-path="introToR.html"><a href="introToR.html#packages"><i class="fa fa-check"></i><b>2.3</b> Packages</a></li>
+<li class="chapter" data-level="2.4" data-path="introToR.html"><a href="introToR.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting help</a></li>
+<li class="chapter" data-level="2.5" data-path="introToR.html"><a href="introToR.html#summaryIntroR"><i class="fa fa-check"></i><b>2.5</b> Summary</a></li>
+<li class="chapter" data-level="2.6" data-path="introToR.html"><a href="introToR.html#exercisesIntroR"><i class="fa fa-check"></i><b>2.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scripts.html"><a href="scripts.html"><i class="fa fa-check"></i><b>3</b> Scripts and reproducible workflow</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scripts.html"><a href="scripts.html#scripts-1"><i class="fa fa-check"></i><b>3.1</b> Scripts</a></li>
+<li class="chapter" data-level="3.2" data-path="scripts.html"><a href="scripts.html#best-practices-for-naming-and-formatting"><i class="fa fa-check"></i><b>3.2</b> Best practices for naming and formatting</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="scripts.html"><a href="scripts.html#fileNaming"><i class="fa fa-check"></i><b>3.2.1</b> Script file naming</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scripts.html"><a href="scripts.html#syntacticNames"><i class="fa fa-check"></i><b>3.2.2</b> Variable naming</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scripts.html"><a href="scripts.html#code-formatting"><i class="fa fa-check"></i><b>3.2.3</b> Code formatting</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scripts.html"><a href="scripts.html#customize-your-coding-environment"><i class="fa fa-check"></i><b>3.2.4</b> Customize your coding environment</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scripts.html"><a href="scripts.html#pathsReadWrite"><i class="fa fa-check"></i><b>3.3</b> File paths and external data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="scripts.html"><a href="scripts.html#paths"><i class="fa fa-check"></i><b>3.3.1</b> Relative and absolute paths</a></li>
+<li class="chapter" data-level="3.3.2" data-path="scripts.html"><a href="scripts.html#readWrite"><i class="fa fa-check"></i><b>3.3.2</b> External data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="scripts.html"><a href="scripts.html#illustration"><i class="fa fa-check"></i><b>3.3.3</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="scripts.html"><a href="scripts.html#projects"><i class="fa fa-check"></i><b>3.4</b> RStudio projects and keeping organized</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="scripts.html"><a href="scripts.html#directories"><i class="fa fa-check"></i><b>3.4.1</b> Directory structure</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="scripts.html"><a href="scripts.html#summaryScripts"><i class="fa fa-check"></i><b>3.5</b> Summary</a></li>
+<li class="chapter" data-level="3.6" data-path="scripts.html"><a href="scripts.html#exercisesWorkflow"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="structures.html"><a href="structures.html"><i class="fa fa-check"></i><b>4</b> Data structures</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="structures.html"><a href="structures.html#typesOfVariables"><i class="fa fa-check"></i><b>4.1</b> Types of variables</a></li>
+<li class="chapter" data-level="4.2" data-path="structures.html"><a href="structures.html#vector"><i class="fa fa-check"></i><b>4.2</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="structures.html"><a href="structures.html#dataTypes"><i class="fa fa-check"></i><b>4.2.1</b> Types, conversion, and coercion</a></li>
+<li class="chapter" data-level="4.2.2" data-path="structures.html"><a href="structures.html#patterned-data"><i class="fa fa-check"></i><b>4.2.2</b> Patterned data</a></li>
+<li class="chapter" data-level="4.2.3" data-path="structures.html"><a href="structures.html#basicSubsetting"><i class="fa fa-check"></i><b>4.2.3</b> Indexing, accessing, and recycling elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="structures.html"><a href="structures.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="structures.html"><a href="structures.html#specialDataTypes"><i class="fa fa-check"></i><b>4.4</b> Missing data, infinity, and other special data types</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="structures.html"><a href="structures.html#infinity-and-nan"><i class="fa fa-check"></i><b>4.4.1</b> Infinity and NaN</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="structures.html"><a href="structures.html#dataFrames"><i class="fa fa-check"></i><b>4.5</b> Data frames</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="structures.html"><a href="structures.html#dataFrameSubsetting"><i class="fa fa-check"></i><b>4.5.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.5.2" data-path="structures.html"><a href="structures.html#adding-columns"><i class="fa fa-check"></i><b>4.5.2</b> Adding columns</a></li>
+<li class="chapter" data-level="4.5.3" data-path="structures.html"><a href="structures.html#removing-columns"><i class="fa fa-check"></i><b>4.5.3</b> Removing columns</a></li>
+<li class="chapter" data-level="4.5.4" data-path="structures.html"><a href="structures.html#transformVariables"><i class="fa fa-check"></i><b>4.5.4</b> Transforming columns</a></li>
+<li class="chapter" data-level="4.5.5" data-path="structures.html"><a href="structures.html#rearranging-columns"><i class="fa fa-check"></i><b>4.5.5</b> Rearranging columns</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="structures.html"><a href="structures.html#lists"><i class="fa fa-check"></i><b>4.6</b> Lists</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="structures.html"><a href="structures.html#accessing-elements"><i class="fa fa-check"></i><b>4.6.1</b> Accessing elements</a></li>
+<li class="chapter" data-level="4.6.2" data-path="structures.html"><a href="structures.html#adding-and-removing-elements"><i class="fa fa-check"></i><b>4.6.2</b> Adding and removing elements</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="structures.html"><a href="structures.html#logicalOperators"><i class="fa fa-check"></i><b>4.7</b> Comparison and logical operators</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="structures.html"><a href="structures.html#inOperator"><i class="fa fa-check"></i><b>4.7.1</b> The <code>%in%</code> operator</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="structures.html"><a href="structures.html#subsetting"><i class="fa fa-check"></i><b>4.8</b> Subsetting with logical vectors</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="structures.html"><a href="structures.html#modifySubsetting"><i class="fa fa-check"></i><b>4.8.1</b> Modifying and creating objects via subsetting</a></li>
+<li class="chapter" data-level="4.8.2" data-path="structures.html"><a href="structures.html#subsetting-data-frames"><i class="fa fa-check"></i><b>4.8.2</b> Subsetting data frames</a></li>
+<li class="chapter" data-level="4.8.3" data-path="structures.html"><a href="structures.html#which"><i class="fa fa-check"></i><b>4.8.3</b> Subsetting with <code>which()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="structures.html"><a href="structures.html#summaryStructures"><i class="fa fa-check"></i><b>4.9</b> Summary</a></li>
+<li class="chapter" data-level="4.10" data-path="structures.html"><a href="structures.html#exercisesData"><i class="fa fa-check"></i><b>4.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>5</b> Functions and programming</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="functions.html"><a href="functions.html#r-functions"><i class="fa fa-check"></i><b>5.1</b> R functions</a></li>
+<li class="chapter" data-level="5.2" data-path="functions.html"><a href="functions.html#programming-conditional-statements"><i class="fa fa-check"></i><b>5.2</b> Programming: conditional statements</a></li>
+<li class="chapter" data-level="5.3" data-path="functions.html"><a href="functions.html#more-on-functions"><i class="fa fa-check"></i><b>5.3</b> More on functions</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="functions.html"><a href="functions.html#functions-with-multiple-returns"><i class="fa fa-check"></i><b>5.3.1</b> Functions with multiple returns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="functions.html"><a href="functions.html#creating-functions"><i class="fa fa-check"></i><b>5.3.2</b> Creating functions</a></li>
+<li class="chapter" data-level="5.3.3" data-path="functions.html"><a href="functions.html#callingFunctions"><i class="fa fa-check"></i><b>5.3.3</b> Calling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="functions.html"><a href="functions.html#loops"><i class="fa fa-check"></i><b>5.4</b> Loops</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="functions.html"><a href="functions.html#a-while-loop"><i class="fa fa-check"></i><b>5.4.1</b> A while loop</a></li>
+<li class="chapter" data-level="5.4.2" data-path="functions.html"><a href="functions.html#forLoops"><i class="fa fa-check"></i><b>5.4.2</b> A for loop</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="functions.html"><a href="functions.html#apply"><i class="fa fa-check"></i><b>5.5</b> The <code>apply()</code> function</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="functions.html"><a href="functions.html#using-user-defined-functions-with-apply"><i class="fa fa-check"></i><b>5.5.1</b> Using user-defined functions with <code>apply()</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="functions.html"><a href="functions.html#applyRelatives"><i class="fa fa-check"></i><b>5.5.2</b> Relatives of <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="functions.html"><a href="functions.html#summaryFunctions"><i class="fa fa-check"></i><b>5.6</b> Summary</a></li>
+<li class="chapter" data-level="5.7" data-path="functions.html"><a href="functions.html#exercisesFunctions"><i class="fa fa-check"></i><b>5.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>6</b> Data summary and analysis using the <code>tidyverse</code></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tidyverse.html"><a href="tidyverse.html#minnesota"><i class="fa fa-check"></i><b>6.1</b> Minnesota tree growth dataset</a></li>
+<li class="chapter" data-level="6.2" data-path="tidyverse.html"><a href="tidyverse.html#tibbles"><i class="fa fa-check"></i><b>6.2</b> Improving data frames with <code>tibbles</code></a></li>
+<li class="chapter" data-level="6.3" data-path="tidyverse.html"><a href="tidyverse.html#readr"><i class="fa fa-check"></i><b>6.3</b> Reading and writing files with <code>readr</code></a></li>
+<li class="chapter" data-level="6.4" data-path="tidyverse.html"><a href="tidyverse.html#summaryTidyverse"><i class="fa fa-check"></i><b>6.4</b> Summary</a></li>
+<li class="chapter" data-level="6.5" data-path="tidyverse.html"><a href="tidyverse.html#exercisesTidyverse"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>7</b> Manipulating and summarizing data with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="dplyr.html"><a href="dplyr.html#filter"><i class="fa fa-check"></i><b>7.1</b> Filtering rows</a></li>
+<li class="chapter" data-level="7.2" data-path="dplyr.html"><a href="dplyr.html#slice"><i class="fa fa-check"></i><b>7.2</b> Slicing rows</a></li>
+<li class="chapter" data-level="7.3" data-path="dplyr.html"><a href="dplyr.html#arranging-rows-by-values"><i class="fa fa-check"></i><b>7.3</b> Arranging rows by values</a></li>
+<li class="chapter" data-level="7.4" data-path="dplyr.html"><a href="dplyr.html#select"><i class="fa fa-check"></i><b>7.4</b> Selecting columns</a></li>
+<li class="chapter" data-level="7.5" data-path="dplyr.html"><a href="dplyr.html#renaming-columns"><i class="fa fa-check"></i><b>7.5</b> Renaming columns</a></li>
+<li class="chapter" data-level="7.6" data-path="dplyr.html"><a href="dplyr.html#mutate"><i class="fa fa-check"></i><b>7.6</b> Creating new columns</a></li>
+<li class="chapter" data-level="7.7" data-path="dplyr.html"><a href="dplyr.html#relocate"><i class="fa fa-check"></i><b>7.7</b> Change column order</a></li>
+<li class="chapter" data-level="7.8" data-path="dplyr.html"><a href="dplyr.html#summarize"><i class="fa fa-check"></i><b>7.8</b> Summarizing</a></li>
+<li class="chapter" data-level="7.9" data-path="dplyr.html"><a href="dplyr.html#groups"><i class="fa fa-check"></i><b>7.9</b> Grouped data</a></li>
+<li class="chapter" data-level="7.10" data-path="dplyr.html"><a href="dplyr.html#counts"><i class="fa fa-check"></i><b>7.10</b> Counting</a></li>
+<li class="chapter" data-level="7.11" data-path="dplyr.html"><a href="dplyr.html#across"><i class="fa fa-check"></i><b>7.11</b> Applying a function across columns</a></li>
+<li class="chapter" data-level="7.12" data-path="dplyr.html"><a href="dplyr.html#pipes"><i class="fa fa-check"></i><b>7.12</b> Piping</a></li>
+<li class="chapter" data-level="7.13" data-path="dplyr.html"><a href="dplyr.html#dplyrworkflow"><i class="fa fa-check"></i><b>7.13</b> Building <code>dplyr</code> workflows</a>
+<ul>
+<li class="chapter" data-level="7.13.1" data-path="dplyr.html"><a href="dplyr.html#dplyrCaution"><i class="fa fa-check"></i><b>7.13.1</b> A cautionary and encouraging note</a></li>
+</ul></li>
+<li class="chapter" data-level="7.14" data-path="dplyr.html"><a href="dplyr.html#twoTables"><i class="fa fa-check"></i><b>7.14</b> Combining multiple tibbles</a>
+<ul>
+<li class="chapter" data-level="7.14.1" data-path="dplyr.html"><a href="dplyr.html#mutatingJoins"><i class="fa fa-check"></i><b>7.14.1</b> Mutating joins</a></li>
+<li class="chapter" data-level="7.14.2" data-path="dplyr.html"><a href="dplyr.html#filteringJoins"><i class="fa fa-check"></i><b>7.14.2</b> Filtering joins</a></li>
+<li class="chapter" data-level="7.14.3" data-path="dplyr.html"><a href="dplyr.html#allometricJoins"><i class="fa fa-check"></i><b>7.14.3</b> Applying allometric equations using joins</a></li>
+<li class="chapter" data-level="7.14.4" data-path="dplyr.html"><a href="dplyr.html#setOperations"><i class="fa fa-check"></i><b>7.14.4</b> Set operations</a></li>
+<li class="chapter" data-level="7.14.5" data-path="dplyr.html"><a href="dplyr.html#binds"><i class="fa fa-check"></i><b>7.14.5</b> Row and column binds</a></li>
+</ul></li>
+<li class="chapter" data-level="7.15" data-path="dplyr.html"><a href="dplyr.html#summaryDplyr"><i class="fa fa-check"></i><b>7.15</b> Summary</a></li>
+<li class="chapter" data-level="7.16" data-path="dplyr.html"><a href="dplyr.html#exercisesDplyr"><i class="fa fa-check"></i><b>7.16</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>8</b> Tidying data with <code>tidyr</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tidyr.html"><a href="tidyr.html#tidyrReshape"><i class="fa fa-check"></i><b>8.1</b> Wide and long formats</a></li>
+<li class="chapter" data-level="8.2" data-path="tidyr.html"><a href="tidyr.html#tidyrSeparate"><i class="fa fa-check"></i><b>8.2</b> Separating and uniting columns</a></li>
+<li class="chapter" data-level="8.3" data-path="tidyr.html"><a href="tidyr.html#standStockTabs"><i class="fa fa-check"></i><b>8.3</b> Application: Stand and stock tables</a></li>
+<li class="chapter" data-level="8.4" data-path="tidyr.html"><a href="tidyr.html#summaryTidr"><i class="fa fa-check"></i><b>8.4</b> Summary</a></li>
+<li class="chapter" data-level="8.5" data-path="tidyr.html"><a href="tidyr.html#exercisesTidyr"><i class="fa fa-check"></i><b>8.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>9</b> Creating graphics with <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ggplot2.html"><a href="ggplot2.html#ggplotComponents"><i class="fa fa-check"></i><b>9.1</b> Grammar components</a></li>
+<li class="chapter" data-level="9.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotInitialLook"><i class="fa fa-check"></i><b>9.2</b> An initial look</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ggplot2.html"><a href="ggplot2.html#geometries-mapping-and-aesthetics"><i class="fa fa-check"></i><b>9.2.1</b> Geometries, mapping, and aesthetics</a></li>
+<li class="chapter" data-level="9.2.2" data-path="ggplot2.html"><a href="ggplot2.html#ggplotScales"><i class="fa fa-check"></i><b>9.2.2</b> Scales</a></li>
+<li class="chapter" data-level="9.2.3" data-path="ggplot2.html"><a href="ggplot2.html#ggplotGuidesThemes"><i class="fa fa-check"></i><b>9.2.3</b> Guides and Themes</a></li>
+<li class="chapter" data-level="9.2.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotFacets"><i class="fa fa-check"></i><b>9.2.4</b> Facets</a></li>
+<li class="chapter" data-level="9.2.5" data-path="ggplot2.html"><a href="ggplot2.html#building-graphics-incrementally"><i class="fa fa-check"></i><b>9.2.5</b> Building graphics incrementally</a></li>
+<li class="chapter" data-level="9.2.6" data-path="ggplot2.html"><a href="ggplot2.html#ggplotPatchwork"><i class="fa fa-check"></i><b>9.2.6</b> Arranging graphics</a></li>
+<li class="chapter" data-level="9.2.7" data-path="ggplot2.html"><a href="ggplot2.html#saving-graphics"><i class="fa fa-check"></i><b>9.2.7</b> Saving graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ggplot2.html"><a href="ggplot2.html#exploring-different-graphics"><i class="fa fa-check"></i><b>9.3</b> Exploring different graphics</a></li>
+<li class="chapter" data-level="9.4" data-path="ggplot2.html"><a href="ggplot2.html#ggplotBarCharts"><i class="fa fa-check"></i><b>9.4</b> Visualizing distributions</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="ggplot2.html"><a href="ggplot2.html#elkCountyBarCharts"><i class="fa fa-check"></i><b>9.4.1</b> Elk County timber cruise bar charts</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="ggplot2.html"><a href="ggplot2.html#summaryGgplot2"><i class="fa fa-check"></i><b>9.5</b> Summary</a></li>
+<li class="chapter" data-level="9.6" data-path="ggplot2.html"><a href="ggplot2.html#exercisesGgplot2"><i class="fa fa-check"></i><b>9.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="notation.html"><a href="notation.html"><i class="fa fa-check"></i><b>10</b> Preliminary definitions and concepts</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="notation.html"><a href="notation.html#popSamps"><i class="fa fa-check"></i><b>10.1</b> Estimating population parameters</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="notation.html"><a href="notation.html#ToolsTypesOfVariables"><i class="fa fa-check"></i><b>10.1.1</b> Types of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="notation.html"><a href="notation.html#tools"><i class="fa fa-check"></i><b>10.2</b> Tools of the trade: Review of notation</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="notation.html"><a href="notation.html#operators"><i class="fa fa-check"></i><b>10.2.1</b> Mathematical operators, subscripts, and nested data</a></li>
+<li class="chapter" data-level="10.2.2" data-path="notation.html"><a href="notation.html#padma"><i class="fa fa-check"></i><b>10.2.2</b> Order of operations</a></li>
+<li class="chapter" data-level="10.2.3" data-path="notation.html"><a href="notation.html#toolsR"><i class="fa fa-check"></i><b>10.2.3</b> Tools of the trade using R</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="notation.html"><a href="notation.html#summaryNotation"><i class="fa fa-check"></i><b>10.3</b> Summary and outlook</a></li>
+<li class="chapter" data-level="10.4" data-path="notation.html"><a href="notation.html#exercisesNotation"><i class="fa fa-check"></i><b>10.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="statBasics.html"><a href="statBasics.html"><i class="fa fa-check"></i><b>11</b> Basic statistical concepts</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="statBasics.html"><a href="statBasics.html#popStats"><i class="fa fa-check"></i><b>11.1</b> Characterizing a population</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="statBasics.html"><a href="statBasics.html#centralTendency"><i class="fa fa-check"></i><b>11.1.1</b> Measures of central tendency</a></li>
+<li class="chapter" data-level="11.1.2" data-path="statBasics.html"><a href="statBasics.html#dispersion"><i class="fa fa-check"></i><b>11.1.2</b> Measures of dispersion</a></li>
+<li class="chapter" data-level="11.1.3" data-path="statBasics.html"><a href="statBasics.html#popTotProp"><i class="fa fa-check"></i><b>11.1.3</b> Totals and proportions</a></li>
+<li class="chapter" data-level="11.1.4" data-path="statBasics.html"><a href="statBasics.html#popTabGraph"><i class="fa fa-check"></i><b>11.1.4</b> Tabular and graphical representations of data distributions</a></li>
+<li class="chapter" data-level="11.1.5" data-path="statBasics.html"><a href="statBasics.html#popIllustration"><i class="fa fa-check"></i><b>11.1.5</b> Illustrative analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="statBasics.html"><a href="statBasics.html#introSampling"><i class="fa fa-check"></i><b>11.2</b> Introduction to sampling methods</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="statBasics.html"><a href="statBasics.html#characteristics-of-samples"><i class="fa fa-check"></i><b>11.2.1</b> Characteristics of samples</a></li>
+<li class="chapter" data-level="11.2.2" data-path="statBasics.html"><a href="statBasics.html#probSamples"><i class="fa fa-check"></i><b>11.2.2</b> Probability samples</a></li>
+<li class="chapter" data-level="11.2.3" data-path="statBasics.html"><a href="statBasics.html#estimators"><i class="fa fa-check"></i><b>11.2.3</b> Sampling distribution and properties of estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="statBasics.html"><a href="statBasics.html#SRS"><i class="fa fa-check"></i><b>11.3</b> Simple Random Sampling</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-without-replacement"><i class="fa fa-check"></i><b>11.3.1</b> Simple Random Sampling without replacement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="statBasics.html"><a href="statBasics.html#simple-random-sampling-with-replacement"><i class="fa fa-check"></i><b>11.3.2</b> Simple Random Sampling with replacement</a></li>
+<li class="chapter" data-level="11.3.3" data-path="statBasics.html"><a href="statBasics.html#SRSTotals"><i class="fa fa-check"></i><b>11.3.3</b> Estimating totals and proportions</a></li>
+<li class="chapter" data-level="11.3.4" data-path="statBasics.html"><a href="statBasics.html#ci"><i class="fa fa-check"></i><b>11.3.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.3.5" data-path="statBasics.html"><a href="statBasics.html#srsIllustration"><i class="fa fa-check"></i><b>11.3.5</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="11.3.6" data-path="statBasics.html"><a href="statBasics.html#sampleSize"><i class="fa fa-check"></i><b>11.3.6</b> Sample size</a></li>
+<li class="chapter" data-level="11.3.7" data-path="statBasics.html"><a href="statBasics.html#ADSRS"><i class="fa fa-check"></i><b>11.3.7</b> Advantages and disadvantages of SRS</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="statBasics.html"><a href="statBasics.html#statBasicsSummary"><i class="fa fa-check"></i><b>11.4</b> Summary and outlook</a></li>
+<li class="chapter" data-level="11.5" data-path="statBasics.html"><a href="statBasics.html#exercisesStats"><i class="fa fa-check"></i><b>11.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="forestStat.html"><a href="forestStat.html"><i class="fa fa-check"></i><b>12</b> Estimating forest parameters</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="forestStat.html"><a href="forestStat.html#samplingUnits"><i class="fa fa-check"></i><b>12.1</b> Sampling units for forestry applications</a></li>
+<li class="chapter" data-level="12.2" data-path="forestStat.html"><a href="forestStat.html#arealSamplingFrame"><i class="fa fa-check"></i><b>12.2</b> Areal sampling frame</a></li>
+<li class="chapter" data-level="12.3" data-path="forestStat.html"><a href="forestStat.html#plotSampling"><i class="fa fa-check"></i><b>12.3</b> Plot sampling</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="forestStat.html"><a href="forestStat.html#plotSamplingExpFa"><i class="fa fa-check"></i><b>12.3.1</b> Expansion factors and estimates</a></li>
+<li class="chapter" data-level="12.3.2" data-path="forestStat.html"><a href="forestStat.html#sample-based-estimates"><i class="fa fa-check"></i><b>12.3.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.3.3" data-path="forestStat.html"><a href="forestStat.html#arealFPC"><i class="fa fa-check"></i><b>12.3.3</b> Finite population correction</a></li>
+<li class="chapter" data-level="12.3.4" data-path="forestStat.html"><a href="forestStat.html#slopOver"><i class="fa fa-check"></i><b>12.3.4</b> Boundary effects</a></li>
+<li class="chapter" data-level="12.3.5" data-path="forestStat.html"><a href="forestStat.html#slopePlots"><i class="fa fa-check"></i><b>12.3.5</b> Slope corrections</a></li>
+<li class="chapter" data-level="12.3.6" data-path="forestStat.html"><a href="forestStat.html#sizeVariance"><i class="fa fa-check"></i><b>12.3.6</b> Effect of plot size on variance</a></li>
+<li class="chapter" data-level="12.3.7" data-path="forestStat.html"><a href="forestStat.html#plotSamplingIllustration"><i class="fa fa-check"></i><b>12.3.7</b> Illustration</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="forestStat.html"><a href="forestStat.html#pointSampling"><i class="fa fa-check"></i><b>12.4</b> Point sampling</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="forestStat.html"><a href="forestStat.html#pointSamplingExpFa"><i class="fa fa-check"></i><b>12.4.1</b> Expansion factors and per unit area estimates</a></li>
+<li class="chapter" data-level="12.4.2" data-path="forestStat.html"><a href="forestStat.html#pointSamplingEstimation"><i class="fa fa-check"></i><b>12.4.2</b> Sample-based estimates</a></li>
+<li class="chapter" data-level="12.4.3" data-path="forestStat.html"><a href="forestStat.html#selectingBAF"><i class="fa fa-check"></i><b>12.4.3</b> Selecting a basal area factor and computing limiting distances</a></li>
+<li class="chapter" data-level="12.4.4" data-path="forestStat.html"><a href="forestStat.html#pointSamplingField"><i class="fa fa-check"></i><b>12.4.4</b> Boundary overlap and slope corrections</a></li>
+<li class="chapter" data-level="12.4.5" data-path="forestStat.html"><a href="forestStat.html#pointSamplingIllustration"><i class="fa fa-check"></i><b>12.4.5</b> Illustration</a></li>
+<li class="chapter" data-level="12.4.6" data-path="forestStat.html"><a href="forestStat.html#tallyByHeight"><i class="fa fa-check"></i><b>12.4.6</b> Per unit area estimates without measuring DBH</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="forestStat.html"><a href="forestStat.html#forestSamplingWorkflow"><i class="fa fa-check"></i><b>12.5</b> Workflows for forest inventory data</a></li>
+<li class="chapter" data-level="12.6" data-path="forestStat.html"><a href="forestStat.html#standStockTabsEsts"><i class="fa fa-check"></i><b>12.6</b> Stand and stock table estimates</a></li>
+<li class="chapter" data-level="12.7" data-path="forestStat.html"><a href="forestStat.html#exercisesForestStats"><i class="fa fa-check"></i><b>12.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="samplingDesigns.html"><a href="samplingDesigns.html"><i class="fa fa-check"></i><b>13</b> Sampling designs, implementation, and analysis</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYS"><i class="fa fa-check"></i><b>13.1</b> Systematic sampling</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimatorsSYS"><i class="fa fa-check"></i><b>13.1.1</b> Estimation Using SYS</a></li>
+<li class="chapter" data-level="13.1.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#SYSIllustration"><i class="fa fa-check"></i><b>13.1.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.1.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADSYS"><i class="fa fa-check"></i><b>13.1.3</b> Advantages and disadvantages of SYS</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#Strat"><i class="fa fa-check"></i><b>13.2</b> Stratified sampling</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#StratEstimation"><i class="fa fa-check"></i><b>13.2.1</b> Estimation using stratified sampling</a></li>
+<li class="chapter" data-level="13.2.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#allocation-of-sample-plots"><i class="fa fa-check"></i><b>13.2.2</b> Allocation of sample plots</a></li>
+<li class="chapter" data-level="13.2.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#strataSampleSize"><i class="fa fa-check"></i><b>13.2.3</b> Sample size determination</a></li>
+<li class="chapter" data-level="13.2.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#stratIllustration"><i class="fa fa-check"></i><b>13.2.4</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.2.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-stratifed-sampling"><i class="fa fa-check"></i><b>13.2.5</b> Advantages and disadvantages of stratifed sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#cluster"><i class="fa fa-check"></i><b>13.3</b> Cluster sampling</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterEstimation"><i class="fa fa-check"></i><b>13.3.1</b> Estimation using cluster sampling</a></li>
+<li class="chapter" data-level="13.3.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#clusterIllustration"><i class="fa fa-check"></i><b>13.3.2</b> Illustrative analysis</a></li>
+<li class="chapter" data-level="13.3.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#advantages-and-disadvantages-of-cluster-sampling"><i class="fa fa-check"></i><b>13.3.3</b> Advantages and disadvantages of cluster sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="samplingDesigns.html"><a href="samplingDesigns.html#multistage"><i class="fa fa-check"></i><b>13.4</b> Multistage sampling</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimationMultistage"><i class="fa fa-check"></i><b>13.4.1</b> Estimation using multistage sampling</a></li>
+<li class="chapter" data-level="13.4.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#estimation-with-unequal-sized-primaries-and-varying-amounts-of-secondaries"><i class="fa fa-check"></i><b>13.4.2</b> Estimation with unequal sized primaries and varying amounts of secondaries</a></li>
+<li class="chapter" data-level="13.4.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#ADMultistage"><i class="fa fa-check"></i><b>13.4.3</b> Advantages and disadvantages of multistage sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="samplingDesigns.html"><a href="samplingDesigns.html#samplingWithCovs"><i class="fa fa-check"></i><b>13.5</b> Sampling with covariates</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="samplingDesigns.html"><a href="samplingDesigns.html#regression"><i class="fa fa-check"></i><b>13.5.1</b> Linear regression</a></li>
+<li class="chapter" data-level="13.5.2" data-path="samplingDesigns.html"><a href="samplingDesigns.html#RegressionSampling"><i class="fa fa-check"></i><b>13.5.2</b> Regression Sampling</a></li>
+<li class="chapter" data-level="13.5.3" data-path="samplingDesigns.html"><a href="samplingDesigns.html#doubleSampling"><i class="fa fa-check"></i><b>13.5.3</b> Double sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="samplingDesigns.html"><a href="samplingDesigns.html#summarySampling"><i class="fa fa-check"></i><b>13.6</b> Summary and outlook</a></li>
+<li class="chapter" data-level="13.7" data-path="samplingDesigns.html"><a href="samplingDesigns.html#exercisesSampling"><i class="fa fa-check"></i><b>13.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reports.html"><a href="reports.html"><i class="fa fa-check"></i><b>14</b> Reports</a></li>
+<li class="chapter" data-level="15" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>15</b> Case Studies</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Forestry Data Analysis with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. We want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+
+<div id="scripts" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Scripts and reproducible workflow<a href="scripts.html#scripts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Data analysis, whether for a professional project or research, typically involves many steps and iterations. For example, creating a figure effective at communicating results can involve trying out several different graphical representations, and then tens if not hundreds of iterations to fine-tune the chosen representation. Each of these iterations might require several lines of code to create. Although we could accomplish this by typing and re-typing code lines in the console, it’s easier and more efficient to write the code in a <em>script</em> that we can submit to the console either a line at a time, several lines at a time, or all together.</p>
+<p>In addition to making the workflow more efficient, scripts provide another great benefit. We often work on a project for a few hours, then move on to something else, and then return to the project a few days, months, or sometimes even years later. In such cases we might have forgotten how we created a particularly nice graphic or how to replicate an analysis, with the result being several hours or days of work to rewrite the necessary code. If we save a script file, the ingredients are immediately available when we return to a project.</p>
+<p>Next consider a large scientific endeavor. Ideally a scientific study is reproducible, meaning an independent group of researchers (or the original researchers) are able to duplicate the study. Reproducible research means anyone can replicate the steps in a study, from importing external datasets and wrangling them into formats for analysis, to creating tables and figures using analysis results. In principle we could detail this process in a step-by-step guide using words; however, in practice, it’s typically difficult or impossible to reproduce a full data analysis based on a written explanation. It’s much more effective to maintain code that accomplishes all steps in a single script file with annotation included as comments.</p>
+<p>In this chapter, we introduce scripts and their use to facilitate reproducible workflows. Because such workflows document analysis of datasets, we cover common functions for reading and writing external data. Writing high quality code and reproducible workflows means conforming to file naming, variable naming, code formatting, and file organization best practices. While many recommendations might initially seem tedious and unnecessary, we speak from experience that using scripts, staying organized, and using a reproducible workflow will save tremendous amounts of time and headaches in the long run.</p>
+<div id="scripts-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Scripts<a href="scripts.html#scripts-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Scripts facilitate efficient coding and provide a data management and analysis record. We illustrate these ideas by tracing steps taken to develop a figure using the FACE dataset introduced in Section <a href="overview.html#face">1.2.3</a>. The illustration uses features that we’ve not yet discussed, so don’t worry about the code details, rather focus on the script’s role in the workflow.</p>
+<p>First read the FACE data using <code>read.csv()</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="scripts.html#cb22-1" tabindex="-1"></a>face_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datasets/FACE/FACE_aspen_core_growth.csv&quot;</span>)</span></code></pre></div>
+<p>Let’s create a scatter plot of 2008 DBH versus height and explore the data a little bit along the way. To do this we create <code>dbh</code> and <code>ht</code> vectors using the 2008 DBH and height <code>face_dat</code> columns and print out the first ten values.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="scripts.html#cb23-1" tabindex="-1"></a>dbh <span class="ot">&lt;-</span> face_dat<span class="sc">$</span>X2008_DBH</span>
+<span id="cb23-2"><a href="scripts.html#cb23-2" tabindex="-1"></a>ht <span class="ot">&lt;-</span> face_dat<span class="sc">$</span>X2008_Height</span>
+<span id="cb23-3"><a href="scripts.html#cb23-3" tabindex="-1"></a>dbh[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
+<pre><code>#&gt;  [1]   NA 9.55 2.00 9.00 3.11 6.35 4.60   NA   NA 1.42</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="scripts.html#cb25-1" tabindex="-1"></a>ht[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
+<pre><code>#&gt;  [1]   NA 1225  334 1079  370  859  818   NA   NA  268</code></pre>
+<p>The missing values (denoted by <code>NA</code>) suggest several trees were dead or not measured for some reason in 2008. At some point it’d be good to investigate which trees have missing data and why, but we’ll skip that for now. <code>plot()</code>omits missing values.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="scripts.html#cb27-1" tabindex="-1"></a><span class="fu">plot</span>(dbh, ht)</span></code></pre></div>
+<p><img src="FD20_files/figure-html/unnamed-chunk-21-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>Not surprisingly, the scatter plot shows DBH and height are positively correlated and their relationship is nonlinear. Now let’s modify the basic scatter plot by adding a feature to identify trees belonging to the control and elevated CO<span class="math inline">\(_2\)</span> treatments. We do this by separating DBH and height into their respective treatment groups.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="scripts.html#cb28-1" tabindex="-1"></a>treat <span class="ot">&lt;-</span> face_dat<span class="sc">$</span>Treat</span>
+<span id="cb28-2"><a href="scripts.html#cb28-2" tabindex="-1"></a>dbh_treat_1 <span class="ot">&lt;-</span> dbh[treat <span class="sc">==</span> <span class="dv">1</span>] <span class="co"># Treatment 1 is the control.</span></span>
+<span id="cb28-3"><a href="scripts.html#cb28-3" tabindex="-1"></a>ht_treat_1 <span class="ot">&lt;-</span> ht[treat <span class="sc">==</span> <span class="dv">1</span>]</span>
+<span id="cb28-4"><a href="scripts.html#cb28-4" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="scripts.html#cb28-5" tabindex="-1"></a>dbh_treat_2 <span class="ot">&lt;-</span> dbh[treat <span class="sc">==</span> <span class="dv">2</span>] <span class="co"># Treatment 2 is the elevated CO2.</span></span>
+<span id="cb28-6"><a href="scripts.html#cb28-6" tabindex="-1"></a>ht_treat_2 <span class="ot">&lt;-</span> ht[treat <span class="sc">==</span> <span class="dv">2</span>]</span></code></pre></div>
+<p>To make a more informative scatter plot we’ll do two things. First, plot treatment 1 data, but ensure the plot region is large enough to show all the treatment 2 data. This is done by specifying sufficiently wide axis ranges via the <code>xlim</code> and <code>ylim</code> arguments in <code>plot()</code>. The <code>xlim</code> and <code>ylim</code> are set to the range of <code>dbh</code> and <code>ht</code> values, respectively, using the <code>range()</code> function.<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> Second add treatment 2 data via <code>points()</code>. There are several other arguments passed to <code>plot()</code>, but don’t worry about these details for now.</p>
+<p>We cover these and many other plot considerations in Chapter <a href="ggplot2.html#ggplot2">9</a>, where we’ll learn about a package called <code>ggplot2</code> that provides another way to create such plots.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="scripts.html#cb29-1" tabindex="-1"></a><span class="fu">plot</span>(dbh_treat_1, ht_treat_1, <span class="at">xlim =</span> <span class="fu">range</span>(dbh, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb29-2"><a href="scripts.html#cb29-2" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(ht, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">&quot;salmon3&quot;</span>,</span>
+<span id="cb29-3"><a href="scripts.html#cb29-3" tabindex="-1"></a>     <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">xlab =</span> <span class="st">&quot;DBH (cm)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Height (cm)&quot;</span>)</span>
+<span id="cb29-4"><a href="scripts.html#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="scripts.html#cb29-5" tabindex="-1"></a><span class="fu">points</span>(dbh_treat_2, ht_treat_2, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="FD20_files/figure-html/unnamed-chunk-23-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>We should have a plot legend to tell the viewer which colors are associated with the treatments, as well as many other aesthetic refinements. For now, however, we’ll resist such temptations.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
+<p>We only show some of the process leading to the completed plot above. We read in the data, created vectors of 2008 DBH and height measurements, took a look at a subset of measurement values, made an intermediate plot, partitioned the measurements by treatment, then made our final plot with points colored by treatment. However, we don’t show a lot of the process. For example, we made several mistakes while getting the code and plot the way we wanted it for this book, e.g., we initially forgot <code>na.rm = TRUE</code> in <code>range()</code> then fiddled around with the treatment colors, point symbols, and axis labels.</p>
+<p>Now imagine trying to recreate the plot a few days later. Possibly someone saw the plot and commented that it’d be interesting to see similar plots for each year in the study period. If we did all the work, including all the false starts and refinements, it’d be hard to sort things out at the console. This would be especially true if a few months had passed, rather than just a few days. Creating the new plots would be much easier if we started from an existing script used to create our initial plot, especially if it included a few well-chosen comments to remind us what we were doing along the way.</p>
+<p>Fortunately it’s easy to create and work with script files in RStudio. Just choose <code>File &gt; New File &gt; R script</code> and a script window will open in the upper left RStudio window. A script is simply a text file that contains code and ends with the file suffix <code>.R</code>. Efficient use of scripts is a key step toward creating a reproducible and organized workflow.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:script"></span>
+<img src="figures/FACE-script-screenshot.png" alt="A script window in RStudio." width="100%" />
+<p class="caption">
+FIGURE 3.1: A script window in RStudio.
+</p>
+</div>
+<p>Figure <a href="scripts.html#fig:script">3.1</a> shows the script window containing our FACE plot code. From the script window you can, among other things, save the script using either the disk icon near the top left of the window or via <code>File &gt; Save</code>, and run one or more lines of code using the <code>Run</code> icon in the window. By “run” we mean send code from your script to the console where it’s executed. You run one line of code by placing your cursor anywhere on the line you want to run, then pressing the <code>Run</code> icon. If you want to run several lines of code, highlight the desired lines then press the <code>Run</code> icon.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> You can press the <code>Source</code> icon to run the entire script. In addition, there’s a <code>Source on Save</code> checkbox. If this is checked, the entire script is run when the script file is saved (we rarely use this option). Generally, scripts are written incrementally—write a few lines then make sure they run as expected, then write a few more lines and check them, and so forth until the script is complete.</p>
+</div>
+<div id="best-practices-for-naming-and-formatting" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Best practices for naming and formatting<a href="scripts.html#best-practices-for-naming-and-formatting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Although a bit harsh, Figure <a href="scripts.html#fig:comic">3.2</a> points out that following code style guides, staying consistent with your chosen file and variable naming, and using ample comments will make your code accessible and reusable to you and others. The scripts you write for this book’s examples and exercises contribute to your codebase for future projects. A <em>codebase</em> is simply the collection of code used in analysis or software development. As your codebase grows, coding tasks become easier because you reuse code snippets and functions written for various previous tasks.</p>
+<div class="figure"><span style="display:block;" id="fig:comic"></span>
+<img src="figures/code_quality.png" alt="Randall Munroe's xkcd.com take on code quality." width="100%" />
+<p class="caption">
+FIGURE 3.2: Randall Munroe’s xkcd.com take on code quality.
+</p>
+</div>
+<p>In subsequent sections, we detail a few key points from Hadley Wickham’s R style guide available at <a href="https://style.tidyverse.org">https://style.tidyverse.org</a>, along with some others for maintaining high-quality code.</p>
+<p>You can do your future self a favor and use clear and consistent naming conventions (or rules) for files, variables, and functions. There have been more times than we like to admit when we find ourselves searching through old directories trying to find a script that has code we could reuse for the task at hand. Or we spend too much time reading through a script that we or someone else wrote, trying to figure out what poorly named variables represent in the analysis. Using an acceptable naming rule is key to reducing confusion and saving time.</p>
+<div id="fileNaming" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Script file naming<a href="scripts.html#fileNaming" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Script file names should be meaningful and end with a “.R” extension. They should also follow some basic naming rules. For example, say we’re conducting an analysis on the emerald ash borer (<em>Agrilus planipennis</em>), referred to by its acronym EAB, distribution in Michigan and save the code in a script. Consider these possible script file names:</p>
+<ul>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>EAB_MI_dist.R</code> (Naming rule called <em>delimiter naming</em> using an underscore. Here too we chose to capitalize acronyms.)</li>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>emeraldAshBorerMIDist.R</code> (Naming rule called <em>camelCase</em><a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> where the first letter in each word is capitalized, except perhaps for the first word. It’s called camelCase because the capital letters look like a camel’s hump.)</li>
+<li><span style="color: Red;">BAD</span>: <code>insectDist.R</code> (camelCase but the file name is too ambiguous.)</li>
+<li><span style="color: Red;">BAD</span>: <code>insect.dist.R</code> (Too ambiguous and multiple periods can confuse the operating system’s file type auto-detect.)</li>
+<li><span style="color: Red;">BAD</span>: <code>emeraldashborermidist.R</code> (Running the letters together without a delimiter or case change makes this too ambiguous and confusing.)</li>
+</ul>
+<p>We’ll generally use the underscore delimiter and capitalize acronyms for script and data file names.</p>
+</div>
+<div id="syntacticNames" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Variable naming<a href="scripts.html#syntacticNames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R has strict rules for naming variables. Syntactic names (i.e., valid names) consist of letters, digits, <code>.</code>, and <code>_</code> but can’t begin with <code>_</code> or a digit. Also, you can’t use any reserved words like <code>NA</code>, <code>NULL</code>, <code>TRUE</code>, <code>FALSE</code>, <code>if</code>, and <code>function</code> (see the complete list by running <code>?Reserved</code> in your console). A name that doesn’t follow these rules is a non-syntactic name (i.e., invalid name) and will result in an error if you try using them. The code below attempts to use a non-syntactic name.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="scripts.html#cb30-1" tabindex="-1"></a><span class="dv">1</span>dbh <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<pre><code>#&gt; Error: &lt;text&gt;:1:2: unexpected symbol
+#&gt; 1: 1dbh
+#&gt;      ^</code></pre>
+<p>Although we don’t recommend it, you can override these rules by surrounding a non-syntactic name with backticks.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="scripts.html#cb32-1" tabindex="-1"></a><span class="st">`</span><span class="at">1dbh</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<p>In addition to adhering to syntactic name rules, there is value in following a naming convention for variables. Here are some examples of good and bad choices for a fictitious variable that holds EAB counts used in the previous section’s EAB analysis:</p>
+<ul>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>eab_count</code> (Delimiter naming using an underscore. Here we chose to keep all letters lowercase, unlike the file example of this naming convention in the previous section.)</li>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>eab.count</code> (Delimiter naming using a period and all lowercase.)</li>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>EABCount</code> (CamelCase naming again.)</li>
+<li><span style="color: Red;">BAD</span>: <code>eabcount</code> (Running the letters together without a delimiter or case change makes this too ambiguous and confusing.)</li>
+</ul>
+</div>
+<div id="code-formatting" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Code formatting<a href="scripts.html#code-formatting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here are some other coding best practices that help readability:</p>
+<ul>
+<li>Keep code lines under 80 characters long. RStudio includes a vertical line in the script window at the 80th character to make this suggestion easy to follow.</li>
+<li>Allow some whitespace in a consistent way between code elements within lines. Include one space on either side of mathematical and logical operators. No space on either side of <code>:</code>, <code>::</code>, and <code>:::</code> operators, which we’ll encounter later. Like the English language, always add a space after a comma and never before. In an expression, add a space before a left parenthesis and after the right parenthesis. Parentheses and square brackets can be directly adjacent to whatever they’re enclosing (unless the last character they enclose is a comma). There should be no space between a function name and left parenthesis that opens the function’s arguments. Notice how the use of whitespace rules below makes reading the code easier on the eyes:
+<ul>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>d &lt;- a + (b * sqrt(5 ^ 2)) / e[1:5, ]</code></li>
+<li><span style="color: Red;">BAD</span>: <code>d&lt;-a+(b*sqrt ( 5^2 ))/e[ 1 : 5 ,]</code></li>
+</ul></li>
+<li>Avoid unnecessary parentheses; rather, rely on order of operations (yes, remember PEMDAS, see Section <a href="notation.html#padma">10.2.2</a>):
+<ul>
+<li><span style="color: ForestGreen;">GOOD</span>: <code>(a + 4) / sqrt(a * b)</code></li>
+<li><span style="color: Red;">BAD</span>: <code>((a) + (4)) / (sqrt((a) * (b)))</code></li>
+</ul></li>
+<li>Indent code two spaces within functions, loops, and decision control structures (RStudio does this by default when you press the TAB key), we’ll revisit this point in Chapter <a href="functions.html#functions">5</a> where these topics are introduced.</li>
+<li>Consolidate calls to packages (using <code>library()</code>) at the top of the script rather than interspersing them throughout the script (Section <a href="introToR.html#packages">2.3</a>).</li>
+</ul>
+</div>
+<div id="customize-your-coding-environment" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Customize your coding environment<a href="scripts.html#customize-your-coding-environment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While this section has nothing to do with developing reproducible workflows, it has everything to do with being a happy coder. RStudio offers great flexibility to customize the interface such as changing themes and syntax highlighting. Syntax highlighting means different code features (e.g., function names, operators, variables, comments) are displayed using different colors and fonts within scripts. To change themes, go to <code>Tools &gt; Global Options</code> and then click on <code>Appearance</code> and choose among Modern, Classic, and Sky. Here too, you can change the font and color schemes used for the script and other interface windows.</p>
+<div class="figure"><span style="display:block;" id="fig:rstudioDark"></span>
+<img src="figures/rstudioDark.png" alt="The RStudio IDE using the Modern theme and Material Editor theme." width="100%" />
+<p class="caption">
+FIGURE 3.3: The RStudio IDE using the Modern theme and Material Editor theme.
+</p>
+</div>
+<p>We generally find Editor themes with a dark background and mellow colored syntax highlighting easier on the eyes and more helpful to quickly identify coding errors. For example, an RStudio window using the Modern theme and Material Editor theme is shown in Figure <a href="scripts.html#fig:rstudioDark">3.3</a>. Using a dark palette is especially useful during long work sessions.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></p>
+</div>
+</div>
+<div id="pathsReadWrite" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> File paths and external data<a href="scripts.html#pathsReadWrite" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="paths" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Relative and absolute paths<a href="scripts.html#paths" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recall from Section <a href="introToR.html#workingDirectory">2.2</a>, the working directory is the directory associated with each session from which R reads and writes files. You can change the working directory using methods discussed in Section <a href="introToR.html#workingDirectory">2.2</a>, such as <code>setwd()</code>.</p>
+<p>Your working directory is shown at the top of the console window or by running <code>getwd()</code> in the console. For example, the working directory for the session shown in Figure <a href="introToR.html#fig:rstudioPic">2.1</a> is <code>~/projects/FD20-book/FD20-git</code> where the preceding tilde, i.e., <code>~</code>, stands for the home directory. The home directory for Microsoft Windows is <code>&lt;drive&gt;/Users/&lt;username&gt;</code> where <code>&lt;drive&gt;</code> is the name of the drive, e.g., <code>C:</code> and <code>&lt;username&gt;</code> is your user name, for macOS it’s <code>/Users/&lt;username&gt;</code>, and for linux its <code>/home/&lt;username&gt;</code>. The root directory is <code>&lt;drive&gt;/</code> on Windows and the first forward slash <code>/</code> for macOS and linux.</p>
+<p>Say we want to read the <code>FEF_trees.csv</code> data file into R. As we’ll cover in Section <a href="scripts.html#readWrite">3.3.2</a>, reading this file can be accomplished using <code>read.csv()</code>. The first argument in <code>read.csv()</code> is <code>file</code> which is set equal to the quoted <em>path</em> to the file you want to read. There are two types of paths, <em>absolute</em> and <em>relative</em>. An absolute path is the directory hierarchy starting from the root directory and ending with the data file. A relative path is the directory hierarchy starting from the working directory and ending with the data file, i.e., the data file location <em>relative</em> to the working directory. The code below reads the <code>FEF_trees.csv</code> file first using the absolute path, then using the relative path.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="scripts.html#cb33-1" tabindex="-1"></a><span class="co"># Reading data using the absolute path.</span></span>
+<span id="cb33-2"><a href="scripts.html#cb33-2" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;/home/andy/projects/FD20-book/FD20-git/datasets/FEF_trees.csv&quot;</span>)</span>
+<span id="cb33-3"><a href="scripts.html#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="scripts.html#cb33-4" tabindex="-1"></a><span class="co"># Reading data using the relative path.</span></span>
+<span id="cb33-5"><a href="scripts.html#cb33-5" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/home/andy/projects/FD20-book/FD20-git&quot;</span>)</span>
+<span id="cb33-6"><a href="scripts.html#cb33-6" tabindex="-1"></a><span class="co"># Or equivalently.</span></span>
+<span id="cb33-7"><a href="scripts.html#cb33-7" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/projects/FD20-book/FD20-git&quot;</span>)</span>
+<span id="cb33-8"><a href="scripts.html#cb33-8" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="scripts.html#cb33-9" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;datasets/FEF_trees.csv&quot;</span>)</span></code></pre></div>
+<p>We <strong>do not recommend</strong> using absolute paths in your code. Using absolute paths makes fragile code, meaning it can “break” easily. Absolute paths in a script need to be changed every time the script is moved to a different directory or if someone tries to run your script on their computer. Rather, use relative paths that read and write data relative to the working directory. As illustrated in the previous example, from the working directory, your path can follow a directory hierarchy down into subdirectories, e.g., <code>datasets</code>. If you want to go up directory levels from the working directory use two periods (<code>..</code>), which takes you up one level (referred to as the <em>parent directory</em>). Continuing with the example code above and working directory <code>setwd("/home/andy/projects/FD20-book/FD20-git")</code>, <code>read.csv(file = "../datasets/FEF_trees.csv")</code> would attempt to read <code>FEF_trees.csv</code> from <code>/home/andy/projects/FD20-book/datasets/FEF_trees.csv</code> and <code>read.csv(file = "../../datasets/FEF_trees.csv")</code> would attempt to read <code>FEF_trees.csv</code> from <code>/home/andy/projects/datasets/FEF_trees.csv</code>. Both attempts would result in an error because there is no directory called <code>datasets</code> in the <code>FD20-book</code> or <code>projects</code> directories.</p>
+<p>You will, at some point, try to read or write a file from a directory that doesn’t exist. When you do, R will provide a somewhat cryptic warning and error message. Following the example above, <code>datasets/FEF_trees.csv</code> does not exist in <code>FD20-git</code>’s parent directory, so the code below returns an error. When you see this error, there’s a very good chance the path you supplied to the read or write function is not correct.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="scripts.html#cb34-1" tabindex="-1"></a><span class="do">## File &quot;../datasets/FEF_trees.csv&quot; does not exist.</span></span>
+<span id="cb34-2"><a href="scripts.html#cb34-2" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;../datasets/FEF_trees.csv&quot;</span>)</span></code></pre></div>
+<pre><code>#&gt; Warning in file(file, &quot;rt&quot;): cannot open file
+#&gt; &#39;../datasets/FEF_trees.csv&#39;: No such file or directory</code></pre>
+<pre><code>#&gt; Error in file(file, &quot;rt&quot;): cannot open the connection</code></pre>
+<p>Setting and keeping track of a working directory might seem cumbersome. One way to make this a bit easier is to set the working directory at the top of your script using <code>setwd()</code>. While this is not a terrible idea (and one we often use), a potentially more eloquent approach is to use an RStudio project as we will see in Section <a href="scripts.html#projects">3.4</a>.</p>
+</div>
+<div id="readWrite" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> External data<a href="scripts.html#readWrite" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Data come in a dizzying variety of formats. Sometimes data are stored in proprietary formats used by commercial software such as Excel, SPSS, or SAS. Sometimes they are structured using a relational model, for example, the USDA Forest Service Forest Inventory and Analysis database <span class="citation">(<a href="#ref-FIADB">Burrill et al. 2018</a>)</span>. Sometimes we use a data-interchange format such as JSON (JavaScript Object Notation; <span class="citation">Pezoa et al. (<a href="#ref-JSON16">2016</a>)</span>), or a markup language format such as XML (Extensible Markup Language; <span class="citation">Bray et al. (<a href="#ref-XML2008">2008</a>)</span>) perhaps with specialized standards for describing ecological information such as EML (Ecological Metadata Language; <span class="citation">Jones et al. (<a href="#ref-EML2019">2019</a>)</span>). The good news is we’ve yet to encounter a data format unreadable by R. This is thanks to the large community of package developers and data formats specific to their respective disciplines. For example, the <code>foreign</code> <span class="citation">(<a href="#ref-foreign">R Core Team 2023</a>)</span> and <code>haven</code> <span class="citation">(<a href="#ref-haven">Wickham, Miller, and Smith 2023</a>)</span> packages provide functions for reading and writing data in common proprietary statistical software formats.</p>
+<p>We cover a few popular base R functions for reading and writing plain-text rectangular files, often refereed to as <em>flat files</em>. For most applications we consider, a flat file is organized in rows and columns, with rows corresponding to observational units (things we measure, e.g., trees) and columns corresponding to variables recorded for each unit.</p>
+<p>There are many functions in base R and user contributed packages that we do not cover (e.g., the <code>load()</code> and <code>save()</code> functions in base R for reading and writing R data files). Like everything else in this book, if the functions covered here don’t meet your needs then other options in R are only a Google search away.</p>
+<div id="importing-data" class="section level4 unnumbered hasAnchor">
+<h4>Importing data<a href="scripts.html#importing-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Fortunately many datasets are (or can be) saved as text files. Most software can read and write such files, so our initial focus is on reading and writing text files.</p>
+<p><code>read.table()</code> and its offshoots, such as <code>read.csv()</code>, are used to read 2-dimensional data (i.e., flat file) from a text file. For example, as described in Section <a href="overview.html#fef">1.2.1</a>, the <code>FEF_trees.csv</code> file holds biomass information for trees measured on FEF plots within different watersheds across years. Below are the first 7 rows and columns of the file’s 89 rows and 18 columns.</p>
+<pre><code>watershed,year,plot,species,dbh_in,height_ft,stem_green_kg
+3,1991,29,Acer rubrum,6,48,92.2
+3,1991,33,Acer rubrum,6.9,48,102.3
+3,1991,35,Acer rubrum,6.4,48,124.4
+3,1991,39,Acer rubrum,6.5,49,91.7
+3,1991,44,Acer rubrum,7.2,51,186.2
+3,1992,26,Acer rubrum,3.1,40,20.8</code></pre>
+<p>As is evident, the file’s first row contains column names separated (delimited) by commas. Subsequent rows contain comma delimited data on each tree’s location (watershed code), measurement year, plot number, species, DBH, height, and weight of tree components (e.g., <code>stem_green_kg</code> is the green weight of the stem in kilograms).</p>
+<p><code>read.table()</code>, called in the code below, reads the <code>FEF_trees.csv</code> file and returns a data frame which is assigned to <code>fef_trees</code>. A data frame is a 2-dimensional object that holds data in rows and columns and is formally introduced in Section <a href="structures.html#dataFrames">4.5</a>—for now picture a data frame as a spreadsheet or data table. We then use <code>nrow()</code> and <code>ncol()</code> to confirm R read in the correct number of data rows and columns.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> Lastly, we call <code>head()</code> to print the first six rows and columns, again to reassure ourselves the data were read correctly.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="scripts.html#cb38-1" tabindex="-1"></a>fef_trees <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&quot;datasets/FEF_trees.csv&quot;</span>,</span>
+<span id="cb38-2"><a href="scripts.html#cb38-2" tabindex="-1"></a>                        <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb38-3"><a href="scripts.html#cb38-3" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="scripts.html#cb38-4" tabindex="-1"></a><span class="co"># Confirm the correct number of rows and columns were read.</span></span>
+<span id="cb38-5"><a href="scripts.html#cb38-5" tabindex="-1"></a><span class="fu">nrow</span>(fef_trees)</span></code></pre></div>
+<pre><code>#&gt; [1] 88</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="scripts.html#cb40-1" tabindex="-1"></a><span class="fu">ncol</span>(fef_trees)</span></code></pre></div>
+<pre><code>#&gt; [1] 18</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="scripts.html#cb42-1" tabindex="-1"></a><span class="co"># A look at the first six rows and columns.</span></span>
+<span id="cb42-2"><a href="scripts.html#cb42-2" tabindex="-1"></a><span class="fu">head</span>(fef_trees, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">6</span>)) </span></code></pre></div>
+<pre><code>#&gt;   watershed year plot     species dbh_in height_ft
+#&gt; 1         3 1991   29 Acer rubrum    6.0        48
+#&gt; 2         3 1991   33 Acer rubrum    6.9        48
+#&gt; 3         3 1991   35 Acer rubrum    6.4        48
+#&gt; 4         3 1991   39 Acer rubrum    6.5        49
+#&gt; 5         3 1991   44 Acer rubrum    7.2        51
+#&gt; 6         3 1992   26 Acer rubrum    3.1        40</code></pre>
+<p>The <code>read.table()</code> arguments and associated values used above include:</p>
+<ul>
+<li><code>file</code> identifies the file location. In this case, the quoted path <code>datasets/FEF_trees.csv</code> is the relative path from the working directory to <code>FEF_trees.csv</code> (Section <a href="scripts.html#paths">3.3.1</a>).</li>
+<li><code>header = TRUE</code> specifies the file’s first row contains the column names, known as the “header.”</li>
+<li><code>sep = ","</code> defines the comma as the character delimiter between the file’s columns.</li>
+</ul>
+<p>The function <code>read.csv()</code> is the same as <code>read.table()</code> except the default delimiter is a comma, whereas the default delimiter for <code>read.table()</code> is whitespace.</p>
+<p>The file <code>FEF_trees.tsv</code> contains the same data, except columns are tab delimited. The <code>sep</code> argument’s value is the only change needed to read this file (and of course the <code>file</code> argument, because the data are stored in a different file).</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="scripts.html#cb44-1" tabindex="-1"></a>fef_trees <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&quot;datasets/FEF_trees.tsv&quot;</span>,</span>
+<span id="cb44-2"><a href="scripts.html#cb44-2" tabindex="-1"></a>                        <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb44-3"><a href="scripts.html#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="scripts.html#cb44-4" tabindex="-1"></a><span class="fu">head</span>(fef_trees, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">6</span>)) </span></code></pre></div>
+<pre><code>#&gt;   watershed year plot     species dbh_in height_ft
+#&gt; 1         3 1991   29 Acer rubrum    6.0        48
+#&gt; 2         3 1991   33 Acer rubrum    6.9        48
+#&gt; 3         3 1991   35 Acer rubrum    6.4        48
+#&gt; 4         3 1991   39 Acer rubrum    6.5        49
+#&gt; 5         3 1991   44 Acer rubrum    7.2        51
+#&gt; 6         3 1992   26 Acer rubrum    3.1        40</code></pre>
+<p>File extensions, e.g., <code>.csv</code> or <code>.tsv</code>, are naming conventions and serve only to remind us how the columns are delimited, i.e., they have no influence on read functions.</p>
+<p>A third file, <code>FEF_trees.txt</code>, contains the same data, but with explanatory text added to the first several rows. The file also uses the whitespace delimiter rather than a comma or tab. Here are the first several rows of the file and seven columns of data.</p>
+<pre><code>This file includes felled tree biomass by tree component for hardwood
+species sampled on the Fernow Experimental Forest (FEF), West Virginia.
+A total of 88 trees were sampled from plots within two watersheds.
+
+&quot;watershed&quot; &quot;year&quot; &quot;plot&quot; &quot;species&quot; &quot;dbh_in&quot; &quot;height_ft&quot; &quot;stem_green_kg&quot;
+3 1991 29 &quot;Acer rubrum&quot; 6 48 92.2
+3 1991 33 &quot;Acer rubrum&quot; 6.9 48 102.3
+3 1991 35 &quot;Acer rubrum&quot; 6.4 48 124.4
+3 1991 39 &quot;Acer rubrum&quot; 6.5 49 91.7
+3 1991 44 &quot;Acer rubrum&quot; 7.2 51 186.2
+3 1992 26 &quot;Acer rubrum&quot; 3.1 40 20.8</code></pre>
+<p>Notice in this file, column names and character column values are quoted. This is necessary because character strings could include whitespace and hence the read function would assume it’s a column delimiter, e.g., the space between <em>Acer</em> and <em>rubrum</em> would be mistaken for a delimiter if it were not quoted.</p>
+<p><code>read.table()</code> needs to skip the first four rows above the header and know that whitespace is the delimiter. The <code>skip</code> and <code>sep</code> arguments control these behaviors.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="scripts.html#cb47-1" tabindex="-1"></a>fef_trees <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&quot;datasets/FEF_trees.txt&quot;</span>,</span>
+<span id="cb47-2"><a href="scripts.html#cb47-2" tabindex="-1"></a>                        <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">skip =</span> <span class="dv">4</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb47-3"><a href="scripts.html#cb47-3" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="scripts.html#cb47-4" tabindex="-1"></a><span class="fu">head</span>(fef_trees, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">6</span>)) </span></code></pre></div>
+<pre><code>#&gt;   watershed year plot     species dbh_in height_ft
+#&gt; 1         3 1991   29 Acer rubrum    6.0        48
+#&gt; 2         3 1991   33 Acer rubrum    6.9        48
+#&gt; 3         3 1991   35 Acer rubrum    6.4        48
+#&gt; 4         3 1991   39 Acer rubrum    6.5        49
+#&gt; 5         3 1991   44 Acer rubrum    7.2        51
+#&gt; 6         3 1992   26 Acer rubrum    3.1        40</code></pre>
+<p>For fun, see what happens when the <code>skip</code> argument is left out of <code>read.table()</code> in the code above.</p>
+</div>
+<div id="importing-data-with-missing-observations" class="section level4 unnumbered hasAnchor">
+<h4>Importing data with missing observations<a href="scripts.html#importing-data-with-missing-observations" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Missing data are common in environmental data. Sometimes missing data are just that—missing—the place where an entry should be is blank. Other times we represent missing data with numbers, such as -9999, or symbols. <code>read.table()</code> has an argument <code>na.strings</code> used to specify how the file represents missing data. The file <code>FEF_trees_missing.csv</code> contains the same FEF data, except some measurements in the third row are missing. Here are the file’s first seven rows and columns.</p>
+<pre><code>watershed,year,plot,species,dbh_in,height_ft,stem_green_kg
+3,1991,29,Acer rubrum,6,48,92.2
+3,1991,33,Acer rubrum,6.9,48,102.3
+3,1991,35,Acer rubrum,,,
+3,1991,39,Acer rubrum,6.5,49,91.7
+3,1991,44,Acer rubrum,7.2,51,186.2
+3,1992,26,Acer rubrum,3.1,40,20.8</code></pre>
+<p>Notice in the third row of data, measurements for <code>dbh_in</code>, <code>height_ft</code>, and <code>stem_green_kg</code> are missing. Rather than being marked with an explicit symbol, e.g., <code>NA</code> which stands for not available or missing, the missing measurements were simply left blank. As shown in the code below, setting the <code>na.strings</code> argument equal to <code>""</code> tells the read function that no values represent the missing values. We again print a subset of the resulting data frame to make sure the missing values were replaced with <code>NA</code>.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="scripts.html#cb50-1" tabindex="-1"></a>fef_trees <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;datasets/FEF_trees_missing.csv&quot;</span>,</span>
+<span id="cb50-2"><a href="scripts.html#cb50-2" tabindex="-1"></a>                      <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb50-3"><a href="scripts.html#cb50-3" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="scripts.html#cb50-4" tabindex="-1"></a><span class="fu">head</span>(fef_trees, <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">6</span>)) </span></code></pre></div>
+<pre><code>#&gt;   watershed year plot     species dbh_in height_ft
+#&gt; 1         3 1991   29 Acer rubrum    6.0        48
+#&gt; 2         3 1991   33 Acer rubrum    6.9        48
+#&gt; 3         3 1991   35 Acer rubrum     NA        NA
+#&gt; 4         3 1991   39 Acer rubrum    6.5        49
+#&gt; 5         3 1991   44 Acer rubrum    7.2        51
+#&gt; 6         3 1992   26 Acer rubrum    3.1        40</code></pre>
+<p>Take a look at the <code>read.table()</code> manual page to gain a better sense of how flexible this and related functions are at reading file formats.</p>
+</div>
+<div id="importing-data-with-non-syntactic-column-names" class="section level4 unnumbered hasAnchor">
+<h4>Importing data with non-syntactic column names<a href="scripts.html#importing-data-with-non-syntactic-column-names" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>When read by <code>read.table()</code> and related read functions, file column names that are not syntactic (see Section <a href="scripts.html#syntacticNames">3.2.2</a>) are modified to make them syntactic (see <code>?make.names</code> for the rules used to modify names).</p>
+</div>
+<div id="exporting-data" class="section level4 unnumbered hasAnchor">
+<h4>Exporting data<a href="scripts.html#exporting-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Data files rarely come in an analysis-ready format. As further developed in Chapter <a href="tidyverse.html#tidyverse">6</a>, some level of <em>data cleaning</em> and <em>data wrangling</em> is typically needed prior to analysis. In addition to documenting such data preparation steps in a script, we often write the processed data to a file for further analysis, distribution, or archival on a data repository. <code>write.table()</code> writes data frames and data frame like objects to an external file.</p>
+<p>To illustrate <code>write.table()</code>, the code below creates a new csv file in our current working directory named <code>FEF_trees_new.csv</code> from the <code>fef_trees</code> data frame we previously created.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="scripts.html#cb52-1" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">x =</span> fef_trees, <span class="at">file =</span> <span class="st">&quot;FEF_trees_new.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, </span>
+<span id="cb52-2"><a href="scripts.html#cb52-2" tabindex="-1"></a>            <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Let’s walk through the <code>write.table()</code> function arguments and associated values used in the code above:</p>
+<ul>
+<li><code>x = fef_trees</code> is the object we’ll write to a file, in this case <code>fef_trees</code>.</li>
+<li><code>file = "FEF_trees_new.csv"</code> is the file path and name to store the data specified in argument <code>x</code>. This is a relative path, unless a root directory is included in the path. See Section <a href="scripts.html#paths">3.3.1</a> for more on relative and absolute paths.</li>
+<li><code>sep = ","</code> defines the comma as the character delimiter between the file’s columns.</li>
+<li><code>row.names = FALSE</code> indicates row names will not be included as the first column in the file. This argument is by default <code>row.names = TRUE</code>. We prefer not including the row names.</li>
+</ul>
+<p><code>write.csv()</code> is a version of <code>write.table()</code> to simplify writing comma delimited files.</p>
+</div>
+</div>
+<div id="illustration" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Illustration<a href="scripts.html#illustration" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s review some key ideas from Sections <a href="scripts.html#paths">3.3.1</a> and <a href="scripts.html#readWrite">3.3.2</a> using an example. Say Sarah is analyzing some emerald ash borer data. Figure <a href="scripts.html#fig:dirExample">3.4</a> illustrates her computer’s directory structure, which is running Microsoft Windows operating system. Her home directory <code>C:/Users/Sarah</code> contains three directories <code>Documents</code>, <code>Research</code>, and <code>Archive</code>. To stay organized, she created a dedicated directory called <code>EAB</code> within <code>Research</code> where she keeps the analysis script and data. You’ll also notice, keeping with good file naming practices, she uses an underscore delimiter naming rule for her files, see, e.g., Section <a href="scripts.html#fileNaming">3.2.1</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:dirExample"></span>
+<img src="figures/directory-example.png" alt="A directory structure used for illustration." width="100%" />
+<p class="caption">
+FIGURE 3.4: A directory structure used for illustration.
+</p>
+</div>
+<p>Code in the <code>EAB_analysis.R</code> script performs the analysis of data held in <code>EAB_data.csv</code>. We display the first two lines in this script below. The first line sets <code>EAB</code> as the working directory using its absolute path. Equivalently, she could have used <code>setwd(~/Research/EAB</code>) to set the working directory, because <code>~</code> is short for her home directory path <code>C:/Users/Sarah</code>. In fact, in most cases it’s much easier to use the tilde in place of writing out the path from the root directory to the user’s home directory. The next line of code reads the <code>EAB_data.csv</code> data file using the file’s relative path from the <code>EAB</code> working directory. If the working directory was not set or set to some directory other than <code>EAB</code>, then <code>read.csv(file = "Data/EAB_data.csv")</code> would fail.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="scripts.html#cb53-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/Sarah/Research/EAB&quot;</span>)</span>
+<span id="cb53-2"><a href="scripts.html#cb53-2" tabindex="-1"></a><span class="co"># Or, equivalently, setwd(&quot;~/Research/EAB&quot;)</span></span>
+<span id="cb53-3"><a href="scripts.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="scripts.html#cb53-4" tabindex="-1"></a>eab_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;Data/EAB_data.csv&quot;</span>)</span></code></pre></div>
+<p>Say later down in the script she needs to read <code>File_1.csv</code> from the <code>Archive/Data</code> directory. Given the <code>EAB</code> working directory, this file is read using the code below. Notice the use of <code>../..</code> to go up two directories to <code>Sarah</code> before going down into <code>Archive</code>.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="scripts.html#cb54-1" tabindex="-1"></a>data_1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;../../Archive/Data/file_1.csv&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="projects" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> RStudio projects and keeping organized<a href="scripts.html#projects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When working on a project, it’s generally best to keep associated files in an organized directory structure. Such a structure might comprise a main directory that contains subdirectories to hold data, scripts, metadata, and results, see, e.g., Section <a href="scripts.html#directories">3.4.1</a>. If organized in this way, the main directory would likely serve well as the working directory. Each time you start an R session to work on the project, you need to set the working directory using <code>setwd()</code> or one of the methods covered in Section <a href="introToR.html#workingDirectory">2.2</a>. To eliminate the repetitive task of setting the working directory for each session, RStudio offers the <em>projects</em> feature.</p>
+<p>We’ll illustrate this feature by making an RStudio project you might use for working through this book’s examples and exercises. In RStudio go to <code>File &gt; New Project</code> then select <code>New Directory &gt; New Project</code>. RStudio then asks for the directory name and its location. Let’s call the project IFDAR (the acronym for the book’s title) and choose a location that makes sense in your broader directory structure, then click <code>Create Project</code>. When these steps are complete, a new RStudio session will start and you should see the project name tab (<code>IFDAR</code>) in the top right corner of the RStudio window. Clicking on the project name provides a menu with options to switch between projects, create a project, and control projects’ default behavior.</p>
+<p>By placing the book’s <code>datasets</code> directory into your IFDAR project directory, code examples offered in the book should run without modifying the relative paths to the various illustrative datasets.<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p>
+<p>The primary benefit of an RStudio project is that we only need to specify the working directory once when setting up the project. In other words, whenever you open an RStudio project the working directory is automatically set. You can confirm this by looking at the top of the console window after creating the <code>IFDAR</code> project, where you should see the working directory’s absolute path. Each project is also associated with its own history, which can be useful if you ever forget to save some important code in a script. Working directory, history, and other project information is stored in a <code>.Rproj</code> file (e.g., <code>IFDAR.Rproj</code>), which can be opened from within RStudio <code>File &gt; Open Project</code> or used to open the project directly from your operating system’s file browser. By automatically setting the working directory, RStudio projects allow for better organization, fewer file relative path errors, and improved reproducibility.</p>
+<div id="directories" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Directory structure<a href="scripts.html#directories" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Whether you decide to use RStudio projects or not, establishing an organized directory structure around your working directory is key to efficiency and reproducibility. There is no single correct way to structure directories. As you learn R and become more familiar with data analysis, you’ll build a preference for subdirectory and file organization. To get you started, we’ll outline an organization scheme that promotes reproducible research best practices suggested by <span class="citation">Sandve et al. (<a href="#ref-sandve2013ten">2013</a>)</span> and <span class="citation">Wilson et al. (<a href="#ref-wilson2017good">2017</a>)</span>. This scheme is illustrated in Figure <a href="scripts.html#fig:dirSuggestion">3.5</a> for an example project that aims to model emerald ash borer distribution in Michigan.</p>
+<div class="figure"><span style="display:block;" id="fig:dirSuggestion"></span>
+<img src="figures/suggested-directory-structure.png" alt="One suggested way to organize a project's directories and files." width="100%" />
+<p class="caption">
+FIGURE 3.5: One suggested way to organize a project’s directories and files.
+</p>
+</div>
+<p>In the main project directory we suggest having two files and four subdirectories. The first is the RStudio project file, e.g., <code>EAB_MI_dist.Rproj</code>. The second is called a README file, typically a simple text file named <code>README.txt</code>, that provides a project description and subdirectory content list with a brief description of each file’s purpose. We recommend starting each project with a <code>README.txt</code> file and adding information to it as the project progresses<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>. A README file not only helps you keep track of file organization, but is crucial for effective collaboration, reproducibility, and archiving.</p>
+<p>The four subdirectories are called <code>data</code>, <code>results</code>, <code>doc</code>, and <code>src</code>. The <code>data</code> directory contains raw data and metadata used in the analysis. Depending on the data amount and structure, you might have multiple subdirectories within the <code>data</code> directory.</p>
+<p>In Figure <a href="scripts.html#fig:dirSuggestion">3.5</a>, the data directory holds two files used in the analysis, one containing EAB counts across Michigan (<code>EAB_MI_counts.csv</code>) and the other containing forest plot characteristics (<code>forest_plot_data.csv</code>). The <code>results</code> directory should contain any files generated during the analysis, which might include figures (Chapter <a href="ggplot2.html#ggplot2">9</a>), tables (Chapter <a href="reports.html#reports">14</a>, and archive-ready cleaned and tidy datasets (Chapter <a href="tidyr.html#tidyr">8</a>). For large projects, it’s often useful to have a separate subdirectory inside the <code>results</code> directory called <code>figures</code> where final figures are stored. The <code>doc</code> directory contains documents associated with the project. Depending on project objectives this can include files for manuscripts, notes, lectures, or professional reports (Chapter <a href="reports.html#reports">14</a>). The <code>doc</code> directory contains files used to write a manuscript in LaTeX (Section <a href="#markdownProcessing"><strong>??</strong></a>). Lastly, the <code>src</code> directory (short for “source code”) contains all code written for the project, e.g., <code>EAB_MI_data_prep.R</code> to prepare the data for analysis conducted in <code>EAB_MI_SDM.R</code>.</p>
+<p>While this suggested directory structure is quite specific, the important thing is that you follow a systematic and intuitive directory and file naming scheme that works best for you and allows others to reproduce your work with minimal effort.</p>
+</div>
+</div>
+<div id="summaryScripts" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Summary<a href="scripts.html#summaryScripts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In forestry, ecology, and the environmental sciences there’s a push for open science, reproducibility, and transparency <span class="citation">(<a href="#ref-ellison2010repeatability">Ellison 2010</a>)</span>, as evidenced by the increasing number of academic journals and government agencies requiring all data and code to be published along with final manuscripts and reports. Considering the scientific process more broadly, the goal of any scientific endeavor is to build upon previous knowledge. By using reproducible data analysis tools that make it easier for others (and your future self) to extend your work, you’re doing your part to advance forestry and environmental sciences.</p>
+<p>In this chapter we introduced essential rules and tools to establish an organized and reproducible data analysis workflow. Maintaining organization throughout all aspects of an analysis can improve efficiency, reduce avoidable errors, and make troubleshooting problems much easier. An organized workflow is also essential for reproducible work.</p>
+<p>Perhaps the easiest way to start documenting your workflow is to use scripts. Scripts are simply text files with a <code>.R</code> extension that hold code needed to reproduce steps in an analysis. The script window in RStudio allows you to write and run your code incrementally, save it, and easily return to it at some later point in time. Adding comments throughout your scripts is an efficient and convenient way to document your analysis and coding decisions. In Chapter <a href="reports.html#reports">14</a>, we’ll learn about R Markdown and Quarto, an alternative way to save and document code that’s ideal for collaboration and making visually-appealing reports.</p>
+<p>The scripts you write to reproduce examples and complete exercises in this book can form the codebase from which you borrow code snippets for future work. Key to building a valuable codebase is to follow best practices when formatting code, naming variables and files, and keeping work in organized directory structures.</p>
+<p>Maintaining an organized and intuitive directory structure, as well as using good coding practices and file naming conventions are often overlooked as a crucial part of data analysis and scientific research <span class="citation">(<a href="#ref-wilson2017good">Wilson et al. 2017</a>)</span>. Learning efficient coding, file organization, and data analysis techniques is analogous to learning proper field techniques for performing a timber inventory, regeneration survey, or any sort of ecological field work. Initially, it might seem tedious to pay attention to organizational and logistical details, but in the long run, using such techniques (or using efficient and accurate field techniques) leads to more reliable results and saves time and headaches.</p>
+<p>We also covered some file reading and writing basics. These routine tasks, dependent on file and directory structure, are part of nearly every data analysis. We read and write external files using either their absolute or relative path. The absolute path starts from the root directory. The relative path starts from the session’s working directory, which is set at the beginning of each new session. RStudio projects remove the need to set a working directory for each new session and also provide some organization and session history niceties. A key skill moving forward is the ability to navigate your computer’s directory structure relative to your chosen working directory or RStudio project.</p>
+<p>In Chapter <a href="structures.html#structures">4</a>, we will continue to introduce fundamental skills needed to work with data in R. With the basics of reproducible workflows established in this chapter, we will move our discussion to tools in R used to organize, represent, access, and manipulate data.</p>
+</div>
+<div id="exercisesWorkflow" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Exercises<a href="scripts.html#exercisesWorkflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="exercise">
+<p><span id="exr:workflow1" class="exercise"><strong>Exercise 3.1  </strong></span>Use Figure <a href="scripts.html#fig:dirExample">3.4</a> to answer the following questions.</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li><p>What is the root directory?</p></li>
+<li><p>What is the home directory?</p></li>
+<li><p>What is the absolute path to the working directory set using <code>setwd("~")</code>?</p></li>
+<li><p>What is the absolute path to <code>File_2.csv</code>?</p></li>
+<li><p>What is the relative path to <code>File_2.csv</code> if the working directory was set using <code>setwd("~/Research/EAB/Data")</code>?</p></li>
+<li><p>Say <code>setwd("~/Research/EAB")</code> was used to set the working directory. Then, within RStudio, a new script file named <code>EAB_spatial_analysis.R</code> was created using <code>File &gt; New File &gt; R Script</code>. Where is this new script file saved by default?</p></li>
+</ol>
+<div class="exercise">
+<p><span id="exr:workflow2" class="exercise"><strong>Exercise 3.2  </strong></span>Consider your own computer when answering the following questions.</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li><p>What operating system are you using, e.g., Microsoft Windows, macOS, Linux, Unix?</p></li>
+<li><p>What is your root directory?</p></li>
+<li><p>What is the absolute path to your home directory?</p></li>
+<li><p>Where will you keep work associated with this book?</p></li>
+</ol>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-XML2008" class="csl-entry">
+Bray, Tim, Jean Paoli, C. M. Sperberg-McQueen, Eve Maler, and François Yergeau. 2008. <span>“Extensible Markup Language (XML) 1.0 (Fifth Edition).”</span>
+</div>
+<div id="ref-FIADB" class="csl-entry">
+Burrill, Elizabeth A., Andrea M. Wilson, Jeffery A. Turner, Scott A. Pugh, James Menlove, Glenn Christiansen, Barbara L. Conkling, and Winnie David. 2018. <span>“The Forest Inventory and Analysis Database: Database Description and User Guide Version 8.0 for Phase 2.”</span> <em>U.S. Department of Agriculture, Forest Service. 946 p.</em> <a href="http://www.fia.fs.fed.us/library/database-documentation/">http://www.fia.fs.fed.us/library/database-documentation/</a>.
+</div>
+<div id="ref-ellison2010repeatability" class="csl-entry">
+Ellison, Aaron M. 2010. <span>“Repeatability and Transparency in Ecological Research.”</span> <em>Ecology</em> 91 (9): 2536–39.
+</div>
+<div id="ref-EML2019" class="csl-entry">
+Jones, Matthew, Margaret O’Brien, Bryce Mecum, Carl Boettiger, Mark Schildhauer, Mitchell Maier, Timothy Whiteaker, Stevan Earl, and Steven Chong. 2019. <span>“Ecological Metadata Language Version 2.2.0.”</span> <a href="https://doi.org/10.5063/f11834t2">https://doi.org/10.5063/f11834t2</a>.
+</div>
+<div id="ref-JSON16" class="csl-entry">
+Pezoa, Felipe, Juan L Reutter, Fernando Suarez, Martı́n Ugarte, and Domagoj Vrgoč. 2016. <span>“Foundations of JSON Schema.”</span> In <em>Proceedings of the 25th International Conference on World Wide Web</em>, 263–73. International World Wide Web Conferences Steering Committee.
+</div>
+<div id="ref-foreign" class="csl-entry">
+R Core Team. 2023. <em>Foreign: Read Data Stored by ’Minitab’, ’s’, ’SAS’, ’SPSS’, ’Stata’, ’Systat’, ’Weka’, ’dBase’, ...</em> <a href="https://CRAN.R-project.org/package=foreign">https://CRAN.R-project.org/package=foreign</a>.
+</div>
+<div id="ref-sandve2013ten" class="csl-entry">
+Sandve, Geir Kjetil, Anton Nekrutenko, James Taylor, and Eivind Hovig. 2013. <span>“Ten Simple Rules for Reproducible Computational Research.”</span> <em>PLoS Computational Biology</em> 9 (10): e1003285.
+</div>
+<div id="ref-haven" class="csl-entry">
+Wickham, Hadley, Evan Miller, and Danny Smith. 2023. <em>Haven: Import and Export ’SPSS’, ’Stata’ and ’SAS’ Files</em>. <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>.
+</div>
+<div id="ref-wilson2017good" class="csl-entry">
+Wilson, Greg, Jennifer Bryan, Karen Cranston, Justin Kitzes, Lex Nederbragt, and Tracy K Teal. 2017. <span>“Good Enough Practices in Scientific Computing.”</span> <em>PLoS Computational Biology</em> 13 (6): e1005510.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="11">
+<li id="fn11"><p>Try and figure out what the <code>na.rm</code> argument does in <code>range()</code>. Read about <code>range()</code> by typing <code>?range</code> in the console. Then, create a short vector with a mix of numeric and <code>NA</code> values and pass it to the <code>range()</code> function with <code>na.rm = TRUE</code> then with <code>na.rm = FALSE</code>. As recommended in Section <a href="overview.html#howToLearn">1.3</a>, it’s these explorations that build your skills.<a href="scripts.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>As an aside, by only looking at the plotted data and thinking about basic plant physiology, can you guess which color is associated with the elevated CO<span class="math inline">\(_2\)</span> treatment?<a href="scripts.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Alternatively, you can use a keyboard shortcut to run code and perform other tasks in RStudio. See <code>Help &gt; Keyboard Shortcuts Help</code>.<a href="scripts.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><a href="https://en.wikipedia.org/wiki/Camel_case" class="uri">https://en.wikipedia.org/wiki/Camel_case</a><a href="scripts.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>Search “Customizing RStudio” and “Using RStudio Themes” on the Posit website if you’re interested in creating custom themes and syntax highlighting.<a href="scripts.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>You could instead use <code>dim()</code>, i.e., <code>dim(fef_trees)</code>, which returns a vector of length two with the first and second elements corresponding to number of rows and columns, respectively.<a href="scripts.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>Available at the book’s website PROVIDE THE URL TO BE DETERMINED.<a href="scripts.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>The README file could also be a markdown (.md) or Quarto (.qmd) file. See Chapter <a href="reports.html#reports">14</a>.<a href="scripts.html#fnref18" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introToR.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="structures.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
