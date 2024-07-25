@@ -3,7 +3,7 @@
 title: Jeffrey W. Doser
 # Username (this should match the folder name)
 authors:
-- jeff
+- jeffrey-w.-doser
 # Is this the primary user of the site?
 superuser: true
 # Role/position
