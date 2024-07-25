@@ -1,6 +1,6 @@
 ---
 title: The Statistical Ecology and Forest Science Lab begins at NC State!  
-date: 2024-08-16
+date: 2024-07-25
 image:
   focal_point: 'top'
 ---
