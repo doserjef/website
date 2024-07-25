@@ -14,7 +14,7 @@ authors:
 date: "2024-05-09T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Ecology (2024) https://doi.org/10.1002/ecy.4283"
+publication: "Ecology https://doi.org/10.1002/ecy.4283"
 publication_short: ""
 publication_types:
 - "2"

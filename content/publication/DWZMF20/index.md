@@ -9,13 +9,9 @@ authors:
 date: "2021-02-20T00:00:00Z"
 doi: ""
 featured: false
-links:
-- name: arXiv
-  url: https://arxiv.org/pdf/2008.12184.pdf
-publication: "In Ecological Applications: https://doi.org/10.1002/eap.2377"
+publication: "Ecological Applications: https://doi.org/10.1002/eap.2377"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2021-02-20T00:00:00Z"
 slides: ''
 summary: ''
@@ -28,6 +24,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [macroscales]
 ---
 
 

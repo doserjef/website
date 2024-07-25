@@ -10,10 +10,9 @@ authors:
 date: "2023-10-25T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Journal of Animal Ecology (2023) https://doi.org/10.1111/1365-2656.14012"
+publication: "Journal of Animal Ecology https://doi.org/10.1111/1365-2656.14012"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2023-10-25T00:00:00Z"
 slides: ''
 summary: "We present an integrated community modeling framework to provide for a holistic evaluation of the effects of global change on biodiversity"
@@ -26,4 +25,5 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [macroscales]
 ---

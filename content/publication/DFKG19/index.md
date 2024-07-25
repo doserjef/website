@@ -15,10 +15,9 @@ featured: false
 links:
 - name: arXiv
   url: https://arxiv.org/abs/1911.03278
-publication: "In: Ecological Indicators (2020) https://doi.org/10.1016/j.ecolind.2020.106244"
+publication: "Ecological Indicators https://doi.org/10.1016/j.ecolind.2020.106244"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2020-03-04T00:00:00Z"
 slides: ''
 summary: A Bayesian approach to hypothesis testing to assess the influence of a shelterwood logging on northern Michigan soundscapes.
@@ -27,10 +26,10 @@ url_code: 'https://github.com/doserjef/DFKG19'
 url_dataset: 'https://www.remoteenvironmentalassessmentlaboratory.com/'
 url_pdf: 'https://jeffdoser.com/files/pubs/doser2020EI.pdf/'
 url_poster: ''
-url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [remoteSensing]
 ---
 
 

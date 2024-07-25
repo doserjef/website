@@ -8,10 +8,9 @@ authors:
 date: "2024-05-10T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Methods in Ecology and Evolution (2024) https://doi.org/10.1111/2041-210X.14332"
+publication: "Methods in Ecology and Evolution https://doi.org/10.1111/2041-210X.14332"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-05-10T00:00:00Z"
 slides: ''
 summary: "We present the spAbundance R package for fitting spatially-explicit abundance models"
@@ -24,6 +23,7 @@ url_project: 'https://cran.r-project.org/web/packages/spAbundance/index.html'
 url_slides: ''
 url_source: 'https://github.com/doserjef/spAbundance'
 url_video: ''
+projects: [software]
 ---
 
 

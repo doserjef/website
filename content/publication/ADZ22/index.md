@@ -11,10 +11,9 @@ authors:
 date: "2023-08-16T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Proceedings of the Royal Society B (2023) https://royalsocietypublishing.org/doi/full/10.1098/rspb.2023.0467"
+publication: "Proceedings of the Royal Society B  https://royalsocietypublishing.org/doi/full/10.1098/rspb.2023.0467"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2023-07-16T00:00:00Z"
 slides: ''
 summary: ""
@@ -27,6 +26,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [application]
 ---
 
 

@@ -14,10 +14,9 @@ authors:
 date: "2024-01-01T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Restoration Ecology (2024) https://onlinelibrary.wiley.com/doi/abs/10.1111/rec.13998"
+publication: "Restoration Ecology https://onlinelibrary.wiley.com/doi/abs/10.1111/rec.13998"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-01-01T00:00:00Z"
 slides: ''
 summary: ""
@@ -30,6 +29,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [application]
 ---
 
 

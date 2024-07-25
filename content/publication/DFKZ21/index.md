@@ -8,10 +8,9 @@ authors:
 date: "2022-03-25T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Methods in Ecology and Evolution (2022) https://doi.org/10.1111/2041-210X.13897"
+publication: "Methods in Ecology and Evolution https://doi.org/10.1111/2041-210X.13897"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2022-03-25T00:00:00Z"
 slides: ''
 summary: "We present the spOccupancy R package for fitting spatially-explicit occupancy models"
@@ -20,10 +19,10 @@ url_code: 'https://github.com/zipkinlab/Doser_etal_2022_MEE_A'
 url_dataset: 'https://github.com/zipkinlab/Doser_etal_2022_MEE_A'
 url_pdf: 'https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13897'
 url_poster: ''
-url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''
 url_source: 'https://github.com/doserjef/spOccupancy'
 url_video: 'https://www.youtube.com/watch?v=arYqlfs6lIQ'
+projects: [software]
 ---
 
 

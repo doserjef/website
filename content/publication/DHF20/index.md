@@ -10,10 +10,9 @@ featured: false
 links:
 - name: arXiv
   url: https://arxiv.org/abs/1905.01218
-publication: "In: Landscape Ecology (2020) https://doi.org/10.1007/s10980-020-00973-2"
+publication: "Landscape Ecology https://doi.org/10.1007/s10980-020-00973-2"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2017-05-03T00:00:00Z"
 slides: ''
 summary: We develop a modeling framework to characterize the functional relationship between anthropogenic  and biological sounds in western New York state.
@@ -26,6 +25,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [remoteSensing]
 ---
 
 

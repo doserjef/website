@@ -8,10 +8,9 @@ authors:
 date: "2024-01-24T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Ecology and Evolution (2024) https://doi.org/10.1002/ece3.10867"
+publication: "Ecology and Evolution https://doi.org/10.1002/ece3.10867"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-01-24T00:00:00Z"
 slides: ''
 summary: ""
@@ -24,6 +23,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [remoteSensing]
 ---
 
 

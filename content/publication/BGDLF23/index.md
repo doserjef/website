@@ -9,10 +9,9 @@ authors:
 date: "2024-02-01T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Scientific Reports (2024) https://doi.org/10.1038/s41598-024-52608-0"
+publication: "Scientific Reports https://doi.org/10.1038/s41598-024-52608-0"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-02-01T00:00:00Z"
 slides: ''
 summary: ""
@@ -21,10 +20,10 @@ url_code: ''
 url_dataset: ''
 url_pdf: 'https://www.nature.com/articles/s41598-024-52608-0.pdf'
 url_poster: ''
-url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [application]
 ---
 
 

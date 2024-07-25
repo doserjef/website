@@ -13,10 +13,9 @@ authors:
 date: "2024-02-21T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Global Ecology and Biogeography (2024): https://doi.org/10.1111/geb.13814"
+publication: "Global Ecology and Biogeography: https://doi.org/10.1111/geb.13814"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-02-21T00:00:00Z"
 slides: ''
 summary: ""
@@ -25,10 +24,10 @@ url_code: 'https://github.com/zipkinlab/Doser_etal_2024_GEB'
 url_dataset: 'https://github.com/zipkinlab/Doser_etal_2024_GEB'
 url_pdf: 'https://onlinelibrary.wiley.com/doi/epdf/10.1111/geb.13814'
 url_poster: ''
-url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''
 url_source: 'https://github.com/doserjef/spOccupancy'
 url_video: ''
+projects: [macroscales]
 ---
 
 

@@ -7,10 +7,9 @@ authors:
 date: "2023-07-16T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Ecology (2023) https://esajournals.onlinelibrary.wiley.com/doi/10.1002/ecy.4137"
+publication: "Ecology https://esajournals.onlinelibrary.wiley.com/doi/10.1002/ecy.4137"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2023-07-16T00:00:00Z"
 slides: ''
 summary: ""
@@ -19,10 +18,10 @@ url_code: 'https://github.com/doserjef/Doser_et_al_2023_Ecology'
 url_dataset: 'https://github.com/doserjef/Doser_et_al_2023_Ecology'
 url_pdf: 'https://esajournals.onlinelibrary.wiley.com/doi/epdf/10.1002/ecy.4137'
 url_poster: ''
-url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''
 url_source: 'https://github.com/doserjef/spOccupancy'
 url_video: ''
+projects: [macroscales]
 ---
 
 

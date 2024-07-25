@@ -7,25 +7,22 @@ authors:
 date: "2020-03-10T00:00:00Z"
 doi: ""
 featured: false
-links:
-- name: arXiv
-  url: https://arxiv.org/abs/1911.11002
-publication: "In: Environmental Modelling & Software (2020) https://doi.org/10.1016/j.envsoft.2020.104668"
+publication: "Environmental Modelling & Software https://doi.org/10.1016/j.envsoft.2020.104668"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article journal"]
 publishDate: "2020-03-07T00:00:00Z"
 slides: ''
 summary: ''
 title: "ForestFit: An R package for modeling plant size distributions"
-url_code: ''
+url_code: https://cran.r-project.org/web/packages/ForestFit/index.html
 url_dataset: ''
 url_pdf: https://jeffdoser.com/files/pubs/teimouri2020EMS.pdf
 url_poster: ''
-url_project: https://cran.r-project.org/web/packages/ForestFit/index.html
+url_project: 
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [software]
 ---
 
 

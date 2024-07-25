@@ -6,10 +6,9 @@ authors:
 date: "2024-01-05T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Global Change Biology (2024) https://doi.org/10.1111/gcb.17123"
+publication: "Global Change Biology https://doi.org/10.1111/gcb.17123"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-01-05T00:00:00Z"
 slides: ''
 summary: ""
@@ -22,6 +21,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [macroscales]
 ---
 
 

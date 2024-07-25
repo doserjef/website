@@ -9,10 +9,9 @@ authors:
 date: "2022-02-12T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Methods in Ecology and Evolution (2022) https://doi.org/10.1111/2041-210X.13811"
+publication: "Methods in Ecology and Evolution https://doi.org/10.1111/2041-210X.13811"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2022-02-12T00:00:00Z"
 slides: ''
 summary: "We present an integrated community occupancy model that units principles of data integration and hierarchical community modeling."
@@ -25,6 +24,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [macroscales]
 ---
 
 

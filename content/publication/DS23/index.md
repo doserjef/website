@@ -7,10 +7,9 @@ authors:
 date: "2024-02-01T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Methods in Ecology and Evolution (2024) https://doi.org/10.1111/2041-210X.14275"
+publication: "Methods in Ecology and Evolution https://doi.org/10.1111/2041-210X.14275"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-02-01T00:00:00Z"
 slides: ''
 summary: ""
@@ -23,6 +22,7 @@ url_project: ''
 url_slides: ''
 url_source: ''
 url_video: ''
+projects: [macroscales]
 ---
 
 

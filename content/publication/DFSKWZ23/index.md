@@ -10,10 +10,9 @@ authors:
 date: "2024-01-18T00:00:00Z"
 doi: ""
 featured: false
-publication: "In: Journal of Agricultural, Biological, and Environmental Statistics (2024) https://doi.org/10.1007/s13253-023-00595-6"
+publication: "Journal of Agricultural, Biological, and Environmental Statistics (2024) https://doi.org/10.1007/s13253-023-00595-6"
 publication_short: ""
-publication_types:
-- "2"
+publication_types: ["article-journal"]
 publishDate: "2024-01-18T00:00:00Z"
 slides: ''
 summary: ""
@@ -22,10 +21,10 @@ url_code: 'https://github.com/zipkinlab/Doser_et_al_2024_JABES'
 url_dataset: 'https://github.com/zipkinlab/Doser_et_al_2024_JABES'
 url_pdf: 'https://jeffdoser.com/files/pubs/doser2024JABES.pdf'
 url_poster: ''
-url_project: 'https://cran.r-project.org/web/packages/spOccupancy/index.html'
 url_slides: ''
 url_source: 'https://github.com/doserjef/spOccupancy'
 url_video: ''
+projects: [macroscales]
 ---
 
 
