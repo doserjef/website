@@ -10,7 +10,7 @@ sections:
       title: Opportunities
       text: |-
         The Statistical Ecology and Forest Science Lab will soon be recruiting a graduate student (start date Fall 2025) and postdoc (start date flexible, no later than July 1, 2025) to join the lab. Keep an eye on this page for more details in the coming weeks!
-      email: doserjef@msu.edu
+      email: jwdoser@ncsu.edu
       phone: (585) 683-4170
       # address:
       #   street: 450 Serra Mall
