@@ -21,7 +21,7 @@ interests:
 - Bayesian Modeling and Software 
 - Spatial Statistics 
 # Email 
-email: doserjef@msu.edu
+email: jwdoser@ncsu.edu 
 # Education
 education:
   courses:
@@ -38,7 +38,7 @@ education:
 social:
 - icon: envelope
   icon_pack: fas
-  link: 'https://www.jeffdoser.com/files/contact/'
+  link: 'https://www.doserlab.com/contact/'
 - icon: github
   icon_pack: fab
   link: https://github.com/doserjef
@@ -47,10 +47,10 @@ social:
   link: https://scholar.google.com/citations?user=VSKVc84AAAAJ&hl=en&oi=ao
 - icon: twitter
   icon_pack: fab
-  link: https://twitter.com/jeffdoser18
+  link: https://twitter.com/doserlab18
 - icon: cv 
   icon_pack: ai 
-  link: https://www.jeffdoser.com/files/Doser_CV.pdf
+  link: https://www.doserlab.com/files/Doser_CV.pdf
   
 user_groups:
 - Principal Investigator
