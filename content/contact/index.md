@@ -39,7 +39,7 @@ sections:
 
         **Application Instructions**
         
-        To apply, please send an email with subject "Gradute student position Fall 2025" that includes a CV and 1 page cover letter to Jeff Doser (jwdoser@ncsu.edu). The cover letter should briefly describe who you are, describe your research interests, and why you want to pursue a degree in the Statistical Ecology and Forest Science Lab. Review of applications will begin September 16, 2024.
+        To apply, please send an email with subject "Gradute student position Fall 2025" that includes a CV and 1 page cover letter to Jeff Doser (jwdoser@ncsu.edu). The cover letter should briefly describe who you are, describe your research interests, and why you want to pursue a degree in the Statistical Ecology and Forest Science Lab. Review of applications will begin September 30, 2024.
 
 
   - block: contact
