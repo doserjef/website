@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spAbundance</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spAbundance/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spAbundance/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -54,10 +54,10 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lfMsNMix</span><span class="op">(</span><span class="va">abund.formula</span>, <span class="va">det.formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>,  </span>
-<span>         <span class="va">tuning</span>, <span class="va">n.factors</span>, <span class="va">n.batch</span>, <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span>
-<span>         family <span class="op">=</span> <span class="st">'Poisson'</span>, n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
-<span>         n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.samples</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lfMsNMix</span><span class="op">(</span><span class="va">abund.formula</span>, <span class="va">det.formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>,</span>
+<span>         <span class="va">tuning</span>, <span class="va">n.factors</span>, <span class="va">n.batch</span>, <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>,</span>
+<span>         family <span class="op">=</span> <span class="st">'Poisson'</span>, n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>         n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>         n.chains <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -80,20 +80,20 @@
 <dt>data</dt>
 <dd><p>a list containing data necessary for model fitting.
   Valid tags are <code>y</code>, <code>abund.covs</code>, <code>det.covs</code>, <code>coords</code>, and <code>offset</code>. <code>y</code>
-  is a three-dimensional array of observed count data with first dimension equal to the number 
-  of species, second dimension equal to the number of sites, and third 
-  dimension equal to the maximum number of replicates at a given site. 
-  <code>abund.covs</code> is a matrix or data frame containing the variables 
-  used in the abundance portion of the model, with \(J\) rows for 
-  each column (variable). <code>det.covs</code> is a list of variables included 
-  in the detection portion of the model. Each list element is a different 
-  detection covariate, which can be site-level or observational-level. 
-  Site-level covariates are specified as a vector of length \(J\) while 
-  observation-level covariates are specified as a matrix or data frame 
-  with the number of rows equal to \(J\) and number of columns equal 
+  is a three-dimensional array of observed count data with first dimension equal to the number
+  of species, second dimension equal to the number of sites, and third
+  dimension equal to the maximum number of replicates at a given site.
+  <code>abund.covs</code> is a matrix or data frame containing the variables
+  used in the abundance portion of the model, with \(J\) rows for
+  each column (variable). <code>det.covs</code> is a list of variables included
+  in the detection portion of the model. Each list element is a different
+  detection covariate, which can be site-level or observational-level.
+  Site-level covariates are specified as a vector of length \(J\) while
+  observation-level covariates are specified as a matrix or data frame
+  with the number of rows equal to \(J\) and number of columns equal
   to the maximum number of replicates at a given site. <code>coords</code> is a matrix
-  or data frame with two columns that contain the spatial coordinates of each 
-  site. Note that <code>spAbundance</code> assumes coordinates are specified 
+  or data frame with two columns that contain the spatial coordinates of each
+  site. Note that <code>spAbundance</code> assumes coordinates are specified
   in a projected coordinate system. <code>offset</code>
   is an offset to use in the abundance model (e.g., an area offset). This can be either a single
   value or a vector with an offset for each site (e.g., if survey area differed in size).</p></dd>
@@ -101,63 +101,63 @@
 
 <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
-  Valid tags are <code>alpha.comm</code>, <code>beta.comm</code>, <code>beta</code>, 
-  <code>alpha</code>, <code>tau.sq.beta</code>, <code>tau.sq.alpha</code>, <code>sigma.sq.mu</code>, 
-  <code>sigma.sq.p</code>, <code>lambda</code>, <code>w</code>, 
-  <code>kappa</code>, and <code>N</code>. <code>sigma.sq.mu</code> and 
-  <code>sigma.sq.p</code> are only relevant when including random effects in the 
+  Valid tags are <code>alpha.comm</code>, <code>beta.comm</code>, <code>beta</code>,
+  <code>alpha</code>, <code>tau.sq.beta</code>, <code>tau.sq.alpha</code>, <code>sigma.sq.mu</code>,
+  <code>sigma.sq.p</code>, <code>lambda</code>, <code>w</code>,
+  <code>kappa</code>, and <code>N</code>. <code>sigma.sq.mu</code> and
+  <code>sigma.sq.p</code> are only relevant when including random effects in the
   abundance and detection portion of the model, respectively. <code>kappa</code> is
   only relevant when <code>family = 'NB'</code>.
-  The value portion of each tag is the parameter's initial value. See 
+  The value portion of each tag is the parameter's initial value. See
   <code>priors</code> description for definition of each parameter name.
-  Additionally, the tag <code>fix</code> can be set to <code>TRUE</code> 
+  Additionally, the tag <code>fix</code> can be set to <code>TRUE</code>
   to fix the starting values across all chains. If <code>fix</code> is not specified
   (the default), starting values are varied randomly across chains.</p></dd>
 
 
 <dt>priors</dt>
-<dd><p>a list with each tag corresponding to a parameter name. 
-  Valid tags are <code>beta.comm.normal</code>, <code>alpha.comm.normal</code>, 
-  <code>tau.sq.beta.ig</code>, <code>tau.sq.alpha.ig</code>, <code>sigma.sq.mu.ig</code>, 
-  <code>sigma.sq.p.ig</code>, and <code>kappa.unif</code>. Community-level abundance 
-  (<code>beta.comm</code>) and detection (<code>alpha.comm</code>) regression coefficients 
-  are assumed to follow a normal distribution. The hyperparameters of the 
+<dd><p>a list with each tag corresponding to a parameter name.
+  Valid tags are <code>beta.comm.normal</code>, <code>alpha.comm.normal</code>,
+  <code>tau.sq.beta.ig</code>, <code>tau.sq.alpha.ig</code>, <code>sigma.sq.mu.ig</code>,
+  <code>sigma.sq.p.ig</code>, and <code>kappa.unif</code>. Community-level abundance
+  (<code>beta.comm</code>) and detection (<code>alpha.comm</code>) regression coefficients
+  are assumed to follow a normal distribution. The hyperparameters of the
   normal distribution are passed as a list of length two with the first
   and second elements corresponding to the mean and variance of the normal
-  distribution, which are each specified as vectors of 
+  distribution, which are each specified as vectors of
   length equal to the number of coefficients to be estimated or of length one
   if priors are the same for all coefficients. If not
   specified, prior means are set to 0 and prior variances for the abundance
-  coefficients are set to 100 and for the detection coefficients are set to 2.72. 
+  coefficients are set to 100 and for the detection coefficients are set to 2.72.
   Community-level variance parameters for abundance (<code>tau.sq.beta</code>) and
-  detection (<code>tau.sq.alpha</code>) are assumed to follow an inverse Gamma 
-  distribution. The hyperparameters of the inverse gamma distribution are 
-  passed as a list of length two with the first and second elements 
+  detection (<code>tau.sq.alpha</code>) are assumed to follow an inverse Gamma
+  distribution. The hyperparameters of the inverse gamma distribution are
+  passed as a list of length two with the first and second elements
   corresponding to the shape and scale parameters, which are each specified
-  as vectors of length equal to the number of coefficients to be estimated 
-  or a single value if all parameters are assigned the same prior. 
-  If not specified, prior shape and scale parameters are set to 0.1. <code>sigma.sq.mu</code> and 
-  <code>sigma.sq.p</code> are the random effect variances for any abundance or 
+  as vectors of length equal to the number of coefficients to be estimated
+  or a single value if all parameters are assigned the same prior.
+  If not specified, prior shape and scale parameters are set to 0.1. <code>sigma.sq.mu</code> and
+  <code>sigma.sq.p</code> are the random effect variances for any abundance or
   detection random effects, respectively, and are assumed to follow an inverse
   Gamma distribution. The hyperparameters of the inverse-Gamma distribution
   are passed as a list of length two with first and second elements corresponding
   to the shape and scale parameters, respectively, which are each specified as
-  vectors of length equal to the number of random effects or of length one 
-  if priors are the same for all random effect variances. <code>kappa</code> is the 
-  negative binomial dispersion parameter for each species and is assumed to 
+  vectors of length equal to the number of random effects or of length one
+  if priors are the same for all random effect variances. <code>kappa</code> is the
+  negative binomial dispersion parameter for each species and is assumed to
   follow a uniform distribution. The hyperparameters of the uniform distribution
   are passed as a list of length two with first and second elements corresponding to the
-  lower and upper bounds of the uniform distribution, respectively, which are each 
+  lower and upper bounds of the uniform distribution, respectively, which are each
   specified as vectors of length equal to the number of species or of length one
   if priors are the same for all species-specific dispersion parameters.</p></dd>
 
 
 <dt>tuning</dt>
-<dd><p>a list with each tag corresponding to a parameter name, 
-  whose value defines the initial variance of the adaptive sampler. 
-  Valid tags are <code>beta</code>, <code>alpha</code>, <code>beta.star</code> (the abundance 
-  random effect values), <code>alpha.star</code> (the detection random effect values), 
-  <code>lambda</code> (the latent factor loadings), <code>w</code> (the latent factors), and 
+<dd><p>a list with each tag corresponding to a parameter name,
+  whose value defines the initial variance of the adaptive sampler.
+  Valid tags are <code>beta</code>, <code>alpha</code>, <code>beta.star</code> (the abundance
+  random effect values), <code>alpha.star</code> (the detection random effect values),
+  <code>lambda</code> (the latent factor loadings), <code>w</code> (the latent factors), and
   <code>kappa</code>. See Roberts and Rosenthal (2009) for details.</p></dd>
 
 
@@ -185,22 +185,22 @@
 
 
 <dt>family</dt>
-<dd><p>the distribution to use for the latent abundance process. Currently 
+<dd><p>the distribution to use for the latent abundance process. Currently
   supports <code>'NB'</code> (negative binomial) and <code>'Poisson'</code>.</p></dd>
 
 
 <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating the number of threads
-  to use for SMP parallel processing. The package must be compiled for 
-  OpenMP support. For most Intel-based machines, we recommend setting 
-  <code>n.omp.threads</code> up to the number of hypterthreaded cores. Note, 
-  <code>n.omp.threads</code> &gt; 1 might not work on some systems. Currently only 
+  to use for SMP parallel processing. The package must be compiled for
+  OpenMP support. For most Intel-based machines, we recommend setting
+  <code>n.omp.threads</code> up to the number of hypterthreaded cores. Note,
+  <code>n.omp.threads</code> &gt; 1 might not work on some systems. Currently only
   relevant for spatial models.</p></dd>
 
 
 <dt>verbose</dt>
-<dd><p>if <code>TRUE</code>, messages about data preparation, 
-  model specification, and progress of the sampler are printed to the screen. 
+<dd><p>if <code>TRUE</code>, messages about data preparation,
+  model specification, and progress of the sampler are printed to the screen.
   Otherwise, no messages are printed.</p></dd>
 
 
@@ -209,13 +209,13 @@
 
 
 <dt>n.burn</dt>
-<dd><p>the number of samples out of the total <code>n.samples</code> to 
+<dd><p>the number of samples out of the total <code>n.samples</code> to
   discard as burn-in for each chain. By default, the first 10% of samples is discarded.</p></dd>
 
 
 <dt>n.thin</dt>
 <dd><p>the thinning interval for collection of MCMC samples. The
-  thinning occurs after the <code>n.burn</code> samples are discarded. Default 
+  thinning occurs after the <code>n.burn</code> samples are discarded. Default
   value is set to 1.</p></dd>
 
 
@@ -236,9 +236,9 @@
 .</p>
 <p>Royle, J. A. (2004). N‐mixture models for estimating population size
   from spatially replicated counts. Biometrics, 60(1), 108-115.</p>
-<p>Yamaura, Y., Royle, J. A., Shimada, N., Asanuma, S., Sato, T., 
-  Taki, H., &amp; Makino, S. I. (2012). Biodiversity of man-made open habitats 
-  in an underused country: a class of multispecies abundance models for 
+<p>Yamaura, Y., Royle, J. A., Shimada, N., Asanuma, S., Sato, T.,
+  Taki, H., &amp; Makino, S. I. (2012). Biodiversity of man-made open habitats
+  in an underused country: a class of multispecies abundance models for
   count data. Biodiversity and Conservation, 21(6), 1365-1380.</p>
     </div>
     <div class="section level2">
@@ -254,7 +254,7 @@
 <dd><p>a <code>coda</code> object of posterior samples
     for the community level abundance regression coefficients.</p></dd>
 
-  
+
   <dt>alpha.comm.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
     for the community level detection regression coefficients.</p></dd>
@@ -286,7 +286,7 @@
 
 
   <dt>w.samples</dt>
-<dd><p>a three-dimensional array of posterior samples for 
+<dd><p>a three-dimensional array of posterior samples for
     the latent effects for each latent factor.</p></dd>
 
 
@@ -309,26 +309,26 @@
   <dt>sigma.sq.mu.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
     for variances of random effects included in the abundance portion
-    of the model. Only included if random effects are specified in 
+    of the model. Only included if random effects are specified in
     <code>abund.formula</code>.</p></dd>
 
 
   <dt>sigma.sq.p.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
-    for variances of random effects included in the detection portion 
-    of the model. Only included if random effects are specified in 
+    for variances of random effects included in the detection portion
+    of the model. Only included if random effects are specified in
     <code>det.formula</code>.</p></dd>
 
 
   <dt>beta.star.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
-    for the abundance random effects. Only included if random effects 
+    for the abundance random effects. Only included if random effects
     are specified in <code>abund.formula</code>.</p></dd>
 
 
   <dt>alpha.star.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
-    for the detection random effects. Only included if random effects 
+    for the detection random effects. Only included if random effects
     are specified in <code>det.formula</code>.</p></dd>
 
 
@@ -345,7 +345,7 @@
 <dd><p>MCMC sampler execution time reported using <code><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time()</a></code>.</p></dd>
 
 
-</dl><p>The return object will include additional objects used for 
+</dl><p>The return object will include additional objects used for
   subsequent prediction and/or model fit evaluation. Note that detection probability
   estimated values are not included in the model object, but can be extracted
   using <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code>.</p>
@@ -360,7 +360,7 @@
 <span class="r-in"><span><span class="va">n.rep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">5</span>, size <span class="op">=</span> <span class="va">J</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">n.sp</span> <span class="op">&lt;-</span> <span class="fl">6</span></span></span>
 <span class="r-in"><span><span class="co"># Community-level covariate effects</span></span></span>
-<span class="r-in"><span><span class="co"># Abundance </span></span></span>
+<span class="r-in"><span><span class="co"># Abundance</span></span></span>
 <span class="r-in"><span><span class="va">beta.mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p.abund</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">beta.mean</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tau.sq.beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">1.2</span><span class="op">)</span></span></span>
@@ -383,7 +383,7 @@
 <span class="r-in"><span><span class="va">n.factors</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simMsNMix.html">simMsNMix</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, alpha <span class="op">=</span> <span class="va">alpha</span>,</span></span>
-<span class="r-in"><span>                 mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="cn">FALSE</span>, family <span class="op">=</span> <span class="st">'Poisson'</span>, </span></span>
+<span class="r-in"><span>                 mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, p.RE <span class="op">=</span> <span class="va">p.RE</span>, sp <span class="op">=</span> <span class="cn">FALSE</span>, family <span class="op">=</span> <span class="st">'Poisson'</span>,</span></span>
 <span class="r-in"><span>                 factor.model <span class="op">=</span> <span class="cn">TRUE</span>, n.factors <span class="op">=</span> <span class="va">n.factors</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span></span>
@@ -400,9 +400,9 @@
 <span class="r-in"><span>                 det.cov.2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">X.p</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>,</span></span>
 <span class="r-in"><span>                  abund.covs <span class="op">=</span> <span class="va">abund.covs</span>,</span></span>
-<span class="r-in"><span>                  det.covs <span class="op">=</span> <span class="va">det.covs</span>, </span></span>
+<span class="r-in"><span>                  det.covs <span class="op">=</span> <span class="va">det.covs</span>,</span></span>
 <span class="r-in"><span>                  coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p.abund</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p.abund</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                           var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">100</span>, <span class="va">p.abund</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   alpha.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p.det</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                            var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2.72</span>, <span class="va">p.det</span><span class="op">)</span><span class="op">)</span>,</span></span>
@@ -416,7 +416,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">4</span></span></span>
 <span class="r-in"><span><span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span></span></span>
-<span class="r-in"><span><span class="va">n.burn</span> <span class="op">&lt;-</span> <span class="fl">0</span> </span></span>
+<span class="r-in"><span><span class="va">n.burn</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></span>
 <span class="r-in"><span><span class="va">n.thin</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
@@ -523,7 +523,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0022</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
@@ -556,7 +556,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
+  <p></p><p>Developed by <a href="https://www.doserlab.com/" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

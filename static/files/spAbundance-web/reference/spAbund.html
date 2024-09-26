@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spAbundance</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spAbundance/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spAbundance/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -55,11 +55,11 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spAbund</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>, <span class="va">tuning</span>,</span>
-<span>        cov.model <span class="op">=</span> <span class="st">'exponential'</span>, NNGP <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>        cov.model <span class="op">=</span> <span class="st">'exponential'</span>, NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        n.neighbors <span class="op">=</span> <span class="fl">15</span>, search.type <span class="op">=</span> <span class="st">'cb'</span>,</span>
 <span>        <span class="va">n.batch</span>, <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>, family <span class="op">=</span> <span class="st">'Poisson'</span>,</span>
-<span>        n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
-<span>        n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>        n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>        n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>        n.chains <span class="op">=</span> <span class="fl">1</span>, save.fitted <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,83 +71,83 @@
     right-hand side of formula is specified. See example below. Random intercepts
     and slopes are allowed using lme4 syntax (Bates et al. 2015).</p></dd>
 
-  
+
   <dt>data</dt>
 <dd><p>a list containing data necessary for model fitting.
     Valid tags are <code>y</code>, <code>covs</code>, <code>z</code>, <code>coords</code>, and <code>offset</code>. <code>y</code>
-    is a vector, matrix, or data frame of the observed count values. If a vector, 
+    is a vector, matrix, or data frame of the observed count values. If a vector,
     the values represent the observed counts at each site. If multiple replicate
     observations are obtained at the sites (e.g., sub-samples, repeated sampling over
-    multiple seasons), <code>y</code> can be specified as a matrix or data frame 
-    with first dimension equal to the number of 
-    sites (\(J\)) and second dimension equal to the maximum number of 
-    replicates at a given site. <code>covs</code> is either a data frame or list 
-    containing the variables used in the model. When only fitting a model with site-level 
-    data, <code>covs</code> can be specified as a data frame, with each row corresponding to 
+    multiple seasons), <code>y</code> can be specified as a matrix or data frame
+    with first dimension equal to the number of
+    sites (\(J\)) and second dimension equal to the maximum number of
+    replicates at a given site. <code>covs</code> is either a data frame or list
+    containing the variables used in the model. When only fitting a model with site-level
+    data, <code>covs</code> can be specified as a data frame, with each row corresponding to
     site and each column corresponding to a variable. When multiple abundance values
     are available at a site, <code>covs</code> is specified as a list, where each list element is a different
     covariate, which can be site-level or observation-level. Site-level covariates
     are specified as a vector of length \(J\), while observation-level covariates
     are specified as a matrix or data frame with the number of rows equal to \(J\)
-    and number of columns equal to the maximum number of replicate observations at a 
-    given site. <code>coords</code> is a \(J \times 2\) matrix of the observation coordinates. 
-    Note that <code>spAbundance</code> assumes coordinates are specified 
+    and number of columns equal to the maximum number of replicate observations at a
+    given site. <code>coords</code> is a \(J \times 2\) matrix of the observation coordinates.
+    Note that <code>spAbundance</code> assumes coordinates are specified
     in a projected coordinate system. For zero-inflated Gaussian models, the tag <code>z</code> is
     used to specify the binary component of the zero-inflated model and should have the same
-    length as <code>y</code>. <code>offset</code> is an offset to use in the abundance model (e.g., an area offset). 
+    length as <code>y</code>. <code>offset</code> is an offset to use in the abundance model (e.g., an area offset).
   This can be either a single value, a vector with an offset for each site (e.g., if survey area differed in size), or a site x replicate matrix if more than one count is available at a given site.</p></dd>
 
-  
+
   <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
-    Valid tags are <code>beta</code>, <code>sigma.sq</code>, 
-    <code>phi</code>, <code>w</code>, <code>nu</code>, <code>kappa</code>, <code>sigma.sq.mu</code>, <code>tau.sq</code>. 
+    Valid tags are <code>beta</code>, <code>sigma.sq</code>,
+    <code>phi</code>, <code>w</code>, <code>nu</code>, <code>kappa</code>, <code>sigma.sq.mu</code>, <code>tau.sq</code>.
     <code>nu</code> is only specified if <code>cov.model = "matern"</code>, <code>sigma.sq.mu</code>
     is only specified if there are random effects in <code>formula</code>, and
-    <code>kappa</code> is only specified when <code>family = 'NB'</code>. 
+    <code>kappa</code> is only specified when <code>family = 'NB'</code>.
     <code>tau.sq</code> is only specified when <code>family = 'Gaussian'</code> or <code>family = 'zi-Gaussian'</code>.
     The value portion of each tag is the parameter's initial value. See <code>priors</code>
     description for definition of each parameter name.
-    Additionally, the tag <code>fix</code> can be set to <code>TRUE</code> 
+    Additionally, the tag <code>fix</code> can be set to <code>TRUE</code>
     to fix the starting values across all chains. If <code>fix</code> is not specified
     (the default), starting values are varied randomly across chains.</p></dd>
 
-  
+
   <dt>priors</dt>
-<dd><p>a list with each tag corresponding to a parameter name. 
-    Valid tags are <code>beta.normal</code>, <code>phi.unif</code>, 
+<dd><p>a list with each tag corresponding to a parameter name.
+    Valid tags are <code>beta.normal</code>, <code>phi.unif</code>,
     <code>sigma.sq.ig</code>, <code>nu.unif</code>, <code>kappa.unif</code>,
-    <code>sigma.sq.mu.ig</code>, <code>tau.sq.ig</code>. Abundance (<code>beta</code>) regression coefficients 
-    are assumed to follow a normal distribution. The hyperparameters of the 
+    <code>sigma.sq.mu.ig</code>, <code>tau.sq.ig</code>. Abundance (<code>beta</code>) regression coefficients
+    are assumed to follow a normal distribution. The hyperparameters of the
     normal distribution are passed as a list of length two with the first
     and second elements corresponding to the mean and variance of the normal
-    distribution, which are each specified as vectors of 
+    distribution, which are each specified as vectors of
     length equal to the number of coefficients to be estimated or of length
     one if priors are the same for all coefficients. If not
-    specified, prior means are set to 0 and prior variances are set to 100. The 
-    spatial variance parameter, <code>sigma.sq</code>, is assumed to follow an 
-    inverse-Gamma distribution. The spatial decay <code>phi</code>, spatial 
+    specified, prior means are set to 0 and prior variances are set to 100. The
+    spatial variance parameter, <code>sigma.sq</code>, is assumed to follow an
+    inverse-Gamma distribution. The spatial decay <code>phi</code>, spatial
     smoothness <code>nu</code>, and negative binomial dispersion <code>kappa</code>
-    parameters are assumed to follow Uniform 
-    distributions. The hyperparameters of the inverse-Gamma for <code>sigma.sq</code> 
-    are passed as a vector of length two, with the first and second 
-    elements corresponding to the <em>shape</em> and <em>scale</em>, respectively. 
-    The hyperparameters of the Uniform are also passed as a vector of 
-    length two with the first and second elements corresponding to 
+    parameters are assumed to follow Uniform
+    distributions. The hyperparameters of the inverse-Gamma for <code>sigma.sq</code>
+    are passed as a vector of length two, with the first and second
+    elements corresponding to the <em>shape</em> and <em>scale</em>, respectively.
+    The hyperparameters of the Uniform are also passed as a vector of
+    length two with the first and second elements corresponding to
     the lower and upper support, respectively. <code>sigma.sq.mu</code>
-    are the random effect variances for any random effects, and are assumed to follow an 
+    are the random effect variances for any random effects, and are assumed to follow an
     inverse-Gamma distribution. The hyperparameters of
-    the inverse-Gamma distribution are passed as a list of length two with the 
-    first and second elements corresponding to the shape and scale parameters, 
-    respectively, which are each specified as vectors of length equal to the 
+    the inverse-Gamma distribution are passed as a list of length two with the
+    first and second elements corresponding to the shape and scale parameters,
+    respectively, which are each specified as vectors of length equal to the
     number of random effects or of length one if priors are the same for all
-    random effect variances. <code>tau.sq</code> is the residual variance 
-    for Gaussian (or zero-inflated Gaussian) models, and it is assigned 
+    random effect variances. <code>tau.sq</code> is the residual variance
+    for Gaussian (or zero-inflated Gaussian) models, and it is assigned
     an inverse-Gamma prior. The hyperparameters of the inverse-Gamma are passed as a vector
-    of length two, with the first and second element corresponding to the shape and 
+    of length two, with the first and second element corresponding to the shape and
     scale parameters, respectively.</p></dd>
 
- 
+
   <dt>cov.model</dt>
 <dd><p>a quoted keyword that specifies the covariance
     function used to model the spatial dependence structure among the
@@ -157,63 +157,64 @@
 
 
   <dt>tuning</dt>
-<dd><p>a single numeric value representing the initial variance of the
-  adaptive sampler for <code>beta</code>, <code>alpha</code>, <code>beta.star</code> (the abundance 
-  random effect values), <code>kappa</code>, <code>phi</code>, 
-  and <code>nu</code>. See Roberts and Rosenthal (2009) for details. Note that only <code>phi</code> 
-  and <code>nu</code> are the only parameters that require tuning for a Gaussian or 
+<dd><p>a list with each tag corresponding to a parameter name, whose value defines
+  the initial variance of the adaptive sampler. Valid tags include
+  <code>beta</code>, <code>alpha</code>, <code>beta.star</code> (the abundance
+  random effect values), <code>kappa</code>, <code>phi</code>,
+  and <code>nu</code>. See Roberts and Rosenthal (2009) for details. Note that only <code>phi</code>
+  and <code>nu</code> are the only parameters that require tuning for a Gaussian or
   zero-inflated Gaussian model.</p></dd>
 
 
   <dt>NNGP</dt>
-<dd><p>if <code>TRUE</code>, model is fit with an NNGP. See Datta et al. (2016) and 
+<dd><p>if <code>TRUE</code>, model is fit with an NNGP. See Datta et al. (2016) and
     Finley et al. (2019) for more information. Currently only NNGP is supported,
     functionality for a full GP may be addded in future package development.</p></dd>
 
-  
+
   <dt>n.neighbors</dt>
-<dd><p>number of neighbors used in the NNGP. Only used if 
-  <code>NNGP = TRUE</code>. Datta et al. (2016) showed that 15 neighbors is usually 
+<dd><p>number of neighbors used in the NNGP. Only used if
+  <code>NNGP = TRUE</code>. Datta et al. (2016) showed that 15 neighbors is usually
   sufficient, but that as few as 5 neighbors can be adequate for certain data
   sets, which can lead to even greater decreases in run time. We recommend
   starting with 15 neighbors (the default) and if additional gains in computation
   time are desired, subsequently compare the results with a smaller number
   of neighbors using WAIC.</p></dd>
 
-  
+
   <dt>search.type</dt>
 <dd><p>a quoted keyword that specifies the type of nearest
     neighbor search algorithm. Supported method key words are: <code>"cb"</code> and
     <code>"brute"</code>. The <code>"cb"</code> should generally be much
     faster. If locations do not have identical coordinate values on
-    the axis used for the nearest neighbor ordering then <code>"cb"</code> 
-    and <code>"brute"</code> should produce identical neighbor sets. 
-    However, if there are identical coordinate values on the axis used 
-    for nearest neighbor ordering, then <code>"cb"</code> and <code>"brute"</code> 
-    might produce different, but equally valid, neighbor sets, 
+    the axis used for the nearest neighbor ordering then <code>"cb"</code>
+    and <code>"brute"</code> should produce identical neighbor sets.
+    However, if there are identical coordinate values on the axis used
+    for nearest neighbor ordering, then <code>"cb"</code> and <code>"brute"</code>
+    might produce different, but equally valid, neighbor sets,
     e.g., if data are on a grid.</p></dd>
 
- 
+
   <dt>n.batch</dt>
-<dd><p>the number of MCMC batches in each chain to run for the adaptive MCMC 
+<dd><p>the number of MCMC batches in each chain to run for the adaptive MCMC
     sampler. See Roberts and Rosenthal (2009) for details.</p></dd>
 
-  
+
   <dt>batch.length</dt>
-<dd><p>the length of each MCMC batch in each chain to run for the adaptive 
+<dd><p>the length of each MCMC batch in each chain to run for the adaptive
     MCMC sampler. See Roberts and Rosenthal (2009) for details.</p></dd>
 
-  
+
   <dt>accept.rate</dt>
-<dd><p>target acceptance rate for adaptive MCMC. Default is 
+<dd><p>target acceptance rate for adaptive MCMC. Default is
     0.43. See Roberts and Rosenthal (2009) for details.</p></dd>
 
 
   <dt>family</dt>
-<dd><p>the distribution to use for the latent abundance process. Currently 
-    supports <code>'NB'</code> (negative binomial), <code>'Poisson'</code>, <code>'Gaussian'</code>, 
+<dd><p>the distribution to use for the latent abundance process. Currently
+    supports <code>'NB'</code> (negative binomial), <code>'Poisson'</code>, <code>'Gaussian'</code>,
     and <code>'zi-Gaussian'</code>.</p></dd>
- 
+
 
   <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating
@@ -223,27 +224,27 @@
    hyperthreaded cores. Note, <code>n.omp.threads</code> &gt; 1 might not
    work on some systems.</p></dd>
 
- 
+
   <dt>verbose</dt>
-<dd><p>if <code>TRUE</code>, messages about data preparation, 
-    model specification, and progress of the sampler are printed to the screen. 
+<dd><p>if <code>TRUE</code>, messages about data preparation,
+    model specification, and progress of the sampler are printed to the screen.
     Otherwise, no messages are printed.</p></dd>
 
- 
+
   <dt>n.report</dt>
 <dd><p>the interval to report Metropolis sampler acceptance and
     MCMC progress.</p></dd>
 
 
   <dt>n.burn</dt>
-<dd><p>the number of samples out of the total <code>n.batch * batch.length</code> 
-    samples in each chain to discard as burn-in. By default, the first 
+<dd><p>the number of samples out of the total <code>n.batch * batch.length</code>
+    samples in each chain to discard as burn-in. By default, the first
     10% of samples is discarded.</p></dd>
 
-  
+
   <dt>n.thin</dt>
 <dd><p>the thinning interval for collection of MCMC samples. The
-    thinning occurs after the <code>n.burn</code> samples are discarded. Default 
+    thinning occurs after the <code>n.burn</code> samples are discarded. Default
     value is set to 1.</p></dd>
 
 
@@ -257,8 +258,8 @@
     <code>y.rep.samples</code>, <code>mu.samples</code>, and <code>like.samples</code> will not be included
     in the model object, and subsequent functions for calculating WAIC, fitted values, and
     posterior predictive checks will not work, although they all can be calculated manually if
-    desired. Setting <code>save.fitted = FALSE</code> can be useful when working with very large 
-    data sets to minimize the amount of RAM needed when fitting and storing the model object in 
+    desired. Setting <code>save.fitted = FALSE</code> can be useful when working with very large
+    data sets to minimize the amount of RAM needed when fitting and storing the model object in
     memory.</p></dd>
 
 
@@ -278,13 +279,13 @@
   Hierarchical Nearest-Neighbor Gaussian process models for large
   geostatistical datasets. <em>Journal of the American Statistical
     Association</em>, <a href="https://doi.org/10.1080/01621459.2015.1044091" class="external-link">doi:10.1080/01621459.2015.1044091</a>
-.</p>  
+.</p>
 <p>Finley, A.O., A. Datta, B.D. Cook, D.C. Morton, H.E. Andersen, and
   S. Banerjee. (2019) Efficient algorithms for Bayesian Nearest Neighbor
   Gaussian Processes. <em>Journal of Computational and Graphical
     Statistics</em>, <a href="https://doi.org/10.1080/10618600.2018.1537924" class="external-link">doi:10.1080/10618600.2018.1537924</a>
 .</p>
-<p>Roberts, G.O. and Rosenthal J.S. (2009) Examples  of adaptive MCMC. 
+<p>Roberts, G.O. and Rosenthal J.S. (2009) Examples  of adaptive MCMC.
   <em>Journal of Computational and Graphical Statistics</em>, 18(2):349-367.</p>
     </div>
     <div class="section level2">
@@ -315,14 +316,14 @@
 
 
   <dt>y.rep.samples</dt>
-<dd><p>a two or three-dimensional object of posterior samples 
-    for the abundance replicate (fitted) values with dimensions 
+<dd><p>a two or three-dimensional object of posterior samples
+    for the abundance replicate (fitted) values with dimensions
     corresponding to MCMC samples, site, and replicate.</p></dd>
 
 
   <dt>mu.samples</dt>
 <dd><p>a two or -three-dimensional array of posterior samples
-    for the expected abundance samples with dimensions corresponding 
+    for the expected abundance samples with dimensions corresponding
     to MCMC samples, site, and replicate.</p></dd>
 
 
@@ -338,14 +339,14 @@
 
   <dt>sigma.sq.mu.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
-    for variances of random effects included in the model. 
-    Only included if random effects are specified in 
+    for variances of random effects included in the model.
+    Only included if random effects are specified in
     <code>formula</code>.</p></dd>
 
 
   <dt>beta.star.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
-    for the abundance random effects. Only included if random effects 
+    for the abundance random effects. Only included if random effects
     are specified in <code>formula</code>.</p></dd>
 
 
@@ -368,7 +369,7 @@
 <dd><p>execution time reported using <code><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time()</a></code>.</p></dd>
 
 
-</dl><p>The return object will include additional objects used for 
+</dl><p>The return object will include additional objects used for
   subsequent prediction and/or model fit evaluation.</p>
     </div>
 
@@ -382,16 +383,16 @@
 <span class="r-in"><span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">0.3</span>, <span class="op">-</span><span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p.abund</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mu.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">45</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              sigma.sq.mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">0.5</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>              sigma.sq.mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">0.5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              beta.indx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">/</span><span class="fl">.6</span></span></span>
 <span class="r-in"><span><span class="va">sigma.sq</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="va">kappa</span> <span class="op">&lt;-</span> <span class="fl">0.2</span></span></span>
-<span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span> </span></span>
+<span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="va">cov.model</span> <span class="op">&lt;-</span> <span class="st">'exponential'</span></span></span>
 <span class="r-in"><span><span class="va">family</span> <span class="op">&lt;-</span> <span class="st">'NB'</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simAbund.html">simAbund</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>, </span></span>
-<span class="r-in"><span>                kappa <span class="op">=</span> <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, phi <span class="op">=</span> <span class="va">phi</span>, </span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simAbund.html">simAbund</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, beta <span class="op">=</span> <span class="va">beta</span>,</span></span>
+<span class="r-in"><span>                kappa <span class="op">=</span> <span class="va">kappa</span>, mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, phi <span class="op">=</span> <span class="va">phi</span>,</span></span>
 <span class="r-in"><span>                sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, cov.model <span class="op">=</span> <span class="va">cov.model</span>, family <span class="op">=</span> <span class="st">'NB'</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span></span>
@@ -399,11 +400,11 @@
 <span class="r-in"><span><span class="va">X.re</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">X.re</span></span></span>
 <span class="r-in"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">coords</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>int <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span>, </span></span>
-<span class="r-in"><span>             abund.cov.1 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>, </span></span>
-<span class="r-in"><span>             abund.cov.2 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span><span class="va">covs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>int <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>             abund.cov.1 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>             abund.cov.2 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">3</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>             abund.cov.3 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, , <span class="fl">4</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>             abund.factor.1 <span class="op">=</span> <span class="va">X.re</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span>             abund.factor.1 <span class="op">=</span> <span class="va">X.re</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>             abund.factor.2 <span class="op">=</span> <span class="va">X.re</span><span class="op">[</span>, , <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, covs <span class="op">=</span> <span class="va">covs</span>, coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span></span></span>
@@ -412,36 +413,36 @@
 <span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span> <span class="op">/</span> <span class="fl">1</span>, <span class="fl">3</span> <span class="op">/</span> <span class="fl">.1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   sigma.sq.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                   kappa.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>                   kappa.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Starting values</span></span></span>
 <span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="va">beta</span>, kappa <span class="op">=</span> <span class="va">kappa</span>, sigma.sq <span class="op">=</span> <span class="va">sigma.sq</span>, phi <span class="op">=</span> <span class="va">phi</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">tuning</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>phi <span class="op">=</span> <span class="fl">0.3</span>, kappa <span class="op">=</span> <span class="fl">0.05</span>, beta <span class="op">=</span> <span class="fl">0.1</span>, beta.star <span class="op">=</span> <span class="fl">0.1</span>, w <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">tuning</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>phi <span class="op">=</span> <span class="fl">0.3</span>, kappa <span class="op">=</span> <span class="fl">0.05</span>, beta <span class="op">=</span> <span class="fl">0.1</span>, beta.star <span class="op">=</span> <span class="fl">0.1</span>, w <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">4</span></span></span>
 <span class="r-in"><span><span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span></span></span>
-<span class="r-in"><span><span class="va">n.burn</span> <span class="op">&lt;-</span> <span class="fl">20</span> </span></span>
+<span class="r-in"><span><span class="va">n.burn</span> <span class="op">&lt;-</span> <span class="fl">20</span></span></span>
 <span class="r-in"><span><span class="va">n.thin</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">spAbund</span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov.1</span> <span class="op">+</span> <span class="va">abund.cov.2</span> <span class="op">+</span> <span class="va">abund.cov.3</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>                           <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">abund.factor.1</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">abund.cov.1</span> <span class="op">|</span> <span class="va">abund.factor.2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>               data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
-<span class="r-in"><span>               n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
-<span class="r-in"><span>               batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
-<span class="r-in"><span>               inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
+<span class="r-in"><span>               data <span class="op">=</span> <span class="va">data.list</span>,</span></span>
+<span class="r-in"><span>               n.batch <span class="op">=</span> <span class="va">n.batch</span>,</span></span>
+<span class="r-in"><span>               batch.length <span class="op">=</span> <span class="va">batch.length</span>,</span></span>
+<span class="r-in"><span>               inits <span class="op">=</span> <span class="va">inits.list</span>,</span></span>
 <span class="r-in"><span>               tuning <span class="op">=</span> <span class="va">tuning</span>,</span></span>
-<span class="r-in"><span>               priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
-<span class="r-in"><span>               NNGP <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>               priors <span class="op">=</span> <span class="va">prior.list</span>,</span></span>
+<span class="r-in"><span>               NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>               cov.model <span class="op">=</span> <span class="st">'exponential'</span>,</span></span>
 <span class="r-in"><span>               search.type <span class="op">=</span> <span class="st">'cb'</span>,</span></span>
 <span class="r-in"><span>               n.neighbors <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>               accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span></span>
-<span class="r-in"><span>               n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span></span>
-<span class="r-in"><span>               verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>               accept.rate <span class="op">=</span> <span class="fl">0.43</span>,</span></span>
+<span class="r-in"><span>               n.omp.threads <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>               verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>               n.report <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>               n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
 <span class="r-in"><span>               n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
-<span class="r-in"><span>               n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>               n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -481,27 +482,27 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling ... </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 1 of 4, 25.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		48.0		0.10202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		36.0		0.10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		40.0		0.10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		40.0		0.09802</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	phi		88.0		0.30606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		32.0		0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		28.0		0.09802</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		44.0		0.10202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		80.0		0.10202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	phi		76.0		0.30606</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 2 of 4, 50.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		32.0		0.10101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		24.0		0.09900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		48.0		0.10101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		68.0		0.09900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	phi		92.0		0.30914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		48.0		0.10101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		16.0		0.09704</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		16.0		0.10101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		36.0		0.10101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	phi		76.0		0.30914</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 3 of 4, 75.00%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Parameter	Acceptance	Tuning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		28.0		0.10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		12.0		0.09802</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		40.0		0.10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		44.0		0.10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 	phi		88.0		0.31224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[1]		40.0		0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[2]		24.0		0.09608</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[3]		32.0		0.10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	beta[4]		48.0		0.10202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 	phi		84.0		0.31224</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 4 of 4, 100.00%</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
@@ -520,24 +521,24 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0017</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.2628 0.2131 -0.5803 -0.2921  0.2442   NA   3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1 -2.4345 0.0970 -2.5822 -2.4204 -2.3191   NA   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2  0.7826 0.0734  0.6765  0.7587  1.0044   NA   5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 -0.7686 0.0778 -0.9057 -0.7703 -0.6091   NA   8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0562 0.1837 -0.3134  0.1073  0.3116   NA   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1 -1.8559 0.0463 -1.9226 -1.8773 -1.7462   NA   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.2  0.6012 0.0979  0.4540  0.5879  0.7765   NA   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.3 -0.5617 0.0886 -0.7121 -0.5442 -0.4463   NA   6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Abundance Random Effect Variances (log scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                              Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-abund.factor.1 1.0911 0.3591 0.6091 0.9995 1.9510   NA   4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1-abund.factor.2 1.9088 0.4733 1.2096 1.8442 2.9181   NA  80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)-abund.factor.1 0.6199 0.2116 0.3629 0.5764 1.0293   NA   8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> abund.cov.1-abund.factor.2 0.6079 0.1418 0.3770 0.5989 0.9060   NA  43</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Mean     SD   2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq  0.5528 0.2002 0.1989  0.5352  0.9803   NA   2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi      11.6883 2.5536 8.2529 11.2674 16.8277   NA  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq 0.4822 0.1548 0.2284 0.4812 0.8201   NA   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi      5.9345 1.7093 3.4074 5.7859 9.0238   NA   4</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -545,7 +546,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
+  <p></p><p>Developed by <a href="https://www.doserlab.com/" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

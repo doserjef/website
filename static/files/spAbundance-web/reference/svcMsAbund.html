@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spAbundance</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spAbundance/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spAbundance/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -55,10 +55,10 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">svcMsAbund</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>, <span class="va">tuning</span>,</span>
-<span>           svc.cols <span class="op">=</span> <span class="fl">1</span>, cov.model <span class="op">=</span> <span class="st">'exponential'</span>, NNGP <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>           svc.cols <span class="op">=</span> <span class="fl">1</span>, cov.model <span class="op">=</span> <span class="st">'exponential'</span>, NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>           n.neighbors <span class="op">=</span> <span class="fl">15</span>, search.type <span class="op">=</span> <span class="st">'cb'</span>, <span class="va">n.factors</span>,</span>
 <span>           <span class="va">n.batch</span>, <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>, family <span class="op">=</span> <span class="st">'Gaussian'</span>,</span>
-<span>           n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>           n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>           n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>           <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -74,104 +74,104 @@
 
   <dt>data</dt>
 <dd><p>a list containing data necessary for model fitting.
-    Valid tags are <code>y</code>, <code>covs</code>, <code>coords</code>, and <code>z</code>. 
+    Valid tags are <code>y</code>, <code>covs</code>, <code>coords</code>, and <code>z</code>.
     <code>y</code> is a matrix with sites corresponding to species and columns
     corresponding to sites. <code>covs</code> is a list, matrix, or data
-    frame of covariates used in the model, where each column (or list element) 
-    represents a different covariate. <code>coords</code> is a 
-    \(J \times 2\) matrix of the observation coordinates. Note that 
-    <code>spAbundance</code> assumes coordinates are specified in a projected coordinate system. 
-    For zero-inflated Gaussian models, the tag <code>z</code> is used to specify the 
+    frame of covariates used in the model, where each column (or list element)
+    represents a different covariate. <code>coords</code> is a
+    \(J \times 2\) matrix of the observation coordinates. Note that
+    <code>spAbundance</code> assumes coordinates are specified in a projected coordinate system.
+    For zero-inflated Gaussian models, the tag <code>z</code> is used to specify the
     binary component of the model and should have the same dimensions as <code>y</code>.</p></dd>
 
 
   <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
-    Valid tags are <code>beta.comm</code>, <code>beta</code>, 
-    <code>tau.sq.beta</code>, <code>sigma.sq.mu</code>, 
-    <code>phi</code>, <code>lambda</code>, <code>nu</code>, and <code>tau.sq</code>. <code>nu</code> is only specified if 
-    <code>cov.model = "matern"</code>, <code>tau.sq</code> is only 
+    Valid tags are <code>beta.comm</code>, <code>beta</code>,
+    <code>tau.sq.beta</code>, <code>sigma.sq.mu</code>,
+    <code>phi</code>, <code>lambda</code>, <code>nu</code>, and <code>tau.sq</code>. <code>nu</code> is only specified if
+    <code>cov.model = "matern"</code>, <code>tau.sq</code> is only
     specified for Gaussian and zero-inflated Gaussian models,
-    and <code>sigma.sq.mu</code> is only specified if random effects are included in <code>formula</code>. 
-    The value portion of each tag is 
+    and <code>sigma.sq.mu</code> is only specified if random effects are included in <code>formula</code>.
+    The value portion of each tag is
     the parameter's initial value. See <code>priors</code> description for definition
-    of each parameter name. Additionally, the tag <code>fix</code> can be set to <code>TRUE</code> 
+    of each parameter name. Additionally, the tag <code>fix</code> can be set to <code>TRUE</code>
     to fix the starting values across all chains. If <code>fix</code> is not specified
     (the default), starting values are varied randomly across chains.</p></dd>
 
 
   <dt>priors</dt>
-<dd><p>a list with each tag corresponding to a parameter name. 
-  Valid tags are <code>beta.comm.normal</code>, <code>tau.sq.beta.ig</code>, <code>sigma.sq.mu</code>, 
-  <code>phi.unif</code>, <code>nu.unif</code>, and <code>tau.sq.ig</code>. 
-  Community-level (<code>beta.comm</code>) regression coefficients are assumed to follow a 
+<dd><p>a list with each tag corresponding to a parameter name.
+  Valid tags are <code>beta.comm.normal</code>, <code>tau.sq.beta.ig</code>, <code>sigma.sq.mu</code>,
+  <code>phi.unif</code>, <code>nu.unif</code>, and <code>tau.sq.ig</code>.
+  Community-level (<code>beta.comm</code>) regression coefficients are assumed to follow a
   normal distribution. The hyperparameters of the normal distribution
-  are passed as a list of length two with the first and second elements 
-  corresponding to the mean and variance of the normal distribution, 
-  which are each specified as vectors of length equal to the number of 
-  coefficients to be estimated or of length one if priors are the same for 
-  all coefficients. If not specified, prior means are set 
-  to 0 and prior variances to 100. Community-level variance parameters 
-  (<code>tau.sq.beta</code>) are 
-  assumed to follow an inverse Gamma distribution. The hyperparameters of 
-  the inverse gamma distribution are passed as a list of length two with 
+  are passed as a list of length two with the first and second elements
+  corresponding to the mean and variance of the normal distribution,
+  which are each specified as vectors of length equal to the number of
+  coefficients to be estimated or of length one if priors are the same for
+  all coefficients. If not specified, prior means are set
+  to 0 and prior variances to 100. Community-level variance parameters
+  (<code>tau.sq.beta</code>) are
+  assumed to follow an inverse Gamma distribution. The hyperparameters of
+  the inverse gamma distribution are passed as a list of length two with
   the first and second elements corresponding to the shape and scale parameters,
-  which are each specified as vectors of length equal to the number of 
-  coefficients to be estimated or a single value if priors are the same for all 
-  parameters. If not specified, prior shape and scale 
+  which are each specified as vectors of length equal to the number of
+  coefficients to be estimated or a single value if priors are the same for all
+  parameters. If not specified, prior shape and scale
   parameters are set to 0.1. If desired, the species-specific regression coefficients
-  (<code>beta</code>) can also be estimated indepdendently by specifying the 
+  (<code>beta</code>) can also be estimated indepdendently by specifying the
   tag <code>independent.betas = TRUE</code>. If specified, this will not estimate species-specific
   coefficients as random effects from a common-community-level distribution, and rather
-  the values of <code>beta.comm</code> and <code>tau.sq.beta</code> will be fixed at the 
+  the values of <code>beta.comm</code> and <code>tau.sq.beta</code> will be fixed at the
   specified initial values. This is equivalent to specifying a Gaussian, independent
-  prior for each of the species-specific effects. 
+  prior for each of the species-specific effects.
   The spatial factor model fits <code>n.factors</code> independent
-  spatial processes. The spatial decay <code>phi</code> and smoothness <code>nu</code> parameters 
-  for each latent factor and spatially-varying coefficient 
-  are assumed to follow Uniform distributions. 
-  The hyperparameters of the Uniform are passed as a list with two elements, 
+  spatial processes. The spatial decay <code>phi</code> and smoothness <code>nu</code> parameters
+  for each latent factor and spatially-varying coefficient
+  are assumed to follow Uniform distributions.
+  The hyperparameters of the Uniform are passed as a list with two elements,
   with both elements being vectors of length equal to the number of spatial factors
-  times the number of spatially-varying coefficients corresponding to the lower and 
+  times the number of spatially-varying coefficients corresponding to the lower and
   upper support, respectively, or as a single value if the same value is assigned
-  for all factors and spatially-varying coefficients. 
+  for all factors and spatially-varying coefficients.
   The priors for the factor loadings matrix <code>lambda</code> are fixed
-  following the standard spatial factor model to ensure parameter 
+  following the standard spatial factor model to ensure parameter
   identifiability (Christensen and Amemlya 2002). The
-  upper triangular elements of the <code>n.sp x n.factors</code> matrix 
-  for each spatially-varying coefficient are fixed at 0 and the 
-  diagonal elements are fixed at 1. The lower triangular elements are assigned a 
+  upper triangular elements of the <code>n.sp x n.factors</code> matrix
+  for each spatially-varying coefficient are fixed at 0 and the
+  diagonal elements are fixed at 1. The lower triangular elements are assigned a
   standard normal prior (i.e., mean 0 and variance 1).
-  <code>sigma.sq.mu</code> are the random 
+  <code>sigma.sq.mu</code> are the random
   effect variances random effects, respectively, and are assumed to follow an inverse
   Gamma distribution. The hyperparameters of the inverse-Gamma distribution
   are passed as a list of length two with first and second elements corresponding
   to the shape and scale parameters, respectively, which are each specified as
-  vectors of length equal to the number of random intercepts or of length one 
-  if priors are the same for all random effect variances. <code>tau.sq</code> is the 
-  species-specific residual variance for Gaussian (or zero-inflated Gaussian) models, and it is assigned 
-  an inverse-Gamma prior. The hyperparameters of the inverse-Gamma are passed as a list 
-  of length two, with the first and second element corresponding to the shape and 
+  vectors of length equal to the number of random intercepts or of length one
+  if priors are the same for all random effect variances. <code>tau.sq</code> is the
+  species-specific residual variance for Gaussian (or zero-inflated Gaussian) models, and it is assigned
+  an inverse-Gamma prior. The hyperparameters of the inverse-Gamma are passed as a list
+  of length two, with the first and second element corresponding to the shape and
   scale parameters, respectively, which are each specified as vectors of length
   equal to the number of species or a single value if priors are the same for all species.</p></dd>
 
 
 <dt>tuning</dt>
-<dd><p>a single numeric value representing the initial variance of the
-  adaptive sampler for <code>phi</code> and <code>nu</code>. 
+<dd><p>a list with each tag corresponding to a parameter name, whose value defines
+  the initial tuning variance of the adaptive sampler for <code>phi</code> and <code>nu</code>.
   See Roberts and Rosenthal (2009) for details.</p></dd>
 
 
 <dt>svc.cols</dt>
-<dd><p>a vector indicating the variables whose effects will be 
-  estimated as spatially-varying coefficients. <code>svc.cols</code> can be an 
-  integer vector with values indicating the order of covariates specified 
-  in the model formula (with 1 being the intercept if specified), or it can 
-  be specified as a character vector with names corresponding to variable 
+<dd><p>a vector indicating the variables whose effects will be
+  estimated as spatially-varying coefficients. <code>svc.cols</code> can be an
+  integer vector with values indicating the order of covariates specified
+  in the model formula (with 1 being the intercept if specified), or it can
+  be specified as a character vector with names corresponding to variable
   names in <code>occ.covs</code> (for the intercept, use <code>'(Intercept)'</code>). <code>svc.cols</code>
-  default argument of 1 results in a spatial factor model analogous to 
+  default argument of 1 results in a spatial factor model analogous to
   <code>sfMsAbund</code> (assuming an intercept is included in the model).</p></dd>
- 
+
 
   <dt>cov.model</dt>
 <dd><p>a quoted keyword that specifies the covariance
@@ -180,64 +180,64 @@
     <code>"exponential"</code>, <code>"matern"</code>, <code>"spherical"</code>, and
     <code>"gaussian"</code>.</p></dd>
 
-  
+
   <dt>NNGP</dt>
-<dd><p>if <code>TRUE</code>, model is fit with an NNGP. If <code>FALSE</code>, 
-    a full Gaussian process is used. See Datta et al. (2016) and 
-    Finley et al. (2019) for more information. For spatial factor models, only 
+<dd><p>if <code>TRUE</code>, model is fit with an NNGP. If <code>FALSE</code>,
+    a full Gaussian process is used. See Datta et al. (2016) and
+    Finley et al. (2019) for more information. For spatial factor models, only
     <code>NNGP = TRUE</code> is currently supported.</p></dd>
 
-  
+
   <dt>n.neighbors</dt>
-<dd><p>number of neighbors used in the NNGP. Only used if 
-  <code>NNGP = TRUE</code>. Datta et al. (2016) showed that 15 neighbors is usually 
+<dd><p>number of neighbors used in the NNGP. Only used if
+  <code>NNGP = TRUE</code>. Datta et al. (2016) showed that 15 neighbors is usually
   sufficient, but that as few as 5 neighbors can be adequate for certain data
   sets, which can lead to even greater decreases in run time. We recommend
   starting with 15 neighbors (the default) and if additional gains in computation
   time are desired, subsequently compare the results with a smaller number
   of neighbors using WAIC.</p></dd>
 
-  
+
   <dt>search.type</dt>
 <dd><p>a quoted keyword that specifies the type of nearest
     neighbor search algorithm. Supported method key words are: <code>"cb"</code> and
     <code>"brute"</code>. The <code>"cb"</code> should generally be much
     faster. If locations do not have identical coordinate values on
-    the axis used for the nearest neighbor ordering then <code>"cb"</code> 
-    and <code>"brute"</code> should produce identical neighbor sets. 
-    However, if there are identical coordinate values on the axis used 
-    for nearest neighbor ordering, then <code>"cb"</code> and <code>"brute"</code> 
-    might produce different, but equally valid, neighbor sets, 
+    the axis used for the nearest neighbor ordering then <code>"cb"</code>
+    and <code>"brute"</code> should produce identical neighbor sets.
+    However, if there are identical coordinate values on the axis used
+    for nearest neighbor ordering, then <code>"cb"</code> and <code>"brute"</code>
+    might produce different, but equally valid, neighbor sets,
     e.g., if data are on a grid.</p></dd>
 
 
   <dt>n.factors</dt>
 <dd><p>the number of factors to use in the spatial factor
-    model approach for each spatially-varying coefficient. 
-    Typically, the number of factors is set to be small (e.g., 4-5) relative to the 
-    total number of species in the community, which will lead to substantial 
-    decreases in computation time. However, the value can be anywhere 
+    model approach for each spatially-varying coefficient.
+    Typically, the number of factors is set to be small (e.g., 4-5) relative to the
+    total number of species in the community, which will lead to substantial
+    decreases in computation time. However, the value can be anywhere
     between 1 and the number of species in the modeled community.</p></dd>
 
 
   <dt>n.batch</dt>
-<dd><p>the number of MCMC batches  in each chain to run for the adaptive MCMC 
+<dd><p>the number of MCMC batches  in each chain to run for the adaptive MCMC
     sampler. See Roberts and Rosenthal (2009) for details.</p></dd>
 
-  
+
   <dt>batch.length</dt>
-<dd><p>the length of each MCMC batch to run for the adaptive 
+<dd><p>the length of each MCMC batch to run for the adaptive
     MCMC sampler. See Roberts and Rosenthal (2009) for details.</p></dd>
 
-  
+
   <dt>accept.rate</dt>
-<dd><p>target acceptance rate for adaptive MCMC. Default is 
+<dd><p>target acceptance rate for adaptive MCMC. Default is
     0.43. See Roberts and Rosenthal (2009) for details.</p></dd>
 
 
   <dt>family</dt>
-<dd><p>the distribution to use for abundance. Currently, spatially-varying 
-  coefficient models are available for <code>family = 'Gaussian'</code> and 
+<dd><p>the distribution to use for abundance. Currently, spatially-varying
+  coefficient models are available for <code>family = 'Gaussian'</code> and
   <code>family = 'zi-Gaussian'</code>.</p></dd>
 
 
@@ -249,13 +249,13 @@
    hyperthreaded cores. Note, <code>n.omp.threads</code> &gt; 1 might not
    work on some systems.</p></dd>
 
- 
+
   <dt>verbose</dt>
-<dd><p>if <code>TRUE</code>, messages about data preparation, 
-    model specification, and progress of the sampler are printed to the screen. 
+<dd><p>if <code>TRUE</code>, messages about data preparation,
+    model specification, and progress of the sampler are printed to the screen.
     Otherwise, no messages are printed.</p></dd>
 
- 
+
   <dt>n.report</dt>
 <dd><p>the interval to report Metropolis sampler acceptance and
     MCMC progress. Note this is specified in terms of batches and not overall
@@ -263,13 +263,13 @@
 
 
   <dt>n.burn</dt>
-<dd><p>the number of samples out of the total <code>n.samples</code> to 
+<dd><p>the number of samples out of the total <code>n.samples</code> to
     discard as burn-in for each chain. By default, the first 10% of samples is discarded.</p></dd>
 
-  
+
   <dt>n.thin</dt>
 <dd><p>the thinning interval for collection of MCMC samples. The
-    thinning occurs after the <code>n.burn</code> samples are discarded. Default 
+    thinning occurs after the <code>n.burn</code> samples are discarded. Default
     value is set to 1.</p></dd>
 
 
@@ -299,8 +299,8 @@
   Fitting Linear Mixed-Effects Models Using lme4. Journal of
   Statistical Software, 67(1), 1-48. <a href="https://doi.org/10.18637/jss.v067.i01" class="external-link">doi:10.18637/jss.v067.i01</a>
 .</p>
-<p>Christensen, W. F., and Amemiya, Y. (2002). Latent variable analysis 
-  of multivariate spatial data. <em>Journal of the American Statistical Association</em>, 
+<p>Christensen, W. F., and Amemiya, Y. (2002). Latent variable analysis
+  of multivariate spatial data. <em>Journal of the American Statistical Association</em>,
   97(457), 302-317.</p>
     </div>
     <div class="section level2">
@@ -317,7 +317,7 @@
 <dd><p>a <code>coda</code> object of posterior samples
     for the community level regression coefficients.</p></dd>
 
-  
+
   <dt>tau.sq.beta.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
     for the abundance community variance parameters.</p></dd>
@@ -357,28 +357,28 @@
 
 
   <dt>w.samples</dt>
-<dd><p>a four-dimensional array of posterior samples for 
-    the latent spatial random effects for each spatial factor within each 
-    spatially-varying coefficient. Dimensions correspond to MCMC sample, 
+<dd><p>a four-dimensional array of posterior samples for
+    the latent spatial random effects for each spatial factor within each
+    spatially-varying coefficient. Dimensions correspond to MCMC sample,
     factor, site, and spatially-varying coefficient.</p></dd>
 
 
   <dt>sigma.sq.mu.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
     for variances of random effects included in the abundance portion
-    of the model. Only included if random effects are specified in 
+    of the model. Only included if random effects are specified in
     <code>abund.formula</code>.</p></dd>
 
 
   <dt>beta.star.samples</dt>
 <dd><p>a <code>coda</code> object of posterior samples
-    for the abundance random effects. Only included if random effects 
+    for the abundance random effects. Only included if random effects
     are specified in <code>abund.formula</code>.</p></dd>
 
 
   <dt>like.samples</dt>
 <dd><p>a three-dimensional array of posterior samples
-    for the likelihood value associated with each site and species. 
+    for the likelihood value associated with each site and species.
     Used for calculating WAIC.</p></dd>
 
 
@@ -395,7 +395,7 @@
 <dd><p>MCMC sampler execution time reported using <code><a href="https://rdrr.io/r/base/proc.time.html" class="external-link">proc.time()</a></code>.</p></dd>
 
 
-</dl><p>The return object will include additional objects used for 
+</dl><p>The return object will include additional objects used for
   subsequent prediction and/or model fit evaluation.</p>
     </div>
 
@@ -418,7 +418,7 @@
 <span class="r-in"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">p.abund</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">beta</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n.sp</span>, <span class="va">beta.mean</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">tau.sq.beta</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span> </span></span>
+<span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="va">svc.cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">n.factors</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="va">q.p.svc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">svc.cols</span><span class="op">)</span> <span class="op">*</span> <span class="va">n.factors</span></span></span>
@@ -428,10 +428,10 @@
 <span class="r-in"><span><span class="va">cov.model</span> <span class="op">&lt;-</span> <span class="st">'exponential'</span></span></span>
 <span class="r-in"><span><span class="va">family</span> <span class="op">&lt;-</span> <span class="st">'Gaussian'</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simMsAbund.html">simMsAbund</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>, </span></span>
-<span class="r-in"><span>                  mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, tau.sq <span class="op">=</span> <span class="va">tau.sq</span>, family <span class="op">=</span> <span class="va">family</span>, </span></span>
-<span class="r-in"><span>                  factor.model <span class="op">=</span> <span class="va">factor.model</span>, phi <span class="op">=</span> <span class="va">phi</span>, </span></span>
-<span class="r-in"><span>                  cov.model <span class="op">=</span> <span class="va">cov.model</span>, n.factors <span class="op">=</span> <span class="va">n.factors</span>, </span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="simMsAbund.html">simMsAbund</a></span><span class="op">(</span>J.x <span class="op">=</span> <span class="va">J.x</span>, J.y <span class="op">=</span> <span class="va">J.y</span>, n.rep <span class="op">=</span> <span class="va">n.rep</span>, n.sp <span class="op">=</span> <span class="va">n.sp</span>, beta <span class="op">=</span> <span class="va">beta</span>,</span></span>
+<span class="r-in"><span>                  mu.RE <span class="op">=</span> <span class="va">mu.RE</span>, sp <span class="op">=</span> <span class="va">sp</span>, tau.sq <span class="op">=</span> <span class="va">tau.sq</span>, family <span class="op">=</span> <span class="va">family</span>,</span></span>
+<span class="r-in"><span>                  factor.model <span class="op">=</span> <span class="va">factor.model</span>, phi <span class="op">=</span> <span class="va">phi</span>,</span></span>
+<span class="r-in"><span>                  cov.model <span class="op">=</span> <span class="va">cov.model</span>, n.factors <span class="op">=</span> <span class="va">n.factors</span>,</span></span>
 <span class="r-in"><span>                  svc.cols <span class="op">=</span> <span class="va">svc.cols</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">y</span></span></span>
@@ -442,11 +442,11 @@
 <span class="r-in"><span>                   abund.cov.2 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">data.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span>, covs <span class="op">=</span> <span class="va">covs</span>, coords <span class="op">=</span> <span class="va">coords</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">prior.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fl">0</span>, var <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                   tau.sq.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>       phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.1</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>                   tau.sq.beta.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">.1</span>, b <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span> </span></span>
-<span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm <span class="op">=</span> <span class="fl">0</span>, </span></span>
-<span class="r-in"><span>                   beta <span class="op">=</span> <span class="fl">0</span>, </span></span>
+<span class="r-in"><span>                   tau.sq.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">2</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>       phi.unif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">.1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   tau.sq.beta.ig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">.1</span>, b <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">inits.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.comm <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>                   beta <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>                   tau.sq <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                   tau.sq.beta <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                   phi <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
@@ -459,23 +459,23 @@
 <span class="r-in"><span><span class="va">n.chains</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">svcMsAbund</span><span class="op">(</span>formula <span class="op">=</span> <span class="op">~</span> <span class="va">abund.cov.1</span> <span class="op">+</span> <span class="va">abund.cov.2</span>,</span></span>
-<span class="r-in"><span>                  data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
-<span class="r-in"><span>                  n.batch <span class="op">=</span> <span class="va">n.batch</span>, </span></span>
-<span class="r-in"><span>                  inits <span class="op">=</span> <span class="va">inits.list</span>, </span></span>
-<span class="r-in"><span>                  priors <span class="op">=</span> <span class="va">prior.list</span>, </span></span>
+<span class="r-in"><span>                  data <span class="op">=</span> <span class="va">data.list</span>,</span></span>
+<span class="r-in"><span>                  n.batch <span class="op">=</span> <span class="va">n.batch</span>,</span></span>
+<span class="r-in"><span>                  inits <span class="op">=</span> <span class="va">inits.list</span>,</span></span>
+<span class="r-in"><span>                  priors <span class="op">=</span> <span class="va">prior.list</span>,</span></span>
 <span class="r-in"><span>                  tuning <span class="op">=</span> <span class="va">tuning.list</span>,</span></span>
-<span class="r-in"><span>                  NNGP <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>                  NNGP <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  svc.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  family <span class="op">=</span> <span class="st">'Gaussian'</span>,</span></span>
-<span class="r-in"><span>                  cov.model <span class="op">=</span> <span class="st">'exponential'</span>, </span></span>
-<span class="r-in"><span>                  n.neighbors <span class="op">=</span> <span class="fl">5</span>, </span></span>
-<span class="r-in"><span>                  n.factors <span class="op">=</span> <span class="va">n.factors</span>, </span></span>
-<span class="r-in"><span>                  batch.length <span class="op">=</span> <span class="va">batch.length</span>, </span></span>
+<span class="r-in"><span>                  cov.model <span class="op">=</span> <span class="st">'exponential'</span>,</span></span>
+<span class="r-in"><span>                  n.neighbors <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>                  n.factors <span class="op">=</span> <span class="va">n.factors</span>,</span></span>
+<span class="r-in"><span>                  batch.length <span class="op">=</span> <span class="va">batch.length</span>,</span></span>
 <span class="r-in"><span>                  n.omp.threads <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
-<span class="r-in"><span>                  n.report <span class="op">=</span> <span class="fl">20</span>, </span></span>
-<span class="r-in"><span>                  n.burn <span class="op">=</span> <span class="va">n.burn</span>, </span></span>
-<span class="r-in"><span>                  n.thin <span class="op">=</span> <span class="va">n.thin</span>, </span></span>
+<span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                  n.report <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>                  n.burn <span class="op">=</span> <span class="va">n.burn</span>,</span></span>
+<span class="r-in"><span>                  n.thin <span class="op">=</span> <span class="va">n.thin</span>,</span></span>
 <span class="r-in"><span>                  n.chains <span class="op">=</span> <span class="va">n.chains</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
@@ -519,20 +519,20 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> svcMsAbund(formula = ~abund.cov.1 + abund.cov.2, data = data.list, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     inits = inits.list, priors = prior.list, tuning = tuning.list, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     svc.cols = c(1, 2), cov.model = "exponential", NNGP = TRUE, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n.neighbors = 5, n.factors = n.factors, n.batch = n.batch, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     batch.length = batch.length, family = "Gaussian", n.omp.threads = 1, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     verbose = TRUE, n.report = 20, n.burn = n.burn, n.thin = n.thin, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n.chains = n.chains)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> svcMsAbundGaussian(formula = formula, data = data, inits = inits, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     priors = priors, tuning = tuning, svc.cols = svc.cols, cov.model = cov.model, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     NNGP = NNGP, n.neighbors = n.neighbors, search.type = search.type, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n.factors = n.factors, n.batch = n.batch, batch.length = batch.length, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     accept.rate = accept.rate, family = family, n.omp.threads = n.omp.threads, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     verbose = verbose, n.report = n.report, n.burn = n.burn, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n.thin = n.thin, n.chains = n.chains)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Samples per Chain: 125</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0047</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
@@ -599,7 +599,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://www.jeffdoser.com" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
+  <p></p><p>Developed by <a href="https://www.doserlab.com/" class="external-link">Jeffrey Doser</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
