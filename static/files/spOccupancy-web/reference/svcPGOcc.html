@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -60,8 +60,9 @@
 <span>         <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>, </span>
 <span>         n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
 <span>         n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, </span>
-<span>         n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>         k.fold.seed <span class="op">=</span> <span class="fl">100</span>, k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>         n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>         <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, k.fold.seed <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>         k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -233,7 +234,7 @@
   
   <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating
-   the number of threads to use for SMP parallel processing. The package must
+   the number of threads to use for SMP parallel processing within chains. The package must
    be compiled for OpenMP support. For most Intel-based machines, we
    recommend setting <code>n.omp.threads</code> up to the number of
    hyperthreaded cores. Note, <code>n.omp.threads</code> &gt; 1 might not
@@ -264,7 +265,7 @@
 
 
   <dt>n.chains</dt>
-<dd><p>the number of MCMC chains to run in sequence.</p></dd>
+<dd><p>the number of MCMC chains to run.</p></dd>
 
 
   <dt>k.fold</dt>
@@ -305,8 +306,18 @@
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    
-
+    <p>Doser, J. W., Finley, A. O., Saunders, S. P., Kery, M., Weed, A. S., &amp;
+  Zipkin, E. F. (2024A). Modeling complex species-environment
+  relationships through spatially-varying coefficient occupancy models.
+  Journal of Agricultural, Biological and Environmental Statistics.
+  <a href="https://doi.org/10.1007/s13253-023-00595-6" class="external-link">doi:10.1007/s13253-023-00595-6</a>
+.</p>
+<p>Doser, J. W., Kery, M., Saunders, S. P., Finley, A. O., Bateman, B. L.,
+  Grand, J., Reault, S., Weed, A. S., &amp; Zipkin, E. F. (2024B). Guidelines
+  for the use of spatially varying coefficients in species distribution
+  models. Global Ecology and Biogeography, 33(4), e13814.
+  <a href="https://doi.org/10.1111/geb.13814" class="external-link">doi:10.1111/geb.13814</a>
+.</p>
 <p>Bates, Douglas, Martin Maechler, Ben Bolker, Steve Walker (2015).
   Fitting Linear Mixed-Effects Models Using lme4. Journal of
   Statistical Software, 67(1), 1-48. <a href="https://doi.org/10.18637/jss.v067.i01" class="external-link">doi:10.18637/jss.v067.i01</a>
@@ -321,9 +332,6 @@
   Gaussian Processes. <em>Journal of Computational and Graphical
     Statistics</em>, <a href="https://doi.org/10.1080/10618600.2018.1537924" class="external-link">doi:10.1080/10618600.2018.1537924</a>
 .</p>
-<p>Finley, A. O., and  Banerjee, S. (2020). Bayesian spatially varying coefficient 
-  models in the spBayes R package. <em>Environmental Modelling and Software</em>, 
-  125, 104608.</p>
 <p>Polson, N.G., J.G. Scott, and J. Windle. (2013) Bayesian Inference for
   Logistic Models Using Polya-Gamma Latent Variables. 
   <em>Journal of the American Statistical Association</em>, 108:1339-1349.</p>
@@ -482,6 +490,8 @@
 <span class="r-in"><span><span class="co"># Tuning</span></span></span>
 <span class="r-in"><span><span class="va">tuning.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>phi <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">svcPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov</span>, </span></span>
 <span class="r-in"><span>                det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span>, </span></span>
 <span class="r-in"><span>                data <span class="op">=</span> <span class="va">data.list</span>, </span></span>
@@ -551,7 +561,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.002</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>

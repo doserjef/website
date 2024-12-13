@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -57,8 +57,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">intPGOcc</span><span class="op">(</span><span class="va">occ.formula</span>, <span class="va">det.formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>, <span class="va">n.samples</span>, </span>
 <span>         n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">1000</span>, </span>
 <span>         n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.samples</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>         <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold.seed</span>, </span>
-<span>         <span class="va">k.fold.data</span>, k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>         <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>         <span class="va">k.fold.seed</span>, <span class="va">k.fold.data</span>, k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,7 +66,8 @@
     <dl><dt>occ.formula</dt>
 <dd><p>a symbolic description of the model to be fit
   for the occurrence portion of the model using R's model syntax. Only
-  right-hand side of formula is specified. See example below.</p></dd>
+  right-hand side of formula is specified. See example below. Random 
+  intercepts are allowed using lme4 syntax (Bates et al. 2015).</p></dd>
 
 
  <dt>det.formula</dt>
@@ -74,7 +75,7 @@
   for the detection portion of the model using R's model syntax for 
   each data set. Each element in the list is a formula for the detection 
   model of a given data set. Only right-hand side of formula is specified. 
-  See example below.</p></dd>
+  See example below. Random intercepts are allowed using lme4 syntax (Bates et al. 2015).</p></dd>
 
  
   <dt>data</dt>
@@ -95,15 +96,24 @@
   with length equal to the number of observed sites of that data source,
   while observation-level covariates are specified as a matrix or data frame 
   with the number of rows equal to the number of observed sites of that data source
-  and number of columns equal to the maximum number of replicates at a given site.</p></dd>
+  and number of columns equal to the maximum number of replicates at a given site.  <code>sites</code>
+  is a list of site indices with number of elements equal to the number of data sources being 
+  modeled. Each element contains a vector of length equal to the number of 
+  sites that specific data source contains. Each value in the vector indicates
+  the row in <code>occ.covs</code> that corresponds with the specific row of the 
+  detection-nondetection data for the data source. This is used to properly link sites across
+  data sets.</p></dd>
 
 
   <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
-  Valid tags are <code>z</code>, <code>beta</code>, and <code>alpha</code>. The value portion
+  Valid tags are <code>z</code>, <code>beta</code>, <code>alpha</code>, <code>sigma.sq.psi</code>, 
+  and <code>sigma.sq.p</code>. The value portion
   of tags <code>z</code> and <code>beta</code> is the parameter's initial value. The tag
   <code>alpha</code> is a list comprised of the initial values for the detection 
-  parameters for each data source. Each element of the list should be a vector of 
+  parameters for each data source. <code>sigma.sq.psi</code> and <code>sigma.sq.p</code>
+  are only relevant when including random effects in the occurrence and detection
+  portion of the occupancy model, respectively. Each element of the list should be a vector of 
   initial values for all detection parameters in the given data source or a single value
   for each data source to assign all parameters for a given data source
   the same initial value. See <code>priors</code> description for definition of 
@@ -114,7 +124,8 @@
 
   <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
-    Valid tags are <code>beta.normal</code> and <code>alpha.normal</code>. Occurrence 
+    Valid tags are <code>beta.normal</code>, <code>alpha.normal</code>, <code>sigma.sq.psi.ig</code>, 
+    and <code>sigma.sq.p.ig</code>. Occurrence 
     (<code>beta</code>) and detection (<code>alpha</code>) regression coefficients 
     are assumed to follow a normal distribution. For <code>beta</code> hyperparameters of the 
     normal distribution are passed as a list of length two with the first
@@ -126,7 +137,14 @@
     hyperparameters are themselves passed in as lists, with each element 
     of the list corresponding to the specific hyperparameters for the 
     detection parameters in a given data source. If not specified, prior means 
-    are set to 0 and prior variances set to 2.72.</p></dd>
+    are set to 0 and prior variances set to 2.72. <code>sigma.sq.psi</code> and 
+  <code>sigma.sq.p</code> are the random effect variances for any occurrence or 
+  detection random effects, respectively, and are assumed to follow an inverse
+  Gamma distribution. The hyperparameters of the inverse-Gamma distribution
+  are passed as a list of length two with first and second elements corresponding
+  to the shape and scale parameters, respectively, which are each specified as
+  vectors of length equal to the number of random intercepts or of length one 
+  if priors are the same for all random effect variances.</p></dd>
 
   
   <dt>n.samples</dt>
@@ -135,7 +153,8 @@
 
   <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating the number of threads
-    to use for SMP parallel processing. The package must be compiled for 
+    to use for SMP parallel processing within chains. This will have no 
+    impact on model run times for non-spatial models. The package must be compiled for 
     OpenMP support. For most Intel-based machines, we recommend setting 
     <code>n.omp.threads</code> up to the number of hypterthreaded cores. Note, 
     <code>n.omp.threads</code> &gt; 1 might not work on some systems.</p></dd>
@@ -163,7 +182,7 @@
 
 
   <dt>n.chains</dt>
-<dd><p>the number of chains to run in sequence.</p></dd>
+<dd><p>the number of chains to run.</p></dd>
 
 
   <dt>k.fold</dt>
@@ -345,6 +364,8 @@
 <span class="r-in"><span>                   alpha.normal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>                                       var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2.72</span>, <span class="fl">2.72</span>, <span class="fl">2.72</span>, <span class="fl">2.72</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">n.samples</span> <span class="op">&lt;-</span> <span class="fl">5000</span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">intPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov</span>, </span></span>
 <span class="r-in"><span>                det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>f.1 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1.1</span>, </span></span>
 <span class="r-in"><span>                                   f.2 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.2.1</span>, </span></span>
@@ -377,7 +398,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 4000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Source compiled with OpenMP support and model fit using 1 thread(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -408,29 +428,44 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 4000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0236</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat  ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1629 0.1907 -0.2016 0.1587 0.5513   NA 2072</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.8732 0.2216  0.4653 0.8675 1.3287   NA 1441</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat  ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.8352 0.2896  0.2817  0.8295  1.4116   NA 2449</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 -0.8601 0.3464 -1.5628 -0.8450 -0.1969   NA 2312</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat  ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.2215 0.2409 -0.2504  0.2162  0.6997   NA 2729</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -1.0246 0.2849 -1.6119 -1.0167 -0.4921   NA 2164</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat  ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.1562 0.2921 -0.7252 -0.1598 0.4228   NA 1984</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.3.1  0.4783 0.2693 -0.0251  0.4709 1.0284   NA 2934</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat  ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.6912 0.2126 0.2873 0.6861 1.1221   NA 2420</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.1 0.9749 0.2207 0.5626 0.9628 1.4429   NA 1996</span>

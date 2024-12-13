@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -61,8 +61,10 @@
 <span>       <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>, n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>       verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
 <span>       n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>       n.chains <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, k.fold.seed <span class="op">=</span> <span class="fl">100</span>, </span>
-<span>       k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">monitors</span>, <span class="va">keep.only.mean.95</span>, shared.spatial <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>       n.chains <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold</span>, </span>
+<span>       k.fold.threads <span class="op">=</span> <span class="fl">1</span>, k.fold.seed <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>       k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">monitors</span>, <span class="va">keep.only.mean.95</span>, </span>
+<span>       shared.spatial <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -247,7 +249,7 @@
   
   <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating
-   the number of threads to use for SMP parallel processing. The package must
+   the number of threads to use for SMP parallel processing within chains. The package must
    be compiled for OpenMP support. For most Intel-based machines, we
    recommend setting <code>n.omp.threads</code> up to the number of
    hyperthreaded cores. Note, <code>n.omp.threads</code> &gt; 1 might not
@@ -542,6 +544,8 @@
 <span class="r-in"><span><span class="va">n.report</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
 <span class="r-in"><span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">sfJSDM</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">formula</span>,</span></span>
 <span class="r-in"><span>              data <span class="op">=</span> <span class="va">data.list</span>,</span></span>
 <span class="r-in"><span>              inits <span class="op">=</span> <span class="va">inits.list</span>,</span></span>
@@ -628,7 +632,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.009</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>

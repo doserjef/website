@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -310,7 +310,7 @@ If specified, this will not estimate species-specific
   
   <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating
-   the number of threads to use for SMP parallel processing. The package must
+   the number of threads to use for SMP parallel processing within chains. The package must
    be compiled for OpenMP support. For most Intel-based machines, we
    recommend setting <code>n.omp.threads</code> up to the number of
    hyperthreaded cores. Note, <code>n.omp.threads</code> &gt; 1 might not
@@ -365,7 +365,19 @@ If specified, this will not estimate species-specific
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Datta, A., S. Banerjee, A.O. Finley, and A.E. Gelfand. (2016)
+    <p>Doser, J. W., Finley, A. O., Saunders, S. P., Kery, M., Weed, A. S., &amp;
+  Zipkin, E. F. (2024A). Modeling complex species-environment
+  relationships through spatially-varying coefficient occupancy models.
+  Journal of Agricultural, Biological and Environmental Statistics.
+  <a href="https://doi.org/10.1007/s13253-023-00595-6" class="external-link">doi:10.1007/s13253-023-00595-6</a>
+.</p>
+<p>Doser, J. W., Kery, M., Saunders, S. P., Finley, A. O., Bateman, B. L.,
+  Grand, J., Reault, S., Weed, A. S., &amp; Zipkin, E. F. (2024B). Guidelines
+  for the use of spatially varying coefficients in species distribution
+  models. Global Ecology and Biogeography, 33(4), e13814.
+  <a href="https://doi.org/10.1111/geb.13814" class="external-link">doi:10.1111/geb.13814</a>
+.</p>
+<p>Datta, A., S. Banerjee, A.O. Finley, and A.E. Gelfand. (2016)
   Hierarchical Nearest-Neighbor Gaussian process models for large
   geostatistical datasets. <em>Journal of the American Statistical
     Association</em>, <a href="https://doi.org/10.1080/01621459.2015.1044091" class="external-link">doi:10.1080/01621459.2015.1044091</a>
@@ -375,8 +387,6 @@ If specified, this will not estimate species-specific
   Gaussian Processes. <em>Journal of Computational and Graphical
     Statistics</em>, <a href="https://doi.org/10.1080/10618600.2018.1537924" class="external-link">doi:10.1080/10618600.2018.1537924</a>
 .</p>
-<p>Finley, A. O., Datta, A., and Banerjee, S. (2020). spNNGP R package 
-  for nearest neighbor Gaussian process models. <em>arXiv</em> preprint arXiv:2001.09111.</p>
 <p>Polson, N.G., J.G. Scott, and J. Windle. (2013) Bayesian Inference for
   Logistic Models Using Polya-Gamma Latent Variables.
   <em>Journal of the American Statistical Association</em>, 108:1339-1349.</p>
@@ -386,11 +396,6 @@ If specified, this will not estimate species-specific
   Fitting Linear Mixed-Effects Models Using lme4. Journal of
   Statistical Software, 67(1), 1-48. <a href="https://doi.org/10.18637/jss.v067.i01" class="external-link">doi:10.18637/jss.v067.i01</a>
 .</p>
-<p>Hooten, M. B., and Hobbs, N. T. (2015). A guide to Bayesian model 
-  selection for ecologists. <em>Ecological Monographs</em>, 85(1), 3-28.</p>
-<p>Christensen, W. F., and Amemiya, Y. (2002). Latent variable analysis 
-  of multivariate spatial data. <em>Journal of the American Statistical Association</em>, 
-  97(457), 302-317.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -603,6 +608,8 @@ If specified, this will not estimate species-specific
 <span class="r-in"><span><span class="va">n.thin</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="va">n.samples</span> <span class="op">&lt;-</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">svcTMsPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov.1</span> <span class="op">+</span> <span class="va">occ.cov.2</span>,</span></span>
 <span class="r-in"><span>                   det.formula <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1</span> <span class="op">+</span> <span class="va">det.cov.2</span>,</span></span>
 <span class="r-in"><span>                   data <span class="op">=</span> <span class="va">data.list</span>,</span></span>
@@ -713,7 +720,7 @@ If specified, this will not estimate species-specific
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0081</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>

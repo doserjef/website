@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -57,7 +57,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">intMsPGOcc</span><span class="op">(</span><span class="va">occ.formula</span>, <span class="va">det.formula</span>, <span class="va">data</span>, <span class="va">inits</span>, <span class="va">priors</span>, <span class="va">n.samples</span>,</span>
 <span>           n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
 <span>           n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.samples</span><span class="op">)</span>, n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>           <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold.seed</span>, k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>           <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -162,7 +162,8 @@
 
 <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating the number of threads
-  to use for SMP parallel processing. The package must be compiled for 
+  to use for SMP parallel processing within chains. This will have no impact on 
+  model run times for non-spatial models. The package must be compiled for 
   OpenMP support. For most Intel-based machines, we recommend setting 
   <code>n.omp.threads</code> up to the number of hypterthreaded cores. Note, 
   <code>n.omp.threads</code> &gt; 1 might not work on some systems. Currently only 
@@ -194,35 +195,11 @@
 <dd><p>the number of chains to run in sequence.</p></dd>
 
 
-<dt>k.fold</dt>
-<dd><p>cross-validation is not currently supported for integrated 
-  multi-species occupancy models.</p></dd>
-
-
-<dt>k.fold.threads</dt>
-<dd><p>cross-validation is not currently supported for 
-  integrated multi-species occupancy models.</p></dd>
- 
-
-<dt>k.fold.seed</dt>
-<dd><p>cross-validation is not currently supported for integrated
-  multi-species occupancy models.</p></dd>
-
-
-<dt>k.fold.only</dt>
-<dd><p>cross-validation is not currently supported for integrated
-  multi-species occupancy models.</p></dd>
- 
-
 <dt>...</dt>
 <dd><p>currently no additional arguments</p></dd>
 
 
 </dl></div>
-    <div class="section level2">
-    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>Basic functionality of this function is stable, but some components are still in development and not currently available. Please create a GitHub issue on the package GitHub page if you use this function and encounter an error.</p>
-    </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Polson, N.G., J.G. Scott, and J. Windle. (2013) Bayesian Inference for
@@ -425,6 +402,8 @@
 <span class="r-in"><span>                   beta <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit the model. </span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">intMsPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov.1</span>,</span></span>
 <span class="r-in"><span>                  det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>f.1 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1.1</span> <span class="op">+</span> <span class="va">det.cov.1.2</span> <span class="op">+</span> <span class="va">det.cov.1.3</span>,</span></span>
 <span class="r-in"><span>                                     f.2 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.2.1</span> <span class="op">+</span> <span class="va">det.cov.2.2</span><span class="op">)</span>,</span></span>
@@ -496,52 +475,52 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0014</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Community Level</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Means (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.1224 0.1995 -0.5236 -0.1146 0.3219   NA  10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov.1    0.6213 0.2875  0.2232  0.5958 1.3717   NA  14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.3109 0.2390 -0.7323 -0.3295 0.2033   NA  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov.1    0.6516 0.2269  0.1991  0.6525 1.1044   NA  32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence Variances (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.1754 0.1789 0.0251 0.1098 0.4952   NA  29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov.1   0.3082 0.2550 0.0658 0.2131 1.0760   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2679 0.2573 0.0238 0.2026 0.9775   NA  17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov.1   0.3124 0.2167 0.0836 0.2630 0.6550   NA  50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Data source 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Means (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.1030 0.6146 -1.2912 -0.0453  1.0540   NA  50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 -0.0950 0.3620 -0.8918 -0.0719  0.6211   NA  50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.2  1.4104 0.1945  1.0473  1.4064  1.7606   NA  18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.3 -1.1502 0.3848 -1.8703 -1.1579 -0.5266   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0946 0.3880 -0.6708  0.1426  0.9458   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 -0.0395 0.2637 -0.6586  0.0049  0.3893   NA  27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.2  1.2311 0.3277  0.7509  1.1615  1.8435   NA  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.3 -0.8574 0.4296 -1.5549 -0.8380 -0.1302   NA  26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Variances (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 3.0868 2.2975 0.6644 2.2999 9.2395   NA  50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 0.8374 0.7828 0.1341 0.4823 2.8526   NA  16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.2 0.2357 0.1452 0.0701 0.2017 0.6433   NA  40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.3 1.2301 1.3493 0.1607 0.6959 4.3793   NA  14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 1.6672 1.1805 0.1461 1.4077 4.3266   NA  11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 0.5857 0.7484 0.1050 0.2943 2.6104   NA  20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.2 0.5243 0.5657 0.0661 0.3538 2.5072   NA  33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.3 1.0231 0.9256 0.2351 0.7942 3.1089   NA  15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Data source 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Means (logit scale): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.3193 0.5888 -0.7075  0.3628 1.2446   NA  14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -1.0049 0.7973 -2.7246 -1.0052 0.6321   NA  61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2  0.4043 0.6884 -0.6966  0.4232 1.4290   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0430 0.7845 -1.4123 -0.1250 1.4883   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -0.8899 0.9956 -2.4205 -1.0049 1.3380   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2  0.4634 0.4806 -0.3250  0.4960 1.2488   NA  50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Detection Variances (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 2.3340 9.5180 0.1674 0.5879  4.6293   NA  50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 2.5181 4.3698 0.1545 1.0881 17.2851   NA  21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2 2.3826 3.3660 0.1149 0.9537 11.2166   NA  26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Mean      SD   2.5%    50%   97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 2.9028  4.9285 0.1832 1.1772 16.0598   NA  50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 9.6785 16.3462 0.2914 3.8987 42.6686   NA  32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2 1.7419  5.9932 0.1117 0.5554  6.5815   NA  50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

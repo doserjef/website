@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -60,8 +60,9 @@
 <span>           <span class="va">batch.length</span>, accept.rate <span class="op">=</span> <span class="fl">0.43</span>, n.omp.threads <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>           verbose <span class="op">=</span> <span class="cn">TRUE</span>, n.report <span class="op">=</span> <span class="fl">100</span>, </span>
 <span>           n.burn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">.10</span> <span class="op">*</span> <span class="va">n.batch</span> <span class="op">*</span> <span class="va">batch.length</span><span class="op">)</span>, </span>
-<span>           n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold</span>, k.fold.threads <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>           <span class="va">k.fold.seed</span>, <span class="va">k.fold.data</span>, k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>           n.thin <span class="op">=</span> <span class="fl">1</span>, n.chains <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold</span>, </span>
+<span>           k.fold.threads <span class="op">=</span> <span class="fl">1</span>, <span class="va">k.fold.seed</span>, <span class="va">k.fold.data</span>, </span>
+<span>           k.fold.only <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,7 +70,8 @@
     <dl><dt>occ.formula</dt>
 <dd><p>a symbolic description of the model to be fit
   for the occurrence portion of the model using R's model syntax. Only
-  right-hand side of formula is specified. See example below.</p></dd>
+  right-hand side of formula is specified. See example below. Random 
+  intercepts are allowed using lme4 syntax (Bates et al. 2015).</p></dd>
 
 
  <dt>det.formula</dt>
@@ -77,7 +79,7 @@
   for the detection portion of the model using R's model syntax for 
   each data set. Each element in the list is a formula for the detection 
   model of a given data set. Only right-hand side of formula is specified. 
-  See example below.</p></dd>
+  See example below. Random intercepts are allowed using lme4 syntax (Bates et al. 2015).</p></dd>
 
  
   <dt>data</dt>
@@ -100,14 +102,23 @@
   with the number of rows equal to the number of observed sites of that data source
   and number of columns equal to the maximum number of replicates at a given site. 
   <code>coords</code> is a matrix of the observation site coordinates. Note that <code>spOccupancy</code> assumes coordinates are specified 
-  in a projected coordinate system.</p></dd>
+  in a projected coordinate system. <code>sites</code>
+  is a list of site indices with number of elements equal to the number of data sources being 
+  modeled. Each element contains a vector of length equal to the number of 
+  sites that specific data source contains. Each value in the vector indicates
+  the row in <code>occ.covs</code> that corresponds with the specific row of the 
+  detection-nondetection data for the data source. This is used to properly link sites across
+  data sets.</p></dd>
 
 
   <dt>inits</dt>
 <dd><p>a list with each tag corresponding to a parameter name.
   Valid tags are <code>z</code>, <code>beta</code>, <code>alpha</code>, <code>sigma.sq</code>, <code>phi</code>, 
-  <code>w</code>, and <code>nu</code>. The value portion of all tags except <code>alpha</code> 
-  is the parameter's initial value. The tag <code>alpha</code> is a list comprised 
+  <code>w</code>, <code>nu</code>, <code>sigma.sq.psi</code>, <code>sigma.sq.p</code>. 
+  The value portion of all tags except <code>alpha</code> 
+  is the parameter's initial value. <code>sigma.sq.psi</code> and <code>sigma.sq.p</code>
+  are only relevant when including random effects in the occurrence and 
+  detection portion of the occupancy model, respectively. The tag <code>alpha</code> is a list comprised 
   of the initial values for the detection parameters for each data source. 
   Each element of the list should be a vector of initial values for all detection 
   parameters in the given data source or a single value for each data source to 
@@ -121,8 +132,8 @@
   <dt>priors</dt>
 <dd><p>a list with each tag corresponding to a parameter name. 
     Valid tags are <code>beta.normal</code>, <code>alpha.normal</code>, <code>phi.unif</code>, 
-    <code>sigma.sq.ig</code>, <code>sigma.sq.unif</code>, and <code>nu.unif</code>. 
-    Occurrence (<code>beta</code>) and detection 
+    <code>sigma.sq.ig</code>, <code>sigma.sq.unif</code>, <code>nu.unif</code>, <code>sigma.sq.psi.ig</code>, 
+    and <code>sigma.sq.p.ig</code>. Occurrence (<code>beta</code>) and detection 
     (<code>alpha</code>) regression coefficients are assumed to follow a normal 
     distribution. For <code>beta</code> hyperparameters of the normal distribution 
     are passed as a list of length two with the first and second elements 
@@ -133,7 +144,7 @@
     and variance hyperparameters are themselves passed in as lists, with each 
     element of the list corresponding to the specific hyperparameters for the 
     detection parameters in a given data source. If not specified, prior means 
-    are set to 0 and prior variances set to 2.73 for normal priors. The 
+    are set to 0 and prior variances set to 2.72 for normal priors. The 
     spatial variance parameter, <code>sigma.sq</code>, is assumed to follow an 
     inverse-Gamma distribution or a uniform distribution (default is 
     inverse-Gamma). <code>sigma.sq</code> can also be fixed at its 
@@ -145,7 +156,14 @@
     to the <em>shape</em> and <em>scale</em>, respectively. The hyperparameters
     of the Uniform are also passed as a vector of length two with the first 
     and second elements corresponding to the lower and upper support, 
-    respectively.</p></dd>
+    respectively. <code>sigma.sq.psi</code> and 
+    <code>sigma.sq.p</code> are the random effect variances for any occurrence or 
+    detection random effects, respectively, and are assumed to follow an inverse
+    Gamma distribution. The hyperparameters of the inverse-Gamma distribution
+    are passed as a list of length two with first and second elements corresponding
+    to the shape and scale parameters, respectively, which are each specified as
+    vectors of length equal to the number of random intercepts or of length one 
+    if priors are the same for all random effect variances.</p></dd>
 
 
   <dt>tuning</dt>
@@ -209,7 +227,7 @@
   
   <dt>n.omp.threads</dt>
 <dd><p>a positive integer indicating
-   the number of threads to use for SMP parallel processing. The package must
+   the number of threads to use for SMP parallel processing within chains. The package must
    be compiled for OpenMP support. For most Intel-based machines, we
    recommend setting <code>n.omp.threads</code> up to the number of
    hyperthreaded cores. Note, <code>n.omp.threads</code> &gt; 1 might not
@@ -240,7 +258,7 @@
 
 
   <dt>n.chains</dt>
-<dd><p>the number of chains to run in sequence.</p></dd>
+<dd><p>the number of chains to run.</p></dd>
 
 
   <dt>k.fold</dt>
@@ -469,10 +487,12 @@
 <span class="r-in"><span><span class="va">tuning.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>phi <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> </span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Number of batches</span></span></span>
-<span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="co"># Batch length</span></span></span>
 <span class="r-in"><span><span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">spIntPGOcc</span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov</span>, </span></span>
 <span class="r-in"><span>                  det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>f.1 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1.1</span>, </span></span>
 <span class="r-in"><span>                                     f.2 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.2.1</span> <span class="op">+</span> <span class="va">det.cov.2.2</span>, </span></span>
@@ -490,7 +510,7 @@
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
 <span class="r-in"><span>                  NNGP <span class="op">=</span> <span class="cn">FALSE</span>, </span></span>
 <span class="r-in"><span>                  n.report <span class="op">=</span> <span class="fl">10</span>, </span></span>
-<span class="r-in"><span>                  n.burn <span class="op">=</span> <span class="fl">50</span>, </span></span>
+<span class="r-in"><span>                  n.burn <span class="op">=</span> <span class="fl">10</span>, </span></span>
 <span class="r-in"><span>                  n.thin <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Preparing to run the model</span>
@@ -503,14 +523,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Integrating 4 occupancy data sets.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per chain: 250 (10 batches of length 25)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per chain: 50 (2 batches of length 25)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 10 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 40 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Using the exponential spatial correlation model.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Source compiled with OpenMP support and model fit using 1 thread(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -519,7 +538,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Chain 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sampling ... </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 10 of 10, 100.00%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Batch: 2 of 2, 100.00%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -530,47 +549,64 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     priors = prior.list, tuning = tuning.list, cov.model = "exponential", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     NNGP = FALSE, n.batch = n.batch, batch.length = batch.length, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     accept.rate = 0.43, n.omp.threads = 1, verbose = TRUE, n.report = 10, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     n.burn = 50, n.thin = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n.burn = 10, n.thin = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per Chain: 250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Samples per Chain: 50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Burn-in: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 7e-04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0654 0.4806 -1.0466 -0.0442 0.6987   NA  28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov      1.0331 0.4524  0.3237  0.9813 1.9626   NA  48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0571 0.4461 -0.8093 -0.0904 0.9508   NA  13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov      1.0141 0.4039  0.0967  1.0501 1.6297   NA  13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0793 0.4798 -1.0044 -0.0851 0.8542   NA 333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 -0.4418 0.6378 -1.7580 -0.4586 0.9681   NA 180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0117 0.4800 -1.1937  0.0905 0.6897   NA  14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 -0.2751 0.6541 -1.4348 -0.2982 0.9414   NA  40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.8380 0.3874  0.1180  0.8148 1.6150   NA 146</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -0.1098 0.3492 -0.7982 -0.1386 0.5576   NA 250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2  1.4554 0.5963  0.4480  1.3583 2.6556   NA  74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.7859 0.4403  0.0320  0.7868 1.6609   NA  10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 -0.1270 0.3960 -0.9293 -0.0818 0.6189   NA  40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2  1.2935 0.6344  0.1739  1.3783 2.1748   NA  21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.6087 0.5199 -1.7420 -0.598 0.2081   NA  15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.3.1  0.9256 0.3985  0.2969  0.894 1.5649   NA  40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.4562 0.4268 -1.4185 -0.4466 0.3153   NA 108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.3.1  1.1125 0.4421  0.3538  1.0642 2.0550   NA  96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0691 0.5462 -0.8860  0.0611 1.0178   NA  19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.1 -0.2269 0.6330 -1.4115 -0.2285 0.8308   NA  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.2  0.2100 0.4994 -0.6206  0.2511 1.0302   NA 150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.3  0.1133 0.5758 -0.6614  0.1682 0.9658   NA  21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection (logit scale): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0318 0.4903 -0.9872  0.0682 0.9851   NA 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.1 -0.2343 0.6006 -1.2466 -0.2916 1.1622   NA 777</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.2  0.1741 0.4809 -0.7771  0.1819 1.1760   NA 200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.3  0.1143 0.6133 -1.0339  0.0837 1.3212   NA 133</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Mean     SD   2.5%    50%   97.5% Rhat ESS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq  2.7399 2.3878 0.6567 2.1141  9.8878   NA  11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi      11.0102 6.8897 3.5824 7.5669 22.7934   NA   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Mean     SD   2.5%    50%   97.5% Rhat ESS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq 2.3434 1.1947 0.8235 2.1512  5.2103   NA   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi      8.2662 1.7107 5.1762 8.2869 11.7010   NA   6</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

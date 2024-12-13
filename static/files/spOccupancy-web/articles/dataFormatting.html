@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -81,7 +81,7 @@ Doser</h4>
             
             <h4 data-toc-skip class="date">2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/doserjef/spOccupancy/blob/HEAD/vignettes/dataFormatting.Rmd" class="external-link"><code>vignettes/dataFormatting.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/biodiverse/spOccupancy/blob/HEAD/vignettes/dataFormatting.Rmd" class="external-link"><code>vignettes/dataFormatting.Rmd</code></a></small>
       <div class="d-none name"><code>dataFormatting.Rmd</code></div>
     </div>
 
@@ -98,14 +98,14 @@ the necessary format for <code>spOccupancy</code>. However, I hope this
 vignette can help provide some guidance on how to take raw data and
 efficiently reformat it for use in <code>spOccupancy</code>. Here I will
 focus solely on data preparation. For full details on the basic
-<code>spOccupancy</code> functionality, please see the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+<code>spOccupancy</code> functionality, please see the <a href="https://www.doserlab.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
 vignette</a>.</p>
 <p>First we load <code>spOccupancy</code> as well as two
 <code>tidyverse</code> packages that we will use for manipulating our
 data sets into the necessary format for <code>spOccupancy</code>
 (<code>dplyr</code> and <code>lubridate</code>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.jeffdoser.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.doserlab.com/files/spoccupancy-web" class="external-link">spOccupancy</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -544,7 +544,7 @@ objects together into a single list.</p>
 (<code>y</code>, <code>occ.covs</code>, <code>det.covs</code>, and
 <code>coords</code>). The data are now ready to go, and below I fit a
 spatially-explicit multi-species occupancy model to verify that (see the
-<a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
+<a href="https://www.doserlab.com/files/spoccupancy-web/articles/modelfitting" class="external-link">introductory
 vignette</a> for more details on model-fitting functions).</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out.msom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spMsPGOcc.html">spMsPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, </span>

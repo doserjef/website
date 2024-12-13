@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -56,7 +56,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for spIntPGOcc</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">X.0</span>, <span class="va">coords.0</span>, n.omp.threads <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>        n.report <span class="op">=</span> <span class="fl">100</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>        n.report <span class="op">=</span> <span class="fl">100</span>, ignore.RE <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">'occupancy'</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,6 +90,15 @@
 
   <dt>n.report</dt>
 <dd><p>the interval to report sampling progress.</p></dd>
+
+
+  <dt>ignore.RE</dt>
+<dd><p>logical value that specifies whether or not to remove random occurrence (or detection if <code>type = 'detection'</code>) effects from the subsequent predictions. If <code>TRUE</code>, random effects will be included. If <code>FALSE</code>, random effects will be set to 0 and predictions will only be generated from the fixed effects.</p></dd>
+
+
+  <dt>type</dt>
+<dd><p>a quoted keyword indicating what type of prediction to produce. Valid keywords are 'occupancy' to predict latent occupancy probability and latent occupancy values (this is the default), or 'detection' to predict detection probability given new values of detection covariates. Note that prediction of detection probability is not currently supported for integrated models.</p></dd>
+
 
 
   <dt>...</dt>
@@ -212,7 +221,8 @@
 <span class="r-in"><span><span class="va">n.batch</span> <span class="op">&lt;-</span> <span class="fl">40</span></span></span>
 <span class="r-in"><span><span class="co"># Batch length</span></span></span>
 <span class="r-in"><span><span class="va">batch.length</span> <span class="op">&lt;-</span> <span class="fl">25</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that this is just a test case and more iterations/chains may need to </span></span></span>
+<span class="r-in"><span><span class="co"># be run to ensure convergence.</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="spIntPGOcc.html">spIntPGOcc</a></span><span class="op">(</span>occ.formula <span class="op">=</span> <span class="op">~</span> <span class="va">occ.cov</span>, </span></span>
 <span class="r-in"><span>                  det.formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>f.1 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.1.1</span>, </span></span>
 <span class="r-in"><span>                                     f.2 <span class="op">=</span> <span class="op">~</span> <span class="va">det.cov.2.1</span> <span class="op">+</span> <span class="va">det.cov.2.2</span>, </span></span>
@@ -246,7 +256,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Model description</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NNGP Integrated Occupancy Model with Polya-Gamma latent</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NNGP Spatial Integrated Occupancy Model with Polya-Gamma latent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> variable fit with 54 sites.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Integrating 4 occupancy data sets.</span>
@@ -260,7 +270,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Using the spherical spatial correlation model.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Using 5 nearest neighbors.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Source compiled with OpenMP support and model fit using 1 thread(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -298,37 +307,54 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Thinning Rate: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Chains: 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Posterior Samples: 500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0055</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Run Time (min): 0.0034</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Occurrence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD   2.5%    50%  97.5% Rhat ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.2798 0.4286 -0.581 0.2637 1.1541   NA  83</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> occ.cov     0.6526 0.4421 -0.173 0.6305 1.5651   NA 161</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 1 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.7223 0.6498 -0.5366 0.7176 1.9761   NA 358</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.1.1 0.7057 0.6615 -0.5103 0.6900 1.9990   NA 311</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 2 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Mean     SD    2.5%    50%  97.5% Rhat ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.6186 0.4118 -0.1791 0.6143 1.4116   NA 248</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.1 0.4807 0.3914 -0.2465 0.4852 1.2507   NA 345</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.2.2 0.3613 0.5043 -0.5803 0.3474 1.3753   NA 354</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 3 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%  97.5% Rhat ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.1296 0.3552 -0.8130 -0.1452 0.5566   NA 317</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.3.1  1.0606 0.4334  0.2623  1.0484 1.9994   NA 273</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection (logit scale): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data source 4 Detection</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects (logit scale):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Mean     SD    2.5%     50%   97.5% Rhat ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.6703 0.5981 -1.8455 -0.6418  0.5291   NA 266</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.1  1.0340 0.7884 -0.3737  0.9873  2.6922   NA 183</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.2 -0.2900 0.6176 -1.6070 -0.2510  0.8572   NA 327</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> det.cov.4.3 -1.7656 0.7798 -3.3158 -1.7166 -0.4113   NA 146</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial Covariance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Mean     SD   2.5%     50%   97.5% Rhat ESS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sigma.sq  2.2455 2.1599 0.3612  1.5353  7.4709   NA  13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> phi      18.0089 7.3563 5.0786 17.7260 29.5405   NA  47</span>

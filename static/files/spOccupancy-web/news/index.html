@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spOccupancy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/spOccupancy/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/biodiverse/spOccupancy/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -44,11 +44,43 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/doserjef/spOccupancy/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/biodiverse/spOccupancy/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.3" id="spoccupancy-073">spOccupancy 0.7.3<a class="anchor" aria-label="anchor" href="#spoccupancy-073"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.0" id="spoccupancy-080">spOccupancy 0.8.0<a class="anchor" aria-label="anchor" href="#spoccupancy-080"></a></h2>
+<ul><li>For queries on anything related to <code>spOccupancy</code> (and <code>spAbundance</code>), please use the new <a href="https://groups.google.com/g/spocc-spabund-users" class="external-link">spOccupancy/spAbundance mailing list</a>.</li>
+<li>New functionality for fitting multi-season, single-species integrated occupancy models. The function <code><a href="../reference/tIntPGOcc.html">tIntPGOcc()</a></code> fits a non-spatial multi-season integrated occupancy model, <code><a href="../reference/stIntPGOcc.html">stIntPGOcc()</a></code> fits a spatial multi-season integrated occupancy model, and <code><a href="../reference/svcTIntPGOcc.html">svcTIntPGOcc()</a></code> fits a spatially-varying coefficient multi-season occupancy model. Random intercepts are supported in both the occurrence and detection formulas for both model types. I am behind on adding vignettes for some of the newer functionality (sorry!), but adding a vignette for this new functionality is on my todo list. If interested in using these functions and you’re having problems fitting them, please send your questions to the mailing list.</li>
+<li>Added in functionality for both occupancy and detection random intercepts in single-species single-season integrated models (<code><a href="../reference/intPGOcc.html">intPGOcc()</a></code> and <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code>) using <code>lme4</code> syntax (e.g., <code>(1 | observer)</code> for a random effect of observer).</li>
+<li>
+<code>simTIntPGOcc()</code> is a new function that allows simulation of single-species multi-season detection-nondetection data from multiple data sources.</li>
+<li>Updated <code>simMsIntPGOcc()</code> to now include simulation of data sets with spatially-varying coefficients and unstructured random effects on both occurrence and detection.</li>
+<li>Fixed a bug in the k-fold cross-validation for spatial integrated occupancy models (NNGP models only) that could lead to incorrect model deviance results under certain situations depending on how the spatial coordinates were ordered on the user-side relative to how they are re-ordered when fitting the model. If using <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code> with <code>NNGP = TRUE</code> and using cross-validation, I suggest re-running the analysis. Apologies for the inconvenience.</li>
+<li>Added in a <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> function to extract occupancy and detection residuals following the approach of <a href="https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/ecy.2703" class="external-link">Wilson et al. (2019)</a> for single-season, single-species occupancy models (functions <code><a href="../reference/PGOcc.html">PGOcc()</a></code>, <code><a href="../reference/spPGOcc.html">spPGOcc()</a></code>, and <code><a href="../reference/svcPGOcc.html">svcPGOcc()</a></code>). I’m hoping to implement this for all model functions and improve GoF functionality. If anyone has any interest in helping out with this, then please let me know!</li>
+<li>
+<code><a href="../reference/waicOcc.html">waicOcc()</a></code> for integrated single-species models is now substantially faster.</li>
+<li>
+<code><a href="../reference/updateMCMC.html">updateMCMC()</a></code> now works with lfJSDM.</li>
+<li>Fixed a bug in <code><a href="../reference/updateMCMC.html">updateMCMC()</a></code> that prevented it from working with <code><a href="https://www.doserlab.com/files/spabundance-web/reference/msAbund.html" class="external-link">spAbundance::msAbund()</a></code> when there were random effects in the model. Also added the <code>save.fitted</code> argument to <code><a href="../reference/updateMCMC.html">updateMCMC()</a></code> to allow it to work with <code>msAbund()</code> and not save the replicate/fitted data values in cases where the amount of RAM is an important consideration.</li>
+<li>Added the <code>include.w</code> argument in the <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> function for <code><a href="../reference/lfMsPGOcc.html">lfMsPGOcc()</a></code> models that enables predicting without the latent factors. This also allows prediction to occur without needing to supply the coordinates, which is useful when generating conditional probability plots.</li>
+<li>Updated <code><a href="../reference/lfJSDM.html">lfJSDM()</a></code> to give an error more quickly when there are memory limitations.</li>
+<li>Fixed a bug in all multi-season, multi-species models that caused the model to crash upon initialization of the MCMC algorithm when data were supplied in a way such that for a given data set, the maximum number of times a specific site was sampled was less than the total number of “replicate periods” (i.e., the fourth dimension of the data list). This may happen when the “replicates” are structured as specific time periods (i.e., weeks, years) instead of a specific “replicate”. Thanks to José Ribeiro for bringing this to my attention.</li>
+<li>Fixed a bug in multi-species cross-validation that could cause an error when using a smaller number of threads for cross-validation compared to the number of folds used.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.6" id="spoccupancy-076">spOccupancy 0.7.6<a class="anchor" aria-label="anchor" href="#spoccupancy-076"></a></h2><p class="text-muted">CRAN release: 2024-04-19</p>
+<ul><li>Fixed a memory problem in the saving of the tuning values for <code>svcTPGOcc</code> models that required updating v0.7.3 on CRAN to pass valgrind checks, as well as a memory leak in the calculation of the nearest neighbors, and a small problem with the DESCRIPTION file for including on CRAN.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.5" id="spoccupancy-075">spOccupancy 0.7.5<a class="anchor" aria-label="anchor" href="#spoccupancy-075"></a></h2>
+<ul><li>See v0.7.6</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.4" id="spoccupancy-074">spOccupancy 0.7.4<a class="anchor" aria-label="anchor" href="#spoccupancy-074"></a></h2>
+<ul><li>See v0.7.5</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.3" id="spoccupancy-073">spOccupancy 0.7.3<a class="anchor" aria-label="anchor" href="#spoccupancy-073"></a></h2><p class="text-muted">CRAN release: 2024-03-28</p>
 <ul><li>Fixed a problem that could arise when calculating Rhat in all models when running multiple chains (but usually only happened in multispecies models) when there was a high amount of correlation between parameter estimates. This would lead to the model running completely, but then failing after all chains have been run. This most often occurred when fitting a multispecies model with a lot of rare species. Thanks to Marc Kery for bringing this to my attention.</li>
 <li>Added in a check at the top of all model fitting functions to return an error when the number of posterior samples saved based on the MCMC criteria (<code>n.batch</code>, <code>batch.length</code>, <code>n.samples</code>, <code>n.burn</code>, <code>n.thin</code>, <code>n.chains</code>) are specified in a way that leads to a non-integer value. In such situations, models would previously run and return without an error, but sometimes the last posterior sample in any given chain could have widely inaccurate values, or values that prevented subsequent functions from working. Thanks to Wendy Leuenberger and Colin Swider for bringing this to my attention.</li>
 <li>Added in functionality for fitting spatially-explicit models where the spatial random effects (or spatially varying coefficients) are not specified at the individual site, but rather are specified at a larger spatial resolution. This is accomplished using a new component of the <code>data</code> list supplied to model fitting functions called <code>grid.index</code>. This is useful for data sets where there is some sort of nested structuring among the data collection protocol, such that you may wish to specify the spatial random effects at a lower resolution than each individual location. Further, it can be particularly useful for SVC models where you only want to specify nonstationarity at a lower spatial resolution (e.g., across a set of grid cells). This is currently implemented for the following functions: <code>spPGOcc</code>, <code>sfMsPGOcc</code>, <code>stMsPGOcc</code>, <code>stPGOcc</code>, <code>svcPGOcc</code>, <code>svcTMsPGOcc</code>, <code>svcTPGOcc</code>. See the documentation for a given model function for how to specify this. I am hoping to eventually write up a small example that shows how to do this, but for now documentation is fairly limited to just the manual pages for each function. Feel free to contact me if you want to use this functionality and have any questions.</li>
@@ -58,11 +90,12 @@
 <li>Wrote a new “vignette” (really more of a blog post) on some recommendations to help improve interpretability of inferences in SVC models.</li>
 <li>Fixed a few typos in the MCMC sampler vignettes for factor models and SVC models.</li>
 <li>Fixed a bug that prevented cross-validation from working properly in multi-species models when setting <code>k.fold.only = TRUE</code>. Thanks to Zack Steel for pointing this out.</li>
+<li>Fixed a typo in the generation of initial values for latent unstructured random effects in all model functions. The typo had no major ramifications, if anything it would have just led to slower convergence, as it resulted in very large (or very small) initial values for the latent random effects that are not really viable on the logit scale.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.2" id="spoccupancy-072">spOccupancy 0.7.2<a class="anchor" aria-label="anchor" href="#spoccupancy-072"></a></h2><p class="text-muted">CRAN release: 2023-11-01</p>
 <ul><li>Added in functionality for using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function to generate simple traceplots using <code>spOccupancy</code> model objects. Details can be found in the help page (e.g., for <code>spPGOcc</code> models, type <code><a href="../reference/summary.spPGOcc.html">?plot.spPGOcc</a></code> in the console).<br></li>
-<li>Not an update to the package, but a <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/identifiability" class="external-link">new vignette</a> has been posted on testing model identifiability using <code>spOccupancy</code>. Thanks to Sara Stoudt for writing this!</li>
+<li>Not an update to the package, but a <a href="https://doserlab.com/files/spoccupancy-web/articles/identifiability" class="external-link">new vignette</a> has been posted on testing model identifiability using <code>spOccupancy</code>. Thanks to Sara Stoudt for writing this!</li>
 <li>Added in the ability to fit <code><a href="../reference/lfJSDM.html">lfJSDM()</a></code> without residual species correlations by setting <code>n.factors = 0</code>. This is a model analogous to <code><a href="../reference/msPGOcc.html">msPGOcc()</a></code>, but without the detection component.</li>
 <li>Added in the <code>shared.spatial</code> argument to <code><a href="../reference/sfJSDM.html">sfJSDM()</a></code>. If set to <code>TRUE</code>, this argument estimates a common spatial process for all species instead of using the default spatial factor modeling approach.</li>
 <li>Fixed a bug in <code><a href="../reference/predict.svcTMsPGOcc.html">predict.svcTMsPGOcc()</a></code> when same variable was used for a fixed and random effect (e.g., if including a linear year trend and also an unstructured random intercept for year). Thanks to Liam Kendall for pointing this out.</li>
@@ -96,7 +129,7 @@
 <li>Updated <code><a href="../reference/getSVCSamples.html">getSVCSamples()</a></code> to eliminate errors that prevented the function from working under certain circumstances depending on which covariates in the design matrix were modelled as spatially-varying coefficients.</li>
 <li>Updated <code><a href="../reference/tPGOcc.html">tPGOcc()</a></code> and <code><a href="../reference/stPGOcc.html">stPGOcc()</a></code> to eliminate an error that occurred when trying to run these models with single-visit data sets.</li>
 <li>Added in the <code>mis.spec.type</code> and <code>scale.param</code> arguments to the <code><a href="../reference/simTOcc.html">simTOcc()</a></code> function to simulate multi-season detection-nondetection data under varying forms of model mis-specification. See <code><a href="../reference/simTOcc.html">simTOcc()</a></code> documentation for detials. Thanks to Sara Stoudt for her help with this.</li>
-<li>Updated a typo in the MCMC sampler documentation for multi-species occupancy models. Specifically, the <strong>T</strong> in the mean component of Equations 23 and 24 from the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/mcmcSamplers.pdf" class="external-link">MCMC samplers vignette</a> was incorrect, and instead is now correctly <strong>T</strong><span class="math inline"><sup>−1</sup></span>. Similarly, Equations 9 and 10 were updated in the <a href="https://www.jeffdoser.com/files/spoccupancy-web/articles/mcmcFactorModels.pdf" class="external-link">MCMC samplers for factor models vignette</a>. Note that these were just typos in the vignettes, the underlying models are correct.</li>
+<li>Updated a typo in the MCMC sampler documentation for multi-species occupancy models. Specifically, the <strong>T</strong> in the mean component of Equations 23 and 24 from the <a href="https://doserlab.com/files/spoccupancy-web/articles/mcmcSamplers.pdf" class="external-link">MCMC samplers vignette</a> was incorrect, and instead is now correctly <strong>T</strong><span class="math inline"><sup>−1</sup></span>. Similarly, Equations 9 and 10 were updated in the <a href="https://doserlab.com/files/spoccupancy-web/articles/mcmcFactorModels.pdf" class="external-link">MCMC samplers for factor models vignette</a>. Note that these were just typos in the vignettes, the underlying models are correct.</li>
 <li>Fixed a bug that prevented <code><a href="../reference/ppcOcc.html">ppcOcc()</a></code> from working when there were only site-level random effects on detection. This also sometimes caused problems with cross-validation functionality as well. Thanks to Jose Luis Mena for bringing this to my attention.</li>
 </ul></div>
     <div class="section level2">
@@ -114,14 +147,14 @@
 <ul><li>New functionality for fitting spatially-varying coefficient occupancy models. The function <code><a href="../reference/svcPGOcc.html">svcPGOcc()</a></code> fits a single-season spatially-varying coefficient model, and <code><a href="../reference/svcTPGOcc.html">svcTPGOcc()</a></code> fits a multi-season spatially-varying coefficient model. We also include the functions <code><a href="../reference/svcPGBinom.html">svcPGBinom()</a></code> and <code><a href="../reference/svcTPGBinom.html">svcTPGBinom()</a></code> for fitting spatially-varying coefficient generalized linear models when ignoring imperfect detection. We also include the helper function <code><a href="../reference/getSVCSamples.html">getSVCSamples()</a></code> to more easily extract the SVC samples from the resulting model objects if they are desired.</li>
 <li>Updated the underlying <code>C++</code> code to reduce run times for models that include unstructured random intercepts.</li>
 <li>Added the <code>k.fold.only</code> argument to all model-fitting functions, which allows users to only perform k-fold cross-validation instead of having to run the model first with the entire data set.</li>
-<li>Adjusted how random intercepts in the detection model were being calculated, which resulted in unnecessary massive objects when fitting a model with a large number of random effect levels and spatial locations. See <a href="https://github.com/doserjef/spOccupancy/issues/14" class="external-link">GitHub issue 14</a>.</li>
-<li>Fixed a bug that prevented prediction from working for multi-species models when <code>X.0</code> was supplied as a data frame and not a matrix. See <a href="https://github.com/doserjef/spOccupancy/issues/13" class="external-link">GitHub issue 13</a>.</li>
-<li>Fixed an error that occurred when the detection-nondetection data were specified in a specific way. See <a href="https://github.com/doserjef/spOccupancy/issues/12" class="external-link">GitHub issue 12</a>.</li>
+<li>Adjusted how random intercepts in the detection model were being calculated, which resulted in unnecessary massive objects when fitting a model with a large number of random effect levels and spatial locations. See <a href="https://github.com/biodiverse/spOccupancy/issues/14" class="external-link">GitHub issue 14</a>.</li>
+<li>Fixed a bug that prevented prediction from working for multi-species models when <code>X.0</code> was supplied as a data frame and not a matrix. See <a href="https://github.com/biodiverse/spOccupancy/issues/13" class="external-link">GitHub issue 13</a>.</li>
+<li>Fixed an error that occurred when the detection-nondetection data were specified in a specific way. See <a href="https://github.com/biodiverse/spOccupancy/issues/12" class="external-link">GitHub issue 12</a>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="spoccupancy-040">spOccupancy 0.4.0<a class="anchor" aria-label="anchor" href="#spoccupancy-040"></a></h2><p class="text-muted">CRAN release: 2022-07-13</p>
 <ul><li>Major new functionality for fitting multi-season (i.e., spatio-temporal) single-species occupancy models using the functions <code><a href="../reference/tPGOcc.html">tPGOcc()</a></code> and <code><a href="../reference/stPGOcc.html">stPGOcc()</a></code>.</li>
-<li>Fixed a bug in calculation of the detection probability values in <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code> functions for all spOccupancy model objects. See <a href="https://github.com/doserjef/spOccupancy/issues/10" class="external-link">this Github issue</a> for more details.</li>
+<li>Fixed a bug in calculation of the detection probability values in <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code> functions for all spOccupancy model objects. See <a href="https://github.com/biodiverse/spOccupancy/issues/10" class="external-link">this Github issue</a> for more details.</li>
 <li>Fixed an error that occurred when predicting for multi-species models and setting <code>ignore.RE = TRUE</code>.<br></li>
 <li>Fixed other small bugs that caused model fitting functions to break under specific circumstances.</li>
 </ul></div>
@@ -135,7 +168,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="spoccupancy-031">spOccupancy 0.3.1<a class="anchor" aria-label="anchor" href="#spoccupancy-031"></a></h2><p class="text-muted">CRAN release: 2022-04-13</p>
-<ul><li>Fixed two small problems with <code><a href="../reference/intPGOcc.html">intPGOcc()</a></code> and <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code> that were accidentally introduced in v0.3.0. See <a href="https://github.com/doserjef/spOccupancy/issues/8" class="external-link">this Github issue</a> for more details.</li>
+<ul><li>Fixed two small problems with <code><a href="../reference/intPGOcc.html">intPGOcc()</a></code> and <code><a href="../reference/spIntPGOcc.html">spIntPGOcc()</a></code> that were accidentally introduced in v0.3.0. See <a href="https://github.com/biodiverse/spOccupancy/issues/8" class="external-link">this Github issue</a> for more details.</li>
 <li>Adapted C/C++ code to properly handle characters strings when calling Fortran BLAS/LAPACK routines following the new requirements for R 4.2.0.</li>
 </ul></div>
     <div class="section level2">
