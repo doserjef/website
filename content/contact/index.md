@@ -8,12 +8,9 @@ sections:
   
   - block: contact
     content:
-      title: Open Opportunity 
-      subtitle: Postdoctoral Researcher
+      title: Open positions 
       text: |-
-        The Statistical Ecology and Forest Science Lab in the Department of Forestry and Environmental Resources (FER) at North Carolina State University seeks a Postdoctoral Research Scholar in Quantitative Ecology or Quantitative Forest Science. The postdoctoral researcher will contribute to the development and application of new quantitative tools for the analysis of large spatio-temporal forest inventory and/or wildlife data. The position provides a unique opportunity to advance quantitative research that has immediate application to forest management and conservation. The appointment is for one year with a possibility of extension depending on availability of funds. There will be numerous opportunities to collaborate with researchers across NC State, government agencies (US Forest Service and National Park Service), as well as other academic institutions. Start date is flexible, but no later than June 30, 2025. 
-
-        For further details and application instructions, see the job posting at https://jobs.ncsu.edu/postings/209091. Please email Jeff Doser (jwdoser@ncsu.edu) with any questions.
+       I do not currently have any funded opportunities for graduate students and/or postdocs to join my lab. If you are a postdoc and are interested in working on a project with me, I am always happy to help with postdoctoral fellowship applications (e.g., [NSF PRFB](https://new.nsf.gov/funding/opportunities/prfb-postdoctoral-research-fellowships-biology), [Smith Conservation Fellows](https://conbio.org/mini-sites/smith-fellows)), so feel free to reach out at my email below! If you are an undergraduate student at NC State and are interested in doing research in my lab group, please shoot me an email and we can discuss potential projects! 
     design:
       columns: '1'
 
