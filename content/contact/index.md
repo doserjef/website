@@ -18,7 +18,7 @@ sections:
     content:
       title: Contact Information 
       email: jwdoser@ncsu.edu
-      phone: (585) 683-4170
+      phone: (919) 513-1248
       # address:
       #   street: 450 Serra Mall
       #   city: Stanford
