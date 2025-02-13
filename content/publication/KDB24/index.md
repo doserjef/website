@@ -4,13 +4,13 @@ authors:
 - Kenneth F. Kellner 
 - Jeffrey W. Doser
 - Jerrold L. Belant 
-date: "2024-11-20T00:00:00Z"
+date: "2025-02-13T00:00:00Z"
 doi: ""
 featured: false
 publication: "Ecology"
 publication_short: ""
 publication_types: ["article-journal"]
-publishDate: "2024-11-20T00:00:00Z"
+publishDate: "2025-01-01T00:00:00Z"
 slides: ''
 summary: ""
 title: "Functional R code is rare in species distribution and abundance papers"
