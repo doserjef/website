@@ -11,7 +11,7 @@ authors:
 date: "2025-02-25T00:00:00Z"
 doi: ""
 featured: false
-publication: "Ecological Letters"
+publication: "Ecology Letters"
 publication_short: ""
 publication_types: ["article-journal"]
 publishDate: "2025-02-25T00:00:00Z"
