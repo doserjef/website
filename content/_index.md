@@ -43,14 +43,14 @@ sections:
       filters:
         author: ''
         category: ''
-        exclude_featured: false
+        exclude_featured: 
         publication_type: ''
         tag: ''
       offset: 0
       order: desc
       page_type: news 
     design:
-      view: showcase
+      view: 
       columns: '1'
   
   - block: markdown
