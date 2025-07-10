@@ -31,7 +31,7 @@ education:
     year: 2016
   
 user_groups:
-- Postdoctoral Research Scholars
+- Current Lab Members 
 
 ---
 

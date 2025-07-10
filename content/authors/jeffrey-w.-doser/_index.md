@@ -53,7 +53,7 @@ social:
   link: https://www.doserlab.com/files/Doser_CV.pdf
   
 user_groups:
-- Principal Investigator
+- Principal Investigator 
 
 ---
 
