@@ -5,61 +5,45 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Example case study from Stanke, Finley, Domke (2021)">
 <title>Estimating temporal trends in merchantable wood volume • rFIA</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Estimating temporal trends in merchantable wood volume">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Estimating temporal trends in merchantable wood volume">
+<meta name="description" content="Example case study from Stanke, Finley, Domke (2021)">
 <meta property="og:description" content="Example case study from Stanke, Finley, Domke (2021)">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">rFIA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/index.html">Articles</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/doserjef/rFIA/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/doserjef/rFIA/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -68,7 +52,8 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Estimating temporal trends in merchantable wood volume</h1>
+
+      <h1>Estimating temporal trends in merchantable wood volume</h1>
                         <h4 data-toc-skip class="author">Hunter
 Stanke</h4>
             
@@ -183,7 +168,7 @@ Maine, and save these data to a local directory on our computer
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Download/save FIA data for Maine (ME)</span></span>
 <span><span class="fu">rFIA</span><span class="fu">::</span><span class="fu"><a href="../reference/getFIA.html">getFIA</a></span><span class="op">(</span>states <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'ME'</span><span class="op">)</span>,</span>
-<span>             dir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'vol/data/FIA/'</span><span class="op">)</span>,</span>
+<span>             dir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'vol/data/FIA/'</span><span class="op">)</span>,</span>
 <span>             load <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -201,7 +186,7 @@ overloading our computer’s RAM.</p>
 data into memory immediately by specifying <code>inMemory=TRUE</code>
 (default) in the call to <code><a href="../reference/readFIA.html">readFIA()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu">rFIA</span><span class="fu">::</span><span class="fu"><a href="../reference/readFIA.html">readFIA</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'volume/data/FIA'</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">db</span> <span class="op">&lt;-</span> <span class="fu">rFIA</span><span class="fu">::</span><span class="fu"><a href="../reference/readFIA.html">readFIA</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">'volume/data/FIA'</span><span class="op">)</span>,</span>
 <span>                    inMemory <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>where <code>dir</code> references the directory where we have saved
 the FIA data we downloaded with <code><a href="../reference/getFIA.html">getFIA()</a></code> (example
@@ -347,11 +332,19 @@ intercept term:</p>
 <h3 id="setting-priors">Setting priors<a class="anchor" aria-label="anchor" href="#setting-priors"></a>
 </h3>
 <p>Next we set priors for our population-level regression coefficients
-(<span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>), and their associated among (<span class="math inline">\(\sigma_{\alpha_{h}}^2\)</span> and <span class="math inline">\(\sigma_{\beta_{h}}^2\)</span>) and within stratum
-variances (<span class="math inline">\(\sigma_{\alpha_{hi}}^2\)</span>
-and <span class="math inline">\(\sigma_{\beta_{hi}}^2\)</span>), and for
-the residual variance of the model. All priors have been designed to be
-weakly informative:</p>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>),
+and their associated among
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>σ</mi><msub><mi>α</mi><mi>h</mi></msub><mn>2</mn></msubsup><annotation encoding="application/x-tex">\sigma_{\alpha_{h}}^2</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>σ</mi><msub><mi>β</mi><mi>h</mi></msub><mn>2</mn></msubsup><annotation encoding="application/x-tex">\sigma_{\beta_{h}}^2</annotation></semantics></math>)
+and within stratum variances
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>σ</mi><msub><mi>α</mi><mrow><mi>h</mi><mi>i</mi></mrow></msub><mn>2</mn></msubsup><annotation encoding="application/x-tex">\sigma_{\alpha_{hi}}^2</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>σ</mi><msub><mi>β</mi><mrow><mi>h</mi><mi>i</mi></mrow></msub><mn>2</mn></msubsup><annotation encoding="application/x-tex">\sigma_{\beta_{hi}}^2</annotation></semantics></math>),
+and for the residual variance of the model. All priors have been
+designed to be weakly informative:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">priors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>   <span class="co"># Population-level regression coeffients</span></span>
@@ -423,8 +416,11 @@ wood volume on an annual basis.</p>
 coefficients from our model. The code for this step may appear
 complicated, but is required to get posterior samples into a tidy
 format, where each row represents a single posterior sample draw of
-<span class="math inline">\(\alpha_h\)</span> or <span class="math inline">\(\beta_h\)</span>, and there are a total of 3000
-posterior samples (rows) for each parameter.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>h</mi></msub><annotation encoding="application/x-tex">\alpha_h</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>h</mi></msub><annotation encoding="application/x-tex">\beta_h</annotation></semantics></math>,
+and there are a total of 3000 posterior samples (rows) for each
+parameter.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod, <span class="at">summary =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>STRATUM_CN[,,<span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
@@ -466,12 +462,17 @@ interest:</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We then join this table containing stratum weights
 (<code>design.info</code>) onto our data object containing posterior
-samples of <span class="math inline">\(\alpha_h\)</span> or <span class="math inline">\(\beta_h\)</span> (<code>params</code>). We take a
-weighted average of <span class="math inline">\(\alpha_h\)</span> and
-<span class="math inline">\(\beta_h\)</span> within estimation units to
-generate our design-adjusted population-level regression coefficients
-for each estimation unit (where stratum weights define relative weights
-in the weighted average).</p>
+samples of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>h</mi></msub><annotation encoding="application/x-tex">\alpha_h</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>h</mi></msub><annotation encoding="application/x-tex">\beta_h</annotation></semantics></math>
+(<code>params</code>). We take a weighted average of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>h</mi></msub><annotation encoding="application/x-tex">\alpha_h</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>h</mi></msub><annotation encoding="application/x-tex">\beta_h</annotation></semantics></math>
+within estimation units to generate our design-adjusted population-level
+regression coefficients for each estimation unit (where stratum weights
+define relative weights in the weighted average).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Adjust population-level coefficients with design weights</span></span>
 <span><span class="va">adj.coef</span> <span class="op">&lt;-</span> <span class="va">params</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -561,28 +562,26 @@ hectare:</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>BOLE_CM_TOTAL <span class="op">=</span> <span class="va">BOLE_CF_TOTAL</span> <span class="op">/</span> <span class="fl">35.315</span><span class="op">*</span><span class="fl">2.471</span>,</span>
 <span>                BOLE_CM_TOTAL_VAR <span class="op">=</span> <span class="va">BOLE_CF_TOTAL_VAR</span> <span class="op">/</span> <span class="op">(</span><span class="fl">35.315</span><span class="op">*</span><span class="fl">2.471</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by <a href="https://hunter-stanke.com/" class="external-link">Hunter Stanke</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>, <a href="https://doserlab.com/" class="external-link">Jeffrey Doser</a>.</p>
+  <p>Developed by <a href="https://doserlab.com/" class="external-link">Jeffrey Doser</a>, <a href="https://hunter-stanke.com/" class="external-link">Hunter Stanke</a>, <a href="https://www.finley-lab.com/" class="external-link">Andrew Finley</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
