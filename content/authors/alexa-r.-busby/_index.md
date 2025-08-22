@@ -15,8 +15,6 @@ organizations:
 # Short bio (displayed in user profile at end of posts)
 bio: 
 # Interests to display
-# Email 
-email: jwdoser@ncsu.edu 
 # Education
 education:
   courses:
