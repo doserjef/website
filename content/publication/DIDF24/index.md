@@ -5,13 +5,13 @@ authors:
 - Malcolm S. Itter
 - Grant M. Domke
 - Andrew O. Finley
-date: "2025-12-01T00:00:00Z"
+date: "2025-10-31T00:00:00Z"
 doi: ""
 featured: false
 publication: "Forest Ecology and Management: https://doi.org/10.1016/j.foreco.2025.123112"
 publication_short: ""
 publication_types: ["article-journal"]
-publishDate: "2025-12-01T00:00:00Z"
+publishDate: "2025-10-31T00:00:00Z"
 slides: ''
 summary: ''
 title: "Multivariate spatial models for small area estimation of species-specific forest inventory parameters"
