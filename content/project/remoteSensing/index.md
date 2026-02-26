@@ -1,5 +1,5 @@
 ---
-date: "2024-07-01T00:00:00Z"
+date: "2026-01-10T00:00:00Z"
 external_link: ""
 image:
   caption:

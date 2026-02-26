@@ -1,6 +1,6 @@
 ---
 # Leave the homepage title empty to use the site title
-title: Statistical Ecology and Forest Science Lab
+title: SEFS Lab 
 date: 2024-07-09
 type: landing
 
@@ -11,7 +11,7 @@ sections:
         Statistical Ecology and Forest Science Lab
       text: |
         
-        The **Statistical Ecology and Forest Science Lab** is led by Jeff Doser in the Department of Forestry and Environmental Resources at North Carolina State University. The lab develops state-of-the-art statistical models and open-source software tools to inform forest and wildlife management and conservation objectives. 
+        The **Statistical Ecology and Forest Science (SEFS) Lab** is led by Jeff Doser in the Department of Forestry and Environmental Resources at North Carolina State University. The lab develops state-of-the-art statistical models and open-source software tools to inform forest and wildlife management and conservation objectives. 
     design:
       columns: '1'
   

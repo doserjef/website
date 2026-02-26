@@ -17,7 +17,7 @@ featured: false
 publication: "Ecology https://doi.org/10.1002/ecy.4283"
 publication_short: ""
 publication_types:
-- "2"
+- "article-journal"
 publishDate: "2024-05-09T00:00:00Z"
 slides: ''
 summary: "We review the history of statistical ecology papers published in the journal Ecology."
