@@ -8,9 +8,23 @@ sections:
   
   - block: contact
     content:
-      title: Open positions 
+      title: M.S. Opportunity in Forestry Software Development and Biometrics (Fall 2026) 
       text: |-
-       I do not currently have any funded opportunities for graduate students and/or postdocs to join my lab. If you are a postdoc and are interested in working on a project with me, I am always happy to help with postdoctoral fellowship applications (e.g., [NSF PRFB](https://new.nsf.gov/funding/opportunities/prfb-postdoctoral-research-fellowships-biology), [Smith Conservation Fellows](https://conbio.org/mini-sites/smith-fellows)), so feel free to reach out at my email below! If you are an undergraduate student at NC State and are interested in doing research in my lab group, please shoot me an email and we can discuss potential projects! 
+        The Statistical Ecology and Forest Science Lab in the Department of Forestry and Envrionmental Resources at North Carolina State University is seeking a highly motivated M.S. student for the Fall 2026 semester. The student will work under the supervision of Dr. Jeff Doser and will serve as a graduate student teaching assistant for one semester during the two-year program. The M.S. student’s research will encompass the topics of software development, forest biometrics, and forest management. In addition to leading research, the student will be expected to participate in regular collaborative meetings, present results at professional meetings and conferences, and publish findings in reputable academic journals. 
+
+        The M.S. student’s research will focus on updating and modernizing the Loblolly Decision Support System (LobDSS) software, a forestry decision support software tool for informing loblolly pine plantation management. While LobDSS has been widely used by practitioners across the U.S. South, it was written as software that is no longer supported on modern computers, which has the potential to render it completely defunct as operating systems continuously evolve. Software modernization of LobDSS will ensure it remains a viable tool for forestry practitioners for decades to come. This work will be done in collaboration with Dr. Rachel Cook and the [Forest Productivity Cooperative](https://www.forestproductivity.org/), and will provide numerous opportunities to form connections with private stakeholders across the U.S. South. 
+
+        **Location**: Raleigh, North Carolina with occasional travel to professional meetings and conferences. 
+
+        **Qualifications**: 
+          + A Bachelor's Degree in forestry, computer science, natural resources, data science, or a closely related field.
+          + Experience in computer programming with at least one of the following languages: Python, R, C, or C++. 
+          + Strong written and oral communication skills. 
+          + Must be a North Carolina resident at the time of enrollment.
+
+        **Funding and Timeline**: This M.S. Assistantship includes a competitive annual stipend, health insurance benefits, and coverage of tuition costs. Funding is guaranteed for 2 academic years. The start date is the Fall 2026 semester.
+
+        **Application**: Interested candidates should email Dr. Jeff Doser (jwdoser@ncsu.edu) with (1) a cover letter (maximum one page) describing your research interests, career goals, and past experience; (2) a resume/CV; and (3) contact information for three professional references. Candidates will be reviewed immediately upon receipt of the application with a final application deadline of April 24, 2026. 
     design:
       columns: '1'
 

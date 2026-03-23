@@ -5,7 +5,5 @@ image:
   focal_point: 'top'
 ---
 
-Check out our new paper on multivariate spatial models for small area estimation of species-specific forest parameters. We apply our modeling framework to estimate species-level biomass for the 20 most common tree species across the Southern US, which resulted in large precision improvements relative to classical approaches. See the [paper here](https://doserlab.com/publication/didf24/) for more details.
-
 Check out our new paper, led by Adham Ashton-Butt at the British Trust for Ornithology, and large-scale multi-taxa passive acoustic monitoring. We explore the potential of PAM for monitoring birds, bats, small mammals, and bush crickets in the Polesia region of Eastern Europe. Our approach provides a roadmap for collecting and processing large-scale, multi-taxa biodiversity data using passive acoustic monitoring. See the [paper here](https://doserlab.com/publication/ANDGKFPSA23/") for more details.
 
