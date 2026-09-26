@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Tips for working with big data • rFIA</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tips for working with big data">
 <meta name="description" content="Learn about how to work with big data using `rFIA`">
 <meta property="og:description" content="Learn about how to work with big data using `rFIA`">
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rFIA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,8 +57,8 @@
                         <h4 data-toc-skip class="author">Hunter Stanke,
 Jeffrey W. Doser</h4>
             
-            <h4 data-toc-skip class="date">2020 (last updated February
-6, 2025)</h4>
+            <h4 data-toc-skip class="date">2020 (last updated September
+23, 2026)</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/doserjef/rFIA/blob/HEAD/vignettes/bigData.Rmd" class="external-link"><code>vignettes/bigData.Rmd</code></a></small>
       <div class="d-none name"><code>bigData.Rmd</code></div>
@@ -105,95 +105,73 @@ biomass using our <code>Remote.FIA.Database</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Estimate biomass with Remote.FIA.Database</span></span>
 <span><span class="fu"><a href="../reference/biomass.html">biomass</a></span><span class="op">(</span>db <span class="op">=</span> <span class="va">fia</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 20 × 8</span></span></span>
-<span><span class="co">##     YEAR BIO_ACRE CARB_ACRE BIO_ACRE_SE CARB_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005     70.6      34.0        3.19         3.19         219         223</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>006     71.1      34.2        2.65         2.66         325         331</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>007     71.0      34.2        2.26         2.26         436         442</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>008     71.8      34.6        2.21         2.22         425         430</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>009     73.6      35.4        2.24         2.24         419         425</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>010     75.1      36.1        2.21         2.21         422         426</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>011     76.1      36.6        2.18         2.18         435         441</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>012     77.1      37.1        2.15         2.15         441         446</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     77.3      37.2        2.12         2.11         438         443</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>014     77.8      37.4        2.12         2.12         439         444</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">11</span>  <span style="text-decoration: underline;">2</span>015     78.3      37.7        2.10         2.10         442         448</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">12</span>  <span style="text-decoration: underline;">2</span>016     79.2      38.1        2.10         2.10         440         445</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">13</span>  <span style="text-decoration: underline;">2</span>017     79.4      38.2        2.11         2.11         438         443</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">14</span>  <span style="text-decoration: underline;">2</span>018     79.6      38.3        2.15         2.15         434         440</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">15</span>  <span style="text-decoration: underline;">2</span>019     80.4      38.7        2.26         2.26         430         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">16</span>  <span style="text-decoration: underline;">2</span>020     81.4      39.1        2.26         2.26         428         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">17</span>  <span style="text-decoration: underline;">2</span>021     81.3      39.1        2.36         2.36         426         435</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">18</span>  <span style="text-decoration: underline;">2</span>022     82.3      39.6        2.23         2.23         428         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">19</span>  <span style="text-decoration: underline;">2</span>023     79.1      38.1        2.40         2.40         409         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">20</span>  <span style="text-decoration: underline;">2</span>024     50.9      24.6        7.99         8.00          90         132</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1 more variable: N &lt;int&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 21 × 5</span></span></span>
+<span><span class="co">##     YEAR BIO_ACRE BIO_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005     70.6        3.19         219         223</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>006     71.1        2.65         325         331</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>007     71.0        2.26         436         442</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>008     71.8        2.21         425         430</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>009     73.6        2.24         419         425</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>010     75.1        2.21         422         426</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>011     76.1        2.18         435         441</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>012     77.1        2.15         441         446</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     77.3        2.12         438         443</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>014     77.8        2.12         439         444</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 11 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># All the extra goodies work the same:</span></span>
 <span><span class="co"># By species</span></span>
 <span><span class="fu"><a href="../reference/biomass.html">biomass</a></span><span class="op">(</span><span class="va">fia</span>, bySpecies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,276 × 11</span></span></span>
-<span><span class="co">##     YEAR  SPCD COMMON_NAME        SCIENTIFIC_NAME BIO_ACRE CARB_ACRE BIO_ACRE_SE</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005    10 fir spp.           Abies spp.      0.000<span style="text-decoration: underline;">761</span>  0.000<span style="text-decoration: underline;">366</span>       100. </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>005    43 Atlantic white-ce… Chamaecyparis … 0.003<span style="text-decoration: underline;">98</span>   0.001<span style="text-decoration: underline;">89</span>         99.9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>005    68 eastern redcedar   Juniperus virg… 0.517     0.269           29.4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005    91 Norway spruce      Picea abies     0.004<span style="text-decoration: underline;">45</span>   0.002<span style="text-decoration: underline;">13</span>        100. </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>005    97 red spruce         Picea rubens    0.015<span style="text-decoration: underline;">5</span>    0.007<span style="text-decoration: underline;">45</span>        100. </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>005   125 red pine           Pinus resinosa  0.030<span style="text-decoration: underline;">0</span>    0.016<span style="text-decoration: underline;">0</span>         100. </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>005   126 pitch pine         Pinus rigida    0.417     0.199           58.4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>005   129 eastern white pine Pinus strobus   3.78      1.92            20.3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>005   261 eastern hemlock    Tsuga canadens… 2.58      1.24            22.9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>005   315 striped maple      Acer pensylvan… 0.009<span style="text-decoration: underline;">56</span>   0.004<span style="text-decoration: underline;">57</span>         77.1</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1,266 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 4 more variables: CARB_ACRE_SE &lt;dbl&gt;, nPlots_TREE &lt;int&gt;, nPlots_AREA &lt;int&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   N &lt;int&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,373 × 8</span></span></span>
+<span><span class="co">##     YEAR  SPCD COMMON_NAME      SCIENTIFIC_NAME BIO_ACRE BIO_ACRE_SE nPlots_TREE</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005    10 fir spp.         Abies spp.      0.000<span style="text-decoration: underline;">761</span>       100.            1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>005    43 Atlantic white-… Chamaecyparis … 0.003<span style="text-decoration: underline;">98</span>         99.9           1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>005    68 eastern redcedar Juniperus virg… 0.517           29.4          20</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005    91 Norway spruce    Picea abies     0.004<span style="text-decoration: underline;">45</span>        100.            1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>005    97 red spruce       Picea rubens    0.015<span style="text-decoration: underline;">5</span>         100.            1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>005   125 red pine         Pinus resinosa  0.030<span style="text-decoration: underline;">0</span>         100.            1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>005   126 pitch pine       Pinus rigida    0.417           58.4           6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>005   129 eastern white p… Pinus strobus   3.78            20.3          59</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>005   261 eastern hemlock  Tsuga canadens… 2.58            22.9          37</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>005   315 striped maple    Acer pensylvan… 0.009<span style="text-decoration: underline;">56</span>         77.1           3</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 1,363 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 1 more variable: nPlots_AREA &lt;int&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Alternative estimators (linear moving average)</span></span>
 <span><span class="fu"><a href="../reference/biomass.html">biomass</a></span><span class="op">(</span><span class="va">fia</span>, method <span class="op">=</span> <span class="st">'LMA'</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 20 × 8</span></span></span>
-<span><span class="co">##     YEAR BIO_ACRE CARB_ACRE BIO_ACRE_SE CARB_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005     70.8      34.1        2.97         2.97         219         223</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>006     71.5      34.4        2.52         2.51         320         326</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>007     72.3      34.8        2.20         2.20         435         441</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>008     73.6      35.4        2.38         2.37         412         417</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>009     74.3      35.7        2.45         2.44         417         423</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>010     76.2      36.6        2.29         2.28         421         425</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>011     76.0      36.6        2.45         2.44         435         441</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>012     77.6      37.4        2.52         2.52         441         446</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     77.2      37.1        2.49         2.49         438         443</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>014     78.6      37.8        2.50         2.49         439         444</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">11</span>  <span style="text-decoration: underline;">2</span>015     79.0      37.9        2.33         2.32         442         448</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">12</span>  <span style="text-decoration: underline;">2</span>016     80.9      38.9        2.38         2.36         440         445</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">13</span>  <span style="text-decoration: underline;">2</span>017     80.7      38.8        2.51         2.54         438         443</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">14</span>  <span style="text-decoration: underline;">2</span>018     79.9      38.4        2.57         2.59         434         440</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">15</span>  <span style="text-decoration: underline;">2</span>019     81.8      39.4        2.89         2.91         430         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">16</span>  <span style="text-decoration: underline;">2</span>020     81.9      39.4        2.86         2.86         428         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">17</span>  <span style="text-decoration: underline;">2</span>021     82.5      39.7        2.93         2.92         426         435</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">18</span>  <span style="text-decoration: underline;">2</span>022     82.8      39.8        2.56         2.55         428         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">19</span>  <span style="text-decoration: underline;">2</span>023     78.2      37.6        2.68         2.66         409         436</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">20</span>  <span style="text-decoration: underline;">2</span>024     42.6      20.6        6.41         6.41          90         132</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1 more variable: N &lt;int&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 21 × 5</span></span></span>
+<span><span class="co">##     YEAR BIO_ACRE BIO_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005     70.8        2.97         219         223</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>006     71.5        2.52         320         326</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>007     72.3        2.20         435         441</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>008     73.6        2.38         412         417</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>009     74.3        2.45         417         423</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>010     76.2        2.29         421         425</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>011     76.0        2.45         435         441</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>012     77.6        2.52         441         446</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>013     77.2        2.49         438         443</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>014     78.6        2.50         439         444</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 11 more rows</span></span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Grouping variables</span></span>
 <span><span class="fu"><a href="../reference/biomass.html">biomass</a></span><span class="op">(</span><span class="va">fia</span>, grpBy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">STDORGCD</span>, <span class="va">SITECLCD</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 151 × 10</span></span></span>
-<span><span class="co">##     YEAR STDORGCD SITECLCD BIO_ACRE CARB_ACRE BIO_ACRE_SE CARB_ACRE_SE</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005        0        3    105.      51.3        12.4         11.9 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>005        0        4     86.5     41.6         7.52         7.53</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>005        0        5     72.9     35.1         3.45         3.45</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005        0        6     55.5     26.7         7.37         7.36</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>005        0        7     45.6     22.1         9.93        10.3 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>005        1        3     84.7     42.1         0            0   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>005        1        6     10.2      4.94        6.25         6.06</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>006        0        3    103.      50.5        11.4         11.0 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>006        0        4     80.9     39.0         6.96         6.89</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>006        0        5     75.3     36.2         2.89         2.93</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 141 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 3 more variables: nPlots_TREE &lt;int&gt;, nPlots_AREA &lt;int&gt;, N &lt;int&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 162 × 7</span></span></span>
+<span><span class="co">##     YEAR STDORGCD SITECLCD BIO_ACRE BIO_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005        0        3    105.        12.4            4           4</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>005        0        4     86.5        7.52          39          39</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>005        0        5     72.9        3.45         121         124</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005        0        6     55.5        7.37          63          65</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>005        0        7     45.6        9.93           3           3</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>005        1        3     84.7        0              1           1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>005        1        6     10.2        6.25           2           2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>006        0        3    103.        11.4            5           5</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>006        0        4     80.9        6.96          51          51</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>006        0        5     75.3        2.89         186         191</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 152 more rows</span></span></span></code></pre>
 <p>In addition, you can still specify spatial-temporal subsets on
 <code>Remote.FIA.Database</code> objects using
 <code><a href="../reference/clipFIA.html">clipFIA()</a></code>:</p>
@@ -203,12 +181,11 @@ biomass using our <code>Remote.FIA.Database</code>:</p>
 <span></span>
 <span><span class="co"># Biomass in most recent inventory</span></span>
 <span><span class="fu"><a href="../reference/biomass.html">biomass</a></span><span class="op">(</span><span class="va">fiaMR</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 8</span></span></span>
-<span><span class="co">##    YEAR BIO_ACRE CARB_ACRE BIO_ACRE_SE CARB_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>024     76.7      36.9        2.51         2.51         391         438</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1 more variable: N &lt;int&gt;</span></span></span></code></pre>
-<p>In practice, <code>rFIA's</code> new larger-than-RAM methods make it
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
+<span><span class="co">##    YEAR BIO_ACRE BIO_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>025     83.2        2.32         435         443</span></span></code></pre>
+<p>In practice, <code>rFIA's</code> larger-than-RAM methods make it
 possible for nearly anyone to work with very large subsets of FIA
 Database. In our testing, we have run <code><a href="../reference/tpa.html">tpa()</a></code>,
 <code><a href="../reference/biomass.html">biomass()</a></code>, <code><a href="../reference/dwm.html">dwm()</a></code>, and <code><a href="../reference/carbon.html">carbon()</a></code>
@@ -243,21 +220,30 @@ classes, where stand age classes can be computed with
 <span></span>
 <span><span class="co"># And produce estimates grouped by our new variable</span></span>
 <span><span class="fu"><a href="../reference/biomass.html">biomass</a></span><span class="op">(</span><span class="va">fia</span>, grpBy <span class="op">=</span> <span class="va">STANDAGEGROUP</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 82 × 9</span></span></span>
-<span><span class="co">##     YEAR STANDAGEGROUP BIO_ACRE CARB_ACRE BIO_ACRE_SE CARB_ACRE_SE nPlots_TREE</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005 [-49,1)          12.4       5.88       80.2         80.1            3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>005 [1,51)           33.6      16.2        14.2         14.2           35</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>005 [101,151)        83.2      39.9         7.39         7.33          18</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005 [51,101)         74.7      35.9         3.19         3.20         178</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>006 [-49,1)          12.9       6.11       67.9         67.8            3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>006 [1,51)           35.7      17.2        10.5         10.5           57</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>006 [101,151)        79.9      38.3         6.64         6.58          23</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>006 [51,101)         76.4      36.8         2.65         2.66         261</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>007 [-49,1)           6.19      2.93       91.0         90.9            3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>007 [1,51)           35.5      17.1         9.45         9.43          74</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 72 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 2 more variables: nPlots_AREA &lt;int&gt;, N &lt;int&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">##   [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">##  [16] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">##  [31] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">##  [46] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">##  [61] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">##  [76] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">##  [91] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">## [106] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">## [121] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
+<span><span class="co">## [136] TRUE</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 88 × 6</span></span></span>
+<span><span class="co">##     YEAR STANDAGEGROUP BIO_ACRE BIO_ACRE_SE nPlots_TREE nPlots_AREA</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>005 [-49,1)          12.4        80.2            3           5</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>005 [1,51)           33.6        14.2           35          36</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>005 [101,151)        83.2         7.39          18          19</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>005 [51,101)         74.7         3.19         178         179</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>006 [-49,1)          12.9        67.9            3           7</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>006 [1,51)           35.7        10.5           57          59</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>006 [101,151)        79.9         6.64          23          25</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>006 [51,101)         76.4         2.65         261         262</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>007 [-49,1)           6.19       91.0            3           9</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>007 [1,51)           35.5         9.45          74          76</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 78 more rows</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="simple-easy-parallelization">Simple, easy parallelization<a class="anchor" aria-label="anchor" href="#simple-easy-parallelization"></a>
@@ -276,12 +262,12 @@ processing, particularly on Windows OS. Thus, users should be cautious
 when running in parallel, and consider implementing serial processing
 for this task if computational resources are limited
 (<code>nCores = 1</code>).</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check the number of cores available on your machine </span></span>
 <span><span class="co"># Requires the parallel package</span></span>
 <span><span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 16</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># On our machine, we have a fun 16 cores to play with. </span></span>
 <span><span class="co"># To speed processing, we will split the workload </span></span>
 <span><span class="co"># across 3 of these cores using nCores = 3</span></span>
@@ -298,7 +284,7 @@ for this task if computational resources are limited
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

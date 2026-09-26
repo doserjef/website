@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Estimating individual-tree and population growth rates • rFIA</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Estimating individual-tree and population growth rates">
 <meta name="description" content="Basic tools for estimating growth with `rFIA`">
 <meta property="og:description" content="Basic tools for estimating growth with `rFIA`">
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rFIA</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,29 +118,28 @@ interest, we’d shoot for net growth. Here’s how we do it with
 <span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vitalRates.html">vitalRates</a></span><span class="op">(</span><span class="va">db</span>,</span>
 <span>                  treeType <span class="op">=</span> <span class="st">'all'</span>, <span class="co"># "all" indicates net growth</span></span>
 <span>                  grpBy <span class="op">=</span> <span class="va">SITECLCD</span>, <span class="co"># Grouping by site productivity class</span></span>
-<span>                  bySpecies <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># also grouping by species</span></span>
-<span>                  variance <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                  bySpecies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># also grouping by species</span></span>
 <span><span class="va">net</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 305 × 26</span></span></span>
-<span><span class="co">##     YEAR SITECLCD  SPCD COMMON_NAME SCIENTIFIC_NAME DIA_GROW BA_GROW NETVOL_GROW</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>021        1    11 Pacific si… Abies amabilis    0.060<span style="text-decoration: underline;">9</span> 0.008<span style="text-decoration: underline;">50</span>      0.462 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>021        1    17 grand fir   Abies grandis    -<span style="color: #BB0000;">0.142</span>  0.001<span style="text-decoration: underline;">97</span>      0.673 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>021        1    22 noble fir   Abies procera     0.194  0.022<span style="text-decoration: underline;">6</span>       0.986 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>021        1    42 Alaska yel… Chamaecyparis …   0.337  0.043<span style="text-decoration: underline;">9</span>       0.772 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>021        1    73 western la… Larix occident…   0.511  0.022<span style="text-decoration: underline;">2</span>       0.377 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>021        1    93 Engelmann … Picea engelman…   0.551  0.016<span style="text-decoration: underline;">4</span>       0.086<span style="text-decoration: underline;">7</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>021        1    98 Sitka spru… Picea sitchens…   0.156  0.020<span style="text-decoration: underline;">3</span>       1.01  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>021        1   108 lodgepole … Pinus contorta    0.316  0.012<span style="text-decoration: underline;">4</span>       0.200 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>021        1   119 western wh… Pinus monticola   0.581  0.018<span style="text-decoration: underline;">2</span>       0.167 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>021        1   122 ponderosa … Pinus ponderosa   0.09   0.023<span style="text-decoration: underline;">7</span>       1.40  </span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 295 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 18 more variables: SAWVOL_GROW &lt;dbl&gt;, BIO_GROW &lt;dbl&gt;, BA_GROW_AC &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   NETVOL_GROW_AC &lt;dbl&gt;, SAWVOL_GROW_AC &lt;dbl&gt;, BIO_GROW_AC &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   DIA_GROW_VAR &lt;dbl&gt;, BA_GROW_VAR &lt;dbl&gt;, NETVOL_GROW_VAR &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   SAWVOL_GROW_VAR &lt;dbl&gt;, BIO_GROW_VAR &lt;dbl&gt;, BA_GROW_AC_VAR &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   NETVOL_GROW_AC_VAR &lt;dbl&gt;, SAWVOL_GROW_AC_VAR &lt;dbl&gt;, BIO_GROW_AC_VAR &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   nPlots_TREE &lt;int&gt;, nPlots_AREA &lt;int&gt;, N &lt;int&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 307 × 25</span></span></span>
+<span><span class="co">##     YEAR SITECLCD  SPCD COMMON_NAME         SCIENTIFIC_NAME    DIA_GROW  BA_GROW</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>024        1    11 Pacific silver fir  Abies amabilis       0.069<span style="text-decoration: underline;">9</span>  0.008<span style="text-decoration: underline;">57</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>024        1    17 grand fir           Abies grandis       -<span style="color: #BB0000;">0.397</span>  -<span style="color: #BB0000;">0.015</span><span style="color: #BB0000; text-decoration: underline;">8</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>024        1    19 subalpine fir       Abies lasiocarpa     0.702   0.030<span style="text-decoration: underline;">6</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>024        1    22 noble fir           Abies procera        0.267   0.028<span style="text-decoration: underline;">1</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>024        1    41 Port-Orford-cedar   Chamaecyparis law…   0.048<span style="text-decoration: underline;">5</span>  0.001<span style="text-decoration: underline;">67</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>024        1    42 Alaska yellow-cedar Chamaecyparis noo…   0.337   0.043<span style="text-decoration: underline;">9</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>024        1    73 western larch       Larix occidentalis   0.381   0.020<span style="text-decoration: underline;">7</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>024        1    93 Engelmann spruce    Picea engelmannii    0.595   0.030<span style="text-decoration: underline;">9</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>024        1    98 Sitka spruce        Picea sitchensis     0.185   0.024<span style="text-decoration: underline;">5</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>024        1   108 lodgepole pine      Pinus contorta       0.304   0.012<span style="text-decoration: underline;">8</span> </span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 297 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 18 more variables: NETVOL_GROW &lt;dbl&gt;, SAWVOL_GROW &lt;dbl&gt;, BIO_GROW &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   BA_GROW_AC &lt;dbl&gt;, NETVOL_GROW_AC &lt;dbl&gt;, SAWVOL_GROW_AC &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   BIO_GROW_AC &lt;dbl&gt;, DIA_GROW_SE &lt;dbl&gt;, BA_GROW_SE &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   NETVOL_GROW_SE &lt;dbl&gt;, SAWVOL_GROW_SE &lt;dbl&gt;, BIO_GROW_SE &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   BA_GROW_AC_SE &lt;dbl&gt;, NETVOL_GROW_AC_SE &lt;dbl&gt;, SAWVOL_GROW_AC_SE &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   BIO_GROW_AC_SE &lt;dbl&gt;, nPlots_TREE &lt;int&gt;, nPlots_AREA &lt;int&gt;</span></span></span></code></pre>
 <p>If we are instead interested in characterizing the average annual
 growth rate of individual trees, we’d most likely want to exclude stems
 that died or recruited into the population between plot measurements. To
@@ -150,8 +149,7 @@ do this with rFIA, simply set <code>treeType = 'live'</code>:</p>
 <span><span class="va">live</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vitalRates.html">vitalRates</a></span><span class="op">(</span><span class="va">db</span>,</span>
 <span>                   treeType <span class="op">=</span> <span class="st">'live'</span>, <span class="co"># "live" excludes mortality and recruitment</span></span>
 <span>                   grpBy <span class="op">=</span> <span class="va">SITECLCD</span>, <span class="co"># Grouping by site productivity class</span></span>
-<span>                   bySpecies <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># also grouping by species</span></span>
-<span>                   variance <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>                   bySpecies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># also grouping by species</span></span></code></pre></div>
 <p>By default, <code><a href="../reference/vitalRates.html">vitalRates()</a></code> will estimate average annual
 DBH, basal area, biomass, and net volume growth rates for <em>individual
 stems</em>, along with average annual basal area, biomass, and net
@@ -162,11 +160,11 @@ let’s simplify and pretty up our tables a bit:</p>
 <span><span class="va">net</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Dropping unnecessary columns</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">SITECLCD</span>, <span class="va">COMMON_NAME</span>, <span class="va">SCIENTIFIC_NAME</span>, <span class="va">SPCD</span>,</span>
-<span>         <span class="va">BA_GROW</span>, <span class="va">BA_GROW_AC</span>, <span class="va">BA_GROW_VAR</span>, <span class="va">BA_GROW_AC_VAR</span>, <span class="va">nPlots_TREE</span>, <span class="va">N</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>         <span class="va">BA_GROW</span>, <span class="va">BA_GROW_AC</span>, <span class="va">BA_GROW_SE</span>, <span class="va">BA_GROW_AC_SE</span>, <span class="va">nPlots_TREE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Dropping rows with no live trees (growth was NA)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">BA_GROW</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Making SITECLCD more informative</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"225+ cubic feet/acre/year"</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>site <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"225+ cubic feet/acre/year"</span>,</span>
 <span>                          <span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"165-224 cubic feet/acre/year"</span>,</span>
 <span>                          <span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">3</span> <span class="op">~</span> <span class="st">"120-164 cubic feet/acre/year"</span>,</span>
 <span>                          <span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">4</span> <span class="op">~</span> <span class="st">"85-119 cubic feet/acre/year"</span>,</span>
@@ -181,11 +179,11 @@ let’s simplify and pretty up our tables a bit:</p>
 <span><span class="va">live</span> <span class="op">&lt;-</span> <span class="va">live</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Dropping unnecessary columns</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">SITECLCD</span>, <span class="va">COMMON_NAME</span>, <span class="va">SCIENTIFIC_NAME</span>, <span class="va">SPCD</span>,</span>
-<span>         <span class="va">BA_GROW</span>, <span class="va">BA_GROW_AC</span>, <span class="va">BA_GROW_VAR</span>, <span class="va">BA_GROW_AC_VAR</span>, <span class="va">nPlots_TREE</span>, <span class="va">N</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>         <span class="va">BA_GROW</span>, <span class="va">BA_GROW_AC</span>, <span class="va">BA_GROW_SE</span>, <span class="va">BA_GROW_AC_SE</span>, <span class="va">nPlots_TREE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Dropping rows with no live trees (growth was NA)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">BA_GROW</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Making SITECLCD more informative</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>siteProd <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"225+ cubic feet/acre/year"</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>siteProd <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"225+ cubic feet/acre/year"</span>,</span>
 <span>                              <span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"165-224 cubic feet/acre/year"</span>,</span>
 <span>                              <span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">3</span> <span class="op">~</span> <span class="st">"120-164 cubic feet/acre/year"</span>,</span>
 <span>                              <span class="va">SITECLCD</span> <span class="op">==</span> <span class="fl">4</span> <span class="op">~</span> <span class="st">"85-119 cubic feet/acre/year"</span>,</span>
@@ -198,58 +196,51 @@ let’s simplify and pretty up our tables a bit:</p>
 <p>Here <code>BA_GROW</code> gives us annual basal area growth per tree
 in square feet/year, and <code>BA_GROW_AC</code> gives us average basal
 area growth per acre in square feet/acre/year. But maybe we’d prefer
-units to be square centimeters instead - just remember to multiply the
-variance by the square of the conversion factor!</p>
+units to be square centimeters instead.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Net annual change</span></span>
 <span><span class="va">net</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Convert to square centimeters instead of square feet</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>BA_GROW <span class="op">=</span> <span class="va">BA_GROW</span> <span class="op">*</span> <span class="fl">929.03</span>,</span>
-<span>         BA_GROW_AC <span class="op">=</span> <span class="va">BA_GROW_AC</span> <span class="op">*</span> <span class="fl">929.03</span>,</span>
-<span>         BA_GROW_VAR <span class="op">=</span> <span class="va">BA_GROW_VAR</span> <span class="op">*</span> <span class="op">(</span><span class="fl">929.03</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
-<span>         BA_GROW_AC_VAR <span class="op">=</span> <span class="va">BA_GROW_AC_VAR</span> <span class="op">*</span> <span class="op">(</span><span class="fl">929.03</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>         BA_GROW_AC <span class="op">=</span> <span class="va">BA_GROW_AC</span> <span class="op">*</span> <span class="fl">929.03</span><span class="op">)</span></span>
 <span><span class="va">net</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 305 × 11</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 307 × 10</span></span></span>
 <span><span class="co">##    COMMON_NAME          SCIENTIFIC_NAME  SITECLCD site   SPCD BA_GROW BA_GROW_AC</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Alaska yellow-cedar  Chamaecyparis n…        1 225+…    42  40.8       1.26  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Alaska yellow-cedar  Chamaecyparis n…        2 165-…    42  11.2       0.632 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Alaska yellow-cedar  Chamaecyparis n…        3 120-…    42   2.62      0.524 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Alaska yellow-cedar  Chamaecyparis n…        4 85-1…    42   4.57      3.05  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Alaska yellow-cedar  Chamaecyparis n…        5 50-8…    42   3.24      3.02  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Alaska yellow-cedar  Chamaecyparis n…        6 20-4…    42   1.45      1.30  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Alaska yellow-cedar  Chamaecyparis n…        7 0-19…    42   0.236     0.198 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Brewer spruce        Picea breweriana        6 20-4…    92   3.75      0.029<span style="text-decoration: underline;">8</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> California black oak Quercus kellogg…        2 165-…   818   0.797     0.023<span style="text-decoration: underline;">1</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> California black oak Quercus kellogg…        3 120-…   818  -<span style="color: #BB0000;">1.14</span>     -<span style="color: #BB0000;">0.117</span> </span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 295 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 4 more variables: BA_GROW_VAR &lt;dbl&gt;, BA_GROW_AC_VAR &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   nPlots_TREE &lt;int&gt;, N &lt;int&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Alaska yellow-cedar  Chamaecyparis n…        1 225+…    42  40.8       1.25  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Alaska yellow-cedar  Chamaecyparis n…        2 165-…    42  11.2       0.622 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Alaska yellow-cedar  Chamaecyparis n…        3 120-…    42   8.16      1.66  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Alaska yellow-cedar  Chamaecyparis n…        4 85-1…    42   4.67      3.55  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Alaska yellow-cedar  Chamaecyparis n…        5 50-8…    42   2.72      2.75  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Alaska yellow-cedar  Chamaecyparis n…        6 20-4…    42   1.39      1.19  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Alaska yellow-cedar  Chamaecyparis n…        7 0-19…    42  -<span style="color: #BB0000;">0.259</span>    -<span style="color: #BB0000;">0.209</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Brewer spruce        Picea breweriana        6 20-4…    92   3.75      0.032<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> California black oak Quercus kellogg…        2 165-…   818   0.618     0.018<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> California black oak Quercus kellogg…        3 120-…   818  -<span style="color: #BB0000;">1.04</span>     -<span style="color: #BB0000;">0.110</span> </span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 297 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 3 more variables: BA_GROW_SE &lt;dbl&gt;, BA_GROW_AC_SE &lt;dbl&gt;, nPlots_TREE &lt;int&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Annual growth on live trees that remained live</span></span>
 <span><span class="va">live</span> <span class="op">&lt;-</span> <span class="va">live</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># Convert to square centimeters instead of square feet</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>BA_GROW <span class="op">=</span> <span class="va">BA_GROW</span> <span class="op">*</span> <span class="fl">929.03</span>,</span>
-<span>         BA_GROW_AC <span class="op">=</span> <span class="va">BA_GROW_AC</span> <span class="op">*</span> <span class="fl">929.03</span>,</span>
-<span>         BA_GROW_VAR <span class="op">=</span> <span class="va">BA_GROW_VAR</span> <span class="op">*</span> <span class="op">(</span><span class="fl">929.03</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
-<span>         BA_GROW_AC_VAR <span class="op">=</span> <span class="va">BA_GROW_AC_VAR</span> <span class="op">*</span> <span class="op">(</span><span class="fl">929.03</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>         BA_GROW_AC <span class="op">=</span> <span class="va">BA_GROW_AC</span> <span class="op">*</span> <span class="fl">929.03</span><span class="op">)</span></span>
 <span><span class="va">live</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 289 × 11</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 290 × 10</span></span></span>
 <span><span class="co">##    COMMON_NAME        SCIENTIFIC_NAME SITECLCD siteProd  SPCD BA_GROW BA_GROW_AC</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Alaska yellow-ced… Chamaecyparis …        1 225+ cu…    42   40.8      1.26  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Alaska yellow-ced… Chamaecyparis …        2 165-224…    42   12.8      0.483 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Alaska yellow-ced… Chamaecyparis …        3 120-164…    42   10.2      1.41  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Alaska yellow-ced… Chamaecyparis …        4 85-119 …    42    6.95     3.89  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Alaska yellow-ced… Chamaecyparis …        5 50-84 c…    42    4.68     3.63  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Alaska yellow-ced… Chamaecyparis …        6 20-49 c…    42    4.20     3.33  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Alaska yellow-ced… Chamaecyparis …        7 0-19 cu…    42    6.36     4.48  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Brewer spruce      Picea breweria…        6 20-49 c…    92    3.75     0.029<span style="text-decoration: underline;">8</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> California black … Quercus kellog…        2 165-224…   818   11.1      0.131 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> California black … Quercus kellog…        3 120-164…   818    4.09     0.206 </span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 279 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 4 more variables: BA_GROW_VAR &lt;dbl&gt;, BA_GROW_AC_VAR &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   nPlots_TREE &lt;int&gt;, N &lt;int&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Alaska yellow-ced… Chamaecyparis …        1 225+ cu…    42   40.8      1.25  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Alaska yellow-ced… Chamaecyparis …        2 165-224…    42   12.9      0.475 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Alaska yellow-ced… Chamaecyparis …        3 120-164…    42   10.9      1.45  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Alaska yellow-ced… Chamaecyparis …        4 85-119 …    42    6.70     4.37  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Alaska yellow-ced… Chamaecyparis …        5 50-84 c…    42    4.95     4.20  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Alaska yellow-ced… Chamaecyparis …        6 20-49 c…    42    4.10     3.03  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Alaska yellow-ced… Chamaecyparis …        7 0-19 cu…    42    6.37     4.30  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Brewer spruce      Picea breweria…        6 20-49 c…    92    3.75     0.032<span style="text-decoration: underline;">2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> California black … Quercus kellog…        2 165-224…   818   11.2      0.140 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> California black … Quercus kellog…        3 120-164…   818    5.29     0.248 </span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 280 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 3 more variables: BA_GROW_SE &lt;dbl&gt;, BA_GROW_AC_SE &lt;dbl&gt;, nPlots_TREE &lt;int&gt;</span></span></span></code></pre>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
@@ -261,7 +252,7 @@ variance by the square of the conversion factor!</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
